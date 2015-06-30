@@ -14,12 +14,8 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 @Controller
-public class EmptyHander {
+public class EmptyHandler {
     @RequestMapping
-    public void doRedirect(HttpServletRequest request){
-//        Map<String ,String[]> map=request.getParameterMap();
-//        for (String key:map.keySet()){
-//            System.out.println("key:"+key+",value:"+map.get(key)[0]);
-//        }
+    public void doRedirect(){
     }
 }

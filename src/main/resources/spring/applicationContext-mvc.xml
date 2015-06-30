@@ -31,7 +31,7 @@
 	</bean>
 	<bean id="defaultHandler" class="org.springframework.web.servlet.HandlerExecutionChain">
 		<constructor-arg index="0">
-			<bean class="com.dabast.common.controller.EmptyHander" />
+			<bean class="com.dabast.common.controller.EmptyHandler" />
 		</constructor-arg>
 	</bean>
 	<bean
