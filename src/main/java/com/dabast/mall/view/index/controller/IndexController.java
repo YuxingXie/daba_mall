@@ -1,44 +1,39 @@
-package com.dabast.mail.model.productseries.controller;
+package com.dabast.mall.view.index.controller;
 
 import com.dabast.common.base.BaseRestSpringController;
-import com.dabast.common.helper.service.ProjectContext;
+import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.ProductSeries;
 import com.dabast.entity.User;
-import com.dabast.mail.model.productseries.service.IProductSeriesService;
-import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.util.JSON;
+import net.sf.json.JSONArray;
 import org.bson.types.ObjectId;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.support.ServletContextResource;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.annotation.Resource;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Administrator on 2015/6/11.
  */
 @Controller
-@RequestMapping("/api")
-public class TestController extends BaseRestSpringController {
+@RequestMapping("/index")
+public class IndexController extends BaseRestSpringController {
+    @RequestMapping(value = "/main")
+    public String index(ModelMap model) {
+       List<String[]> top3= ServiceManager.productSeriesService.getTop3ProductSeries();
+        model.addAttribute("top3", top3);
+        List<ProductSeries> hotSells=ServiceManager.productSeriesService.getHotSell();
+        model.addAttribute("hotSells", hotSells);
 
+        return "index";
+    }
 
 //    @ModelAttribute
 //    public void init(ModelMap model) {

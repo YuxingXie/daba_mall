@@ -22,7 +22,7 @@ public class ProductSeries {
     private String name;
     @Field(value = "picture")
     private String picture;
-    private Double minPrice;
+    private Double commonPrice;
     private Integer evaluateCount;
     @Past
     @NotNull
@@ -34,6 +34,16 @@ public class ProductSeries {
     private String id;
     @DBRef
     private Set<Product> products;
+    private boolean newProduct;
+
+    public boolean isNewProduct() {
+        Date now =new Date();
+        if (shelvesDate==null) return false;
+        if ((now.getTime()-shelvesDate.getTime()) <=(30L*24L*60L*60L*1000L)) {
+            return true;
+        }
+        return false;
+    }
 
     public Set<Product> getProducts() {
         return products;
@@ -67,12 +77,12 @@ public class ProductSeries {
         this.picture = picture;
     }
 
-    public Double getMinPrice() {
-        return minPrice;
+    public Double getCommonPrice() {
+        return commonPrice;
     }
 
-    public void setMinPrice(Double minPrice) {
-        this.minPrice = minPrice;
+    public void setCommonPrice(Double commonPrice) {
+        this.commonPrice = commonPrice;
     }
 
     public Integer getEvaluateCount() {

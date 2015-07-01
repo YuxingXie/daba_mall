@@ -1,15 +1,16 @@
-package com.dabast.mail.model.productseries.controller;
+package com.dabast.mall.model.productseries.controller;
 
 import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.ProductSeries;
-import com.dabast.mail.model.productseries.service.IProductSeriesService;
+import com.dabast.mall.model.productseries.service.IProductSeriesService;
 import com.mongodb.gridfs.GridFSDBFile;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.bson.types.ObjectId;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -20,12 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -62,6 +59,20 @@ public class ProductSeriesController extends BaseRestSpringController {
 
         
         return "baseInfo/rm_baseInfo_update_input";
+    }
+    @RequestMapping(value="/popover/{id}")
+    public ResponseEntity<ProductSeries> popover(ModelMap model,@PathVariable java.lang.String id) {
+//        ProductSeries productSeries = ServiceManager.productSeriesService.findById(new ObjectId(id));
+        System.out.println("popover...");
+        ProductSeries productSeries2=new ProductSeries();
+        productSeries2.setId(id);
+        productSeries2.setBrand("大坝");
+        productSeries2.setEvaluateCount(101);
+        productSeries2.setCommonPrice(100.36);
+        productSeries2.setName("豆腐乳");
+        productSeries2.setPicture("statics/assets/temp/products/model2.jpg");
+        productSeries2.setShelvesDate(new Date());
+        return new ResponseEntity<ProductSeries>(productSeries2, HttpStatus.OK);
     }
     @RequestMapping(value="pic/{id}")
     public String showPic(ModelMap model,@PathVariable java.lang.String id) {

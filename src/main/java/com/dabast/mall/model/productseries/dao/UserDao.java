@@ -1,4 +1,4 @@
-package com.dabast.mail.model.productseries.dao;
+package com.dabast.mall.model.productseries.dao;
 
 import com.dabast.common.base.BaseMongoDao;
 import com.dabast.entity.User;

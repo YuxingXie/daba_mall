@@ -125,6 +125,8 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     }
 
     public E findById(ObjectId id) {
+        //for test
+
         return mongoTemplate.findById(id, collectionClass);
     }
 
@@ -135,7 +137,6 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         if (min != null) criteria.gte(min);
         if (max != null) criteria.lte(max);
         Query query = Query.query(criteria);
-        System.out.println(query);
         return mongoTemplate.find(query, collectionClass);
     }
 
