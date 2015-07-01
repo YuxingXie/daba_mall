@@ -5,9 +5,9 @@ package com.dabast.entity;
  */
 public class ProductProperty {
     private String id;
-    private String name;
-    private Product product;
-    private Object productPropertyValue;
+    private String propertyName;
+    private ProductSeries productSeries;
+    private Object[] propertyValues;
 
     public String getId() {
         return id;
@@ -17,27 +17,28 @@ public class ProductProperty {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getPropertyName() {
+        return propertyName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPropertyName(String propertyName) {
+        this.propertyName = propertyName;
     }
 
-    public Product getProduct() {
-        return product;
+    public Object[] getPropertyValues() {
+        return propertyValues;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setPropertyValues(Object[] propertyValues) {
+        this.propertyValues = propertyValues;
     }
 
-    public Object getProductPropertyValue() {
-        return productPropertyValue;
+    public ProductSeries getProductSeries() {
+        return productSeries;
     }
 
-    public void setProductPropertyValue(Object productPropertyValue) {
-        this.productPropertyValue = productPropertyValue;
+    public void setProductSeries(ProductSeries productSeries) {
+        this.productSeries = productSeries;
     }
+
 }

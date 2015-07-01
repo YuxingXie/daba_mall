@@ -24,6 +24,7 @@ public class ProductSeries {
     private String picture;
     private Double commonPrice;
     private Integer evaluateCount;
+    private String description;
     @Past
     @NotNull
     @Field(value = "shelvesDate")
@@ -33,7 +34,7 @@ public class ProductSeries {
     @Id
     private String id;
     @DBRef
-    private Set<Product> products;
+    private Set<ProductProperty> productProperties;
     private boolean newProduct;
 
     public boolean isNewProduct() {
@@ -45,12 +46,12 @@ public class ProductSeries {
         return false;
     }
 
-    public Set<Product> getProducts() {
-        return products;
+    public Set<ProductProperty> getProductProperties() {
+        return productProperties;
     }
 
-    public void setProducts(Set<Product> products) {
-        this.products = products;
+    public void setProductProperties(Set<ProductProperty> productProperties) {
+        this.productProperties = productProperties;
     }
 
     public String getId() {
@@ -107,5 +108,13 @@ public class ProductSeries {
 
     public void setBrand(String brand) {
         this.brand = brand;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

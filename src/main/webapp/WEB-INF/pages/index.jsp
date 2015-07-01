@@ -91,7 +91,7 @@
                                         <img src="${path}/${prod.picture}" class="img-responsive" alt="Berry Lace Dress">
                                         <div>
                                             <a href="${path}/${prod.picture}" class="btn btn-default fancybox-button">大图</a>
-                                            <a href="#" data-url="${path}/product_series/popover/${prod.id}" class="btn btn-default fancybox-fast-view" data-pic="${path}/${prod.picture}">详情</a>
+                                            <a href="#product-pop-up" data-url="${path}/product_series/popover/${prod.id}" class="btn btn-default fancybox-fast-view" data-pic="${path}/${prod.picture}">详情</a>
                                         </div>
                                     </div>
                                     <h3><a href="item.html">${prod.name}</a></h3>
@@ -273,75 +273,13 @@
 </div>
 
 <!-- BEGIN fast view of a product -->
-<div id="product-pop-up1" style="display: none; width: 700px;">
-    <div class="product-page product-pop-up">
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-3">
-                <div class="product-main-image">
-                    <img src="${path}/statics/assets/temp/products/model7.jpg" alt="Cool green dress with red bell" class="img-responsive">
-                </div>
-                <div class="product-other-images">
-                    <a href="#" class="active"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model3.jpg"></a>
-                    <a href="#"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model4.jpg"></a>
-                    <a href="#"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model5.jpg"></a>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-9">
-                <h1 style=" text-align:center;">烟熏腊鱼</h1>
-                <div class="price-availability-block clearfix">
-                    <div class="price">
-                        <strong><span>￥</span>47.00</strong>
-                        <em>￥<span>62.00</span></em>
-                    </div>
-                    <div class="availability">
-                        状态: <strong>货源充足</strong>
-                    </div>
-                </div>
-                <div class="description" style=" direction:ltr;">
-                    <p>腊鱼是将鱼洗净腌制晒干后的称呼，鲫鱼、草鱼、鲤鱼都可以制作腊鱼。腌制腊鱼是我国传统水产加工食品，其风味独特，耐贮藏，在我国南方的饮食文化中有着重要地位。在腌腊鱼的加工过程中，由于微生物和原料鱼中酶类的作用</p>
-                </div>
-                <div class="product-page-options">
-                    <div class="pull-left">
-                        <label class="control-label" style=" direction:ltr;">产地&nbsp;:&nbsp;</label>
-                        <select class="form-control input-sm">
-                            <option>黄材</option>
-                            <option>横市</option>
-                            <option>双凫铺</option>
-                            <option>大成桥</option>
-                            <option>回龙铺</option>
-                            <option>宁乡</option>
-                        </select>
-
-                    </div>
-                    <div class="pull-left">
-                        <label class="control-label" style=" direction:ltr;">种类&nbsp;:&nbsp;</label>
-                        <select class="form-control input-sm">
-                            <option>三文鱼腊鱼</option>
-                            <option>福寿鱼腊鱼</option>
-                            <option>草鱼腊鱼</option>
-                        </select>
-
-                    </div>
-                </div>
-                <div class="product-page-cart">
-                    <div class="product-quantity">
-                        <input type="text" value="1" readonly name="product-quantity" class="form-control input-sm">
-                    </div>
-                    <button class="btn btn-primary" type="submit">添加到购物车</button>
-                    <button class="btn btn-default" type="submit">更多商品</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
 
 <div id="product-pop-up" style="display: none; width: 700px;">
     <div class="product-page product-pop-up">
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-3">
                 <div class="product-main-image">
-                    <img src="${path}/statics/assets/temp/products/model7.jpg" alt="Cool green dress with red bell" class="img-responsive">
+                    <img src="#"class="img-responsive">
                 </div>
                 <div class="product-other-images">
                     <a href="#" class="active"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model3.jpg"></a>
@@ -350,47 +288,46 @@
                 </div>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-9">
-                <h1 style=" text-align:center;">烟熏腊鱼</h1>
+                <h1 style=" text-align:center;"></h1>
                 <div class="price-availability-block clearfix">
                     <div class="price">
-                        <strong><span>￥</span>47.00</strong>
-                        <em>￥<span>62.00</span></em>
+
                     </div>
                     <div class="availability">
                         状态: <strong>货源充足</strong>
                     </div>
                 </div>
                 <div class="description" style=" direction:ltr;">
-                    <p>腊鱼是将鱼洗净腌制晒干后的称呼，鲫鱼、草鱼、鲤鱼都可以制作腊鱼。腌制腊鱼是我国传统水产加工食品，其风味独特，耐贮藏，在我国南方的饮食文化中有着重要地位。在腌腊鱼的加工过程中，由于微生物和原料鱼中酶类的作用</p>
+                    <p></p>
                 </div>
                 <div class="product-page-options">
-                    <div class="pull-left">
-                        <label class="control-label" style=" direction:ltr;">产地&nbsp;:&nbsp;</label>
-                        <select class="form-control input-sm">
-                            <option>黄材</option>
-                            <option>横市</option>
-                            <option>双凫铺</option>
-                            <option>大成桥</option>
-                            <option>回龙铺</option>
-                            <option>宁乡</option>
-                        </select>
+                    <%--<div class="pull-left">--%>
+                        <%--<label class="control-label" style=" direction:ltr;">产地&nbsp;:&nbsp;</label>--%>
+                        <%--<select class="form-control input-sm">--%>
+                            <%--<option>黄材</option>--%>
+                            <%--<option>横市</option>--%>
+                            <%--<option>双凫铺</option>--%>
+                            <%--<option>大成桥</option>--%>
+                            <%--<option>回龙铺</option>--%>
+                            <%--<option>宁乡</option>--%>
+                        <%--</select>--%>
 
-                    </div>
-                    <div class="pull-left">
-                        <label class="control-label" style=" direction:ltr;">种类&nbsp;:&nbsp;</label>
-                        <select class="form-control input-sm">
-                            <option>三文鱼腊鱼</option>
-                            <option>福寿鱼腊鱼</option>
-                            <option>草鱼腊鱼</option>
-                        </select>
+                    <%--</div>--%>
+                    <%--<div class="pull-left">--%>
+                        <%--<label class="control-label" style=" direction:ltr;">种类&nbsp;:&nbsp;</label>--%>
+                        <%--<select class="form-control input-sm">--%>
+                            <%--<option>三文鱼腊鱼</option>--%>
+                            <%--<option>福寿鱼腊鱼</option>--%>
+                            <%--<option>草鱼腊鱼</option>--%>
+                        <%--</select>--%>
 
-                    </div>
+                    <%--</div>--%>
                 </div>
                 <div class="product-page-cart">
                     <div class="product-quantity">
-                        <input type="text" value="1" readonly name="product-quantity" class="form-control input-sm">
+                        <input type="number" value="1"  class="input-sm" style="max-width: 80px;">
                     </div>
-                    <button class="btn btn-primary" type="submit">添加到购物车</button>
+                    <button class="btn btn-primary add2cart" type="submit">添加到购物车</button>
                     <button class="btn btn-default" type="submit">更多商品</button>
                 </div>
             </div>
@@ -438,8 +375,34 @@
         App.initImageZoom();
         App.initTouchspin();
         $(".fancybox-fast-view").click(function(){
-            alert("fancybox-fast-view");
+            $.ajax($(this).data("url")).done(function(data){
+                $("#product-pop-up .product-main-image>img").attr("src","${path}/"+data.picture);
+                $("#product-pop-up h1").text(data.name);
+                $("#product-pop-up .price").html("<strong><span>￥</span>"+data.commonPrice+"</strong><em>￥<span>62.00</span></em>");
+                $("#product-pop-up .description>p").html(data.description);
+                $("#product-pop-up  .add2cart").unbind("click");
+                var json =data.productProperties;
+                console.log("执行了ajax请求，属性数量是"+json.length);
+                var product_page_options=$("#product-pop-up .product-page-options");
+                product_page_options.empty();
+                for(var i=0;i<json.length;i++){
+                    var pull_left=$('<div class="pull-left"></div>');
 
+                    pull_left.appendTo(product_page_options);
+                    var control_label=$('<label class="control-label" style=" direction:ltr;">'+json[i]["propertyName"]+'&nbsp;:&nbsp;</label>');
+                    control_label.appendTo(pull_left);
+                    var select=$('<select class="form-control input-sm" name='+json[i]["id"]+'>');
+                    select.appendTo(pull_left);
+                    var propertyValues= json[i]["propertyValues"];
+                    for(var j=0;j<propertyValues.length;j++){
+                        var option=$("<option>"+propertyValues[j]+"</option>");
+                        option.appendTo(select);
+                    }
+                }
+                $("#product-pop-up  .add2cart").click(function(){
+//                    console.log("id:"+data.id);
+                });
+            }).fail(function(){ console("出错啦！"); });
         });
     });
 </script>

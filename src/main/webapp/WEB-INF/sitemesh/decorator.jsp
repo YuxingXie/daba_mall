@@ -19,8 +19,8 @@
     <meta property="og:image" content="-CUSTOMER VALUE-">
     <!-- link to image for socio -->
     <meta property="og:url" content="-CUSTOMER VALUE-">
-    <link rel="shortcut icon" href="favicon.ico">
-    <link href="/favicon.ico" rel="SHORTCUT ICON" type="image/ico">
+    <%--<link rel="shortcut icon" href="favicon.ico">--%>
+    <%--<link href="/favicon.ico" rel="SHORTCUT ICON" type="image/ico">--%>
 
     <!-- Global styles START -->
     <link href="${path}/statics/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
