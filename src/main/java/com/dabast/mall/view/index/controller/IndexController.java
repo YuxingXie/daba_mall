@@ -11,10 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +21,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/index")
+@SessionAttributes("loginUser")
 public class IndexController extends BaseRestSpringController {
     @RequestMapping(value = "/main")
     public String index(ModelMap model) {
@@ -31,6 +29,11 @@ public class IndexController extends BaseRestSpringController {
         model.addAttribute("top3", top3);
         List<ProductSeries> hotSells=ServiceManager.productSeriesService.getHotSell();
         model.addAttribute("hotSells", hotSells);
+        if (model.get("loginUser")!=null){
+            User user= (User) model.get("loginUser");
+//            System.out.println(user.getName());
+//            System.out.println(user.getSex());
+        }
 
         return "index";
     }
@@ -49,21 +52,15 @@ public class IndexController extends BaseRestSpringController {
     }
     @RequestMapping(value = "/user/post",method = RequestMethod.POST)
     public ResponseEntity<User> post(@RequestBody User user,ModelMap model) {
-        System.out.println("post");
+//        System.out.println("post");
         user.setId(new ObjectId());
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
     @RequestMapping(value = "/user/login",method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody User user,ModelMap model) {
-        System.out.println("login------");
-        if (user.getName()==null) return null;
-        if (user.getName().contains("a"))
+        model.addAttribute("loginUser",user);
         return new ResponseEntity("{token:'abc123456789'}",HttpStatus.OK);
-        else {
-            if (user.getName().contains("x"))
-                return new ResponseEntity("{token:'abc123456789'}",HttpStatus.FORBIDDEN);//403
-        }
-        return new ResponseEntity("{token:'abc123456789'}",HttpStatus.UNAUTHORIZED);//401
+
     }
 
     @RequestMapping(value = "/users")
@@ -83,7 +80,7 @@ public class IndexController extends BaseRestSpringController {
     }
     @RequestMapping(value = "/user/test1")
     public ResponseEntity<User> test1(ModelMap model) {
-        System.out.println("test1");
+//        System.out.println("test1");
         User user=new User();
         user.setName("Robinson");
         user.setSex("m");
@@ -92,7 +89,7 @@ public class IndexController extends BaseRestSpringController {
     }
     @RequestMapping(value = "/user/test2")
     public ResponseEntity<User> test2(ModelMap model) {
-        System.out.println("test2");
+//        System.out.println("test2");
         User user=new User();
         user.setName("Michale Jordan");
         user.setSex("m");
@@ -101,7 +98,7 @@ public class IndexController extends BaseRestSpringController {
     }
     @RequestMapping(value = "/user/test3")
       public ResponseEntity<User> test3(ModelMap model) {
-        System.out.println("test3");
+//        System.out.println("test3");
         User user=new User();
         user.setName("Alison Fisher");
         user.setSex("f");
@@ -110,6 +107,6 @@ public class IndexController extends BaseRestSpringController {
     }
     public static void main(String[] args){
         String jsonStr="[{id:100,name:'Johnson'},{id:101,name:'Jackson'}]";
-        System.out.println(JSON.parse(jsonStr));
+//        System.out.println(JSON.parse(jsonStr));
     }
 }

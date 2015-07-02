@@ -53,23 +53,35 @@
             <div class="row">
                 <div class="col-md-6 col-sm-6 additional-nav">
                     <ul class="list-unstyled list-inline pull-right" style=" float:left !important;">
-                        <li><a href="login-page.html">注册</a></li>
-                        <li><a href="login-page.html">登录</a></li>
+                        <c:choose>
+                            <c:when test="${empty sessionScope.loginUser}">
+                                <li><a href="login-page.html">注册</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#myModal">登录</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li>欢迎您,<a href="#">${sessionScope.loginUser.name}</a>!</li>
+                            </c:otherwise>
+                        </c:choose>
+
                         <li><a href="checkout.html">结账</a></li>
                         <li><a href="#">我的账户</a></li>
                         <li><a href="#">我的收藏</a></li>
                     </ul>
-                </div><div class="col-md-6 col-sm-6 additional-shop-info">
-                <ul class="list-unstyled list-inline" style=" float:right !important;">
-                    <li><i class="fa fa-phone"></i><span>87654321</span></li>
-                    <li class="langs-block">
-                        <a href="javascript:void(0);" class="current">中文 <i class="fa fa-angle-down"></i></a>
-                        <div class="langs-block-others-wrapper"><div class="langs-block-others">
-                            <a href="javascript:void(0);">英语</a>
-                        </div></div>
-                    </li>
-                </ul>
-            </div>
+                </div>
+                <div class="col-md-6 col-sm-6 additional-shop-info">
+                    <ul class="list-unstyled list-inline" style=" float:right !important;">
+                        <li><i class="fa fa-phone"></i><span>87654321</span></li>
+                        <li class="langs-block">
+                            <a href="javascript:void(0);" class="current">中文 <i class="fa fa-angle-down"></i></a>
+
+                            <div class="langs-block-others-wrapper">
+                                <div class="langs-block-others">
+                                    <a href="javascript:void(0);">英语</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -86,7 +98,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 <!-- END RESPONSIVE MENU TOGGLER -->
-                <a href="index.html" class="navbar-brand"><img src="${path}/statics/assets/img/logo_red.png" alt="大坝生态农业"></a><!-- LOGO -->
+                <a href="index.html" class="navbar-brand"><img src="${path}/statics/assets/img/logo_red.png"
+                                                               alt="大坝生态农业"></a><!-- LOGO -->
             </div>
             <!-- BEGIN CART -->
             <div class="cart-block">
@@ -99,63 +112,72 @@
                     <div class="cart-content">
                         <ul class="scroller" style="height: 250px;">
                             <li>
-                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg"  width="37" height="34"></a>
+                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37"
+                                                         height="34"></a>
                                 <span class="cart-content-count">x 1</span>
                                 <strong><a href="item.html">乡里腊肉</a></strong>
                                 <em>￥123</em>
                                 <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
                             </li>
                             <li>
-                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg"  width="37" height="34"></a>
+                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37"
+                                                         height="34"></a>
                                 <span class="cart-content-count">x 1</span>
                                 <strong><a href="item.html">乡里腊肉</a></strong>
                                 <em>￥123</em>
                                 <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
                             </li>
                             <li>
-                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg"  width="37" height="34"></a>
+                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37"
+                                                         height="34"></a>
                                 <span class="cart-content-count">x 1</span>
                                 <strong><a href="item.html">乡里腊肉</a></strong>
                                 <em>￥123</em>
                                 <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
                             </li>
                             <li>
-                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg"  width="37" height="34"></a>
+                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37"
+                                                         height="34"></a>
                                 <span class="cart-content-count">x 1</span>
                                 <strong><a href="item.html">乡里腊肉</a></strong>
                                 <em>￥123</em>
                                 <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
                             </li>
                             <li>
-                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg"  width="37" height="34"></a>
+                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37"
+                                                         height="34"></a>
                                 <span class="cart-content-count">x 1</span>
                                 <strong><a href="item.html">乡里腊肉</a></strong>
                                 <em>￥123</em>
                                 <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
                             </li>
                             <li>
-                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37" height="34"></a>
+                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37"
+                                                         height="34"></a>
                                 <span class="cart-content-count">x 1</span>
                                 <strong><a href="item.html">乡里腊肉</a></strong>
                                 <em>￥123</em>
                                 <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
                             </li>
                             <li>
-                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg"  width="37" height="34"></a>
+                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37"
+                                                         height="34"></a>
                                 <span class="cart-content-count">x 1</span>
                                 <strong><a href="item.html">乡里腊肉</a></strong>
                                 <em>￥123</em>
                                 <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
                             </li>
                             <li>
-                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg"  width="37" height="34"></a>
+                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37"
+                                                         height="34"></a>
                                 <span class="cart-content-count">x 1</span>
                                 <strong><a href="item.html">乡里腊肉</a></strong>
                                 <em>￥123</em>
                                 <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
                             </li>
                             <li>
-                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg"  width="37" height="34"></a>
+                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37"
+                                                         height="34"></a>
                                 <span class="cart-content-count">x 1</span>
                                 <strong><a href="item.html">双凫铺腊肉</a></strong>
                                 <em>￥123</em>
@@ -175,7 +197,8 @@
             <div class="collapse navbar-collapse mega-menu">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="#" href="#">
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"
+                           data-target="#" href="#">
                             网站地图
                             <i class="fa fa-angle-down"></i>
                         </a>
@@ -243,7 +266,8 @@
                     </li>
                     <li><a href="#">官网首页</a></li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="#" href="#">
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"
+                           data-target="#" href="#">
                             我的大坝
                             <i class="fa fa-angle-down"></i>
                         </a>
@@ -257,7 +281,8 @@
                         <!-- END DROPDOWN MENU -->
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="#" href="#">
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"
+                           data-target="#" href="#">
                             手机大坝
                             <i class="fa fa-angle-down"></i>
                         </a>
@@ -274,7 +299,8 @@
                         <!-- END DROPDOWN MENU -->
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="#" href="#">
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"
+                           data-target="#" href="#">
                             新品上市
                             <i class="fa fa-angle-down"></i>
                         </a>
@@ -284,25 +310,34 @@
                                 <div class="nav-content">
                                     <div class="product-item">
                                         <div class="pi-img-wrapper">
-                                            <a href="item.html"><img src="${path}/statics/assets/temp/products/model4.jpg" class="img-responsive" alt="Berry Lace Dress"></a>
+                                            <a href="item.html"><img
+                                                    src="${path}/statics/assets/temp/products/model4.jpg"
+                                                    class="img-responsive" alt="Berry Lace Dress"></a>
                                         </div>
                                         <h3><a href="item.html">黄材中华鲟</a></h3>
+
                                         <div class="pi-price">￥29.00</div>
                                         <a href="#" class="btn btn-default add2cart">添加到购物车</a>
                                     </div>
                                     <div class="product-item">
                                         <div class="pi-img-wrapper">
-                                            <a href="item.html"><img src="${path}/statics/assets/temp/products/model3.jpg" class="img-responsive" alt="Berry Lace Dress"></a>
+                                            <a href="item.html"><img
+                                                    src="${path}/statics/assets/temp/products/model3.jpg"
+                                                    class="img-responsive" alt="Berry Lace Dress"></a>
                                         </div>
                                         <h3><a href="item.html">乡里腊肉</a></h3>
+
                                         <div class="pi-price">￥52.00</div>
                                         <a href="#" class="btn btn-default add2cart">添加到购物车</a>
                                     </div>
                                     <div class="product-item">
                                         <div class="pi-img-wrapper">
-                                            <a href="item.html"><img src="${path}/statics/assets/temp/products/model7.jpg" class="img-responsive" alt="Berry Lace Dress"></a>
+                                            <a href="item.html"><img
+                                                    src="${path}/statics/assets/temp/products/model7.jpg"
+                                                    class="img-responsive" alt="Berry Lace Dress"></a>
                                         </div>
                                         <h3><a href="item.html">生态干鱼</a></h3>
+
                                         <div class="pi-price">￥36.00</div>
                                         <a href="#" class="btn btn-default add2cart">添加到购物车</a>
                                     </div>
@@ -312,7 +347,8 @@
                         <!-- END DROPDOWN MENU -->
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="#" href="#">
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"
+                           data-target="#" href="#">
                             客服服务
                             <i class="fa fa-angle-down"></i>
                         </a>
@@ -337,6 +373,7 @@
                     <li class="menu-search">
                         <span class="sep"></span>
                         <i class="fa fa-search search-btn"></i>
+
                         <div class="search-box">
                             <form action="#">
                                 <div class="input-group">
@@ -363,6 +400,59 @@
 
 
 <sitemesh:write property='body'/>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 400px;">
+        <form id="loginForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h2 class="modal-title" id="myModalLabel">
+                        登录&nbsp;&nbsp;
+                        <small style=" color:#187705;">支持以下登录方式登录</small>
+                    </h2>
+                    <br/>
+                    <ul class="social-icons">
+                        <li><a href="#" data-original-title="txqq" class="txqq" title="腾讯QQ"></a></li>
+                        <li><a href="#" data-original-title="xlwb" class="xlwb" title="新浪微博"></a></li>
+                        <li><a href="#" data-original-title="rrw" class="rrw" title="人人网"></a></li>
+                        <li><a href="#" data-original-title="wx" class="wx" title="微信"></a></li>
+                        <li><a href="#" data-original-title="zfb" class="zfb" title="支付宝"></a></li>
+                        <li><a href="#" data-original-title="wy" class="wy" title="网易"></a></li>
+                        <li><a href="#" data-original-title="txwb" class="txwb" title="腾讯微博"></a></li>
+                    </ul>
+                </div>
+                <div class="modal-body" style="height: 110px;">
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" id="usename" name="name" placeholder="手机号码或者邮箱地址"><br/>
+                        <input type="password" class="form-control" id="password" name="password"
+                               placeholder="密码应由6-20个字符组成">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-lg-12">
+                        <button type="button" class="btn btn-primary" id="login" style=" width:100%;">
+                            登录
+                        </button>
+                        <ul class="automatically">
+                            <li class="first">
+                                <input type="checkbox" value="true" class="common_chk" checked="checked" name="remember">自动登录
+                            </li>
+                            <li><a href="#">忘记密码</a></li>
+                            <li style=" border-right:0;"><a href="#">免费注册</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </form>
+    </div>
+    <!-- /.modal -->
+</div>
 <footer>
 
     <!-- BEGIN STEPS -->
@@ -371,6 +461,7 @@
             <div class="row">
                 <div class="col-md-4 steps3-col">
                     <i class="fa fa-truck"></i>
+
                     <div>
                         <h2>品质保证</h2>
                         <em>我们只生产生态绿色食品</em>
@@ -379,6 +470,7 @@
                 </div>
                 <div class="col-md-4 steps3-col">
                     <i class="fa fa-gift"></i>
+
                     <div>
                         <h2>商务合作</h2>
                         <em>我们的强大需要您的加入</em>
@@ -387,6 +479,7 @@
                 </div>
                 <div class="col-md-4 steps3-col">
                     <i class="fa fa-phone"></i>
+
                     <div>
                         <h2>87654321</h2>
                         <em>24小时竭诚为您服务热线</em>
@@ -405,8 +498,12 @@
                 <!-- BEGIN BOTTOM ABOUT BLOCK -->
                 <div class="col-md-3 col-sm-6 pre-footer-col">
                     <h2>关于我们</h2>
-                    <p>长沙大坝生态农业科技有限公司组建于2013年，注册资本1000万元，现有固定员工180人。公司致力于现代生态高效农业产业化集群开发，着力打造全民创业、万众创新的平台，着力解决千家万户的"菜篮子"、"米袋子"、"果盘子"所需。</p>
-                    <p>公司拥有"一中心，二平台，三基地"。即特色农产品展示中心；特色农产品研发孵化平台，特色农产品信息交流平台；长沙大坝生态金棋现代农业示范基地，长沙大坝生态黄材水库有机野生鱼类养殖基地，长沙大坝生态干鱼加工基地。</p>
+
+                    <p>
+                        长沙大坝生态农业科技有限公司组建于2013年，注册资本1000万元，现有固定员工180人。公司致力于现代生态高效农业产业化集群开发，着力打造全民创业、万众创新的平台，着力解决千家万户的"菜篮子"、"米袋子"、"果盘子"所需。</p>
+
+                    <p>
+                        公司拥有"一中心，二平台，三基地"。即特色农产品展示中心；特色农产品研发孵化平台，特色农产品信息交流平台；长沙大坝生态金棋现代农业示范基地，长沙大坝生态黄材水库有机野生鱼类养殖基地，长沙大坝生态干鱼加工基地。</p>
                 </div>
                 <!-- END BOTTOM ABOUT BLOCK -->
                 <!-- BEGIN BOTTOM INFO BLOCK -->
@@ -450,10 +547,9 @@
             <hr>
 
 
-
         </div>
     </div>
-    </div>
+
 
     <!-- END PRE-FOOTER -->
 
@@ -469,10 +565,14 @@
                 <!-- BEGIN PAYMENTS -->
                 <div class="col-md-6 col-sm-6">
                     <ul class="list-unstyled list-inline pull-right margin-bottom-15">
-                        <li><img src="${path}/statics/assets/img/payments/american-express.jpg" alt="We accept American Express" title="We accept American Express"></li>
-                        <li><img src="${path}/statics/assets/img/payments/MasterCard.jpg" alt="We accept MasterCard" title="We accept MasterCard"></li>
-                        <li><img src="${path}/statics/assets/img/payments/PayPal.jpg" alt="We accept PayPal" title="We accept PayPal"></li>
-                        <li><img src="${path}/statics/assets/img/payments/visa.jpg" alt="We accept Visa" title="We accept Visa"></li>
+                        <li><img src="${path}/statics/assets/img/payments/american-express.jpg"
+                                 alt="We accept American Express" title="We accept American Express"></li>
+                        <li><img src="${path}/statics/assets/img/payments/MasterCard.jpg" alt="We accept MasterCard"
+                                 title="We accept MasterCard"></li>
+                        <li><img src="${path}/statics/assets/img/payments/PayPal.jpg" alt="We accept PayPal"
+                                 title="We accept PayPal"></li>
+                        <li><img src="${path}/statics/assets/img/payments/visa.jpg" alt="We accept Visa"
+                                 title="We accept Visa"></li>
                     </ul>
                 </div>
                 <!-- END PAYMENTS -->
@@ -482,5 +582,35 @@
     <!-- END FOOTER -->
 
 </footer>
+
 </body>
+<script>
+    $(document).ready(function () {
+        $("#login").click(function () {
+            $.ajax({
+                url: "${path}/index/user/login",
+                contentType: "application/json",
+//                data: JSON.stringify({"name": "John", "sex": "男"}),
+                 data : JSON.stringify($('#loginForm').serializeObject(["remember"])),
+                method: "post",
+                success: function (data) {
+                    alert("login done");
+                }
+            })
+        })
+
+    });
+    $.fn.serializeObject = function(excludeFields)
+    {
+        if(excludeFields!=undefined && !Array.isArray(excludeFields)) return false;
+        var d = {};
+        var t = $(this).serializeArray();
+        $.each(t, function() {
+            if($.inArray(this.name,excludeFields)<0){
+                d[this.name] = this.value;
+            }
+        });
+        return d;
+    };
+</script>
 </html>

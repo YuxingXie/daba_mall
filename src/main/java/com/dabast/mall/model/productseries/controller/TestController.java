@@ -35,13 +35,13 @@ public class TestController extends BaseRestSpringController {
     }
     @RequestMapping(value = "/user/post",method = RequestMethod.POST)
     public ResponseEntity<User> post(@RequestBody User user,ModelMap model) {
-        System.out.println("post");
+        //System.out.println("post");
         user.setId(new ObjectId());
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
     @RequestMapping(value = "/user/login",method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody User user,ModelMap model) {
-        System.out.println("login------");
+        ////System.out.println("login------");
         if (user.getName()==null) return null;
         if (user.getName().contains("a"))
         return new ResponseEntity("{token:'abc123456789'}",HttpStatus.OK);
@@ -69,7 +69,7 @@ public class TestController extends BaseRestSpringController {
     }
     @RequestMapping(value = "/user/test1")
     public ResponseEntity<User> test1(ModelMap model) {
-        System.out.println("test1");
+        //System.out.println("test1");
         User user=new User();
         user.setName("Robinson");
         user.setSex("m");
@@ -78,7 +78,7 @@ public class TestController extends BaseRestSpringController {
     }
     @RequestMapping(value = "/user/test2")
     public ResponseEntity<User> test2(ModelMap model) {
-        System.out.println("test2");
+        //System.out.println("test2");
         User user=new User();
         user.setName("Michale Jordan");
         user.setSex("m");
@@ -87,7 +87,7 @@ public class TestController extends BaseRestSpringController {
     }
     @RequestMapping(value = "/user/test3")
       public ResponseEntity<User> test3(ModelMap model) {
-        System.out.println("test3");
+        //System.out.println("test3");
         User user=new User();
         user.setName("Alison Fisher");
         user.setSex("f");
@@ -96,6 +96,6 @@ public class TestController extends BaseRestSpringController {
     }
     public static void main(String[] args){
         String jsonStr="[{id:100,name:'Johnson'},{id:101,name:'Jackson'}]";
-        System.out.println(JSON.parse(jsonStr));
+        //System.out.println(JSON.parse(jsonStr));
     }
 }

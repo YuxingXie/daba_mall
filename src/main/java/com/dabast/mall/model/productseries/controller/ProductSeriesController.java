@@ -66,14 +66,13 @@ public class ProductSeriesController extends BaseRestSpringController {
     @RequestMapping(value="/popover/{id}")
     public ResponseEntity<ProductSeries> popover(ModelMap model,@PathVariable java.lang.String id) {
 //        ProductSeries productSeries = ServiceManager.productSeriesService.findById(new ObjectId(id));
-        System.out.println("popover...");
         ProductSeries productSeries2=new ProductSeries();
         productSeries2.setId(id);
         productSeries2.setBrand("大坝");
         productSeries2.setEvaluateCount(101);
         productSeries2.setCommonPrice(100.36);
         productSeries2.setName("豆腐乳");
-        productSeries2.setPicture("statics/assets/temp/products/model2.jpg");
+        productSeries2.setPictures(new String[]{"statics/assets/temp/products/model2.jpg","statics/assets/temp/products/model3.jpg","statics/assets/temp/products/model4.jpg"});
         productSeries2.setDescription("豆腐乳真的很好吃哦！");
         productSeries2.setShelvesDate(new Date());
         Set<ProductProperty> productPropertySet=new HashSet<ProductProperty>();
@@ -124,7 +123,7 @@ public class ProductSeriesController extends BaseRestSpringController {
         try {
 
             String picture=productSeriesService.saveFile(file.getOriginalFilename(),file.getBytes());
-            productSeries.setPicture(picture);
+            productSeries.setPictures(new String[]{picture});
             productSeriesService.insert(productSeries);
         } catch (IOException e) {
             e.printStackTrace();
@@ -133,80 +132,6 @@ public class ProductSeriesController extends BaseRestSpringController {
     }
 
 
-//    @RequestMapping(value="/{id}",method=RequestMethod.PUT)
-//    public String update(ModelMap model,@PathVariable java.lang.Integer id,@Valid ProductSeries productSeries,BindingResult errors,HttpServletRequest request,HttpServletResponse response)  {
-//        productSeriesValidator.validate(productSeries, errors);
-//        if(errors.hasErrors()) {
-//            this.setFailure(model);
-//            model.addAttribute("errors", errors.getModel());
-//            List<RmSortInfo> rmSortInfos=ServiceManager.rmSortInfoService.findAll();
-//            model.put("rmSortInfos", rmSortInfos);
-//            return "baseInfo/rm_baseInfo_update_input";
-//        }
-//        productSeriesService.update(productSeries);
-//        setSuccess(model);
-//        return REDIRECT_ACTION;
-//    }
-
-
-//    @RequestMapping(value="/{id}",method=RequestMethod.DELETE)
-//    public String delete(ModelMap model,@PathVariable java.lang.Integer id) {
-//        productSeriesService.removeById(id);
-//        setSuccess(model);
-//        return REDIRECT_ACTION;
-//    }
-
-//    @RequestMapping(method=RequestMethod.DELETE)
-//    public String batchDelete(ModelMap model,@RequestParam("items") java.lang.Integer[] items) {
-//        for(int i = 0; i < items.length; i++) {
-//            productSeriesService.removeById(items[i]);
-//        }
-//        setSuccess(model);
-//        return REDIRECT_ACTION;
-//    }
-////    @RequestMapping(value="/list.do",method={RequestMethod.POST,RequestMethod.GET})
-////    public String list(ModelMap model,Integer page) {
-////        page=page==null?0:page;
-////        Page<ProductSeries> pages=productSeriesService.findPageCaseCade(new ProductSeries(), page, 20);
-////        model.put("page", pages);
-////
-////        return "baseInfo/rm_baseInfo_list";
-////    }
-//    @RequestMapping(value="/search.do",method={RequestMethod.POST,RequestMethod.GET})
-//    public String search(ModelMap model,ProductSeries productSeries,Integer page) {
-//        page=page==null?0:page;
-//        Page<ProductSeries> pages=productSeriesService.findPageCaseCade(productSeries, page, 20);
-//        model.put("page", pages);
-//        return "baseInfo/rm_baseInfo_list";
-//    }
-//    @RequestMapping(value="/create_input.do",method={RequestMethod.GET,RequestMethod.POST})
-//    public String createInput(ModelMap model){
-//        List<RmSortInfo> rmSortInfos=ServiceManager.rmSortInfoService.findAll();
-//        model.put("rmSortInfos", rmSortInfos);
-//        return "baseInfo/rm_baseInfo_create_input";
-//    }
-//
-//    @RequestMapping(value="/from_plan.do",method={RequestMethod.POST})
-//    public void getProductSeriesFromPurchasePlan(ModelMap model,Integer purchasePlanId,HttpServletRequest request,HttpServletResponse response){
-//
-//
-//        List<ProductSeries> list=productSeriesService.getProductSeriesFromPurchasePlan(purchasePlanId);
-//
-//        JSONArray jsonArray=new JSONArray();
-//        for(ProductSeries productSeries:list){
-//            JSONObject jsonObject=new JSONObject();
-//            jsonObject.put("rmId", productSeries.getRmId());
-//            jsonObject.put("rmName", productSeries.getRmName());
-//            jsonArray.add(jsonObject);
-//        }
-//        try {
-//            response.setContentType("text/html");
-//            response.setCharacterEncoding("utf-8");
-//            response.getWriter().write(URLDecoder.decode(jsonArray.toString()+"","utf8"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
     @RequestMapping("/create_input.do")
     public String createInput(ModelMap model){
         return "admin/product_series/create_input";

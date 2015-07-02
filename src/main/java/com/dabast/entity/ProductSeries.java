@@ -21,7 +21,7 @@ public class ProductSeries {
     @Field(value = "name")
     private String name;
     @Field(value = "picture")
-    private String picture;
+    private String[] pictures;
     private Double commonPrice;
     private Integer evaluateCount;
     private String description;
@@ -70,12 +70,12 @@ public class ProductSeries {
         this.name = name;
     }
 
-    public String getPicture() {
-        return picture;
+    public String[] getPictures() {
+        return pictures;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setPictures(String[] pictures) {
+        this.pictures = pictures;
     }
 
     public Double getCommonPrice() {

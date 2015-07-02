@@ -22,11 +22,19 @@ public class User
     private String sex;
     @Field(value = "height")
     private Integer height;
-
+    private String password;
     @DBRef private Set<Address> address;
 
     public Set<Address> getAddress() {
         return address;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setAddress(Set<Address> address) {

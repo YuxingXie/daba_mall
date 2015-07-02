@@ -88,10 +88,10 @@
                             <li>
                                 <div class="product-item">
                                     <div class="pi-img-wrapper">
-                                        <img src="${path}/${prod.picture}" class="img-responsive" alt="Berry Lace Dress">
+                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" alt="Berry Lace Dress">
                                         <div>
-                                            <a href="${path}/${prod.picture}" class="btn btn-default fancybox-button">大图</a>
-                                            <a href="#product-pop-up" data-url="${path}/product_series/popover/${prod.id}" class="btn btn-default fancybox-fast-view" data-pic="${path}/${prod.picture}">详情</a>
+                                            <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
+                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
                                         </div>
                                     </div>
                                     <h3><a href="item.html">${prod.name}</a></h3>
@@ -119,10 +119,11 @@
                             <li>
                                 <div class="product-item">
                                     <div class="pi-img-wrapper">
-                                        <img src="${path}/${prod.picture}" class="img-responsive" alt="Berry Lace Dress">
+                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" alt="Berry Lace Dress">
                                         <div>
-                                            <a href="${path}/${prod.picture}" class="btn btn-default fancybox-button">大图</a>
-                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">详情</a>
+                                            <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
+                                            <%--<a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>--%>
+                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
                                         </div>
                                     </div>
                                     <h3><a href="item.html">${prod.name}</a></h3>
@@ -153,10 +154,10 @@
                             <li>
                                 <div class="product-item">
                                     <div class="pi-img-wrapper">
-                                        <img src="${path}/${prod.picture}" class="img-responsive" alt="Berry Lace Dress">
+                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" alt="Berry Lace Dress">
                                         <div>
-                                            <a href="${path}/${prod.picture}" class="btn btn-default fancybox-button">大图</a>
-                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">详情</a>
+                                            <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
+                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
                                         </div>
                                     </div>
                                     <h3><a href="item.html">${prod.name}</a></h3>
@@ -185,10 +186,10 @@
                             <li>
                                 <div class="product-item">
                                     <div class="pi-img-wrapper">
-                                        <img src="${path}/${prod.picture}" class="img-responsive" alt="Berry Lace Dress">
+                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" alt="Berry Lace Dress">
                                         <div>
-                                            <a href="${path}/${prod.picture}" class="btn btn-default fancybox-button">大图</a>
-                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">详情</a>
+                                            <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
+                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
                                         </div>
                                     </div>
                                     <h3><a href="item.html">${prod.name}</a></h3>
@@ -217,10 +218,10 @@
                             <li>
                                 <div class="product-item">
                                     <div class="pi-img-wrapper">
-                                        <img src="${path}/${prod.picture}" class="img-responsive" alt="Berry Lace Dress">
+                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" alt="Berry Lace Dress">
                                         <div>
-                                            <a href="${path}/${prod.picture}" class="btn btn-default fancybox-button">大图</a>
-                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">详情</a>
+                                            <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
+                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
                                         </div>
                                     </div>
                                     <h3><a href="item.html">${prod.name}</a></h3>
@@ -248,10 +249,10 @@
                             <li>
                                 <div class="product-item">
                                     <div class="pi-img-wrapper">
-                                        <img src="${path}/${prod.picture}" class="img-responsive" alt="Berry Lace Dress">
+                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" alt="Berry Lace Dress">
                                         <div>
-                                            <a href="${path}/${prod.picture}" class="btn btn-default fancybox-button">大图</a>
-                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">详情</a>
+                                            <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
+                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
                                         </div>
                                     </div>
                                     <h3><a href="item.html">${prod.name}</a></h3>
@@ -282,16 +283,12 @@
                     <img src="#"class="img-responsive">
                 </div>
                 <div class="product-other-images">
-                    <a href="#" class="active"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model3.jpg"></a>
-                    <a href="#"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model4.jpg"></a>
-                    <a href="#"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model5.jpg"></a>
                 </div>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-9">
                 <h1 style=" text-align:center;"></h1>
                 <div class="price-availability-block clearfix">
                     <div class="price">
-
                     </div>
                     <div class="availability">
                         状态: <strong>货源充足</strong>
@@ -301,31 +298,10 @@
                     <p></p>
                 </div>
                 <div class="product-page-options">
-                    <%--<div class="pull-left">--%>
-                        <%--<label class="control-label" style=" direction:ltr;">产地&nbsp;:&nbsp;</label>--%>
-                        <%--<select class="form-control input-sm">--%>
-                            <%--<option>黄材</option>--%>
-                            <%--<option>横市</option>--%>
-                            <%--<option>双凫铺</option>--%>
-                            <%--<option>大成桥</option>--%>
-                            <%--<option>回龙铺</option>--%>
-                            <%--<option>宁乡</option>--%>
-                        <%--</select>--%>
-
-                    <%--</div>--%>
-                    <%--<div class="pull-left">--%>
-                        <%--<label class="control-label" style=" direction:ltr;">种类&nbsp;:&nbsp;</label>--%>
-                        <%--<select class="form-control input-sm">--%>
-                            <%--<option>三文鱼腊鱼</option>--%>
-                            <%--<option>福寿鱼腊鱼</option>--%>
-                            <%--<option>草鱼腊鱼</option>--%>
-                        <%--</select>--%>
-
-                    <%--</div>--%>
                 </div>
                 <div class="product-page-cart">
                     <div class="product-quantity">
-                        <input type="number" value="1"  class="input-sm" style="max-width: 80px;">
+                        <input type="text" value="1" readonly name="product-quantity" class="form-control input-sm">
                     </div>
                     <button class="btn btn-primary add2cart" type="submit">添加到购物车</button>
                     <button class="btn btn-default" type="submit">更多商品</button>
@@ -368,21 +344,15 @@
 <script type="text/javascript">
 
     jQuery(document).ready(function(){
-        console.log("init app...");
-        App.init();
-        App.initBxSlider();
-        Index.initLayerSlider();
-        App.initImageZoom();
-        App.initTouchspin();
         $(".fancybox-fast-view").click(function(){
             $.ajax($(this).data("url")).done(function(data){
-                $("#product-pop-up .product-main-image>img").attr("src","${path}/"+data.picture);
+                $("#product-pop-up .product-main-image>img").attr("src","${path}/"+data.pictures[0]);
                 $("#product-pop-up h1").text(data.name);
                 $("#product-pop-up .price").html("<strong><span>￥</span>"+data.commonPrice+"</strong><em>￥<span>62.00</span></em>");
                 $("#product-pop-up .description>p").html(data.description);
                 $("#product-pop-up  .add2cart").unbind("click");
                 var json =data.productProperties;
-                console.log("执行了ajax请求，属性数量是"+json.length);
+//                console.log("执行了ajax请求，属性数量是"+json.length);
                 var product_page_options=$("#product-pop-up .product-page-options");
                 product_page_options.empty();
                 for(var i=0;i<json.length;i++){
@@ -399,11 +369,46 @@
                         option.appendTo(select);
                     }
                 }
+                var pictures=data.pictures;
+                var $images=$("#product-pop-up  .product-other-images");
+                $images.empty();
+                for(var i=0;i<pictures.length;i++){
+//                    alert("第"+i+"个图："+pictures[i]);
+                    var $img;
+                    if(i==0)
+                     $img =$('<a href="#" class="active"><img src="${path}/'+pictures[i]+'"/></a>');
+                    else
+                     $img =$('<a href="#"><img src="${path}/'+pictures[i]+'"/></a>');
+                    $img.appendTo($images);
+                }
+
                 $("#product-pop-up  .add2cart").click(function(){
 //                    console.log("id:"+data.id);
                 });
-            }).fail(function(){ console("出错啦！"); });
+//                App.init();
+//                App.initBxSlider();
+//                Index.initLayerSlider();
+                App.initImageZoom();
+//                App.initTouchspin();
+            }).fail(function(){ console("something wrong!"); });
         });
+        App.init();
+        App.initBxSlider();
+        Index.initLayerSlider();
+//        App.initImageZoom();
+        App.initTouchspin();
+        /* center modal */
+        function centerModals(){
+            $('.modal').each(function(i){
+//                console.log("centerModals....")
+                var $clone = $(this).clone().css('display', 'block').appendTo('body');    var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2);
+                top = top > 0 ? top : 0;
+                $clone.remove();
+                $(this).find('.modal-content').css("margin-top", top);
+            });
+        }
+        $('.modal').on('show.bs.modal', centerModals);
+        $(window).on('resize', centerModals);
     });
 </script>
 </html>

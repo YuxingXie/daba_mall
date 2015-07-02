@@ -67,12 +67,12 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     }
     @Override
     public void insert(E e) {
-        System.out.println("invoke insert method......");
+//        System.out.println("invoke insert method......");
         mongoTemplate.insert(e);
     }
 
     public List<E> findEquals(E e) {
-        System.out.println("invoke find method......");
+//        System.out.println("invoke find method......");
         Query query = getEqualsQuery(e);
         if (query == null) return findAll();
 
@@ -101,7 +101,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         }
         if (criteria == null) return null;
         query = Query.query(criteria);
-        System.out.println(query);
+//        System.out.println(query);
         return query;
     }
 
@@ -116,11 +116,11 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         }
 //        System.out.println(cur.count());
 //        System.out.println(cur.getCursorId());
-        System.out.println(basicDBList.size());
+//        System.out.println(basicDBList.size());
        for (Object object:basicDBList){
-           System.out.println(object);
+//           System.out.println(object);
        }
-        System.out.println(JSON.serialize(cur));
+//        System.out.println(JSON.serialize(cur));
         return mongoTemplate.findAll(collectionClass);
     }
 
@@ -144,7 +144,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     public List<E> findNotEquals(E e) {
         if (e == null) return findAll();
         Query query = getNotEqualsQuery(e);
-        System.out.println(query);
+//        System.out.println(query);
         CommandResult commandResult=mongoTemplate.executeCommand("");
         commandResult.toString();
         return mongoTemplate.find(query, collectionClass);
@@ -172,7 +172,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         }
         if (criteria == null) return null;
         query = Query.query(criteria);
-        System.out.println(query);
+//        System.out.println(query);
         return query;
 
     }
@@ -180,7 +180,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     public List<E> findKeyIn(String key, Collection collection) {
         Criteria criteria = Criteria.where(key).in(collection);
         Query query = Query.query(criteria);
-        System.out.println(query);
+//        System.out.println(query);
         return mongoTemplate.find(query, collectionClass);
     }
 
@@ -188,7 +188,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     public List<E> findKeyNotIn(String key, Collection collection) {
         Criteria criteria = Criteria.where(key).nin(collection);
         Query query = Query.query(criteria);
-        System.out.println(query);
+//        System.out.println(query);
 
         return mongoTemplate.find(query, collectionClass);
     }
@@ -197,14 +197,14 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     public List<E> findKeyIsNull(String key) {
         Criteria criteria = Criteria.where(key).is(null);
         Query query = Query.query(criteria);
-        System.out.println(query);
+//        System.out.println(query);
         return mongoTemplate.find(query, collectionClass);
     }
 
     public List<E> findByRegex(String key, String regex) {
         Criteria criteria = Criteria.where(key).regex(regex);
         Query query = Query.query(criteria);
-        System.out.println(query);
+//        System.out.println(query);
         return mongoTemplate.find(query, collectionClass);
     }
 
@@ -212,7 +212,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     public List<E> findInArray(String key, Object[] values) {
         Criteria criteria = Criteria.where(key).all(values);
         Query query = Query.query(criteria);
-        System.out.println(query);
+//        System.out.println(query);
         return mongoTemplate.find(query, collectionClass);
     }
 
@@ -221,7 +221,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 //        Criteria criteria=Criteria.where("address.country").is("China").and("address.provence").is("Hunan");
         Criteria criteria = Criteria.where("address").elemMatch(Criteria.where("country").is("China").and("provence").is("Hunan"));
         Query query = Query.query(criteria);
-        System.out.println(query);
+//        System.out.println(query);
         //why result is empty???
         return mongoTemplate.find(query, collectionClass);
     }
@@ -233,7 +233,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         int pageSize = 2;
         Pageable pageable = new PageRequest(pageIndex, pageSize);
         query = query.limit(pageSize).skip((pageIndex - 1) * pageSize);
-        System.out.println(query);
+//        System.out.println(query);
         List<E> list = mongoTemplate.find(query, collectionClass);
         Page<E> page = new PageImpl<E>(list, pageable, count);
         return page;
@@ -265,7 +265,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 
         DBCursor cursor= collection.find(dbObject);
         while (cursor.hasNext()){
-            System.out.println(cursor.next());
+//            System.out.println(cursor.next());
         }
     return null;
     }

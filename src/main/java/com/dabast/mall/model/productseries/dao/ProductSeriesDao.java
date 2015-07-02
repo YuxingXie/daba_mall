@@ -35,7 +35,7 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         productSeries1.setEvaluateCount(888);
         productSeries1.setCommonPrice(100.36);
         productSeries1.setName("帝王蟹");
-        productSeries1.setPicture("statics/assets/temp/products/model1.jpg");
+        productSeries1.setPictures(new String[]{"statics/assets/temp/products/model1.jpg","statics/assets/temp/products/model2.jpg"});
         String[] pattern = new String[]{"yyyy-MM","yyyyMM","yyyy/MM",
                 "yyyyMMdd","yyyy-MM-dd","yyyy/MM/dd",
                 "yyyyMMddHHmmss",
@@ -53,7 +53,7 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         productSeries2.setEvaluateCount(101);
         productSeries2.setCommonPrice(100.36);
         productSeries2.setName("豆腐乳");
-        productSeries2.setPicture("statics/assets/temp/products/model2.jpg");
+        productSeries2.setPictures(new String[]{"statics/assets/temp/products/model2.jpg"});
         productSeries2.setShelvesDate(new Date());
 
         ProductSeries productSeries3=new ProductSeries();
@@ -62,7 +62,7 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         productSeries3.setEvaluateCount(1081);
         productSeries3.setCommonPrice(100.36);
         productSeries3.setName("酱板鸭");
-        productSeries3.setPicture("statics/assets/temp/products/model6.jpg");
+        productSeries3.setPictures(new String[]{"statics/assets/temp/products/model6.jpg"});
         productSeries3.setShelvesDate(new Date());
 
         ProductSeries productSeries4=new ProductSeries();
@@ -71,7 +71,7 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         productSeries4.setEvaluateCount(11);
         productSeries4.setCommonPrice(100.36);
         productSeries4.setName("黄材中华鲟");
-        productSeries4.setPicture("statics/assets/temp/products/model4.jpg");
+        productSeries4.setPictures(new String[]{"statics/assets/temp/products/model4.jpg"});
         productSeries4.setShelvesDate(new Date());
 
         ProductSeries productSeries5=new ProductSeries();
@@ -80,7 +80,7 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         productSeries5.setEvaluateCount(1001);
         productSeries5.setCommonPrice(100.36);
         productSeries5.setName("大龙虾");
-        productSeries5.setPicture("statics/assets/temp/products/model5.jpg");
+        productSeries5.setPictures(new String[]{"statics/assets/temp/products/model5.jpg"});
         productSeries5.setShelvesDate(new Date());
 
         ProductSeries productSeries6=new ProductSeries();
@@ -89,7 +89,7 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         productSeries6.setEvaluateCount(999);
         productSeries6.setCommonPrice(100.36);
         productSeries6.setName("乡里腊肉");
-        productSeries6.setPicture("statics/assets/temp/products/model3.jpg");
+        productSeries6.setPictures(new String[]{"statics/assets/temp/products/model3.jpg"});
         productSeries6.setShelvesDate(new Date());
 
         ProductSeries productSeries7=new ProductSeries();
@@ -98,7 +98,7 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         productSeries7.setEvaluateCount(10050);
         productSeries7.setCommonPrice(100.36);
         productSeries7.setName("生态干鱼");
-        productSeries7.setPicture("statics/assets/temp/products/model7.jpg");
+        productSeries7.setPictures(new String[]{"statics/assets/temp/products/model7.jpg"});
         productSeries7.setShelvesDate(new Date());
 
         productSeriesList.add(productSeries1);
