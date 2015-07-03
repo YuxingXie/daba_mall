@@ -1,14 +1,22 @@
 package com.dabast.entity;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 /**
  * Created by Administrator on 2015/6/4.
  */
+@Document(collection = "productProperty")
 public class ProductProperty {
+    @Id
     private String id;
+    @Field(value = "propertyName")
     private String propertyName;
-    private ProductSeries productSeries;
-    private Object[] propertyValues;
+    @Field(value = "productSeries")
+    private ProductSeries productSeriesId;
 
+    private PropertyValues propertyValues;
     public String getId() {
         return id;
     }
@@ -25,20 +33,19 @@ public class ProductProperty {
         this.propertyName = propertyName;
     }
 
-    public Object[] getPropertyValues() {
+    public PropertyValues getPropertyValues() {
         return propertyValues;
     }
 
-    public void setPropertyValues(Object[] propertyValues) {
+    public void setPropertyValues(PropertyValues propertyValues) {
         this.propertyValues = propertyValues;
     }
 
-    public ProductSeries getProductSeries() {
-        return productSeries;
+    public ProductSeries getProductSeriesId() {
+        return productSeriesId;
     }
 
-    public void setProductSeries(ProductSeries productSeries) {
-        this.productSeries = productSeries;
+    public void setProductSeriesId(ProductSeries productSeriesId) {
+        this.productSeriesId = productSeriesId;
     }
-
 }

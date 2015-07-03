@@ -17,13 +17,16 @@ import java.util.Set;
  */
 @Document(collection = "productSeries")
 public class ProductSeries {
+    @Id
+    private String id;
     @Length(min=2,max=100)
     @Field(value = "name")
     private String name;
-    @Field(value = "picture")
+    @Field(value = "pictures")
     private String[] pictures;
+    @Field(value = "commonPrice")
     private Double commonPrice;
-    private Integer evaluateCount;
+    @Field(value = "description")
     private String description;
     @Past
     @NotNull
@@ -31,12 +34,12 @@ public class ProductSeries {
     private Date shelvesDate;
     @Field(value = "brand")
     private String brand;
-    @Id
-    private String id;
-    @DBRef
-    private Set<ProductProperty> productProperties;
-    private boolean newProduct;
 
+
+
+    private List<ProductProperty> productProperties;
+    private boolean newProduct;
+    private Integer evaluateCount;
     public boolean isNewProduct() {
         Date now =new Date();
         if (shelvesDate==null) return false;
@@ -46,11 +49,11 @@ public class ProductSeries {
         return false;
     }
 
-    public Set<ProductProperty> getProductProperties() {
+    public List<ProductProperty> getProductProperties() {
         return productProperties;
     }
 
-    public void setProductProperties(Set<ProductProperty> productProperties) {
+    public void setProductProperties(List<ProductProperty> productProperties) {
         this.productProperties = productProperties;
     }
 

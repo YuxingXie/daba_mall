@@ -351,19 +351,20 @@
                 $("#product-pop-up .price").html("<strong><span>￥</span>"+data.commonPrice+"</strong><em>￥<span>62.00</span></em>");
                 $("#product-pop-up .description>p").html(data.description);
                 $("#product-pop-up  .add2cart").unbind("click");
-                var json =data.productProperties;
 //                console.log("执行了ajax请求，属性数量是"+json.length);
                 var product_page_options=$("#product-pop-up .product-page-options");
                 product_page_options.empty();
+                var json =data.productProperties;
                 for(var i=0;i<json.length;i++){
                     var pull_left=$('<div class="pull-left"></div>');
 
                     pull_left.appendTo(product_page_options);
-                    var control_label=$('<label class="control-label" style=" direction:ltr;">'+json[i]["propertyName"]+'&nbsp;:&nbsp;</label>');
+                    var productProperty=json[i];
+                    var control_label=$('<label class="control-label" style=" direction:ltr;">'+productProperty["propertyName"]+'&nbsp;:&nbsp;</label>');
                     control_label.appendTo(pull_left);
-                    var select=$('<select class="form-control input-sm" name='+json[i]["id"]+'>');
+                    var select=$('<select class="form-control input-sm" name='+productProperty["id"]+'>');
                     select.appendTo(pull_left);
-                    var propertyValues= json[i]["propertyValues"];
+                    var propertyValues= productProperty["propertyValues"]["values"];
                     for(var j=0;j<propertyValues.length;j++){
                         var option=$("<option>"+propertyValues[j]+"</option>");
                         option.appendTo(select);

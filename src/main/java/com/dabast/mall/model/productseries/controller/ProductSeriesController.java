@@ -5,6 +5,7 @@ import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.ProductProperty;
 import com.dabast.entity.ProductSeries;
+import com.dabast.entity.PropertyValues;
 import com.dabast.mall.model.productseries.service.IProductSeriesService;
 import com.mongodb.gridfs.GridFSDBFile;
 import org.bson.types.ObjectId;
@@ -26,9 +27,7 @@ import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Administrator on 2015/6/11.
@@ -73,22 +72,22 @@ public class ProductSeriesController extends BaseRestSpringController {
         productSeries2.setCommonPrice(100.36);
         productSeries2.setName("豆腐乳");
         productSeries2.setPictures(new String[]{"statics/assets/temp/products/model2.jpg","statics/assets/temp/products/model3.jpg","statics/assets/temp/products/model4.jpg"});
-        productSeries2.setDescription("豆腐乳真的很好吃哦！");
+        productSeries2.setDescription("豆腐乳真的很好吃哦~~~");
         productSeries2.setShelvesDate(new Date());
-        Set<ProductProperty> productPropertySet=new HashSet<ProductProperty>();
+        List<ProductProperty> productProperties=new ArrayList<ProductProperty>();
         ProductProperty property1=new ProductProperty();
         property1.setId("prop-00001");
         property1.setPropertyName("包装");
-        property1.setPropertyValues(new String[]{"袋装","散装"});
-        productPropertySet.add(property1);
+        property1.setPropertyValues(new PropertyValues(null, new String[]{"袋装", "散装", "精装"}));
+        productProperties.add(property1);
 
         ProductProperty property2=new ProductProperty();
         property2.setId("prop-00002");
         property2.setPropertyName("辣度");
-        property2.setPropertyValues(new String[]{"微辣","中辣","辣","麻辣"});
-        productPropertySet.add(property2);
+        property2.setPropertyValues(new PropertyValues(null,new String[]{"微辣","中辣","辣","麻辣"}));
+        productProperties.add(property2);
 
-        productSeries2.setProductProperties(productPropertySet);
+        productSeries2.setProductProperties(productProperties);
         ResponseEntity<ProductSeries> rt=new ResponseEntity<ProductSeries>(productSeries2, HttpStatus.OK);
         return rt;
     }
