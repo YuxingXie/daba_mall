@@ -60,6 +60,7 @@
                             </c:when>
                             <c:otherwise>
                                 <li>欢迎您,<a href="#">${sessionScope.loginUser.name}</a>!</li>
+                                </li><li><a href="#" id="logout">退出</a></li>
                             </c:otherwise>
                         </c:choose>
 
@@ -440,7 +441,8 @@
                         </button>
                         <ul class="automatically">
                             <li class="first">
-                                <input type="checkbox" value="true" class="common_chk" checked="checked" name="remember">自动登录
+                                <input type="checkbox" value="true" class="common_chk" checked="checked"
+                                       name="remember">自动登录
                             </li>
                             <li><a href="#">忘记密码</a></li>
                             <li style=" border-right:0;"><a href="#">免费注册</a></li>
@@ -586,27 +588,41 @@
 </body>
 <script>
     $(document).ready(function () {
-        $("#login").click(function () {
+
+        $(document).on("click", "#login", function () {
             $.ajax({
                 url: "${path}/index/user/login",
                 contentType: "application/json",
-//                data: JSON.stringify({"name": "John", "sex": "男"}),
-                 data : JSON.stringify($('#loginForm').serializeObject(["remember"])),
+                data: JSON.stringify($('#loginForm').serializeObject(["remember"])),
                 method: "post",
                 success: function (data) {
-                    alert("login done");
+                    $(".additional-nav>ul>li:eq(0)").remove();
+                    $(".additional-nav>ul>li:eq(0)").remove();
+                    var $new_li = $('<li>欢迎您,<a href="#">' + data.name + '</a>! </li><li><a href="#" id="logout">退出</a></li>');
+                    $new_li.insertBefore($(".additional-nav>ul>li:eq(0)"));
+                    $('#myModal').modal('hide');
                 }
             })
         })
+        $(document).on("click", "#logout", function () {
+            $.ajax("${path}/index/user/logout")
+                    .done(
+                    function () {
+                        $(".additional-nav>ul>li:eq(0)").remove();
+                        $(".additional-nav>ul>li:eq(0)").remove();
+                        var $new_li = $('<li><a href="login-page.html">注册</a></li><li><a href="#" data-toggle="modal" data-target="#myModal">登录</a></li>');
+                        $new_li.insertBefore($(".additional-nav>ul>li:eq(0)"));
+                    }
+            ).fail()
+        });
 
     });
-    $.fn.serializeObject = function(excludeFields)
-    {
-        if(excludeFields!=undefined && !Array.isArray(excludeFields)) return false;
+    $.fn.serializeObject = function (excludeFields) {
+        if (excludeFields != undefined && !Array.isArray(excludeFields)) return false;
         var d = {};
         var t = $(this).serializeArray();
-        $.each(t, function() {
-            if($.inArray(this.name,excludeFields)<0){
+        $.each(t, function () {
+            if ($.inArray(this.name, excludeFields) < 0) {
                 d[this.name] = this.value;
             }
         });

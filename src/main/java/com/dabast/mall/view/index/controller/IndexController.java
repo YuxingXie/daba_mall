@@ -59,10 +59,16 @@ public class IndexController extends BaseRestSpringController {
     @RequestMapping(value = "/user/login",method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody User user,ModelMap model) {
         model.addAttribute("loginUser",user);
-        return new ResponseEntity("{token:'abc123456789'}",HttpStatus.OK);
+        return new ResponseEntity<User>(user,HttpStatus.OK);
 
     }
+    @RequestMapping(value = "/user/logout")
+    public ResponseEntity logout(ModelMap model) {
+        model.addAttribute("loginUser",null);
+        model.remove("loginUser");
+        return new ResponseEntity("{}",HttpStatus.OK);
 
+    }
     @RequestMapping(value = "/users")
     public ResponseEntity<List<User>> all(ModelMap model,String role) {
         List<User> users=new ArrayList<User>();

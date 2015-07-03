@@ -30,7 +30,7 @@
                 <strong><span>￥</span>${top3[0][6]}</strong>
             </div>
 
-            <a href="${path}/product/${top3[0][0]}" class="ls-s-1 ls-more mini-text" style=" top: 72%; left: 21%; slidedirection : fade; slideoutdirection : fade; durationin : 750; durationout : 750; easingin : easeOutQuint; easingout : easeInOutQuint; delayin : 0; delayout : 0; rotatein : 90; rotateout : -90; scalein : .5; scaleout : .5; showuntil : 4000; display: inline-block; white-space: nowrap;">
+            <a href="#" data-href="${path}/product/${top3[0][0]}" class="ls-s-1 ls-more mini-text add2cart" style=" top: 72%; left: 21%; slidedirection : fade; slideoutdirection : fade; durationin : 750; durationout : 750; easingin : easeOutQuint; easingout : easeInOutQuint; delayin : 0; delayout : 0; rotatein : 90; rotateout : -90; scalein : .5; scaleout : .5; showuntil : 4000; display: inline-block; white-space: nowrap;">
                 添加到购物车
             </a>
         </div>
@@ -43,7 +43,7 @@
 
             <div class="ls-s-1 mini-text" style=" top: 70%; left: 60%; slidedirection : fade; slideoutdirection : fade; durationout : 750; easingin : easeOutQuint; delayin : 300; scalein : .8; scaleout : .8; showuntil : 4000; white-space: nowrap;">
                 <span>${top3[1][3]}</span>
-                <a href="${path}/product/${top3[1][0]}">添加到购物车</a>
+                <a href="#" data-href="${path}/product/${top3[1][0]}" class="add2cart">添加到购物车</a>
             </div>
         </div>
         <!--LayerSlider layer-->
@@ -57,7 +57,7 @@
             </div>
 
             <div class="ls-s-1" style=" top: 333px; left: 33%; slidedirection : fade; slideoutdirection : fade; durationout : 750; easingin : easeOutQuint; delayin : 300; scalein : .8; scaleout : .8; showuntil : 4000; white-space: nowrap; font-size: 20px; font: 20px 'Open Sans Light', sans-serif;">
-                <a href="${path}/product/${top3[2][0]}" class="ls-buy">
+                <a href="#" data-href="${path}/product/${top3[2][0]}" class="ls-buy add2cart">
                     添加到购物车
                 </a>
                 <div class="ls-price">
@@ -91,13 +91,12 @@
                                         <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
                                         <div>
                                             <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
-                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">${prod.id}</a>
+                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">${prod.name}</a>
                                         </div>
                                     </div>
                                     <h3><a href="${prod.id}">${prod.name}</a></h3>
-                                    <h3><a href="${prod.id}">${prod.id}</a></h3>
                                     <div class="pi-price">￥${prod.commonPrice}</div>
-                                    <a href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
+                                    <button data-href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</button>
                                         <%--新品--%>
                                         <%--<div class="sticker sticker-new"></div>--%>
                                     <c:if test="${prod.evaluateCount ge 1000}"><div class="sticker sticker-sale"></div></c:if>
@@ -129,7 +128,7 @@
                                     </div>
                                     <h3><a href="item.html">${prod.name}</a></h3>
                                     <div class="pi-price">￥${prod.commonPrice}</div>
-                                    <a href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
+                                    <a href="#" data-href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
                                         <%--新品--%>
                                         <%--<div class="sticker sticker-new"></div>--%>
                                     <c:if test="${prod.evaluateCount ge 1000}"><div class="sticker sticker-sale"></div></c:if>
@@ -163,7 +162,7 @@
                                     </div>
                                     <h3><a href="item.html">${prod.name}</a></h3>
                                     <div class="pi-price">￥${prod.commonPrice}</div>
-                                    <a href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
+                                    <a href="#" data-href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
 
                                     <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
                                 </div>
@@ -195,7 +194,7 @@
                                     </div>
                                     <h3><a href="item.html">${prod.name}</a></h3>
                                     <div class="pi-price">￥${prod.commonPrice}</div>
-                                    <a href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
+                                    <a href="#" data-href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
 
                                     <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
                                 </div>
@@ -227,7 +226,7 @@
                                     </div>
                                     <h3><a href="item.html">${prod.name}</a></h3>
                                     <div class="pi-price">￥${prod.commonPrice}</div>
-                                    <a href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
+                                    <a href="#" data-href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
 
                                     <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
                                 </div>
@@ -258,8 +257,7 @@
                                     </div>
                                     <h3><a href="item.html">${prod.name}</a></h3>
                                     <div class="pi-price">￥${prod.commonPrice}</div>
-                                    <a href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
-
+                                    <button href="#" data-href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</button>
                                     <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
                                 </div>
                             </li>
@@ -303,6 +301,11 @@
 <script type="text/javascript" src="${path}/statics/assets/scripts/app.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
 <script>
-//    $(document).ready(function(){App.popup();});
+    $(document).ready(function(){
+        $(document).on("click",".add2cart",function(){
+            var url=$(this).data("href");
+            alert(url);
+        });
+    });
 </script>
 </html>
