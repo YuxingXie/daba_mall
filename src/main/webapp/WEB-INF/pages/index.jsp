@@ -88,13 +88,14 @@
                             <li>
                                 <div class="product-item">
                                     <div class="pi-img-wrapper">
-                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" alt="Berry Lace Dress">
+                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
                                         <div>
                                             <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
-                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
+                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">${prod.id}</a>
                                         </div>
                                     </div>
-                                    <h3><a href="item.html">${prod.name}</a></h3>
+                                    <h3><a href="${prod.id}">${prod.name}</a></h3>
+                                    <h3><a href="${prod.id}">${prod.id}</a></h3>
                                     <div class="pi-price">￥${prod.commonPrice}</div>
                                     <a href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
                                         <%--新品--%>
@@ -119,7 +120,7 @@
                             <li>
                                 <div class="product-item">
                                     <div class="pi-img-wrapper">
-                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" alt="Berry Lace Dress">
+                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
                                         <div>
                                             <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
                                                 <%--<a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>--%>
@@ -154,7 +155,7 @@
                             <li>
                                 <div class="product-item">
                                     <div class="pi-img-wrapper">
-                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" alt="Berry Lace Dress">
+                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
                                         <div>
                                             <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
                                             <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
@@ -186,7 +187,7 @@
                             <li>
                                 <div class="product-item">
                                     <div class="pi-img-wrapper">
-                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" alt="Berry Lace Dress">
+                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
                                         <div>
                                             <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
                                             <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
@@ -218,7 +219,7 @@
                             <li>
                                 <div class="product-item">
                                     <div class="pi-img-wrapper">
-                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" alt="Berry Lace Dress">
+                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
                                         <div>
                                             <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
                                             <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
@@ -249,7 +250,7 @@
                             <li>
                                 <div class="product-item">
                                     <div class="pi-img-wrapper">
-                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" alt="Berry Lace Dress">
+                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
                                         <div>
                                             <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
                                             <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>

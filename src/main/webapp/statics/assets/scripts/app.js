@@ -421,7 +421,9 @@ $(document).ready(function(){
     }
     $(".fancybox-fast-view").click(function(){
         appendDom();
-        $.ajax($(this).data("url")).done(function(data){
+        console.log($(this).attr("data-url"));
+
+        $.ajax($(this).attr("data-url")).done(function(data){
             console.log("回调了一次")
             $("#product-pop-up  .add2cart").unbind("click");
             var $img=$('#product-pop-up .img-responsive');
