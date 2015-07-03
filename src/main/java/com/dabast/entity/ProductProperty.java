@@ -14,9 +14,9 @@ public class ProductProperty {
     @Field(value = "propertyName")
     private String propertyName;
     @Field(value = "productSeries")
-    private ProductSeries productSeriesId;
-
-    private PropertyValues propertyValues;
+    private String productSeriesId;
+    @Field(value = "values")
+    private Object[] propertyValues;
     public String getId() {
         return id;
     }
@@ -33,19 +33,19 @@ public class ProductProperty {
         this.propertyName = propertyName;
     }
 
-    public PropertyValues getPropertyValues() {
+    public Object[] getPropertyValues() {
         return propertyValues;
     }
 
-    public void setPropertyValues(PropertyValues propertyValues) {
+    public void setPropertyValues(Object[] propertyValues) {
         this.propertyValues = propertyValues;
     }
 
-    public ProductSeries getProductSeriesId() {
+    public String getProductSeriesId() {
         return productSeriesId;
     }
 
-    public void setProductSeriesId(ProductSeries productSeriesId) {
+    public void setProductSeriesId(String productSeriesId) {
         this.productSeriesId = productSeriesId;
     }
 }

@@ -5,6 +5,7 @@ import com.dabast.common.base.EntityDao;
 import com.dabast.entity.ProductSeries;
 import com.dabast.mall.model.productseries.dao.ProductSeriesDao;
 import com.dabast.mall.model.productseries.service.IProductSeriesService;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,5 +30,10 @@ public class ProductSeriesService extends BaseEntityManager<ProductSeries> imple
     @Override
     public List<ProductSeries> getHotSell() {
         return productSeriesDao.getHotSell();
+    }
+
+    @Override
+    public ProductSeries findProductSeriesById(ObjectId objectId) {
+        return productSeriesDao.findProductSeriesById(objectId);
     }
 }

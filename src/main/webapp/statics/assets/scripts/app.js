@@ -366,3 +366,129 @@ var App = function () {
 
     };
 }();
+/**
+ * Created by Administrator on 2015/7/3.
+ */
+$(document).ready(function(){
+        var appendDom=function(){
+        $('#product-pop-up').remove();
+        var $product_pop_up_div=$('<div id="product-pop-up" style="display: none; width: 700px;"></div>');
+
+        $product_pop_up_div.empty();
+        var $product_page_div=$('<div class="product-page product-pop-up"></div>');
+        $product_page_div.appendTo($product_pop_up_div);
+        var $row_div=$('<div class="row"></div>');
+        $row_div.appendTo($product_page_div);
+        var $col_div=$('<div class="col-md-6 col-sm-6 col-xs-3"></div>');
+        $col_div.appendTo($row_div);
+        var $main_image_div=$('<div class="product-main-image"></div>');
+        $main_image_div.appendTo($col_div);
+        var $img=$('<img class="img-responsive"/>');
+        $img.attr("src","");
+        $img.appendTo($main_image_div);
+        var $other_images=$('<div class="product-other-images"></div>');
+        $other_images.appendTo($col_div);
+        var $col_div2=$('<div class="col-md-6 col-sm-6 col-xs-9"></div>');
+        $col_div2.appendTo($row_div);
+        var $h1_title=$('<h1 style=" text-align:center;"></h1>');
+        $h1_title.appendTo($col_div2);
+        var $price_availability_block=$('<div class="price-availability-block clearfix"></div>');
+        $price_availability_block.appendTo($col_div2);
+        var $price_div=$('<div class="price"></div>');
+        $price_div.html("<strong><span>￥</span></strong><em>￥<span></span></em>");
+        $price_div.appendTo($price_availability_block);
+        var $availability_div=$('<div class="availability">状态: <strong>货源充足</strong></div>');
+        $availability_div.appendTo($price_availability_block);
+        var $description_div=$('<div class="description" style=" direction:ltr;"></div>');
+        var $description_p=$('<p></p>');
+        $description_p.appendTo($description_div);
+        $description_div.appendTo($col_div2);
+        var $product_page_options=$('<div class="product-page-options"></div>');
+        $product_page_options.empty();
+        $product_page_options.appendTo($col_div2);
+        var $product_page_cart=$('<div class="product-page-cart"></div>');
+        $product_page_cart.appendTo($col_div2);
+        var $product_quantity=$('<div class="product-quantity"></div>');
+        $product_quantity.appendTo($product_page_cart);
+        var $input_quantity=$('<input type="text" value="1" readonly name="product-quantity" class="form-control input-sm"/>');
+        $input_quantity.appendTo($product_quantity);
+        var $btn_add2cart=$('<button class="btn btn-primary add2cart" type="submit">添加到购物车</button>');
+        $btn_add2cart.unbind("click");
+        $btn_add2cart.appendTo($product_page_cart);
+        var $btn_more=$('<button class="btn btn-default" type="submit">更多商品</button>');
+        $btn_more.appendTo($product_page_cart);
+        $product_pop_up_div.appendTo($('body'));
+    }
+    $(".fancybox-fast-view").click(function(){
+        appendDom();
+        $.ajax($(this).data("url")).done(function(data){
+            console.log("回调了一次")
+            $("#product-pop-up  .add2cart").unbind("click");
+            var $img=$('#product-pop-up .img-responsive');
+            $img.attr("src",path+"/"+data.pictures[0]);
+
+            var $h1_title=$('#product-pop-up h1');
+            $h1_title.text(data.name);
+
+            var $price_availability_block=$('#product-pop-up .price-availability-block.clearfix');
+            var $price_div=$('#product-pop-up .price');
+            $price_div.html("<strong><span>￥</span>"+data.commonPrice+"</strong><em>￥<span>62.00</span></em>");
+            $price_div.appendTo($price_availability_block);
+            var $description_p=$('#product-pop-up .description p');
+            $description_p.html(data.description);
+            var $product_page_options=$('#product-pop-up .product-page-options');
+            var productProperties =data.productProperties;
+            for(var i=0;i<productProperties.length;i++){
+                var pull_left=$('<div class="pull-left"></div>');
+                pull_left.appendTo($product_page_options);
+                var productProperty=productProperties[i];
+                var control_label=$('<label class="control-label" style=" direction:ltr;">'+productProperty["propertyName"]+'&nbsp;:&nbsp;</label>');
+                control_label.appendTo(pull_left);
+                var select=$('<select class="form-control input-sm" name='+productProperty["id"]+'>');
+                select.appendTo(pull_left);
+                var propertyValues= productProperty["propertyValues"];
+                for(var j=0;j<propertyValues.length;j++){
+                    var option=$("<option>"+propertyValues[j]+"</option>");
+                    option.appendTo(select);
+                }
+            }
+            var pictures=data.pictures;
+            var $images=$("#product-pop-up  .product-other-images");
+//                $images.empty();
+            for(var i=0;i<pictures.length;i++){
+                var $img;
+                if(i==0)
+                    $img =$('<a href="#" class="active"><img src="'+path+'/'+pictures[i]+'"/></a>');
+                else
+                    $img =$('<a href="#"><img src="'+path+'/'+pictures[i]+'"/></a>');
+                $img.appendTo($images);
+            }
+
+            $("#product-pop-up  .add2cart").click(function(){
+//                    console.log("id:"+data.id);
+            });
+//                App.init();
+//                App.initBxSlider();
+//                Index.initLayerSlider();
+            App.initImageZoom();
+//                App.initTouchspin();
+        }).fail(function(){ console("something wrong!"); });
+    });
+    App.init();
+    App.initBxSlider();
+    Index.initLayerSlider();
+//        App.initImageZoom();
+    App.initTouchspin();
+    /* center modal */
+    function centerModals(){
+        $('.modal').each(function(i){
+//                console.log("centerModals....")
+            var $clone = $(this).clone().css('display', 'block').appendTo('body');    var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2);
+            top = top > 0 ? top : 0;
+            $clone.remove();
+            $(this).find('.modal-content').css("margin-top", top);
+        });
+    }
+    $('.modal').on('show.bs.modal', centerModals);
+    $(window).on('resize', centerModals);
+});

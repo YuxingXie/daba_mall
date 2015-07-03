@@ -28,22 +28,22 @@ public class ProductSeries {
     private Double commonPrice;
     @Field(value = "description")
     private String description;
-    @Past
-    @NotNull
+//    @Past
+//    @NotNull
     @Field(value = "shelvesDate")
-    private Date shelvesDate;
+    private Long shelvesDate;
     @Field(value = "brand")
     private String brand;
 
 
-
+    @DBRef(db = "")
     private List<ProductProperty> productProperties;
     private boolean newProduct;
     private Integer evaluateCount;
     public boolean isNewProduct() {
-        Date now =new Date();
+        long now=System.currentTimeMillis();
         if (shelvesDate==null) return false;
-        if ((now.getTime()-shelvesDate.getTime()) <=(30L*24L*60L*60L*1000L)) {
+        if ((now-shelvesDate) <=(30L*24L*60L*60L*1000L)) {
             return true;
         }
         return false;
@@ -97,11 +97,11 @@ public class ProductSeries {
         this.evaluateCount = evaluateCount;
     }
 
-    public Date getShelvesDate() {
+    public Long getShelvesDate() {
         return shelvesDate;
     }
 
-    public void setShelvesDate(Date shelvesDate) {
+    public void setShelvesDate(Long shelvesDate) {
         this.shelvesDate = shelvesDate;
     }
 

@@ -4,15 +4,14 @@ package com.dabast.entity;
  * Created by Administrator on 2015/7/3.
  */
 public class ProductPropertySelect {
-    private String propertyValueId;
+    private String productPropertyId;
     private int selectIndex;
 
-    public String getPropertyValueId() {
-        return propertyValueId;
+    public String getProductPropertyId() {
+        return productPropertyId;
     }
-
-    public void setPropertyValueId(String propertyValueId) {
-        this.propertyValueId = propertyValueId;
+    public void setProductPropertyId(String productPropertyId) {
+        this.productPropertyId = productPropertyId;
     }
 
     public int getSelectIndex() {
