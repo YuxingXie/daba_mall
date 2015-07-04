@@ -85,4 +85,15 @@ public class UserDao extends BaseMongoDao<User> implements IUserDao {
             mongoTemplate.dropCollection(User.class);
         }
     }
+
+    @Override
+    public User findByNameAndPwd(String loginName, String loginPwd) {
+        User user=new User();
+        user.setName(loginName);
+        user.setPassword(loginPwd);
+        user.setSex("男");
+        user.setHeight(187);
+//        return findEquals(user).get(0);
+        return user;
+    }
 }

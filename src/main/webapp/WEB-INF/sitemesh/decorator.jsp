@@ -197,6 +197,111 @@
             <!-- BEGIN NAVIGATION -->
             <div class="collapse navbar-collapse mega-menu">
                 <ul class="nav navbar-nav">
+
+                    <li><a href="#">官网首页</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"
+                           data-target="#" href="#">
+                            我的大坝
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <!-- BEGIN DROPDOWN MENU -->
+                        <ul class="dropdown-menu">
+                            <li><a href="order-form.html">我的订单</a></li>
+                            <li><a href="order-form.html">待处理订单</a></li>
+                            <li><a href="order-form.html">我的关注</a></li>
+                            <li><a href="order-form.html">退货换货</a></li>
+                        </ul>
+                        <!-- END DROPDOWN MENU -->
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"
+                           data-target="#" href="#">
+                            手机大坝
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <!-- BEGIN DROPDOWN MENU -->
+                        <ul class="dropdown-menu">
+                            <li><a href="#">手机用户首次下单买100送30</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">android客户端下载</a></li>
+                            <li><a href="#"><img src="${path}/statics/images/tuo_ma.png" class="tuo_ma"></a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">ios客户端下载客户端</a></li>
+                            <li><a href="#"><img src="${path}/statics/images/tuo_ma.png" class="tuo_ma"></a></li>
+                        </ul>
+                        <!-- END DROPDOWN MENU -->
+                    </li>
+                    <%--<li class="dropdown">--%>
+                        <%--<a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"--%>
+                           <%--data-target="#" href="#">--%>
+                            <%--新品上市--%>
+                            <%--<i class="fa fa-angle-down"></i>--%>
+                        <%--</a>--%>
+                        <%--<!-- BEGIN DROPDOWN MENU -->--%>
+                        <%--<ul class="dropdown-menu" aria-labelledby="mega-menu-catalogue">--%>
+                            <%--<li>--%>
+                                <%--<div class="nav-content">--%>
+                                    <%--<div class="product-item">--%>
+                                        <%--<div class="pi-img-wrapper">--%>
+                                            <%--<a href="item.html"><img--%>
+                                                    <%--src="${path}/statics/assets/temp/products/model4.jpg"--%>
+                                                    <%--class="img-responsive" alt="Berry Lace Dress"></a>--%>
+                                        <%--</div>--%>
+                                        <%--<h3><a href="item.html">黄材中华鲟</a></h3>--%>
+
+                                        <%--<div class="pi-price">￥29.00</div>--%>
+                                        <%--<a href="#" class="btn btn-default add2cart">添加到购物车</a>--%>
+                                    <%--</div>--%>
+                                    <%--<div class="product-item">--%>
+                                        <%--<div class="pi-img-wrapper">--%>
+                                            <%--<a href="item.html"><img--%>
+                                                    <%--src="${path}/statics/assets/temp/products/model3.jpg"--%>
+                                                    <%--class="img-responsive" alt="Berry Lace Dress"></a>--%>
+                                        <%--</div>--%>
+                                        <%--<h3><a href="item.html">乡里腊肉</a></h3>--%>
+
+                                        <%--<div class="pi-price">￥52.00</div>--%>
+                                        <%--<a href="#" class="btn btn-default add2cart">添加到购物车</a>--%>
+                                    <%--</div>--%>
+                                    <%--<div class="product-item">--%>
+                                        <%--<div class="pi-img-wrapper">--%>
+                                            <%--<a href="item.html"><img--%>
+                                                    <%--src="${path}/statics/assets/temp/products/model7.jpg"--%>
+                                                    <%--class="img-responsive" alt="Berry Lace Dress"></a>--%>
+                                        <%--</div>--%>
+                                        <%--<h3><a href="item.html">生态干鱼</a></h3>--%>
+
+                                        <%--<div class="pi-price">￥36.00</div>--%>
+                                        <%--<a href="#" class="btn btn-default add2cart">添加到购物车</a>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</li>--%>
+                        <%--</ul>--%>
+                        <%--<!-- END DROPDOWN MENU -->--%>
+                    <%--</li>--%>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"
+                           data-target="#" href="#">
+                            客服服务
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <!-- BEGIN DROPDOWN MENU -->
+                        <ul class="dropdown-menu">
+                            <li><a href="#">关于我们</a></li>
+                            <li><a href="#">售后服务</a></li>
+                            <li class="dropdown-submenu">
+                                <a href="#">在线客服 <i class="fa fa-angle-right"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">联系电话：0731-87654321</a></li>
+                                    <li><a href="#">企业QQ：888888</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">意见建议</a></li>
+                            <li><a href="#">客服邮箱</a></li>
+                        </ul>
+                        <!-- END DROPDOWN MENU -->
+                    </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"
                            data-target="#" href="#">
@@ -265,111 +370,6 @@
                         </ul>
                         <!-- END DROPDOWN MENU -->
                     </li>
-                    <li><a href="#">官网首页</a></li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"
-                           data-target="#" href="#">
-                            我的大坝
-                            <i class="fa fa-angle-down"></i>
-                        </a>
-                        <!-- BEGIN DROPDOWN MENU -->
-                        <ul class="dropdown-menu">
-                            <li><a href="order-form.html">我的订单</a></li>
-                            <li><a href="order-form.html">待处理订单</a></li>
-                            <li><a href="order-form.html">我的关注</a></li>
-                            <li><a href="order-form.html">退货换货</a></li>
-                        </ul>
-                        <!-- END DROPDOWN MENU -->
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"
-                           data-target="#" href="#">
-                            手机大坝
-                            <i class="fa fa-angle-down"></i>
-                        </a>
-                        <!-- BEGIN DROPDOWN MENU -->
-                        <ul class="dropdown-menu">
-                            <li><a href="#">手机用户首次下单买100送30</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">android客户端下载</a></li>
-                            <li><a href="#"><img src="${path}/statics/images/tuo_ma.png" class="tuo_ma"></a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">ios客户端下载客户端</a></li>
-                            <li><a href="#"><img src="${path}/statics/images/tuo_ma.png" class="tuo_ma"></a></li>
-                        </ul>
-                        <!-- END DROPDOWN MENU -->
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"
-                           data-target="#" href="#">
-                            新品上市
-                            <i class="fa fa-angle-down"></i>
-                        </a>
-                        <!-- BEGIN DROPDOWN MENU -->
-                        <ul class="dropdown-menu" aria-labelledby="mega-menu-catalogue">
-                            <li>
-                                <div class="nav-content">
-                                    <div class="product-item">
-                                        <div class="pi-img-wrapper">
-                                            <a href="item.html"><img
-                                                    src="${path}/statics/assets/temp/products/model4.jpg"
-                                                    class="img-responsive" alt="Berry Lace Dress"></a>
-                                        </div>
-                                        <h3><a href="item.html">黄材中华鲟</a></h3>
-
-                                        <div class="pi-price">￥29.00</div>
-                                        <a href="#" class="btn btn-default add2cart">添加到购物车</a>
-                                    </div>
-                                    <div class="product-item">
-                                        <div class="pi-img-wrapper">
-                                            <a href="item.html"><img
-                                                    src="${path}/statics/assets/temp/products/model3.jpg"
-                                                    class="img-responsive" alt="Berry Lace Dress"></a>
-                                        </div>
-                                        <h3><a href="item.html">乡里腊肉</a></h3>
-
-                                        <div class="pi-price">￥52.00</div>
-                                        <a href="#" class="btn btn-default add2cart">添加到购物车</a>
-                                    </div>
-                                    <div class="product-item">
-                                        <div class="pi-img-wrapper">
-                                            <a href="item.html"><img
-                                                    src="${path}/statics/assets/temp/products/model7.jpg"
-                                                    class="img-responsive" alt="Berry Lace Dress"></a>
-                                        </div>
-                                        <h3><a href="item.html">生态干鱼</a></h3>
-
-                                        <div class="pi-price">￥36.00</div>
-                                        <a href="#" class="btn btn-default add2cart">添加到购物车</a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        <!-- END DROPDOWN MENU -->
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"
-                           data-target="#" href="#">
-                            客服服务
-                            <i class="fa fa-angle-down"></i>
-                        </a>
-                        <!-- BEGIN DROPDOWN MENU -->
-                        <ul class="dropdown-menu">
-                            <li><a href="#">关于我们</a></li>
-                            <li><a href="#">售后服务</a></li>
-                            <li class="dropdown-submenu">
-                                <a href="#">在线客服 <i class="fa fa-angle-right"></i></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">联系电话：0731-87654321</a></li>
-                                    <li><a href="#">企业QQ：888888</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">意见建议</a></li>
-                            <li><a href="#">客服邮箱</a></li>
-                        </ul>
-                        <!-- END DROPDOWN MENU -->
-                    </li>
-
                     <!-- BEGIN TOP SEARCH -->
                     <li class="menu-search">
                         <span class="sep"></span>
@@ -593,7 +593,7 @@
             $.ajax({
                 url: "${path}/index/user/login",
                 contentType: "application/json",
-                data: JSON.stringify($('#loginForm').serializeObject(["remember"])),
+                data: JSON.stringify($('#loginForm').serializeObject([])),
                 method: "post",
                 success: function (data) {
                     $(".additional-nav>ul>li:eq(0)").remove();
@@ -618,11 +618,15 @@
 
     });
     $.fn.serializeObject = function (excludeFields) {
-        if (excludeFields != undefined && !Array.isArray(excludeFields)) return false;
+        if (excludeFields != undefined && !Array.isArray(excludeFields)) {
+            console.log('excludeFields must be defined and be an array!');
+            return false
+        };
         var d = {};
         var t = $(this).serializeArray();
         $.each(t, function () {
             if ($.inArray(this.name, excludeFields) < 0) {
+                console.log(this.name+":"+this.value);
                 d[this.name] = this.value;
             }
         });

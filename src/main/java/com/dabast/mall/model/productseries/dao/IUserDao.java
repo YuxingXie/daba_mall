@@ -22,4 +22,6 @@ public interface IUserDao {
     void createCollection();
 
     void dropCollection();
+
+    User findByNameAndPwd(String loginName, String loginPwd);
 }
