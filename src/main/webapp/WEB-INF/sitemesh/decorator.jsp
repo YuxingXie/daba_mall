@@ -27,6 +27,8 @@
     <link href="${path}/statics/assets/plugins/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
     <!-- Global styles END -->
     <script type="text/javascript" src="${path}/statics/assets/plugins/jquery-1.10.2.min.js"></script>
+    <script src="${path}/statics/assets/plugins/jquery.md5.js" type="text/javascript"></script>
+
     <!-- Page level plugin styles START -->
     <link href="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet">
     <link href="${path}/statics/assets/plugins/bxslider/jquery.bxslider.css" rel="stylesheet">
@@ -590,10 +592,14 @@
     $(document).ready(function () {
 
         $(document).on("click", "#login", function () {
+            var fun=$.m
+            d5;
+            alert($);
+            return;
             $.ajax({
                 url: "${path}/index/user/login",
                 contentType: "application/json",
-                data: JSON.stringify($('#loginForm').serializeObject([])),
+                data: JSON.stringify($('#loginForm').serializeObject({"remember": $.md5})),
                 method: "post",
                 success: function (data) {
                     $(".additional-nav>ul>li:eq(0)").remove();
@@ -617,20 +623,26 @@
         });
 
     });
-    $.fn.serializeObject = function (excludeFields) {
-        if (excludeFields != undefined && !Array.isArray(excludeFields)) {
-            console.log('excludeFields must be defined and be an array!');
-            return false
-        };
+    $.fn.serializeObject = function (handlers) {
+//        if (handlers != undefined && !Array.isArray(handlers)) {
+//            console.log('handlers must be an array if defined!');
+//            return false
+//        };
         var d = {};
         var t = $(this).serializeArray();
+        for(var key in handlers){
+            var fun=handlers[key];
+            alert(fun(key))
+        }
         $.each(t, function () {
-            if ($.inArray(this.name, excludeFields) < 0) {
+//            if ($.inArray(this.name, handlers[0]) < 0) {
+
                 console.log(this.name+":"+this.value);
                 d[this.name] = this.value;
-            }
+//            }
         });
-        return d;
+//        return d;
+        alert(JSON.stringify(d));
     };
 </script>
 </html>
