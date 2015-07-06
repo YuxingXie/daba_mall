@@ -382,9 +382,10 @@
                         option.appendTo(select);
                     }
                 }
-                $("#product-pop-up  .add2cart").click(function(){
-//                    console.log("id:"+data.id);
-                });
+//                $("#product-pop-up  .add2cart").click(function(){
+////                    console.log("id:"+data.id);
+//                });
+                App.initImageZoom();
             }).fail(function(){ console.log("出错啦！"); });
         });
     });

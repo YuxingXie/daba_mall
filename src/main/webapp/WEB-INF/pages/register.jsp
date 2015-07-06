@@ -89,7 +89,7 @@
                         <div class="content-form-page">
                             <div class="row">
                                 <div class="col-md-7 col-sm-7">
-                                    <form class="form-horizontal form-without-legend" role="form">
+                                    <form class="form-horizontal form-without-legend" role="form" action="${path}/user/register/email">
                                         <div class="form-group">
                                             <label class="col-lg-4 control-label">昵称 <span class="require">*</span></label>
                                             <div class="col-lg-8">

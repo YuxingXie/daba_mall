@@ -8,9 +8,7 @@ import org.springframework.stereotype.Controller;
 import java.text.ParseException;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,18 +23,15 @@ import org.springframework.web.servlet.ModelAndView;
 public class RegisterController {
 
     @Resource
-    private RegisterValidateService service;
+    private RegisterValidateService registerValidateService;
 
-    @RequestMapping(value = "/register", method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView register(ModelMap map, HttpServletRequest request, @ModelAttribute User user) throws ParseException {
-        String url = request.getScheme()+"://"+ request.getServerName()+request.getRequestURI();
+    @RequestMapping(value = "/register/email", method = {RequestMethod.POST})
+    public String register(ModelMap map, HttpServletRequest request, @ModelAttribute User user) throws ParseException {
+        String url = request.getScheme()+"://"+ request.getServerName()+":"+request.getServerPort()+"/user/activate";
         ModelAndView model = new ModelAndView();
         //注册
-        String email = request.getParameter("email");
-        service.processRegister(email, user);//发邮箱激活
-        model.addObject("text", "注册成功");
-        model.setViewName("register/register_success");
-        return model;
+        registerValidateService.processRegister(url, user);//发邮箱激活
+        return "register/register_success";
     }
 
     @RequestMapping(value = "/activate", method = {RequestMethod.GET, RequestMethod.POST})
@@ -46,7 +41,7 @@ public class RegisterController {
         String email = request.getParameter("email");//获取email
         String validateCode = request.getParameter("validateCode");//激活码
         try {
-            service.processActivate(email, validateCode);//调用激活方法
+            registerValidateService.processActivate(email, validateCode);//调用激活方法
         } catch (ServiceException e) {
             e.printStackTrace();
         }

@@ -36,8 +36,7 @@ public class IndexController extends BaseRestSpringController {
     UserDao userDao;
     @RequestMapping(value = "/main")
     public String index(HttpServletRequest request,ModelMap model,HttpSession session) {
-        String url = request.getScheme()+"://"+ request.getServerName()+request.getRequestURI();
-        System.out.println(url);
+
         Cookie nameCookie=CookieTool.getCookieByName(request,"name");
         Cookie pwdCookie=CookieTool.getCookieByName(request,"password");
         String name= null;
