@@ -2,6 +2,7 @@ package com.dabast.mall.view.index.controller;
 
 import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.helper.service.ServiceManager;
+import com.dabast.common.util.MD5;
 import com.dabast.common.web.CookieTool;
 import com.dabast.entity.ProductSeries;
 import com.dabast.entity.User;
@@ -35,6 +36,8 @@ public class IndexController extends BaseRestSpringController {
     UserDao userDao;
     @RequestMapping(value = "/main")
     public String index(HttpServletRequest request,ModelMap model,HttpSession session) {
+        String url = request.getScheme()+"://"+ request.getServerName()+request.getRequestURI();
+        System.out.println(url);
         Cookie nameCookie=CookieTool.getCookieByName(request,"name");
         Cookie pwdCookie=CookieTool.getCookieByName(request,"password");
         String name= null;
@@ -54,12 +57,6 @@ public class IndexController extends BaseRestSpringController {
         model.addAttribute("top3", top3);
         List<ProductSeries> hotSells=ServiceManager.productSeriesService.getHotSell();
         model.addAttribute("hotSells", hotSells);
-        if (model.get("loginUser")!=null){
-            User user= (User) model.get("loginUser");
-//            System.out.println(form.getName());
-//            System.out.println(form.getSex());
-        }
-
         return "index";
     }
 
@@ -75,7 +72,10 @@ public class IndexController extends BaseRestSpringController {
         user.setSex("f");
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
-
+    @RequestMapping(value = "/user/register")
+    public String userRegister(ModelMap model) {
+        return "register";
+    }
     @RequestMapping(value = "/user/post",method = RequestMethod.POST)
     public ResponseEntity<User> post(@RequestBody User user,ModelMap model) {
 //        System.out.println("post");
@@ -85,17 +85,34 @@ public class IndexController extends BaseRestSpringController {
     @RequestMapping(value = "/user/login",method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody UserLoginForm form,ModelMap model,HttpSession session,HttpServletRequest request,HttpServletResponse response) {
         System.out.println("用户 "+ form.getName()+" 登录");
-        session.setAttribute("loginUser", form);
-        int  loginMaxAge = 30*24*60*60;   //定义账户密码的生命周期，这里是一个月。单位为秒
-        if (form.isRemember()) {
-            CookieTool.addCookie(request,response, "name" , form.getName() , loginMaxAge);
-            CookieTool.addCookie(request,response, "password" , form.getPassword() , loginMaxAge);
-//            CookieTool.addCookie(request,response, "remember" , "true" , loginMaxAge);
-        }else {
-            CookieTool.removeCookie(request,response, "name");
-            CookieTool.removeCookie(request,response, "password");
+        System.out.println("用户登录密码："+form.getPassword());
+        User user=userDao.findByNameAndPwd(form.getName(),form.getPassword());//模拟用户密码是123
+        //form.password可能是原始密码经过一次MD5加密，也可能是两次md5加密
+        if (form.getPassword().equalsIgnoreCase(user.getPassword())){//如果密码经过一次MD5加密，会直接相等
+            session.setAttribute("loginUser", form);
+            int  loginMaxAge = 30*24*60*60;   //定义账户密码的生命周期，这里是一个月。单位为秒
+            if (form.isRemember()) {
+                CookieTool.addCookie(request,response, "name" , form.getName() , loginMaxAge);
+                CookieTool.addCookie(request,response, "password" , form.getPassword() , loginMaxAge);
+            }else {
+                CookieTool.removeCookie(request,response, "name");
+                CookieTool.removeCookie(request,response, "password");
+            }
+        }else if (form.getPassword().equalsIgnoreCase(MD5.convert(user.getPassword()))){//如果密码经过两次MD5加密
+            session.setAttribute("loginUser", form);
+            int  loginMaxAge = 30*24*60*60;   //定义账户密码的生命周期，这里是一个月。单位为秒
+            if (form.isRemember()) {
+                CookieTool.addCookie(request,response, "name" , form.getName() , loginMaxAge);
+                CookieTool.addCookie(request,response, "password" , user.getPassword() , loginMaxAge);
+            }else {
+                CookieTool.removeCookie(request,response, "name");
+                CookieTool.removeCookie(request,response, "password");
+            }
+        }else{
+            return new ResponseEntity("{\"custom_status\":\"用户名或密码错误\"}",HttpStatus.OK);
         }
-        ////////////////////////////////////////////////////////////////////////
+
+
         return new ResponseEntity<User>(form,HttpStatus.OK);
 
     }
@@ -110,47 +127,8 @@ public class IndexController extends BaseRestSpringController {
         return new ResponseEntity("{}",HttpStatus.OK);
 
     }
-    @RequestMapping(value = "/users")
-    public ResponseEntity<List<User>> all(ModelMap model,String role) {
-        List<User> users=new ArrayList<User>();
-        User u = new User();
-        u.setId(new ObjectId());
-        u.setName("Jackson");
-        users.add(u);
-        User u2 = new User();
-        u2.setId(new ObjectId());
-        u2.setName("Johnson");
-        u2.setSex("m");
-        users.add(u2);
-        ResponseEntity<List<User>> usersE= new ResponseEntity<List<User>>(users, HttpStatus.OK);
-        return usersE;
-    }
-    @RequestMapping(value = "/user/test1")
-    public ResponseEntity<User> test1(ModelMap model) {
-//        System.out.println("test1");
-        User user=new User();
-        user.setName("Robinson");
-        user.setSex("m");
-        user.setHeight(180);
-        return new ResponseEntity<User>(user,HttpStatus.OK);
-    }
-    @RequestMapping(value = "/user/test2")
-    public ResponseEntity<User> test2(ModelMap model) {
-//        System.out.println("test2");
-        User user=new User();
-        user.setName("Michale Jordan");
-        user.setSex("m");
-        user.setHeight(194);
-        return new ResponseEntity<User>(user,HttpStatus.OK);
-    }
-    @RequestMapping(value = "/user/test3")
-      public ResponseEntity<User> test3(ModelMap model) {
-        User user=new User();
-        user.setName("Alison Fisher");
-        user.setSex("f");
-        user.setHeight(170);
-        return new ResponseEntity<User>(user,HttpStatus.OK);
-    }
+
+
     public static void main(String[] args){
         String jsonStr="[{id:100,name:'Johnson'},{id:101,name:'Jackson'}]";
 //        System.out.println(JSON.parse(jsonStr));

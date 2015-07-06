@@ -25,25 +25,23 @@
     <!-- Global styles START -->
     <link href="${path}/statics/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="${path}/statics/assets/plugins/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+
     <!-- Global styles END -->
     <script type="text/javascript" src="${path}/statics/assets/plugins/jquery-1.10.2.min.js"></script>
-    <script src="${path}/statics/assets/plugins/jquery.md5.js" type="text/javascript"></script>
-
+    <script type="text/javascript" src="${path}/statics/assets/plugins/jquery.md5.js"></script>
+    <script src="${path}/statics/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="${path}/statics/assets/scripts/app.js"></script>
     <!-- Page level plugin styles START -->
     <link href="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet">
     <link href="${path}/statics/assets/plugins/bxslider/jquery.bxslider.css" rel="stylesheet">
     <link rel="stylesheet" href="${path}/statics/assets/plugins/layerslider/css/layerslider.css" type="text/css">
     <!-- Page level plugin styles END -->
-
     <!-- Theme styles START -->
     <link href="${path}/statics/assets/css/style-metronic.css" rel="stylesheet" type="text/css">
     <link href="${path}/statics/assets/css/style.css" rel="stylesheet" type="text/css">
     <link href="${path}/statics/assets/css/style-responsive.css" rel="stylesheet" type="text/css">
     <link href="${path}/statics/assets/css/custom.css" rel="stylesheet" type="text/css">
     <!-- Theme styles END -->
-
-    <script type="text/javascript" src="${path}/statics/assets/plugins/jquery-1.10.2.min.js"></script>
-
     <sitemesh:write property='head'/>
     <title>大坝生态农业</title>
     <sitemesh:write property='title'/>
@@ -57,7 +55,7 @@
                     <ul class="list-unstyled list-inline pull-right" style=" float:left !important;">
                         <c:choose>
                             <c:when test="${empty sessionScope.loginUser}">
-                                <li><a href="login-page.html">注册</a></li>
+                                <li><a href="${path}/index/user/register">注册</a></li>
                                 <li><a href="#" data-toggle="modal" data-target="#myModal">登录</a></li>
                             </c:when>
                             <c:otherwise>
@@ -76,7 +74,6 @@
                         <li><i class="fa fa-phone"></i><span>87654321</span></li>
                         <li class="langs-block">
                             <a href="javascript:void(0);" class="current">中文 <i class="fa fa-angle-down"></i></a>
-
                             <div class="langs-block-others-wrapper">
                                 <div class="langs-block-others">
                                     <a href="javascript:void(0);">英语</a>
@@ -431,9 +428,8 @@
                 </div>
                 <div class="modal-body" style="height: 110px;">
                     <div class="col-lg-12">
-                        <input type="text" class="form-control" id="usename" name="name" placeholder="手机号码或者邮箱地址"><br/>
-                        <input type="password" class="form-control" id="password" name="password"
-                               placeholder="密码应由6-20个字符组成">
+                        <input type="text" class="form-control" id="usename" name="name" placeholder="手机号码或者邮箱地址"/><br/>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="密码应由6-20个字符组成" />
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -456,6 +452,8 @@
         </form>
     </div>
     <!-- /.modal -->
+    <!-- BEGIN fast view of a product -->
+
 </div>
 <footer>
 
@@ -592,16 +590,19 @@
     $(document).ready(function () {
 
         $(document).on("click", "#login", function () {
-            var fun=$.m
-            d5;
-            alert($);
-            return;
+            var pwd=$.md5($("#password").val());
+            $("#password").val(pwd);
             $.ajax({
                 url: "${path}/index/user/login",
                 contentType: "application/json",
-                data: JSON.stringify($('#loginForm').serializeObject({"remember": $.md5})),
+                data: JSON.stringify($('#loginForm').serializeObject()),
                 method: "post",
                 success: function (data) {
+                    if(data.custom_status !=undefined){
+                        alert(data.custom_status);
+                        return;
+                    }
+
                     $(".additional-nav>ul>li:eq(0)").remove();
                     $(".additional-nav>ul>li:eq(0)").remove();
                     var $new_li = $('<li>欢迎您,<a href="#">' + data.name + '</a>! </li><li><a href="#" id="logout">退出</a></li>');
@@ -623,26 +624,16 @@
         });
 
     });
-    $.fn.serializeObject = function (handlers) {
-//        if (handlers != undefined && !Array.isArray(handlers)) {
-//            console.log('handlers must be an array if defined!');
-//            return false
-//        };
+    $.fn.serializeObject = function (excludeFields) {
+        if(excludeFields!=undefined && !Array.isArray(excludeFields)) return false;
         var d = {};
         var t = $(this).serializeArray();
-        for(var key in handlers){
-            var fun=handlers[key];
-            alert(fun(key))
-        }
-        $.each(t, function () {
-//            if ($.inArray(this.name, handlers[0]) < 0) {
-
-                console.log(this.name+":"+this.value);
+        $.each(t, function() {
+            if($.inArray(this.name,excludeFields)<0){
                 d[this.name] = this.value;
-//            }
+            }
         });
-//        return d;
-        alert(JSON.stringify(d));
+        return d;
     };
 </script>
 </html>

@@ -90,10 +90,17 @@ public class UserDao extends BaseMongoDao<User> implements IUserDao {
     public User findByNameAndPwd(String loginName, String loginPwd) {
         User user=new User();
         user.setName(loginName);
-        user.setPassword(loginPwd);
+        user.setPassword("202cb962ac59075b964b07152d234b70");//密码123
         user.setSex("男");
         user.setHeight(187);
 //        return findEquals(user).get(0);
         return user;
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        User user=new User();
+        user.setEmail(email);
+        return findEquals(user).get(0);
     }
 }

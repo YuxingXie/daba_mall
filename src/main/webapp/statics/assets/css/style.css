@@ -1084,7 +1084,7 @@ Catalogue styles
 .ls-fullwidth .ls-nav-next {
 	width: 49px;
 	height: 59px;
-	z-index: 10000;
+	z-index: 100;
 	top: 50%;
 	margin-top: -30px;
 	position: absolute;

@@ -2,7 +2,6 @@ var Index = function () {
 
     return {
         initLayerSlider: function () {
-            console.log("initLayerSlider");
             $('#layerslider').layerSlider({
                 skin : 'fullwidth',
                 thumbnailNavigation : 'hover',

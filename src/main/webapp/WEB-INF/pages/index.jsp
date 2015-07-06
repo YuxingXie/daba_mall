@@ -91,7 +91,7 @@
                                         <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
                                         <div>
                                             <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
-                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">${prod.name}</a>
+                                            <a href="#product-pop-up" data-prod="${prod.id}" class="btn btn-default fancybox-fast-view">${prod.name}</a>
                                         </div>
                                     </div>
                                     <h3><a href="${prod.id}">${prod.name}</a></h3>
@@ -122,7 +122,6 @@
                                         <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
                                         <div>
                                             <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
-                                                <%--<a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>--%>
                                             <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
                                         </div>
                                     </div>
@@ -269,13 +268,55 @@
         </div>
         <!-- END SALE PRODUCT & NEW ARRIVALS -->
     </div>
+    <div id="product-pop-up" style="display: none; width: 700px;">
+        <div class="product-page product-pop-up">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-3">
+                    <div class="product-main-image">
+                        <img src="${path}/statics/assets/temp/products/model7.jpg" alt="Cool green dress with red bell" class="img-responsive">
+                    </div>
+                    <div class="product-other-images">
+                        <a href="#" class="active"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model3.jpg"></a>
+                        <a href="#"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model4.jpg"></a>
+                        <a href="#"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model5.jpg"></a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-9">
+                    <h1 style=" text-align:center;">帝王蟹</h1>
+                    <div class="price-availability-block clearfix">
+                        <div class="price">
+                            <strong><span>$</span>47.00</strong>
+                            <em>$<span>62.00</span></em>
+                        </div>
+                        <div class="availability">
+                            状态: <strong>货源充足</strong>
+                        </div>
+                    </div>
+                    <div class="description" style=" direction:ltr;">
+                        <p></p>
+                    </div>
+                    <div class="product-page-options">
+
+                    </div>
+                    <div class="product-page-cart">
+                        <div class="product-quantity">
+                            <input id="product-quantity" type="text" value="1" name="product-quantity" class="form-control input-sm">
+                        </div>
+                        <button class="btn btn-primary" type="submit">添加到购物车</button>
+                        <button class="btn btn-default" type="submit">更多商品</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 <!--[if lt IE 9]>
 <script src="${path}/statics/assets/plugins/respond.min.js"></script>
 <![endif]-->
 <script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
 <script type="text/javascript" src="${path}/statics/assets/plugins/back-to-top.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/jQuery-slimScroll/jquery.slimscroll.min.js"></script>
 <!-- END CORE PLUGINS -->
@@ -297,13 +338,54 @@
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.transitions.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js"
         type="text/javascript"></script>
-<script type="text/javascript" src="${path}/statics/assets/scripts/app.js"></script>
+
 <script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
 <script>
     $(document).ready(function(){
+        App.init();
+        App.initBxSlider();
+        Index.initLayerSlider();
+        App.initImageZoom();
+        App.initTouchspin();
         $(document).on("click",".add2cart",function(){
             var url=$(this).data("href");
             alert(url);
+        });
+
+        $(".fancybox-fast-view").click(function(){
+            var prod=$(this).data("prod");
+//            http://localhost:63342/daba/metronic_v2.0.2/ecommerce/template/product_json/product"+prod+".json
+            <%--$.ajax("${path}/product_series/popover/"+prod).done(function(data){--%>
+            console.log("prod:"+prod)
+            <%--$.ajax("${path}/statics/product_json/product"+prod+".json").done(function(data){--%>
+            $.ajax("${path}/product_series/popover/"+prod).done(function(data){
+                $("#product-pop-up .product-main-image>img").attr("src","${path}/"+data.pictures[0]);
+                $("#product-pop-up h1").text(data.name);
+                $("#product-pop-up .price").html("<strong><span>￥</span>"+data.commonPrice+"</strong><em>￥<span>62.00</span></em>");
+                $("#product-pop-up .description>p").html(data.description);
+                $("#product-pop-up  .add2cart").unbind("click");
+                var json =data.productProperties;
+                console.log("执行了ajax请求，属性数量是"+json.length);
+                var product_page_options=$("#product-pop-up .product-page-options");
+                product_page_options.empty();
+                for(var i=0;i<json.length;i++){
+                    var pull_left=$('<div class="pull-left"></div>');
+
+                    pull_left.appendTo(product_page_options);
+                    var control_label=$('<label class="control-label" style=" direction:ltr;">'+json[i]["propertyName"]+'&nbsp;:&nbsp;</label>');
+                    control_label.appendTo(pull_left);
+                    var select=$('<select class="form-control input-sm" name='+json[i]["id"]+'>');
+                    select.appendTo(pull_left);
+                    var propertyValues= json[i]["propertyValues"];
+                    for(var j=0;j<propertyValues.length;j++){
+                        var option=$("<option>"+propertyValues[j]+"</option>");
+                        option.appendTo(select);
+                    }
+                }
+                $("#product-pop-up  .add2cart").click(function(){
+//                    console.log("id:"+data.id);
+                });
+            }).fail(function(){ console.log("出错啦！"); });
         });
     });
 </script>
