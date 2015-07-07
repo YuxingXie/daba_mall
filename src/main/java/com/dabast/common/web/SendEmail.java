@@ -14,10 +14,13 @@ import javax.mail.internet.MimeMessage;
  */
 public class SendEmail {
     public static final String HOST = "smtp.163.com";
+//    public static final String HOST = "smtp.sina.com";
     public static final String PROTOCOL = "smtp";
     public static final int PORT = 25;
-    public static final String FROM = "xieyuxing008@gmail.com";//发件人的email
-    public static final String PWD = "brighttemple1978";//发件人密码
+    public static final String FROM = "dabast";//发件人的email
+//    public static final String PWD = "dbst123456789";//发件人密码
+    public static final String PWD = "upljstdsalbkscyr";//发件人密码
+
 
     /**
      * 获取Session
@@ -28,8 +31,9 @@ public class SendEmail {
         Properties props = new Properties();
         props.put("mail.smtp.host", HOST);//设置服务器地址
         props.put("mail.store.protocol", PROTOCOL);//设置协议
+        props.put("mail.transport.protocol", PROTOCOL);//设置协议
         props.put("mail.smtp.port", PORT);//设置端口
-        props.put("mail.smtp.auth", true);
+        props.put("mail.smtp.auth", "true");
 
         Authenticator authenticator = new Authenticator() {
             @Override
@@ -38,6 +42,7 @@ public class SendEmail {
             }
 
         };
+//        Session session = Session.getInstance(props, authenticator);
         Session session = Session.getDefaultInstance(props, authenticator);
 
         return session;
@@ -57,9 +62,16 @@ public class SendEmail {
             msg.setSubject("账号激活邮件");
             msg.setSentDate(new Date());
             msg.setContent(content, "text/html;charset=utf-8");
-
+            //add
+            msg.saveChanges();
             //Send the message
-            Transport.send(msg);
+            Transport transport = session.getTransport();
+            // 打开连接
+            transport.connect(HOST,PORT,FROM, PWD);
+            // 将message对象传递给transport对象，将邮件发送出去
+            transport.sendMessage(msg, msg.getAllRecipients());
+            // 关闭连接
+            transport.close();
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }

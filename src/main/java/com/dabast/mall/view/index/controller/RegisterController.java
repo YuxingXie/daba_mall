@@ -27,7 +27,7 @@ public class RegisterController {
 
     @RequestMapping(value = "/register/email", method = {RequestMethod.POST})
     public String register(ModelMap map, HttpServletRequest request, String email) throws ParseException {
-        String url = request.getScheme()+"://"+ request.getServerName()+":"+request.getServerPort()+"/user/activate";
+        String url = request.getScheme()+"://"+ request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/user/activate";
         System.out.println(url);
         //注册
         registerValidateService.processRegister(url, email);//发邮箱激活

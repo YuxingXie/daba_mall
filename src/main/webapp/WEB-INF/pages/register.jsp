@@ -11,13 +11,13 @@
             color: #E94D1C
         }
         .pw_weak{
-            width: 30px; height: 13px; background: #e97e30;float:right; margin-top:2px; border-right: 1px #fff solid;
+            width: 30px; height: 13px; background: red;float:right; margin-top:2px; border-right: 1px #fff solid;
         }
         .pw_mid{
-            width: 30px; height: 13px; background: #2fe3e5;float:right; margin-top:2px; border-right: 1px #fff solid;
+            width: 30px; height: 13px; background: orange;float:right; margin-top:2px; border-right: 1px #fff solid;
         }
         .pw_strong{
-            width: 30px; height: 13px; background: #17d528;float:right; margin-top:2px ;border-right: 1px #fff solid;
+            width: 30px; height: 13px; background: #008000;float:right; margin-top:2px ;border-right: 1px #fff solid;
         }
         .pw_un_reach{
             width: 30px; height: 13px; background: darkgray;float:right; margin-top:2px; border-right: 1px #fff solid;
@@ -95,30 +95,7 @@
                                                 <button type="submit" class="btn btn-primary col-lg-8">完成注册</button>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-lg-8 col-md-offset-4 padding-left-0 padding-top-10 padding-right-30">
-                                                <hr>
-                                                <div class="login-socio">
-                                                    <p class="text-muted">其它方式登录:</p>
-                                                    <ul class="social-icons">
-                                                        <li><a href="#" data-original-title="txqq" class="txqq"
-                                                               title="腾讯QQ"></a></li>
-                                                        <li><a href="#" data-original-title="xlwb" class="xlwb"
-                                                               title="新浪微博"></a></li>
-                                                        <li><a href="#" data-original-title="rrw" class="rrw"
-                                                               title="人人网"></a></li>
-                                                        <li><a href="#" data-original-title="wx" class="wx"
-                                                               title="微信"></a></li>
-                                                        <li><a href="#" data-original-title="zfb" class="zfb"
-                                                               title="支付宝"></a></li>
-                                                        <li><a href="#" data-original-title="wy" class="wy"
-                                                               title="网易"></a></li>
-                                                        <li><a href="#" data-original-title="txwb" class="txwb"
-                                                               title="腾讯微博"></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </form>
                                 </div>
                                 <div class="col-md-4 col-sm-4 pull-right">
@@ -235,30 +212,7 @@
                                                 </div>
                                             </div>
                                         </fieldset>
-                                        <div class="row">
-                                            <div class="col-lg-8 col-md-offset-4 padding-left-0 padding-top-10 padding-right-30">
-                                                <hr>
-                                                <div class="login-socio">
-                                                    <p class="text-muted">其它方式登录:</p>
-                                                    <ul class="social-icons">
-                                                        <li><a href="#" data-original-title="txqq" class="txqq"
-                                                               title="腾讯QQ"></a></li>
-                                                        <li><a href="#" data-original-title="xlwb" class="xlwb"
-                                                               title="新浪微博"></a></li>
-                                                        <li><a href="#" data-original-title="rrw" class="rrw"
-                                                               title="人人网"></a></li>
-                                                        <li><a href="#" data-original-title="wx" class="wx"
-                                                               title="微信"></a></li>
-                                                        <li><a href="#" data-original-title="zfb" class="zfb"
-                                                               title="支付宝"></a></li>
-                                                        <li><a href="#" data-original-title="wy" class="wy"
-                                                               title="网易"></a></li>
-                                                        <li><a href="#" data-original-title="txwb" class="txwb"
-                                                               title="腾讯微博"></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </form>
                                 </div>
                                 <div class="col-md-4 col-sm-4 pull-right">
