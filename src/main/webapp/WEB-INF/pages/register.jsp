@@ -359,9 +359,9 @@
                 method:"POST",
                 url:"${path}/user/register/email?email="+$scope.user.email
             }).success(function(data){
-                c.$setValidity('unique',data.unique);
+//                c.$setValidity('unique',data.unique);
             }).error(function(data){
-                c.$setValidity('unique',false);
+//                c.$setValidity('unique',false);
             });
         }
     }])
