@@ -10,21 +10,9 @@ import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.SimpleEmail;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
-
 import java.text.ParseException;
 import java.util.Date;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
-//import com.app.dao.UserDao;
-//import com.app.tools.MD5Tool;
-//import com.app.tools.MD5Util;
-//import com.app.tools.SendEmail;
-//import com.app.tools.ServiceException;
-//import com.code.model.UserModel;
-
 /**
  * Created by Administrator on 2015/7/6.
  */
@@ -46,7 +34,7 @@ public class RegisterValidateService {
         user.setEmail(email);
         ///如果处于安全，可以将激活码处理的更复杂点，这里我稍做简单处理
         user.setValidateCode(MD5.convert(user.getEmail()));
-//        userDao.insert(user);//保存注册信息
+
         ///邮件的内容
         StringBuffer sb = new StringBuffer("点击下面链接激活账号，48小时生效，否则重新注册账号，链接只能使用一次，请尽快激活！</br>");
         sb.append("<a href=\"").append(registerUrl).append("?email=");
@@ -58,15 +46,16 @@ public class RegisterValidateService {
         HtmlEmail simpleEmail = new HtmlEmail();
         simpleEmail.setHostName("smtp.qq.com");//设置使用发电子邮件的邮件服务器
 
-//        simpleEmail.setSmtpPort(25);
+        simpleEmail.setAuthentication("185246042", "xieyuxing1978");
+        simpleEmail.setCharset("UTF-8");
+        simpleEmail.setSubject("大坝生态账号激活");
         try {
             simpleEmail.addTo(email);
-            simpleEmail.setAuthentication("185246042", "xieyuxing1978");
-            simpleEmail.setCharset("UTF-8");
             simpleEmail.setFrom("185246042@qq.com");
-            simpleEmail.setSubject("大坝生态账号激活");
+            String message=simpleEmail.send();
+            System.out.println(message);
             simpleEmail.setMsg(sb.toString());
-            simpleEmail.send();
+            userDao.insert(user);//保存注册信息,如果发送邮件抛出异常，不会保存
         }
         catch (EmailException ex) {
             ex.printStackTrace();
