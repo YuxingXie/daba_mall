@@ -26,11 +26,11 @@ public class RegisterController {
     private RegisterValidateService registerValidateService;
 
     @RequestMapping(value = "/register/email", method = {RequestMethod.POST})
-    public String register(ModelMap map, HttpServletRequest request, @ModelAttribute User user) throws ParseException {
+    public String register(ModelMap map, HttpServletRequest request, String email) throws ParseException {
         String url = request.getScheme()+"://"+ request.getServerName()+":"+request.getServerPort()+"/user/activate";
-        ModelAndView model = new ModelAndView();
+        System.out.println(url);
         //注册
-        registerValidateService.processRegister(url, user);//发邮箱激活
+        registerValidateService.processRegister(url, email);//发邮箱激活
         return "register/register_success";
     }
 

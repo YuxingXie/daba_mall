@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -75,12 +74,26 @@ public class IndexController extends BaseRestSpringController {
     public String userRegister(ModelMap model) {
         return "register";
     }
+    @RequestMapping(value = "/user/exist")
+    public ResponseEntity exist(ModelMap model,String name) {
+        System.out.println(name);
+        ResponseEntity responseEntity=null;
+        if (name.contains("sb")){
+            responseEntity=new ResponseEntity("{\"unique\":false}",HttpStatus.OK);
+        }else{
+            responseEntity=new ResponseEntity("{\"unique\":true}",HttpStatus.OK);
+        }
+
+//        System.out.println("is unique");
+        return responseEntity;
+    }
     @RequestMapping(value = "/user/post",method = RequestMethod.POST)
     public ResponseEntity<User> post(@RequestBody User user,ModelMap model) {
 //        System.out.println("post");
         user.setId(new ObjectId());
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
+
     @RequestMapping(value = "/user/login",method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody UserLoginForm form,ModelMap model,HttpSession session,HttpServletRequest request,HttpServletResponse response) {
         System.out.println("用户 "+ form.getName()+" 登录");

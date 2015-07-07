@@ -31,8 +31,9 @@ public class RegisterValidateService {
      * 处理注册
      */
 
-    public void processRegister(String registerUrl, User user){
+    public void processRegister(String registerUrl, String email){
         Long as=5480l;
+        User user=new User();
         user.setId(new ObjectId());
         user.setRegisterTime(new Date());
         user.setStatus(0);
