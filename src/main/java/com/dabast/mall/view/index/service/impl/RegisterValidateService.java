@@ -1,5 +1,6 @@
 package com.dabast.mall.view.index.service.impl;
 
+import com.dabast.common.code.EmailEnum;
 import com.dabast.common.util.MD5;
 import com.dabast.common.web.SendEmail;
 import com.dabast.entity.User;
@@ -12,7 +13,10 @@ import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.Resource;
+import javax.mail.internet.InternetAddress;
+
 /**
  * Created by Administrator on 2015/7/6.
  */
@@ -25,7 +29,7 @@ public class RegisterValidateService {
      * 处理注册
      */
 
-    public void processRegister(String registerUrl, String email) {
+    public String processRegister(String registerUrl, String email) {
         Long as = 5480l;
         User user = new User();
         user.setId(new ObjectId());
@@ -33,35 +37,40 @@ public class RegisterValidateService {
         user.setStatus(0);
         user.setEmail(email);
         ///如果处于安全，可以将激活码处理的更复杂点，这里我稍做简单处理
-        user.setValidateCode(MD5.convert(user.getEmail()));
 
         ///邮件的内容
-        StringBuffer sb = new StringBuffer("点击下面链接激活账号，48小时生效，否则重新注册账号，链接只能使用一次，请尽快激活！</br>");
-        sb.append("<a href=\"").append(registerUrl).append("?email=");
-        sb.append(user.getEmail()).append("&validateCode=").append(user.getValidateCode()).append("\">").append(registerUrl).append( "?email=")
-                .append(user.getEmail()).append("&validateCode=").append(user.getValidateCode()).append("</a>");
+        StringBuffer sb = new StringBuffer("<p>您的大坝生态邮箱注册验证码是:");
+        int validateCode=(int)(Math.random()*999999-99999);
+        user.setValidateCode(""+validateCode);
+        sb.append("<font color='red'>").append(validateCode).append("</font></p>");
+        sb.append("<p>验证码有效时间为30分钟。</p>");
 
         //发送邮件
-        System.out.println(sb);
-        HtmlEmail simpleEmail = new HtmlEmail();
-        simpleEmail.setHostName("smtp.qq.com");//设置使用发电子邮件的邮件服务器
-
-        simpleEmail.setAuthentication("185246042", "xieyuxing1978");
-        simpleEmail.setCharset("UTF-8");
-        simpleEmail.setSubject("大坝生态账号激活");
+        HtmlEmail htmlEmail = new HtmlEmail();
+        htmlEmail.setHostName("smtp.qq.com");//设置使用发电子邮件的邮件服务器
+        htmlEmail.setAuthentication("185246042", "xieyuxing1978");
+        htmlEmail.setCharset("UTF-8");
+        htmlEmail.setSubject("大坝生态账号激活");
+        htmlEmail.getBounceAddress();
+        String msg=null;
         try {
-            simpleEmail.addTo(email);
-            simpleEmail.setFrom("185246042@qq.com");
-            String message=simpleEmail.send();
-            System.out.println(message);
-            simpleEmail.setMsg(sb.toString());
+            htmlEmail.addTo(email);
+            htmlEmail.setFrom("185246042@qq.com");
+            htmlEmail.setMsg(sb.toString());
+            htmlEmail.send();
+
+
             userDao.insert(user);//保存注册信息,如果发送邮件抛出异常，不会保存
+            String code=email.indexOf("@")>=0?email.substring(email.indexOf("@")+1):"";
+            String url= EmailEnum.getUrlByCode(code);
+            msg="邮件成功发送到您的邮箱";
+            if (url!=null) msg+=",<a href='"+url+"' target='_blank'>进入邮箱</a>";
         }
         catch (EmailException ex) {
             ex.printStackTrace();
+            msg="对不起，服务器发送邮件时出现异常，请稍后再试!";
         }
-//        SendEmail.send(user.getEmail(), sb.toString());
-
+        return msg;
     }
 
     /**

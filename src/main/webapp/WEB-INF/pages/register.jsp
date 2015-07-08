@@ -10,6 +10,15 @@
             padding: 0;
             color: #E94D1C
         }
+        .info {
+            margin: 0;
+            padding: 0;
+            color: #18e957;
+            margin-left: 80px;
+            margin-top: 10px;
+            width: 100%;
+
+        }
         .pw_weak{
             width: 30px; height: 13px; background: red;float:right; margin-top:2px; border-right: 1px #fff solid;
         }
@@ -129,7 +138,7 @@
 
                                                 <div class="col-lg-8">
                                                     <input type="text" class="form-control" name="name"
-                                                           ng-model="user.name"
+                                                           ng-model="name"
                                                            placeholder="请输入您的昵称" required ng-maxlength="20">
                                                 </div>
                                                 <div class="col-lg-4"></div>
@@ -146,7 +155,7 @@
                                                         class="require">*</span></label>
 
                                                 <div class="col-lg-8">
-                                                    <input type="email" class="form-control" name="email" ng-model="user.email" placeholder="请输入您的邮箱地址" required ensure_unique="{{user.email}}"/>
+                                                    <input type="email" class="form-control" name="email" ng-model="email" placeholder="请输入您的邮箱地址" required ensure_unique="{{email}}"/>
                                                 </div>
                                                 <div class="col-lg-4"></div>
                                                 <div class="error col-lg-8"
@@ -160,7 +169,7 @@
                                                 <label for="password" class="col-lg-4 control-label">密码 <span class="require">*</span></label>
 
                                                 <div class="col-lg-8">
-                                                    <input type="password" class="form-control" id="password2" name="password" ng-model="user.password" placeholder="请输入密码" required ng-minlength="{{pw_min}}">
+                                                    <input type="password" class="form-control" id="password2" name="password" ng-model="password" placeholder="请输入密码" required ng-minlength="{{pw_min}}">
                                                 </div>
                                                 <div class="col-lg-4"></div>
                                                 <div class="error col-lg-8" ng-show="signup_form.password.$dirty &&signup_form.password.$invalid">
@@ -177,15 +186,13 @@
                                             <div class="form-group">
                                                 <label for="password" class="col-lg-4 control-label">确认密码 <span class="require">*</span></label>
                                                 <div class="col-lg-8">
-                                                    <input type="password" class="form-control" name="re_password" ng-model="user.re_password" pw-check="#password2" placeholder="请再输入一次密码" required ng-minlength="{{pw_min}}"/>
+                                                    <input type="password" class="form-control" name="re_password" ng-model="re_password" pw_check="#password2" placeholder="请再输入一次密码" required ng-minlength="{{pw_min}}"/>
                                                 </div>
                                                 <div class="col-lg-4"></div>
                                                 <div class="error col-lg-8" ng-show="signup_form.re_password.$dirty &&signup_form.re_password.$invalid">
                                                     <span class="error" ng-show="signup_form.re_password.$error.required"> 必须确认密码</span>
                                                     <span class="error" ng-show="signup_form.re_password.$error.minlength"> 密码最少需要{{pw_min}}个字符 </span>
                                                     <span class="error" ng-show="signup_form.re_password.$error.pwmatch"> 两次密码必须相同</span>
-
-
                                                 </div>
                                                 <div class="col-lg-5" ng-show="signup_form.re_password.$valid">
                                                     <p> {{confirm}}</p>
@@ -194,21 +201,21 @@
                                             <div class="form-group">
                                                 <label class="col-lg-4 control-label">邮箱验证码 <span
                                                         class="require">*</span></label>
-
                                                 <div class="col-lg-4">
-                                                    <input type="text" class="form-control" name="user.code"
-                                                           ng-model="user.code">
+                                                    <input type="text" class="form-control" email="{{email}}" name="validateCode" ng-model="validateCode" required ng-disabled="!mailSent" ensure_validate_code="{{validateCode}}"/>
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <button type="button" class="btn btn-primary col-lg-12" ng-disabled="signup_form.email.$invalid" data-ng-click="getValidCode()">获取验证码</button>
+                                                </div>
+                                                <div class="col-lg-4"></div>
+                                                <div class="col-lg-8 info" ng-show="mailSent &&signup_form.validateCode.$error.required">
+                                                    <span class="info">邮件发送成功，点击<a href="{{url}}" target="_blank">这里</a>进入邮箱获取验证码</span>
                                                 </div>
                                             </div>
 
                                             <div class="row">
                                                 <div class="col-lg-8 col-md-offset-4 padding-left-0">
-                                                    <button type="submit" class="btn btn-primary col-lg-8"
-                                                            ng-disabled="signup_form.$invalid">提交
-                                                    </button>
+                                                    <button type="submit" class="btn btn-primary col-lg-8" ng-disabled="signup_form.$invalid">提交</button>
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -260,34 +267,69 @@
                  link:function(scope,ele,attrs,c){
                      var timeout;
                      scope.$watch(attrs.ngModel,function(n){
+//                         console.log(scope.ngModel);
                          if(!n) return;
                          if(timeout) $timeout.cancel(timeout);
                          timeout=$timeout(function(){
+                             var data={}
+                             data[attrs.ngModel]=attrs.ensureUnique;
                              $http({
                                  method:"POST",
-                                 url:"exist?name="+attrs.ensureUnique,
-                                 data:{
-                                     field:attrs.emailValidate,
-                                     value:scope.ngModel
-                                 }
+                                 url:"exist",
+                                 data:data
                              }).success(function(data){
                                  c.$setValidity('unique',data.unique);
                              }).error(function(data){
                                  c.$setValidity('unique',false);
                              });
-                         },200);
+                         },300);
 
                      });
 
                  }
              }
      })
+    .directive("ensureValidateCode", function ($http,$timeout) {
+        return{
+            require:"ngModel",
+//            controller:"formController",
+            scope:{
+                email:'@'
+            },
+            link:function(scope,ele,attrs,c){
+                var timeout;
+                scope.$watch(attrs.ngModel,function(n){
+
+                    if(!n) return;
+                    if(timeout) $timeout.cancel(timeout);
+                    timeout=$timeout(function(){
+                        var data={};
+                        data[email]=scope.email;
+                        console.log(scope.email);
+                        data[validateCode]=scope.validateCode;
+                        $http({
+                            method:"POST",
+                            url:"${path}/user/email/validate",
+                            data:data
+                        }).success(function(data){
+                            c.$setValidity('unique',data.unique);
+                        }).error(function(data){
+                            c.$setValidity('unique',false);
+                        });
+                    },200);
+
+                });
+
+            }
+        }
+    })
     .constant('pw_min',6)
     .controller("formController", ["$scope","$http","pw_min",function ($scope,$http,pw_min) {
         $scope.pw_min=pw_min;
-        $scope.$watch('user.password', function (newVal, oldVal, scope) {
+        $scope.$watch('email', function (newVal, oldVal, scope) {if(newVal !== oldVal)$scope.email=newVal})
+        $scope.$watch('password', function (newVal, oldVal, scope) {
             if (newVal && newVal !== oldVal && newVal.length >= pw_min) {
-                $scope.user.password=newVal;
+                $scope.password=newVal;
                 if (newVal.length >=pw_min && newVal.length < (pw_min+3)) {
                     $scope.passwordStrength = "弱";
                     $scope.cls1 = "pw_weak";
@@ -311,11 +353,12 @@
         $scope.getValidCode = function () {
             $http({
                 method:"POST",
-                url:"${path}/user/register/email?email="+$scope.user.email
+                url:"${path}/user/register/validate_code/email?email="+$scope.email
             }).success(function(data){
-//                c.$setValidity('unique',data.unique);
+                $scope.mailSent=true;
+                $scope.url=data.url;
             }).error(function(data){
-//                c.$setValidity('unique',false);
+                $scope.mailSent=false;
             });
         }
     }])

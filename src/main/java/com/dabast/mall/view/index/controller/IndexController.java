@@ -75,10 +75,10 @@ public class IndexController extends BaseRestSpringController {
         return "register";
     }
     @RequestMapping(value = "/user/exist")
-    public ResponseEntity exist(ModelMap model,String name) {
-        System.out.println(name);
+    public ResponseEntity exist(ModelMap model,@RequestBody User user) {
+        System.out.println("user:"+user.getEmail());
         ResponseEntity responseEntity=null;
-        if (name.contains("sb")){
+        if (user.getEmail().contains("sb")){
             responseEntity=new ResponseEntity("{\"unique\":false}",HttpStatus.OK);
         }else{
             responseEntity=new ResponseEntity("{\"unique\":true}",HttpStatus.OK);

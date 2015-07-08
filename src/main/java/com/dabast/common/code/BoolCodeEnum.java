@@ -51,11 +51,11 @@ public enum BoolCodeEnum implements ICodeEnum {
         return code;
     }
 
-    @Override
-    public String toChineseCode() {
-        if (code.equals("Y")) return "是";
-        return "否";
-    }
+//    @Override
+//    public String toChineseCode() {
+//        if (code.equals("Y")) return "是";
+//        return "否";
+//    }
 
     public boolean boolValue() {
         return this.ordinal() == 0;
