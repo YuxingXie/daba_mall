@@ -34,7 +34,7 @@
     </style>
 </head>
 <body>
-<div class="main" ng-app="registerApp">
+<div class="main" ng-app="registerApp" ng-init='mailSent=false;requestSent=false'>
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="${path}/index/main">首页</a></li>
@@ -205,7 +205,8 @@
                                                     <input type="text" class="form-control" email="{{email}}" name="validateCode" ng-model="validateCode" required ng-disabled="!mailSent" ensure_validate_code="{{validateCode}}"/>
                                                 </div>
                                                 <div class="col-lg-4">
-                                                    <button type="button" class="btn btn-primary col-lg-12" ng-disabled="signup_form.email.$invalid" data-ng-click="getValidCode()">获取验证码</button>
+                                                    <button type="button"  class="btn btn-primary col-lg-12"
+                                                            ng-disabled="signup_form.email.$invalid||(!mailSent&&requestSent)" data-ng-click="getValidCode()">获取验证码</button>
                                                 </div>
                                                 <div class="col-lg-4"></div>
                                                 <div class="col-lg-8 info" ng-show="mailSent &&signup_form.validateCode.$error.required">
@@ -292,21 +293,20 @@
     .directive("ensureValidateCode", function ($http,$timeout) {
         return{
             require:"ngModel",
-//            controller:"formController",
-            scope:{
-                email:'@'
-            },
+//            scope:{
+//                ngModel:"=",
+//                email:'@'
+//            },
             link:function(scope,ele,attrs,c){
                 var timeout;
-                scope.$watch(attrs.ngModel,function(n){
-
-                    if(!n) return;
+                scope.$watch(attrs.ngModel,function(newVal){
+                    if(!newVal) return;
                     if(timeout) $timeout.cancel(timeout);
                     timeout=$timeout(function(){
                         var data={};
-                        data[email]=scope.email;
-                        console.log(scope.email);
-                        data[validateCode]=scope.validateCode;
+                        data["email"]=scope.email;
+                        data["validateCode"]=attrs.ensureValidateCode;
+//                        data["validateCode"]=scope.validateCode;
                         $http({
                             method:"POST",
                             url:"${path}/user/email/validate",
@@ -316,7 +316,7 @@
                         }).error(function(data){
                             c.$setValidity('unique',false);
                         });
-                    },200);
+                    },300);
 
                 });
 
@@ -350,12 +350,15 @@
                 }
             }
         });
-        $scope.getValidCode = function () {
+        $scope.getValidCode = function (){
+            $scope.requestSent=true;
+            $scope.mailSent=false;
             $http({
                 method:"POST",
                 url:"${path}/user/register/validate_code/email?email="+$scope.email
             }).success(function(data){
                 $scope.mailSent=true;
+
                 $scope.url=data.url;
             }).error(function(data){
                 $scope.mailSent=false;

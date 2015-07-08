@@ -43,7 +43,8 @@ public class RegisterController {
 
     @RequestMapping(value = "/email/validate")
     public ResponseEntity exist(ModelMap model,@RequestBody User user) {
-        System.out.println("user:"+user.getEmail());
+        System.out.println("email:"+user.getEmail());
+        System.out.println("code:"+user.getValidateCode());
         ResponseEntity responseEntity=null;
 
 
