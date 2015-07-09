@@ -20,21 +20,21 @@
 
         }
         .pw_weak{
-            width: 30px; height: 13px; background: red;float:right; margin-top:2px; border-right: 1px #fff solid;
+            width: 50px;background: red;border-right: 1px #fff solid;display:inline-block;margin: 0px;
         }
         .pw_mid{
-            width: 30px; height: 13px; background: orange;float:right; margin-top:2px; border-right: 1px #fff solid;
+            width: 50px;background: orange;border-right: 1px #fff solid;display:inline-block;margin: 0px;
         }
         .pw_strong{
-            width: 30px; height: 13px; background: #008000;float:right; margin-top:2px ;border-right: 1px #fff solid;
+            width: 50px;background: #008000;border-right: 1px #fff solid;display:inline-block;margin: 0px;
         }
         .pw_un_reach{
-            width: 30px; height: 13px; background: darkgray;float:right; margin-top:2px; border-right: 1px #fff solid;
+            width: 50px; background: darkgray;border-right: 1px #fff solid;display:inline-block;margin: 0px;
         }
     </style>
 </head>
 <body>
-<div class="main" ng-app="registerApp" ng-init='mailSent=false;requestSent=false'>
+<div class="main" ng-app="registerApp" ng-init='mailSending=false;sendCount=0;'>
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="${path}/index/main">首页</a></li>
@@ -133,84 +133,109 @@
                                           novalidate="novalidate" method="post" ng-submit="signupForm()">
                                         <fieldset>
                                             <div class="form-group">
-                                                <label class="col-lg-4 control-label">昵称<span
-                                                        class="require">*</span></label>
+                                                <div class="row">
+                                                    <label class="col-lg-4 control-label">昵称<span class="require">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="text" class="form-control" name="name" id="name"
+                                                               ng-model="name"
+                                                               placeholder="请输入您的昵称" required ng-maxlength="20">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-4">&nbsp;</div>
+                                                    <div class="col-lg-8 has-error"
+                                                         ng-show="signup_form.name.$dirty &&signup_form.name.$invalid">
+                                                        <label class="control-label" ng-show="signup_form.name.$error.required" for="name">
+                                                            用户昵称必填</label>
+                                                        <label class="control-label" ng-show="signup_form.name.$error.maxlength" for="name">
+                                                            昵称不能超过20个字符</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <label class="col-lg-4 control-label">邮箱地址 <span class="require">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="email" class="form-control" name="email" ng-model="email" placeholder="请输入您的邮箱地址" required ensure_unique="{{email}}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-4">&nbsp;</div>
+                                                    <div class="col-lg-8 has-error"
+                                                         ng-show="signup_form.email.$dirty &&signup_form.email.$invalid">
+                                                        <label class="control-label" ng-show="signup_form.email.$error.required">邮箱必填</label>
+                                                        <label class="control-label" ng-show="signup_form.email.$error.email"> 请输入一个有效的邮箱</label>
+                                                        <label class="control-label" ng-show="signup_form.email.$error.unique"> 该邮箱已被使用</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <label for="password" class="col-lg-4 control-label">密码 <span class="require">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="password" class="form-control" id="password2" name="password" ng-model="password" placeholder="请输入密码" required ng-minlength="{{pw_min}}">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-4">&nbsp;</div>
+                                                    <div class="has-error col-lg-8" ng-show="signup_form.password.$dirty &&signup_form.password.$invalid">
+                                                        <label class="control-label" ng-show="signup_form.password.$error.required">密码必填</label>
+                                                        <label class="control-label" ng-show="signup_form.password.$error.minlength">密码最少需要{{pw_min}}个字符</label>
+                                                    </div>
+                                                    <div class="has-success col-lg-8" ng-show="signup_form.password.$valid">
+                                                        <label class="control-label">密码强度:
+                                                        <div class="{{cls1}}">&nbsp;</div><div class="{{cls2}}">&nbsp;</div><div class="{{cls3}}">&nbsp;</div>
+                                                        {{passwordStrength}}</label>
+                                                    </div>
+                                                </div>
 
-                                                <div class="col-lg-8">
-                                                    <input type="text" class="form-control" name="name"
-                                                           ng-model="name"
-                                                           placeholder="请输入您的昵称" required ng-maxlength="20">
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <label for="password" class="col-lg-4 control-label">确认密码 <span class="require">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="password" class="form-control" name="re_password"
+                                                               ng-model="re_password" pw_check="#password2" placeholder="请再输入一次密码" required ng-minlength="{{pw_min}}"/>
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-4"></div>
-                                                <div class="error col-lg-8"
-                                                     ng-show="signup_form.name.$dirty &&signup_form.name.$invalid">
-                                                    <p class="error" ng-show="signup_form.name.$error.required">
-                                                        用户昵称必填</p>
-                                                    <p class="error" ng-show="signup_form.name.$error.maxlength">
-                                                        昵称不能超过20个字符</p>
+                                                <div class="row">
+                                                    <div class="col-lg-4">&nbsp;</div>
+                                                    <div class="has-error col-lg-8" ng-show="signup_form.re_password.$dirty &&signup_form.re_password.$invalid">
+                                                        <label class="control-label" ng-show="signup_form.re_password.$error.required"> 必须确认密码</label>
+                                                        <label class="control-label" ng-show="signup_form.re_password.$error.minlength"> 密码最少需要{{pw_min}}个字符 </label>
+                                                        <label class="control-label" ng-show="signup_form.re_password.$error.pwmatch"> 两次密码必须相同</label>
+                                                    </div>
+                                                    <div class="col-lg-8 has-success" ng-show="signup_form.re_password.$valid">
+                                                        <label class="control-label"> V</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-lg-4 control-label">邮箱地址 <span
-                                                        class="require">*</span></label>
-
-                                                <div class="col-lg-8">
-                                                    <input type="email" class="form-control" name="email" ng-model="email" placeholder="请输入您的邮箱地址" required ensure_unique="{{email}}"/>
+                                                <div class="row">
+                                                    <label class="col-lg-4 control-label">邮箱验证码 <span class="require">*</span></label>
+                                                    <div class="col-lg-4">
+                                                        <input type="text" class="form-control" email="{{email}}" name="validateCode" ng-model="validateCode" required ng-disabled="!mailSending" ensure_validate_code="{{validateCode}}"/>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <button type="button"  class="btn btn-primary col-lg-12"
+                                                                ng-disabled="signup_form.email.$invalid||mailSending" data-ng-click="getValidCode({{sendCount}})">获取验证码</button>
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-4"></div>
-                                                <div class="error col-lg-8"
-                                                     ng-show="signup_form.email.$dirty &&signup_form.email.$invalid">
-                                                    <span class="error" ng-show="signup_form.email.$error.required">邮箱必填</span>
-                                                    <span class="error" ng-show="signup_form.email.$error.email"> 请输入一个有效的邮箱</span>
-                                                    <span class="error" ng-show="signup_form.email.$error.unique"> 该邮箱已被使用</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="password" class="col-lg-4 control-label">密码 <span class="require">*</span></label>
-
-                                                <div class="col-lg-8">
-                                                    <input type="password" class="form-control" id="password2" name="password" ng-model="password" placeholder="请输入密码" required ng-minlength="{{pw_min}}">
-                                                </div>
-                                                <div class="col-lg-4"></div>
-                                                <div class="error col-lg-8" ng-show="signup_form.password.$dirty &&signup_form.password.$invalid">
-                                                    <p class="error" ng-show="signup_form.password.$error.required">密码必填</p>
-                                                    <p class="error" ng-show="signup_form.password.$error.minlength">密码最少需要{{pw_min}}个字符</p>
-                                                </div>
-                                                <div class="col-lg-5" ng-show="signup_form.password.$valid">
-                                                    <div class="{{cls3}}"></div>
-                                                    <div class="{{cls2}}"></div>
-                                                    <div class="{{cls1}}"></div>
-                                                    密码强度:<span class='{{cls}}'>{{passwordStrength}}</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="password" class="col-lg-4 control-label">确认密码 <span class="require">*</span></label>
-                                                <div class="col-lg-8">
-                                                    <input type="password" class="form-control" name="re_password" ng-model="re_password" pw_check="#password2" placeholder="请再输入一次密码" required ng-minlength="{{pw_min}}"/>
-                                                </div>
-                                                <div class="col-lg-4"></div>
-                                                <div class="error col-lg-8" ng-show="signup_form.re_password.$dirty &&signup_form.re_password.$invalid">
-                                                    <span class="error" ng-show="signup_form.re_password.$error.required"> 必须确认密码</span>
-                                                    <span class="error" ng-show="signup_form.re_password.$error.minlength"> 密码最少需要{{pw_min}}个字符 </span>
-                                                    <span class="error" ng-show="signup_form.re_password.$error.pwmatch"> 两次密码必须相同</span>
-                                                </div>
-                                                <div class="col-lg-5" ng-show="signup_form.re_password.$valid">
-                                                    <p> {{confirm}}</p>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-lg-4 control-label">邮箱验证码 <span class="require">*</span></label>
-                                                <div class="col-lg-4">
-                                                    <input type="text" class="form-control" email="{{email}}" name="validateCode" ng-model="validateCode" required ng-disabled="!mailSent" ensure_validate_code="{{validateCode}}"/>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <button type="button"  class="btn btn-primary col-lg-12"
-                                                            ng-disabled="signup_form.email.$invalid||(!mailSent&&requestSent)" data-ng-click="getValidCode()">获取验证码</button>
-                                                </div>
-                                                <div class="col-lg-4"></div>
-                                                <div class="col-lg-8" >
-                                                    <span class="info" ng-show="mailSent">邮件发送成功，点击<a href="{{url}}" target="_blank">这里</a>进入邮箱获取验证码</span>
-                                                    <span class="error" ng-show="mailSent&&!signup_form.validateCode.$error.codeInvalid">验证码错误</span>
+                                                <div class="row">
+                                                    <div class="col-lg-4"
+                                                         ng-show="(!signup_form.validateCode.$error.codeInvalid&&signup_form.validateCode.$dirty)
+                                                    ||(mailSending&&signup_form.validateCode.$dirty)">&nbsp;</div>
+                                                    <%--前后这两个div一定要ng-show相同哦--%>
+                                                    <div class="col-lg-8 has-error"
+                                                         ng-show="(signup_form.validateCode.$dirty&&sendCount==1&&!signup_form.validateCode.$error.codeInvalid)
+                                                    ||(mailSending&&signup_form.validateCode.$dirty&&sendCount>1)">
+                                                        <label class="control-label" >验证码错误</label>
+                                                    </div>
+                                                    <div class="col-lg-4" ng-show="mailSending">&nbsp;</div>
+                                                    <%--前后这两个div一定要ng-show相同哦--%>
+                                                    <div class="col-lg-8 has-success" ng-show="mailSending">
+                                                        <label class="control-label" >邮件发送成功，点击<a href="{{url}}" class="btn-primary btn-xs" target="_blank">这里</a>进入邮箱</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -351,18 +376,18 @@
                 }
             }
         });
-        $scope.getValidCode = function (){
-            $scope.requestSent=true;
-            $scope.mailSent=false;
+        $scope.getValidCode = function (sendCount){
+            $scope.sendCount++;
+            $scope.mailSending=false;
             $http({
                 method:"POST",
                 url:"${path}/user/register/validate_code/email?email="+$scope.email
             }).success(function(data){
-                $scope.mailSent=true;
+                $scope.mailSending=true;
 
                 $scope.url=data.url;
             }).error(function(data){
-                $scope.mailSent=false;
+                $scope.mailSending=false;
             });
         }
     }])
