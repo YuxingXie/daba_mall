@@ -4,13 +4,10 @@ import com.dabast.common.base.BaseMongoDao;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.ProductProperty;
 import com.dabast.entity.ProductSeries;
-import org.apache.commons.lang.time.DateUtils;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Repository;
 
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

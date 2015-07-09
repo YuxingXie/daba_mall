@@ -199,8 +199,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-lg-4 control-label">邮箱验证码 <span
-                                                        class="require">*</span></label>
+                                                <label class="col-lg-4 control-label">邮箱验证码 <span class="require">*</span></label>
                                                 <div class="col-lg-4">
                                                     <input type="text" class="form-control" email="{{email}}" name="validateCode" ng-model="validateCode" required ng-disabled="!mailSent" ensure_validate_code="{{validateCode}}"/>
                                                 </div>
@@ -209,11 +208,11 @@
                                                             ng-disabled="signup_form.email.$invalid||(!mailSent&&requestSent)" data-ng-click="getValidCode()">获取验证码</button>
                                                 </div>
                                                 <div class="col-lg-4"></div>
-                                                <div class="col-lg-8 info" ng-show="mailSent &&signup_form.validateCode.$error.required">
-                                                    <span class="info">邮件发送成功，点击<a href="{{url}}" target="_blank">这里</a>进入邮箱获取验证码</span>
+                                                <div class="col-lg-8" >
+                                                    <span class="info" ng-show="mailSent">邮件发送成功，点击<a href="{{url}}" target="_blank">这里</a>进入邮箱获取验证码</span>
+                                                    <span class="error" ng-show="mailSent&&!signup_form.validateCode.$error.codeInvalid">验证码错误</span>
                                                 </div>
                                             </div>
-
                                             <div class="row">
                                                 <div class="col-lg-8 col-md-offset-4 padding-left-0">
                                                     <button type="submit" class="btn btn-primary col-lg-8" ng-disabled="signup_form.$invalid">提交</button>
@@ -274,6 +273,8 @@
                          timeout=$timeout(function(){
                              var data={}
                              data[attrs.ngModel]=attrs.ensureUnique;
+                             console.log("key:"+attrs.ngModel)
+                             console.log("value:"+attrs.ensureUnique)
                              $http({
                                  method:"POST",
                                  url:"exist",
@@ -312,9 +313,9 @@
                             url:"${path}/user/email/validate",
                             data:data
                         }).success(function(data){
-                            c.$setValidity('unique',data.unique);
+                            c.$setValidity('codeInvalid',data.codeInvalid);
                         }).error(function(data){
-                            c.$setValidity('unique',false);
+                            c.$setValidity('codeInvalid',true);
                         });
                     },300);
 

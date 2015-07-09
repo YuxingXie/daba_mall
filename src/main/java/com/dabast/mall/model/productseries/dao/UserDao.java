@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Administrator on 2015/5/22.
  */
 @Repository
-public class UserDao extends BaseMongoDao<User> implements IUserDao {
+public class UserDao extends BaseMongoDao<User>  {
     //单个插入
     @Resource
     private MongoOperations mongoTemplate;
@@ -24,7 +24,7 @@ public class UserDao extends BaseMongoDao<User> implements IUserDao {
     /**
      * 获得所有的user
      */
-    @Override
+
     public List<User> getAllObjects() {
         return mongoTemplate.findAll(User.class);
     }
@@ -32,7 +32,7 @@ public class UserDao extends BaseMongoDao<User> implements IUserDao {
     /**
      * 保存一个user对象
      */
-    @Override
+
     public void saveObject(User user) {
         mongoTemplate.insert(user);
     }
@@ -41,7 +41,7 @@ public class UserDao extends BaseMongoDao<User> implements IUserDao {
      * 通过id进行查找
      */
 
-    @Override
+
     public User getObject(String id) {
         return mongoTemplate.findOne(new Query(Criteria.where(id).is(id)),
                 User.class);
@@ -50,7 +50,7 @@ public class UserDao extends BaseMongoDao<User> implements IUserDao {
     /**
      * 根据id和name进行查找
      */
-    @Override
+
     public WriteResult updateObject(String id, String name) {
         return mongoTemplate.updateFirst(
                 new Query(Criteria.where(id).is(id)),
@@ -60,7 +60,7 @@ public class UserDao extends BaseMongoDao<User> implements IUserDao {
     /**
      * 根据id删除user
      */
-    @Override
+
     public void deleteObject(String id) {
         mongoTemplate
                 .remove(new Query(Criteria.where(id).is(id)), User.class);
@@ -69,7 +69,7 @@ public class UserDao extends BaseMongoDao<User> implements IUserDao {
     /**
      * 如果collection不存在则建立
      */
-    @Override
+
     public void createCollection() {
         if (!mongoTemplate.collectionExists(User.class))
             mongoTemplate.createCollection(User.class);
@@ -79,14 +79,14 @@ public class UserDao extends BaseMongoDao<User> implements IUserDao {
      * 如果collection存在则删除之
      */
 
-    @Override
+
     public void dropCollection() {
         if (mongoTemplate.collectionExists(User.class)) {
             mongoTemplate.dropCollection(User.class);
         }
     }
 
-    @Override
+
     public User findByNameAndPwd(String loginName, String loginPwd) {
         User user=new User();
         user.setName(loginName);
@@ -97,10 +97,18 @@ public class UserDao extends BaseMongoDao<User> implements IUserDao {
         return user;
     }
 
-    @Override
+
     public User findByEmail(String email) {
         User user=new User();
         user.setEmail(email);
-        return findEquals(user).get(0);
+        List<User> users=findEquals(user);
+        return users==null||users.size()==0?null:users.get(0);
+    }
+
+    public boolean isEmailUsed(String email) {
+        User user=findByEmail(email);
+        if (user==null) return false;
+        if (user.getStatus()==0) return false;
+        return true;
     }
 }

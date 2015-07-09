@@ -8,12 +8,16 @@ import com.dabast.entity.ProductSeries;
 import com.dabast.entity.User;
 import com.dabast.mall.form.UserLoginForm;
 import com.dabast.mall.model.productseries.dao.UserDao;
+import com.dabast.mall.view.index.service.impl.RegisterValidateService;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -33,6 +37,8 @@ import java.util.List;
 public class IndexController extends BaseRestSpringController {
     @Resource(name = "userDao")
     UserDao userDao;
+    @Resource
+    private RegisterValidateService registerValidateService;
     @RequestMapping(value = "/main")
     public String index(HttpServletRequest request,ModelMap model,HttpSession session) {
 
@@ -45,8 +51,6 @@ public class IndexController extends BaseRestSpringController {
             e.printStackTrace();
         }
         String password=pwdCookie==null?null:pwdCookie.getValue();
-        System.out.println("read password from cookie:"+password);
-        System.out.println("read user name from cookie:"+name);
         if (name!=null&&password!=null){
             User user=userDao.findByNameAndPwd(name,password);
             if (user!=null) session.setAttribute("loginUser",user);
@@ -76,9 +80,10 @@ public class IndexController extends BaseRestSpringController {
     }
     @RequestMapping(value = "/user/exist")
     public ResponseEntity exist(ModelMap model,@RequestBody User user) {
-        System.out.println("user:"+user.getEmail());
+        System.out.println("email:"+user.getEmail());
         ResponseEntity responseEntity=null;
-        if (user.getEmail().contains("sb")){
+        boolean used=registerValidateService.isEmailUsed(user.getEmail());
+        if (used){
             responseEntity=new ResponseEntity("{\"unique\":false}",HttpStatus.OK);
         }else{
             responseEntity=new ResponseEntity("{\"unique\":true}",HttpStatus.OK);
@@ -93,7 +98,6 @@ public class IndexController extends BaseRestSpringController {
         user.setId(new ObjectId());
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
-
     @RequestMapping(value = "/user/login",method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody UserLoginForm form,ModelMap model,HttpSession session,HttpServletRequest request,HttpServletResponse response) {
         System.out.println("用户 "+ form.getName()+" 登录");

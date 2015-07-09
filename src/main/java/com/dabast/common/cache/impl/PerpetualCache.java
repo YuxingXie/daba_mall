@@ -2,7 +2,6 @@ package com.dabast.common.cache.impl;
 
 
 import com.dabast.common.cache.Cache;
-import com.dabast.common.cache.CacheException;
 
 import java.util.ArrayList;
 import java.util.HashMap;

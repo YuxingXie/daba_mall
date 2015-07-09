@@ -6,7 +6,6 @@ import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.List;
 @Transactional(readOnly = true)
@@ -34,7 +33,8 @@ public abstract class BaseEntityManager <E> implements IBaseEntityManager<E> {
 	public List<E> findAll() {
 		return getEntityDao().findAll();
 	}
-
+	@Override
+	public int upsert(E queryEntity,E updateEntity) {return getEntityDao().upsert(queryEntity,updateEntity);}
 	@Override
 	public E findById(ObjectId id) {
 		return getEntityDao().findById(id);

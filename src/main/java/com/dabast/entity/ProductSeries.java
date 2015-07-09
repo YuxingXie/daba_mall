@@ -6,11 +6,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Administrator on 2015/6/2.

@@ -14,9 +14,7 @@ import java.util.Set;
  * Created by Administrator on 2015/5/22.
  */
 @Document(collection = "users")
-public class User
-
-{
+public class User {
     @Id private ObjectId id;
     @Field(value = "name")
     private String name;
@@ -29,10 +27,12 @@ public class User
     @Field("email")
     @Email
     private String email;
-    @DBRef private Set<Address> address;
+//    @DBRef private Set<Address> address;
     @Field("registerTime")
     private Date registerTime;
+    @Field("status")
     private int status;
+    @Field("validateCode")
     private String validateCode;
     @Field("lastActivateTime")
     private Date lastActivateTime;
@@ -45,10 +45,12 @@ public class User
         this.email = email;
     }
 
-    public Set<Address> getAddress() {
-        return address;
-    }
-
+//    public Set<Address> getAddress() {
+//        return address;
+//    }
+//    public void setAddress(Set<Address> address) {
+//        this.address = address;
+//    }
     public String getPassword() {
         return password;
     }
@@ -57,9 +59,7 @@ public class User
         this.password = password;
     }
 
-    public void setAddress(Set<Address> address) {
-        this.address = address;
-    }
+
 
     public ObjectId getId() {
         return id;

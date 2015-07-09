@@ -5,7 +5,6 @@ import com.mongodb.gridfs.GridFSDBFile;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,6 +15,7 @@ public interface IBaseEntityManager<E> {
    List<E> findEquals(E e);
    List<E> findNotEquals(E e);
    List<E> findAll();
+   public int upsert(E queryEntity,E updateEntity);
    E findById(ObjectId id);;
    List<E> findRange(String key, Object min, Object max);
    List<E> findKeyIn(String key, Collection collection);

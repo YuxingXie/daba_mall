@@ -1,21 +1,17 @@
 package com.dabast.mall.view.index.service.impl;
 
 import com.dabast.common.code.EmailEnum;
-import com.dabast.common.util.MD5;
-import com.dabast.common.web.SendEmail;
 import com.dabast.entity.User;
 import com.dabast.mall.model.productseries.dao.UserDao;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
-import org.apache.commons.mail.SimpleEmail;
-import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.Resource;
-import javax.mail.internet.InternetAddress;
 
 /**
  * Created by Administrator on 2015/7/6.
@@ -29,19 +25,23 @@ public class RegisterValidateService {
      * 处理注册
      */
 
-    public String processRegister(String registerUrl, String email) {
+    public String processRegister(String email) {
         Long as = 5480l;
-        User user = new User();
-        user.setId(new ObjectId());
-        user.setRegisterTime(new Date());
-        user.setStatus(0);
-        user.setEmail(email);
-        ///如果处于安全，可以将激活码处理的更复杂点，这里我稍做简单处理
+        User queryUser = new User();
+        queryUser.setEmail(email);
+        queryUser.setStatus(0);
+        User updateUser=new User();
+        updateUser.setEmail(email);
+        updateUser.setStatus(0);
+        List<User> dbUsers=userDao.findEquals(queryUser);
+        User dbUser=dbUsers==null||dbUsers.size()==0?updateUser:(dbUsers.get(0));
+//        user.setId(new ObjectId());
+        dbUser.setRegisterTime(new Date());
 
         ///邮件的内容
         StringBuffer sb = new StringBuffer("<p>您的大坝生态邮箱注册验证码是:");
         int validateCode=(int)(Math.random()*999999-99999);
-        user.setValidateCode(""+validateCode);
+        dbUser.setValidateCode(""+validateCode);
         sb.append("<font color='red'>").append(validateCode).append("</font></p>");
         sb.append("<p>验证码有效时间为30分钟。</p>");
 
@@ -58,9 +58,8 @@ public class RegisterValidateService {
             htmlEmail.setFrom("185246042@qq.com");
             htmlEmail.setMsg(sb.toString());
             htmlEmail.send();
-
-
-            userDao.insert(user);//保存注册信息,如果发送邮件抛出异常，不会保存
+            //保存注册信息,如果发送邮件抛出异常，不会保存
+            userDao.upsert(queryUser,dbUser);
             String code=email.indexOf("@")>=0?email.substring(email.indexOf("@")+1):"";
             String url= EmailEnum.getUrlByCode(code);
             msg="邮件成功发送到您的邮箱";
@@ -111,5 +110,9 @@ public class RegisterValidateService {
             throw new ServiceException("该邮箱未注册（邮箱地址不存在）！");
         }
 
+    }
+
+    public boolean isEmailUsed(String email) {
+        return userDao.isEmailUsed(email);
     }
 }

@@ -5,13 +5,13 @@ import com.mongodb.gridfs.GridFSDBFile;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
 public interface EntityDao <E>{
     public String saveFile(String fileName,byte[] file);
     public GridFSDBFile findFileById(String id);
+    public int upsert(E queryEntity,E updateEntity);
     void insert(E e);
     List<E> findEquals(E e);
     List<E> findAll();

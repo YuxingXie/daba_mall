@@ -1,14 +1,10 @@
 package com.dabast.mall.interceptor;
 
-import com.dabast.common.web.CookieTool;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 
 /**
  * Created by Administrator on 2015/7/4.
