@@ -1,6 +1,7 @@
 package com.dabast.mall.view.index.controller;
 
 import com.dabast.common.code.EmailEnum;
+import com.dabast.common.util.MD5;
 import com.dabast.entity.User;
 import com.dabast.mall.form.UserLoginForm;
 import com.dabast.mall.model.productseries.dao.UserDao;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.util.Date;
@@ -58,18 +61,16 @@ public class RegisterController {
     }
 
     @RequestMapping(value = "/register/email",method = RequestMethod.POST)
-    public String emailRegister(ModelMap model,@ModelAttribute UserLoginForm form) {
+    public String emailRegister(ModelMap model,@ModelAttribute @Valid UserLoginForm form,RedirectAttributes redirectAttributes) {
         User dbUser=userDao.findByEmail(form.getEmail());
-
         BeanUtils.copyProperties(form,dbUser,new String[]{"id"});
         dbUser.setStatus(1);
         Date now = new Date();
         dbUser.setRegisterTime(now);
         dbUser.setLastActivateTime(now);
+        dbUser.setPassword(MD5.convert(dbUser.getPassword()));
         userDao.update(dbUser);
-//        User user=userDao.update(form);
-        System.out.println("registering----------------");
-        model.addAttribute("user",dbUser);
-        return "register/register_success";
+        redirectAttributes.addFlashAttribute("user",dbUser);
+        return "redirect:/register/register_success";
     }
 }

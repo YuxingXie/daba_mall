@@ -123,8 +123,7 @@ var myApp = angular.module('registerApp', [])
                 });
             }
             $scope.signupForm=function(){
-                console.log($scope.signupForm.password);
-                console.log($scope.signupForm.rePassword);
-                alert("i will do");
+                $scope.password= $.md5($scope.password);
+                $scope.rePassword=$.md5($scope.rePassword);
             }
         }])

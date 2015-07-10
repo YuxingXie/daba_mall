@@ -186,10 +186,11 @@
                                             </div>
                                             <div class="form-group has-feedback">
                                                 <div class="row">
-                                                    <label for="password" class="col-lg-4 control-label">确认密码 <span class="require">*</span></label>
+                                                    <label for="password" class="col-lg-4 control-label">确认密码<span class="require">*</span></label>
                                                     <div class="col-lg-8 has-success">
                                                         <form:input type="password" class="form-control" path="rePassword"
                                                                ng-model="rePassword" pw_check="#password" placeholder="请再输入一次密码" required="true" ng-minlength="{{pw_min}}"/>
+
                                                         <span ng-show="signupForm.rePassword.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                                     </div>
                                                 </div>
@@ -255,5 +256,7 @@
     </div>
 </div>
 <script>var path="${path}"</script>
+<script src="${path}/statics/assets/plugins/jquery.md5.js"></script>
 <script src="${path}/statics/assets/scripts/register.js"></script>
+
 </body>
