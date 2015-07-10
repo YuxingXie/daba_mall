@@ -73,4 +73,19 @@ public class ReflectUtil {
 		
     	
     }
+
+    public static <E> void invokeSetter(E e, String fieldName, Object value) {
+
+        Class clazz=e.getClass();
+        try {
+            Method setter=clazz.getDeclaredMethod(getSetterMethodName(fieldName),value.getClass());
+            setter.invoke(e,new Object[]{value});
+        } catch (NoSuchMethodException e1) {
+            e1.printStackTrace();
+        } catch (InvocationTargetException e1) {
+            e1.printStackTrace();
+        } catch (IllegalAccessException e1) {
+            e1.printStackTrace();
+        }
+    }
 }

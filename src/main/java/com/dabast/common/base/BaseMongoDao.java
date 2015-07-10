@@ -72,9 +72,10 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         return file;
     }
     @Override
-    public void insert(E e) {
+    public E insert(E e) {
 //        System.out.println("invoke insert method......");
         mongoTemplate.insert(e);
+        return  e;
     }
 
     public List<E> findEquals(E e) {
@@ -192,18 +193,25 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         Page<E> page = new PageImpl<E>(list, pageable, count);
         return page;
     }
-
-    public void update(E e) {
+    @Deprecated
+    public E update(E e) {
         String id = MongoDocumentUtil.getId(e);
         if (null == id || "".equals(id.trim())) {
         //如果主键为空,则不进行修改
-            return;
+            return null;
         }
-        Update update = new Update();
-        //TODO
-//        update.set("email", member.getEmail());
-
-        mongoTemplate.updateFirst(Query.query(Criteria.where("_id").is(id)), update, collectionClass);
+        E qe=null;
+        try {
+            qe=collectionClass.newInstance();
+            ReflectUtil.invokeSetter(qe, "id",id);
+        } catch (InstantiationException e1) {
+            e1.printStackTrace();
+        } catch (IllegalAccessException e1) {
+            e1.printStackTrace();
+        }
+        Update update = getUpdateFromEntity(e);
+        mongoTemplate.updateFirst(getEqualsQuery(qe),update,collectionClass);
+        return e;
     }
     public CommandResult runCommand(String command){
 

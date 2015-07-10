@@ -12,5 +12,6 @@
 </head>
 <body>
 register success!
+<p>user id:${user.id}</p>
 </body>
 </html>

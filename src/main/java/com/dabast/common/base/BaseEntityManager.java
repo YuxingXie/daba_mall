@@ -15,8 +15,8 @@ public abstract class BaseEntityManager <E> implements IBaseEntityManager<E> {
 
 	protected abstract EntityDao<E> getEntityDao();
 	@Transactional
-	public void insert(E e) {
-		getEntityDao().insert(e);
+	public E insert(E e) {
+		return getEntityDao().insert(e);
 	}
 	public String saveFile(String fileName,byte[] file){
 		return  getEntityDao().saveFile(fileName,file);

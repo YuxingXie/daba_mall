@@ -12,7 +12,7 @@ public interface EntityDao <E>{
     public String saveFile(String fileName,byte[] file);
     public GridFSDBFile findFileById(String id);
     public int upsert(E queryEntity,E updateEntity);
-    void insert(E e);
+    E insert(E e);
     List<E> findEquals(E e);
     List<E> findAll();
     List<E> findRange(String key, Object min, Object max);
@@ -32,7 +32,7 @@ public interface EntityDao <E>{
 
     Page<E> findPage(int pageIndex);
 
-    void update(E e);
+    E update(E e);
 
     CommandResult runCommand(String s);
 

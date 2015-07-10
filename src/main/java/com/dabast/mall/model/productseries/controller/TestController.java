@@ -35,12 +35,12 @@ public class TestController extends BaseRestSpringController {
         user.setSex("f");
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
-    @RequestMapping(value = "/user/post",method = RequestMethod.POST)
-    public ResponseEntity<User> post(@RequestBody User user,ModelMap model) {
-        //System.out.println("post");
-        user.setId(new ObjectId());
-        return new ResponseEntity<User>(user, HttpStatus.OK);
-    }
+//    @RequestMapping(value = "/user/post",method = RequestMethod.POST)
+//    public ResponseEntity<User> post(@RequestBody User user,ModelMap model) {
+//        //System.out.println("post");
+//        user.setId("");
+//        return new ResponseEntity<User>(user, HttpStatus.OK);
+//    }
     @RequestMapping(value = "/user/login",method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody User user,ModelMap model) {
         ////System.out.println("login------");
@@ -54,21 +54,21 @@ public class TestController extends BaseRestSpringController {
         return new ResponseEntity("{token:'abc123456789'}",HttpStatus.UNAUTHORIZED);//401
     }
 
-    @RequestMapping(value = "/users")
-    public ResponseEntity<List<User>> all(ModelMap model,String role) {
-        List<User> users=new ArrayList<User>();
-        User u = new User();
-        u.setId(new ObjectId());
-        u.setName("Jackson");
-        users.add(u);
-        User u2 = new User();
-        u2.setId(new ObjectId());
-        u2.setName("Johnson");
-        u2.setSex("m");
-        users.add(u2);
-        ResponseEntity<List<User>> usersE= new ResponseEntity<List<User>>(users, HttpStatus.OK);
-        return usersE;
-    }
+//    @RequestMapping(value = "/users")
+//    public ResponseEntity<List<User>> all(ModelMap model,String role) {
+//        List<User> users=new ArrayList<User>();
+//        User u = new User();
+//        u.setId(new ObjectId());
+//        u.setName("Jackson");
+//        users.add(u);
+//        User u2 = new User();
+//        u2.setId(new ObjectId());
+//        u2.setName("Johnson");
+//        u2.setSex("m");
+//        users.add(u2);
+//        ResponseEntity<List<User>> usersE= new ResponseEntity<List<User>>(users, HttpStatus.OK);
+//        return usersE;
+//    }
     @RequestMapping(value = "/user/test1")
     public ResponseEntity<User> test1(ModelMap model) {
         //System.out.println("test1");

@@ -20,8 +20,7 @@ public class MongoDocumentUtil  {
         Class<?> clazz=t.getClass();
         if (clazz==null) return null;
         for (java.lang.reflect.Field classField:clazz.getDeclaredFields()){
-            Id id=clazz.getAnnotation(Id.class);
-            if (id==null) continue;
+            if (!classField.isAnnotationPresent(Id.class)) continue;
             Object idValue=ReflectUtil.getValue(t, classField.getName());
             return idValue==null?null:idValue.toString();
         }

@@ -7,6 +7,7 @@ import com.dabast.entity.User;
  */
 public class UserLoginForm extends User {
     private boolean remember;
+    private String rePassword;
 
     public boolean isRemember() {
         return remember;
@@ -14,5 +15,13 @@ public class UserLoginForm extends User {
 
     public void setRemember(boolean remember) {
         this.remember = remember;
+    }
+
+    public String getRePassword() {
+        return rePassword;
+    }
+
+    public void setRePassword(String rePassword) {
+        this.rePassword = rePassword;
     }
 }

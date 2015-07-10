@@ -15,7 +15,7 @@ import java.util.Set;
  */
 @Document(collection = "users")
 public class User {
-    @Id private ObjectId id;
+    @Id private String id;
     @Field(value = "name")
     private String name;
     @Field(value = "sex")
@@ -37,6 +37,14 @@ public class User {
     @Field("lastActivateTime")
     private Date lastActivateTime;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -57,16 +65,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-
-
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
     }
 
     public String getName() {
