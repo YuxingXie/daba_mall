@@ -11,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,14 +48,14 @@ public class RegisterController {
     }
 
     @RequestMapping(value = "/email/validate")
-    public ResponseEntity exist(ModelMap model,@RequestBody User user) {
-        System.out.println("email:"+user.getEmail());
-        System.out.println("code:"+user.getValidateCode());
+    public ResponseEntity checkValidateCode(ModelMap model,@RequestBody User user) {
+//        System.out.println("email:"+user.getEmail());
+//        System.out.println("code:"+user.getValidateCode());
         ResponseEntity responseEntity=null;
         User dbUser=userDao.findByEmail(user.getEmail());
-        System.out.println("code in request is:" + user.getValidateCode() + ",code in db is:" + dbUser.getValidateCode());
+//        System.out.println("code in request is:" + user.getValidateCode() + ",code in db is:" + dbUser.getValidateCode());
         boolean codeValid=dbUser.getValidateCode().equals(user.getValidateCode());
-        System.out.println("code valid:"+codeValid);
+//        System.out.println("code valid:"+codeValid);
         if (codeValid){
             return new ResponseEntity("{\"codeValid\":true}",HttpStatus.OK);
         }
@@ -61,16 +64,47 @@ public class RegisterController {
     }
 
     @RequestMapping(value = "/register/email",method = RequestMethod.POST)
-    public String emailRegister(ModelMap model,@ModelAttribute @Valid UserLoginForm form,RedirectAttributes redirectAttributes) {
-        User dbUser=userDao.findByEmail(form.getEmail());
-        BeanUtils.copyProperties(form,dbUser,new String[]{"id"});
-        dbUser.setStatus(1);
-        Date now = new Date();
-        dbUser.setRegisterTime(now);
-        dbUser.setLastActivateTime(now);
-        dbUser.setPassword(MD5.convert(dbUser.getPassword()));
-        userDao.update(dbUser);
-        redirectAttributes.addFlashAttribute("user",dbUser);
-        return "redirect:/register/register_success";
+    public String emailRegister(ModelMap model,@Valid @ModelAttribute UserLoginForm form,BindingResult errors,RedirectAttributes redirectAttributes) {
+
+
+        if (errors.hasErrors()){
+            for (Object errKey:errors.getModel().keySet()){
+                Object err=errors.getModel().get(errKey);
+                System.out.println("error:"+err);
+            }
+            redirectAttributes.addFlashAttribute("form", form);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
+//            redirectAttributes.addAttribute("redirectAttributes", redirectAttributes);
+//            redirectAttributes.addAttribute("BindingResult", errors);
+            return "redirect:/index/user/register";
+        }else{
+            User dbUser=userDao.findByEmail(form.getEmail());
+            if (!dbUser.getValidateCode().equals(form.getValidateCode())){
+//                ObjectError objectError=new ObjectError("validateCode","验证码错误");
+                errors.rejectValue("validateCode","user.signup.validateCode.error");
+                if (form.getPassword().equals(form.getRePassword())){
+                    errors.rejectValue("rePassword","user.signup.rePassword.error");
+                }
+                redirectAttributes.addFlashAttribute("form", form);
+                redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
+                for (Object errKey:errors.getModel().keySet()){
+                    Object err=errors.getModel().get(errKey);
+                    System.out.println("error:"+err);
+                }
+                return "redirect:/index/user/register";
+            }else{
+                BeanUtils.copyProperties(form,dbUser,new String[]{"id"});
+                dbUser.setStatus(1);
+                Date now = new Date();
+                dbUser.setRegisterTime(now);
+                dbUser.setLastActivateTime(now);
+                dbUser.setPassword(MD5.convert(dbUser.getPassword()));
+                userDao.update(dbUser);
+                redirectAttributes.addFlashAttribute("user", dbUser);
+                return "redirect:/register/register_success";
+            }
+
+        }
+
     }
 }

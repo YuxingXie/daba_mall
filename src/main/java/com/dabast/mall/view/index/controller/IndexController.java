@@ -80,7 +80,7 @@ public class IndexController extends BaseRestSpringController {
     }
     @RequestMapping(value = "/user/exist")
     public ResponseEntity exist(ModelMap model,@RequestBody User user) {
-        System.out.println("email:"+user.getEmail());
+//        System.out.println("email:"+user.getEmail());
         ResponseEntity responseEntity=null;
         boolean used=registerValidateService.isEmailUsed(user.getEmail());
         if (used){
@@ -100,8 +100,8 @@ public class IndexController extends BaseRestSpringController {
 //    }
     @RequestMapping(value = "/user/login",method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody UserLoginForm form,ModelMap model,HttpSession session,HttpServletRequest request,HttpServletResponse response) {
-        System.out.println("用户 "+ form.getName()+" 登录");
-        System.out.println("用户登录密码："+form.getPassword());
+//        System.out.println("用户 "+ form.getName()+" 登录");
+//        System.out.println("用户登录密码："+form.getPassword());
         User user=userDao.findByNameAndPwd(form.getName(),form.getPassword());//模拟用户密码是123
         //form.password可能是原始密码经过一次MD5加密，也可能是两次md5加密
         if (form.getPassword().equalsIgnoreCase(user.getPassword())){//如果密码经过一次MD5加密，会直接相等
@@ -137,9 +137,9 @@ public class IndexController extends BaseRestSpringController {
         session.setAttribute("loginUser", null);
         session.removeAttribute("loginUser");
         CookieTool.removeCookie(request, response, "name");
-        System.out.println("清除cookie name");
+//        System.out.println("清除cookie name");
         CookieTool.removeCookie(request,response,"password");
-        System.out.println("清除cookie password");
+//        System.out.println("清除cookie password");
         return new ResponseEntity("{}",HttpStatus.OK);
 
     }
@@ -156,7 +156,7 @@ public class IndexController extends BaseRestSpringController {
         UserDao usersDao = new UserDao();
         User user = usersDao.findByNameAndPwd(user_name,user_pwd);
         if(user==null){//登录验证失败
-            System.out.println("登录失败");
+//            System.out.println("登录失败");
             request.getSession().setAttribute("errorInfo","用户名或密码错误，请重新登录！");
             String path = request.getContextPath();
             String basePath = request.getScheme() + "://"+ request.getServerName() + ":" + request.getServerPort()+ path + "/";

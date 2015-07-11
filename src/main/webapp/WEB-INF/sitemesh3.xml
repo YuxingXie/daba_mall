@@ -4,8 +4,10 @@
     <mapping path="/WEB-INF/pages/*" decorator="/WEB-INF/sitemesh/decorator.jsp" />
     <mapping path="/index/main" decorator="/WEB-INF/sitemesh/decorator.jsp" />
     <mapping path="/index/user/register" decorator="/WEB-INF/sitemesh/decorator.jsp" />
+    <mapping path="/user/register/email" decorator="/WEB-INF/sitemesh/decorator.jsp" />
     <mapping path="/register/register_success" decorator="/WEB-INF/sitemesh/decorator.jsp" />
     <mapping path="/index.jsp" decorator="/WEB-INF/sitemesh/decorator.jsp" />
+
 
 
     <!-- 不被装饰 -->

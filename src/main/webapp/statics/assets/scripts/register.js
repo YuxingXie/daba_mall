@@ -117,13 +117,11 @@ var myApp = angular.module('registerApp', [])
                     $scope.mailSending=false;
                     $scope.mailSent=true;
                     $scope.url=data.url;
+                    $scope.validateCode=""
                 }).error(function(data){
                     $scope.mailSending=true;
                     $scope.mailSent=false;
                 });
             }
-            $scope.signupForm=function(){
-                $scope.password= $.md5($scope.password);
-                $scope.rePassword=$.md5($scope.rePassword);
-            }
+
         }])

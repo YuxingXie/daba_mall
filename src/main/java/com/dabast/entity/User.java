@@ -2,6 +2,7 @@ package com.dabast.entity;
 
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,11 +18,13 @@ import java.util.Set;
 public class User {
     @Id private String id;
     @Field(value = "name")
+    @Length(min=2,max=12)
     private String name;
     @Field(value = "sex")
     private String sex;
     @Field(value = "height")
     private Integer height;
+    @Length(min=6)
     @Field("password")
     private String password;
     @Field("email")
@@ -31,7 +34,7 @@ public class User {
     @Field("registerTime")
     private Date registerTime;
     @Field("status")
-    private int status;
+    private Integer status;
     @Field("validateCode")
     private String validateCode;
     @Field("lastActivateTime")

@@ -86,4 +86,11 @@
             </list>
         </property>
     </bean>
+
+    <!-- 定义国际化消息 -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename">
+            <value>messages</value>
+        </property>
+    </bean>
 </beans>
