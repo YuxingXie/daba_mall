@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface IBaseEntityManager<E> {
    E insert(E e);
+   E findById(String id);
    public String saveFile(String fileName,byte[] file);
    public GridFSDBFile findFileById(String id);
    List<E> findEquals(E e);

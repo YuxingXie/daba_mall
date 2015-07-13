@@ -39,6 +39,8 @@ public class User {
     private String validateCode;
     @Field("lastActivateTime")
     private Date lastActivateTime;
+    @Field("phone")
+    private String phone;
 
     public String getId() {
         return id;
@@ -50,6 +52,14 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public void setEmail(String email) {
@@ -103,12 +113,12 @@ public class User {
         return registerTime;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public Integer getStatus() {
+        return status;
     }
 
-    public int getStatus() {
-        return status;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public void setValidateCode(String validateCode) {

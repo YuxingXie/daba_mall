@@ -2,10 +2,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:useBean id="form" class="com.dabast.mall.form.UserLoginForm" scope="request"></jsp:useBean>
+<jsp:useBean id="phoneForm" class="com.dabast.mall.form.UserLoginForm" scope="request"></jsp:useBean>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <head>
     <script type="text/javascript" src="${path}/statics/assets/plugins/angular-1.2.19/angular.min.js"></script>
+    <script type="text/javascript" src="${path}/statics/assets/plugins/angular-1.2.19/angular-route.min.js"></script>
     <style>
         .error {
             margin: 0;
@@ -39,7 +41,7 @@
 <div class="main" ng-app="registerApp" ng-init='mailSending=false;mailSent=false;'>
     <div class="container">
         <ul class="breadcrumb">
-            <li><a href="${path}/index/main">首页</a></li>
+            <li><a href="${path}/index">首页</a></li>
             <li><a href="">商店</a></li>
             <li class="active">注册</li>
         </ul>
@@ -47,15 +49,17 @@
         <div class="row ">
             <div class="col-md-7 col-sm-7" >
                 <ul id="myTab" class="nav nav-tabs">
-                    <li class="active"><a href="#Information" data-toggle="tab">邮箱注册</a></li>
-                    <li><a href="#Description" data-toggle="tab">手机注册</a></li>
+                    <li class="active"><a class="btn btn-primary" href="#Information" data-toggle="tab">邮箱注册</a></li>
+                    <%--href="#Information" data-ng-click="goEmail()"--%>
+                    <li><a data-toggle="tab" class="btn btn-primary" href="#Description" data-ng-click="goPhone()">手机注册</a></li>
+                    <%--href="#Description"--%>
                 </ul>
                 <div id="myTabContent" class="tab-content">
-                    <div class="tab-pane fade in active" id="Information">
+                    <div class="tab-pane fade in active" id="Information"  data-ng-controller="formController">
                         <div class="content-form-page">
                             <div class="row">
                                 <div class="col-md-12 col-sm-12">
-                                    <form:form name="signupForm" data-ng-controller="formController" modelAttribute="form"
+                                    <form:form name="signupForm" modelAttribute="form"
                                                class="form-horizontal form-without-legend" role="form"
                                                action="${path}/user/register/email"
                                                novalidate="novalidate" _method="POST">
@@ -64,7 +68,7 @@
                                                 <div class="row">
                                                     <label class="col-lg-4 control-label">昵称<span class="require">*</span></label>
 
-                                                    <div class="col-lg-8 has-error">
+                                                    <div class="col-lg-8 has-success">
                                                         <form:input type="text"  path="name" class="form-control" required="true" ng-maxlength="20" ng-init="name='${form.name}'" ng-model="name"/>
                                                         <span ng-show="signupForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                                         <form:errors path="name" class="control-label"/>
@@ -108,7 +112,7 @@
                                                     <label for="password" class="col-lg-4 control-label">密码 <span class="require">*</span></label>
                                                     <div class="col-lg-8 has-success">
                                                         <form:password class="form-control" path="password" ng-init="password='${form.password}'" ng-model="password"
-                                                                   placeholder="请输入密码" required="true" ng-minlength="{{pw_min}}"/>
+                                                                       placeholder="请输入密码" required="true" ng-minlength="{{pw_min}}"/>
                                                         <span ng-show="signupForm.password.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                                         <form:errors path="password" class="control-label"/>
                                                     </div>
@@ -132,7 +136,7 @@
                                                     <label for="password" class="col-lg-4 control-label">确认密码<span class="require">*</span></label>
                                                     <div class="col-lg-8 has-success">
                                                         <form:password class="form-control" path="rePassword" ng-init="rePassword='${form.rePassword}'"
-                                                                   ng-model="rePassword" pw_check="#password" placeholder="请再输入一次密码" required="true" ng-minlength="{{pw_min}}"/>
+                                                                       ng-model="rePassword" pw_check="#password" placeholder="请再输入一次密码" required="true" ng-minlength="{{pw_min}}"/>
                                                         <span ng-show="signupForm.rePassword.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                                         <form:errors path="rePassword" class="control-label"/>
                                                     </div>
@@ -162,7 +166,7 @@
                                                     </div>
                                                     <div class="col-lg-4">
                                                         <button type="button"  class="btn btn-primary col-lg-12"
-                                                                ng-disabled="signupForm.email.$invalid||(mailSending&&!mailSent)" data-ng-click="getValidCode()">获取验证码</button>
+                                                                ng-disabled="signupForm.email.$invalid||(mailSending&&!mailSent)" data-ng-click="getValidCode('email')">获取验证码</button>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -194,71 +198,9 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="Description">
-                        <%--<div class="content-form-page">--%>
-                            <%--<div class="row">--%>
-                                <%--<div class="col-md-12 col-sm-12">--%>
-                                    <%--<form class="form-horizontal form-without-legend" role="form">--%>
-                                        <%--<div class="form-group">--%>
-                                            <%--<label class="col-lg-4 control-label">昵称 <span--%>
-                                                    <%--class="require">*</span></label>--%>
-
-                                            <%--<div class="col-lg-8">--%>
-                                                <%--<input type="text" class="form-control" name="userName"--%>
-                                                       <%--placeholder="请输入您的昵称" novalidate="novalidate">--%>
-                                            <%--</div>--%>
-                                        <%--</div>--%>
-                                        <%--<div class="form-group">--%>
-                                            <%--<label class="col-lg-4 control-label">手机号码 <span--%>
-                                                    <%--class="require">*</span></label>--%>
-                                            <%--<div class="col-lg-8">--%>
-                                                <%--<input type="text" class="form-control" name="userName"--%>
-                                                       <%--placeholder="请输入您的手机号码" novalidate="novalidate">--%>
-                                            <%--</div>--%>
-                                        <%--</div>--%>
-                                        <%--<div class="form-group">--%>
-                                            <%--<label for="password" class="col-lg-4 control-label">创建密码 <span--%>
-                                                    <%--class="require">*</span></label>--%>
-                                            <%--<div class="col-lg-8">--%>
-                                                <%--<input type="password" class="form-control"--%>
-                                                       <%--name="password" placeholder="密码应由6-20个字符组成"--%>
-                                                       <%--novalidate="novalidate">--%>
-                                            <%--</div>--%>
-                                        <%--</div>--%>
-                                        <%--<div class="form-group">--%>
-                                            <%--<label for="password" class="col-lg-4 control-label">创建密码 <span--%>
-                                                    <%--class="require">*</span></label>--%>
-                                            <%--<div class="col-lg-8">--%>
-                                                <%--<input type="password" class="form-control"--%>
-                                                       <%--name="rePassword" placeholder="密码应由6-20个字符组成"--%>
-                                                       <%--novalidate="novalidate">--%>
-                                            <%--</div>--%>
-                                        <%--</div>--%>
-                                        <%--<div class="form-group">--%>
-                                            <%--<label class="col-lg-4 control-label">短信验证码 <span--%>
-                                                    <%--class="require">*</span></label>--%>
-                                            <%--<div class="col-lg-4">--%>
-                                                <%--<input type="text" class="form-control" name="userName">--%>
-                                            <%--</div>--%>
-                                            <%--<div class="col-lg-4">--%>
-                                                <%--<button type="submit" class="btn btn-primary col-lg-12">获取验证码</button>--%>
-                                            <%--</div>--%>
-                                        <%--</div>--%>
-                                        <%--<div class="row">--%>
-                                            <%--<div class="col-lg-8 col-md-offset-4 padding-left-0">--%>
-                                                <%--<button type="submit" class="btn btn-primary col-lg-8">完成注册</button>--%>
-                                            <%--</div>--%>
-                                        <%--</div>--%>
-
-                                    <%--</form>--%>
-                                <%--</div>--%>
-
-                            <%--</div>--%>
-                        <%--</div>--%>
                     </div>
-
                 </div>
             </div>
-
         </div>
 
         <!-- END CONTENT -->

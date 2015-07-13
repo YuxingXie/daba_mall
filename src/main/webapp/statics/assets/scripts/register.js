@@ -1,4 +1,18 @@
-var myApp = angular.module('registerApp', [])
+angular.module('registerApp', ['ngRoute'])
+    //.config(['$routeProvider',function($routeProvider){
+    //    $routeProvider.when("/",{
+    //        templateUrl:path+'/register/email_register_form.do',
+    //        controller:'formController'
+    //    }).when("/email",{
+    //        templateUrl:path+'/register/email_register_form.do',
+    //        controller:'formController'
+    //    }).when("/phone",{
+    //        templateUrl:path+'/register/phone_register_form.do',
+    //        controller:'formController'
+    //    }).otherwise({
+    //        redirectTo:"/"}
+    //    )
+    //}])
         .directive('pwCheck', [function () {
             return {
                 require: 'ngModel',
@@ -29,7 +43,7 @@ var myApp = angular.module('registerApp', [])
                             console.log("value:"+attrs.ensureUnique)
                             $http({
                                 method:"POST",
-                                url:"exist",
+                                url:path+"/index/user/exist_email",
                                 data:data
                             }).success(function(data){
                                 c.$setValidity('unique',data.unique);
@@ -43,6 +57,36 @@ var myApp = angular.module('registerApp', [])
                 }
             }
         })
+    .directive("ensurePhoneUnique", function ($http,$timeout) {
+        return{
+            require:"ngModel",
+            link:function(scope,ele,attrs,c){
+                var timeout;
+                scope.$watch(attrs.ngModel,function(n){
+//                         console.log(scope.ngModel);
+                    if(!n) return;
+                    if(timeout) $timeout.cancel(timeout);
+                    timeout=$timeout(function(){
+                        var data={}
+                        data[attrs.ngModel]=attrs.ensurePhoneUnique;
+                        console.log("key:"+attrs.ngModel)
+                        console.log("value:"+attrs.ensurePhoneUnique)
+                        $http({
+                            method:"POST",
+                            url:path+"//index/user/exist_phone",
+                            data:data
+                        }).success(function(data){
+                            c.$setValidity('unique',data.unique);
+                        }).error(function(data){
+                            c.$setValidity('unique',false);
+                        });
+                    },300);
+
+                });
+
+            }
+        }
+    })
         .directive("ensureValidateCode", function ($http,$timeout) {
             return{
                 require:"ngModel",
@@ -81,7 +125,7 @@ var myApp = angular.module('registerApp', [])
             }
         })
         .constant('pw_min',6)
-        .controller("formController", ["$scope","$http","pw_min",function ($scope,$http,pw_min) {
+        .controller("formController", ["$scope","$http","pw_min","$location",function ($scope,$http,pw_min) {
             $scope.pw_min=pw_min;
             $scope.$watch('email', function (newVal, oldVal, scope) {if(newVal !== oldVal)$scope.email=newVal})
             $scope.$watch('password', function (newVal, oldVal, scope) {
@@ -107,12 +151,19 @@ var myApp = angular.module('registerApp', [])
                     }
                 }
             });
-            $scope.getValidCode = function (){
+            $scope.getValidCode = function (type){
+
                 $scope.mailSent=false;
                 $scope.mailSending=true;
+                var requestUrl;
+                if(type==="email"){
+                    requestUrl=path+"/user/register/validate_code/email?email="+$scope.email
+                }else{
+                    requestUrl=path+"/user/register/validate_code/phone?phone="+$scope.phone
+                }
                 $http({
                     method:"POST",
-                    url:path+"/user/register/validate_code/email?email="+$scope.email
+                    url:requestUrl
                 }).success(function(data){
                     $scope.mailSending=false;
                     $scope.mailSent=true;
@@ -125,3 +176,11 @@ var myApp = angular.module('registerApp', [])
             }
 
         }])
+    //.controller("mainController",["$location","$scope",function($location,$scope){
+    //    $scope.goEmail=function(){
+    //        $location.path('/email');
+    //    }
+    //    $scope.goPhone=function(){
+    //        $location.path('/phone');
+    //    }
+    //}])

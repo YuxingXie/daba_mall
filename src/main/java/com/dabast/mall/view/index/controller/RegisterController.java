@@ -11,19 +11,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -46,10 +43,17 @@ public class RegisterController {
         String validUrl= EmailEnum.getUrlByCode(code);
         return new ResponseEntity("{\"message\":\""+msg+"\",\"url\":\""+validUrl+"\"}", HttpStatus.OK);
     }
-
+    @RequestMapping(value = "/register/validate_code/phone", method = {RequestMethod.POST})
+    public ResponseEntity phoneValidateCode(ModelMap map, HttpServletRequest request, String phone) throws ParseException {
+        //注册
+        String msg=registerValidateService.processRegister(phone);//发邮箱激活
+        String code= phone.indexOf("@")>=0? phone.substring(phone.indexOf("@")+1):"";
+        String validUrl= EmailEnum.getUrlByCode(code);
+        return new ResponseEntity("{\"message\":\""+msg+"\",\"url\":\""+validUrl+"\"}", HttpStatus.OK);
+    }
     @RequestMapping(value = "/email/validate")
     public ResponseEntity checkValidateCode(ModelMap model,@RequestBody User user) {
-//        System.out.println("email:"+user.getEmail());
+//        System.out.println("phone:"+user.getEmail());
 //        System.out.println("code:"+user.getValidateCode());
         ResponseEntity responseEntity=null;
         User dbUser=userDao.findByEmail(user.getEmail());
@@ -64,35 +68,31 @@ public class RegisterController {
     }
 
     @RequestMapping(value = "/register/email",method = RequestMethod.POST)
-    public String emailRegister(ModelMap model,@Valid @ModelAttribute UserLoginForm form,BindingResult errors,RedirectAttributes redirectAttributes) {
-
+    public String emailRegister(@Valid @ModelAttribute UserLoginForm form,BindingResult errors,RedirectAttributesModelMap modelMap) {
 
         if (errors.hasErrors()){
-            for (Object errKey:errors.getModel().keySet()){
-                Object err=errors.getModel().get(errKey);
-                System.out.println("error:"+err);
-            }
-            redirectAttributes.addFlashAttribute("form", form);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
-//            redirectAttributes.addAttribute("redirectAttributes", redirectAttributes);
-//            redirectAttributes.addAttribute("BindingResult", errors);
+            modelMap.addFlashAttribute("form", form);
+            modelMap.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
+//            modelMap.addAttribute("modelMap", modelMap);
+//            modelMap.addAttribute("BindingResult", errors);
             return "redirect:/index/user/register";
         }else{
             User dbUser=userDao.findByEmail(form.getEmail());
             if (!dbUser.getValidateCode().equals(form.getValidateCode())){
-//                ObjectError objectError=new ObjectError("validateCode","验证码错误");
                 errors.rejectValue("validateCode","user.signup.validateCode.error");
-                if (form.getPassword().equals(form.getRePassword())){
+                if (!form.getPassword().equals(form.getRePassword())){
                     errors.rejectValue("rePassword","user.signup.rePassword.error");
                 }
-                redirectAttributes.addFlashAttribute("form", form);
-                redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
-                for (Object errKey:errors.getModel().keySet()){
-                    Object err=errors.getModel().get(errKey);
-                    System.out.println("error:"+err);
-                }
+                modelMap.addFlashAttribute("form", form);
+                modelMap.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
                 return "redirect:/index/user/register";
             }else{
+                if (!form.getPassword().equals(form.getRePassword())){
+                    errors.rejectValue("rePassword","user.signup.rePassword.error");
+                    modelMap.addFlashAttribute("form", form);
+                    modelMap.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
+                    return "redirect:/index/user/register";
+                }
                 BeanUtils.copyProperties(form,dbUser,new String[]{"id"});
                 dbUser.setStatus(1);
                 Date now = new Date();
@@ -100,11 +100,16 @@ public class RegisterController {
                 dbUser.setLastActivateTime(now);
                 dbUser.setPassword(MD5.convert(dbUser.getPassword()));
                 userDao.update(dbUser);
-                redirectAttributes.addFlashAttribute("user", dbUser);
-                return "redirect:/register/register_success";
+                modelMap.addFlashAttribute("form", dbUser);
+                modelMap.addFlashAttribute("message", "注册成功!");
+                return "redirect:/user/register/success";
             }
 
         }
 
+    }
+    @RequestMapping("/register/success")
+    public String registerSuccess(){
+        return "register/register_success";
     }
 }

@@ -115,4 +115,8 @@ public class RegisterValidateService {
     public boolean isEmailUsed(String email) {
         return userDao.isEmailUsed(email);
     }
+
+    public boolean isPhoneUsed(String phone) {
+        return  userDao.isPhoneUsed(phone);
+    }
 }

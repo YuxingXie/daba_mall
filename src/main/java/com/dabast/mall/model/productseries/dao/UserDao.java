@@ -104,9 +104,21 @@ public class UserDao extends BaseMongoDao<User>  {
         List<User> users=findEquals(user);
         return users==null||users.size()==0?null:users.get(0);
     }
-
+    public User findByPhone(String phone) {
+        User user=new User();
+        user.setPhone(phone);
+        List<User> users=findEquals(user);
+        return users==null||users.size()==0?null:users.get(0);
+    }
     public boolean isEmailUsed(String email) {
         User user=findByEmail(email);
+        if (user==null) return false;
+        if (user.getStatus()==0) return false;
+        return true;
+    }
+
+    public boolean isPhoneUsed(String phone) {
+        User user=findByPhone(phone);
         if (user==null) return false;
         if (user.getStatus()==0) return false;
         return true;

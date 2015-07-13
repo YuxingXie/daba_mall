@@ -1,5 +1,6 @@
 package com.dabast.common.base;
 
+import com.dabast.entity.User;
 import com.mongodb.CommandResult;
 import com.mongodb.gridfs.GridFSDBFile;
 import org.bson.types.ObjectId;
@@ -37,4 +38,6 @@ public interface EntityDao <E>{
     CommandResult runCommand(String s);
 
     Object find(Object parse);
+
+    E findById(String id);
 }

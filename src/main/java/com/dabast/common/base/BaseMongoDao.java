@@ -77,7 +77,12 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         mongoTemplate.insert(e);
         return  e;
     }
-
+    @Override
+    public E findById(String id){
+        if (id==null) return null;
+        return findById(new ObjectId(id));
+    }
+    @Override
     public List<E> findEquals(E e) {
         Query query = getEqualsQuery(e);
         if(!collectionExists()) return null;

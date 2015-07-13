@@ -365,12 +365,10 @@
                 $("#product-pop-up .description>p").html(data.description);
                 $("#product-pop-up  .add2cart").unbind("click");
                 var json =data.productProperties;
-                console.log("执行了ajax请求，属性数量是"+json.length);
                 var product_page_options=$("#product-pop-up .product-page-options");
                 product_page_options.empty();
                 for(var i=0;i<json.length;i++){
                     var pull_left=$('<div class="pull-left"></div>');
-
                     pull_left.appendTo(product_page_options);
                     var control_label=$('<label class="control-label" style=" direction:ltr;">'+json[i]["propertyName"]+'&nbsp;:&nbsp;</label>');
                     control_label.appendTo(pull_left);
@@ -386,7 +384,7 @@
 ////                    console.log("id:"+data.id);
 //                });
                 App.initImageZoom();
-            }).fail(function(){ console.log("出错啦！"); });
+            }).fail(function(){ console.log("error！"); });
         });
     });
 </script>

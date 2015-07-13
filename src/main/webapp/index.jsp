@@ -1,3 +1,3 @@
 <%
-    request.getRequestDispatcher("index/main").forward(request,response);
+    request.getRequestDispatcher("index").forward(request,response);
 %>
