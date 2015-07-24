@@ -18,6 +18,7 @@ public interface IBaseEntityManager<E> {
    List<E> findAll();
    public int upsert(E queryEntity,E updateEntity);
    E findById(ObjectId id);;
+   E findOne(E condition);
    List<E> findRange(String key, Object min, Object max);
    List<E> findKeyIn(String key, Collection collection);
 

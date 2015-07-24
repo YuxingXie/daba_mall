@@ -41,6 +41,7 @@ public class User {
     private Date lastActivateTime;
     @Field("phone")
     private String phone;
+    private String loginStatus;
 
     public String getId() {
         return id;
@@ -66,7 +67,15 @@ public class User {
         this.email = email;
     }
 
-//    public Set<Address> getAddress() {
+    public String getLoginStatus() {
+        return loginStatus;
+    }
+
+    public void setLoginStatus(String loginStatus) {
+        this.loginStatus = loginStatus;
+    }
+
+    //    public Set<Address> getAddress() {
 //        return address;
 //    }
 //    public void setAddress(Set<Address> address) {

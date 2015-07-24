@@ -598,8 +598,9 @@
                 data: JSON.stringify($('#loginForm').serializeObject()),
                 method: "post",
                 success: function (data) {
-                    if(data.custom_status !=undefined){
-                        alert(data.custom_status);
+                    console.log(data.customStatus);
+                    if(data.name==undefined){
+                        alert(data.loginStatus);
                         return;
                     }
 
@@ -608,6 +609,9 @@
                     var $new_li = $('<li>欢迎您,<a href="#">' + data.name + '</a>! </li><li><a href="#" id="logout">退出</a></li>');
                     $new_li.insertBefore($(".additional-nav>ul>li:eq(0)"));
                     $('#myModal').modal('hide');
+                },
+                error:function(data){
+                    console.log(data.data.custom_status);
                 }
             })
         })

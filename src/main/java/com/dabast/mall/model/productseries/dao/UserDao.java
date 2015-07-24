@@ -4,9 +4,7 @@ import com.dabast.common.base.BaseMongoDao;
 import com.dabast.entity.User;
 import com.mongodb.WriteResult;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.mongodb.core.query.*;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -90,11 +88,8 @@ public class UserDao extends BaseMongoDao<User>  {
     public User findByNameAndPwd(String loginName, String loginPwd) {
         User user=new User();
         user.setName(loginName);
-        user.setPassword("202cb962ac59075b964b07152d234b70");//密码123
-        user.setSex("男");
-        user.setHeight(187);
-//        return findEquals(user).get(0);
-        return user;
+        user.setPassword(loginPwd);//密码123
+        return findOne(user);
     }
 
 
@@ -122,5 +117,12 @@ public class UserDao extends BaseMongoDao<User>  {
         if (user==null) return false;
         if (user.getStatus()==0) return false;
         return true;
+    }
+
+    public User findByEmailOrPhone(String name) {
+        String q="{'$or':[{ 'phone':'"+name+"'},{'email':'"+name+"'}]}";
+        Query query = new BasicQuery(q);
+        System.out.println(query);
+        return mongoTemplate.findOne(query,User.class);
     }
 }

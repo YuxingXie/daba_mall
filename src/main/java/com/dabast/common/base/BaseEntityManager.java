@@ -54,7 +54,8 @@ public abstract class BaseEntityManager<E> implements IBaseEntityManager<E> {
     public E findById(ObjectId id) {
         return getEntityDao().findById(id);
     }
-
+    @Override
+    public E findOne(E condition){ return getEntityDao().findOne(condition);}
     @Override
     public List<E> findRange(String key, Object min, Object max) {
         return getEntityDao().findRange(key, min, max);

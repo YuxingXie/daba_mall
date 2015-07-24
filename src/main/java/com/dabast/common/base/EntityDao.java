@@ -20,7 +20,7 @@ public interface EntityDao <E>{
     E findById(ObjectId id);
     List<E> findNotEquals(E e);
     List<E> findKeyIn(String key, Collection collection);
-
+    E findOne(E condition);
     List<E> findKeyNotIn(String key, Collection collection);
 
     List<E> findKeyIsNull(String key);

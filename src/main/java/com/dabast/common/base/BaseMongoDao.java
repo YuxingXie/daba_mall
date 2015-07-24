@@ -115,6 +115,10 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 
         return mongoTemplate.findById(id, collectionClass);
     }
+    @Override
+    public E findOne(E condition) {
+        return mongoTemplate.findOne(getEqualsQuery(condition), collectionClass);
+    }
 
     @Override
     public List<E> findRange(String key, Object min, Object max) {

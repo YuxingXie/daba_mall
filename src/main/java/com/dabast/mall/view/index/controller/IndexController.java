@@ -114,7 +114,12 @@ public class IndexController extends BaseRestSpringController {
     @RequestMapping(value = "/index/user/login", method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody UserLoginForm form, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
-        User user = userDao.findByNameAndPwd(form.getName(), form.getPassword());
+        User user = userDao.findByEmailOrPhone(form.getName());
+        if (user==null){
+            user=new User();
+            user.setLoginStatus("用户不存在");
+            return new ResponseEntity<User>(user,HttpStatus.OK);
+        }
         //form.password可能是原始密码经过一次MD5加密，也可能是两次md5加密
         if (form.getPassword().equalsIgnoreCase(user.getPassword())) {//如果密码经过一次MD5加密，会直接相等
             session.setAttribute("loginUser", form);
@@ -137,7 +142,7 @@ public class IndexController extends BaseRestSpringController {
                 CookieTool.removeCookie(request, response, "password");
             }
         } else {
-            return new ResponseEntity("{\"custom_status\":\"用户名或密码错误\"}", HttpStatus.OK);
+            return new ResponseEntity("{\"name\":\"用户名或密码错误\"}", HttpStatus.OK);
         }
 
 
