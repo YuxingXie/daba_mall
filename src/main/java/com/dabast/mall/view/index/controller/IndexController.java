@@ -114,39 +114,34 @@ public class IndexController extends BaseRestSpringController {
     @RequestMapping(value = "/index/user/login", method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody UserLoginForm form, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
-        User user = userDao.findByEmailOrPhone(form.getName());
+        User user = userDao.findByEmailOrPhone(form.getLoginStr());
         if (user==null){
             user=new User();
             user.setLoginStatus("用户不存在");
             return new ResponseEntity<User>(user,HttpStatus.OK);
         }
-        //form.password可能是原始密码经过一次MD5加密，也可能是两次md5加密
-        if (form.getPassword().equalsIgnoreCase(user.getPassword())) {//如果密码经过一次MD5加密，会直接相等
-            session.setAttribute("loginUser", form);
+        //form.password可能是原始密码或者经过一次MD5加密，也可能是两次md5加密
+        if (form.getPassword().equalsIgnoreCase(user.getPassword())
+                ||form.getPassword().equalsIgnoreCase(MD5.convert(user.getPassword()))
+                ||MD5.convert(form.getPassword()).equalsIgnoreCase(user.getPassword())) {
+            session.setAttribute("loginUser", user);
             int loginMaxAge = 30 * 24 * 60 * 60;   //定义账户密码的生命周期，这里是一个月。单位为秒
             if (form.isRemember()) {
-                CookieTool.addCookie(request, response, "name", form.getName(), loginMaxAge);
+                CookieTool.addCookie(request, response, "loginStr", form.getLoginStr(), loginMaxAge);
                 CookieTool.addCookie(request, response, "password", form.getPassword(), loginMaxAge);
             } else {
-                CookieTool.removeCookie(request, response, "name");
+                CookieTool.removeCookie(request, response, "loginStr");
                 CookieTool.removeCookie(request, response, "password");
             }
-        } else if (form.getPassword().equalsIgnoreCase(MD5.convert(user.getPassword()))) {//如果密码经过两次MD5加密
-            session.setAttribute("loginUser", form);
-            int loginMaxAge = 30 * 24 * 60 * 60;   //定义账户密码的生命周期，这里是一个月。单位为秒
-            if (form.isRemember()) {
-                CookieTool.addCookie(request, response, "name", form.getName(), loginMaxAge);
-                CookieTool.addCookie(request, response, "password", user.getPassword(), loginMaxAge);
-            } else {
-                CookieTool.removeCookie(request, response, "name");
-                CookieTool.removeCookie(request, response, "password");
-            }
+            return new ResponseEntity<User>(user, HttpStatus.OK);
         } else {
-            return new ResponseEntity("{\"name\":\"用户名或密码错误\"}", HttpStatus.OK);
+            user=new User();
+            user.setLoginStatus("用户名/密码错误");
+            return new ResponseEntity<User>(user,HttpStatus.OK);
         }
 
 
-        return new ResponseEntity<User>(form, HttpStatus.OK);
+
 
     }
 
@@ -164,7 +159,7 @@ public class IndexController extends BaseRestSpringController {
     public ResponseEntity logout(ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         session.setAttribute("loginUser", null);
         session.removeAttribute("loginUser");
-        CookieTool.removeCookie(request, response, "name");
+        CookieTool.removeCookie(request, response, "loginStr");
 //        System.out.println("清除cookie name");
         CookieTool.removeCookie(request, response, "password");
 //        System.out.println("清除cookie password");

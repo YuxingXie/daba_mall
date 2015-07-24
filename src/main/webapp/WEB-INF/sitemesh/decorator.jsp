@@ -428,7 +428,7 @@
                 </div>
                 <div class="modal-body" style="height: 110px;">
                     <div class="col-lg-12">
-                        <input type="text" class="form-control" id="usename" name="name" placeholder="手机号码或者邮箱地址"/><br/>
+                        <input type="text" class="form-control" id="loginStr" name="loginStr" placeholder="手机号码或者邮箱地址"/><br/>
                         <input type="password" class="form-control" id="password" name="password" placeholder="密码应由6-20个字符组成" />
                     </div>
                 </div>
@@ -599,7 +599,7 @@
                 method: "post",
                 success: function (data) {
                     console.log(data.customStatus);
-                    if(data.name==undefined){
+                    if(data.loginStatus!=undefined){
                         alert(data.loginStatus);
                         return;
                     }

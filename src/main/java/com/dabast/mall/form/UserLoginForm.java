@@ -11,6 +11,8 @@ public class UserLoginForm extends User {
     private boolean remember;
     @NotNull
     private String rePassword;
+    @NotNull
+    private String loginStr;
 
     public boolean isRemember() {
         return remember;
@@ -26,5 +28,13 @@ public class UserLoginForm extends User {
 
     public void setRePassword(String rePassword) {
         this.rePassword = rePassword;
+    }
+
+    public String getLoginStr() {
+        return loginStr;
+    }
+
+    public void setLoginStr(String loginStr) {
+        this.loginStr = loginStr;
     }
 }

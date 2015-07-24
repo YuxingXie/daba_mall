@@ -37,7 +37,7 @@ public final class MD5 {
 		}
 	}
 	public static void main(String[] args) {
-//		System.out.println(MD5.convert("a"));
+		System.out.println(MD5.convert("123"));
 	}
 
 }
