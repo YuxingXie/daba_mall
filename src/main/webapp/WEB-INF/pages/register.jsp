@@ -6,8 +6,7 @@
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <head>
-    <script type="text/javascript" src="${path}/statics/assets/plugins/angular-1.2.19/angular.min.js"></script>
-    <script type="text/javascript" src="${path}/statics/assets/plugins/angular-1.2.19/angular-route.min.js"></script>
+
     <style>
         .error {
             margin: 0;

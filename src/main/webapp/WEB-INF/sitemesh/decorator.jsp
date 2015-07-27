@@ -31,6 +31,9 @@
     <script type="text/javascript" src="${path}/statics/assets/plugins/jquery.md5.js"></script>
     <script src="${path}/statics/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="${path}/statics/assets/scripts/app.js"></script>
+    <script type="text/javascript" src="${path}/statics/assets/plugins/angular-1.2.19/angular.min.js"></script>
+    <script type="text/javascript" src="${path}/statics/assets/plugins/angular-1.2.19/angular-route.min.js"></script>
+    <%--<script src="${path}/statics/assets/scripts/login.js"></script>--%>
     <!-- Page level plugin styles START -->
     <link href="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet">
     <link href="${path}/statics/assets/plugins/bxslider/jquery.bxslider.css" rel="stylesheet">
@@ -231,54 +234,7 @@
                         </ul>
                         <!-- END DROPDOWN MENU -->
                     </li>
-                    <%--<li class="dropdown">--%>
-                        <%--<a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"--%>
-                           <%--data-target="#" href="#">--%>
-                            <%--新品上市--%>
-                            <%--<i class="fa fa-angle-down"></i>--%>
-                        <%--</a>--%>
-                        <%--<!-- BEGIN DROPDOWN MENU -->--%>
-                        <%--<ul class="dropdown-menu" aria-labelledby="mega-menu-catalogue">--%>
-                            <%--<li>--%>
-                                <%--<div class="nav-content">--%>
-                                    <%--<div class="product-item">--%>
-                                        <%--<div class="pi-img-wrapper">--%>
-                                            <%--<a href="item.html"><img--%>
-                                                    <%--src="${path}/statics/assets/temp/products/model4.jpg"--%>
-                                                    <%--class="img-responsive" alt="Berry Lace Dress"></a>--%>
-                                        <%--</div>--%>
-                                        <%--<h3><a href="item.html">黄材中华鲟</a></h3>--%>
 
-                                        <%--<div class="pi-price">￥29.00</div>--%>
-                                        <%--<a href="#" class="btn btn-default add2cart">添加到购物车</a>--%>
-                                    <%--</div>--%>
-                                    <%--<div class="product-item">--%>
-                                        <%--<div class="pi-img-wrapper">--%>
-                                            <%--<a href="item.html"><img--%>
-                                                    <%--src="${path}/statics/assets/temp/products/model3.jpg"--%>
-                                                    <%--class="img-responsive" alt="Berry Lace Dress"></a>--%>
-                                        <%--</div>--%>
-                                        <%--<h3><a href="item.html">乡里腊肉</a></h3>--%>
-
-                                        <%--<div class="pi-price">￥52.00</div>--%>
-                                        <%--<a href="#" class="btn btn-default add2cart">添加到购物车</a>--%>
-                                    <%--</div>--%>
-                                    <%--<div class="product-item">--%>
-                                        <%--<div class="pi-img-wrapper">--%>
-                                            <%--<a href="item.html"><img--%>
-                                                    <%--src="${path}/statics/assets/temp/products/model7.jpg"--%>
-                                                    <%--class="img-responsive" alt="Berry Lace Dress"></a>--%>
-                                        <%--</div>--%>
-                                        <%--<h3><a href="item.html">生态干鱼</a></h3>--%>
-
-                                        <%--<div class="pi-price">￥36.00</div>--%>
-                                        <%--<a href="#" class="btn btn-default add2cart">添加到购物车</a>--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
-                            <%--</li>--%>
-                        <%--</ul>--%>
-                        <%--<!-- END DROPDOWN MENU -->--%>
-                    <%--</li>--%>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"
                            data-target="#" href="#">
@@ -352,18 +308,7 @@
                                             <li><a href="#">泥鳅/黄鳝</a></li>
                                         </ul>
                                     </div>
-                                    <!-- END DROPDOWN MENU - COLUMN -->
-                                    <!-- BEGIN DROPDOWN MENU - BRANDS -->
-                                    <!--<div class="nav-brands">
-                                      <ul>
-                                        <li><a href="#"><img title="esprit" alt="esprit" src="${path}/statics/assets/temp/brands/esprit.jpg"></a></li>
-                                        <li><a href="#"><img title="gap" alt="gap" src="${path}/statics/assets/temp/brands/gap.jpg"></a></li>
-                                        <li><a href="#"><img title="next" alt="next" src="${path}/statics/assets/temp/brands/next.jpg"></a></li>
-                                        <li><a href="#"><img title="puma" alt="puma" src="${path}/statics/assets/temp/brands/puma.jpg"></a></li>
-                                        <li><a href="#"><img title="zara" alt="zara" src="${path}/statics/assets/temp/brands/zara.jpg"></a></li>
-                                      </ul>
-                                    </div>-->
-                                    <!-- END DROPDOWN MENU - BRANDS -->
+
                                 </div>
                             </li>
                         </ul>
@@ -404,7 +349,6 @@
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 400px;">
-        <form id="loginForm">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close"
@@ -426,30 +370,60 @@
                         <li><a href="#" data-original-title="txwb" class="txwb" title="腾讯微博"></a></li>
                     </ul>
                 </div>
-                <div class="modal-body" style="height: 110px;">
-                    <div class="col-lg-12">
-                        <input type="text" class="form-control" id="loginStr" name="loginStr" placeholder="手机号码或者邮箱地址"/><br/>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="密码应由6-20个字符组成" />
+                <form id="loginForm" name="loginForm" class="form-horizontal form-without-legend" role="form">
+                    <div class="modal-body">
+                        <div class="row"><div class="col-lg-1"></div>
+                            <div class="col-lg-10"><span id="error-msg" class="text-danger"></span></div>
+                            <div class="col-lg-1"></div></div>
+
+                        <fieldset>
+
+                            <div class="form-group has-feedback">
+                                <div class="row">
+                                    <div class="col-lg-1"></div>
+                                    <div class="col-lg-10 has-error">
+                                        <input type="text" class="form-control" id="loginStr" name="loginStr" placeholder="邮箱/用户名/已验证手机"  required="true"/>
+                                        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                    </div>
+                                    <div class="col-lg-1"></div>
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <div class="row">
+                                    <div class="col-lg-1"></div>
+                                    <div class="col-lg-10 has-error">
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="密码" required="true" ng-minlength="{{pw_min}}" />
+                                        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                    </div>
+                                    <div class="col-lg-1"></div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+
+
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="col-lg-12">
-                        <button type="button" class="btn btn-primary" id="login" style=" width:100%;">
-                            登录
-                        </button>
-                        <ul class="automatically">
-                            <li class="first">
-                                <input type="checkbox" value="true" class="common_chk" checked="checked"
-                                       name="remember">自动登录
-                            </li>
-                            <li><a href="#">忘记密码</a></li>
-                            <li style=" border-right:0;"><a href="#">免费注册</a></li>
-                        </ul>
+
+                    <div class="modal-footer">
+                        <div class="col-lg-12">
+                            <button type="button" class="btn btn-primary" id="login" style=" width:100%;">
+                                登录
+                            </button>
+                            <ul class="automatically">
+                                <li class="first">
+                                    <input type="checkbox" value="true" class="common_chk" checked="checked"
+                                           name="remember">自动登录
+                                </li>
+                                <li><a href="#">忘记密码</a></li>
+                                <li style=" border-right:0;"><a href="#">免费注册</a></li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
+                </form>
+
             </div>
             <!-- /.modal-content -->
-        </form>
+
     </div>
     <!-- /.modal -->
     <!-- BEGIN fast view of a product -->
@@ -588,7 +562,9 @@
 </body>
 <script>
     $(document).ready(function () {
-
+        $(document).on("click",".glyphicon-remove",function(){
+            $(this).prev().val("").focus();
+        });
         $(document).on("click", "#login", function () {
             var pwd=$.md5($("#password").val());
             $("#password").val(pwd);
@@ -600,7 +576,7 @@
                 success: function (data) {
                     console.log(data.customStatus);
                     if(data.loginStatus!=undefined){
-                        alert(data.loginStatus);
+                        $("#error-msg").text(data.loginStatus);
                         return;
                     }
 

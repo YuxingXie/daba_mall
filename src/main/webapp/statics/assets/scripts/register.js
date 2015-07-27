@@ -1,18 +1,4 @@
 angular.module('registerApp', ['ngRoute'])
-    //.config(['$routeProvider',function($routeProvider){
-    //    $routeProvider.when("/",{
-    //        templateUrl:path+'/register/email_register_form.do',
-    //        controller:'formController'
-    //    }).when("/email",{
-    //        templateUrl:path+'/register/email_register_form.do',
-    //        controller:'formController'
-    //    }).when("/phone",{
-    //        templateUrl:path+'/register/phone_register_form.do',
-    //        controller:'formController'
-    //    }).otherwise({
-    //        redirectTo:"/"}
-    //    )
-    //}])
         .directive('pwCheck', [function () {
             return {
                 require: 'ngModel',

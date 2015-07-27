@@ -34,6 +34,7 @@ public class CookieTool {
         response.addCookie(cookie);
     }
     public static void removeCookie(HttpServletRequest request,HttpServletResponse response,Cookie cookie){
+        if (cookie==null) return;
         cookie.setPath(request.getContextPath());
         cookie.setMaxAge(0);
         response.addCookie(cookie);

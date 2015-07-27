@@ -43,7 +43,7 @@ public class IndexController extends BaseRestSpringController {
     @RequestMapping(value = "/index")
     public String index(HttpServletRequest request, ModelMap model, HttpSession session) {
 
-        Cookie nameCookie = CookieTool.getCookieByName(request, "name");
+        Cookie nameCookie = CookieTool.getCookieByName(request, "loginStr");
         Cookie pwdCookie = CookieTool.getCookieByName(request, "password");
         String name = null;
         try {
@@ -53,8 +53,9 @@ public class IndexController extends BaseRestSpringController {
         }
         String password = pwdCookie == null ? null : pwdCookie.getValue();
         if (name != null && password != null) {
-            User user = userDao.findByNameAndPwd(name, password);
-            if (user != null) session.setAttribute("loginUser", user);
+//            User user = userDao.findByNameAndPwd(name, password);
+            User user = userDao.findByEmailOrPhone(name);
+            if (user.getPassword().equalsIgnoreCase(password)) session.setAttribute("loginUser", user);
         }
         List<String[]> top3 = ServiceManager.productSeriesService.getTop3ProductSeries();
         model.addAttribute("top3", top3);
@@ -173,29 +174,5 @@ public class IndexController extends BaseRestSpringController {
 //        System.out.println(JSON.parse(jsonStr));
     }
 
-    private String validUser(HttpServletRequest request, HttpServletResponse response) {
-        String user_name = request.getParameter("name");
-        String user_pwd = request.getParameter("password");
-        String str = null;
-        UserDao usersDao = new UserDao();
-        User user = usersDao.findByNameAndPwd(user_name, user_pwd);
-        if (user == null) {//登录验证失败
-//            System.out.println("登录失败");
-            request.getSession().setAttribute("errorInfo", "用户名或密码错误，请重新登录！");
-            String path = request.getContextPath();
-            String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
-//            response.sendRedirect(basePath+"self/logOn.do");
-        } else {
-            int loginMaxAge = 30 * 24 * 60 * 60;   //定义账户密码的生命周期，这里是一个月。单位为秒
-            String rememberPwd = request.getParameter("rememberPwd") == null ? "" : request.getParameter("rememberPwd").toString();
-            if ("rememberPwd".equals(rememberPwd)) {
-                CookieTool.addCookie(request, response, "name", user_name, loginMaxAge); //将姓名加入到cookie中
-                CookieTool.addCookie(request, response, "password", user_pwd, loginMaxAge);   //将密码加入到cookie中
-            }
-            //将UtcUsers放到session中
-            request.getSession().setAttribute("utcUsers", user);
-            str = "self/index";
-        }
-        return str;
-    }
+
 }
