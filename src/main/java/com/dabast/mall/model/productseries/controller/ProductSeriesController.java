@@ -64,30 +64,7 @@ public class ProductSeriesController extends BaseRestSpringController {
     }
     @RequestMapping(value="/popover/{id}")
     public ResponseEntity<ProductSeries> popover(ModelMap model,@PathVariable java.lang.String id) {
-//        ProductSeries productSeries = ServiceManager.productSeriesService.findById(new ObjectId(id));
         ProductSeries productSeries=productSeriesService.findProductSeriesById(new ObjectId(id));
-//        productSeries.setId(id);
-//        productSeries.setBrand("大坝");
-//        productSeries.setEvaluateCount(101);
-//        productSeries.setCommonPrice(100.36);
-//        productSeries.setName("豆腐乳");
-//        productSeries.setPictures(new String[]{"statics/assets/temp/products/model2.jpg", "statics/assets/temp/products/model3.jpg", "statics/assets/temp/products/model4.jpg"});
-//        productSeries.setDescription("豆腐乳真的很好吃哦~~~");
-//        productSeries.setShelvesDate(new Date());
-//        List<ProductProperty> productProperties=new ArrayList<ProductProperty>();
-//        ProductProperty property1=new ProductProperty();
-//        property1.setId("prop-00001");
-//        property1.setPropertyName("包装");
-//        property1.setPropertyValues( new String[]{"袋装", "散装", "精装"});
-//        productProperties.add(property1);
-//
-//        ProductProperty property2=new ProductProperty();
-//        property2.setId("prop-00002");
-//        property2.setPropertyName("辣度");
-//        property2.setPropertyValues(new String[]{"微辣","中辣","辣","麻辣"});
-//        productProperties.add(property2);
-//
-//        productSeries.setProductProperties(productProperties);
         ResponseEntity<ProductSeries> rt=new ResponseEntity<ProductSeries>(productSeries, HttpStatus.OK);
         return rt;
     }

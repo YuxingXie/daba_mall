@@ -161,7 +161,7 @@
                                     </div>
                                     <h3><a href="item.html">${prod.name}</a></h3>
                                     <div class="pi-price">￥${prod.commonPrice}</div>
-                                    <a href="#" data-href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
+                                    <a href="#" data-id="${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
 
                                     <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
                                 </div>
@@ -270,44 +270,45 @@
     </div>
     <div id="product-pop-up" style="display: none; width: 700px;">
         <div class="product-page product-pop-up">
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-3">
-                    <div class="product-main-image">
-                        <img src="${path}/statics/assets/temp/products/model7.jpg" alt="Cool green dress with red bell" class="img-responsive">
+            <form name="popForm">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-3">
+                        <div class="product-main-image">
+                            <img src="${path}/statics/assets/temp/products/model7.jpg" alt="Cool green dress with red bell" class="img-responsive">
+                        </div>
+                        <div class="product-other-images">
+                            <a href="#" class="active"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model3.jpg"></a>
+                            <a href="#"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model4.jpg"></a>
+                            <a href="#"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model5.jpg"></a>
+                        </div>
                     </div>
-                    <div class="product-other-images">
-                        <a href="#" class="active"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model3.jpg"></a>
-                        <a href="#"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model4.jpg"></a>
-                        <a href="#"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model5.jpg"></a>
+                    <div class="col-md-6 col-sm-6 col-xs-9">
+                        <h1 style=" text-align:center;">帝王蟹</h1>
+                        <div class="price-availability-block clearfix">
+                            <div class="price">
+                                <strong><span>$</span>47.00</strong>
+                                <em>$<span>62.00</span></em>
+                            </div>
+                            <div class="availability">
+                                状态: <strong>货源充足</strong>
+                            </div>
+                        </div>
+                        <div class="description" style=" direction:ltr;">
+                            <p></p>
+                        </div>
+                        <div class="product-page-options">
+
+                        </div>
+                        <div class="product-page-cart">
+                            <div class="product-quantity">
+                                <input id="product-quantity" type="text" value="1" name="product-quantity" class="form-control input-sm">
+                            </div>
+                            <button class="btn btn-primary add2cart" type="button">添加到购物车</button>
+                            <button class="btn btn-default" type="submit">更多商品</button>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-6 col-xs-9">
-                    <h1 style=" text-align:center;">帝王蟹</h1>
-                    <div class="price-availability-block clearfix">
-                        <div class="price">
-                            <strong><span>$</span>47.00</strong>
-                            <em>$<span>62.00</span></em>
-                        </div>
-                        <div class="availability">
-                            状态: <strong>货源充足</strong>
-                        </div>
-                    </div>
-                    <div class="description" style=" direction:ltr;">
-                        <p></p>
-                    </div>
-                    <div class="product-page-options">
-
-                    </div>
-                    <div class="product-page-cart">
-                        <div class="product-quantity">
-                            <input id="product-quantity" type="text" value="1" name="product-quantity" class="form-control input-sm">
-                        </div>
-                        <button class="btn btn-primary" type="submit">添加到购物车</button>
-                        <button class="btn btn-default" type="submit">更多商品</button>
-                    </div>
-                </div>
-
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -340,6 +341,7 @@
         type="text/javascript"></script>
 
 <script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
+<script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
 <script>
     $(document).ready(function(){
         App.init();
@@ -347,17 +349,25 @@
         Index.initLayerSlider();
         App.initImageZoom();
         App.initTouchspin();
-        $(document).on("click",".add2cart",function(){
-            var url=$(this).data("href");
-            alert(url);
+        $(document).on("click","#product-pop-up .add2cart",function(){
+            var propertyId=$(".product-property").attr("propertyId");
+            var form=$('[name="popForm"]');
+            var data={};
+            data.productSeriesId=form.find("[name='productSeriesId']").val();
+            var productPropertySelects=[];
+            form.find("select").each(function(){
+                var productPropertySelect={};
+                productPropertySelect.productPropertyId=$(this).data("productPropertyId");
+                productPropertySelect.selectIndex=$(this).val();
+                productPropertySelects.push(productPropertySelect);
+            });
+            data.productPropertySelects=productPropertySelects;
+            alert(JSON.stringify(data));
+
         });
 
         $(".fancybox-fast-view").click(function(){
             var prod=$(this).data("prod");
-//            http://localhost:63342/daba/metronic_v2.0.2/ecommerce/template/product_json/product"+prod+".json
-            <%--$.ajax("${path}/product_series/popover/"+prod).done(function(data){--%>
-            console.log("prod:"+prod)
-            <%--$.ajax("${path}/statics/product_json/product"+prod+".json").done(function(data){--%>
             $.ajax("${path}/product_series/popover/"+prod).done(function(data){
                 $("#product-pop-up .product-main-image>img").attr("src","${path}/"+data.pictures[0]);
                 $("#product-pop-up h1").text(data.name);
@@ -366,26 +376,41 @@
                 $("#product-pop-up  .add2cart").unbind("click");
                 var json =data.productProperties;
                 var product_page_options=$("#product-pop-up .product-page-options");
+
                 product_page_options.empty();
+                var productSeriesId=$('<input type="hidden" name="productSeriesId" value="'+prod+'"/>');
+                productSeriesId.appendTo(product_page_options);
                 for(var i=0;i<json.length;i++){
                     var pull_left=$('<div class="pull-left"></div>');
                     pull_left.appendTo(product_page_options);
                     var control_label=$('<label class="control-label" style=" direction:ltr;">'+json[i]["propertyName"]+'&nbsp;:&nbsp;</label>');
                     control_label.appendTo(pull_left);
-                    var select=$('<select class="form-control input-sm" name='+json[i]["id"]+'>');
+                    var select=$('<select class="form-control input-sm product-property" name="productPropertyId" data-product-property-id="'+json[i]["id"]+'">');
                     select.appendTo(pull_left);
                     var propertyValues= json[i]["propertyValues"];
                     for(var j=0;j<propertyValues.length;j++){
-                        var option=$("<option>"+propertyValues[j]+"</option>");
+                        var option=$("<option value='"+j+"'>"+propertyValues[j]+"</option>");
                         option.appendTo(select);
                     }
                 }
-//                $("#product-pop-up  .add2cart").click(function(){
-////                    console.log("id:"+data.id);
-//                });
+                $(".product-other-images").empty();
+                for(var j=0;j<data.pictures.length;j++){
+                    if(j==0){
+                        $(".product-other-images").append("<a href='javascript:void(0)' class='active'><img src='${path}/"+data.pictures[j]+"'/></a>");
+                    }else{
+                        $(".product-other-images").append("<a href='javascript:void(0)'><img src='${path}/"+data.pictures[j]+"'/></a>");
+                    }
+                }
                 App.initImageZoom();
             }).fail(function(){ console.log("error！"); });
         });
+        $(document).on("click",".product-other-images a",function(){
+            $(".product-main-image").find("img").attr("src",($(this).find("img").attr("src")));
+            App.initImageZoom();
+        })
+    });
+    $(function(){
+        $('.add2cart').shoping(); //调用shoping函数
     });
 </script>
 </html>

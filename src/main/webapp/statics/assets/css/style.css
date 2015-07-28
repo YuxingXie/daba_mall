@@ -3301,3 +3301,61 @@ ul.automatically li a:hover
 	position: absolute;
 	top: -3px;
 }
+.form-horizontal .control-label, .form-horizontal .radio, .form-horizontal .checkbox, .form-horizontal .radio-inline, .form-horizontal .checkbox-inline
+{
+	padding-top:0px;
+}
+
+.imgsto img
+{
+	max-width:50%;
+	height:auto;
+	padding:10px;
+}
+.content-page ul
+{
+	width:100%;
+	height:160px;
+	border:1px solid rgb(178,178,178);
+
+	-moz-box-shadow:0px 0px 10px #BFBFBF;
+
+
+
+	/* For Firefox3.6+ */
+
+	-webkit-box-shadow:0px 0px 10px #BFBFBF; /* For Chrome5+, Safari5+ */
+
+	box-shadow:0px 0px 10px #BFBFBF;	}
+.content-page li
+{
+	width:50%;
+	padding-bottom:10px;
+	padding-top:10px;
+	float:left;
+}
+
+
+/*2015-7-13*/
+.J-shoping{height:34px;position:fixed; z-index:1111}
+*html .J-shoping{position:absolute;top:expression(eval(document.documentElement.scrollTop));margin:500px 0 0 0;}
+.J-shoping-item{position:relative;padding:0px 6px;height:34px;}
+.J-shoping-pos{position:absolute;width:6px;height:34px;z-index:1111;top:-3px;}
+.J-L-ico{background-position:-55px -84px;left:0px;}
+.J-R-ico{background-position:-66px -84px;right:0px;}
+.J-shoping-main{position:relative;}
+.J-shoping-title{height:27px;cursor:pointer;line-height:27px;padding:0px 10px 4px 10px;position:relative;z-index:1111;background:url(../images/bg5.png) repeat-x 0px 0px;}
+.J-shoping-title .J-go{color:#fff;display:block;float:left;}
+.J-shoping-title .J-go em{display:inline-block;width:17px;height:14px;vertical-align:middle;margin:-2px 10px 0px 0px;margin-top:0px\9;background-position:-56px -124px;}
+.J-shoping-num{width:21px;height:14px;background-position:-28px -88px;text-align:center;overflow:hidden;line-height:14px;display:block;position:absolute;left:0px;top:-16px;color:#187705;font-size:15px;}
+.J-shoping-body{width:255px;display:none;border:solid 1px #d6d6d6;box-shadow:0px 0px 5px #8b8b8b;behavior: url(js/pie.htc);padding:10px 10px 35px 10px;position:absolute;bottom:5px;left:0px;background:url(../images/p-bg.png) repeat;z-index:1111;}
+.J-shoping-px{width:275px;border:solid 1px #d6d6d6;display:none;box-shadow:0px 0px 5px #8b8b8b;behavior: url(js/pie.htc);height:28px;position:absolute;bottom:5px;left:0px;background:url(../images/p-bg.png) repeat;z-index:1111;}
+.J-shoping-mx{width:113px;position:absolute;left:-3px;top:-3px;height:3px;background-position:-4px -187px;z-index:1121;}
+.J-shoping-small{width:119px;}
+#floatOrder{width:50px;height:50px;padding:2px;background:#fff;border:solid 5px #e54144;overflow:hidden;position:absolute;z-index:1101;}
+.Q-online{width:28px;height:20px;display:block;background-position:-78px -130px;position:fixed;right:10px;bottom:13px;}
+*html .Q-online{position:absolute;top:expression(eval(document.documentElement.scrollTop));margin:500px 0 0 0;}
+#U-attion{display:block;width:120px;padding-right:20px;height:28px;background:#eee;line-height:28px;text-align: center;border:solid 1px #d0d0d0;color:#181818;position:absolute;left:-145px;top:-2px;}
+#U-attion em{display:inline-block;vertical-align:middle;margin:-2px 5px 0px 0px;margin-top:0px\9;width:16px;height:15px;background-position:-65px -47px;}
+#U-attion span{display:inline-block;width:22px;height:11px;background-position:-65px -32px;position:absolute;right:5px;top:2px;}
+

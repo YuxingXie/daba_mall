@@ -11,9 +11,9 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class ProductSelected {
     @Id
     private String id;
-//    @Field(value = "productProperties")
+
     @Field(value = "productPropertySelect")
-    private ProductPropertySelect[] productPropertySelect;
+    private ProductPropertySelect[] productPropertySelects;
 
     public String getId() {
         return id;
@@ -23,11 +23,11 @@ public class ProductSelected {
         this.id = id;
     }
 
-    public ProductPropertySelect[] getProductPropertySelect() {
-        return productPropertySelect;
+    public ProductPropertySelect[] getProductPropertySelects() {
+        return productPropertySelects;
     }
 
-    public void setProductPropertySelect(ProductPropertySelect[] productPropertySelect) {
-        this.productPropertySelect = productPropertySelect;
+    public void setProductPropertySelects(ProductPropertySelect[] productPropertySelects) {
+        this.productPropertySelects = productPropertySelects;
     }
 }

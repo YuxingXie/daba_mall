@@ -107,7 +107,12 @@
             <!-- BEGIN CART -->
             <div class="cart-block">
                 <div class="cart-info">
-                    <a href="javascript:void(0);" class="cart-info-value">11</a>
+                    <%--<a href="javascript:void(0);" class="cart-info-value">11</a>--%>
+                    <div class="J-shoping J-shoping-small">
+                        <div class="J-shoping-title">
+                            <span class="baseBg J-shoping-num">0</span>
+                        </div>
+                    </div>
                 </div>
                 <a href="#"><i class="fa fa-shopping-cart"></i></a>
                 <!-- BEGIN CART CONTENT -->
