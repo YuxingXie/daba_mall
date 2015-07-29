@@ -4,10 +4,11 @@ import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.common.util.MD5;
 import com.dabast.common.web.CookieTool;
-import com.dabast.entity.ProductSeries;
-import com.dabast.entity.User;
+import com.dabast.entity.*;
+import com.dabast.mall.Constant;
 import com.dabast.mall.form.UserLoginForm;
 import com.dabast.mall.model.productseries.dao.UserDao;
+import com.dabast.mall.model.productseries.service.impl.CartService;
 import com.dabast.mall.view.index.service.impl.RegisterValidateService;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,7 +42,7 @@ public class IndexController extends BaseRestSpringController {
     UserDao userDao;
     @Resource
     private RegisterValidateService registerValidateService;
-
+    @Resource private CartService cartService;
     @RequestMapping(value = "/index")
     public String index(HttpServletRequest request, ModelMap model, HttpSession session) {
 
@@ -55,7 +58,15 @@ public class IndexController extends BaseRestSpringController {
         if (name != null && password != null) {
 //            User user = userDao.findByNameAndPwd(name, password);
             User user = userDao.findByEmailOrPhone(name);
-            if (user.getPassword().equalsIgnoreCase(password)) session.setAttribute("loginUser", user);
+            if (user.getPassword().equalsIgnoreCase(password)) {
+                session.setAttribute("loginUser", user);
+                Cart condition=new Cart();
+                condition.setUserId(user.getId());
+                Cart cart=cartService.findOne(condition);
+                if (cart!=null){
+                    session.setAttribute(Constant.CART,cart);
+                }
+            }
         }
         List<String[]> top3 = ServiceManager.productSeriesService.getTop3ProductSeries();
         model.addAttribute("top3", top3);
@@ -111,7 +122,30 @@ public class IndexController extends BaseRestSpringController {
 //        System.out.println("is unique");
         return responseEntity;
     }
+    @RequestMapping(value = "/index/cart", method = RequestMethod.POST)
+    public ResponseEntity<Cart> login(@RequestBody ProductSelected productSelected, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        Cart cart=null;
+       if (session.getAttribute(Constant.CART)==null){
+           cart=new Cart();
+       }else{
+           cart=(Cart)session.getAttribute(Constant.CART);
+       }
+        ProductSeries productSeries=ServiceManager.productSeriesService.findById(productSelected.getProductSeriesId());
+        productSelected.setProductSeries(productSeries);
 
+        List<ProductPropertySelect> productPropertySelectList=new ArrayList<ProductPropertySelect>();
+       for(ProductPropertySelect productPropertySelect: productSelected.getProductPropertySelects()){
+           ProductProperty productProperty=ServiceManager.productPropertyService.findById(productPropertySelect.getProductPropertyId());
+           productPropertySelect.setProductProperty(productProperty);
+           productPropertySelectList.add(productPropertySelect);
+       }
+        productSelected.setProductPropertySelects((ProductPropertySelect[])productPropertySelectList.toArray(new ProductPropertySelect[productPropertySelectList.size()]));
+        cart.merge(productSelected);
+        session.setAttribute(Constant.CART, cart);
+        ResponseEntity<Cart> cartResponseEntity=new ResponseEntity<Cart>(cart, HttpStatus.OK);
+
+        return cartResponseEntity;
+    }
     @RequestMapping(value = "/index/user/login", method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody UserLoginForm form, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
@@ -160,12 +194,13 @@ public class IndexController extends BaseRestSpringController {
     public ResponseEntity logout(ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         session.setAttribute("loginUser", null);
         session.removeAttribute("loginUser");
+        session.setAttribute(Constant.CART, null);
+        session.removeAttribute(Constant.CART);
         CookieTool.removeCookie(request, response, "loginStr");
 //        System.out.println("清除cookie name");
         CookieTool.removeCookie(request, response, "password");
 //        System.out.println("清除cookie password");
         return new ResponseEntity("{}", HttpStatus.OK);
-
     }
 
 

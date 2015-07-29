@@ -1,7 +1,10 @@
 package com.dabast.entity;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,11 +12,13 @@ import java.util.List;
  */
 @Document(collection = "cart")
 public class Cart {
+    @Id
     private String id;
+    @Field(value = "userId")
     private String userId;
     private List<ProductSelected> productSelectedList;
-    private String productSeriesId;
-    private Integer amount;
+
+
 
     public String getId() {
         return id;
@@ -39,19 +44,21 @@ public class Cart {
         this.productSelectedList = productSelectedList;
     }
 
-    public String getProductSeriesId() {
-        return productSeriesId;
-    }
-
-    public void setProductSeriesId(String productSeriesId) {
-        this.productSeriesId = productSeriesId;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
+    public void merge(ProductSelected anotherProductSelected){
+        List<ProductSelected> selectedList=this.getProductSelectedList();
+        if (selectedList==null){
+            selectedList=new ArrayList<ProductSelected>();
+            selectedList.add(anotherProductSelected);
+            this.setProductSelectedList(selectedList);
+            return;
+        }
+        for (ProductSelected productSelected: this.getProductSelectedList()){
+            if (productSelected.equals(anotherProductSelected)){
+                productSelected.setAmount(productSelected.getAmount()+anotherProductSelected.getAmount());
+                return;
+            }
+        }
+        selectedList.add(anotherProductSelected);
+        setProductSelectedList(selectedList);
     }
 }

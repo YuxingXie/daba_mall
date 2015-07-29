@@ -118,79 +118,27 @@
                 <!-- BEGIN CART CONTENT -->
                 <div class="cart-content-wrapper">
                     <div class="cart-content">
-                        <ul class="scroller" style="height: 250px;">
-                            <li>
-                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37"
-                                                         height="34"></a>
-                                <span class="cart-content-count">x 1</span>
-                                <strong><a href="item.html">乡里腊肉</a></strong>
-                                <em>￥123</em>
-                                <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
-                            </li>
-                            <li>
-                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37"
-                                                         height="34"></a>
-                                <span class="cart-content-count">x 1</span>
-                                <strong><a href="item.html">乡里腊肉</a></strong>
-                                <em>￥123</em>
-                                <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
-                            </li>
-                            <li>
-                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37"
-                                                         height="34"></a>
-                                <span class="cart-content-count">x 1</span>
-                                <strong><a href="item.html">乡里腊肉</a></strong>
-                                <em>￥123</em>
-                                <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
-                            </li>
-                            <li>
-                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37"
-                                                         height="34"></a>
-                                <span class="cart-content-count">x 1</span>
-                                <strong><a href="item.html">乡里腊肉</a></strong>
-                                <em>￥123</em>
-                                <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
-                            </li>
-                            <li>
-                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37"
-                                                         height="34"></a>
-                                <span class="cart-content-count">x 1</span>
-                                <strong><a href="item.html">乡里腊肉</a></strong>
-                                <em>￥123</em>
-                                <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
-                            </li>
-                            <li>
-                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37"
-                                                         height="34"></a>
-                                <span class="cart-content-count">x 1</span>
-                                <strong><a href="item.html">乡里腊肉</a></strong>
-                                <em>￥123</em>
-                                <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
-                            </li>
-                            <li>
-                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37"
-                                                         height="34"></a>
-                                <span class="cart-content-count">x 1</span>
-                                <strong><a href="item.html">乡里腊肉</a></strong>
-                                <em>￥123</em>
-                                <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
-                            </li>
-                            <li>
-                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37"
-                                                         height="34"></a>
-                                <span class="cart-content-count">x 1</span>
-                                <strong><a href="item.html">乡里腊肉</a></strong>
-                                <em>￥123</em>
-                                <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
-                            </li>
-                            <li>
-                                <a href="item.html"><img src="${path}/statics/assets/temp/cart-img.jpg" width="37"
-                                                         height="34"></a>
-                                <span class="cart-content-count">x 1</span>
-                                <strong><a href="item.html">双凫铺腊肉</a></strong>
-                                <em>￥123</em>
-                                <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
-                            </li>
+                        <ul class="scroller" style="height:250px;">
+                            <c:choose>
+                                <c:when test="${empty sessionScope.cart}">
+                                    您的购物车中还没有商品
+                                </c:when>
+                                <c:otherwise>
+                                    <c:forEach var="productSelected" items="${sessionScope.cart.productSelectedList}">
+                                        <li>
+                                            <a href="item.html"><img src="${path}/${productSelected.productSeries.pictures[0]}" width="37" height="34"></a>
+                                            <span class="cart-content-count">x ${productSelected.amount}</span>
+                                            <strong><a href="item.html">${productSelected.productSeries.name}</a>
+                                                <c:forEach var="productPropertySelect" items="${productSelected.productPropertySelects}">
+                                                ${productPropertySelect.productProperty.propertyValues[productPropertySelect.selectIndex]}
+                                                </c:forEach></strong>
+                                            <em>￥${productSelected.productSeries.commonPrice}</em>
+                                            <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
+                                        </li>
+                                    </c:forEach>
+                                </c:otherwise>
+                            </c:choose>
+
                         </ul>
                         <div class="text-right">
                             <a href="shopping-cart.html" class="btn btn-default">查看购物车</a>

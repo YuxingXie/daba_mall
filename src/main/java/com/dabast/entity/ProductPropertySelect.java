@@ -6,7 +6,7 @@ package com.dabast.entity;
 public class ProductPropertySelect {
     private String productPropertyId;
     private int selectIndex;
-
+    private ProductProperty productProperty;
     public String getProductPropertyId() {
         return productPropertyId;
     }
@@ -20,5 +20,13 @@ public class ProductPropertySelect {
 
     public void setSelectIndex(int selectIndex) {
         this.selectIndex = selectIndex;
+    }
+
+    public ProductProperty getProductProperty() {
+        return productProperty;
+    }
+
+    public void setProductProperty(ProductProperty productProperty) {
+        this.productProperty = productProperty;
     }
 }

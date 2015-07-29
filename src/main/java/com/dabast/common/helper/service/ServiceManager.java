@@ -1,4 +1,5 @@
 package com.dabast.common.helper.service;
+import com.dabast.mall.model.productseries.service.ICartService;
 import com.dabast.mall.model.productseries.service.IProductPropertyService;
 import com.dabast.mall.model.productseries.service.IProductSeriesService;
 import org.springframework.beans.factory.InitializingBean;
@@ -9,6 +10,7 @@ public class ServiceManager implements InitializingBean{
     private static boolean inited;
     public static IProductSeriesService productSeriesService;
     public static IProductPropertyService productPropertyService;
+    public static ICartService cartService;
 
 
     public static void setInited(boolean inited) {
@@ -27,5 +29,7 @@ public class ServiceManager implements InitializingBean{
         ServiceManager.productPropertyService = productPropertyService;
     }
 
-
+    public void setCartService(ICartService cartService) {
+        ServiceManager.cartService = cartService;
+    }
 }

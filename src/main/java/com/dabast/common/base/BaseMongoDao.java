@@ -295,7 +295,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         return mongoTemplate.getDb().collectionExists(getCollectionName());
     }
     private Query getEqualsQuery(E e) {
-
+        if (e==null) return null;
         Query query = null;
         Criteria criteria = null;
         boolean firstCriteriaAdded = false;
