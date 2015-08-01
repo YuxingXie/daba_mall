@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <!DOCTYPE html>
@@ -26,13 +27,6 @@
     <link href="${path}/statics/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="${path}/statics/assets/plugins/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
 
-    <!-- Global styles END -->
-    <script type="text/javascript" src="${path}/statics/assets/plugins/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="${path}/statics/assets/plugins/jquery.md5.js"></script>
-    <script src="${path}/statics/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="${path}/statics/assets/scripts/app.js"></script>
-    <script type="text/javascript" src="${path}/statics/assets/plugins/angular-1.2.19/angular.min.js"></script>
-    <script type="text/javascript" src="${path}/statics/assets/plugins/angular-1.2.19/angular-route.min.js"></script>
     <%--<script src="${path}/statics/assets/scripts/login.js"></script>--%>
     <!-- Page level plugin styles START -->
     <link href="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet">
@@ -45,6 +39,8 @@
     <link href="${path}/statics/assets/css/style-responsive.css" rel="stylesheet" type="text/css">
     <link href="${path}/statics/assets/css/custom.css" rel="stylesheet" type="text/css">
     <!-- Theme styles END -->
+    <script> path="${path}";</script>
+    <script type="text/javascript" src="${path}/statics/assets/plugins/jquery-1.10.2.min.js"></script>
     <sitemesh:write property='head'/>
     <title>大坝生态农业</title>
     <sitemesh:write property='title'/>
@@ -110,7 +106,11 @@
                     <%--<a href="javascript:void(0);" class="cart-info-value">11</a>--%>
                     <div class="J-shoping J-shoping-small">
                         <div class="J-shoping-title">
-                            <span class="baseBg J-shoping-num">0</span>
+                            <span class="baseBg J-shoping-num"><c:choose>
+                                <c:when test="${empty sessionScope.cart ||empty sessionScope.cart.productSelectedList}">0</c:when>
+                                <c:otherwise>${fn:length(sessionScope.cart.productSelectedList)}</c:otherwise>
+                            </c:choose>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -118,20 +118,22 @@
                 <!-- BEGIN CART CONTENT -->
                 <div class="cart-content-wrapper">
                     <div class="cart-content">
-                        <ul class="scroller" style="height:250px;">
+                        <ul class="scroller" style="height:250px;" id="cart_list">
                             <c:choose>
-                                <c:when test="${empty sessionScope.cart}">
-                                    您的购物车中还没有商品
+                                <c:when test="${empty sessionScope.cart ||empty sessionScope.cart.productSelectedList}">
+                                    <li>您的购物车中还没有商品</li>
                                 </c:when>
                                 <c:otherwise>
-                                    <c:forEach var="productSelected" items="${sessionScope.cart.productSelectedList}">
-                                        <li>
+                                    <c:forEach var="productSelected" items="${sessionScope.cart.productSelectedList}" varStatus="selectedIndex">
+                                        <li data-selected-index="${selectedIndex.index}">
                                             <a href="item.html"><img src="${path}/${productSelected.productSeries.pictures[0]}" width="37" height="34"></a>
                                             <span class="cart-content-count">x ${productSelected.amount}</span>
-                                            <strong><a href="item.html">${productSelected.productSeries.name}</a>
+                                            <strong>
+                                                <a href="item.html">${productSelected.productSeries.name}</a>
                                                 <c:forEach var="productPropertySelect" items="${productSelected.productPropertySelects}">
                                                 ${productPropertySelect.productProperty.propertyValues[productPropertySelect.selectIndex]}
-                                                </c:forEach></strong>
+                                                </c:forEach>
+                                            </strong>
                                             <em>￥${productSelected.productSeries.commonPrice}</em>
                                             <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
                                         </li>
@@ -513,60 +515,10 @@
 </footer>
 
 </body>
-<script>
-    $(document).ready(function () {
-        $(document).on("click",".glyphicon-remove",function(){
-            $(this).prev().val("").focus();
-        });
-        $(document).on("click", "#login", function () {
-            var pwd=$.md5($("#password").val());
-            $("#password").val(pwd);
-            $.ajax({
-                url: "${path}/index/user/login",
-                contentType: "application/json",
-                data: JSON.stringify($('#loginForm').serializeObject()),
-                method: "post",
-                success: function (data) {
-                    console.log(data.customStatus);
-                    if(data.loginStatus!=undefined){
-                        $("#error-msg").text(data.loginStatus);
-                        return;
-                    }
 
-                    $(".additional-nav>ul>li:eq(0)").remove();
-                    $(".additional-nav>ul>li:eq(0)").remove();
-                    var $new_li = $('<li>欢迎您,<a href="#">' + data.name + '</a>! </li><li><a href="#" id="logout">退出</a></li>');
-                    $new_li.insertBefore($(".additional-nav>ul>li:eq(0)"));
-                    $('#myModal').modal('hide');
-                },
-                error:function(data){
-                    console.log(data.data.custom_status);
-                }
-            })
-        })
-        $(document).on("click", "#logout", function () {
-            $.ajax("${path}/index/user/logout")
-                    .done(
-                    function () {
-                        $(".additional-nav>ul>li:eq(0)").remove();
-                        $(".additional-nav>ul>li:eq(0)").remove();
-                        var $new_li = $('<li><a href="login-page.html">注册</a></li><li><a href="#" data-toggle="modal" data-target="#myModal">登录</a></li>');
-                        $new_li.insertBefore($(".additional-nav>ul>li:eq(0)"));
-                    }
-            ).fail()
-        });
-
-    });
-    $.fn.serializeObject = function (excludeFields) {
-        if(excludeFields!=undefined && !Array.isArray(excludeFields)) return false;
-        var d = {};
-        var t = $(this).serializeArray();
-        $.each(t, function() {
-            if($.inArray(this.name,excludeFields)<0){
-                d[this.name] = this.value;
-            }
-        });
-        return d;
-    };
-</script>
+<script type="text/javascript" src="${path}/statics/assets/plugins/jquery.md5.js"></script>
+<script type="text/javascript" src="${path}/statics/assets/plugins/bootstrap/js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="${path}/statics/assets/scripts/app.js"></script>
+<script type="text/javascript" src="${path}/statics/assets/plugins/angular-1.2.19/angular.min.js"></script>
+<script type="text/javascript" src="${path}/statics/assets/scripts/top.js"></script>
 </html>

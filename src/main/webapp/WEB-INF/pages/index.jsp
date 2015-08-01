@@ -2,9 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
-<script>
-    path="${path}";
-</script>
+
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
@@ -371,17 +369,8 @@
                 data: JSON.stringify(data),
                 method: "post",
                 success: function (data) {
-                    console.log("success");
                     $.fancybox.close();
-                    for(var i=0;i<data.productSelectedList.length;i++){
-                        var productSelected=data.productSelectedList[i];
-                        console.log(productSelected.productSeries.name);
-                        for(var j=0;j<productSelected.productPropertySelects.length;j++){
-                            var productPropertySelect=productSelected.productPropertySelects[j];
-                            console.log(productPropertySelect.productProperty.propertyValues[productPropertySelect.selectIndex]);
-                        }
-                    }
-
+                    renderCart(data);
                 },
                 error:function(data){
 
@@ -427,6 +416,7 @@
                     }
                 }
                 App.initImageZoom();
+                $('.add2cart').shoping();
             }).fail(function(){ console.log("error！"); });
         });
         $(document).on("click",".product-other-images a",function(){

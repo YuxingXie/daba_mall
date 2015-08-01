@@ -49,12 +49,12 @@
 									$obj.fadeOut(300,function(){
 										$obj.remove();	
 										$target.data('click',false).addClass('dis-click');
-										var l=$('.J-shoping-list').length,
-											num=Number($num.text());
-										if(l<5){
-											$body.prepend('<div class="J-shoping-list" data-id="'+id+'"><a href="#"title=""><img src="'+path+'/statics/images/logo.png" width="50"height="50"/></a><div class="J-shoping-list-a"><p>彩涂板卷(镀铝锌基板)</p><p><span class="left">TDC51D+AZ</span><span class="right"><em>150.000</em>吨</span></p></div><div class="baseBg J-shoping-close"></div></div>');
-										};
-										$num.text(num+1);
+										//var l=$('.J-shoping-list').length,
+											//num=Number($num.text());
+										//if(l<5){
+										//	$body.prepend('<div class="J-shoping-list" data-id="'+id+'"><a href="#"title=""><img src="'+path+'/statics/images/logo.png" width="50"height="50"/></a><div class="J-shoping-list-a"><p>彩涂板卷(镀铝锌基板)</p><p><span class="left">TDC51D+AZ</span><span class="right"><em>150.000</em>吨</span></p></div><div class="baseBg J-shoping-close"></div></div>');
+										//};
+										//$num.text(num+1);
 									});
 								});
 							});	
@@ -100,7 +100,7 @@
 				},
 				hideBody:function(){
 					var length=$('.J-shoping-list').length;	
-					$num.text(length);
+					//$num.text(length);
 					if(length==0){
 						$('.J-shoping-px,.J-shoping-body').hide();
 						$('.J-shoping-mx').show();

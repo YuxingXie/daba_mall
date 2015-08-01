@@ -146,6 +146,22 @@ public class IndexController extends BaseRestSpringController {
 
         return cartResponseEntity;
     }
+    @RequestMapping(value = "/index/cart/remove", method = RequestMethod.POST)
+    public ResponseEntity<Cart> cartRemove(Integer selectedIndex, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        Cart cart=null;
+        if (session.getAttribute(Constant.CART)==null){
+            cart=new Cart();
+        }else{
+            cart=(Cart)session.getAttribute(Constant.CART);
+        }
+        if (cart.getProductSelectedList()!=null &&cart.getProductSelectedList().size()>selectedIndex){
+            cart.getProductSelectedList().remove(selectedIndex.intValue());
+        }
+        session.setAttribute(Constant.CART, cart);
+        ResponseEntity<Cart> cartResponseEntity=new ResponseEntity<Cart>(cart, HttpStatus.OK);
+
+        return cartResponseEntity;
+    }
     @RequestMapping(value = "/index/user/login", method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody UserLoginForm form, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
@@ -174,10 +190,6 @@ public class IndexController extends BaseRestSpringController {
             user.setLoginStatus("用户名/密码错误");
             return new ResponseEntity<User>(user,HttpStatus.OK);
         }
-
-
-
-
     }
 
     @RequestMapping(value = "/index/user/login/direct/{id}")
@@ -186,7 +198,6 @@ public class IndexController extends BaseRestSpringController {
         int loginMaxAge = 30 * 24 * 60 * 60;   //定义账户密码的生命周期，这里是一个月。单位为秒
         CookieTool.addCookie(request, response, "name", user.getName(), loginMaxAge);
         CookieTool.addCookie(request, response, "password", user.getPassword(), loginMaxAge);
-
         return "redirect:/index";
     }
 
