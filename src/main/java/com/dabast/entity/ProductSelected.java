@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.util.Assert;
 
 import java.util.Arrays;
 import java.util.List;
@@ -65,10 +66,13 @@ public class ProductSelected {
 
     @Override
     public boolean equals(Object obj) {
+        Assert.notNull(obj);
         if(this == obj) return true;
         if(obj == null)  return false;
         if(getClass() != obj.getClass() ) return false;
         ProductSelected other = (ProductSelected)obj;
+        Assert.notNull(this.productSeriesId);
+        Assert.notNull(other.productSeriesId);
         if (!this.productSeriesId.equalsIgnoreCase(other.productSeriesId)) return false;
         if (other.getProductPropertySelects()==null && this.getProductPropertySelects()==null) return true;
         if (other.getProductPropertySelects()==null && this.getProductPropertySelects()!=null) return false;

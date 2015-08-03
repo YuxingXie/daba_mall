@@ -16,10 +16,11 @@ public class Cart {
     private String id;
     @Field(value = "userId")
     private String userId;
-    private User user;
+
+    @Field(value = "productSelectedList")
     private List<ProductSelected> productSelectedList;
-
-
+    @Field(value = "productSelectedIds")
+    private String[] productSelectedIds;
 
     public String getId() {
         return id;
@@ -63,11 +64,13 @@ public class Cart {
         setProductSelectedList(selectedList);
     }
 
-    public User getUser() {
-        return user;
+
+
+    public String[] getProductSelectedIds() {
+        return productSelectedIds;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setProductSelectedIds(String[] productSelectedIds) {
+        this.productSelectedIds = productSelectedIds;
     }
 }

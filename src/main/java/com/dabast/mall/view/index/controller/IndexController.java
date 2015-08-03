@@ -141,9 +141,14 @@ public class IndexController extends BaseRestSpringController {
        }
         productSelected.setProductPropertySelects((ProductPropertySelect[])productPropertySelectList.toArray(new ProductPropertySelect[productPropertySelectList.size()]));
         cart.merge(productSelected);
+        if (session.getAttribute(Constant.LOGIN_USER)!=null){
+            User user=(User)session.getAttribute(Constant.LOGIN_USER);
+            Cart queryCart=new Cart();
+            queryCart.setUserId(user.getId());
+            ServiceManager.cartService.upsert(queryCart,cart);
+        }
         session.setAttribute(Constant.CART, cart);
         ResponseEntity<Cart> cartResponseEntity=new ResponseEntity<Cart>(cart, HttpStatus.OK);
-
         return cartResponseEntity;
     }
     @RequestMapping(value = "/index/cart/remove", method = RequestMethod.POST)

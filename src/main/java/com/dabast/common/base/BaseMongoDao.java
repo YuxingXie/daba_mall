@@ -8,6 +8,8 @@ import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSInputFile;
 import com.mongodb.util.JSON;
 import org.bson.types.ObjectId;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +20,7 @@ import org.springframework.data.mongodb.core.query.BasicUpdate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.lang.reflect.*;
@@ -63,8 +66,21 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     public int upsert(E queryEntity,E updateEntity){
         Query query=getEqualsQuery(queryEntity);
         System.out.println("update:"+getEqualsQuery(updateEntity).toString());
-        Update update=getUpdateFromEntity(updateEntity);
-        return  mongoTemplate.upsert(query,update,collectionClass).getN();
+        List<E> list=mongoTemplate.find(query,collectionClass);
+        Assert.isTrue(list==null ||list.size()<=1);
+        if (list==null||list.size()==0) {
+            mongoTemplate.insert(updateEntity);
+            return 1;
+        }
+        else{
+            E e=list.get(0);
+            BeanUtils.copyProperties(updateEntity,e);
+           return mongoTemplate.updateFirst(query, getUpdateFromEntity(updateEntity), collectionClass).getN();
+
+        }
+
+//        Update update=getUpdateFromEntity(updateEntity);
+//        return  mongoTemplate.upsert(query,update,collectionClass).getN();
     }
     public GridFSDBFile findFileById(String id){
         GridFS fs=new GridFS(mongoTemplate.getDb());
@@ -300,19 +316,27 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         Criteria criteria = null;
         boolean firstCriteriaAdded = false;
         for (Field field : collectionClass.getDeclaredFields()) {
-            if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)) continue;
+            if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)||!field.isAnnotationPresent(Id.class)) continue;
             String fieldName = field.getName();
             Object fieldValue = ReflectUtil.getValue(e, fieldName);
             if (fieldValue == null) continue;
             if (fieldValue.toString().trim().equals("")) continue;
-            String key = field.getAnnotation(org.springframework.data.mongodb.core.mapping.Field.class).value();
-            if (key == null || key.equals("")) key = fieldName;
-            if (firstCriteriaAdded == false) {
+            if (field.isAnnotationPresent(Id.class)){
+                String key = "_id";
+                criteria = null;
                 criteria = Criteria.where(key).is(fieldValue);
-                firstCriteriaAdded = true;
-            } else {
-                criteria.and(key).is(fieldValue);
+                break;
+            }else{
+                String key = field.getAnnotation(org.springframework.data.mongodb.core.mapping.Field.class).value();
+                if (key == null || key.equals("")) key = fieldName;
+                if (firstCriteriaAdded == false) {
+                    criteria = Criteria.where(key).is(fieldValue);
+                    firstCriteriaAdded = true;
+                } else {
+                    criteria.and(key).is(fieldValue);
+                }
             }
+
         }
         if (criteria == null) return null;
         query = Query.query(criteria);
@@ -348,17 +372,22 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     private Update getUpdateFromEntity(E e) {
         Update update=new Update();
         for (Field field:collectionClass.getDeclaredFields()){
-            if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)) continue;
+            if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)&&!field.isAnnotationPresent(Id.class)) continue;
             String setterMethodName=ReflectUtil.getSetterMethodName(field.getName());
             Class fieldType=field.getType();
             try {
                 field.setAccessible(true);
                 Object fieldValue= field.get(e);
                 if (fieldValue==null) continue;
-                org.springframework.data.mongodb.core.mapping.Field docField=field.getAnnotation(org.springframework.data.mongodb.core.mapping.Field.class);
-
-                String fieldName=docField.value()==null||docField.value().equals("")?field.getName():docField.value();
-                update.set(fieldName,fieldValue);
+                if (field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)){
+                    org.springframework.data.mongodb.core.mapping.Field docField=field.getAnnotation(org.springframework.data.mongodb.core.mapping.Field.class);
+                    String fieldName=docField.value()==null||docField.value().equals("")?field.getName():docField.value();
+                    update.set(fieldName,fieldValue);
+                }
+                if (field.isAnnotationPresent(Id.class)){
+                    Id id=field.getAnnotation(Id.class);
+                    update.set("_id",fieldValue);
+                }
             } catch (IllegalAccessException e1) {
                 e1.printStackTrace();
             }
