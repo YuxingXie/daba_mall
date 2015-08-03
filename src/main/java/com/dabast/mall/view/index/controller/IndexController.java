@@ -184,6 +184,9 @@ public class IndexController extends BaseRestSpringController {
                 CookieTool.removeCookie(request, response, "loginStr");
                 CookieTool.removeCookie(request, response, "password");
             }
+            Cart cart=ServiceManager.cartService.getCartByUserId(user.getId());
+            session.setAttribute(Constant.CART,cart);
+            user.setCart(cart);
             return new ResponseEntity<User>(user, HttpStatus.OK);
         } else {
             user=new User();

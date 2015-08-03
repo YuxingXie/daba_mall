@@ -16,6 +16,7 @@ public class Cart {
     private String id;
     @Field(value = "userId")
     private String userId;
+    private User user;
     private List<ProductSelected> productSelectedList;
 
 
@@ -60,5 +61,13 @@ public class Cart {
         }
         selectedList.add(anotherProductSelected);
         setProductSelectedList(selectedList);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

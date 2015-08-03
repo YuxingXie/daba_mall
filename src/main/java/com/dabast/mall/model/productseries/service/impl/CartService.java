@@ -19,4 +19,9 @@ public class CartService extends BaseEntityManager<Cart> implements ICartService
     protected EntityDao<Cart> getEntityDao() {
         return this.cartDao;
     }
+
+    @Override
+    public Cart getCartByUserId(String id) {
+        return cartDao.getCartByUserId(id);
+    }
 }

@@ -42,6 +42,7 @@ public class User {
     @Field("phone")
     private String phone;
     private String loginStatus;
+    private Cart cart;
 
     public String getId() {
         return id;
@@ -144,5 +145,13 @@ public class User {
 
     public void setLastActivateTime(Date lastActivateTime) {
         this.lastActivateTime = lastActivateTime;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }
