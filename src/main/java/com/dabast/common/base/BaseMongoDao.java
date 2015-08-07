@@ -160,7 +160,6 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     public List<E> findKeyIn(String key, Collection collection) {
         Criteria criteria = Criteria.where(key).in(collection);
         Query query = Query.query(criteria);
-//        System.out.println(query);
         return mongoTemplate.find(query, collectionClass);
     }
 
@@ -316,7 +315,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         Criteria criteria = null;
         boolean firstCriteriaAdded = false;
         for (Field field : collectionClass.getDeclaredFields()) {
-            if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)||!field.isAnnotationPresent(Id.class)) continue;
+            if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)&& !field.isAnnotationPresent(Id.class)) continue;
             String fieldName = field.getName();
             Object fieldValue = ReflectUtil.getValue(e, fieldName);
             if (fieldValue == null) continue;
