@@ -376,10 +376,7 @@
 
                 }
             })
-
-
         });
-
         $(".fancybox-fast-view").click(function(){
             var prod=$(this).data("prod");
             $.ajax("${path}/product_series/popover/"+prod).done(function(data){
@@ -390,7 +387,6 @@
                 $("#product-pop-up  .add2cart").unbind("click");
                 var json =data.productProperties;
                 var product_page_options=$("#product-pop-up .product-page-options");
-
                 product_page_options.empty();
                 var productSeriesId=$('<input type="hidden" name="productSeriesId" value="'+prod+'"/>');
                 productSeriesId.appendTo(product_page_options);
