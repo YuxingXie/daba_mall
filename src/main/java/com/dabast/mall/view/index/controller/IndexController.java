@@ -123,7 +123,7 @@ public class IndexController extends BaseRestSpringController {
         return responseEntity;
     }
     @RequestMapping(value = "/index/cart", method = RequestMethod.POST)
-    public ResponseEntity<Cart> login(@RequestBody ProductSelected productSelected, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<Cart> cart(@RequestBody ProductSelected productSelected, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         Cart cart=null;
        if (session.getAttribute(Constant.CART)==null){
            cart=new Cart();
