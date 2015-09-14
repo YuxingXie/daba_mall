@@ -17,13 +17,13 @@ public class ProductSelected {
     @Id
     private String id;
     @Field(value = "productSeriesId")
-    @DBRef(db = "productSeries")
+//    @DBRef(db = "productSeries")
     private String productSeriesId;
     @Field(value = "productPropertySelects")
     private ProductPropertySelect[] productPropertySelects;
     @Field(value = "amount")
     private Integer amount;
-    private ProductSeries productSeries;
+
     public String getId() {
         return id;
     }
@@ -56,13 +56,6 @@ public class ProductSelected {
         this.amount = amount;
     }
 
-    public ProductSeries getProductSeries() {
-        return productSeries;
-    }
-
-    public void setProductSeries(ProductSeries productSeries) {
-        this.productSeries = productSeries;
-    }
 
     @Override
     public boolean equals(Object obj) {

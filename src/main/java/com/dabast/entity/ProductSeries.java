@@ -32,8 +32,8 @@ public class ProductSeries {
     private String brand;
 
 
-    @DBRef(db = "")
-    private List<ProductProperty> productProperties;
+
+
     private boolean newProduct;
     private Integer evaluateCount;
     public boolean isNewProduct() {
@@ -45,13 +45,6 @@ public class ProductSeries {
         return false;
     }
 
-    public List<ProductProperty> getProductProperties() {
-        return productProperties;
-    }
-
-    public void setProductProperties(List<ProductProperty> productProperties) {
-        this.productProperties = productProperties;
-    }
 
     public String getId() {
         return id;
