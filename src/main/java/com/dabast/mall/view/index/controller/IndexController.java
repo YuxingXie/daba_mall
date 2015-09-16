@@ -135,7 +135,8 @@ public class IndexController extends BaseRestSpringController {
         List<ProductPropertySelect> productPropertySelectList=new ArrayList<ProductPropertySelect>();
        for(ProductPropertySelect productPropertySelect: productSelectedVo.getProductPropertySelects()){
            ProductProperty productProperty=ServiceManager.productPropertyService.findById(productPropertySelect.getProductPropertyId());
-           productPropertySelect.setProductProperty(productProperty);
+//           productPropertySelect.setProductProperty(productProperty);
+           productPropertySelect.setProductPropertyId(productPropertySelect.getProductPropertyId());
            productPropertySelectList.add(productPropertySelect);
        }
         productSelectedVo.setProductPropertySelects((ProductPropertySelect[])productPropertySelectList.toArray(new ProductPropertySelect[productPropertySelectList.size()]));

@@ -3,8 +3,11 @@ package com.dabast.mall.model.productseries.dao;
 import com.dabast.common.base.BaseMongoDao;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.ProductProperty;
+import com.dabast.entity.ProductPropertySelect;
 import com.dabast.entity.ProductSeries;
+import com.dabast.vo.ProductSeriesVo;
 import org.bson.types.ObjectId;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -112,15 +115,18 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         return productSeriesList;
     }
 
-    public ProductSeries findProductSeriesById(ObjectId objectId) {
+    public ProductSeriesVo findProductSeriesById(ObjectId objectId) {
         ProductSeries productSeries=findById(objectId);
         ProductProperty queryEntity=new ProductProperty();
         queryEntity.setProductSeriesId(objectId.toString());
         List<ProductProperty> productProperties= ServiceManager.productPropertyService.findEquals(queryEntity);
-        for(ProductProperty productProperty:productProperties){
-            productProperty.getId();
-        }
-        productSeries.setProductProperties(productProperties);
-        return productSeries;
+//        for(ProductProperty productProperty:productProperties){
+//            productProperty.getId();
+//        }
+//        productSeries.setProductProperties(productProperties);
+        ProductSeriesVo productSeriesVo=new ProductSeriesVo();
+        BeanUtils.copyProperties(productSeries,productSeriesVo);
+        productSeriesVo.setProductProperties((ProductProperty[])productProperties.toArray(new ProductProperty[productProperties.size()]));
+        return productSeriesVo;
     }
 }

@@ -20,12 +20,11 @@ public class CartDao extends BaseMongoDao<Cart> {
         List<ProductSelected> productSelectedList=new ArrayList<ProductSelected>();
         ProductSelected productSelected1=new ProductSelected();
         productSelected1.setAmount(3);
-        productSelected1.setProductSeries(ServiceManager.productSeriesService.findById("5595f39fe7c7fa5690325b11"));
-
+//        productSelected1.setProductSeries(ServiceManager.productSeriesService.findById("5595f39fe7c7fa5690325b11"));
         productSelected1.setProductSeriesId("5595f39fe7c7fa5690325b11");
-
         ProductPropertySelect productPropertySelect=new ProductPropertySelect();
-        productPropertySelect.setProductProperty(ServiceManager.productPropertyService.findById("5595f892e7c7fa5690325b12"));
+//        productPropertySelect.setProductProperty(ServiceManager.productPropertyService.findById("5595f892e7c7fa5690325b12"));
+        productPropertySelect.setProductPropertyId("5595f892e7c7fa5690325b12");
         productPropertySelect.setSelectIndex(1);
         productPropertySelect.setProductPropertyId("5595f892e7c7fa5690325b12");
         ProductPropertySelect[] productPropertySelects=new ProductPropertySelect[1];
