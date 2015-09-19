@@ -21,14 +21,15 @@ public class MongoDbUtil {
             if (field.isAnnotationPresent(MongoField.class)){
                 stringBuffer=addField(stringBuffer,field,object);
             }
-            if (field.isAnnotationPresent(MongoBean.class)){
-                stringBuffer=addBean(stringBuffer,field,object);
-            }
-            if (field.isAnnotationPresent(MongoArray.class)){
-                stringBuffer=addArray(stringBuffer, field,object);
-            }
+//            if (field.isAnnotationPresent(MongoBean.class)){
+//                stringBuffer=addBean(stringBuffer,field,object);
+//            }
+//            if (field.isAnnotationPresent(MongoArray.class)){
+//                stringBuffer=addArray(stringBuffer, field,object);
+//            }
         }
         stringBuffer.append("}");
+        if(stringBuffer.toString().equals("{}")) return null;
         return  stringBuffer;
     }
 
