@@ -56,7 +56,13 @@ public class ProductSelected {
         this.amount = amount;
     }
 
-
+    private ProductSeries productSeries;
+    public ProductSeries getProductSeries() {
+        return productSeries;
+    }
+    public void setProductSeries(ProductSeries productSeries) {
+        this.productSeries = productSeries;
+    }
     @Override
     public boolean equals(Object obj) {
         Assert.notNull(obj);

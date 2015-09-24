@@ -21,5 +21,12 @@ public class ProductPropertySelect {
     public void setSelectIndex(int selectIndex) {
         this.selectIndex = selectIndex;
     }
+    private ProductProperty productProperty;
+    public ProductProperty getProductProperty() {
+        return productProperty;
+    }
 
+    public void setProductProperty(ProductProperty productProperty) {
+        this.productProperty = productProperty;
+    }
 }

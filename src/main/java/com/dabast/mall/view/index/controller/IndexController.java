@@ -10,7 +10,7 @@ import com.dabast.mall.form.UserLoginForm;
 import com.dabast.mall.model.productseries.dao.UserDao;
 import com.dabast.mall.model.productseries.service.impl.CartService;
 import com.dabast.mall.view.index.service.impl.RegisterValidateService;
-import com.dabast.vo.ProductSelectedVo;
+import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,6 +28,7 @@ import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -122,32 +123,30 @@ public class IndexController extends BaseRestSpringController {
         return responseEntity;
     }
     @RequestMapping(value = "/index/cart", method = RequestMethod.POST)
-    public ResponseEntity<Cart> cart(@RequestBody ProductSelectedVo productSelectedVo, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<Cart> login(@RequestBody ProductSelected productSelected, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         Cart cart=null;
        if (session.getAttribute(Constant.CART)==null){
            cart=new Cart();
        }else{
            cart=(Cart)session.getAttribute(Constant.CART);
        }
-        ProductSeries productSeries=ServiceManager.productSeriesService.findById(productSelectedVo.getProductSeriesId());
-        productSelectedVo.setProductSeries(productSeries);
+        ProductSeries productSeries=ServiceManager.productSeriesService.findById(productSelected.getProductSeriesId());
+        productSelected.setProductSeries(productSeries);
 
         List<ProductPropertySelect> productPropertySelectList=new ArrayList<ProductPropertySelect>();
-       for(ProductPropertySelect productPropertySelect: productSelectedVo.getProductPropertySelects()){
+       for(ProductPropertySelect productPropertySelect: productSelected.getProductPropertySelects()){
            ProductProperty productProperty=ServiceManager.productPropertyService.findById(productPropertySelect.getProductPropertyId());
-//           productPropertySelect.setProductProperty(productProperty);
-           productPropertySelect.setProductPropertyId(productPropertySelect.getProductPropertyId());
+           productPropertySelect.setProductProperty(productProperty);
            productPropertySelectList.add(productPropertySelect);
        }
-        productSelectedVo.setProductPropertySelects((ProductPropertySelect[])productPropertySelectList.toArray(new ProductPropertySelect[productPropertySelectList.size()]));
-        productSelectedVo.setId("559601f5e7c7fa5690325b17");
-        cart.merge(productSelectedVo);
-        if (session.getAttribute(Constant.LOGIN_USER)!=null){
-            User user=(User)session.getAttribute(Constant.LOGIN_USER);
-            Cart queryCart=new Cart();
-            queryCart.setUserId(user.getId());
-            ServiceManager.cartService.upsert(queryCart,cart);
-        }
+        productSelected.setProductPropertySelects((ProductPropertySelect[])productPropertySelectList.toArray(new ProductPropertySelect[productPropertySelectList.size()]));
+        cart.merge(productSelected);
+//        if (session.getAttribute(Constant.LOGIN_USER)!=null){
+//            User user=(User)session.getAttribute(Constant.LOGIN_USER);
+//            Cart queryCart=new Cart();
+//            queryCart.setUserId(user.getId());
+//            ServiceManager.cartService.upsert(queryCart,cart);
+//        }
         session.setAttribute(Constant.CART, cart);
         ResponseEntity<Cart> cartResponseEntity=new ResponseEntity<Cart>(cart, HttpStatus.OK);
         return cartResponseEntity;

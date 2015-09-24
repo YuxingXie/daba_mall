@@ -45,7 +45,14 @@ public class ProductSeries {
         return false;
     }
 
+    private ProductProperty[] productProperties;
+    public ProductProperty[] getProductProperties() {
+        return productProperties;
+    }
 
+    public void setProductProperties(ProductProperty[] productProperties) {
+        this.productProperties = productProperties;
+    }
     public String getId() {
         return id;
     }
