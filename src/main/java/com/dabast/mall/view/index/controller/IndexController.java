@@ -87,6 +87,12 @@ public class IndexController extends BaseRestSpringController {
         user.setSex("f");
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
+    @RequestMapping(value = "/index/product/search")
+    public String  searchProducts(ModelMap model,String keyWord) {
+        List<ProductSeries> productSeriesList=ServiceManager.productSeriesService.findProductSeriesesByKeyWord(keyWord);
+        model.addAttribute("productSeriesList",productSeriesList);
+        return "search-result";
+    }
 
     @RequestMapping(value = "/index/user/register")
     public String userRegister(ModelMap model) {

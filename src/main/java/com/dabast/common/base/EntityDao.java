@@ -16,6 +16,7 @@ public interface EntityDao <E>{
     E insert(E e);
     List<E> findEquals(E e);
     List<E> findAll();
+    public List<E> textQuery(String  keyWord);
     List<E> findRange(String key, Object min, Object max);
     E findById(ObjectId id);
     List<E> findNotEquals(E e);

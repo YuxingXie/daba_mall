@@ -129,4 +129,10 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         productSeriesVo.setProductProperties((ProductProperty[])productProperties.toArray(new ProductProperty[productProperties.size()]));
         return productSeriesVo;
     }
+
+    public List<ProductSeries> findProductSeriesesByKeyWord(String keyWord) {
+
+        return textQuery("{\"name\":\"黄材中华鲟\"}") ;
+//        return textQuery(keyWord) ;
+    }
 }

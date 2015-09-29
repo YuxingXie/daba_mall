@@ -275,9 +275,9 @@
                         <i class="fa fa-search search-btn"></i>
 
                         <div class="search-box">
-                            <form action="#">
+                            <form action="${path}/index/product/search" method="post">
                                 <div class="input-group">
-                                    <input type="text" placeholder="查找" class="form-control">
+                                    <input type="text" placeholder="查找" class="form-control" name="keyWord">
                                     <span class="input-group-btn">
                                         <button class="btn btn-primary" type="submit">查找</button>
                                     </span>

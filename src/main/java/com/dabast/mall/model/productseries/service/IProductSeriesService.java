@@ -15,4 +15,6 @@ public interface IProductSeriesService  extends IBaseEntityManager<ProductSeries
     List<ProductSeries> getHotSell();
 
     ProductSeries findProductSeriesById(ObjectId objectId);
+
+    List<ProductSeries> findProductSeriesesByKeyWord(String keyWord);
 }

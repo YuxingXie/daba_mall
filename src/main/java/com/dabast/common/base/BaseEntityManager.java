@@ -65,7 +65,10 @@ public abstract class BaseEntityManager<E> implements IBaseEntityManager<E> {
     public List<E> findNotEquals(E e) {
         return getEntityDao().findNotEquals(e);
     }
-
+    @Override
+    public  List<E> textQuery(String  keyWord){
+        return getEntityDao().textQuery(keyWord);
+    }
     @Override
     public List<E> findKeyIn(String key, Collection collection) {
         return getEntityDao().findKeyIn(key, collection);

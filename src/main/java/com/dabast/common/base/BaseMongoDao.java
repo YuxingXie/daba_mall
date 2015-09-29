@@ -16,19 +16,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapping.*;
-import org.springframework.data.mongodb.core.query.BasicUpdate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.query.*;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.lang.reflect.*;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Administrator on 2015/5/22.
@@ -105,7 +99,12 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         if (query == null) return findAll();
         return mongoTemplate.find(query, collectionClass);
     }
-
+    @Override
+    public List<E> textQuery(String  keyWord) {
+        Query textQuery=new TextQuery(keyWord);
+        return mongoTemplate.findAll(collectionClass);
+//        return mongoTemplate.find(textQuery,collectionClass);
+    }
 
     public List<E> findAll() {
         DB db=mongoTemplate.getDb();
@@ -272,7 +271,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         } catch (IllegalAccessException ex) {
             ex.printStackTrace();
         }
-        for (Field field:collectionClass.getDeclaredFields()){
+        for (java.lang.reflect.Field field:collectionClass.getDeclaredFields()){
             if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)) continue;
             String setterMethodName=ReflectUtil.getSetterMethodName(field.getName());
             Class fieldType=field.getType();
@@ -314,7 +313,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         Query query = null;
         Criteria criteria = null;
         boolean firstCriteriaAdded = false;
-        for (Field field : collectionClass.getDeclaredFields()) {
+        for (java.lang.reflect.Field field : collectionClass.getDeclaredFields()) {
             if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)&& !field.isAnnotationPresent(Id.class)) continue;
             String fieldName = field.getName();
             Object fieldValue = ReflectUtil.getValue(e, fieldName);
@@ -346,7 +345,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         Query query = null;
         Criteria criteria = null;
         boolean firstCriteriaAdded = false;
-        for (Field field : collectionClass.getDeclaredFields()) {
+        for (java.lang.reflect.Field field : collectionClass.getDeclaredFields()) {
             if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)) continue;
             String fieldName = field.getName();
 
@@ -370,7 +369,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     }
     private Update getUpdateFromEntity(E e) {
         Update update=new Update();
-        for (Field field:collectionClass.getDeclaredFields()){
+        for (java.lang.reflect.Field field:collectionClass.getDeclaredFields()){
             if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)&&!field.isAnnotationPresent(Id.class)) continue;
             String setterMethodName=ReflectUtil.getSetterMethodName(field.getName());
             Class fieldType=field.getType();

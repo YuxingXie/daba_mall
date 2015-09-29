@@ -15,6 +15,7 @@ public interface IBaseEntityManager<E> {
    public GridFSDBFile findFileById(String id);
    List<E> findEquals(E e);
    List<E> findNotEquals(E e);
+   List<E> textQuery(String  keyWord);
    List<E> findAll();
    public int upsert(E queryEntity,E updateEntity);
    E findById(ObjectId id);;
