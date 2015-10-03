@@ -155,7 +155,7 @@
             <div class="collapse navbar-collapse mega-menu">
                 <ul class="nav navbar-nav">
 
-                    <li><a href="#">官网首页</a></li>
+                    <li><a href="${path}">官网首页</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"
                            data-target="#" href="#">

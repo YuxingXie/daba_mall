@@ -90,7 +90,8 @@ public class IndexController extends BaseRestSpringController {
     @RequestMapping(value = "/index/product/search")
     public String  searchProducts(ModelMap model,String keyWord) {
         List<ProductSeries> productSeriesList=ServiceManager.productSeriesService.findProductSeriesesByKeyWord(keyWord);
-        model.addAttribute("productSeriesList",productSeriesList);
+        model.addAttribute("productSeriesList", productSeriesList);
+        model.addAttribute("keyWord",keyWord);
         return "search-result";
     }
 

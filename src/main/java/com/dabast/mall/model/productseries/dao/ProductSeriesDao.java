@@ -8,6 +8,10 @@ import com.dabast.entity.ProductSeries;
 import com.dabast.vo.ProductSeriesVo;
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.TextQuery;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -131,8 +135,13 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
     }
 
     public List<ProductSeries> findProductSeriesesByKeyWord(String keyWord) {
-
-        return textQuery("{\"name\":\"黄材中华鲟\"}") ;
+        Query query = new Query();
+        Criteria cr = new Criteria();
+        query.addCriteria(cr.orOperator(
+                Criteria.where("name").regex(".*?" + keyWord + ".*")
+                , Criteria.where("description").regex(".*?" + keyWord + ".*")
+        ));
+        return getMongoTemplate().find(query.limit(9), ProductSeries.class);
 //        return textQuery(keyWord) ;
     }
 }
