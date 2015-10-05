@@ -11,6 +11,7 @@ import com.dabast.mall.model.productseries.dao.UserDao;
 import com.dabast.mall.model.productseries.service.impl.CartService;
 import com.dabast.mall.view.index.service.impl.RegisterValidateService;
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -88,9 +89,12 @@ public class IndexController extends BaseRestSpringController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
     @RequestMapping(value = "/index/product/search")
-    public String  searchProducts(ModelMap model,String keyWord) {
-        List<ProductSeries> productSeriesList=ServiceManager.productSeriesService.findProductSeriesesByKeyWord(keyWord);
-        model.addAttribute("productSeriesList", productSeriesList);
+    public String  searchProducts(ModelMap model,String keyWord,Integer page) {
+        page=page==null?1:page;
+        keyWord=keyWord==null?"":keyWord;
+        Page<ProductSeries> productSeriesList=ServiceManager.productSeriesService.findProductSeriesesByKeyWord(keyWord,page);
+        model.addAttribute("_page", productSeriesList);
+        model.addAttribute("page", page);
         model.addAttribute("keyWord",keyWord);
         return "search-result";
     }

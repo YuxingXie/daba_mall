@@ -324,11 +324,10 @@ public class PageTag extends BodyTagSupport {
         re.append(writeCss());
         String cleanUrl = getCleanUrl();
 
-        int ItemsDisplayed = 15;
-        if (totalRecords > 0) {
-            re.append("总共" + totalRecords + "条记录 ");
-        }
-        re.append("总共" + totalPages + "页,当前是第" + currentPage + "页&nbsp;&nbsp;");
+//        if (totalRecords > 0) {
+//            re.append("总共" + totalRecords + "条记录 ");
+//        }
+//        re.append("总共" + totalPages + "页,当前是第" + currentPage + "页&nbsp;&nbsp;");
 
         re.append("<div id='infoPage'><ul>");
 
@@ -405,28 +404,19 @@ public class PageTag extends BodyTagSupport {
     private String writeCss() {
         StringBuilder re = new StringBuilder();
         re.append("<style>" +
-//                "#infoPage {font-family: Verdana,Arial,Helvetica,sans-serif;height: 30px;margin-bottom: 20px;text-align: center;position:absolute;left;0;}\n" +
                 "#infoPage {font-family: Verdana,Arial,Helvetica,sans-serif;text-align: center;padding:0px 0 0 0;}\n" +
                 "#infoPage{float:right;width:auto;/*padding-top: 10px;*/}/*expression(doucment.getElementById('infoPage').scrollWidth+'px';);*/\n" +
-//                "#infoPage ul li{float:left; line-height: 11px;list-style:none;color:#333;}\n" +
-//                "#infoPage li span { float: left;}\n" +
                 "#infoPage .prev {margin-right: 20px;}\n" +
                 "#infoPage .next {margin-left: 15px;}\n" +
                 "#infoPage .everyPage{/*border: 1px solid #D4D4D4;color: #FF6500;*/margin-right: 3px;padding: 2px 7px;text-decoration: none;}\n" +
-//                "#infoPage .nowPage{background: none repeat scroll 0 0 #FFC794;border: 1px solid #FF9600;color: #FF6500;margin-right: 3px;padding: 2px 6px;text-decoration: none;}\n" +
                 "#infoPage .nowPage{background: none repeat scroll 0 0;margin-right: 3px;padding: 2px 6px;text-decoration: none;}\n" +
-//                "#infoPage select{height:18px;color:#333;}\n" +
                 "#infoPage span, .pager a {font-size: 12px;font-weight: bolder; text-decoration: none;}\n" +
                 "#infoPage li {display: inline-block;/*height: 34px;*/}\n" +
                 "#infoPage li a, #infoPage .pages li span {display: block; float: left; width: auto; line-height:11px;}\n" +
-//                "#infoPage li a:hover {color:#FF6500;background:#FFC794; border: 1px solid #FF9600;}\n" +
                 "#infoPage a:hover {color:#FF6500; }\n" +
-//                "#infoPage .everyPage { color: #0061DE;}\n" +
                 "#infoPage .upPage,#infoPage .downPage {color: #0061DE; border: 1px solid #E5E5E5;/*height: 16px;*/ padding-top: 2px;text-align: center; width: 48px;margin-right: 4px;}\n" +
-//                "#infoPage li.current {color: #000000; cursor: default;}\n" +
                 "#inputPage{border:#b3b5bd 1px solid; width:25px; /*height: 20px;*/text-align: center;}\n" +
                 "#infoPage .goToPage{margin-left:0px;width:30px;/*height:20px;*/display:inline-block;}" +
-
                 "</style>");
         return re.toString();
     }

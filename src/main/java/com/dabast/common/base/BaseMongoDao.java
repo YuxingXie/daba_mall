@@ -76,6 +76,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 //        Update update=getUpdateFromEntity(updateEntity);
 //        return  mongoTemplate.upsert(query,update,collectionClass).getN();
     }
+
     public GridFSDBFile findFileById(String id){
         GridFS fs=new GridFS(mongoTemplate.getDb());
        GridFSDBFile file=fs.find(new ObjectId(id));
@@ -208,7 +209,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         Criteria criteria = new Criteria();
         Query query = Query.query(criteria);
         Long count = mongoTemplate.count(query, collectionClass);
-        int pageSize = 2;
+        int pageSize = 5;
         Pageable pageable = new PageRequest(pageIndex, pageSize);
         query = query.limit(pageSize).skip((pageIndex - 1) * pageSize);
 //        System.out.println(query);

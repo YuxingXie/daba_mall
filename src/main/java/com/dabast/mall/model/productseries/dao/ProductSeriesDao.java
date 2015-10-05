@@ -3,15 +3,16 @@ package com.dabast.mall.model.productseries.dao;
 import com.dabast.common.base.BaseMongoDao;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.ProductProperty;
-import com.dabast.entity.ProductPropertySelect;
 import com.dabast.entity.ProductSeries;
 import com.dabast.vo.ProductSeriesVo;
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.TextQuery;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -134,14 +135,24 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         return productSeriesVo;
     }
 
-    public List<ProductSeries> findProductSeriesesByKeyWord(String keyWord) {
-        Query query = new Query();
-        Criteria cr = new Criteria();
-        query.addCriteria(cr.orOperator(
-                Criteria.where("name").regex(".*?" + keyWord + ".*")
-                , Criteria.where("description").regex(".*?" + keyWord + ".*")
-        ));
-        return getMongoTemplate().find(query.limit(9), ProductSeries.class);
-//        return textQuery(keyWord) ;
+    public Page<ProductSeries> findProductSeriesesByKeyWord(String keyWord,int currentPage) {
+//        Query query = new Query();
+//        Criteria cr = new Criteria();
+//        query.addCriteria(cr.orOperator(
+//                Criteria.where("name").regex(".*?" + keyWord + ".*")
+//                , Criteria.where("description").regex(".*?" + keyWord + ".*")
+//        ));
+//        return getMongoTemplate().find(query.limit(9), ProductSeries.class);
+
+        Criteria criteria = new Criteria().orOperator(Criteria.where("name").regex(".*?" + keyWord + ".*") , Criteria.where("description").regex(".*?" + keyWord + ".*") );
+        Query query = Query.query(criteria);
+        Long count = getMongoTemplate().count(query, ProductSeries.class);
+        int pageSize = 5;
+        Pageable pageable = new PageRequest(currentPage, pageSize);
+        query = query.limit(pageSize).skip((currentPage - 1) * pageSize);
+        List<ProductSeries> list = getMongoTemplate().find(query, ProductSeries.class);
+        Page<ProductSeries> page = new PageImpl<ProductSeries>(list, pageable, count);
+        System.out.println("关键字："+keyWord+",当前页："+currentPage+","+list.size()+"条记录，总共"+count+"条");
+        return page;
     }
 }

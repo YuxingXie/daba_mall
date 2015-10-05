@@ -6,6 +6,7 @@ import com.dabast.entity.ProductSeries;
 import com.dabast.mall.model.productseries.dao.ProductSeriesDao;
 import com.dabast.mall.model.productseries.service.IProductSeriesService;
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -38,7 +39,7 @@ public class ProductSeriesService extends BaseEntityManager<ProductSeries> imple
     }
 
     @Override
-    public List<ProductSeries> findProductSeriesesByKeyWord(String keyWord) {
-        return productSeriesDao.findProductSeriesesByKeyWord(keyWord);
+    public Page<ProductSeries> findProductSeriesesByKeyWord(String keyWord, int currentPage) {
+        return productSeriesDao.findProductSeriesesByKeyWord(keyWord,currentPage);
     }
 }
