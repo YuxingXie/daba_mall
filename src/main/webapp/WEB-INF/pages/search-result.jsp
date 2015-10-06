@@ -166,15 +166,18 @@
             <div class="row" style=" padding-bottom:20px;">
                 <div class="col-md-12 col-sm-12">
                     <ul class="pagination pull-right">
+                        <c:set var="maxShowPage" value="3"/>
+                        <c:set var="totalPages" value="${_page.totalPages}"/>
                         <li><a href="javascript:void(0)" class="prev-pages">&laquo;</a></li>
-                        <c:forEach begin="0" end="${_page.totalPages-1}" varStatus="varStatus">
+                        <c:forEach begin="0" end="${totalPages-1}" varStatus="varStatus">
                             <c:choose>
                                 <c:when test="${varStatus.index+1 eq page}">
-                                    <li>
+                                    <li class="now-page" page-index="${1+varStatus.index}">
                                         <span >${varStatus.index+1}</span></li>
                                 </c:when>
                                 <c:otherwise>
-                                    <li class="li-form"><a href="javascript:void(0) ">${1+varStatus.index}</a>
+                                    <li class="li-form" page-index="${1+varStatus.index}" <c:if test="${1+varStatus.index >maxShowPage}">style="display: none" </c:if> >
+                                        <a href="javascript:void(0) ">${1+varStatus.index}</a>
                                         <form action="${path}/index/product/search" method="post">
                                             <input type="hidden" name="keyWord" value="${keyWord}">
                                             <input type="hidden" name="page" value="${1+varStatus.index}">
@@ -183,14 +186,6 @@
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
-                        <%--<p:PageTag--%>
-                                <%--isDisplayGoToPage="true" isDisplaySelect="false"--%>
-                                <%--totalPages='${_page.totalPages}'--%>
-                                <%--currentPage='${page}'--%>
-                                <%--totalRecords='${_page.totalElements}'--%>
-                                <%--ajaxUrl='${path}/index/product/search'--%>
-                                <%--frontPath='' displayNum='5'--%>
-                                <%--/>--%>
                         <li><a href="javascript:void(0)" class="next-pages">&raquo;</a></li>
                     </ul>
                 </div>
@@ -309,12 +304,55 @@
         App.init();
         highLighter();
         $(".li-form").on("click",function(){$(this).find("form").submit();});
-//        $(".prev-pages").on("click",function(){
-//            $(this).parent().find("form").submit();
-//        });
-//        $(".next-pages").on("click",function(){
-//            $(this).parent().find("form").submit();
-//        });
+        $(".prev-pages").on("click",function(){
+            var nowPage=Number($(".now-page").find("span").text());
+            alert("当前页是"+nowPage);
+            var minShowPage=nowPage;
+            if(nowPage===1) {alert("当前第一页，不能退了");return;}
+            var canBack=true;
+            $(".li-form").each(function(){
+                var formGoPage= Number($(this).find("a").text());
+                if(formGoPage<=minShowPage) minShowPage=formGoPage;
+                if(minShowPage===1){alert("最小页是第一页，不能退了");canBack=false; return false;}
+            });
+            if(!canBack) return;
+            $(".now-page").find("span").text(nowPage-1);
+            $(".li-form").each(function(){
+                var oldFormNumber= Number($(this).find("a").text());
+                if(oldFormNumber-1===nowPage){
+                    $(this).find("a").html("<span>"+oldFormNumber-1+"/<span>");
+                }else
+                $(this).find("a").text(oldFormNumber-1);
+                $(this).find("[name='page']").text(oldFormNumber-1);
+            });
+        });
+
+
+
+
+        $(".next-pages").on("click",function(){
+            var nowPage=Number($(".now-page").find("span").text());
+            var maxShowPage=nowPage;
+            if(nowPage===${totalPages}) {alert("当前最大页，不能进了");return;}
+            var canForward=true;
+            $(".li-form").each(function(){
+                var formGoPage= Number($(this).find("a").text());
+                if(formGoPage>=maxShowPage) maxShowPage=formGoPage;
+                if(maxShowPage===${totalPages}){alert("最大页是第${totalPages}页，不能进了");canForward=false; return false;}
+            });
+            if(!canForward) return;
+            $(".now-page").find("span").text(nowPage+1);
+            $(".li-form").each(function(){
+                var oldFormNumber= Number($(this).find("a").text());
+                if(oldFormNumber+1===nowPage){
+                    alert("页"+oldFormNumber+"变为页"+(oldFormNumber+1));
+                    $(this).find("a").html("<span>"+(oldFormNumber+1)+"/<span>");
+                }else{
+                    $(this).find("a").text(oldFormNumber+1);
+                }
+                $(this).find("[name='page']").text(oldFormNumber+1);
+            });
+        });
     });
 </script>
 </body>

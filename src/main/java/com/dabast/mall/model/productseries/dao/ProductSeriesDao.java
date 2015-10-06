@@ -38,85 +38,6 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         //可规定热卖商品数量
         List<ProductSeries> productSeriesList=findAll();
 
-//        ProductSeries productSeries1=new ProductSeries();
-//        productSeries1.setId("5595f39fe7c7fa5690325b11");
-//        productSeries1.setBrand("大坝");
-//        productSeries1.setEvaluateCount(888);
-//        productSeries1.setCommonPrice(100.36);
-//        productSeries1.setName("帝王蟹");
-//        productSeries1.setPictures(new String[]{"statics/assets/temp/products/model1.jpg","statics/assets/temp/products/model2.jpg"});
-//        String[] pattern = new String[]{"yyyy-MM","yyyyMM","yyyy/MM",
-//                "yyyyMMdd","yyyy-MM-dd","yyyy/MM/dd",
-//                "yyyyMMddHHmmss",
-//                "yyyy-MM-dd HH:mm:ss",
-//                "yyyy/MM/dd HH:mm:ss"};
-//        try {
-//            productSeries1.setShelvesDate(DateUtils.parseDate("2014-10-12",pattern).getTime());
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-//        ProductSeries productSeries2=new ProductSeries();
-//        productSeries2.setId("1111112");
-//        productSeries2.setBrand("大坝");
-//        productSeries2.setEvaluateCount(101);
-//        productSeries2.setCommonPrice(100.36);
-//        productSeries2.setName("豆腐乳");
-//        productSeries2.setPictures(new String[]{"statics/assets/temp/products/model2.jpg"});
-//        productSeries2.setShelvesDate(new Date().getTime());
-//
-//        ProductSeries productSeries3=new ProductSeries();
-//        productSeries3.setId("1111113");
-//        productSeries3.setBrand("大坝");
-//        productSeries3.setEvaluateCount(1081);
-//        productSeries3.setCommonPrice(100.36);
-//        productSeries3.setName("酱板鸭");
-//        productSeries3.setPictures(new String[]{"statics/assets/temp/products/model6.jpg"});
-//        productSeries3.setShelvesDate(new Date().getTime());
-//
-//        ProductSeries productSeries4=new ProductSeries();
-//        productSeries4.setId("1111114");
-//        productSeries4.setBrand("大坝");
-//        productSeries4.setEvaluateCount(11);
-//        productSeries4.setCommonPrice(100.36);
-//        productSeries4.setName("黄材中华鲟");
-//        productSeries4.setPictures(new String[]{"statics/assets/temp/products/model4.jpg"});
-//        productSeries4.setShelvesDate(new Date().getTime());
-//
-//        ProductSeries productSeries5=new ProductSeries();
-//        productSeries5.setId("1111115");
-//        productSeries5.setBrand("大坝");
-//        productSeries5.setEvaluateCount(1001);
-//        productSeries5.setCommonPrice(100.36);
-//        productSeries5.setName("大龙虾");
-//        productSeries5.setPictures(new String[]{"statics/assets/temp/products/model5.jpg"});
-//        productSeries5.setShelvesDate(new Date().getTime());
-//
-//        ProductSeries productSeries6=new ProductSeries();
-//        productSeries6.setId("1111116");
-//        productSeries6.setBrand("大坝");
-//        productSeries6.setEvaluateCount(999);
-//        productSeries6.setCommonPrice(100.36);
-//        productSeries6.setName("乡里腊肉");
-//        productSeries6.setPictures(new String[]{"statics/assets/temp/products/model3.jpg"});
-//        productSeries6.setShelvesDate(new Date().getTime());
-//
-//        ProductSeries productSeries7=new ProductSeries();
-//        productSeries7.setId("1111117");
-//        productSeries7.setBrand("大坝");
-//        productSeries7.setEvaluateCount(10050);
-//        productSeries7.setCommonPrice(100.36);
-//        productSeries7.setName("生态干鱼");
-//        productSeries7.setPictures(new String[]{"statics/assets/temp/products/model7.jpg"});
-//        productSeries7.setShelvesDate(new Date().getTime());
-//
-//        productSeriesList.add(productSeries1);
-//        productSeriesList.add(productSeries2);
-//        productSeriesList.add(productSeries3);
-//        productSeriesList.add(productSeries4);
-//        productSeriesList.add(productSeries5);
-//        productSeriesList.add(productSeries6);
-//        productSeriesList.add(productSeries7);
         return productSeriesList;
     }
 
@@ -147,12 +68,12 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         Criteria criteria = new Criteria().orOperator(Criteria.where("name").regex(".*?" + keyWord + ".*") , Criteria.where("description").regex(".*?" + keyWord + ".*") );
         Query query = Query.query(criteria);
         Long count = getMongoTemplate().count(query, ProductSeries.class);
-        int pageSize = 5;
+        int pageSize = 2;
         Pageable pageable = new PageRequest(currentPage, pageSize);
         query = query.limit(pageSize).skip((currentPage - 1) * pageSize);
         List<ProductSeries> list = getMongoTemplate().find(query, ProductSeries.class);
         Page<ProductSeries> page = new PageImpl<ProductSeries>(list, pageable, count);
-        System.out.println("关键字："+keyWord+",当前页："+currentPage+","+list.size()+"条记录，总共"+count+"条");
+//        System.out.println("关键字："+keyWord+",当前页："+currentPage+","+list.size()+"条记录，总共"+count+"条");
         return page;
     }
 }
