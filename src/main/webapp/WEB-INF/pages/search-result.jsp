@@ -172,11 +172,11 @@
                         <c:forEach begin="0" end="${totalPages-1}" varStatus="varStatus">
                             <c:choose>
                                 <c:when test="${varStatus.index+1 eq page}">
-                                    <li class="now-page" page-index="${1+varStatus.index}">
+                                    <li class="now-page" pageIndex="${1+varStatus.index}">
                                         <span >${varStatus.index+1}</span></li>
                                 </c:when>
                                 <c:otherwise>
-                                    <li class="li-form" page-index="${1+varStatus.index}" <c:if test="${1+varStatus.index >maxShowPage}">style="display: none" </c:if> >
+                                    <li class="li-form" pageIndex="${1+varStatus.index}" <c:if test="${1+varStatus.index >maxShowPage}">style="display: none" </c:if> >
                                         <a href="javascript:void(0) ">${1+varStatus.index}</a>
                                         <form action="${path}/index/product/search" method="post">
                                             <input type="hidden" name="keyWord" value="${keyWord}">
@@ -305,25 +305,37 @@
         highLighter();
         $(".li-form").on("click",function(){$(this).find("form").submit();});
         $(".prev-pages").on("click",function(){
-            var nowPage=Number($(".now-page").find("span").text());
-            alert("当前页是"+nowPage);
-            var minShowPage=nowPage;
-            if(nowPage===1) {alert("当前第一页，不能退了");return;}
-            var canBack=true;
-            $(".li-form").each(function(){
-                var formGoPage= Number($(this).find("a").text());
-                if(formGoPage<=minShowPage) minShowPage=formGoPage;
-                if(minShowPage===1){alert("最小页是第一页，不能退了");canBack=false; return false;}
+//            var nowPage=Number($(".now-page").find("span").text());
+//            alert("当前页是"+nowPage);
+//            var minShowPage=nowPage;
+//            if(nowPage===1) {alert("当前第一页，不能退了");return;}
+//            var canBack=true;
+//            $(".li-form").each(function(){
+//                var formGoPage= Number($(this).find("a").text());
+//                if(formGoPage<=minShowPage) minShowPage=formGoPage;
+//                if(minShowPage===1){alert("最小页是第一页，不能退了");canBack=false; return false;}
+//            });
+//            if(!canBack) return;
+//            $(".now-page").find("span").text(nowPage-1);
+//            $(".li-form").each(function(){
+//                var oldFormNumber= Number($(this).find("a").text());
+//                if(oldFormNumber-1===nowPage){
+//                    $(this).find("a").html("<span>"+oldFormNumber-1+"/<span>");
+//                }else
+//                $(this).find("a").text(oldFormNumber-1);
+//                $(this).find("[name='page']").text(oldFormNumber-1);
+//            });
+            var $li=$(".now-page,.li-form");
+            var max=1,min=${totalPages};
+            alert($li.length);
+            $li.each(function(){
+                var pageIndex=Number($(this).attr("pageIndex"));
+                if(pageIndex>max) max=pageIndex;
+                if(pageIndex<min) min=pageIndex;
             });
-            if(!canBack) return;
-            $(".now-page").find("span").text(nowPage-1);
-            $(".li-form").each(function(){
-                var oldFormNumber= Number($(this).find("a").text());
-                if(oldFormNumber-1===nowPage){
-                    $(this).find("a").html("<span>"+oldFormNumber-1+"/<span>");
-                }else
-                $(this).find("a").text(oldFormNumber-1);
-                $(this).find("[name='page']").text(oldFormNumber-1);
+            alert("min max:"+min+":"+max);
+            $li.each(function(){
+                $(this).find("['pageIndex="+min+"']").hide();
             });
         });
 
@@ -331,26 +343,39 @@
 
 
         $(".next-pages").on("click",function(){
-            var nowPage=Number($(".now-page").find("span").text());
-            var maxShowPage=nowPage;
-            if(nowPage===${totalPages}) {alert("当前最大页，不能进了");return;}
-            var canForward=true;
-            $(".li-form").each(function(){
-                var formGoPage= Number($(this).find("a").text());
-                if(formGoPage>=maxShowPage) maxShowPage=formGoPage;
-                if(maxShowPage===${totalPages}){alert("最大页是第${totalPages}页，不能进了");canForward=false; return false;}
+            <%--var nowPage=Number($(".now-page").find("span").text());--%>
+            <%--var maxShowPage=nowPage;--%>
+            <%--if(nowPage===${totalPages}) {alert("当前最大页，不能进了");return;}--%>
+            <%--var canForward=true;--%>
+            <%--$(".li-form").each(function(){--%>
+                <%--var formGoPage= Number($(this).find("a").text());--%>
+                <%--if(formGoPage>=maxShowPage) maxShowPage=formGoPage;--%>
+                <%--if(maxShowPage===${totalPages}){alert("最大页是第${totalPages}页，不能进了");canForward=false; return false;}--%>
+            <%--});--%>
+            <%--if(!canForward) return;--%>
+            <%--$(".now-page").find("span").text(nowPage+1);--%>
+            <%--$(".li-form").each(function(){--%>
+                <%--var oldFormNumber= Number($(this).find("a").text());--%>
+                <%--if(oldFormNumber+1===nowPage){--%>
+                    <%--alert("页"+oldFormNumber+"变为页"+(oldFormNumber+1));--%>
+                    <%--$(this).find("a").html("<span>"+(oldFormNumber+1)+"/<span>");--%>
+                <%--}else{--%>
+                    <%--$(this).find("a").text(oldFormNumber+1);--%>
+                <%--}--%>
+                <%--$(this).find("[name='page']").text(oldFormNumber+1);--%>
+            <%--});--%>
+            var $li=$(".now-page,.li-form");
+            var max=1,min=${totalPages};
+            alert($li.length);
+            $li.each(function(){
+                var pageIndex=Number($(this).attr("pageIndex"));
+                if(pageIndex>max) max=pageIndex;
+                if(pageIndex<min) min=pageIndex;
             });
-            if(!canForward) return;
-            $(".now-page").find("span").text(nowPage+1);
-            $(".li-form").each(function(){
-                var oldFormNumber= Number($(this).find("a").text());
-                if(oldFormNumber+1===nowPage){
-                    alert("页"+oldFormNumber+"变为页"+(oldFormNumber+1));
-                    $(this).find("a").html("<span>"+(oldFormNumber+1)+"/<span>");
-                }else{
-                    $(this).find("a").text(oldFormNumber+1);
-                }
-                $(this).find("[name='page']").text(oldFormNumber+1);
+            $li.each(function(){
+                $(this).find("[pageIndex='"+min+"']").hide();
+                $(this).find("[pageIndex='"+(max+1)+"']").show();
+                alert("隐藏"+min+"显示"+(max+1));
             });
         });
     });
