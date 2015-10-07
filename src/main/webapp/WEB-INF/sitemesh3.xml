@@ -5,6 +5,7 @@
     <mapping path="/index" decorator="/WEB-INF/sitemesh/decorator.jsp" />
     <mapping path="/index.jsp" decorator="/WEB-INF/sitemesh/decorator.jsp" />
     <mapping path="/index/product/search" decorator="/WEB-INF/sitemesh/decorator.jsp" />
+    <mapping path="/product/**" decorator="/WEB-INF/sitemesh/decorator.jsp" />
     <mapping path="/index/user/register" decorator="/WEB-INF/sitemesh/decorator.jsp" />
     <mapping path="/user/register/email" decorator="/WEB-INF/sitemesh/decorator.jsp" />
     <mapping path="/user/register/success" decorator="/WEB-INF/sitemesh/decorator.jsp" />

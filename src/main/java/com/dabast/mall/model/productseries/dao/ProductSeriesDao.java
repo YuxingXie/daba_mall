@@ -68,12 +68,11 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         Criteria criteria = new Criteria().orOperator(Criteria.where("name").regex(".*?" + keyWord + ".*") , Criteria.where("description").regex(".*?" + keyWord + ".*") );
         Query query = Query.query(criteria);
         Long count = getMongoTemplate().count(query, ProductSeries.class);
-        int pageSize = 2;
+        int pageSize = 3;
         Pageable pageable = new PageRequest(currentPage, pageSize);
         query = query.limit(pageSize).skip((currentPage - 1) * pageSize);
         List<ProductSeries> list = getMongoTemplate().find(query, ProductSeries.class);
         Page<ProductSeries> page = new PageImpl<ProductSeries>(list, pageable, count);
-//        System.out.println("关键字："+keyWord+",当前页："+currentPage+","+list.size()+"条记录，总共"+count+"条");
         return page;
     }
 }

@@ -17,8 +17,10 @@ $(document).ready(function(){
             productPropertySelects.push(productPropertySelect);
         });
         data.productPropertySelects=productPropertySelects;
-        console.log(JSON.stringify(data));
+        //console.log(JSON.stringify(data));
+
         $.ajax({
+
             url: path+"/index/cart",
             contentType: "application/json",
             data: JSON.stringify(data),

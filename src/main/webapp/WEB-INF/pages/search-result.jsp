@@ -94,30 +94,30 @@
             </div>
             <div class="row list-view-sorting clearfix">
                 <div class="col-md-10 col-sm-10" style=" width:100%;">
-                    <div class="pull-left">
-                        <label class="control-label"><a href="#" title="点击后恢复默认排序">综合排序&nbsp;&nbsp;<i
-                                class="fa fa-chevron-down"></i></a></label>
-                    </div>
-                    <div class="pull-left">
-                        <label class="control-label"><a href="#" title="点击后按照价格从高到低排序">价格排序&nbsp;&nbsp;<i
-                                class="fa fa-chevron-down"></i></a></label>
-                    </div>
-                    <div class="pull-left">
-                        <label class="control-label"><a href="#" title="点击后按照销量从多到少排序">销量排序&nbsp;&nbsp;<i
-                                class="fa fa-chevron-down"></i></a></label>
-                    </div>
-                    <div class="pull-left">
-                        <label class="control-label"><a href="#" title="点击后按照评论从多到少排序">评论排序&nbsp;&nbsp;<i
-                                class="fa fa-chevron-down"></i></a></label>
-                    </div>
-                    <div class="pull-left">
-                        <label class="control-label"><a href="#" title="点击后按照人气从高到低排序">热卖商品&nbsp;&nbsp;<i
-                                class="fa fa-chevron-down"></i></a></label>
-                    </div>
-                    <div class="pull-left">
-                        <label class="control-label"><a href="#" title="点击后按照人气从高到低排序">新品上市&nbsp;&nbsp;<i
-                                class="fa fa-chevron-down"></i></a></label>
-                    </div>
+                    <%--<div class="pull-left">--%>
+                        <%--<label class="control-label"><a href="#" title="点击后恢复默认排序">综合排序&nbsp;&nbsp;<i--%>
+                                <%--class="fa fa-chevron-down"></i></a></label>--%>
+                    <%--</div>--%>
+                    <%--<div class="pull-left">--%>
+                        <%--<label class="control-label"><a href="#" title="点击后按照价格从高到低排序">价格排序&nbsp;&nbsp;<i--%>
+                                <%--class="fa fa-chevron-down"></i></a></label>--%>
+                    <%--</div>--%>
+                    <%--<div class="pull-left">--%>
+                        <%--<label class="control-label"><a href="#" title="点击后按照销量从多到少排序">销量排序&nbsp;&nbsp;<i--%>
+                                <%--class="fa fa-chevron-down"></i></a></label>--%>
+                    <%--</div>--%>
+                    <%--<div class="pull-left">--%>
+                        <%--<label class="control-label"><a href="#" title="点击后按照评论从多到少排序">评论排序&nbsp;&nbsp;<i--%>
+                                <%--class="fa fa-chevron-down"></i></a></label>--%>
+                    <%--</div>--%>
+                    <%--<div class="pull-left">--%>
+                        <%--<label class="control-label"><a href="#" title="点击后按照人气从高到低排序">热卖商品&nbsp;&nbsp;<i--%>
+                                <%--class="fa fa-chevron-down"></i></a></label>--%>
+                    <%--</div>--%>
+                    <%--<div class="pull-left">--%>
+                        <%--<label class="control-label"><a href="#" title="点击后按照人气从高到低排序">新品上市&nbsp;&nbsp;<i--%>
+                                <%--class="fa fa-chevron-down"></i></a></label>--%>
+                    <%--</div>--%>
 
                 </div>
             </div>
@@ -132,11 +132,11 @@
                         <c:forEach var="productSeries" items="${_page.content}">
                             <div class="col-md-12 col-sm-0 col-xs-12">
                                 <div class="product-item">
-                                    <img src="${path}/${productSeries.pictures[0]}" class="pull-left resule-thumb"
-                                         alt="${productSeries.name}">
+                                    <a href="${path}/product/${productSeries.id}"><img src="${path}/${productSeries.pictures[0]}" class="pull-left resule-thumb"
+                                         alt="${productSeries.name}"></a>
 
                                     <div class="introduce">
-                                        <h3><a href="#" class="high-lighter">${productSeries.name}</a></h3>
+                                        <h3><a href="${path}/product/${productSeries.id}" class="high-lighter">${productSeries.name}</a></h3>
 
                                         <p class="ware-desc pull-left high-lighter">${productSeries.description}</p>
                                     </div>
@@ -158,7 +158,6 @@
                 </c:choose>
 
 
-
                 <!-- PRODUCT ITEM END -->
             </div>
             <!-- END PRODUCT LIST -->
@@ -168,25 +167,49 @@
                     <ul class="pagination pull-right">
                         <c:set var="maxShowPage" value="3"/>
                         <c:set var="totalPages" value="${_page.totalPages}"/>
-                        <li><a href="javascript:void(0)" class="prev-pages">&laquo;</a></li>
-                        <c:forEach begin="0" end="${totalPages-1}" varStatus="varStatus">
+                        <c:if test="${page gt 1}">
+                            <li>
+                                <a href="javascript:void(0)" class="prev-pages">&laquo;
+                                    <form action="${path}/index/product/search" method="post">
+                                        <input type="hidden" name="keyWord" value="${keyWord}">
+                                        <input type="hidden" name="page" value="${page-1}">
+                                    </form>
+                                </a>
+                            </li>
+                        </c:if>
+
+                        <c:forEach begin="${page}" end="${page+maxShowPage}" varStatus="varStatus">
                             <c:choose>
-                                <c:when test="${varStatus.index+1 eq page}">
-                                    <li class="now-page" pageIndex="${1+varStatus.index}">
-                                        <span >${varStatus.index+1}</span></li>
+                                <c:when test="${varStatus.index eq page}">
+                                    <li class="now-page" pageIndex="${varStatus.index}">
+                                        <span>${varStatus.index}</span></li>
                                 </c:when>
                                 <c:otherwise>
-                                    <li class="li-form" pageIndex="${1+varStatus.index}" <c:if test="${1+varStatus.index >maxShowPage}">style="display: none" </c:if> >
-                                        <a href="javascript:void(0) ">${1+varStatus.index}</a>
-                                        <form action="${path}/index/product/search" method="post">
-                                            <input type="hidden" name="keyWord" value="${keyWord}">
-                                            <input type="hidden" name="page" value="${1+varStatus.index}">
-                                        </form>
-                                    </li>
+                                    <c:if test="${varStatus.index le totalPages}">
+                                        <li class="li-form" pageIndex="${varStatus.index}">
+                                            <a href="javascript:void(0) ">${varStatus.index}</a>
+
+                                            <form action="${path}/index/product/search" method="post">
+                                                <input type="hidden" name="keyWord" value="${keyWord}">
+                                                <input type="hidden" name="page" value="${varStatus.index}">
+                                            </form>
+                                        </li>
+                                    </c:if>
                                 </c:otherwise>
                             </c:choose>
+
                         </c:forEach>
-                        <li><a href="javascript:void(0)" class="next-pages">&raquo;</a></li>
+                        <c:if test="${page+maxShowPage lt totalPages}">
+                            <li>
+                                <a href="javascript:void(0)" class="next-pages">&raquo;
+                                    <form action="${path}/index/product/search" method="post">
+                                        <input type="hidden" name="keyWord" value="${keyWord}">
+                                        <input type="hidden" name="page" value="${page+1}">
+                                    </form>
+                                </a>
+
+                            </li>
+                        </c:if>
                     </ul>
                 </div>
             </div>
@@ -198,14 +221,14 @@
             <div class="sidebar-products clearfix">
                 <h2>为您推荐</h2>
 
-                <div class="item">
-                    <a href="item.html"><img src="${path}/statics/assets/temp/products/k1.jpg" alt="腊肉"></a>
 
-                    <h3><a href="item.html">腊肉的防腐能力强，能延长保存时间</a></h3>
-
-                    <div class="price">$31.00</div>
-                </div>
-
+                <c:forEach items="${recommendList}" var="productSeries">
+                    <div class="item">
+                        <a href="item.html"><img src="${path}/statics/assets/temp/products/k1.jpg" alt="腊肉"></a>
+                        <h3><a href="item.html">腊肉的防腐能力强，能延长保存时间</a></h3>
+                        <div class="price">$31.00</div>
+                    </div>
+                </c:forEach>
             </div>
         </div>
         <!-- END SIDEBAR -->
@@ -254,7 +277,7 @@
                             <input id="product-quantity" type="text" value="1" name="product-quantity"
                                    class="form-control input-sm">
                         </div>
-                        <button class="btn btn-primary pop" type="button">添加到购物车</button>
+                        <button class="btn btn-primary pop add2cart" type="button">添加到购物车</button>
                         <button class="btn btn-default" type="submit">更多商品</button>
                     </div>
                 </div>
@@ -302,81 +325,20 @@
     }
     $(document).ready(function () {
         App.init();
+        App.initBxSlider();
+        Index.initLayerSlider();
+        App.initImageZoom();
+        App.initTouchspin();
         highLighter();
-        $(".li-form").on("click",function(){$(this).find("form").submit();});
-        $(".prev-pages").on("click",function(){
-//            var nowPage=Number($(".now-page").find("span").text());
-//            alert("当前页是"+nowPage);
-//            var minShowPage=nowPage;
-//            if(nowPage===1) {alert("当前第一页，不能退了");return;}
-//            var canBack=true;
-//            $(".li-form").each(function(){
-//                var formGoPage= Number($(this).find("a").text());
-//                if(formGoPage<=minShowPage) minShowPage=formGoPage;
-//                if(minShowPage===1){alert("最小页是第一页，不能退了");canBack=false; return false;}
-//            });
-//            if(!canBack) return;
-//            $(".now-page").find("span").text(nowPage-1);
-//            $(".li-form").each(function(){
-//                var oldFormNumber= Number($(this).find("a").text());
-//                if(oldFormNumber-1===nowPage){
-//                    $(this).find("a").html("<span>"+oldFormNumber-1+"/<span>");
-//                }else
-//                $(this).find("a").text(oldFormNumber-1);
-//                $(this).find("[name='page']").text(oldFormNumber-1);
-//            });
-            var $li=$(".now-page,.li-form");
-            var max=1,min=${totalPages};
-            alert($li.length);
-            $li.each(function(){
-                var pageIndex=Number($(this).attr("pageIndex"));
-                if(pageIndex>max) max=pageIndex;
-                if(pageIndex<min) min=pageIndex;
-            });
-            alert("min max:"+min+":"+max);
-            $li.each(function(){
-                $(this).find("['pageIndex="+min+"']").hide();
-            });
+        $(".li-form").on("click", function () {
+            $(this).find("form").submit();
         });
+        $(".prev-pages").on("click", function () {
 
-
-
-
-        $(".next-pages").on("click",function(){
-            <%--var nowPage=Number($(".now-page").find("span").text());--%>
-            <%--var maxShowPage=nowPage;--%>
-            <%--if(nowPage===${totalPages}) {alert("当前最大页，不能进了");return;}--%>
-            <%--var canForward=true;--%>
-            <%--$(".li-form").each(function(){--%>
-                <%--var formGoPage= Number($(this).find("a").text());--%>
-                <%--if(formGoPage>=maxShowPage) maxShowPage=formGoPage;--%>
-                <%--if(maxShowPage===${totalPages}){alert("最大页是第${totalPages}页，不能进了");canForward=false; return false;}--%>
-            <%--});--%>
-            <%--if(!canForward) return;--%>
-            <%--$(".now-page").find("span").text(nowPage+1);--%>
-            <%--$(".li-form").each(function(){--%>
-                <%--var oldFormNumber= Number($(this).find("a").text());--%>
-                <%--if(oldFormNumber+1===nowPage){--%>
-                    <%--alert("页"+oldFormNumber+"变为页"+(oldFormNumber+1));--%>
-                    <%--$(this).find("a").html("<span>"+(oldFormNumber+1)+"/<span>");--%>
-                <%--}else{--%>
-                    <%--$(this).find("a").text(oldFormNumber+1);--%>
-                <%--}--%>
-                <%--$(this).find("[name='page']").text(oldFormNumber+1);--%>
-            <%--});--%>
-            var $li=$(".now-page,.li-form");
-            var max=1,min=${totalPages};
-            alert($li.length);
-            $li.each(function(){
-                var pageIndex=Number($(this).attr("pageIndex"));
-                if(pageIndex>max) max=pageIndex;
-                if(pageIndex<min) min=pageIndex;
-            });
-            $li.each(function(){
-                $(this).find("[pageIndex='"+min+"']").hide();
-                $(this).find("[pageIndex='"+(max+1)+"']").show();
-                alert("隐藏"+min+"显示"+(max+1));
-            });
+            $(this).find("form").submit();
+        });
+        $(".next-pages").on("click", function () {
+            $(this).find("form").submit();
         });
     });
 </script>
