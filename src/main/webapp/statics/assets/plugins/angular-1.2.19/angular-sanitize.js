@@ -50,7 +50,7 @@ var $sanitizeMinErr = angular.$$minErr('$sanitize');
  *   it into the returned string, however, since our parser is more strict than a typical browser
  *   parser, it's possible that some obscure input, which would be recognized as valid HTML by a
  *   browser, won't make it through the sanitizer.
- *   The whitelist is configured using the functions `aHrefSanitizationWhitelist` and
+ *   The whitelist is configured using the function `aHrefSanitizationWhitelist` and
  *   `imgSrcSanitizationWhitelist` of {@link ng.$compileProvider `$compileProvider`}.
  *
  * @param {string} html Html input.

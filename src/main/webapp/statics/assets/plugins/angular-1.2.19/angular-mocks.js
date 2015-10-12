@@ -438,7 +438,7 @@ angular.mock.$LogProvider = function() {
  * Mock implementation of the $interval service.
  *
  * Use {@link ngMock.$interval#flush `$interval.flush(millis)`} to
- * move forward by `millis` milliseconds and trigger any functions scheduled to run in that
+ * move forward by `millis` milliseconds and trigger any function scheduled to run in that
  * time.
  *
  * @param {function()} fn A function that should be called repeatedly.
@@ -2008,7 +2008,7 @@ if(window.jasmine || window.mocha) {
    * See {@link angular.mock.inject inject} for usage example
    *
    * @param {...(string|Function|Object)} fns any number of modules which are represented as string
-   *        aliases or as anonymous module initialization functions. The modules are used to
+   *        aliases or as anonymous module initialization function. The modules are used to
    *        configure the injector. The 'ng' and 'ngMock' modules are automatically loaded. If an
    *        object literal is passed they will be registered as values in the module, the key being
    *        the module name and the value being what is returned.
@@ -2097,7 +2097,7 @@ if(window.jasmine || window.mocha) {
    *     beforeEach(module('myApplicationModule'));
    *
    *
-   *     // inject() is used to inject arguments of all given functions
+   *     // inject() is used to inject arguments of all given function
    *     it('should provide a version', inject(function(mode, version) {
    *       expect(version).toEqual('v1.0.1');
    *       expect(mode).toEqual('app');
@@ -2106,7 +2106,7 @@ if(window.jasmine || window.mocha) {
    *
    *     // The inject and module method can also be used inside of the it or beforeEach
    *     it('should override a version and test the new version is injected', function() {
-   *       // module() takes functions or strings (module aliases)
+   *       // module() takes function or strings (module aliases)
    *       module(function($provide) {
    *         $provide.value('version', 'overridden'); // override version here
    *       });
@@ -2119,7 +2119,7 @@ if(window.jasmine || window.mocha) {
    *
    * ```
    *
-   * @param {...Function} fns any number of functions which will be injected using the injector.
+   * @param {...Function} fns any number of function which will be injected using the injector.
    */
 
 
@@ -2151,7 +2151,7 @@ if(window.jasmine || window.mocha) {
       }
       for(var i = 0, ii = blockFns.length; i < ii; i++) {
         try {
-          /* jshint -W040 *//* Jasmine explicitly provides a `this` object when calling functions */
+          /* jshint -W040 *//* Jasmine explicitly provides a `this` object when calling function */
           injector.invoke(blockFns[i] || angular.noop, this);
           /* jshint +W040 */
         } catch (e) {

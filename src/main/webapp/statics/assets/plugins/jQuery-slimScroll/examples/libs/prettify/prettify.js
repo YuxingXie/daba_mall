@@ -15,7 +15,7 @@
 
 /**
  * @fileoverview
- * some functions for browser-side pretty printing of code contained in html.
+ * some function for browser-side pretty printing of code contained in html.
  *
  * <p>
  * For a fairly comprehensive set of languages see the
@@ -1453,7 +1453,7 @@ var REGEXP_PRECEDER_PATTERN = '(?:^^\\.?|[+-]|\\!|\\!=|\\!==|\\#|\\%|\\%=|&|&&|&
     */
   window['prettyPrint'] = prettyPrint;
    /**
-    * Contains functions for creating and registering new language handlers.
+    * Contains function for creating and registering new language handlers.
     * @type {Object}
     */
   window['PR'] = {

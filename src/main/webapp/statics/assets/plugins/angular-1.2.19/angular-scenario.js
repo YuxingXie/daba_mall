@@ -430,7 +430,7 @@ jQuery.extend({
 			return;
 		}
 
-		// If there are functions bound, to execute
+		// If there are function bound, to execute
 		readyList.resolveWith( document, [ jQuery ] );
 
 		// Trigger any bound ready events
@@ -440,7 +440,7 @@ jQuery.extend({
 	},
 
 	// See test/unit/core.js for details concerning isFunction.
-	// Since version 1.3, DOM methods and functions like alert
+	// Since version 1.3, DOM methods and function like alert
 	// aren't supported. They return false on IE (#2968).
 	isFunction: function( obj ) {
 		return jQuery.type(obj) === "function";
@@ -966,7 +966,7 @@ jQuery.ready.promise = function( obj ) {
 						// detach all dom ready events
 						detach();
 
-						// and execute any waiting functions
+						// and execute any waiting function
 						jQuery.ready();
 					}
 				})();
@@ -2814,7 +2814,7 @@ compile = Sizzle.compile = function( selector, group /* Internal Use Only */ ) {
 		cached = compilerCache[ selector + " " ];
 
 	if ( !cached ) {
-		// Generate a function of recursive functions that can be used to check each element
+		// Generate a function of recursive function that can be used to check each element
 		if ( !group ) {
 			group = tokenize( selector );
 		}
@@ -4725,7 +4725,7 @@ function safeActiveElement() {
 }
 
 /*
- * Helper functions for managing events -- not part of the public interface.
+ * Helper function for managing events -- not part of the public interface.
  * Props to Dean Edwards' addEvent library for many of the ideas.
  */
 jQuery.event = {
@@ -7018,7 +7018,7 @@ jQuery.extend({
 			}
 
 			// Fixes #8908, it can be done more correctly by specifing setters in cssHooks,
-			// but it would mean to define eight (for every problematic property) identical functions
+			// but it would mean to define eight (for every problematic property) identical function
 			if ( !jQuery.support.clearCloneStyle && value === "" && name.indexOf("background") === 0 ) {
 				style[ name ] = "inherit";
 			}
@@ -7772,7 +7772,7 @@ jQuery.fn.load = function( url, params, callback ) {
 	return this;
 };
 
-// Attach a bunch of functions for handling common AJAX events
+// Attach a bunch of function for handling common AJAX events
 jQuery.each( [ "ajaxStart", "ajaxStop", "ajaxComplete", "ajaxError", "ajaxSuccess", "ajaxSend" ], function( i, type ){
 	jQuery.fn[ type ] = function( fn ){
 		return this.on( type, fn );
@@ -10846,7 +10846,7 @@ function bind(self, fn) {
             : fn.call(self);
         };
   } else {
-    // in IE, native methods are not functions so they cannot be bound (note: they don't need to be)
+    // in IE, native methods are not function so they cannot be bound (note: they don't need to be)
     return fn;
   }
 }
@@ -12370,7 +12370,7 @@ var JQLitePrototype = JQLite.prototype = {
 
 //////////////////////////////////////////
 // Functions iterating getter/setters.
-// these functions return self on setter and
+// these function return self on setter and
 // value on get.
 //////////////////////////////////////////
 var BOOLEAN_ATTR = {};
@@ -12634,7 +12634,7 @@ function createEventHandler(element, events) {
 
 //////////////////////////////////////////
 // Functions iterating traversal.
-// These functions chain results into a single
+// These function chain results into a single
 // selector.
 //////////////////////////////////////////
 forEach({
@@ -12844,7 +12844,7 @@ forEach({
   }
 }, function(fn, name){
   /**
-   * chaining functions
+   * chaining function
    */
   JQLite.prototype[name] = function(arg1, arg2, arg3) {
     var value;
@@ -12949,7 +12949,7 @@ HashMap.prototype = {
  * dependency injection (see {@link guide/di dependency injection}).
  *
 
- * @param {Array.<string|Function>} modules A list of module functions or their aliases. See
+ * @param {Array.<string|Function>} modules A list of module function or their aliases. See
  *        {@link angular.module}. The `ng` module must be explicitly added.
  * @returns {function()} Injector function. See {@link auto.$injector $injector}.
  *
@@ -13185,7 +13185,7 @@ function annotate(fn) {
  *
  * # The array notation
  *
- * It is often desirable to inline Injected functions and that's when setting the `$inject` property
+ * It is often desirable to inline Injected function and that's when setting the `$inject` property
  * is very inconvenient. In these situations using the array notation to specify the dependencies in
  * a way that survives minification is a better choice:
  *
@@ -13229,12 +13229,12 @@ function annotate(fn) {
  * @description
  *
  * The {@link auto.$provide $provide} service has a number of methods for registering components
- * with the {@link auto.$injector $injector}. Many of these functions are also exposed on
+ * with the {@link auto.$injector $injector}. Many of these function are also exposed on
  * {@link angular.Module}.
  *
  * An Angular **service** is a singleton object created by a **service factory**.  These **service
- * factories** are functions which, in turn, are created by a **service provider**.
- * The **service providers** are constructor functions. When instantiated they must contain a
+ * factories** are function which, in turn, are created by a **service provider**.
+ * The **service providers** are constructor function. When instantiated they must contain a
  * property called `$get`, which holds the **service factory** function.
  *
  * When you request a service, the {@link auto.$injector $injector} is responsible for finding the
@@ -13267,8 +13267,8 @@ function annotate(fn) {
  * @name $provide#provider
  * @description
  *
- * Register a **provider function** with the {@link auto.$injector $injector}. Provider functions
- * are constructor functions, whose instances are responsible for "providing" a factory for a
+ * Register a **provider function** with the {@link auto.$injector $injector}. Provider function
+ * are constructor function, whose instances are responsible for "providing" a factory for a
  * service.
  *
  * Service provider names start with the name of the service they provide followed by `Provider`.
@@ -13862,7 +13862,7 @@ var $AnimateProvider = ['$provide', function($provide) {
    *
    * @description
    * Registers a new injectable animation factory function. The factory function produces the
-   * animation object which contains callback functions for each event that is expected to be
+   * animation object which contains callback function for each event that is expected to be
    * animated.
    *
    *   * `eventFn`: `function(Element, doneFunction)` The element to animate, the `doneFunction`
@@ -13926,7 +13926,7 @@ var $AnimateProvider = ['$provide', function($provide) {
      *
      * @ngdoc service
      * @name $animate
-     * @description The $animate service provides rudimentary DOM manipulation functions to
+     * @description The $animate service provides rudimentary DOM manipulation function to
      * insert, remove and move elements within the DOM, as well as adding and removing classes.
      * This service is the core service used by the ngAnimate $animator service which provides
      * high-level animation hooks for CSS and JavaScript.
@@ -14183,7 +14183,7 @@ function Browser(window, document, $log, $sniffer) {
    * @param {function()} fn Poll function to add
    *
    * @description
-   * Adds a function to the list of functions that poller periodically executes,
+   * Adds a function to the list of function that poller periodically executes,
    * and starts polling if not started yet.
    *
    * @returns {function()} the added function
@@ -14195,7 +14195,7 @@ function Browser(window, document, $log, $sniffer) {
   };
 
   /**
-   * @param {number} interval How often should browser call poll functions (ms)
+   * @param {number} interval How often should browser call poll function (ms)
    * @param {function()} setTimeout Reference to a real or fake `setTimeout` function.
    *
    * @description
@@ -14985,9 +14985,9 @@ function $TemplateCacheProvider() {
  * #### `priority`
  * When there are multiple directives defined on a single DOM element, sometimes it
  * is necessary to specify the order in which the directives are applied. The `priority` is used
- * to sort the directives before their `compile` functions get called. Priority is defined as a
- * number. Directives with greater numerical `priority` are compiled first. Pre-link functions
- * are also run in priority order, but post-link functions are run in reverse order. The order
+ * to sort the directives before their `compile` function get called. Priority is defined as a
+ * number. Directives with greater numerical `priority` are compiled first. Pre-link function
+ * are also run in priority order, but post-link function are run in reverse order. The order
  * of directives with the same priority is undefined. The default priority is `0`.
  *
  * #### `terminal`
@@ -15138,7 +15138,7 @@ function $TemplateCacheProvider() {
  *     safe to do template transformation on the element and child elements only.
  *
  *   * `tAttrs` - template attributes - Normalized list of attributes declared on this element shared
- *     between all directive compile functions.
+ *     between all directive compile function.
  *
  *   * `transclude` -  [*DEPRECATED*!] A transclude linking function: `function(scope, cloneLinkingFn)`
  *
@@ -15151,7 +15151,7 @@ function $TemplateCacheProvider() {
 
  * <div class="alert alert-warning">
  * **Note:** The compile function cannot handle directives that recursively use themselves in their
- * own templates or compile functions. Compiling these directives results in an infinite loop and a
+ * own templates or compile function. Compiling these directives results in an infinite loop and a
  * stack overflow errors.
  *
  * This can be avoided by manually using $compile in the postLink function to imperatively compile
@@ -15172,7 +15172,7 @@ function $TemplateCacheProvider() {
  *
  * * returning an object with function(s) registered via `pre` and `post` properties - allows you to
  *   control when a linking function should be called during the linking phase. See info about
- *   pre-linking and post-linking functions below.
+ *   pre-linking and post-linking function below.
  *
  *
  * #### `link`
@@ -15194,7 +15194,7 @@ function $TemplateCacheProvider() {
  *     already been linked.
  *
  *   * `iAttrs` - instance attributes - Normalized list of attributes declared on this element shared
- *     between all directive linking functions.
+ *     between all directive linking function.
  *
  *   * `controller` - a controller instance - A controller instance if at least one directive on the
  *     element defines a controller. The controller is shared among all the directives, which allows
@@ -15219,7 +15219,7 @@ function $TemplateCacheProvider() {
  * ### Attributes
  *
  * The {@link ng.$compile.directive.Attributes Attributes} object - passed as a parameter in the
- * `link()` or `compile()` functions. It has a variety of uses.
+ * `link()` or `compile()` function. It has a variety of uses.
  *
  * accessing *Normalized attribute names:*
  * Directives like 'ngBind' can be expressed in many ways: 'ng:bind', `data-ng-bind`, or 'x-ng-bind'.
@@ -15739,8 +15739,8 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
     /**
      * Compile function matches each node in nodeList against the directives. Once all directives
-     * for a particular node are collected their compile functions are executed. The compile
-     * functions return values - the linking functions - are combined into a composite linking
+     * for a particular node are collected their compile function are executed. The compile
+     * function return values - the linking function - are combined into a composite linking
      * function, which is the a linking function for the node.
      *
      * @param {NodeList} nodeList an array of nodes or NodeList to compile
@@ -16003,13 +16003,13 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
     }
 
     /**
-     * Once the directives have been collected, their compile functions are executed. This method
+     * Once the directives have been collected, their compile function are executed. This method
      * is responsible for inlining directive templates as well as terminating the application
      * of the directives if the terminal directive has been reached.
      *
      * @param {Array} directives Array of collected directives to execute their compile function.
      *        this needs to be pre-sorted by priority order.
-     * @param {Node} compileNode The raw DOM node to apply the compile functions to
+     * @param {Node} compileNode The raw DOM node to apply the compile function to
      * @param {Object} templateAttrs The shared attribute function
      * @param {function(angular.Scope, cloneAttachFn=)} transcludeFn A linking function, where the
      *                                                  scope argument is auto-generated to the new
@@ -16865,7 +16865,7 @@ function directiveNormalize(name) {
  * @name $compile.directive.Attributes
  *
  * @description
- * A shared object between directive compile / linking functions which contains normalized DOM
+ * A shared object between directive compile / linking function which contains normalized DOM
  * element attributes. The values reflect current binding state `{{ }}`. The normalization is
  * needed since all of these are treated as equivalent in Angular:
  *
@@ -17149,13 +17149,13 @@ function headersGetter(headers) {
 
 
 /**
- * Chain all given functions
+ * Chain all given function
  *
  * This function is used for both request and response transforming
  *
  * @param {*} data Data to transform.
  * @param {function(string=)} headers Http headers getter fn.
- * @param {(Function|Array.<Function>)} fns Function or an array of functions.
+ * @param {(Function|Array.<Function>)} fns Function or an array of function.
  * @returns {*} Transformed data.
  */
 function transformData(data, headers, fns) {
@@ -17379,7 +17379,7 @@ function $HttpProvider() {
      *
      * # Transforming Requests and Responses
      *
-     * Both requests and responses can be transformed using transform functions. By default, Angular
+     * Both requests and responses can be transformed using transform function. By default, Angular
      * applies these transformations:
      *
      * Request transformations:
@@ -17394,10 +17394,10 @@ function $HttpProvider() {
      *
      * To globally augment or override the default transforms, modify the
      * `$httpProvider.defaults.transformRequest` and `$httpProvider.defaults.transformResponse`
-     * properties. These properties are by default an array of transform functions, which allows you
+     * properties. These properties are by default an array of transform function, which allows you
      * to `push` or `unshift` a new transformation function into the transformation chain. You can
      * also decide to completely override any default transformations by assigning your
-     * transformation functions to these properties directly without the array wrapper.  These defaults
+     * transformation function to these properties directly without the array wrapper.  These defaults
      * are again available on the $http factory at run-time, which may be useful if you have run-time
      * services you wish to be involved in your transformations.
      *
@@ -17625,18 +17625,18 @@ function $HttpProvider() {
      *      to `?key1=value1&key2=value2` after the url. If the value is not a string, it will be
      *      JSONified.
      *    - **data** – `{string|Object}` – Data to be sent as the request message data.
-     *    - **headers** – `{Object}` – Map of strings or functions which return strings representing
+     *    - **headers** – `{Object}` – Map of strings or function which return strings representing
      *      HTTP headers to send to the server. If the return value of a function is null, the
      *      header will not be sent.
      *    - **xsrfHeaderName** – `{string}` – Name of HTTP header to populate with the XSRF token.
      *    - **xsrfCookieName** – `{string}` – Name of cookie containing the XSRF token.
      *    - **transformRequest** –
      *      `{function(data, headersGetter)|Array.<function(data, headersGetter)>}` –
-     *      transform function or an array of such functions. The transform function takes the http
+     *      transform function or an array of such function. The transform function takes the http
      *      request body and headers and returns its transformed (typically serialized) version.
      *    - **transformResponse** –
      *      `{function(data, headersGetter)|Array.<function(data, headersGetter)>}` –
-     *      transform function or an array of such functions. The transform function takes the http
+     *      transform function or an array of such function. The transform function takes the http
      *      response body and headers and returns its transformed (typically deserialized) version.
      *    - **cache** – `{boolean|Cache}` – If true, a default $http cache will be used to cache the
      *      GET request, otherwise if a cache instance built with
@@ -17655,11 +17655,11 @@ function $HttpProvider() {
      *   method takes two arguments a success and an error callback which will be called with a
      *   response object. The `success` and `error` methods take a single argument - a function that
      *   will be called when the request succeeds or fails respectively. The arguments passed into
-     *   these functions are destructured representation of the response object passed into the
+     *   these function are destructured representation of the response object passed into the
      *   `then` method. The response object has these properties:
      *
      *   - **data** – `{string|Object}` – The response body transformed with the transform
-     *     functions.
+     *     function.
      *   - **status** – `{number}` – HTTP status code of the response.
      *   - **headers** – `{function([headerName])}` – Header getter function.
      *   - **config** – `{Object}` – The configuration object that was used to generate the request.
@@ -18613,7 +18613,7 @@ function $IntervalProvider() {
       * To cancel an interval, call `$interval.cancel(promise)`.
       *
       * In tests you can use {@link ngMock.$interval#flush `$interval.flush(millis)`} to
-      * move forward by `millis` milliseconds and trigger any functions scheduled to run in that
+      * move forward by `millis` milliseconds and trigger any function scheduled to run in that
       * time.
       *
       * <div class="alert alert-warning">
@@ -19769,7 +19769,7 @@ var promiseWarning;
 // ------------------------------
 // Angular expressions are generally considered safe because these expressions only have direct
 // access to $scope and locals. However, one can obtain the ability to execute arbitrary JS code by
-// obtaining a reference to native JS functions such as the Function constructor.
+// obtaining a reference to native JS function such as the Function constructor.
 //
 // As an example, consider the following Angular expression:
 //
@@ -20522,7 +20522,7 @@ Parser.prototype = {
       ensureSafeObject(context, parser.text);
       ensureSafeFunction(fnPtr, parser.text);
 
-      // IE stupidity! (IE doesn't have apply for some native functions)
+      // IE stupidity! (IE doesn't have apply for some native function)
       var v = fnPtr.apply
             ? fnPtr.apply(context, args)
             : fnPtr(args[0], args[1], args[2], args[3], args[4]);
@@ -20599,7 +20599,7 @@ Parser.prototype = {
 
 
 //////////////////////////////////////////////////
-// Parser helper functions
+// Parser helper function
 //////////////////////////////////////////////////
 
 function setter(obj, path, setValue, fullExp, options) {
@@ -21185,7 +21185,7 @@ function $ParseProvider() {
  *      // it got called synchronously or asynchronously.
  *      expect(resolvedValue).toBeUndefined();
  *
- *      // Propagate promise resolution to 'then' functions using $apply().
+ *      // Propagate promise resolution to 'then' function using $apply().
  *      $rootScope.$apply();
  *      expect(resolvedValue).toEqual(123);
  *    }));
@@ -21204,7 +21204,7 @@ function $QProvider() {
 /**
  * Constructs a promise manager.
  *
- * @param {function(Function)} nextTick Function for executing functions in the next turn.
+ * @param {function(Function)} nextTick Function for executing function in the next turn.
  * @param {function(...*)} exceptionHandler Function into which unexpected exceptions are passed for
  *     debugging purposes.
  * @returns {object} Promise manager.
@@ -22811,7 +22811,7 @@ var SCE_CONTEXTS = {
   JS: 'js'
 };
 
-// Helper functions follow.
+// Helper function follow.
 
 // Copied from:
 // http://docs.closure-library.googlecode.com/git/closure_goog_string_string.js.source.html#line962
@@ -22874,7 +22874,7 @@ function adjustMatchers(matchers) {
  * Typically, you would configure or override the {@link ng.$sceDelegate $sceDelegate} instead of
  * the `$sce` service to customize the way Strict Contextual Escaping works in AngularJS.  This is
  * because, while the `$sce` provides numerous shorthand methods, etc., you really only need to
- * override 3 core functions (`trustAs`, `getTrusted` and `valueOf`) to replace the way things
+ * override 3 core function (`trustAs`, `getTrusted` and `valueOf`) to replace the way things
  * work because `$sce` delegates to `$sceDelegate` for these operations.
  *
  * Refer {@link ng.$sceDelegateProvider $sceDelegateProvider} to configure this service.
@@ -23968,7 +23968,7 @@ function $TimeoutProvider() {
       * To cancel a timeout request, call `$timeout.cancel(promise)`.
       *
       * In tests you can use {@link ngMock.$timeout `$timeout.flush()`} to
-      * synchronously flush the queue of deferred functions.
+      * synchronously flush the queue of deferred function.
       *
       * @param {function()} fn A function, whose execution should be delayed.
       * @param {number=} [delay=0] Delay in milliseconds.
@@ -24182,7 +24182,7 @@ function $WindowProvider(){
  * @name $filterProvider
  * @description
  *
- * Filters are just functions which transform input to an output. However filters need to be
+ * Filters are just function which transform input to an output. However filters need to be
  * Dependency Injected. To achieve this a filter definition consists of a factory function which is
  * annotated with dependencies and is responsible for creating a filter function.
  *
@@ -27090,7 +27090,7 @@ var VALID_CLASS = 'ng-valid',
  *
  * @property {string} $viewValue Actual string value in the view.
  * @property {*} $modelValue The value in the model, that the control is bound to.
- * @property {Array.<Function>} $parsers Array of functions to execute, as a pipeline, whenever
+ * @property {Array.<Function>} $parsers Array of function to execute, as a pipeline, whenever
        the control reads value from the DOM.  Each function is called, in turn, passing the value
        through to the next. The last return value is used to populate the model.
        Used to sanitize / convert the value as well as validation. For validation,
@@ -27099,7 +27099,7 @@ var VALID_CLASS = 'ng-valid',
        and return `undefined` for invalid values.
 
  *
- * @property {Array.<Function>} $formatters Array of functions to execute, as a pipeline, whenever
+ * @property {Array.<Function>} $formatters Array of function to execute, as a pipeline, whenever
        the model value changes. Each function is called, in turn, passing the value through to the
        next. Used to format / convert values for display in the control and validation.
  * ```js
@@ -27111,7 +27111,7 @@ var VALID_CLASS = 'ng-valid',
  * ngModel.$formatters.push(formatter);
  * ```
  *
- * @property {Array.<Function>} $viewChangeListeners Array of functions to execute whenever the
+ * @property {Array.<Function>} $viewChangeListeners Array of function to execute whenever the
  *     view value has changed. It is called with no arguments, and its return value is ignored.
  *     This can be used in place of additional $watches against the model value.
  *
@@ -27299,7 +27299,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * Change the validity state, and notifies the form when the control changes validity. (i.e. it
    * does not notify form if given validator is already marked as invalid).
    *
-   * This method should be called by validators - i.e. the parser or formatter functions.
+   * This method should be called by validators - i.e. the parser or formatter function.
    *
    * @param {string} validationErrorKey Name of the validator. the `validationErrorKey` will assign
    *        to `$error[validationErrorKey]=!isValid` so that it is available for data-binding.
@@ -27362,7 +27362,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * For example {@link ng.directive:input input} and
    * {@link ng.directive:select select} directives call it.
    *
-   * It will update the $viewValue, then pass this value through each of the functions in `$parsers`,
+   * It will update the $viewValue, then pass this value through each of the function in `$parsers`,
    * which includes any validators. The value that comes out of this `$parsers` pipeline, be applied to
    * `$modelValue` and the **expression** specified in the `ng-model` attribute.
    *
@@ -28434,7 +28434,7 @@ var ngCloakDirective = ngDirective({
  *   are accessed through bindings.
  * * View — The template (HTML with data bindings) that is rendered into the View.
  * * Controller — The `ngController` directive specifies a Controller class; the class contains business
- *   logic behind the application to decorate the scope with functions and values
+ *   logic behind the application to decorate the scope with function and values
  *
  * Note that you can also attach controllers to the DOM by declaring it in a route definition
  * via the {@link ngRoute.$route $route} service. A common mistake is to declare the controller
@@ -28651,11 +28651,11 @@ var ngControllerDirective = [function() {
  *
  * This is necessary when developing things like Google Chrome Extensions.
  *
- * CSP forbids apps to use `eval` or `Function(string)` generated functions (among other things).
+ * CSP forbids apps to use `eval` or `Function(string)` generated function (among other things).
  * For us to be compatible, we just need to implement the "getterFn" in $parse without violating
  * any of these restrictions.
  *
- * AngularJS uses `Function(string)` generated functions as a speed optimization. Applying the `ngCsp`
+ * AngularJS uses `Function(string)` generated function as a speed optimization. Applying the `ngCsp`
  * directive will cause Angular to use CSP compatibility mode. When this mode is on AngularJS will
  * evaluate all expressions up to 30% slower than in non-CSP mode, but no security violations will
  * be raised.
@@ -30050,7 +30050,7 @@ var ngRepeatDirective = ['$parse', '$animate', function($parse, $animate) {
         if (trackByExp) {
           trackByExpGetter = $parse(trackByExp);
           trackByIdExpFn = function(key, value, index) {
-            // assign key, value, and $index to the locals so that they can be used in hash functions
+            // assign key, value, and $index to the locals so that they can be used in hash function
             if (keyIdentifier) hashFnLocals[keyIdentifier] = key;
             hashFnLocals[valueIdentifier] = value;
             hashFnLocals.$index = index;
@@ -31574,12 +31574,12 @@ angular.scenario.output = angular.scenario.output || function(name, fn) {
 
 /**
  * Defines a new DSL statement. If your factory function returns a Future
- * it's returned, otherwise the result is assumed to be a map of functions
- * for chaining. Chained functions are subject to the same rules.
+ * it's returned, otherwise the result is assumed to be a map of function
+ * for chaining. Chained function are subject to the same rules.
  *
- * Note: All functions on the chain are bound to the chain scope so values
+ * Note: All function on the chain are bound to the chain scope so values
  *   set on "this" in your statement function are available in the chained
- *   functions.
+ *   function.
  *
  * @param {string} name The name of the statement
  * @param {function()} fn Factory function(), return a function for
@@ -31587,7 +31587,7 @@ angular.scenario.output = angular.scenario.output || function(name, fn) {
  */
 angular.scenario.dsl = angular.scenario.dsl || function(name, fn) {
   angular.scenario.dsl[name] = function() {
-    /* jshint -W040 *//* The dsl binds `this` for us when calling chained functions */
+    /* jshint -W040 *//* The dsl binds `this` for us when calling chained function */
     function executeStatement(statement, args) {
       var result = statement.apply(this, args);
       if (angular.isFunction(result) || result instanceof angular.scenario.Future)
@@ -32176,7 +32176,7 @@ angular.scenario.Describe = function(descName, parent) {
   this.id = angular.scenario.Describe.id++;
 
   /**
-   * Calls all before functions.
+   * Calls all before function.
    */
   var beforeEachFns = this.beforeEachFns;
   this.setupBefore = function() {
@@ -32185,7 +32185,7 @@ angular.scenario.Describe = function(descName, parent) {
   };
 
   /**
-   * Calls all after functions.
+   * Calls all after function.
    */
   var afterEachFns = this.afterEachFns;
   this.setupAfter  = function() {
@@ -32283,7 +32283,7 @@ angular.scenario.Describe.prototype.iit = function(name, body) {
 angular.scenario.Describe.prototype.xit = angular.noop;
 
 /**
- * Gets an array of functions representing all the tests (recursively).
+ * Gets an array of function representing all the tests (recursively).
  * that can be executed with SpecRunner's.
  *
  * @return {Array<Object>} Array of it blocks {
@@ -32865,7 +32865,7 @@ angular.scenario.SpecRunner = function() {
 };
 
 /**
- * Executes a spec which is an it block with associated before/after functions
+ * Executes a spec which is an it block with associated before/after function
  * based on the describe nesting.
  *
  * @param {Object} spec A spec object

@@ -1162,7 +1162,7 @@ QUnit.equiv = (function() {
 	// the real equiv function
 	var innerEquiv,
 
-		// stack to decide between skip/abort functions
+		// stack to decide between skip/abort function
 		callers = [],
 
 		// stack to avoiding loops from circular referencing
@@ -1491,7 +1491,7 @@ QUnit.dump = (function() {
 				"undefined": "undefined",
 				"function": function( fn ) {
 					var ret = "function",
-						// functions never have name in IE
+						// function never have name in IE
 						name = "name" in fn ? fn.name : ( reName.exec( fn ) || [] )[ 1 ];
 
 					if ( name ) {

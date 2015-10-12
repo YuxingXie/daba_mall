@@ -30,9 +30,20 @@ public class ProductSeries {
     private Long shelvesDate;
     @Field(value = "brand")
     private String brand;
+    @Field(value = "subCategoryId")
+    private String subCategoryId;
 
+    public String getSubCategoryId() {
+        return subCategoryId;
+    }
 
+    public void setSubCategoryId(String subCategoryId) {
+        this.subCategoryId = subCategoryId;
+    }
 
+    public void setNewProduct(boolean newProduct) {
+        this.newProduct = newProduct;
+    }
 
     private boolean newProduct;
     private Integer evaluateCount;

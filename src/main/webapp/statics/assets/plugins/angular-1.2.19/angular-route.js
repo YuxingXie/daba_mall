@@ -114,7 +114,7 @@ function $RouteProvider(){
    *        and the return value is treated as the dependency. If the result is a promise, it is
    *        resolved before its value is injected into the controller. Be aware that
    *        `ngRoute.$routeParams` will still refer to the previous route within these resolve
-   *        functions.  Use `$route.current.params` to access the new route parameters, instead.
+   *        function.  Use `$route.current.params` to access the new route parameters, instead.
    *
    *    - `redirectTo` – {(string|function())=} – value to update
    *      {@link ng.$location $location} path with and trigger route redirection.
@@ -622,7 +622,7 @@ ngRouteModule.provider('$routeParams', $RouteParamsProvider);
  * (but its properties will likely change) even when a route change occurs.
  *
  * Note that the `$routeParams` are only updated *after* a route change completes successfully.
- * This means that you cannot rely on `$routeParams` being correct in route resolve functions.
+ * This means that you cannot rely on `$routeParams` being correct in route resolve function.
  * Instead you can use `$route.current.params` to access the new route's parameters.
  *
  * @example

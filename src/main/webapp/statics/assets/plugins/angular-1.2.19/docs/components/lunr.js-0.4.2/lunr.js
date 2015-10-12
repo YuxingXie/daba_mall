@@ -7,10 +7,10 @@
 
 /**
  * Convenience function for instantiating a new lunr index and configuring it
- * with the default pipeline functions and the passed config function.
+ * with the default pipeline function and the passed config function.
  *
  * When using this convenience function a new index will be created with the
- * following functions already in the pipeline:
+ * following function already in the pipeline:
  *
  * lunr.StopWordFilter - filters out any stop words before they enter the
  * index
@@ -150,7 +150,7 @@ lunr.EventEmitter.prototype.removeListener = function (name, fn) {
 }
 
 /**
- * Calls all functions bound to the given event.
+ * Calls all function bound to the given event.
  *
  * Additional data can be passed to the event handler as arguments to `emit`
  * after the event name.
@@ -217,30 +217,30 @@ lunr.tokenizer = function (obj) {
  */
 
 /**
- * lunr.Pipelines maintain an ordered list of functions to be applied to all
+ * lunr.Pipelines maintain an ordered list of function to be applied to all
  * tokens in documents entering the search index and queries being ran against
  * the index.
  *
  * An instance of lunr.Index created with the lunr shortcut will contain a
  * pipeline with a stop word filter and an English language stemmer. Extra
- * functions can be added before or after either of these functions or these
- * default functions can be removed.
+ * function can be added before or after either of these function or these
+ * default function can be removed.
  *
  * When run the pipeline will call each function in turn, passing a token, the
  * index of that token in the original list of all tokens and finally a list of
  * all the original tokens.
  *
- * The output of functions in the pipeline will be passed to the next function
+ * The output of function in the pipeline will be passed to the next function
  * in the pipeline. To exclude a token from entering the index the function
  * should return undefined, the rest of the pipeline will not be called with
  * this token.
  *
- * For serialisation of pipelines to work, all functions used in an instance of
- * a pipeline should be registered with lunr.Pipeline. Registered functions can
- * then be loaded. If trying to load a serialised pipeline that uses functions
+ * For serialisation of pipelines to work, all function used in an instance of
+ * a pipeline should be registered with lunr.Pipeline. Registered function can
+ * then be loaded. If trying to load a serialised pipeline that uses function
  * that are not registered an error will be thrown.
  *
- * If not planning on serialising the pipeline then registering pipeline functions
+ * If not planning on serialising the pipeline then registering pipeline function
  * is not necessary.
  *
  * @constructor
@@ -257,7 +257,7 @@ lunr.Pipeline.registeredFunctions = {}
  * Functions that are used in the pipeline should be registered if the pipeline
  * needs to be serialised, or a serialised pipeline needs to be loaded.
  *
- * Registering a function does not add it to a pipeline, functions must still be
+ * Registering a function does not add it to a pipeline, function must still be
  * added to instances of the pipeline for them to be used when running a pipeline.
  *
  * @param {Function} fn The function to check for.
@@ -291,7 +291,7 @@ lunr.Pipeline.warnIfFunctionNotRegistered = function (fn) {
 /**
  * Loads a previously serialised pipeline.
  *
- * All functions to be loaded must already be registered with lunr.Pipeline.
+ * All function to be loaded must already be registered with lunr.Pipeline.
  * If any function from the serialised data has not been registered then an
  * error will be thrown.
  *
@@ -316,11 +316,11 @@ lunr.Pipeline.load = function (serialised) {
 }
 
 /**
- * Adds new functions to the end of the pipeline.
+ * Adds new function to the end of the pipeline.
  *
  * Logs a warning if the function has not been registered.
  *
- * @param {Function} functions Any number of functions to add to the pipeline.
+ * @param {Function} function Any number of function to add to the pipeline.
  * @memberOf Pipeline
  */
 lunr.Pipeline.prototype.add = function () {
@@ -378,7 +378,7 @@ lunr.Pipeline.prototype.remove = function (fn) {
 }
 
 /**
- * Runs the current list of functions that make up the pipeline against the
+ * Runs the current list of function that make up the pipeline against the
  * passed tokens.
  *
  * @param {Array} tokens The tokens to run through the pipeline.

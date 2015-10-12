@@ -47,7 +47,9 @@ public class ProductController extends BaseRestSpringController {
 
     @RequestMapping(value = "/{id}")
     public String loginDirect(@PathVariable String id, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("id "+id);
+
+        ProductSeries productSeries=productSeriesService.findById(id);
+        model.addAttribute("productSeries",productSeries);
         return "item";
     }
 

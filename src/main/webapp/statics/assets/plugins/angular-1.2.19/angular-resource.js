@@ -7,7 +7,7 @@
 
 var $resourceMinErr = angular.$$minErr('$resource');
 
-// Helper functions and regex to lookup a dotted path on an object
+// Helper function and regex to lookup a dotted path on an object
 // stopping at undefined/null.  The path must be composed of ASCII
 // identifiers (just like $parse)
 var MEMBER_NAME_REGEX = /^(\.[a-zA-Z_$][0-9a-zA-Z_$]*)+$/;
@@ -125,11 +125,11 @@ function shallowClearAndCopy(src, dst) {
  *     see `returns` section.
  *   - **`transformRequest`** –
  *     `{function(data, headersGetter)|Array.<function(data, headersGetter)>}` –
- *     transform function or an array of such functions. The transform function takes the http
+ *     transform function or an array of such function. The transform function takes the http
  *     request body and headers and returns its transformed (typically serialized) version.
  *   - **`transformResponse`** –
  *     `{function(data, headersGetter)|Array.<function(data, headersGetter)>}` –
- *     transform function or an array of such functions. The transform function takes the http
+ *     transform function or an array of such function. The transform function takes the http
  *     response body and headers and returns its transformed (typically deserialized) version.
  *   - **`cache`** – `{boolean|Cache}` – If true, a default $http cache will be used to cache the
  *     GET request, otherwise if a cache instance built with

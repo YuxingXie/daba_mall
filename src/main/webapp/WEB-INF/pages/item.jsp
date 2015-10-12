@@ -2,10 +2,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="p" uri="/pageTag" %>
+<%@taglib prefix="f" uri="/functions" %>
 <jsp:useBean id="form" class="com.dabast.mall.form.UserLoginForm" scope="request"></jsp:useBean>
 <jsp:useBean id="phoneForm" class="com.dabast.mall.form.UserLoginForm" scope="request"></jsp:useBean>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
+<
 <head>
   <meta charset="utf-8">
   <title>物品详情页</title>
@@ -59,7 +61,6 @@
     <!-- BEGIN TOP BAR -->
 
 
-
     <div class="main">
       <div class="container">
         <ul class="breadcrumb">
@@ -72,69 +73,28 @@
           <!-- BEGIN SIDEBAR -->
           <div class="sidebar col-md-3 col-sm-5">
             <ul class="list-group margin-bottom-25 sidebar-menu">
-              <li class="list-group-item clearfix dropdown active">
-                <a href="javascript:void(0);" class="collapsed">
-                  <i class="fa fa-angle-right"></i>
-                  熏腊制品
-                  <i class="fa fa-angle-down"></i>
-                </a>
-                <ul class="dropdown-menu" style="display:block;">
-                  <li>
-                    <a href="product-list.html"><i class="fa fa-circle"></i>烟熏腊肉</a>
-                  </li>
-                  <li class="list-group-item dropdown clearfix active"><a href="product-list.html"><i class="fa fa-circle"></i>生态干鱼</a></li>
-                  <li><a href="product-list.html"><i class="fa fa-circle"></i>腊肠</a></li>
-                  <li><a href="product-list.html"><i class="fa fa-circle"></i>酱板鸭</a></li>
-                </ul>
-              </li>
-             <li class="list-group-item clearfix dropdown ">
-                <a href="javascript:void(0);" class="collapsed">
-                  <i class="fa fa-angle-right"></i>
-                  鲜活水产
-                  <i class="fa fa-angle-down"></i>
-                </a>
-                <ul class="dropdown-menu" style="display:none;">
-                  <li>
-                    <a href="product-list.html"><i class="fa fa-circle"></i>黄材中华鲟</a>
-                  </li>
-                  <li><a href="product-list.html"><i class="fa fa-circle"></i>大龙虾</a></li>
-                  <li><a href="product-list.html"><i class="fa fa-circle"></i>皇帝蟹</a></li>
-                  <li><a href="product-list.html"><i class="fa fa-circle"></i>三文鱼</a></li>
-                  <li><a href="product-list.html"><i class="fa fa-circle"></i>甲鱼</a></li>
-                  <li><a href="product-list.html"><i class="fa fa-circle"></i>黄鸭叫</a></li>
-                  <li><a href="product-list.html"><i class="fa fa-circle"></i>泥鳅/黄鳝</a></li>
-                </ul>
-              </li>
-              <li class="list-group-item clearfix dropdown ">
-                <a href="javascript:void(0);" class="collapsed">
-                  <i class="fa fa-angle-right"></i>
-                  新品上市
-                  <i class="fa fa-angle-down"></i>
-                </a>
-                <ul class="dropdown-menu" style="display:none;">
-                  <li>
-                    <a href="product-list.html"><i class="fa fa-circle"></i>黄材中华鲟</a>
-                  </li>
-                  <li><a href="product-list.html"><i class="fa fa-circle"></i>生态干鱼</a></li>
-                  <li><a href="product-list.html"><i class="fa fa-circle"></i>乡里腊肉</a></li>
-                </ul>
-              </li>
-              <li class="list-group-item clearfix dropdown ">
-                <a href="javascript:void(0);" class="collapsed">
-                  <i class="fa fa-angle-right"></i>
-                  促销产品
-                  <i class="fa fa-angle-down"></i>
-                </a>
-                <ul class="dropdown-menu" style="display:none;">
-                  <li>
-                    <a href="product-list.html"><i class="fa fa-circle"></i>黄材中华鲟</a>
-                  </li>
-                  <li><a href="product-list.html"><i class="fa fa-circle"></i>生态干鱼</a></li>
-                  <li><a href="product-list.html"><i class="fa fa-circle"></i>乡里腊肉</a></li>
-                </ul>
-              </li>
-            </ul>
+              <c:forEach var="productCategory" items="${f:getProductCategories()}">
+                <c:set var="categoryId" value="${f:getProductCategoryIdByProductSeriesId(productSeries.id)}"/>
+                <li class="list-group-item clearfix dropdown
+                <c:if test="${productSeries.subCategoryId eq productCategory.id}">active</c:if>">
+                  <a href="javascript:void(0);" class="collapsed">
+                    <i class="fa fa-angle-right"></i>
+                    熏腊制品
+                    <i class="fa fa-angle-down"></i>
+                  </a>
+                  <ul class="dropdown-menu" style="display:block;">
+                    <li>
+                      <a href="product-list.html"><i class="fa fa-circle"></i>烟熏腊肉</a>
+                    </li>
+                    <li class="list-group-item dropdown clearfix active"><a href="product-list.html"><i class="fa fa-circle"></i>生态干鱼</a></li>
+                    <li><a href="product-list.html"><i class="fa fa-circle"></i>腊肠</a></li>
+                    <li><a href="product-list.html"><i class="fa fa-circle"></i>酱板鸭</a></li>
+                  </ul>
+                </li>
+              </c:forEach>
 
+
+            </ul>
             <div class="sidebar-products clearfix">
               <h2>热销商品</h2>
               <div class="item">
@@ -167,53 +127,43 @@
               <div class="row">
                 <div class="col-md-6 col-sm-6">
                   <div class="product-main-image">
-                    <img src="${path}/statics/assets/temp/products/model7.jpg" alt="烟熏腊鱼" class="img-responsive" data-BigImgSrc="${path}/statics/assets/temp/products/model7.jpg">
+                    <img src="${path}/${productSeries.pictures[0]}" alt="${productSeries.name}" class="img-responsive" data-BigImgSrc="${path}/${productSeries.pictures[0]}">
                   </div>
                   <div class="product-other-images">
-                    <a href="#" class="active"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model3.jpg"></a>
-                    <a href="#"><img src="${path}/statics/assets/temp/products/model4.jpg"></a>
-                    <a href="#"><img src="${path}/statics/assets/temp/products/model5.jpg"></a>
+                    <c:forEach var="pic" items="${productSeries.pictures}" varStatus="varStatus">
+                      <a href="#" <c:if test="${varStatus.index eq 0}">class="active"</c:if>><img src="${path}/${pic}"></a>
+                    </c:forEach>
                   </div>
                 </div>
-                
                 <div class="col-md-6 col-sm-6">
-                  <h1>烟熏腊鱼</h1>
+                  <h1>${productSeries.name}</h1>
                   <div class="price-availability-block clearfix">
                     <div class="price">
-                      <strong><span>￥</span>47.00</strong>
-                      <em>￥<span>62.00</span></em>
+                      <strong><span>￥</span>${productSeries.commonPrice}</strong>
+                      <%--<em>￥<span>62.00</span></em>--%>
                     </div>
                     <div class="availability">
                       状态:<strong>货源充足</strong>
                     </div>
                   </div>
                   <div class="description">
-                    <p>腊鱼是将鱼洗净腌制晒干后的称呼，鲫鱼、草鱼、鲤鱼都可以制作腊鱼。腌制腊鱼是我国传统水产加工食品，其风味独特，耐贮藏，在我国南方的饮食文化中有着重要地位。在腌腊鱼的加工过程中，由于微生物和原料鱼中酶类的作用</p>
+                    <p>${productSeries.description}</p>
                   </div>
                   <div class="product-page-options">
-                    <div class="pull-left">
-                      <label class="control-label" style=" direction:ltr;">产地&nbsp;:&nbsp;</label>
-                      <select class="form-control input-sm">
-                        <option>黄材</option>
-                        <option>横市</option>
-                        <option>双凫铺</option>
-                        <option>大成桥</option>
-                        <option>回龙铺</option>
-                        <option>宁乡</option>
-                      </select>
-                    </div>
-                    <div class="pull-left">
-                       <label class="control-label" style=" direction:ltr;">种类&nbsp;:&nbsp;</label>
-                      <select class="form-control input-sm">
-                        <option>三文鱼腊鱼</option>
-                        <option>福寿鱼腊鱼</option>
-                        <option>草鱼腊鱼</option>
-                      </select>
-                    </div>
+                    <c:forEach var="productProperty" items="${f:getProductPropertiesById(productSeries.id)}">
+                      <div class="pull-left">
+                        <label class="control-label" style=" direction:ltr;">${productProperty.propertyName}&nbsp;:&nbsp;</label>
+                        <select class="form-control input-sm">
+                          <c:forEach var="propertyValue" items="${productProperty.propertyValues}">
+                            <option>${propertyValue}</option>
+                          </c:forEach>
+                        </select>
+                      </div>
+                    </c:forEach>
                   </div>
                   <div class="product-page-cart">
                     <div class="product-quantity">
-                        <input id="product-quantity" type="text" value="1" readonly class="form-control input-sm">
+                        <input type="text" value="1" readonly class="form-control input-sm">
                     </div>
                     <button class="btn btn-primary" type="submit">添加到购物车</button>
                   </div>
@@ -221,12 +171,19 @@
                     <input type="range" value="4" step="0.25" id="backing4">
                     <div class="rateit" data-rateit-backingfld="#backing4" data-rateit-resetable="false"  data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
                     </div>
-                    <a href="#">2015条评论</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#">发表评论</a>
+                    <a href="#">${productSeries.evaluateCount}条评论</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#">发表评论</a>
                   </div>
                   <ul class="social-icons">
-                    <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>			                 </ul>
+                    <div class="bdsharebuttonbox">
+                      <a href="#" class="bds_more" data-cmd="more"></a>
+                      <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                      <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                      <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+                      <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+                      <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                    </div>
+                  </ul>
                 </div>
-
                 <div class="product-page-content">
                   <ul id="myTab" class="nav nav-tabs">
                     <li class="active"><a href="#Description" data-toggle="tab">商品介绍</a></li>
@@ -302,68 +259,7 @@
                             <p>商品评价是指生产厂家、商家或者消费者根据具体商品的性能、规格、材质、使用寿命、外观等商品的内在价值设定一个可量化或定性的评价体系，由消费者对商品使用价值进行评价的过程。</p>
                         </div>
                       </div>
-                      <div class="review-item clearfix">
-                        <div class="review-item-submitted">
-                          <strong>李开复</strong>
-                          <em>2015/06/22 - 17:49</em>
-                          <div class="rateit" data-rateit-value="4.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
-                        </div>                                              
-                        <div class="review-item-content">
-                            <p>商品评价是指生产厂家、商家或者消费者根据具体商品的性能、规格、材质、使用寿命、外观等商品的内在价值设定一个可量化或定性的评价体系，由消费者对商品使用价值进行评价的过程。</p>
-                        </div>
-                      </div>
-                      <div class="review-item clearfix">
-                        <div class="review-item-submitted">
-                          <strong>陈欧</strong>
-                          <em>2015/06/22 - 17:49</em>
-                          <div class="rateit" data-rateit-value="4.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
-                        </div>                                              
-                        <div class="review-item-content">
-                            <p>商品评价是指生产厂家、商家或者消费者根据具体商品的性能、规格、材质、使用寿命、外观等商品的内在价值设定一个可量化或定性的评价体系，由消费者对商品使用价值进行评价的过程。</p>
-                        </div>
-                      </div>
-                      <div class="review-item clearfix">
-                        <div class="review-item-submitted">
-                          <strong>刘强东</strong>
-                          <em>2015/06/22 - 17:49</em>
-                          <div class="rateit" data-rateit-value="4.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
-                        </div>                                              
-                        <div class="review-item-content">
-                            <p>商品评价是指生产厂家、商家或者消费者根据具体商品的性能、规格、材质、使用寿命、外观等商品的内在价值设定一个可量化或定性的评价体系，由消费者对商品使用价值进行评价的过程。</p>
-                        </div>
-                      </div>
-                      <div class="review-item clearfix">
-                        <div class="review-item-submitted">
-                          <strong>雷军</strong>
-                          <em>2015/06/22 - 17:49</em>
-                          <div class="rateit" data-rateit-value="4.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
-                        </div>                                              
-                        <div class="review-item-content">
-                            <p>商品评价是指生产厂家、商家或者消费者根据具体商品的性能、规格、材质、使用寿命、外观等商品的内在价值设定一个可量化或定性的评价体系，由消费者对商品使用价值进行评价的过程。</p>
-                        </div>
-                      </div>
-                      <div class="review-item clearfix">
-                        <div class="review-item-submitted">
-                          <strong>史玉柱</strong>
-                          <em>2015/06/22 - 17:49</em>
-                          <div class="rateit" data-rateit-value="4.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
-                        </div>                                              
-                        <div class="review-item-content">
-                            <p>商品评价是指生产厂家、商家或者消费者根据具体商品的性能、规格、材质、使用寿命、外观等商品的内在价值设定一个可量化或定性的评价体系，由消费者对商品使用价值进行评价的过程。</p>
-                        </div>
-                      </div>
-                      <div class="review-item clearfix">
-                        <div class="review-item-submitted">
-                          <strong>马化腾</strong>
-                          <em>2015/06/22 - 22:49</em>
-                          <div class="rateit" data-rateit-value="4.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
-                        </div>                                              
-                        <div class="review-item-content">
-                            <p>商品评价是指生产厂家、商家或者消费者根据具体商品的性能、规格、材质、使用寿命、外观等商品的内在价值设定一个可量化或定性的评价体系，由消费者对商品使用价值进行评价的过程。</p>
-                        </div>
-                      </div>
 
-                     
                     </div>
                   </div>
                 </div>

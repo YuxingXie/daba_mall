@@ -232,7 +232,7 @@
  * In other words, if the CSS classes present on the animated element match any of the JavaScript animations then the callback function will
  * be executed. It should be also noted that only simple, single class selectors are allowed (compound class selectors are not supported).
  *
- * Within a JavaScript animation, an object containing various event callback animation functions is expected to be returned.
+ * Within a JavaScript animation, an object containing various event callback animation function is expected to be returned.
  * As explained above, these callbacks are triggered based on the animation event. Therefore if an enter animation is run,
  * and the JavaScript animation is found, then the enter callback will handle that animation (in addition to the CSS keyframe animation
  * or transition code that is defined via a stylesheet).
@@ -1479,7 +1479,7 @@ angular.module('ngAnimate', ['ng'])
           return;
         }
 
-        //There are two cancellation functions: one is before the first
+        //There are two cancellation function: one is before the first
         //reflow animation and the second is during the active state
         //animation. The first function will take care of removing the
         //data from the element which will not make the 2nd animation
@@ -1531,7 +1531,7 @@ angular.module('ngAnimate', ['ng'])
           var cancellationMethod = animateBefore('setClass', element, className, function(fn) {
             /* when classes are removed from an element then the transition style
              * that is applied is the transition defined on the element without the
-             * CSS class being there. This is how CSS3 functions outside of ngAnimate.
+             * CSS class being there. This is how CSS3 function outside of ngAnimate.
              * http://plnkr.co/edit/j8OzgTNxHTb4n3zLyjGW?p=preview */
             var klass = element.attr('class');
             element.removeClass(remove);
@@ -1557,7 +1557,7 @@ angular.module('ngAnimate', ['ng'])
 
             /* when a CSS class is added to an element then the transition style that
              * is applied is the transition defined on the element when the CSS class
-             * is added at the time of the animation. This is how CSS3 functions
+             * is added at the time of the animation. This is how CSS3 function
              * outside of ngAnimate. */
             element.addClass(className);
             var timings = fn();
@@ -1591,7 +1591,7 @@ angular.module('ngAnimate', ['ng'])
           var cancellationMethod = animateBefore('removeClass', element, suffixClasses(className, '-remove'), function(fn) {
             /* when classes are removed from an element then the transition style
              * that is applied is the transition defined on the element without the
-             * CSS class being there. This is how CSS3 functions outside of ngAnimate.
+             * CSS class being there. This is how CSS3 function outside of ngAnimate.
              * http://plnkr.co/edit/j8OzgTNxHTb4n3zLyjGW?p=preview */
             var klass = element.attr('class');
             element.removeClass(className);

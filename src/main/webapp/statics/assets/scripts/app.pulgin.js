@@ -37,7 +37,7 @@
             }
         }
 
-        // runs callback functions set by App.addResponsiveHandler().
+        // runs callback function set by App.addResponsiveHandler().
         var runResponsiveHandlers = function () {
             // reinitialize other subscribed elements
             for (var i in responsiveHandlers) {

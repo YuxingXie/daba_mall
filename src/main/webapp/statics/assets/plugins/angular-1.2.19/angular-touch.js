@@ -44,7 +44,7 @@ var ngTouch = angular.module('ngTouch', []);
      *
      * # Usage
      * The `$swipe` service is an object with a single method: `bind`. `bind` takes an element
-     * which is to be watched for swipes, and an object with four handler functions. See the
+     * which is to be watched for swipes, and an object with four handler function. See the
      * documentation for `bind` below.
      */
 

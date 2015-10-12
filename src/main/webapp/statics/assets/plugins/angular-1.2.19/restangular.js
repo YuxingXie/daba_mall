@@ -486,7 +486,7 @@ restangular.provider('Restangular', function() {
     };
 
 
-    //Internal values and functions
+    //Internal values and function
     config.urlCreatorFactory = {};
 
     /**
