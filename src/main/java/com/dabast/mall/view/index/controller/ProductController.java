@@ -50,6 +50,8 @@ public class ProductController extends BaseRestSpringController {
 
         ProductSeries productSeries=productSeriesService.findById(id);
         model.addAttribute("productSeries",productSeries);
+        List<ProductSeries> hotSells = ServiceManager.productSeriesService.getHotSell();
+        model.addAttribute("hotSells", hotSells);
         return "item";
     }
 

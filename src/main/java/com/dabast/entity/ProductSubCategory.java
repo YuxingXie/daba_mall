@@ -1,14 +1,19 @@
 package com.dabast.entity;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * Created by Administrator on 2015/10/12.
  */
 @Document(collection = "productSubCategory")
 public class ProductSubCategory {
+    @Id
     private String id;
+    @Field(value = "categoryId")
     private String categoryId;
+    @Field(value = "subCategoryName")
     private String subCategoryName;
 
     public String getId() {

@@ -8,6 +8,7 @@ import com.dabast.mall.model.productseries.service.IProductSubCategoryService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/10/12.
@@ -18,5 +19,10 @@ public class ProductSubCategoryService  extends BaseEntityManager<ProductSubCate
     private ProductSubCategoryDao productSubCategoryDao;
     protected EntityDao<ProductSubCategory> getEntityDao() {
         return this.productSubCategoryDao;
+    }
+
+    @Override
+    public List<ProductSubCategory> getProductSubCategoriesByCategoryId(String categoryId) {
+        return productSubCategoryDao.getProductSubCategoriesByCategoryId(categoryId);
     }
 }

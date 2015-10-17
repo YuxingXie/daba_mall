@@ -276,8 +276,8 @@
                         </div>
                         <div class="product-other-images">
                             <a href="#" class="active"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model3.jpg"></a>
-                            <a href="#"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model4.jpg"></a>
-                            <a href="#"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model5.jpg"></a>
+                            <a href="#"><img src="${path}/statics/assets/temp/products/model4.jpg"></a>
+                            <a href="#"><img src="${path}/statics/assets/temp/products/model5.jpg"></a>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-9">

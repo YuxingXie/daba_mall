@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <!DOCTYPE html>
@@ -27,7 +28,6 @@
     <link href="${path}/statics/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="${path}/statics/assets/plugins/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
 
-    <%--<script src="${path}/statics/assets/scripts/login.js"></script>--%>
     <!-- Page level plugin styles START -->
     <link href="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet">
     <link href="${path}/statics/assets/plugins/bxslider/jquery.bxslider.css" rel="stylesheet">
@@ -41,6 +41,7 @@
     <!-- Theme styles END -->
     <script> path="${path}";</script>
     <script type="text/javascript" src="${path}/statics/assets/plugins/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="${path}/statics/assets/plugins/angular-1.2.19/angular.min.js"></script>
     <sitemesh:write property='head'/>
     <title>大坝生态农业</title>
     <sitemesh:write property='title'/>
@@ -124,12 +125,14 @@
                                     <li>您的购物车中还没有商品</li>
                                 </c:when>
                                 <c:otherwise>
+                                    <c:set var="totalPrice" value="0"/>
                                     <c:forEach var="productSelected" items="${sessionScope.cart.productSelectedList}" varStatus="selectedIndex">
+                                        <c:set var="totalPrice" value="${totalPrice+productSelected.amount*productSelected.productSeries.commonPrice}"/>
                                         <li data-selected-index="${selectedIndex.index}">
-                                            <a href="item.html"><img src="${path}/${productSelected.productSeries.pictures[0]}" width="37" height="34"></a>
+                                            <a href="${path}/product/${productSelected.productSeriesId}"><img src="${path}/${productSelected.productSeries.pictures[0]}" width="37" height="34"></a>
                                             <span class="cart-content-count">x ${productSelected.amount}</span>
                                             <strong>
-                                                <a href="item.html">${productSelected.productSeries.name}</a>
+                                                <a href="${path}/product/${productSelected.productSeriesId}"> ${productSelected.productSeries.name}</a>
                                                 <c:forEach var="productPropertySelect" items="${productSelected.productPropertySelects}">
                                                 ${productPropertySelect.productProperty.propertyValues[productPropertySelect.selectIndex]}
                                                 </c:forEach>
@@ -143,8 +146,9 @@
 
                         </ul>
                         <div class="text-right">
+                            <p id="total-price">总计：￥<fmt:formatNumber value="${totalPrice}" pattern="##.##" minFractionDigits="2" ></fmt:formatNumber></p>
                             <a href="shopping-cart.html" class="btn btn-default">查看购物车</a>
-                            <a href="checkout.html" class="btn btn-primary">结账付款</a>
+                            <a href="${path}/cart" class="btn btn-primary">结账付款</a>
                         </div>
                     </div>
                 </div>
@@ -519,6 +523,7 @@
 <script type="text/javascript" src="${path}/statics/assets/plugins/jquery.md5.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/bootstrap/js/bootstrap.min.js" ></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/app.js"></script>
-<script type="text/javascript" src="${path}/statics/assets/plugins/angular-1.2.19/angular.min.js"></script>
+
 <script type="text/javascript" src="${path}/statics/assets/scripts/top.js"></script>
+<script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>
 </html>

@@ -3,7 +3,9 @@ package com.dabast.function;
 import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.entity.ProductCategory;
 import com.dabast.entity.ProductProperty;
+import com.dabast.entity.ProductSubCategory;
 import com.dabast.mall.model.productseries.service.IProductCategoryService;
+import com.dabast.mall.model.productseries.service.IProductSubCategoryService;
 import com.dabast.mall.model.productseries.service.impl.ProductPropertyService;
 
 import java.util.List;
@@ -26,5 +28,12 @@ public class ProductFunction {
     public static String getProductCategoryIdByProductSeriesId(String productSeriesId){
         IProductCategoryService productCategoryService=ProjectContext.getBean("productCategoryService");
         return productCategoryService.getProductCategoryIdByProductSeriesId(productSeriesId);
+    }
+
+    public static List<ProductSubCategory> getProductSubCategoriesByCategoryId(String categoryId){
+        if (categoryId==null) return null;
+        IProductSubCategoryService productSubCategoryService=ProjectContext.getBean("productSubCategoryService");
+        List<ProductSubCategory> list= productSubCategoryService.getProductSubCategoriesByCategoryId(categoryId);
+        return list;
     }
 }

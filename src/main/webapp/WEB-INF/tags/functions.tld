@@ -33,4 +33,10 @@
         <function-class>com.dabast.function.ProductFunction</function-class>
         <function-signature>java.lang.String getProductCategoryIdByProductSeriesId(java.lang.String)</function-signature>
     </function>
+
+    <function>
+        <name>getProductSubCategoriesByCategoryId</name>
+        <function-class>com.dabast.function.ProductFunction</function-class>
+        <function-signature>java.util.List getProductSubCategoriesByCategoryId(java.lang.String)</function-signature>
+    </function>
 </taglib>

@@ -162,7 +162,7 @@ public class IndexController extends BaseRestSpringController {
         ResponseEntity<Cart> cartResponseEntity=new ResponseEntity<Cart>(cart, HttpStatus.OK);
         return cartResponseEntity;
     }
-    @RequestMapping(value = "/index/cart/remove", method = RequestMethod.POST)
+    @RequestMapping(value = "/index/cart/remove", method = {RequestMethod.POST})
     public ResponseEntity<Cart> cartRemove(Integer selectedIndex, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         Cart cart=null;
         if (session.getAttribute(Constant.CART)==null){
@@ -177,6 +177,20 @@ public class IndexController extends BaseRestSpringController {
         ResponseEntity<Cart> cartResponseEntity=new ResponseEntity<Cart>(cart, HttpStatus.OK);
 
         return cartResponseEntity;
+    }
+    @RequestMapping(value = "/cart/remove/{selectedIndex}", method = RequestMethod.GET)
+    public String cartRemove2(@PathVariable Integer selectedIndex, ModelMap model, HttpSession session) {
+        Cart cart=null;
+        if (session.getAttribute(Constant.CART)==null){
+            cart=new Cart();
+        }else{
+            cart=(Cart)session.getAttribute(Constant.CART);
+        }
+        if (cart.getProductSelectedList()!=null &&cart.getProductSelectedList().size()>selectedIndex){
+            cart.getProductSelectedList().remove(selectedIndex.intValue());
+        }
+        session.setAttribute(Constant.CART, cart);
+        return "cart";
     }
     @RequestMapping(value = "/index/user/login", method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody UserLoginForm form, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
