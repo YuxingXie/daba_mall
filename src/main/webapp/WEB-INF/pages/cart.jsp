@@ -150,10 +150,11 @@
                                             </tr>
                                         </c:forEach>
                                         <tr>
-                                            <td colspan="5">
+                                            <td colspan="4">
                                                 总计：{{<c:forEach var="productSelected" items="${sessionScope.cart.productSelectedList}" varStatus="selectedIndex">amount_${selectedIndex.index}+</c:forEach>0}}件商品,共
                                                 {{<c:forEach var="productSelected" items="${sessionScope.cart.productSelectedList}" varStatus="selectedIndex">amount_${selectedIndex.index}*${productSelected.productSeries.commonPrice}+</c:forEach>0 | number:2}}元
                                             </td>
+                                            <td><button type="submit" class="btn btn-primary col-lg-8" ng-disabled="signupForm.$invalid">去结算</button></td>
                                         </tr>
                                     </c:otherwise>
                                 </c:choose>
