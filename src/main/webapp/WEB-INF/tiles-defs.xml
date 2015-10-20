@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <definition name="baseDefinition" template="/WEB-INF/pages/layout/layout.jsp">
+        <put-attribute name="footer" value="/WEB-INF/pages/layout/footer.jsp" />
+        <put-attribute name="meta" value="/WEB-INF/pages/layout/meta.jsp" />
+        <put-attribute name="topCss" value="/WEB-INF/pages/layout/topCss.jsp" />
+        <put-attribute name="topScript" value="/WEB-INF/pages/layout/topScript.jsp" />
+        <put-attribute name="bottomScript" value="/WEB-INF/pages/layout/bottomScript.jsp" />
+
+    </definition>
+    <definition name="*" extends="baseDefinition">
+        <put-attribute name="body" value="/WEB-INF/pages/{1}/{1}.jsp"/>
+        <put-attribute name="pageTopCss" value="/WEB-INF/pages/{1}/topCss.jsp" />
+        <put-attribute name="pageTopScript" value="/WEB-INF/pages/{1}/topScript.jsp" />
+        <put-attribute name="pageBottomScript" value="/WEB-INF/pages/{1}/bottomScript.jsp" />
+    </definition>
+</tiles-definitions>

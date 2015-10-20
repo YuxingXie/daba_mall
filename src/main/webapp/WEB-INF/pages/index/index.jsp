@@ -6,11 +6,7 @@
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
-<!DOCTYPE html>
-<html lang="en" >
-<head>
-</head>
-<body >
+
 <div class="page-slider margin-bottom-35">
     <!--LayerSlider begin-->
     <div id="layerslider" style="width: 100%; height: 494px; margin: 0 auto;">
@@ -123,7 +119,7 @@
                                             <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
                                         </div>
                                     </div>
-                                    <h3><a href="item.html">${prod.name}</a></h3>
+                                    <h3><a href="../item.html">${prod.name}</a></h3>
                                     <div class="pi-price">￥${prod.commonPrice}</div>
                                     <a href="#" data-href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
                                         <%--新品--%>
@@ -157,7 +153,7 @@
                                             <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
                                         </div>
                                     </div>
-                                    <h3><a href="item.html">${prod.name}</a></h3>
+                                    <h3><a href="../item.html">${prod.name}</a></h3>
                                     <div class="pi-price">￥${prod.commonPrice}</div>
                                     <a href="#" data-id="${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
 
@@ -189,7 +185,7 @@
                                             <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
                                         </div>
                                     </div>
-                                    <h3><a href="item.html">${prod.name}</a></h3>
+                                    <h3><a href="../item.html">${prod.name}</a></h3>
                                     <div class="pi-price">￥${prod.commonPrice}</div>
                                     <a href="#" data-href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
 
@@ -221,7 +217,7 @@
                                             <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
                                         </div>
                                     </div>
-                                    <h3><a href="item.html">${prod.name}</a></h3>
+                                    <h3><a href="../item.html">${prod.name}</a></h3>
                                     <div class="pi-price">￥${prod.commonPrice}</div>
                                     <a href="#" data-href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
 
@@ -252,7 +248,7 @@
                                             <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
                                         </div>
                                     </div>
-                                    <h3><a href="item.html">${prod.name}</a></h3>
+                                    <h3><a href="../item.html">${prod.name}</a></h3>
                                     <div class="pi-price">￥${prod.commonPrice}</div>
                                     <button href="#" data-href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</button>
                                     <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
@@ -310,45 +306,4 @@
         </div>
     </div>
 </div>
-</body>
-<!--[if lt IE 9]>
-<script src="${path}/statics/assets/plugins/respond.min.js"></script>
-<![endif]-->
-<script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 
-<script type="text/javascript" src="${path}/statics/assets/plugins/back-to-top.js"></script>
-<script type="text/javascript" src="${path}/statics/assets/plugins/jQuery-slimScroll/jquery.slimscroll.min.js"></script>
-<!-- END CORE PLUGINS -->
-
-<!-- BEGIN PAGE LEVEL JAVASCRIPTS (REQUIRED ONLY FOR CURRENT PAGE) -->
-<script type="text/javascript" src="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.js"></script>
-<!-- pop up -->
-<script type="text/javascript" src="${path}/statics/assets/plugins/bxslider/jquery.bxslider.min.js"></script>
-<!-- slider for products -->
-<script type="text/javascript" src='${path}/statics/assets/plugins/zoom/jquery.zoom.min.js'></script>
-<!-- product zoom -->
-<script src="${path}/statics/assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script>
-<!-- Quantity -->
-
-<!-- BEGIN LayerSlider -->
-<script src="${path}/statics/assets/plugins/layerslider/jQuery/jquery-easing-1.3.js" type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/layerslider/jQuery/jquery-transit-modified.js"
-        type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/layerslider/js/layerslider.transitions.js" type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js"
-        type="text/javascript"></script>
-
-<script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
-<script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
-<script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>
-<script>
-    $(document).ready(function(){
-        App.init();
-        App.initBxSlider();
-        Index.initLayerSlider();
-        App.initImageZoom();
-        App.initTouchspin();
-
-    });
-</script>
-</html>
