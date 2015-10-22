@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><c:set var="path" value="<%=request.getContextPath() %>"/><c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="<%=request.getContextPath() %>"/><c:if test="${path eq '/'}"><c:set var="path"
+                                                                                             value=""/></c:if>
 <!--[if lt IE 9]>
 <script src="${path}/statics/assets/plugins/respond.min.js"></script>
 <![endif]-->
@@ -26,3 +28,18 @@
 
 <script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
+<script type="text/javascript">
+    $("#toBill").click(function () {
+        var isLogin = false;
+        $.ajax({
+            url: path + "/index/login_user",
+            success: function (data) {
+                if (!data.id) {
+                    console.log("user not log in");
+                    $("#myModal").modal().show();
+                }
+            }
+        });
+
+    });
+</script>

@@ -98,7 +98,8 @@
                                                     总计：{{<c:forEach var="productSelected" items="${sessionScope.cart.productSelectedList}" varStatus="selectedIndex">amount_${selectedIndex.index}+</c:forEach>0}}件商品,共
                                                     {{<c:forEach var="productSelected" items="${sessionScope.cart.productSelectedList}" varStatus="selectedIndex">amount_${selectedIndex.index}*${productSelected.productSeries.commonPrice}+</c:forEach>0 | number:2}}元
                                                 </td>
-                                                <td><button href="#" class="btn btn-primary col-lg-8" data-toggle="modal" data-target="#myModal">去结算</button></td>
+                                                <%--<td><button href="#" class="btn btn-primary col-lg-8" data-toggle="modal" data-target="#myModal">去结算</button></td>--%>
+                                                <td><button href="#" class="btn btn-primary col-lg-8" id="toBill">去结算</button></td>
                                             </tr>
                                         </c:otherwise>
                                     </c:choose>

@@ -6,7 +6,6 @@ import com.mongodb.*;
 import com.mongodb.gridfs.GridFS;
 import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSInputFile;
-import com.mongodb.util.JSON;
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
@@ -16,7 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapping.*;
-import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.query.*;
 import org.springframework.util.Assert;
 
@@ -111,19 +109,23 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         DB db=mongoTemplate.getDb();
         DBCollection collection=db.getCollection(getCollectionName());
         DBCursor cur = collection.find();
-        BasicDBList basicDBList=new BasicDBList();
+//        BasicDBList basicDBList=new BasicDBList();
+        List<E> list=new ArrayList<E>();
         while (cur.hasNext()) {
-//            System.out.println(cur.next().get("_id"));
-            basicDBList.add(cur.next());
+            DBObject object=cur.next();
+            System.out.println(object.get("_id"));
+//            basicDBList.add(cur.next());
+            list.add(dbObject2EntityBean(object));
         }
 //        System.out.println(cur.count());
 //        System.out.println(cur.getCursorId());
 //        System.out.println(basicDBList.size());
-       for (Object object:basicDBList){
-//           System.out.println(object);
-       }
+//       for (Object dbObject:basicDBList){
+//           System.out.println(dbObject);
+//       }
 //        System.out.println(JSON.serialize(cur));
-        return mongoTemplate.findAll(collectionClass);
+//        return mongoTemplate.findAll(collectionClass);
+        return list;
     }
 
     public E findById(ObjectId id) {
@@ -263,7 +265,8 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     private DBCollection getDBCollection(){
         return mongoTemplate.getDb().getCollection(getCollectionName());
     }
-    private E dbObject2EntityBean(DBObject object) {
+    private E dbObject2EntityBean(DBObject dbObject) {
+        //TODO
         E e=null;
         try {
             e=collectionClass.newInstance();
@@ -276,7 +279,11 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
             if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)) continue;
             String setterMethodName=ReflectUtil.getSetterMethodName(field.getName());
             Class fieldType=field.getType();
-            Object fieldValue=object.get(field.getName());
+            //基本数据类型可以这样做，如果是复杂数据类型呢?
+            Object fieldValue= dbObject.get(field.getName());
+            if (fieldType.isPrimitive()||ReflectUtil.isWrapClass(fieldType)||fieldType==String.class){
+
+            }
             try {
                 Method setter= collectionClass.getDeclaredMethod(setterMethodName, fieldType);
                 setter.invoke(e,fieldValue);

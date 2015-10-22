@@ -5,6 +5,7 @@ import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.common.util.MD5;
 import com.dabast.common.web.CookieTool;
 import com.dabast.entity.*;
+import com.dabast.entity.*;
 import com.dabast.mall.Constant;
 import com.dabast.mall.form.UserLoginForm;
 import com.dabast.mall.model.productseries.dao.UserDao;
@@ -133,6 +134,7 @@ public class IndexController extends BaseRestSpringController {
     }
     @RequestMapping(value = "/index/cart", method = RequestMethod.POST)
     public ResponseEntity<Cart> login(@RequestBody ProductSelected productSelected, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        //TODO
         Cart cart=null;
        if (session.getAttribute(Constant.CART)==null){
            cart=new Cart();
@@ -142,14 +144,14 @@ public class IndexController extends BaseRestSpringController {
         ProductSeries productSeries=ServiceManager.productSeriesService.findById(productSelected.getProductSeriesId());
         productSelected.setProductSeries(productSeries);
 
-        List<ProductPropertySelect> productPropertySelectList=new ArrayList<ProductPropertySelect>();
-       for(ProductPropertySelect productPropertySelect: productSelected.getProductPropertySelects()){
-           ProductProperty productProperty=ServiceManager.productPropertyService.findById(productPropertySelect.getProductPropertyId());
-           productPropertySelect.setProductProperty(productProperty);
-           productPropertySelectList.add(productPropertySelect);
-       }
-        productSelected.setProductPropertySelects((ProductPropertySelect[])productPropertySelectList.toArray(new ProductPropertySelect[productPropertySelectList.size()]));
-        cart.merge(productSelected);
+//        List<ProductPropertySelect> productPropertySelectList=new ArrayList<ProductPropertySelect>();
+//       for(ProductPropertySelect productPropertySelect: productSelected.getProductPropertySelects()){
+//           ProductProperty productProperty=ServiceManager.productPropertyService.findById(productPropertySelect.getProductPropertyId());
+//           productPropertySelect.setProductProperty(productProperty);
+//           productPropertySelectList.add(productPropertySelect);
+//       }
+//        productSelected.setProductPropertySelects((ProductPropertySelect[])productPropertySelectList.toArray(new ProductPropertySelect[productPropertySelectList.size()]));
+//        cart.merge(productSelected);
 //        if (session.getAttribute(Constant.LOGIN_USER)!=null){
 //            User user=(User)session.getAttribute(Constant.LOGIN_USER);
 //            Cart queryCart=new Cart();
@@ -244,7 +246,11 @@ public class IndexController extends BaseRestSpringController {
 //        System.out.println("清除cookie password");
         return new ResponseEntity("{}", HttpStatus.OK);
     }
-
+    @RequestMapping(value = "/index/login_user")
+    public ResponseEntity loginUser(ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
+        return new ResponseEntity<User>(user,HttpStatus.OK);
+    }
 
     public static void main(String[] args) {
         String jsonStr = "[{id:100,name:'Johnson'},{id:101,name:'Jackson'}]";

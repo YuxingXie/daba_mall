@@ -56,10 +56,8 @@ $(document).ready(function(){
             productPropertySelects.push(productPropertySelect);
         });
         data.productPropertySelects=productPropertySelects;
-        //console.log(JSON.stringify(data));
-
+        console.log(JSON.stringify(data));
         $.ajax({
-
             url: path+"/index/cart",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -90,6 +88,7 @@ $(document).ready(function(){
     });
     $(".fancybox-fast-view").click(function(){
         var prod=$(this).data("prod");
+        console.log(prod)
         $.ajax(path+"/product_series/popover/"+prod).done(function(data){
             $("#product-pop-up .product-main-image>img").attr("src",path+"/"+data.pictures[0]);
             $("#product-pop-up h1").text(data.name);

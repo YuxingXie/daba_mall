@@ -2,7 +2,6 @@ package com.dabast.entity;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -56,14 +55,16 @@ public class ProductSeries {
         return false;
     }
 
-    private ProductProperty[] productProperties;
-    public ProductProperty[] getProductProperties() {
+    private List<ProductProperty> productProperties;
+
+    public List<ProductProperty> getProductProperties() {
         return productProperties;
     }
 
-    public void setProductProperties(ProductProperty[] productProperties) {
+    public void setProductProperties(List<ProductProperty> productProperties) {
         this.productProperties = productProperties;
     }
+
     public String getId() {
         return id;
     }

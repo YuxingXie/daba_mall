@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2015/6/4.
  */
@@ -15,8 +17,15 @@ public class ProductProperty {
     private String propertyName;
     @Field(value = "productSeries")
     private String productSeriesId;
-    @Field(value = "values")
-    private Object[] propertyValues;
+    private List<ProductPropertyValue> propertyValues;
+    public List<ProductPropertyValue> getPropertyValues() {
+        return propertyValues;
+    }
+
+    public void setPropertyValues(List<ProductPropertyValue> propertyValues) {
+        this.propertyValues = propertyValues;
+    }
+
     public String getId() {
         return id;
     }
@@ -31,14 +40,6 @@ public class ProductProperty {
 
     public void setPropertyName(String propertyName) {
         this.propertyName = propertyName;
-    }
-
-    public Object[] getPropertyValues() {
-        return propertyValues;
-    }
-
-    public void setPropertyValues(Object[] propertyValues) {
-        this.propertyValues = propertyValues;
     }
 
     public String getProductSeriesId() {

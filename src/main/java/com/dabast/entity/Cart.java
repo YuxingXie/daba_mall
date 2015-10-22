@@ -17,10 +17,7 @@ public class Cart {
     @Field(value = "userId")
     private String userId;
 
-    @Field(value = "productSelectedList")
     private List<ProductSelected> productSelectedList;
-    @Field(value = "productSelectedIds")
-    private String[] productSelectedIds;
 
     public String getId() {
         return id;
@@ -47,21 +44,21 @@ public class Cart {
     }
 
     public void merge(ProductSelected anotherProductSelected){
-        List<ProductSelected> selectedList=this.getProductSelectedList();
-        if (selectedList==null){
-            selectedList=new ArrayList<ProductSelected>();
-            selectedList.add(anotherProductSelected);
-            this.setProductSelectedList(selectedList);
+        List<ProductSelected> productSelectedList=this.getProductSelectedList();
+        if (productSelectedList==null){
+            productSelectedList=new ArrayList<ProductSelected>();
+            productSelectedList.add(anotherProductSelected);
+            this.setProductSelectedList(productSelectedList);
             return;
         }
-        for (ProductSelected productSelected: this.getProductSelectedList()){
-            if (productSelected.equals(anotherProductSelected)){
-                productSelected.setAmount(productSelected.getAmount()+anotherProductSelected.getAmount());
+        for (ProductSelected thisProductSelected : this.getProductSelectedList()){
+            if (thisProductSelected.equals(anotherProductSelected)){
+                thisProductSelected.setAmount(thisProductSelected.getAmount()+anotherProductSelected.getAmount());
                 return;
             }
         }
-        selectedList.add(anotherProductSelected);
-        setProductSelectedList(selectedList);
+        productSelectedList.add(anotherProductSelected);
+        setProductSelectedList(productSelectedList);
     }
 
     private User user;
@@ -74,11 +71,5 @@ public class Cart {
         this.user = user;
     }
 
-    public String[] getProductSelectedIds() {
-        return productSelectedIds;
-    }
 
-    public void setProductSelectedIds(String[] productSelectedIds) {
-        this.productSelectedIds = productSelectedIds;
-    }
 }

@@ -1,14 +1,7 @@
 package com.dabast.mall.listener;
 
-import com.dabast.common.helper.service.ServiceManager;
-import com.dabast.entity.Cart;
-import com.dabast.mall.Constant;
-
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
-import javax.servlet.http.HttpSessionEvent;
-import javax.servlet.http.HttpSessionListener;
 
 /**
  * Created by Administrator on 2015/7/29.

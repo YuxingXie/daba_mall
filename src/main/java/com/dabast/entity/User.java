@@ -1,15 +1,13 @@
 package com.dabast.entity;
 
-import org.bson.types.ObjectId;
+import com.dabast.entity.Cart;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Date;
-import java.util.Set;
 
 /**
  * Created by Administrator on 2015/5/22.

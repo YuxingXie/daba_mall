@@ -13,6 +13,13 @@ public class ReflectUtil {
         }
         return false;
     }
+    public static boolean isWrapClass(Class clz) {
+        try {
+            return ((Class) clz.getField("TYPE").get(null)).isPrimitive();
+        } catch (Exception e) {
+            return false;
+        }
+    }
     public static String getGetterMethodName(String fieldName) {
         return "get" + firstUpperCase(fieldName);
     }
@@ -87,5 +94,13 @@ public class ReflectUtil {
         } catch (IllegalAccessException e1) {
             e1.printStackTrace();
         }
+    }
+    public static void main(String[] args){
+        System.out.println(isWrapClass(String.class));//false
+        System.out.println(isWrapClass(Integer.class));//true
+        System.out.println(isWrapClass(int.class));//false
+        System.out.println(int.class==Integer.class);//false
+        System.out.println(int.class.isPrimitive());//true
+        System.out.println(Integer.class.isPrimitive());//false
     }
 }

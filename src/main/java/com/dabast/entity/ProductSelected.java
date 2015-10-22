@@ -1,44 +1,23 @@
 package com.dabast.entity;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.util.Assert;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by Administrator on 2015/7/3.
  */
-@Document(collection = "productSelected")
+
+/**
+ * 这不是一个持久化了，是一个持久化中间类(作为Cart的一个field)
+ */
 public class ProductSelected {
-    @Id
-    private String id;
-    @Field(value = "productSeriesId")
-//    @DBRef(db = "productSeries")
     private String productSeriesId;
-    @Field(value = "productPropertySelects")
-    private ProductPropertySelect[] productPropertySelects;
-    @Field(value = "amount")
+
     private Integer amount;
 
-    public String getId() {
-        return id;
-    }
+    private List<String> productPropertyValueIds;
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public ProductPropertySelect[] getProductPropertySelects() {
-        return productPropertySelects;
-    }
-
-    public void setProductPropertySelects(ProductPropertySelect[] productPropertySelects) {
-        this.productPropertySelects = productPropertySelects;
-    }
 
     public String getProductSeriesId() {
         return productSeriesId;
@@ -56,35 +35,46 @@ public class ProductSelected {
         this.amount = amount;
     }
 
+    public List<String> getProductPropertyValueIds() {
+        return productPropertyValueIds;
+    }
+
+    public void setProductPropertyValueIds(List<String> productPropertyValueIds) {
+        this.productPropertyValueIds = productPropertyValueIds;
+    }
+
     private ProductSeries productSeries;
+
     public ProductSeries getProductSeries() {
         return productSeries;
     }
+
     public void setProductSeries(ProductSeries productSeries) {
         this.productSeries = productSeries;
     }
+
     @Override
     public boolean equals(Object obj) {
         Assert.notNull(obj);
-        if(this == obj) return true;
-        if(obj == null)  return false;
-        if(getClass() != obj.getClass() ) return false;
-        ProductSelected other = (ProductSelected)obj;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        ProductSelected other = (ProductSelected) obj;
         Assert.notNull(this.productSeriesId);
         Assert.notNull(other.productSeriesId);
         if (!this.productSeriesId.equalsIgnoreCase(other.productSeriesId)) return false;
-        if (other.getProductPropertySelects()==null && this.getProductPropertySelects()==null) return true;
-        if (other.getProductPropertySelects()==null && this.getProductPropertySelects()!=null) return false;
-        if (other.getProductPropertySelects()!=null && this.getProductPropertySelects()==null) return false;
-        if (other.getProductPropertySelects().length!=this.getProductPropertySelects().length) return false;
-        for (ProductPropertySelect thisProductPropertySelect:this.getProductPropertySelects()){
-            for (ProductPropertySelect otherProductPropertySelect:other.getProductPropertySelects()){
-                if (thisProductPropertySelect.getProductPropertyId().equalsIgnoreCase(otherProductPropertySelect.getProductPropertyId())){
-                    if (thisProductPropertySelect.getSelectIndex()!=otherProductPropertySelect.getSelectIndex()){
-                        return false;
-                    }
+        if (other.getProductPropertyValueIds() == null && this.getProductPropertyValueIds() == null) return true;
+        if (other.getProductPropertyValueIds() == null && this.getProductPropertyValueIds() != null) return false;
+        if (other.getProductPropertyValueIds() != null && this.getProductPropertyValueIds() == null) return false;
+        if (other.getProductPropertyValueIds().size() != this.getProductPropertyValueIds().size()) return false;
+        for (String productPropertyValueId : this.getProductPropertyValueIds()) {
+            boolean equals=false;
+            for (String otherProductPropertyValueId : other.getProductPropertyValueIds()) {
+                if (productPropertyValueId.equalsIgnoreCase(otherProductPropertyValueId)) {
+                    equals=true;
                 }
             }
+            if (!equals) return false;
         }
         return true;
     }

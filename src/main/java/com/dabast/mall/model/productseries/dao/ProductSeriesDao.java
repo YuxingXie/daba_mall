@@ -4,7 +4,6 @@ import com.dabast.common.base.BaseMongoDao;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.ProductProperty;
 import com.dabast.entity.ProductSeries;
-import com.dabast.vo.ProductSeriesVo;
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -41,19 +40,14 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         return productSeriesList;
     }
 
-    public ProductSeriesVo findProductSeriesById(ObjectId objectId) {
+    public ProductSeries findProductSeriesById(ObjectId objectId) {
+
         ProductSeries productSeries=findById(objectId);
         ProductProperty queryEntity=new ProductProperty();
         queryEntity.setProductSeriesId(objectId.toString());
         List<ProductProperty> productProperties= ServiceManager.productPropertyService.findEquals(queryEntity);
-//        for(ProductProperty productProperty:productProperties){
-//            productProperty.getId();
-//        }
-//        productSeries.setProductProperties(productProperties);
-        ProductSeriesVo productSeriesVo=new ProductSeriesVo();
-        BeanUtils.copyProperties(productSeries,productSeriesVo);
-        productSeriesVo.setProductProperties((ProductProperty[])productProperties.toArray(new ProductProperty[productProperties.size()]));
-        return productSeriesVo;
+        productSeries.setProductProperties(productProperties);
+        return productSeries;
     }
 
     public Page<ProductSeries> findProductSeriesesByKeyWord(String keyWord,int currentPage) {
