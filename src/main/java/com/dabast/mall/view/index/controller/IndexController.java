@@ -5,12 +5,13 @@ import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.common.util.MD5;
 import com.dabast.common.web.CookieTool;
 import com.dabast.entity.*;
-import com.dabast.entity.*;
 import com.dabast.mall.Constant;
 import com.dabast.mall.form.UserLoginForm;
 import com.dabast.mall.model.productseries.dao.UserDao;
 import com.dabast.mall.model.productseries.service.impl.CartService;
 import com.dabast.mall.view.index.service.impl.RegisterValidateService;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,7 +63,10 @@ public class IndexController extends BaseRestSpringController {
                 session.setAttribute("loginUser", user);
                 Cart condition=new Cart();
                 condition.setUserId(user.getId());
-                Cart cart=cartService.findOne(condition);
+                DBObject dbCondition=new BasicDBObject();
+                dbCondition.put("userId",user.getId());
+//                Cart cart=cartService.findOne(condition);
+                Cart cart=cartService.findOne(dbCondition);
                 if (cart!=null){
                     session.setAttribute(Constant.CART,cart);
                 }
@@ -144,14 +148,21 @@ public class IndexController extends BaseRestSpringController {
         ProductSeries productSeries=ServiceManager.productSeriesService.findById(productSelected.getProductSeriesId());
         productSelected.setProductSeries(productSeries);
 
-//        List<ProductPropertySelect> productPropertySelectList=new ArrayList<ProductPropertySelect>();
-//       for(ProductPropertySelect productPropertySelect: productSelected.getProductPropertySelects()){
-//           ProductProperty productProperty=ServiceManager.productPropertyService.findById(productPropertySelect.getProductPropertyId());
-//           productPropertySelect.setProductProperty(productProperty);
-//           productPropertySelectList.add(productPropertySelect);
-//       }
-//        productSelected.setProductPropertySelects((ProductPropertySelect[])productPropertySelectList.toArray(new ProductPropertySelect[productPropertySelectList.size()]));
-//        cart.merge(productSelected);
+        List<ProductPropertyValue> productPropertyValueList=new ArrayList<ProductPropertyValue>();
+       for(String productPropertyValueId : productSelected.getProductPropertyValueIds()){
+           DBObject ppCon=new BasicDBObject();
+           ProductPropertyValue value=ServiceManager.productPropertyValueService.findById(productPropertyValueId);
+           ppCon.put("_id",value.getProductPropertyId());
+           ProductProperty productProperty=ServiceManager.productPropertyService.findOne(ppCon);
+           value.setProductProperty(productProperty);
+           productPropertyValueList.add(value);
+
+//           productPropertyValueId.setProductProperty(productProperty);
+//           ProductPropertyValueList.add(productPropertyValueId);
+       }
+//        productSelected.((ProductPropertySelect[])ProductPropertyValueList.toArray(new ProductPropertySelect[ProductPropertyValueList.size()]));
+        productSelected.setProductPropertyValueList(productPropertyValueList);
+        cart.merge(productSelected);
 //        if (session.getAttribute(Constant.LOGIN_USER)!=null){
 //            User user=(User)session.getAttribute(Constant.LOGIN_USER);
 //            Cart queryCart=new Cart();
@@ -160,6 +171,7 @@ public class IndexController extends BaseRestSpringController {
 //        }
         session.setAttribute(Constant.CART, cart);
         ResponseEntity<Cart> cartResponseEntity=new ResponseEntity<Cart>(cart, HttpStatus.OK);
+        System.out.println("executed");
         return cartResponseEntity;
     }
     @RequestMapping(value = "/index/cart/remove", method = {RequestMethod.POST})

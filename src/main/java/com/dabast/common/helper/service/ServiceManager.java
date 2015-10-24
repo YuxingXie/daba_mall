@@ -1,8 +1,5 @@
 package com.dabast.common.helper.service;
-import com.dabast.mall.model.productseries.service.ICartService;
-import com.dabast.mall.model.productseries.service.IProductPropertyService;
-import com.dabast.mall.model.productseries.service.IProductSeriesService;
-import com.dabast.mall.model.productseries.service.IProductSubCategoryService;
+import com.dabast.mall.model.productseries.service.*;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 @Component
@@ -13,6 +10,7 @@ public class ServiceManager implements InitializingBean{
     public static IProductPropertyService productPropertyService;
     public static ICartService cartService;
     public static IProductSubCategoryService productSubCategoryService;
+    public static IProductPropertyValueService productPropertyValueService;
 
 
     public static void setInited(boolean inited) {
@@ -37,5 +35,9 @@ public class ServiceManager implements InitializingBean{
 
     public void setProductSubCategoryService(IProductSubCategoryService productSubCategoryService) {
         ServiceManager.productSubCategoryService = productSubCategoryService;
+    }
+
+    public void setProductPropertyValueService(IProductPropertyValueService productPropertyValueService) {
+        ServiceManager.productPropertyValueService = productPropertyValueService;
     }
 }

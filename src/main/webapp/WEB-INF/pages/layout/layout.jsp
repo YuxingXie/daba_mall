@@ -102,8 +102,8 @@
                                             <span class="cart-content-count">x ${productSelected.amount}</span>
                                             <strong>
                                                 <a href="${path}/product/${productSelected.productSeriesId}"> ${productSelected.productSeries.name}</a>
-                                                <c:forEach var="productPropertySelect" items="${productSelected.productPropertySelects}">
-                                                ${productPropertySelect.productProperty.propertyValues[productPropertySelect.selectIndex]}
+                                                <c:forEach var="productPropertyValue" items="${productSelected.productPropertyValueList}">
+                                                ${productPropertyValue.value}
                                                 </c:forEach>
                                             </strong>
                                             <em>￥${productSelected.productSeries.commonPrice}</em>

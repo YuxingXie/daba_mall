@@ -1,6 +1,6 @@
 package com.dabast.common.base;
 
-import com.dabast.common.util.MongoDocumentUtil;
+import com.dabast.common.util.MongoDbUtil;
 import com.dabast.common.util.ReflectUtil;
 import com.mongodb.*;
 import com.mongodb.gridfs.GridFS;
@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapping.*;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.query.*;
 import org.springframework.util.Assert;
 
@@ -47,27 +48,28 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     public MongoTemplate getMongoTemplate() {
         return mongoTemplate;
     }
-    public String saveFile(String fileName,byte[] file){
-        GridFS fs=new GridFS(mongoTemplate.getDb());
-        GridFSInputFile fsInputFile=fs.createFile(file);
-        fsInputFile.put("uploadDate",new Date());
-        fsInputFile.put("filename",fileName);
+
+    public String saveFile(String fileName, byte[] file) {
+        GridFS fs = new GridFS(mongoTemplate.getDb());
+        GridFSInputFile fsInputFile = fs.createFile(file);
+        fsInputFile.put("uploadDate", new Date());
+        fsInputFile.put("filename", fileName);
         fsInputFile.save();
-        return  fsInputFile.get("_id")==null?null :fsInputFile.get("_id").toString();
+        return fsInputFile.get("_id") == null ? null : fsInputFile.get("_id").toString();
     }
-    public int upsert(E queryEntity,E updateEntity){
-        Query query=getEqualsQuery(queryEntity);
-        System.out.println("update:"+getEqualsQuery(updateEntity).toString());
-        List<E> list=mongoTemplate.find(query,collectionClass);
-        Assert.isTrue(list==null ||list.size()<=1);
-        if (list==null||list.size()==0) {
+
+    public int upsert(E queryEntity, E updateEntity) {
+        Query query = getEqualsQuery(queryEntity);
+        System.out.println("update:" + getEqualsQuery(updateEntity).toString());
+        List<E> list = mongoTemplate.find(query, collectionClass);
+        Assert.isTrue(list == null || list.size() <= 1);
+        if (list == null || list.size() == 0) {
             mongoTemplate.insert(updateEntity);
             return 1;
-        }
-        else{
-            E e=list.get(0);
-            BeanUtils.copyProperties(updateEntity,e);
-           return mongoTemplate.updateFirst(query, getUpdateFromEntity(updateEntity), collectionClass).getN();
+        } else {
+            E e = list.get(0);
+            BeanUtils.copyProperties(updateEntity, e);
+            return mongoTemplate.updateFirst(query, getUpdateFromEntity(updateEntity), collectionClass).getN();
 
         }
 
@@ -75,47 +77,88 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 //        return  mongoTemplate.upsert(query,update,collectionClass).getN();
     }
 
-    public GridFSDBFile findFileById(String id){
-        GridFS fs=new GridFS(mongoTemplate.getDb());
-       GridFSDBFile file=fs.find(new ObjectId(id));
+    public GridFSDBFile findFileById(String id) {
+        GridFS fs = new GridFS(mongoTemplate.getDb());
+        GridFSDBFile file = fs.find(new ObjectId(id));
         return file;
     }
+
     @Override
     public E insert(E e) {
 //        System.out.println("invoke insert method......");
         mongoTemplate.insert(e);
-        return  e;
+        return e;
     }
+
     @Override
-    public E findById(String id){
-        if (id==null) return null;
+    public E findById(String id) {
+        if (id == null) return null;
         return findById(new ObjectId(id));
     }
+
     @Override
     public List<E> findEquals(E e) {
         Query query = getEqualsQuery(e);
-        if(!collectionExists()) return null;
+        if (!collectionExists()) return null;
         if (query == null) return findAll();
         return mongoTemplate.find(query, collectionClass);
     }
+
     @Override
-    public List<E> textQuery(String  keyWord) {
-        Query textQuery=new TextQuery(keyWord);
+    public List<E> textQuery(String keyWord) {
+        Query textQuery = new TextQuery(keyWord);
         return mongoTemplate.findAll(collectionClass);
 //        return mongoTemplate.find(textQuery,collectionClass);
     }
 
-    public List<E> findAll() {
-        DB db=mongoTemplate.getDb();
-        DBCollection collection=db.getCollection(getCollectionName());
-        DBCursor cur = collection.find();
-//        BasicDBList basicDBList=new BasicDBList();
-        List<E> list=new ArrayList<E>();
+    @Override
+    public E findOne(DBObject queryCondition){
+        DB db = mongoTemplate.getDb();
+        DBCollection collection = db.getCollection(getCollectionName());
+        DBObject dbObject=collection.findOne(queryCondition);
+        E e = null;
+        try {
+            e = collectionClass.newInstance();
+            e=MongoDbUtil.dbObject2Bean(dbObject,e);
+        } catch (InstantiationException e1) {
+            e1.printStackTrace();
+        } catch (IllegalAccessException e1) {
+            e1.printStackTrace();
+        } catch (NoSuchMethodException e1) {
+            e1.printStackTrace();
+        } catch (InvocationTargetException e1) {
+            e1.printStackTrace();
+        }
+        return e;
+    }
+    public List<E> findAll(DBObject condition){
+        DB db = mongoTemplate.getDb();
+        DBCollection collection = db.getCollection(getCollectionName());
+        DBCursor cur =null;
+        if (condition==null){
+            cur = collection.find();
+        }else {
+            cur=collection.find(condition);
+        }
+        List<E> list = new ArrayList<E>();
         while (cur.hasNext()) {
-            DBObject object=cur.next();
-            System.out.println(object.get("_id"));
+            DBObject dbObject = cur.next();
+            E e= null;
+            try {
+                e = collectionClass.newInstance();
+                list.add(MongoDbUtil.dbObject2Bean(dbObject,e));
+            } catch (InstantiationException e1) {
+                e1.printStackTrace();
+            } catch (IllegalAccessException e1) {
+                e1.printStackTrace();
+            } catch (NoSuchMethodException e1) {
+                e1.printStackTrace();
+            } catch (InvocationTargetException e1) {
+                e1.printStackTrace();
+            }
+//            System.out.println(dbObject.get("_id"));
 //            basicDBList.add(cur.next());
-            list.add(dbObject2EntityBean(object));
+
         }
 //        System.out.println(cur.count());
 //        System.out.println(cur.getCursorId());
@@ -127,12 +170,17 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 //        return mongoTemplate.findAll(collectionClass);
         return list;
     }
+    public List<E> findAll() {
+        return findAll(null);
+    }
 
     public E findById(ObjectId id) {
-        //for test
-
-        return mongoTemplate.findById(id, collectionClass);
+        DBObject condition=new BasicDBObject();
+        condition.put("_id",id);
+        return findOne(condition);
+//        return mongoTemplate.findById(id, collectionClass);
     }
+
     @Override
     public E findOne(E condition) {
         return mongoTemplate.findOne(getEqualsQuery(condition), collectionClass);
@@ -140,7 +188,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 
     @Override
     public List<E> findRange(String key, Object min, Object max) {
-        if (!MongoDocumentUtil.isKeyExists(collectionClass, key)) return null;
+        if (!MongoDbUtil.isKeyExists(collectionClass, key)) return null;
         Criteria criteria = Criteria.where(key);
         if (min != null) criteria.gte(min);
         if (max != null) criteria.lte(max);
@@ -153,7 +201,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         if (e == null) return findAll();
         Query query = getNotEqualsQuery(e);
 //        System.out.println(query);
-        CommandResult commandResult=mongoTemplate.executeCommand("");
+        CommandResult commandResult = mongoTemplate.executeCommand("");
         commandResult.toString();
         return mongoTemplate.find(query, collectionClass);
     }
@@ -219,120 +267,149 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         Page<E> page = new PageImpl<E>(list, pageable, count);
         return page;
     }
+
     @Deprecated
     public E update(E e) {
-        String id = MongoDocumentUtil.getId(e);
+        String id = MongoDbUtil.getId(e);
         if (null == id || "".equals(id.trim())) {
-        //如果主键为空,则不进行修改
+            //如果主键为空,则不进行修改
             return null;
         }
-        E qe=null;
+        E qe = null;
         try {
-            qe=collectionClass.newInstance();
-            ReflectUtil.invokeSetter(qe, "id",id);
+            qe = collectionClass.newInstance();
+            ReflectUtil.invokeSetter(qe, "id", id);
         } catch (InstantiationException e1) {
             e1.printStackTrace();
         } catch (IllegalAccessException e1) {
             e1.printStackTrace();
         }
         Update update = getUpdateFromEntity(e);
-        mongoTemplate.updateFirst(getEqualsQuery(qe),update,collectionClass);
+        mongoTemplate.updateFirst(getEqualsQuery(qe), update, collectionClass);
         return e;
     }
-    public CommandResult runCommand(String command){
 
-        CommandResult commandResult= mongoTemplate.executeCommand(command);
+    public CommandResult runCommand(String command) {
+
+        CommandResult commandResult = mongoTemplate.executeCommand(command);
         return commandResult;
     }
 
     @Override
     public Object find(Object parse) {
-        Query query=Query.query(Criteria.where("中国名").is("谢宇星"));
-        DBObject dbObject=query.getQueryObject();
-        DBCollection collection= getDBCollection();
+        Query query = Query.query(Criteria.where("中国名").is("谢宇星"));
+        DBObject dbObject = query.getQueryObject();
+        DBCollection collection = getDBCollection();
 
-        DBCursor cursor= collection.find(dbObject);
-        while (cursor.hasNext()){
+        DBCursor cursor = collection.find(dbObject);
+        while (cursor.hasNext()) {
 //            System.out.println(cursor.next());
         }
-    return null;
+        return null;
     }
-    private String getCollectionName(){
-        Document document=collectionClass.getAnnotation(Document.class);
-        if (document==null) return collectionClass.getSimpleName();
+
+    private String getCollectionName() {
+        Document document = collectionClass.getAnnotation(Document.class);
+        if (document == null) return collectionClass.getSimpleName();
         return document.collection();
     }
-    private DBCollection getDBCollection(){
+
+    private DBCollection getDBCollection() {
         return mongoTemplate.getDb().getCollection(getCollectionName());
     }
-    private E dbObject2EntityBean(DBObject dbObject) {
+
+    private Object dbObject2EntityBean(Class cls, DBObject dbObject) throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         //TODO
-        E e=null;
-        try {
-            e=collectionClass.newInstance();
-        } catch (InstantiationException ex) {
-            ex.printStackTrace();
-        } catch (IllegalAccessException ex) {
-            ex.printStackTrace();
-        }
-        for (java.lang.reflect.Field field:collectionClass.getDeclaredFields()){
+        Object o = cls.newInstance();
+        for (java.lang.reflect.Field field : cls.getDeclaredFields()) {
             if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)) continue;
-            String setterMethodName=ReflectUtil.getSetterMethodName(field.getName());
-            Class fieldType=field.getType();
-            //基本数据类型可以这样做，如果是复杂数据类型呢?
-            Object fieldValue= dbObject.get(field.getName());
-            if (fieldType.isPrimitive()||ReflectUtil.isWrapClass(fieldType)||fieldType==String.class){
+            String fieldName = field.getName();
+            System.out.println("field name:" + fieldName);
+            field.setAccessible(true);
+            Object fieldValue = dbObject.get(fieldName);
+            if (fieldValue == null) continue;
+            Type genericType = field.getGenericType();
+            if (field.getType().isPrimitive() || ReflectUtil.isWrapClass(field.getType()) || field.getType() == String.class) {
+                System.out.println("field is a primitive type type");
+                Method setter = cls.getDeclaredMethod(ReflectUtil.getSetterMethodName(fieldName), field.getType());
+                setter.invoke(o, fieldValue);
+            } else if (field.getType().isArray()) {
+                System.out.print("field is an array");
+                Object[] fieldArrayObject = (Object[]) fieldValue;
+                for (Object fieldArrayObjectItem : fieldArrayObject) {
+                    System.out.print(fieldArrayObjectItem + ",class is:" + fieldArrayObjectItem.getClass() + ",");
+                }
+                System.out.println("");
 
-            }
-            try {
-                Method setter= collectionClass.getDeclaredMethod(setterMethodName, fieldType);
-                setter.invoke(e,fieldValue);
-            } catch (NoSuchMethodException e1) {
-                e1.printStackTrace();
-            } catch (InvocationTargetException e1) {
-                e1.printStackTrace();
-            } catch (IllegalAccessException e1) {
-                e1.printStackTrace();
-            }
+            } else if (genericType instanceof ParameterizedType) {
+                ParameterizedType parameterizedType = (ParameterizedType) genericType;
+                System.out.println("field is a parameterized type:" + parameterizedType);
+                Type[] actualTypes = parameterizedType.getActualTypeArguments();
+                Type rawType = parameterizedType.getRawType();
 
-        }
-        return e;
-    }
-    private List<E> writeResult2List(WriteResult writeResult){
-        DBCursor cursor = getDBCollection().find();
-        try {
-            List<E> result = new ArrayList<E>();
-            while (cursor.hasNext()) {
-                DBObject object = cursor.next();
-                result.add(dbObject2EntityBean(object));
+                if (rawType == List.class) {
+                    System.out.println("field is a java.util.List");
+                }
+
+//                if (actualTypes.length>0){
+                Class class0 = (Class<?>) actualTypes[0];
+                System.out.println("field parameterized type:" + class0);
+//                }
+                if (fieldValue != null && rawType == List.class) {
+                    BasicDBList dd = (BasicDBList) fieldValue;
+                    Iterator iterator = dd.iterator();
+                    while (iterator.hasNext()) {
+                        Object iteratorItem = iterator.next();
+                        DBObject iteratorItemDbObject = (DBObject) iteratorItem;
+                        dbObject2EntityBean(class0, iteratorItemDbObject);
+                    }
+                }
+            } else {
+                System.out.println("field is a simple class");
             }
-            return result;
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
+            System.out.println("--------------------------------------------------------------");
         }
+        return o;
     }
-    private boolean collectionExists(){
+
+//    private List<E> writeResult2List(WriteResult writeResult) {
+//        DBCursor cursor = getDBCollection().find();
+//        try {
+//            List<E> result = new ArrayList<E>();
+//            while (cursor.hasNext()) {
+//                DBObject object = cursor.next();
+//                result.add(dbObject2EntityBean(object));
+//            }
+//            return result;
+//        } finally {
+//            if (cursor != null) {
+//                cursor.close();
+//            }
+//        }
+//    }
+
+    private boolean collectionExists() {
         return mongoTemplate.getDb().collectionExists(getCollectionName());
     }
+
     private Query getEqualsQuery(E e) {
-        if (e==null) return null;
+        if (e == null) return null;
         Query query = null;
         Criteria criteria = null;
         boolean firstCriteriaAdded = false;
         for (java.lang.reflect.Field field : collectionClass.getDeclaredFields()) {
-            if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)&& !field.isAnnotationPresent(Id.class)) continue;
+            if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class) && !field.isAnnotationPresent(Id.class))
+                continue;
             String fieldName = field.getName();
             Object fieldValue = ReflectUtil.getValue(e, fieldName);
             if (fieldValue == null) continue;
             if (fieldValue.toString().trim().equals("")) continue;
-            if (field.isAnnotationPresent(Id.class)){
+            if (field.isAnnotationPresent(Id.class)) {
                 String key = "_id";
                 criteria = null;
                 criteria = Criteria.where(key).is(fieldValue);
                 break;
-            }else{
+            } else {
                 String key = field.getAnnotation(org.springframework.data.mongodb.core.mapping.Field.class).value();
                 if (key == null || key.equals("")) key = fieldName;
                 if (firstCriteriaAdded == false) {
@@ -349,6 +426,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 //        System.out.println(query);
         return query;
     }
+
     private Query getNotEqualsQuery(E e) {
         Query query = null;
         Criteria criteria = null;
@@ -375,24 +453,26 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         return query;
 
     }
+
     private Update getUpdateFromEntity(E e) {
-        Update update=new Update();
-        for (java.lang.reflect.Field field:collectionClass.getDeclaredFields()){
-            if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)&&!field.isAnnotationPresent(Id.class)) continue;
-            String setterMethodName=ReflectUtil.getSetterMethodName(field.getName());
-            Class fieldType=field.getType();
+        Update update = new Update();
+        for (java.lang.reflect.Field field : collectionClass.getDeclaredFields()) {
+            if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class) && !field.isAnnotationPresent(Id.class))
+                continue;
+            String setterMethodName = ReflectUtil.getSetterMethodName(field.getName());
+            Class fieldType = field.getType();
             try {
                 field.setAccessible(true);
-                Object fieldValue= field.get(e);
-                if (fieldValue==null) continue;
-                if (field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)){
-                    org.springframework.data.mongodb.core.mapping.Field docField=field.getAnnotation(org.springframework.data.mongodb.core.mapping.Field.class);
-                    String fieldName=docField.value()==null||docField.value().equals("")?field.getName():docField.value();
-                    update.set(fieldName,fieldValue);
+                Object fieldValue = field.get(e);
+                if (fieldValue == null) continue;
+                if (field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)) {
+                    org.springframework.data.mongodb.core.mapping.Field docField = field.getAnnotation(org.springframework.data.mongodb.core.mapping.Field.class);
+                    String fieldName = docField.value() == null || docField.value().equals("") ? field.getName() : docField.value();
+                    update.set(fieldName, fieldValue);
                 }
-                if (field.isAnnotationPresent(Id.class)){
-                    Id id=field.getAnnotation(Id.class);
-                    update.set("_id",fieldValue);
+                if (field.isAnnotationPresent(Id.class)) {
+                    Id id = field.getAnnotation(Id.class);
+                    update.set("_id", fieldValue);
                 }
             } catch (IllegalAccessException e1) {
                 e1.printStackTrace();

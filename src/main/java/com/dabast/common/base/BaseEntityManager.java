@@ -1,6 +1,7 @@
 package com.dabast.common.base;
 
 import com.mongodb.CommandResult;
+import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
@@ -34,7 +35,10 @@ public abstract class BaseEntityManager<E> implements IBaseEntityManager<E> {
     public List<E> findEquals(E e) {
         return getEntityDao().findEquals(e);
     }
-
+    @Override
+    public List<E> findAll(DBObject condition){
+        return getEntityDao().findAll(condition);
+    }
     @Override
     public E findById(String id) {
         return getEntityDao().findById(id);
@@ -114,7 +118,10 @@ public abstract class BaseEntityManager<E> implements IBaseEntityManager<E> {
 
         return getEntityDao().runCommand(s);
     }
-
+    @Override
+    public E findOne(DBObject condition){
+        return getEntityDao().findOne(condition);
+    }
     @Override
     public Object find(Object parse) {
         return getEntityDao().find(parse);

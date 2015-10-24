@@ -1,23 +1,25 @@
 package com.dabast.entity;
 
 import org.springframework.util.Assert;
-
 import java.util.List;
-
-/**
- * Created by Administrator on 2015/7/3.
- */
 
 /**
  * 这不是一个持久化了，是一个持久化中间类(作为Cart的一个field)
  */
+
 public class ProductSelected {
     private String productSeriesId;
-
     private Integer amount;
-
     private List<String> productPropertyValueIds;
+    private List<ProductPropertyValue> productPropertyValueList;
 
+    public List<ProductPropertyValue> getProductPropertyValueList() {
+        return productPropertyValueList;
+    }
+
+    public void setProductPropertyValueList(List<ProductPropertyValue> productPropertyValueList) {
+        this.productPropertyValueList = productPropertyValueList;
+    }
 
     public String getProductSeriesId() {
         return productSeriesId;

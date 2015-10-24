@@ -2,6 +2,9 @@ package com.dabast.mall.model.productseries.dao;
 
 import com.dabast.common.base.BaseMongoDao;
 import com.dabast.entity.User;
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.WriteResult;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.*;
@@ -120,9 +123,17 @@ public class UserDao extends BaseMongoDao<User>  {
     }
 
     public User findByEmailOrPhone(String name) {
-        String q="{'$or':[{ 'phone':'"+name+"'},{'email':'"+name+"'}]}";
-        Query query = new BasicQuery(q);
-        System.out.println(query);
-        return mongoTemplate.findOne(query,User.class);
+//        String q="{'$or':[{ 'phone':'"+name+"'},{'email':'"+name+"'}]}";
+//        Query query = new BasicQuery(q);
+//        System.out.println(query);
+        DBObject queryCondition = new BasicDBObject();
+        queryCondition = new BasicDBObject();
+        BasicDBList values = new BasicDBList();
+        values.add(new BasicDBObject("phone", name));
+        values.add(new BasicDBObject("email", name));
+        queryCondition.put("$or", values);
+
+//        return mongoTemplate.findOne(query,User.class);
+        return findOne(queryCondition);
     }
 }

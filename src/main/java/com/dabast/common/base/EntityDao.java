@@ -2,6 +2,7 @@ package com.dabast.common.base;
 
 import com.dabast.entity.User;
 import com.mongodb.CommandResult;
+import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
@@ -16,12 +17,15 @@ public interface EntityDao <E>{
     E insert(E e);
     List<E> findEquals(E e);
     List<E> findAll();
+    List<E> findAll(DBObject condition);
+    E findOne(DBObject queryCondition);
+    E findOne(E condition);
     public List<E> textQuery(String  keyWord);
     List<E> findRange(String key, Object min, Object max);
     E findById(ObjectId id);
     List<E> findNotEquals(E e);
     List<E> findKeyIn(String key, Collection collection);
-    E findOne(E condition);
+
     List<E> findKeyNotIn(String key, Collection collection);
 
     List<E> findKeyIsNull(String key);

@@ -11,10 +11,20 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class ProductPropertyValue {
     @Id
     private String id;
-    @Field(value = "value")
-    private String value;
     @Field(value = "productPropertyId")
     private String productPropertyId;
+    @Field(value = "value")
+    private String value;
+
+    private ProductProperty productProperty;
+
+    public ProductProperty getProductProperty() {
+        return productProperty;
+    }
+
+    public void setProductProperty(ProductProperty productProperty) {
+        this.productProperty = productProperty;
+    }
 
     public String getId() {
         return id;

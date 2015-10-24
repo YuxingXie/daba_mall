@@ -24,7 +24,7 @@
                 <strong><span>￥</span>${top3[0][6]}</strong>
             </div>
 
-            <a href="#" data-href="${path}/product/${top3[0][0]}" class="ls-s-1 ls-more mini-text add2cart" style=" top: 72%; left: 21%; slidedirection : fade; slideoutdirection : fade; durationin : 750; durationout : 750; easingin : easeOutQuint; easingout : easeInOutQuint; delayin : 0; delayout : 0; rotatein : 90; rotateout : -90; scalein : .5; scaleout : .5; showuntil : 4000; display: inline-block; white-space: nowrap;">
+            <a href="javascript:void(0)" data-href="${path}/product/${top3[0][0]}" class="ls-s-1 ls-more mini-text add2cart" style=" top: 72%; left: 21%; slidedirection : fade; slideoutdirection : fade; durationin : 750; durationout : 750; easingin : easeOutQuint; easingout : easeInOutQuint; delayin : 0; delayout : 0; rotatein : 90; rotateout : -90; scalein : .5; scaleout : .5; showuntil : 4000; display: inline-block; white-space: nowrap;">
                 添加到购物车
             </a>
         </div>
@@ -37,7 +37,7 @@
 
             <div class="ls-s-1 mini-text" style=" top: 70%; left: 60%; slidedirection : fade; slideoutdirection : fade; durationout : 750; easingin : easeOutQuint; delayin : 300; scalein : .8; scaleout : .8; showuntil : 4000; white-space: nowrap;">
                 <span>${top3[1][3]}</span>
-                <a href="#" data-href="${path}/product/${top3[1][0]}" class="add2cart">添加到购物车</a>
+                <a href="javascript:void(0)" data-href="${path}/product/${top3[1][0]}" class="add2cart">添加到购物车</a>
             </div>
         </div>
         <!--LayerSlider layer-->
@@ -51,7 +51,7 @@
             </div>
 
             <div class="ls-s-1" style=" top: 333px; left: 33%; slidedirection : fade; slideoutdirection : fade; durationout : 750; easingin : easeOutQuint; delayin : 300; scalein : .8; scaleout : .8; showuntil : 4000; white-space: nowrap; font-size: 20px; font: 20px 'Open Sans Light', sans-serif;">
-                <a href="#" data-href="${path}/product/${top3[2][0]}" class="ls-buy add2cart">
+                <a href="javascript:void(0)" data-href="${path}/product/${top3[2][0]}" class="ls-buy add2cart">
                     添加到购物车
                 </a>
                 <div class="ls-price">
@@ -121,7 +121,7 @@
                                     </div>
                                     <h3><a href="../item.html">${prod.name}</a></h3>
                                     <div class="pi-price">￥${prod.commonPrice}</div>
-                                    <a href="#" data-href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
+                                    <a href="javascript:void(0)" data-href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
                                         <%--新品--%>
                                         <%--<div class="sticker sticker-new"></div>--%>
                                     <c:if test="${prod.evaluateCount ge 1000}"><div class="sticker sticker-sale"></div></c:if>
@@ -155,7 +155,7 @@
                                     </div>
                                     <h3><a href="../item.html">${prod.name}</a></h3>
                                     <div class="pi-price">￥${prod.commonPrice}</div>
-                                    <a href="#" data-id="${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
+                                    <a href="javascript:void(0)" data-id="${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
 
                                     <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
                                 </div>
@@ -187,7 +187,7 @@
                                     </div>
                                     <h3><a href="../item.html">${prod.name}</a></h3>
                                     <div class="pi-price">￥${prod.commonPrice}</div>
-                                    <a href="#" data-href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
+                                    <a href="javascript:void(0)" data-href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
 
                                     <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
                                 </div>
@@ -219,7 +219,7 @@
                                     </div>
                                     <h3><a href="../item.html">${prod.name}</a></h3>
                                     <div class="pi-price">￥${prod.commonPrice}</div>
-                                    <a href="#" data-href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
+                                    <a href="javascript:void(0)" data-href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
 
                                     <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
                                 </div>
@@ -268,12 +268,12 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-6 col-xs-3">
                         <div class="product-main-image">
-                            <img src="${path}/statics/assets/temp/products/model7.jpg" alt="Cool green dress with red bell" class="img-responsive">
+                            <img src="${path}/statics/assets/temp/products/model7.jpg" class="img-responsive">
                         </div>
                         <div class="product-other-images">
-                            <a href="#" class="active"><img alt="Berry Lace Dress" src="${path}/statics/assets/temp/products/model3.jpg"></a>
-                            <a href="#"><img src="${path}/statics/assets/temp/products/model4.jpg"></a>
-                            <a href="#"><img src="${path}/statics/assets/temp/products/model5.jpg"></a>
+                            <a href="javascript:void(0)" class="active"><img src="${path}/statics/assets/temp/products/model3.jpg"></a>
+                            <a href="javascript:void(0)"><img src="${path}/statics/assets/temp/products/model4.jpg"></a>
+                            <a href="javascript:void(0)"><img src="${path}/statics/assets/temp/products/model5.jpg"></a>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-9">
@@ -298,7 +298,7 @@
                                 <input id="product-quantity" type="text" value="1" name="product-quantity" class="form-control input-sm">
                             </div>
                             <button class="btn btn-primary add2cart" type="button">添加到购物车</button>
-                            <button class="btn btn-default" type="submit">更多商品</button>
+                            <button class="btn btn-default" type="button">更多商品</button>
                         </div>
                     </div>
                 </div>

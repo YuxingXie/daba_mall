@@ -29,7 +29,7 @@
 
 <script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
-<script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>
+<%--<script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>--%>
 <script>
   $(document).ready(function(){
     App.init();

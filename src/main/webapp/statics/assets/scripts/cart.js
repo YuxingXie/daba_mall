@@ -1,10 +1,11 @@
 /**
  * 需要jquery.js,app.js
  */
-var renderCart = function(data){
+var renderCart = function(cart){
+    console.log(cart);
     var $cartList=$("#cart_list");
     $cartList.empty();
-    if(!data.productSelectedList||data.productSelectedList.length==0){
+    if(!cart.productSelectedList||cart.productSelectedList.length==0){
         var $li_empty=$('<li>您的购物车中还没有商品</li>');
         $li_empty.appendTo($cartList);
         $('.J-shoping-num').text("0");
@@ -12,8 +13,8 @@ var renderCart = function(data){
         return;
     }
     var totalPrice=0;
-    for(var i=0;i<data.productSelectedList.length;i++){
-        var productSelected=data.productSelectedList[i];
+    for(var i=0;i<cart.productSelectedList.length;i++){
+        var productSelected=cart.productSelectedList[i];
         var $li=$("<li data-selected-index='"+i+"'></li>");
         $cartList.append($li);
         var $a=$('<a href='+path+'/product/'+productSelected.productSeriesId+'><img src="'+path+'/'+productSelected.productSeries.pictures[0]+'" width="37" height="34"/></a>');
@@ -38,38 +39,34 @@ var renderCart = function(data){
         $a_end.appendTo($li);
     }
     $("#total-price").text("总计：￥"+totalPrice.toFixed(2));
-    $('.J-shoping-num').text(data.productSelectedList.length);
+    $('.J-shoping-num').text(cart.productSelectedList.length);
 }
 $(document).ready(function(){
     $(document).on("click","#product-pop-up .add2cart",function(){
-        //var propertyId=$(".product-property").attr("propertyId");
         var form=$('[name="popForm"]');
         var amount=$("#product-quantity").val();
-        var data={};
-        data.amount=amount;
-        data.productSeriesId=form.find("[name='productSeriesId']").val();
-        var productPropertySelects=[];
+        var productSelected={};
+        productSelected.amount=amount;
+        productSelected.productSeriesId=form.find("[name='productSeriesId']").val();
+        var productPropertyValueIds=[];
         form.find("select").each(function(){
-            var productPropertySelect={};
-            productPropertySelect.productPropertyId=$(this).data("productPropertyId");
-            productPropertySelect.selectIndex=$(this).val();
-            productPropertySelects.push(productPropertySelect);
+            //productPropertySelect.productPropertyId=$(this).data("productPropertyId");
+            var productPropertyValueId=$(this).val();
+            productPropertyValueIds.push(productPropertyValueId);
         });
-        data.productPropertySelects=productPropertySelects;
-        console.log(JSON.stringify(data));
+        productSelected.productPropertyValueIds=productPropertyValueIds;
+        console.log(JSON.stringify(productSelected));
         $.ajax({
             url: path+"/index/cart",
             contentType: "application/json",
-            data: JSON.stringify(data),
-            method: "post",
-            success: function (data) {
-                $.fancybox.close();
-                renderCart(data);
-            },
-            error:function(data){
-
-            }
-        })
+            data: JSON.stringify(productSelected),
+            method: "post"
+        }).done(function (cart) {
+            $.fancybox.close();
+            renderCart(cart);
+            console.log("success")
+        }).fail(function(){ console.log("error！"); });
+        return false;
     });
     $(document).on("click",".del-goods",function(){
         var $li=$(this).parent();
@@ -88,37 +85,36 @@ $(document).ready(function(){
     });
     $(".fancybox-fast-view").click(function(){
         var prod=$(this).data("prod");
-        console.log(prod)
-        $.ajax(path+"/product_series/popover/"+prod).done(function(data){
-            $("#product-pop-up .product-main-image>img").attr("src",path+"/"+data.pictures[0]);
-            $("#product-pop-up h1").text(data.name);
-            $("#product-pop-up .price").html("<strong><span>￥</span>"+data.commonPrice+"</strong><em>￥<span>62.00</span></em>");
-            $("#product-pop-up .description>p").html(data.description);
+        $.ajax(path+"/product_series/popover/"+prod).done(function(productSeries){
+            $("#product-pop-up .product-main-image>img").attr("src",path+"/"+productSeries.pictures[0]);
+            $("#product-pop-up h1").text(productSeries.name);
+            $("#product-pop-up .price").html("<strong><span>￥</span>"+productSeries.commonPrice+"</strong><em>￥<span>62.00</span></em>");
+            $("#product-pop-up .description>p").html(productSeries.description);
             $("#product-pop-up  .add2cart").unbind("click");
-            var json =data.productProperties;
+            var productProperties =productSeries.productProperties;
             var product_page_options=$("#product-pop-up .product-page-options");
             product_page_options.empty();
             var productSeriesId=$('<input type="hidden" name="productSeriesId" value="'+prod+'"/>');
             productSeriesId.appendTo(product_page_options);
-            for(var i=0;i<json.length;i++){
+            for(var i=0;i<productProperties.length;i++){
                 var pull_left=$('<div class="pull-left"></div>');
                 pull_left.appendTo(product_page_options);
-                var control_label=$('<label class="control-label" style=" direction:ltr;">'+json[i]["propertyName"]+'&nbsp;:&nbsp;</label>');
+                var control_label=$('<label class="control-label" style=" direction:ltr;">'+productProperties[i]["propertyName"]+'&nbsp;:&nbsp;</label>');
                 control_label.appendTo(pull_left);
-                var select=$('<select class="form-control input-sm product-property" name="productPropertyId" data-product-property-id="'+json[i]["id"]+'">');
+                var select=$('<select class="form-control input-sm product-property" name="productPropertyId" data-product-property-id="'+productProperties[i]["id"]+'">');
                 select.appendTo(pull_left);
-                var propertyValues= json[i]["propertyValues"];
+                var propertyValues= productProperties[i]["propertyValues"];
                 for(var j=0;j<propertyValues.length;j++){
-                    var option=$("<option value='"+j+"'>"+propertyValues[j]+"</option>");
+                    var option=$("<option value='"+propertyValues[j].id+"'>"+propertyValues[j].value+"</option>");
                     option.appendTo(select);
                 }
             }
             $(".product-other-images").empty();
-            for(var j=0;j<data.pictures.length;j++){
+            for(var j=0;j<productSeries.pictures.length;j++){
                 if(j==0){
-                    $(".product-other-images").append("<a href='javascript:void(0)' class='active'><img src='"+path+"/"+data.pictures[j]+"'/></a>");
+                    $(".product-other-images").append("<a href='javascript:void(0)' class='active'><img src='"+path+"/"+productSeries.pictures[j]+"'/></a>");
                 }else{
-                    $(".product-other-images").append("<a href='javascript:void(0)'><img src='"+path+"/"+data.pictures[j]+"'/></a>");
+                    $(".product-other-images").append("<a href='javascript:void(0)'><img src='"+path+"/"+productSeries.pictures[j]+"'/></a>");
                 }
             }
             App.initImageZoom();

@@ -5,6 +5,7 @@ import com.dabast.common.base.EntityDao;
 import com.dabast.entity.Cart;
 import com.dabast.mall.model.productseries.dao.CartDao;
 import com.dabast.mall.model.productseries.service.ICartService;
+import com.mongodb.DBObject;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,5 +24,10 @@ public class CartService extends BaseEntityManager<Cart> implements ICartService
     @Override
     public Cart getCartByUserId(String id) {
         return cartDao.getCartByUserId(id);
+    }
+
+    @Override
+    public Cart findOne(DBObject condition) {
+        return cartDao.findOne(condition);
     }
 }

@@ -1,6 +1,8 @@
 package com.dabast.common.base;
 
+import com.dabast.entity.ProductProperty;
 import com.mongodb.CommandResult;
+import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
@@ -14,6 +16,7 @@ public interface IBaseEntityManager<E> {
    public String saveFile(String fileName,byte[] file);
    public GridFSDBFile findFileById(String id);
    List<E> findEquals(E e);
+   List<E> findAll(DBObject condition);
    List<E> findNotEquals(E e);
    List<E> textQuery(String  keyWord);
    List<E> findAll();
@@ -40,4 +43,6 @@ public interface IBaseEntityManager<E> {
    CommandResult runCommand(String s);
 
    Object find(Object parse);
+
+   E findOne(DBObject condition);
 }

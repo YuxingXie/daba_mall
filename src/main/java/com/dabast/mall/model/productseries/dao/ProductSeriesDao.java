@@ -3,7 +3,10 @@ package com.dabast.mall.model.productseries.dao;
 import com.dabast.common.base.BaseMongoDao;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.ProductProperty;
+import com.dabast.entity.ProductPropertyValue;
 import com.dabast.entity.ProductSeries;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -43,10 +46,21 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
     public ProductSeries findProductSeriesById(ObjectId objectId) {
 
         ProductSeries productSeries=findById(objectId);
-        ProductProperty queryEntity=new ProductProperty();
-        queryEntity.setProductSeriesId(objectId.toString());
-        List<ProductProperty> productProperties= ServiceManager.productPropertyService.findEquals(queryEntity);
+//        ProductProperty queryEntity=new ProductProperty();
+//        queryEntity.setProductSeriesId(objectId.toString());
+//        List<ProductProperty> productProperties= ServiceManager.productPropertyService.findEquals(queryEntity);
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("productSeries",objectId.toString());
+        List<ProductProperty> productProperties= ServiceManager.productPropertyService.findAll(dbObject);
+        for (ProductProperty productProperty :productProperties){
+//            ProductPropertyValue cond=new ProductPropertyValue();
+            DBObject cond=new BasicDBObject();
+            cond.put("productPropertyId", productProperty.getId());
+            List<ProductPropertyValue> propertyValues=ServiceManager.productPropertyValueService.findAll(cond);
+            productProperty.setPropertyValues(propertyValues);
+        }
         productSeries.setProductProperties(productProperties);
+
         return productSeries;
     }
 
