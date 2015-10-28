@@ -5,6 +5,7 @@ import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.ProductProperty;
 import com.dabast.entity.ProductPropertyValue;
 import com.dabast.entity.ProductSeries;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by Administrator on 2015/6/11.
@@ -65,22 +67,15 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
     }
 
     public Page<ProductSeries> findProductSeriesesByKeyWord(String keyWord,int currentPage) {
-//        Query query = new Query();
-//        Criteria cr = new Criteria();
-//        query.addCriteria(cr.orOperator(
-//                Criteria.where("name").regex(".*?" + keyWord + ".*")
-//                , Criteria.where("description").regex(".*?" + keyWord + ".*")
-//        ));
-//        return getMongoTemplate().find(query.limit(9), ProductSeries.class);
+//        Criteria criteria = new Criteria().orOperator(Criteria.where("name").regex(".*?" + keyWord + ".*"), Criteria.where("description").regex(".*?" + keyWord + ".*"));
+        Pattern pattern = Pattern.compile(".*?" + keyWord + ".*");
+        DBObject queryCondition=new BasicDBObject();
+        BasicDBList values = new BasicDBList();
+        values.add(new BasicDBObject("name", pattern));
+        values.add(new BasicDBObject("description", pattern));
+        queryCondition.put("$or", values);
 
-        Criteria criteria = new Criteria().orOperator(Criteria.where("name").regex(".*?" + keyWord + ".*") , Criteria.where("description").regex(".*?" + keyWord + ".*") );
-        Query query = Query.query(criteria);
-        Long count = getMongoTemplate().count(query, ProductSeries.class);
-        int pageSize = 3;
-        Pageable pageable = new PageRequest(currentPage, pageSize);
-        query = query.limit(pageSize).skip((currentPage - 1) * pageSize);
-        List<ProductSeries> list = getMongoTemplate().find(query, ProductSeries.class);
-        Page<ProductSeries> page = new PageImpl<ProductSeries>(list, pageable, count);
-        return page;
+
+        return findPage(queryCondition,currentPage);
     }
 }

@@ -28,7 +28,7 @@
                                 <li><a href="#" data-toggle="modal" data-target="#myModal">登录</a></li>
                             </c:when>
                             <c:otherwise>
-                                <li>欢迎您,<a href="#">${sessionScope.loginUser.name}</a>!</li>
+                                <li>欢迎您,<a href="${path}/personal_message">${sessionScope.loginUser.name}</a>!</li>
                                 </li><li><a href="#" id="logout">退出</a></li>
                             </c:otherwise>
                         </c:choose>

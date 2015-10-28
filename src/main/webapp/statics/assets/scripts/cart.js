@@ -25,10 +25,10 @@ var renderCart = function(cart){
         $strong.appendTo($li);
         var $strong_a=$('<a href='+path+'/product/'+productSelected.productSeriesId+'>'+productSelected.productSeries.name+'</a>');
         $strong_a.appendTo($strong);
-        if(productSelected.productPropertySelects){
-            for(var j=0;j<productSelected.productPropertySelects.length;j++){
-                var productPropertySelect=productSelected.productPropertySelects[j];
-                var $pps=$('<label> &nbsp;'+productPropertySelect.productProperty.propertyValues[productPropertySelect.selectIndex]+'</label>');
+        if(productSelected.productPropertyValueList){
+            for(var j=0;j<productSelected.productPropertyValueList.length;j++){
+                var productPropertyValue=productSelected.productPropertyValueList[j];
+                var $pps=$('<label> &nbsp;'+productPropertyValue.value+'</label>');
                 $pps.appendTo($strong);
             }
         }

@@ -9,52 +9,8 @@
 <head>
   <meta charset="utf-8">
   <title>物品详情页</title>
+ </head>
 
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-  <meta content="Metronic Shop UI description" name="description">
-  <meta content="Metronic Shop UI keywords" name="keywords">
-  <meta content="keenthemes" name="author">
-
-  <meta property="og:site_name" content="-CUSTOMER VALUE-">
-  <meta property="og:title" content="-CUSTOMER VALUE-">
-  <meta property="og:description" content="-CUSTOMER VALUE-">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="-CUSTOMER VALUE-"><!-- link to image for socio -->
-  <meta property="og:url" content="-CUSTOMER VALUE-">
-
-  <link rel="shortcut icon" href="favicon.ico">
-  <link href="/favicon.ico" rel="SHORTCUT ICON" type="image/ico">
-
-  <!-- Fonts START -->
-  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css">
-  <link href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow&subset=all" rel="stylesheet" type="text/css">
-  <!-- Fonts END -->
-
-  <!-- Global styles START -->          
-  <link href="${path}/statics/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <link href="${path}/statics/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-  <!-- Global styles END --> 
-   
-  <!-- Page level plugin styles START -->
-  <link href=${path}/statics/"assets/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet">
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"><!-- for slider-range -->
-  <link href="${path}/statics/assets/plugins/bxslider/jquery.bxslider.css" rel="stylesheet">
-  <link href="${path}/statics/assets/plugins/rateit/src/rateit.css" rel="stylesheet" type="text/css">
-  <link href="${path}/statics/assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
-  <!-- Page level plugin styles END -->
-
-  <!-- Theme styles START -->
-  <link href="${path}/statics/assets/css/style-metronic.css" rel="stylesheet" type="text/css">
-  <link href="${path}/statics/assets/css/style.css" rel="stylesheet" type="text/css">
-  <link href="${path}/statics/assets/css/style-responsive.css" rel="stylesheet" type="text/css">
-  <link href="${path}/statics/assets/css/custom.css" rel="stylesheet" type="text/css">
-  <!-- Theme styles END -->
-</head>
-<!-- Head END -->
-
-<!-- Body BEGIN -->
 <body>
     <!-- BEGIN TOP BAR -->
 
@@ -62,7 +18,7 @@
     <div class="main">
       <div class="container">
         <ul class="breadcrumb">
-            <li><a href="index.html">首页</a></li>
+            <li><a href="${path}">首页</a></li>
             <li><a href="">商店</a></li>
             <li class="active">物品详情</li>
         </ul>
@@ -83,7 +39,7 @@
                   <ul class="dropdown-menu" style="display:block;">
                     <c:forEach var="subCategory" items="${f:getProductSubCategoriesByCategoryId(productCategory.id)}">
                       <li <c:if test="${productSeries.subCategoryId eq subCategory.id}">class="list-group-item dropdown clearfix active"</c:if>>
-                        <a href="product-list.html"><i class="fa fa-circle"></i>${subCategory.subCategoryName}</a>
+                        <a href="${path}/sort/${subCategory.id}"><i class="fa fa-circle"></i>${subCategory.subCategoryName}</a>
                       </li>
                     </c:forEach>
                   </ul>
@@ -140,7 +96,7 @@
                           <label class="control-label" style=" direction:ltr;">${productProperty.propertyName}&nbsp;:&nbsp;</label>
                           <select class="form-control input-sm" name="productPropertyId" data-product-property-id="${productProperty.id}">
                             <c:forEach var="propertyValue" items="${productProperty.propertyValues}" varStatus="varStatus">
-                              <option value="${varStatus.index}">${propertyValue}</option>
+                              <option value="${propertyValue.id}">${propertyValue.value}</option>
                             </c:forEach>
                           </select>
                         </div>
@@ -265,147 +221,9 @@
     </div>
 
 
-
-
-    <!-- BEGIN fast view of a product -->
-<%--<div id="product-pop-up" style="display: none; width: 700px;">--%>
-            <%--<div class="product-page product-pop-up">--%>
-              <%--<div class="row">--%>
-                <%--<div class="col-md-6 col-sm-6 col-xs-3">--%>
-                  <%--<div class="product-main-image">--%>
-                    <%--<img src="${path}/statics/assets/temp/products/model7.jpg" class="img-responsive">--%>
-                  <%--</div>--%>
-                  <%--<div class="product-other-images">--%>
-                    <%--<a href="#" class="active"><img src="${path}/statics/assets/temp/products/model3.jpg"></a>--%>
-                    <%--<a href="#"><img  src="${path}/statics/assets/temp/products/model4.jpg"></a>--%>
-                    <%--<a href="#"><img src="${path}/statics/assets/temp/products/model5.jpg"></a>--%>
-                  <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="col-md-6 col-sm-6 col-xs-9">--%>
-                  <%--<h1 style=" text-align:center;">烟熏腊鱼</h1>--%>
-                  <%--<div class="price-availability-block clearfix">--%>
-                    <%--<div class="price">--%>
-                      <%--<strong><span>￥</span>47.00</strong>--%>
-                      <%--<em>￥<span>62.00</span></em>--%>
-                    <%--</div>--%>
-                    <%--<div class="availability">--%>
-                      <%--状态: <strong>货源充足</strong>--%>
-                    <%--</div>--%>
-                  <%--</div>--%>
-                  <%--<div class="description" style=" direction:ltr;">--%>
-                    <%--<p>腊鱼是将鱼洗净腌制晒干后的称呼，鲫鱼、草鱼、鲤鱼都可以制作腊鱼。腌制腊鱼是我国传统水产加工食品，其风味独特，耐贮藏，在我国南方的饮食文化中有着重要地位。在腌腊鱼的加工过程中，由于微生物和原料鱼中酶类的作用</p>--%>
-                  <%--</div>--%>
-                  <%--<div class="product-page-options">--%>
-                    <%--<div class="pull-left">--%>
-                    <%--<label class="control-label" style=" direction:ltr;">产地&nbsp;:&nbsp;</label>--%>
-                      <%--<select class="form-control input-sm">--%>
-                        <%--<option>黄材</option>--%>
-                        <%--<option>横市</option>--%>
-                        <%--<option>双凫铺</option>--%>
-                        <%--<option>大成桥</option>--%>
-                        <%--<option>回龙铺</option>--%>
-                        <%--<option>宁乡</option>--%>
-                      <%--</select>--%>
-                      <%----%>
-                    <%--</div>--%>
-                    <%--<div class="pull-left">--%>
-                   <%--<label class="control-label" style=" direction:ltr;">种类&nbsp;:&nbsp;</label>--%>
-                      <%--<select class="form-control input-sm">--%>
-                        <%--<option>三文鱼腊鱼</option>--%>
-                        <%--<option>福寿鱼腊鱼</option>--%>
-                        <%--<option>草鱼腊鱼</option>--%>
-                      <%--</select>--%>
-
-                    <%--</div>--%>
-                  <%--</div>--%>
-                  <%--<div class="product-page-cart">--%>
-                    <%--<div class="product-quantity">--%>
-                        <%--<input id="product-quantity" type="text" value="1" readonly name="product-quantity" class="form-control input-sm">--%>
-                    <%--</div>--%>
-                    <%--<button class="btn btn-primary" type="submit">添加到购物车</button>--%>
-                    <%--<button class="btn btn-default" type="submit">更多商品</button>--%>
-                  <%--</div>--%>
-                <%--</div>--%>
-
-              <%--</div>--%>
-            <%--</div>--%>
-    <%--</div>    <!-- END fast view of a product -->--%>
-
     <!-- Load javascripts at bottom, this will reduce page load time -->
     <!-- BEGIN CORE PLUGINS(REQUIRED FOR ALL PAGES) -->
-    <!--[if lt IE 9]>
-    <script src="${path}/statics/assets/plugins/respond.min.js"></script>
-    <![endif]-->  
-    <script src="${path}/statics/assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
-    <script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
-    <script src="${path}/statics/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="${path}/statics/assets/plugins/back-to-top.js"></script>
-    <script type="text/javascript" src="${path}/statics/assets/plugins/jQuery-slimScroll/jquery.slimscroll.min.js"></script>
-    <!-- END CORE PLUGINS -->
 
-    <!-- BEGIN PAGE LEVEL JAVASCRIPTS(REQUIRED ONLY FOR CURRENT PAGE) -->
-    <script type="text/javascript" src="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.pack.js"></script>
-    <script type="text/javascript" src="${path}/statics/assets/plugins/bxslider/jquery.bxslider.min.js"></script><!-- slider for products -->
-    <script src="${path}/statics/assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script><!-- Quantity -->
-    <script src="${path}/statics/assets/plugins/rateit/src/jquery.rateit.js" type="text/javascript"></script>
-    <script type="text/javascript" src='${path}/statics/assets/plugins/zoom/jquery.zoom.min.js'></script><!-- product zoom -->
-    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script><!-- for slider-range -->
-    <script src="${path}/statics/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
-    <%--<script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>--%>
-    <script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
-    <script type="text/javascript" src="${path}/statics/assets/scripts/app.js"></script>
 
-	<script type="text/javascript">
-      jQuery(document).ready(function() {
-        App.init();   
-        App.initBxSlider(); 
-        App.initImageZoom();
-        App.initSliderRange();
-        App.initUniform();
-        App.initTouchspin();
-        $(document).on("click",".product-image",function(){
-          var $productMainImage=$(".product-main-image").find("img");
-          var imgSrc=$(this).attr("src");
-          $productMainImage.attr("src",imgSrc);
-          $productMainImage.attr("data-BigImgSrc",imgSrc);
-          App.initImageZoom();
-          $('.add2cart').shoping();
-        });
-        $(document).on("click",".add2cart",function(){
-//          var propertyId=$(".product-property").attr("propertyId");
-          var form=$('[name="cartForm"]');
-          var amount=$("#product-quantity").val();
-          console.log("amount "+amount);
-          var data={};
-          data.amount=amount;
-          data.productSeriesId=form.find("[name='productSeriesId']").val();
-          var productPropertySelects=[];
-          form.find("select").each(function(){
-            var productPropertySelect={};
-            productPropertySelect.productPropertyId=$(this).data("productPropertyId");
-            productPropertySelect.selectIndex=$(this).val();
-            productPropertySelects.push(productPropertySelect);
-          });
-          data.productPropertySelects=productPropertySelects;
-          console.log(JSON.stringify(data));
-          $.ajax({
-            url: path+"/index/cart",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            method: "post",
-            success: function (data) {
-              console.log("add to cart success");
-//              $.fancybox.close();
-              renderCart(data);
-            },
-            error:function(data){
-
-            }
-          })
-        });
-      });
-    </script>
-    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
-    <!-- END PAGE LEVEL JAVASCRIPTS -->
 </body>
 

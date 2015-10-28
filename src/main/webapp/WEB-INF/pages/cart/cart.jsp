@@ -34,7 +34,7 @@
                 <div class="shopping-cart-page">
                     <div class="shopping-cart-data clearfix">
                         <div class="table-wrapper-responsive" ng-app>
-                            <form>
+                            <form action="${path}/cart/to_bill">
                                 <table summary="Shopping cart">
                                     <tr>
                                         <th class="shopping-cart-image"></th>
@@ -65,9 +65,9 @@
                                                     </td>
                                                     <td class="shopping-cart-description">
                                                         <h3>${productSelected.productSeries.name}</h3>
-                                                        <c:forEach var="productPropertySelect"
-                                                                   items="${productSelected.productPropertySelects}">
-                                                            ${productPropertySelect.productProperty.propertyValues[productPropertySelect.selectIndex]}
+                                                        <c:forEach var="productPropertyValue"
+                                                                   items="${productSelected.productPropertyValueList}">
+                                                            ${productPropertyValue.value}
                                                         </c:forEach>
                                                     </td>
                                                     <td class="shopping-cart-price">
@@ -99,7 +99,7 @@
                                                     {{<c:forEach var="productSelected" items="${sessionScope.cart.productSelectedList}" varStatus="selectedIndex">amount_${selectedIndex.index}*${productSelected.productSeries.commonPrice}+</c:forEach>0 | number:2}}元
                                                 </td>
                                                 <%--<td><button href="#" class="btn btn-primary col-lg-8" data-toggle="modal" data-target="#myModal">去结算</button></td>--%>
-                                                <td><button href="#" class="btn btn-primary col-lg-8" id="toBill">去结算</button></td>
+                                                <td><button  class="btn btn-primary col-lg-8" type="submit">去结算</button></td>
                                             </tr>
                                         </c:otherwise>
                                     </c:choose>

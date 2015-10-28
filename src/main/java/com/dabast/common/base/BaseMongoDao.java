@@ -131,6 +131,19 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         }
         return e;
     }
+    public Page<E> findPage(DBObject condition,int currentPage){
+        DB db = mongoTemplate.getDb();
+        DBCollection collection = db.getCollection(getCollectionName());
+        int pageSize = 3;
+        Pageable pageable = new PageRequest(currentPage, pageSize);
+//        query = query.limit(pageSize).skip((currentPage - 1) * pageSize);
+//        List<ProductSeries> list = getMongoTemplate().find(query, ProductSeries.class);
+        Long count = collection.count(condition);
+        System.out.println(condition.toString());
+        List<E> list = dbCursor2List(collection.find(condition).limit(pageSize).skip((currentPage - 1) * pageSize));
+        Page<E> page = new PageImpl<E>(list, pageable, count);
+        return page;
+    }
     public List<E> findAll(DBObject condition){
         DB db = mongoTemplate.getDb();
         DBCollection collection = db.getCollection(getCollectionName());
@@ -140,13 +153,18 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         }else {
             cur=collection.find(condition);
         }
+        List<E> list = dbCursor2List(cur);
+        return list;
+    }
+
+    private List<E> dbCursor2List(DBCursor cur) {
         List<E> list = new ArrayList<E>();
         while (cur.hasNext()) {
             DBObject dbObject = cur.next();
             E e= null;
             try {
                 e = collectionClass.newInstance();
-                list.add(MongoDbUtil.dbObject2Bean(dbObject,e));
+                list.add(MongoDbUtil.dbObject2Bean(dbObject, e));
             } catch (InstantiationException e1) {
                 e1.printStackTrace();
             } catch (IllegalAccessException e1) {
@@ -160,16 +178,9 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 //            basicDBList.add(cur.next());
 
         }
-//        System.out.println(cur.count());
-//        System.out.println(cur.getCursorId());
-//        System.out.println(basicDBList.size());
-//       for (Object dbObject:basicDBList){
-//           System.out.println(dbObject);
-//       }
-//        System.out.println(JSON.serialize(cur));
-//        return mongoTemplate.findAll(collectionClass);
         return list;
     }
+
     public List<E> findAll() {
         return findAll(null);
     }

@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/5/22.
@@ -41,6 +42,15 @@ public class User {
     private String phone;
     private String loginStatus;
     private Cart cart;
+    private List<Address> addresses;
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
 
     public String getId() {
         return id;

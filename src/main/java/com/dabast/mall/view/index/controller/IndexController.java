@@ -264,6 +264,16 @@ public class IndexController extends BaseRestSpringController {
         return new ResponseEntity<User>(user,HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/index/personal_message")
+    public String personalMessage(ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+//        User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
+        return "personal_message";
+    }
+    @RequestMapping(value = "/cart/to_bill")
+    public String toBill(ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
+        return "to_bill";
+    }
     public static void main(String[] args) {
         String jsonStr = "[{id:100,name:'Johnson'},{id:101,name:'Jackson'}]";
 //        System.out.println(JSON.parse(jsonStr));

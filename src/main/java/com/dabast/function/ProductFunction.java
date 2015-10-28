@@ -7,6 +7,8 @@ import com.dabast.entity.ProductSubCategory;
 import com.dabast.mall.model.productseries.service.IProductCategoryService;
 import com.dabast.mall.model.productseries.service.IProductSubCategoryService;
 import com.dabast.mall.model.productseries.service.impl.ProductPropertyService;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 
 import java.util.List;
 
@@ -17,9 +19,7 @@ public class ProductFunction {
     public static List<ProductProperty> getProductPropertiesByProductSeriesId(String productSeriesId){
         if (productSeriesId==null) return null;
         ProductPropertyService productPropertyService=ProjectContext.getBean("productPropertyService");
-        ProductProperty productProperty=new ProductProperty();
-        productProperty.setProductSeriesId(productSeriesId);
-        return productPropertyService.findEquals(productProperty);
+        return productPropertyService.getProductPropertiesByProductSeriesId(productSeriesId);
     }
     public static List<ProductCategory> getProductCategories(){
         IProductCategoryService productCategoryService=ProjectContext.getBean("productCategoryService");

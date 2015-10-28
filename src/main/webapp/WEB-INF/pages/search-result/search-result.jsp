@@ -2,63 +2,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="p" uri="/pageTag" %>
-<jsp:useBean id="form" class="com.dabast.mall.form.UserLoginForm" scope="request"></jsp:useBean>
-<jsp:useBean id="phoneForm" class="com.dabast.mall.form.UserLoginForm" scope="request"></jsp:useBean>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
-<head>
-    <meta charset="utf-8">
-    <title>搜索结果页</title>
 
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-    <meta content="Metronic Shop UI description" name="description">
-    <meta content="Metronic Shop UI keywords" name="keywords">
-    <meta content="keenthemes" name="author">
-
-    <meta property="og:site_name" content="-CUSTOMER VALUE-">
-    <meta property="og:title" content="-CUSTOMER VALUE-">
-    <meta property="og:description" content="-CUSTOMER VALUE-">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="-CUSTOMER VALUE-">
-    <!-- link to image for socio -->
-    <meta property="og:url" content="-CUSTOMER VALUE-">
-
-    <link rel="shortcut icon" href="favicon.ico">
-    <link href="/favicon.ico" rel="SHORTCUT ICON" type="image/ico">
-
-    <!-- Fonts START -->
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
-          type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow&subset=all" rel="stylesheet" type="text/css">
-    <!-- Fonts END -->
-
-    <!-- Global styles START -->
-    <%--<link href="${path}/statics/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">--%>
-    <link href="${path}/statics/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <!-- Global styles END -->
-
-    <!-- Page level plugin styles START -->
-    <link href="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet">
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-    <!-- for slider-range -->
-    <link href="${path}/statics/assets/plugins/bxslider/jquery.bxslider.css" rel="stylesheet">
-    <link href="${path}/statics/assets/plugins/rateit/src/rateit.css" rel="stylesheet" type="text/css">
-    <link href="${path}/statics/assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
-    <!-- Page level plugin styles END -->
-
-    <!-- Theme styles START -->
-    <link href="${path}/statics/assets/css/style-metronic.css" rel="stylesheet" type="text/css">
-    <link href="${path}/statics/assets/css/style.css" rel="stylesheet" type="text/css">
-    <link href="${path}/statics/assets/css/style-responsive.css" rel="stylesheet" type="text/css">
-    <link href="${path}/statics/assets/css/custom.css" rel="stylesheet" type="text/css">
-    <!-- Theme styles END -->
-</head>
-<!-- Head END -->
-
-<!-- Body BEGIN -->
-<body>
 <!-- BEGIN TOP BAR -->
 
 <!-- END HEADER -->
@@ -285,61 +231,6 @@
         </form>
     </div>
 </div>
-<!--[if lt IE 9]>
-<script src="${path}/statics/assets/plugins/respond.min.js"></script>
-<![endif]-->
-<script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 
-<script type="text/javascript" src="${path}/statics/assets/plugins/back-to-top.js"></script>
-<script type="text/javascript" src="${path}/statics/assets/plugins/jQuery-slimScroll/jquery.slimscroll.min.js"></script>
-<!-- END CORE PLUGINS -->
 
-<!-- BEGIN PAGE LEVEL JAVASCRIPTS (REQUIRED ONLY FOR CURRENT PAGE) -->
-<script type="text/javascript" src="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.js"></script>
-<!-- pop up -->
-<script type="text/javascript" src="${path}/statics/assets/plugins/bxslider/jquery.bxslider.min.js"></script>
-<!-- slider for products -->
-<script type="text/javascript" src='${path}/statics/assets/plugins/zoom/jquery.zoom.min.js'></script>
-<!-- product zoom -->
-<script src="${path}/statics/assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script>
-<!-- Quantity -->
 
-<!-- BEGIN LayerSlider -->
-<script src="${path}/statics/assets/plugins/layerslider/jQuery/jquery-easing-1.3.js" type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/layerslider/jQuery/jquery-transit-modified.js"
-        type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/layerslider/js/layerslider.transitions.js" type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js"
-        type="text/javascript"></script>
-
-<script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
-<script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
-<script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>
-<script>
-    highLighter = function () {
-        $(".high-lighter").each(function () {
-            var oldText = $(this).text();
-            var newText = oldText.replace('${keyWord}', '<span style="color:red">${keyWord}</span>');
-            $(this).html(newText);
-        });
-    }
-    $(document).ready(function () {
-        App.init();
-        App.initBxSlider();
-        Index.initLayerSlider();
-        App.initImageZoom();
-        App.initTouchspin();
-        highLighter();
-        $(".li-form").on("click", function () {
-            $(this).find("form").submit();
-        });
-        $(".prev-pages").on("click", function () {
-
-            $(this).find("form").submit();
-        });
-        $(".next-pages").on("click", function () {
-            $(this).find("form").submit();
-        });
-    });
-</script>
-</body>
