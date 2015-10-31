@@ -24,7 +24,7 @@
                 <div class="shopping-cart-page">
                     <div class="shopping-cart-data clearfix">
                         <div class="table-wrapper-responsive" ng-app>
-                            <form action="${path}/cart/to_bill">
+                            <form action="${path}/cart/to_bill" id="form">
                                 <table summary="Shopping cart">
                                     <tr>
                                         <th class="shopping-cart-description"  colspan="2">填写并核对订单</th>

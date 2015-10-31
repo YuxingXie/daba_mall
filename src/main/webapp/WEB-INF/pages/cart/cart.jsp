@@ -19,22 +19,13 @@
 
         <!-- BEGIN CONTENT -->
         <div class="col-md-9 col-sm-7">
-            <div class="content-search margin-bottom-20">
-                <div class="row">
-                    <div class="col-md-6 col-sm-6">
-                        <h1>全部商品<c:if
-                                test="${not empty sessionScope.cart ||empty sessionScope.cart.productSelectedList}">
-                            <li>您的购物车中有商品${fn:length(sessionScope.cart.productSelectedList)}</li>
-                        </c:if></h1>
-                    </div>
 
-                </div>
-            </div>
             <div class="row list-view-sorting clearfix">
                 <div class="shopping-cart-page">
                     <div class="shopping-cart-data clearfix">
                         <div class="table-wrapper-responsive" ng-app>
-                            <form action="${path}/cart/to_bill">
+                            <form action="${path}/cart/to_bill" method="post" id="form"  enctype='application/json'>
+                                <input type="hidden" name="cart"/>
                                 <table summary="Shopping cart">
                                     <tr>
                                         <th class="shopping-cart-image"></th>
@@ -53,28 +44,32 @@
                                         <c:otherwise>
                                             <c:set var="totalPrice" value="0"/>
 
-                                            <c:forEach var="productSelected"
-                                                       items="${sessionScope.cart.productSelectedList}"
-                                                       varStatus="selectedIndex">
-                                                <c:set var="totalPrice"
-                                                       value="${totalPrice+productSelected.amount*productSelected.productSeries.commonPrice}"/>
-                                                <tr>
-                                                    <td class="shopping-cart-image">
-                                                        <a href="${path}/product/${productSelected.productSeriesId}"><img
-                                                                src="${path}/${productSelected.productSeries.pictures[0]}"></a>
+                                            <c:forEach var="productSelected" items="${sessionScope.cart.productSelectedList}" varStatus="selectedIndex">
+                                                <c:set var="totalPrice" value="${totalPrice+productSelected.amount*productSelected.productSeries.commonPrice}"/>
+                                                <tr name="productSelected"
+                                                    data-product-series-id="${productSelected.productSeriesId}"
+                                                    data-amount="${productSelected.amount}"
+                                                    data-common-price="${productSelected.productSeries.commonPrice}">
+                                                    <td class="shopping-cart-image" name="pictures0" data-pictures0="${productSelected.productSeries.pictures[0]}">
+                                                        <a href="${path}/product/${productSelected.productSeriesId}">
+                                                            <img src="${path}/${productSelected.productSeries.pictures[0]}"></a>
+                                                        <%--<input type="hidden" name="cart[productSelectedList][${selectedIndex.index}][amount]" value="${productSelected.amount}">--%>
+                                                        <%--<input type="hidden" name="cart[productSelectedList][${selectedIndex.index}][productSeriesId]" value="${productSelected.productSeriesId}">--%>
+
                                                     </td>
                                                     <td class="shopping-cart-description">
                                                         <h3>${productSelected.productSeries.name}</h3>
-                                                        <c:forEach var="productPropertyValue"
-                                                                   items="${productSelected.productPropertyValueList}">
+                                                        <c:forEach var="productPropertyValue" items="${productSelected.productPropertyValueList}">
+                                                            <span name="productPropertyValue"
+                                                                  data-product-property-value-id="${productPropertyValue.id}"
+                                                                  data-product-property-value-value="${productPropertyValue.value}"
+                                                                  data-product-property-value-product-property-id="${productPropertyValue.productPropertyId}" >
                                                             ${productPropertyValue.value}
+                                                            </span>
                                                         </c:forEach>
                                                     </td>
                                                     <td class="shopping-cart-price">
-                                                    <span>￥<fmt:formatNumber
-                                                            value="${productSelected.productSeries.commonPrice}"
-                                                            pattern="##.##"
-                                                            minFractionDigits="2"></fmt:formatNumber></span>
+                                                    <span>￥<fmt:formatNumber value="${productSelected.productSeries.commonPrice}" pattern="##.##" minFractionDigits="2"></fmt:formatNumber></span>
                                                     </td>
                                                     <td class="shopping-cart-quantity">
                                                     <span style=" font-size:14px;">
@@ -88,7 +83,6 @@
                                                     </td>
                                                     <td class="shopping-cart-total">
                                                         <p><a href="${path}/cart/remove/${selectedIndex.index}">删除</a></p>
-
                                                         <p>移到我的关注</p>
                                                     </td>
                                                 </tr>
@@ -98,8 +92,7 @@
                                                     总计：{{<c:forEach var="productSelected" items="${sessionScope.cart.productSelectedList}" varStatus="selectedIndex">amount_${selectedIndex.index}+</c:forEach>0}}件商品,共
                                                     {{<c:forEach var="productSelected" items="${sessionScope.cart.productSelectedList}" varStatus="selectedIndex">amount_${selectedIndex.index}*${productSelected.productSeries.commonPrice}+</c:forEach>0 | number:2}}元
                                                 </td>
-                                                <%--<td><button href="#" class="btn btn-primary col-lg-8" data-toggle="modal" data-target="#myModal">去结算</button></td>--%>
-                                                <td><button  class="btn btn-primary col-lg-8" type="submit">去结算</button></td>
+                                                <td><button  class="btn btn-primary col-lg-8" type="button" id="toBill">去结算</button></td>
                                             </tr>
                                         </c:otherwise>
                                     </c:choose>
@@ -111,22 +104,6 @@
             </div>
         </div>
         <!-- END CONTENT -->
-        <!-- BEGIN SIDEBAR -->
-        <div class="sidebar col-md-3 col-sm-5">
-            <div class="sidebar-products clearfix">
-                <h2>为您推荐</h2>
-                <c:forEach items="${recommendList}" var="productSeries">
-                    <div class="item">
-                        <a href="item.html"><img src="${path}/statics/assets/temp/products/k1.jpg" alt="腊肉"></a>
-
-                        <h3><a href="item.html">腊肉的防腐能力强，能延长保存时间</a></h3>
-
-                        <div class="price">$31.00</div>
-                    </div>
-                </c:forEach>
-            </div>
-        </div>
-        <!-- END SIDEBAR -->
     </div>
     <!-- END SIDEBAR & CONTENT -->
 </div>

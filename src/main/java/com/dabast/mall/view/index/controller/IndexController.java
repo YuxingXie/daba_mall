@@ -270,8 +270,12 @@ public class IndexController extends BaseRestSpringController {
         return "personal_message";
     }
     @RequestMapping(value = "/cart/to_bill")
-    public String toBill(ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public String toBill(@RequestBody Cart cart,ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        System.out.println(cart);
         User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
+        Cart cart1=session.getAttribute("cart")==null?null:(Cart)session.getAttribute(Constant.CART);
+        cart1.setProductSelectedList(cart.getProductSelectedList());
+        session.setAttribute(Constant.CART,cart1);
         return "to_bill";
     }
     public static void main(String[] args) {
