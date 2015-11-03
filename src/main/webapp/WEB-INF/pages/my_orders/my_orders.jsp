@@ -12,8 +12,8 @@
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="${path}">首页</a></li>
-            <li><a href="">商店</a></li>
-            <li class="active">购物车</li>
+            <li><a href="">我的大坝</a></li>
+            <li class="active">我的订单</li>
         </ul>
         <!-- BEGIN SIDEBAR & CONTENT -->
 
@@ -36,57 +36,59 @@
                                         <th class="shopping-cart-total">交易操作</th>
                                     </tr>
                                     <c:choose>
-                                        <c:when test="${empty sessionScope.cart ||empty sessionScope.cart.productSelectedList}">
+                                        <c:when test="${empty orders}">
                                             <tr>
-                                                <td colspan="5">您的购物车中还没有商品</td>
+                                                <td colspan="5">您没有生成过订单</td>
                                             </tr>
                                         </c:when>
                                         <c:otherwise>
-                                            <c:set var="totalPrice" value="0"/>
+                                            <c:forEach var="order" items="${orders}">
+                                                <c:set var="totalPrice" value="0"/>
+                                                <c:forEach var="productSelected" items="${order.productSelectedList}" varStatus="selectedIndex">
+                                                    <c:set var="totalPrice" value="${totalPrice+productSelected.amount*productSelected.productSeries.commonPrice}"/>
+                                                    <tr name="productSelected"
+                                                        data-product-series-id="${productSelected.productSeriesId}"
+                                                        data-amount="${productSelected.amount}"
+                                                        data-common-price="${productSelected.productSeries.commonPrice}">
+                                                        <td class="shopping-cart-image" name="pictures0" data-pictures0="${productSelected.productSeries.pictures[0]}">
+                                                            <a href="${path}/product/${productSelected.productSeriesId}">
+                                                                <img src="${path}/${productSelected.productSeries.pictures[0]}"></a>
+                                                                <%--<input type="hidden" name="cart[productSelectedList][${selectedIndex.index}][amount]" value="${productSelected.amount}">--%>
+                                                                <%--<input type="hidden" name="cart[productSelectedList][${selectedIndex.index}][productSeriesId]" value="${productSelected.productSeriesId}">--%>
 
-                                            <c:forEach var="productSelected" items="${sessionScope.cart.productSelectedList}" varStatus="selectedIndex">
-                                                <c:set var="totalPrice" value="${totalPrice+productSelected.amount*productSelected.productSeries.commonPrice}"/>
-                                                <tr name="productSelected"
-                                                    data-product-series-id="${productSelected.productSeriesId}"
-                                                    data-amount="${productSelected.amount}"
-                                                    data-common-price="${productSelected.productSeries.commonPrice}">
-                                                    <td class="shopping-cart-image" name="pictures0" data-pictures0="${productSelected.productSeries.pictures[0]}">
-                                                        <a href="${path}/product/${productSelected.productSeriesId}">
-                                                            <img src="${path}/${productSelected.productSeries.pictures[0]}"></a>
-                                                        <%--<input type="hidden" name="cart[productSelectedList][${selectedIndex.index}][amount]" value="${productSelected.amount}">--%>
-                                                        <%--<input type="hidden" name="cart[productSelectedList][${selectedIndex.index}][productSeriesId]" value="${productSelected.productSeriesId}">--%>
-
-                                                    </td>
-                                                    <td class="shopping-cart-description">
-                                                        <h3>${productSelected.productSeries.name}</h3>
-                                                        <c:forEach var="productPropertyValue" items="${productSelected.productPropertyValueList}">
+                                                        </td>
+                                                        <td class="shopping-cart-description">
+                                                            <h3>${productSelected.productSeries.name}</h3>
+                                                            <c:forEach var="productPropertyValue" items="${productSelected.productPropertyValueList}">
                                                             <span name="productPropertyValue"
                                                                   data-product-property-value-id="${productPropertyValue.id}"
                                                                   data-product-property-value-value="${productPropertyValue.value}"
                                                                   data-product-property-value-product-property-id="${productPropertyValue.productPropertyId}" >
-                                                            ${productPropertyValue.value}
+                                                                    ${productPropertyValue.value}
                                                             </span>
-                                                        </c:forEach>
-                                                    </td>
-                                                    <td class="shopping-cart-price">
-                                                    <span>￥<fmt:formatNumber value="${productSelected.productSeries.commonPrice}" pattern="##.##" minFractionDigits="2"></fmt:formatNumber></span>
-                                                    </td>
-                                                    <td class="shopping-cart-quantity">
+                                                            </c:forEach>
+                                                        </td>
+                                                        <td class="shopping-cart-price">
+                                                            <span>￥<fmt:formatNumber value="${productSelected.productSeries.commonPrice}" pattern="##.##" minFractionDigits="2"></fmt:formatNumber></span>
+                                                        </td>
+                                                        <td class="shopping-cart-quantity">
                                                     <span style=" font-size:14px;">
                                                         <input type="number" name="amount"
                                                                ng-model="amount_${selectedIndex.index}" min="1"
                                                                ng-init="amount_${selectedIndex.index}=${productSelected.amount}"/>
                                                     </span>
-                                                    </td>
-                                                    <td class="shopping-cart-price">
-                                                        <span>￥{{amount_${selectedIndex.index}*${productSelected.productSeries.commonPrice} | number:2}}</span>
-                                                    </td>
-                                                    <td class="shopping-cart-total">
-                                                        <p><a href="${path}/cart/remove/${selectedIndex.index}">删除</a></p>
-                                                        <p>移到我的关注</p>
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                        <td class="shopping-cart-price">
+                                                            <span>￥{{amount_${selectedIndex.index}*${productSelected.productSeries.commonPrice} | number:2}}</span>
+                                                        </td>
+                                                        <td class="shopping-cart-total">
+                                                            <p><a href="${path}/cart/remove/${selectedIndex.index}">删除</a></p>
+                                                            <p>移到我的关注</p>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
                                             </c:forEach>
+
                                             <tr>
                                                 <td colspan="4">
                                                     总计：{{<c:forEach var="productSelected" items="${sessionScope.cart.productSelectedList}" varStatus="selectedIndex">amount_${selectedIndex.index}+</c:forEach>0}}件商品,共

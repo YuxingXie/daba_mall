@@ -85,8 +85,12 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 
     @Override
     public E insert(E e) {
+        //TODO
 //        System.out.println("invoke insert method......");
         mongoTemplate.insert(e);
+//        DB db = mongoTemplate.getDb();
+//        DBCollection collection = db.getCollection(getCollectionName());
+//        collection.insert(e)
         return e;
     }
 
@@ -116,6 +120,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         DB db = mongoTemplate.getDb();
         DBCollection collection = db.getCollection(getCollectionName());
         DBObject dbObject=collection.findOne(queryCondition);
+
         E e = null;
         try {
             e = collectionClass.newInstance();

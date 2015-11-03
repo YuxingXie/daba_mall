@@ -28,7 +28,9 @@
                                 <table summary="Shopping cart">
                                     <tr>
                                         <th class="shopping-cart-description"  colspan="2">填写并核对订单</th>
-                                        <th class="shopping-cart-image" colspan="4"></th>
+                                    </tr>
+                                    <tr>
+                                        <th class="shopping-cart-image" colspan="4">生成订单号为：${order.id}</th>
                                     </tr>
                                     <tr>
                                         <td class="shopping-cart-image">收货人信息：</td>
@@ -58,7 +60,7 @@
                                         <th class="shopping-cart-image" colspan="4"></th>
                                     </tr>
                                     <c:choose>
-                                        <c:when test="${empty sessionScope.cart ||empty sessionScope.cart.productSelectedList}">
+                                        <c:when test="${empty order ||empty order.productSelectedList}">
                                             <tr>
                                                 <td colspan="5">您的购物车中还没有商品</td>
                                             </tr>
@@ -68,7 +70,7 @@
                                             <c:set var="totalCount" value="0"/>
 
                                             <c:forEach var="productSelected"
-                                                       items="${sessionScope.cart.productSelectedList}"
+                                                       items="${order.productSelectedList}"
                                                        varStatus="selectedIndex">
                                                 <c:set var="totalPrice" value="${totalPrice+productSelected.amount*productSelected.productSeries.commonPrice}"/>
                                                 <tr>

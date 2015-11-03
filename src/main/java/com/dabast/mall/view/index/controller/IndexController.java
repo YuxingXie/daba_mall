@@ -30,6 +30,7 @@ import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -269,14 +270,59 @@ public class IndexController extends BaseRestSpringController {
 //        User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
         return "personal_message";
     }
-    @RequestMapping(value = "/cart/to_bill")
-    public String toBill(@RequestBody Cart cart,ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/cart/adjust")
+    public ResponseEntity adjust(@RequestBody Cart cart,ModelMap model, HttpSession session) {
         System.out.println(cart);
         User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
         Cart cart1=session.getAttribute("cart")==null?null:(Cart)session.getAttribute(Constant.CART);
         cart1.setProductSelectedList(cart.getProductSelectedList());
         session.setAttribute(Constant.CART,cart1);
+        return null;
+    }
+    @RequestMapping(value = "/cart/to_bill")
+    public String toBill(ModelMap model, HttpSession session) {
+        User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
+        Cart cart=session.getAttribute(Constant.CART)==null?null:(Cart)session.getAttribute(Constant.CART);
+        if (cart==null) return "my_orders";
+        Order order=new Order();
+        order.setUserId(user.getId());
+        order.setOrderDate(new Date());
+        order.setPayStatus("n");
+        order.setProductSelectedList(cart.getProductSelectedList());
+
+        ServiceManager.orderService.insert(order);
+        model.addAttribute("order",order);
+        session.removeAttribute(Constant.CART);
         return "to_bill";
+    }
+
+
+    @RequestMapping(value = "/index/my_orders")
+    public String myOrders(ModelMap model, HttpSession session) {
+        User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
+//        DBObject condition=new BasicDBObject();
+//        condition.put("userId",user.getId());
+//        List<Order> orders=ServiceManager.orderService.findAll(condition);
+        Order order=new Order();
+        order.setUserId(user.getId());
+        List<Order> orders=ServiceManager.orderService.findEquals(order);
+        for (Order order1:orders){
+            List<ProductSelected> productSelectedList=order1.getProductSelectedList();
+            for (ProductSelected productSelected:productSelectedList){
+                ProductSeries productSeries=ServiceManager.productSeriesService.findById(productSelected.getProductSeriesId());
+                productSelected.setProductSeries(productSeries);
+                List<String> valueIds=productSelected.getProductPropertyValueIds();
+                if (valueIds==null) break;
+                List<ProductPropertyValue> productPropertyValueList=new ArrayList<ProductPropertyValue>();
+                for (String valueId:valueIds){
+                    ProductPropertyValue productPropertyValue=ServiceManager.productPropertyValueService.findById(valueId);
+                    productPropertyValueList.add(productPropertyValue);
+                }
+                productSelected.setProductPropertyValueList(productPropertyValueList);
+            }
+        }
+        model.addAttribute("orders",orders);
+        return "my_orders";
     }
     public static void main(String[] args) {
         String jsonStr = "[{id:100,name:'Johnson'},{id:101,name:'Jackson'}]";

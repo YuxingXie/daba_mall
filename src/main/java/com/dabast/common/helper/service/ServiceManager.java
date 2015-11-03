@@ -11,7 +11,11 @@ public class ServiceManager implements InitializingBean{
     public static ICartService cartService;
     public static IProductSubCategoryService productSubCategoryService;
     public static IProductPropertyValueService productPropertyValueService;
+    public static IOrderService orderService;
 
+    public void setOrderService(IOrderService orderService) {
+        ServiceManager.orderService = orderService;
+    }
 
     public static void setInited(boolean inited) {
         ServiceManager.inited = inited;

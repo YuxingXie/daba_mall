@@ -64,7 +64,15 @@
             productSelectedList.push(productSelected);
         });
         cart.productSelectedList=productSelectedList;
+//        cart.productSelectedList=[];
+//        cart.userId="232323ddasdsad2ada";
+
+
+//        console.log(JSON.stringify(cart));
         var url=$("#form").attr("action");
+//        $("#form").find("[name='cart']").val(JSON.stringify(cart));
+//        $("#form").submit();
+//        return;
         $.ajax({
             url: url,
             contentType: "application/json",
@@ -83,8 +91,25 @@
             } else {
                 supportHtml5=false;
             }
-            loginCheckBeforeHandler("nonHtml5Post()");
+            var isLogin = false;
+            $.ajax({
+                url: path + "/index/login_user"
+
+            }).done(function (data) {
+                if (!data.id) {
+                    console.log("user not log in");
+                    $("#myModal").modal().show();
+                    return false;
+                }else{
+                   nonHtml5Post();
+                    return false;
+                }
+            }).fail(function(){
+                console.log("error ");
+                return false;
+            });
 
         });
     });
+
 </script>

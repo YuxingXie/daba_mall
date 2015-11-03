@@ -1,5 +1,7 @@
 package com.dabast.entity;
 
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.util.Assert;
 import java.util.List;
 
@@ -11,7 +13,10 @@ public class ProductSelected {
     private String productSeriesId;
     private Integer amount;
     private List<String> productPropertyValueIds;
+    @Transient
     private List<ProductPropertyValue> productPropertyValueList;
+    @Transient
+    private ProductSeries productSeries;
 
     public List<ProductPropertyValue> getProductPropertyValueList() {
         return productPropertyValueList;
@@ -45,7 +50,7 @@ public class ProductSelected {
         this.productPropertyValueIds = productPropertyValueIds;
     }
 
-    private ProductSeries productSeries;
+
 
     public ProductSeries getProductSeries() {
         return productSeries;

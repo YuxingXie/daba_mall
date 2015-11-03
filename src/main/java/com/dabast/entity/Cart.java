@@ -1,6 +1,7 @@
 package com.dabast.entity;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -60,7 +61,7 @@ public class Cart {
         productSelectedList.add(anotherProductSelected);
         setProductSelectedList(productSelectedList);
     }
-
+    @Transient
     private User user;
 
     public User getUser() {

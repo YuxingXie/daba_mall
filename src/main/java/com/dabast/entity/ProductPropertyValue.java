@@ -1,8 +1,10 @@
 package com.dabast.entity;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
 
 /**
  * Created by Administrator on 2015/6/4.
@@ -15,7 +17,7 @@ public class ProductPropertyValue {
     private String productPropertyId;
     @Field(value = "value")
     private String value;
-
+    @Transient
     private ProductProperty productProperty;
 
     public ProductProperty getProductProperty() {
