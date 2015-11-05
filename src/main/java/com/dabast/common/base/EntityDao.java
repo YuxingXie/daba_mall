@@ -45,4 +45,6 @@ public interface EntityDao <E>{
     Object find(Object parse);
 
     E findById(String id);
+
+    void removeById(String id);
 }

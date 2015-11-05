@@ -17,7 +17,14 @@ public class ProductSelected {
     private List<ProductPropertyValue> productPropertyValueList;
     @Transient
     private ProductSeries productSeries;
+    private String receiveStatus;
+    public String getReceiveStatus() {
+        return receiveStatus;
+    }
 
+    public void setReceiveStatus(String receiveStatus) {
+        this.receiveStatus = receiveStatus;
+    }
     public List<ProductPropertyValue> getProductPropertyValueList() {
         return productPropertyValueList;
     }

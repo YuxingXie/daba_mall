@@ -24,6 +24,20 @@ public class Order {
     private Date orderDate;
     @Field(value = "userId")
     private String userId;
+
+
+    @Transient
+    private Double totalPrice;
+
+    public Double getTotalPrice() {
+        Double price=0d;
+        for (ProductSelected productSelected:productSelectedList){
+            Double thePrice=productSelected.getProductSeries()==null?0:(productSelected.getProductSeries().getCommonPrice()==null?0:productSelected.getProductSeries().getCommonPrice());
+            price+=thePrice*productSelected.getAmount();
+        }
+        return price;
+    }
+
     @Transient
     private User user;
     public String getId() {
@@ -43,6 +57,7 @@ public class Order {
         for (ProductSelected productSelected:productSelectedList){
             List<String> productPropertyValueIds=new ArrayList<String>();
             List<ProductPropertyValue> productPropertyValueList=productSelected.getProductPropertyValueList();
+            if (productPropertyValueList==null) continue;
             for (ProductPropertyValue productPropertyValue:productPropertyValueList){
                 productPropertyValueIds.add(productPropertyValue.getId());
             }
@@ -82,4 +97,5 @@ public class Order {
     public void setUser(User user) {
         this.user = user;
     }
+
 }

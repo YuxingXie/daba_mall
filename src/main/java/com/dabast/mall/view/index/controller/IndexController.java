@@ -9,6 +9,7 @@ import com.dabast.mall.Constant;
 import com.dabast.mall.form.UserLoginForm;
 import com.dabast.mall.model.productseries.dao.UserDao;
 import com.dabast.mall.model.productseries.service.impl.CartService;
+import com.dabast.mall.model.productseries.service.impl.OrderService;
 import com.dabast.mall.view.index.service.impl.RegisterValidateService;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -205,6 +207,12 @@ public class IndexController extends BaseRestSpringController {
         session.setAttribute(Constant.CART, cart);
         return "cart/cart";
     }
+    @RequestMapping(value = "/index/order/delete/{id}", method = RequestMethod.GET)
+    public String orderRemove(@PathVariable String id, ModelMap model, HttpSession session) {
+        Assert.notNull(id);
+        ServiceManager.orderService.removeById(id);
+        return myOrders(model,session);
+    }
     @RequestMapping(value = "/index/user/login", method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody UserLoginForm form, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
@@ -300,9 +308,6 @@ public class IndexController extends BaseRestSpringController {
     @RequestMapping(value = "/index/my_orders")
     public String myOrders(ModelMap model, HttpSession session) {
         User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
-//        DBObject condition=new BasicDBObject();
-//        condition.put("userId",user.getId());
-//        List<Order> orders=ServiceManager.orderService.findAll(condition);
         Order order=new Order();
         order.setUserId(user.getId());
         List<Order> orders=ServiceManager.orderService.findEquals(order);
@@ -312,7 +317,7 @@ public class IndexController extends BaseRestSpringController {
                 ProductSeries productSeries=ServiceManager.productSeriesService.findById(productSelected.getProductSeriesId());
                 productSelected.setProductSeries(productSeries);
                 List<String> valueIds=productSelected.getProductPropertyValueIds();
-                if (valueIds==null) break;
+                if (valueIds==null) continue;
                 List<ProductPropertyValue> productPropertyValueList=new ArrayList<ProductPropertyValue>();
                 for (String valueId:valueIds){
                     ProductPropertyValue productPropertyValue=ServiceManager.productPropertyValueService.findById(valueId);
@@ -326,7 +331,6 @@ public class IndexController extends BaseRestSpringController {
     }
     public static void main(String[] args) {
         String jsonStr = "[{id:100,name:'Johnson'},{id:101,name:'Jackson'}]";
-//        System.out.println(JSON.parse(jsonStr));
     }
 
 

@@ -496,4 +496,11 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         }
         return update;
     }
+    @Override
+    public void removeById(String id){
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("_id",new ObjectId(id));
+        Query query=new BasicQuery(dbObject);
+        getMongoTemplate().remove(query,collectionClass);
+    }
 }

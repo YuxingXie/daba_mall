@@ -28,6 +28,8 @@
 
 <script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
+<script type="text/javascript" src="${path}/statics/assets/plugins/sco.js-master/js/sco.modal.js"></script>
+<script type="text/javascript" src="${path}/statics/assets/plugins/sco.js-master/js/sco.confirm.js"></script>
 <script type="text/javascript">
     var nonHtml5Post =function(){
         var cart={};
@@ -110,6 +112,14 @@
             });
 
         });
+        $(".del-order").click(function(){
+            var action=$(this).data("href");
+            $("#ensure-delete").attr("href",action);
+            $(this).scojs_confirm({
+                target:'#confirmDeleteOrderModal'
+            });
+        });
+
     });
 
 </script>

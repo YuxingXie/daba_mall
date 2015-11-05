@@ -1,5 +1,6 @@
 package com.dabast.common.base;
 
+import com.dabast.entity.Order;
 import com.dabast.entity.ProductProperty;
 import com.mongodb.CommandResult;
 import com.mongodb.DBObject;
@@ -45,4 +46,6 @@ public interface IBaseEntityManager<E> {
    Object find(Object parse);
 
    E findOne(DBObject condition);
+
+   void removeById(String id);
 }

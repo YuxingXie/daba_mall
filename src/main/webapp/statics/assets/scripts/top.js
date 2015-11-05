@@ -17,8 +17,7 @@ var loginCheckBeforeHandler=function(handler){
 }
     var toUrl=function(url){
         return function(){
-            //alert("call function toUrl");
-            window.location.href=url;
+            if(url&&url!==undefined&&url!=="") window.location.href=url;
         }
     }
 var loginAndCallBack=function (callBack) {
