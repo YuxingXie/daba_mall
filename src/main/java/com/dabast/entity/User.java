@@ -41,14 +41,15 @@ public class User {
     @Field("phone")
     private String phone;
     private String loginStatus;
+    @Field(value = "cart")
     private Cart cart;
-    private List<Address> addresses;
-
-    public List<Address> getAddresses() {
+    @Field(value = "addresses")
+    private String[] addresses;
+    public String[] getAddresses() {
         return addresses;
     }
 
-    public void setAddresses(List<Address> addresses) {
+    public void setAddresses(String[] addresses) {
         this.addresses = addresses;
     }
 

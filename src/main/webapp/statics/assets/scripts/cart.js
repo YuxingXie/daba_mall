@@ -2,7 +2,7 @@
  * 需要jquery.js,app.js
  */
 var renderCart = function(cart){
-    console.log(cart);
+    //console.log(cart);
     var $cartList=$("#cart_list");
     $cartList.empty();
     if(!cart.productSelectedList||cart.productSelectedList.length==0){
@@ -15,7 +15,7 @@ var renderCart = function(cart){
     var totalPrice=0;
     for(var i=0;i<cart.productSelectedList.length;i++){
         var productSelected=cart.productSelectedList[i];
-        var $li=$("<li data-selected-index='"+i+"'></li>");
+        var $li=$("<li class='j-shoping-item' data-selected-index='"+i+"'></li>");
         $cartList.append($li);
         var $a=$('<a href='+path+'/product/'+productSelected.productSeriesId+'><img src="'+path+'/'+productSelected.productSeries.pictures[0]+'" width="37" height="34"/></a>');
         $a.appendTo($li);

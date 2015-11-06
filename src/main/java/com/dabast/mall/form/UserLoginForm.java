@@ -13,6 +13,15 @@ public class UserLoginForm extends User {
     private String rePassword;
     @NotNull
     private String loginStr;
+    private boolean mergeCart;
+
+    public boolean isMergeCart() {
+        return mergeCart;
+    }
+
+    public void setMergeCart(boolean mergeCart) {
+        this.mergeCart = mergeCart;
+    }
 
     public boolean isRemember() {
         return remember;

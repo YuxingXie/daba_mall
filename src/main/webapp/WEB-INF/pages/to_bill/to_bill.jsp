@@ -24,7 +24,7 @@
                 <div class="shopping-cart-page">
                     <div class="shopping-cart-data clearfix">
                         <div class="table-wrapper-responsive" ng-app>
-                            <form action="${path}/cart/to_bill" id="form">
+                            <form action="${path}/index/order/submit" id="form" autocomplete="off">
                                 <table summary="Shopping cart">
                                     <tr>
                                         <th class="shopping-cart-description"  colspan="2">填写并核对订单</th>
@@ -34,8 +34,10 @@
                                     </tr>
                                     <tr>
                                         <td class="shopping-cart-image">收货人信息：</td>
-                                        <td class="shopping-cart-description">谢宇星</td>
-                                        <td class="shopping-cart-price" colspan="2">湖南 长沙市 宁乡县 玉潭镇白马大道西六街105-6</td>
+                                        <td class="shopping-cart-description">${order.user.name}</td>
+                                        <td class="shopping-cart-price" colspan="2" ng-controller="appCtrl">
+                                            <input select-address p="p" c="c" a="a" d="d" ng-model="xxx" placeholder="请选择所在地" type="text" class="form-control" />
+                                        </td>
                                         <td class="shopping-cart-quantity">1390306***6</td>
                                         <td class="shopping-cart-total">
                                            <a href="${path}/cart/remove/${selectedIndex.index}">删除</a>
@@ -47,12 +49,11 @@
                                         <th class="shopping-cart-image" colspan="4"></th>
                                     </tr>
                                     <tr>
-
                                         <td colspan="6">
-                                            <div class="radio-button radio-inline"><label><input type="radio" value="1" name="payType" />货到付款</label></div>
-                                            <div class="radio-button radio-inline"><label><input type="radio" value="2" name="payType" />在线支付</label></div>
-                                            <div class="radio-button radio-inline"><label><input type="radio" value="3" name="payType" />公司转账</label></div>
-                                            <div class="radio-button radio-inline"><label><input type="radio" value="4" name="payType" />邮局汇款</label></div>
+                                            <div class="radio-button radio-inline"><label><input type="radio" value="1" name="payWay" />货到付款</label></div>
+                                            <div class="radio-button radio-inline"><label><input type="radio" value="2" name="payWay" />在线支付</label></div>
+                                            <div class="radio-button radio-inline"><label><input type="radio" value="3" name="payWay" />公司转账</label></div>
+                                            <div class="radio-button radio-inline"><label><input type="radio" value="4" name="payWay" />邮局汇款</label></div>
                                         </td>
                                     </tr>
                                     <tr>

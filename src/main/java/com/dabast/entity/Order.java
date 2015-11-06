@@ -19,13 +19,25 @@ public class Order {
     @Field(value = "productSelectedList")
     private List<ProductSelected> productSelectedList;
     @Field(value = "payStatus")
+    /**
+     * 已支付:y，未支付n
+     */
     private String payStatus;
+    @Field(value = "payWay")
+    /**
+     * 支付方式，货到付款1，在线支付2，公司转账3，邮局汇款4
+     */
+    private String payWay;
     @Field(value = "orderDate")
     private Date orderDate;
     @Field(value = "userId")
     private String userId;
-
-
+    @Field(value = "addressId")
+    private String addressId;
+    @Field(value = "submitStatus")
+    private String submitStatus;
+    @Field(value = "postAddress")
+    private String postAddress;
     @Transient
     private Double totalPrice;
 
@@ -98,4 +110,35 @@ public class Order {
         this.user = user;
     }
 
+    public String getPayWay() {
+        return payWay;
+    }
+
+    public void setPayWay(String payWay) {
+        this.payWay = payWay;
+    }
+
+    public String getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
+    }
+
+    public String getPostAddress() {
+        return postAddress;
+    }
+
+    public void setPostAddress(String postAddress) {
+        this.postAddress = postAddress;
+    }
+
+    public String getSubmitStatus() {
+        return submitStatus;
+    }
+
+    public void setSubmitStatus(String submitStatus) {
+        this.submitStatus = submitStatus;
+    }
 }

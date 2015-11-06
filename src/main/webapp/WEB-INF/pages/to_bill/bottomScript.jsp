@@ -26,10 +26,12 @@
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.transitions.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js"
         type="text/javascript"></script>
-
 <script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>
+
+<script src="${path}/statics/assets/plugins/cascading-select-address-master/js/selectAddress2.js" type="text/javascript"></script>
+<script src="${path}/statics/assets/plugins/cascading-select-address-master/js/index.js"></script>
 <script>
     highLighter = function () {
         $(".high-lighter").each(function () {
@@ -39,21 +41,6 @@
         });
     }
     $(document).ready(function () {
-        App.init();
-        App.initBxSlider();
-        Index.initLayerSlider();
-        App.initImageZoom();
-        App.initTouchspin();
-        highLighter();
-        $(".li-form").on("click", function () {
-            $(this).find("form").submit();
-        });
-        $(".prev-pages").on("click", function () {
 
-            $(this).find("form").submit();
-        });
-        $(".next-pages").on("click", function () {
-            $(this).find("form").submit();
-        });
     });
 </script>

@@ -1,7 +1,8 @@
 package com.dabast.mall.model.productseries.dao;
 
 import com.dabast.common.base.BaseMongoDao;
-import com.dabast.entity.User;
+import com.dabast.common.helper.service.ServiceManager;
+import com.dabast.entity.*;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -11,6 +12,7 @@ import org.springframework.data.mongodb.core.query.*;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -123,17 +125,38 @@ public class UserDao extends BaseMongoDao<User>  {
     }
 
     public User findByEmailOrPhone(String name) {
-//        String q="{'$or':[{ 'phone':'"+name+"'},{'email':'"+name+"'}]}";
-//        Query query = new BasicQuery(q);
-//        System.out.println(query);
         DBObject queryCondition = new BasicDBObject();
         queryCondition = new BasicDBObject();
         BasicDBList values = new BasicDBList();
         values.add(new BasicDBObject("phone", name));
         values.add(new BasicDBObject("email", name));
         queryCondition.put("$or", values);
-
+        Query query=new BasicQuery(queryCondition);
 //        return mongoTemplate.findOne(query,User.class);
-        return findOne(queryCondition);
+//        User user=findOne(queryCondition);
+        User user=mongoTemplate.findOne(query,User.class);
+        if (user!=null){
+            Cart cart=user.getCart();
+            if (cart!=null){
+                List<ProductSelected> productSelectedList=cart.getProductSelectedList();
+                if (productSelectedList!=null){
+                    for (ProductSelected productSelected:productSelectedList){
+                        ProductSeries productSeries= ServiceManager.productSeriesService.findById(productSelected.getProductSeriesId());
+                        productSelected.setProductSeries(productSeries);
+                        List<String> productPropertyValueIds=productSelected.getProductPropertyValueIds();
+                        if (productPropertyValueIds!=null){
+                            List<ProductPropertyValue> productPropertyValueList=new ArrayList<ProductPropertyValue>();
+                            for (String productPropertyValueId:productPropertyValueIds){
+                                ProductPropertyValue productPropertyValue=ServiceManager.productPropertyValueService.findById(productPropertyValueId);
+                                productPropertyValueList.add(productPropertyValue);
+                            }
+                            productSelected.setProductPropertyValueList(productPropertyValueList);
+                        }
+                    }
+                }
+            }
+
+        }
+        return user;
     }
 }

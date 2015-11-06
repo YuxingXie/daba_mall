@@ -7,4 +7,5 @@ import com.dabast.entity.Order;
  * Created by Administrator on 2015/11/2.
  */
 public interface IOrderService  extends IBaseEntityManager<Order> {
+    Order findLastOrderByUserId(String userId);
 }

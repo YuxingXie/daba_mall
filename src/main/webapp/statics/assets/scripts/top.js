@@ -24,6 +24,11 @@ var loginAndCallBack=function (callBack) {
     return function(){
         var pwd=$.md5($("#password").val());
         $("#password").val(pwd);
+        //var $cartList=$("#cart_list");
+        //if($cartList.find(".j-shoping-item")&&$cartList.find(".j-shoping-item").length>0){
+        //    alert("购物车发现商品:"+$cartList.find(".j-shoping-item").length);
+        //    $('#mergeCart').val(true);
+        //}
         $.ajax({
             url: path+"/index/user/login",
             contentType: "application/json",

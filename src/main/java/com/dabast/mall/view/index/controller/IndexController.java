@@ -19,10 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -60,19 +57,10 @@ public class IndexController extends BaseRestSpringController {
         }
         String password = pwdCookie == null ? null : pwdCookie.getValue();
         if (name != null && password != null) {
-//            User user = userDao.findByNameAndPwd(name, password);
             User user = userDao.findByEmailOrPhone(name);
             if (user.getPassword().equalsIgnoreCase(password)) {
                 session.setAttribute("loginUser", user);
-                Cart condition=new Cart();
-                condition.setUserId(user.getId());
-                DBObject dbCondition=new BasicDBObject();
-                dbCondition.put("userId",user.getId());
-//                Cart cart=cartService.findOne(condition);
-                Cart cart=cartService.findOne(dbCondition);
-                if (cart!=null){
-                    session.setAttribute(Constant.CART,cart);
-                }
+                session.setAttribute(Constant.CART,user.getCart());
             }
         }
         List<String[]> top3 = ServiceManager.productSeriesService.getTop3ProductSeries();
@@ -82,10 +70,6 @@ public class IndexController extends BaseRestSpringController {
         return "index";
     }
 
-    //    @ModelAttribute
-//    public void init(ModelMap model) {
-//        model.put("now", new java.sql.Timestamp(System.currentTimeMillis()));
-//    }
     @RequestMapping(value = "/index/user/{id}")
     public ResponseEntity<User> get(ModelMap model, @PathVariable String id) {
         User user = new User();
@@ -139,9 +123,15 @@ public class IndexController extends BaseRestSpringController {
 //        System.out.println("is unique");
         return responseEntity;
     }
+
+    /**
+     * 把一件商品添加到购物车
+     * @param productSelected
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/index/cart", method = RequestMethod.POST)
-    public ResponseEntity<Cart> login(@RequestBody ProductSelected productSelected, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-        //TODO
+    public ResponseEntity<Cart> login(@RequestBody ProductSelected productSelected,HttpSession session) {
         Cart cart=null;
        if (session.getAttribute(Constant.CART)==null){
            cart=new Cart();
@@ -150,7 +140,6 @@ public class IndexController extends BaseRestSpringController {
        }
         ProductSeries productSeries=ServiceManager.productSeriesService.findById(productSelected.getProductSeriesId());
         productSelected.setProductSeries(productSeries);
-
         List<ProductPropertyValue> productPropertyValueList=new ArrayList<ProductPropertyValue>();
        for(String productPropertyValueId : productSelected.getProductPropertyValueIds()){
            DBObject ppCon=new BasicDBObject();
@@ -159,22 +148,17 @@ public class IndexController extends BaseRestSpringController {
            ProductProperty productProperty=ServiceManager.productPropertyService.findOne(ppCon);
            value.setProductProperty(productProperty);
            productPropertyValueList.add(value);
-
-//           productPropertyValueId.setProductProperty(productProperty);
-//           ProductPropertyValueList.add(productPropertyValueId);
        }
 //        productSelected.((ProductPropertySelect[])ProductPropertyValueList.toArray(new ProductPropertySelect[ProductPropertyValueList.size()]));
         productSelected.setProductPropertyValueList(productPropertyValueList);
         cart.merge(productSelected);
-//        if (session.getAttribute(Constant.LOGIN_USER)!=null){
-//            User user=(User)session.getAttribute(Constant.LOGIN_USER);
-//            Cart queryCart=new Cart();
-//            queryCart.setUserId(user.getId());
-//            ServiceManager.cartService.upsert(queryCart,cart);
-//        }
+        if (session.getAttribute(Constant.LOGIN_USER)!=null){
+            User user=(User)session.getAttribute(Constant.LOGIN_USER);
+            user.setCart(cart);
+            ServiceManager.userService.update(user);
+        }
         session.setAttribute(Constant.CART, cart);
         ResponseEntity<Cart> cartResponseEntity=new ResponseEntity<Cart>(cart, HttpStatus.OK);
-        System.out.println("executed");
         return cartResponseEntity;
     }
     @RequestMapping(value = "/index/cart/remove", method = {RequestMethod.POST})
@@ -187,6 +171,11 @@ public class IndexController extends BaseRestSpringController {
         }
         if (cart.getProductSelectedList()!=null &&cart.getProductSelectedList().size()>selectedIndex){
             cart.getProductSelectedList().remove(selectedIndex.intValue());
+        }
+        if (session.getAttribute(Constant.LOGIN_USER)!=null){
+            User user=(User)session.getAttribute(Constant.LOGIN_USER);
+            user.setCart(cart);
+            ServiceManager.userService.update(user);
         }
         session.setAttribute(Constant.CART, cart);
         ResponseEntity<Cart> cartResponseEntity=new ResponseEntity<Cart>(cart, HttpStatus.OK);
@@ -206,6 +195,15 @@ public class IndexController extends BaseRestSpringController {
         }
         session.setAttribute(Constant.CART, cart);
         return "cart/cart";
+    }
+    @RequestMapping(value = "/index/order/submit", method = RequestMethod.GET)
+    public String orderSubmit(@ModelAttribute String  id,@ModelAttribute String address,@ModelAttribute String payWay, ModelMap model) {
+        Order order=ServiceManager.orderService.findById(id);
+       order.setPostAddress(address);
+        order.setPayWay(payWay);
+        ServiceManager.orderService.update(order);
+        model.addAttribute("order",order);
+        return "redirect:/order_submit_result";
     }
     @RequestMapping(value = "/index/order/delete/{id}", method = RequestMethod.GET)
     public String orderRemove(@PathVariable String id, ModelMap model, HttpSession session) {
@@ -235,9 +233,18 @@ public class IndexController extends BaseRestSpringController {
                 CookieTool.removeCookie(request, response, "loginStr");
                 CookieTool.removeCookie(request, response, "password");
             }
-            Cart cart=ServiceManager.cartService.getCartByUserId(user.getId());
-            session.setAttribute(Constant.CART,cart);
-            user.setCart(cart);
+            Cart sessionCart=session.getAttribute(Constant.CART)==null?null:((Cart)(session.getAttribute(Constant.CART)));
+           if (form.isMergeCart()){
+               if (user.getCart()==null){
+                   user.setCart(sessionCart);
+               }else{
+                   user.getCart().merge(sessionCart);
+               }
+               if (sessionCart!=null){
+                   ServiceManager.userService.update(user);
+               }
+           }
+            session.setAttribute(Constant.CART,user.getCart());
             return new ResponseEntity<User>(user, HttpStatus.OK);
         } else {
             user=new User();
@@ -284,27 +291,36 @@ public class IndexController extends BaseRestSpringController {
         User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
         Cart cart1=session.getAttribute("cart")==null?null:(Cart)session.getAttribute(Constant.CART);
         cart1.setProductSelectedList(cart.getProductSelectedList());
+        user.setCart(cart1);
+        ServiceManager.userService.update(user);
         session.setAttribute(Constant.CART,cart1);
         return null;
     }
     @RequestMapping(value = "/cart/to_bill")
     public String toBill(ModelMap model, HttpSession session) {
-        User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
-        Cart cart=session.getAttribute(Constant.CART)==null?null:(Cart)session.getAttribute(Constant.CART);
-        if (cart==null) return "my_orders";
-        Order order=new Order();
-        order.setUserId(user.getId());
-        order.setOrderDate(new Date());
-        order.setPayStatus("n");
-        order.setProductSelectedList(cart.getProductSelectedList());
+        //区分从页面跳转过来的还是刷新页面来的
 
-        ServiceManager.orderService.insert(order);
+        User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
+//        Cart cart=session.getAttribute(Constant.CART)==null?null:(Cart)session.getAttribute(Constant.CART);
+        Cart cart=user.getCart();
+        Order order=new Order();
+        if (cart==null){
+            order=ServiceManager.orderService.findLastOrderByUserId(user.getId());
+        }else{
+            order.setUserId(user.getId());
+            order.setOrderDate(new Date());
+            order.setPayStatus("n");
+            order.setProductSelectedList(cart.getProductSelectedList());
+            ServiceManager.orderService.insert(order);
+        }
+        order.setUser(user);
         model.addAttribute("order",order);
+        //这个时候购物车已经从session中移除了，但在session属性的user中还保存着购物车信息
+        user.setCart(null);
+        ServiceManager.userService.update(user);
         session.removeAttribute(Constant.CART);
         return "to_bill";
     }
-
-
     @RequestMapping(value = "/index/my_orders")
     public String myOrders(ModelMap model, HttpSession session) {
         User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");

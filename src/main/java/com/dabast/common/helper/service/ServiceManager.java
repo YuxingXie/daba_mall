@@ -1,5 +1,6 @@
 package com.dabast.common.helper.service;
 import com.dabast.mall.model.productseries.service.*;
+import com.mongodb.DBCollection;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 @Component
@@ -13,6 +14,9 @@ public class ServiceManager implements InitializingBean{
     public static IProductPropertyValueService productPropertyValueService;
     public static IOrderService orderService;
 
+
+    public static IUserService userService;
+
     public void setOrderService(IOrderService orderService) {
         ServiceManager.orderService = orderService;
     }
@@ -23,6 +27,9 @@ public class ServiceManager implements InitializingBean{
     @Override
     public void afterPropertiesSet() throws Exception {
         inited = true;
+    }
+    public void setUserService(IUserService userService) {
+        ServiceManager.userService = userService;
     }
 
     public void setProductSeriesService(IProductSeriesService productSeriesService) {

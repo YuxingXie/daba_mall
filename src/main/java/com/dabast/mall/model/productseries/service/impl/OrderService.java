@@ -19,4 +19,9 @@ public class OrderService extends BaseEntityManager<Order> implements IOrderServ
     protected EntityDao<Order> getEntityDao() {
         return this.orderDao;
     }
+
+    @Override
+    public Order findLastOrderByUserId(String userId) {
+        return orderDao.findLastOrderByUserId(userId);
+    }
 }

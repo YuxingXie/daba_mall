@@ -97,7 +97,7 @@
                                     <c:set var="totalPrice" value="0"/>
                                     <c:forEach var="productSelected" items="${sessionScope.cart.productSelectedList}" varStatus="selectedIndex">
                                         <c:set var="totalPrice" value="${totalPrice+productSelected.amount*productSelected.productSeries.commonPrice}"/>
-                                        <li data-selected-index="${selectedIndex.index}">
+                                        <li class="j-shoping-item" data-selected-index="${selectedIndex.index}">
                                             <a href="${path}/product/${productSelected.productSeriesId}"><img src="${path}/${productSelected.productSeries.pictures[0]}" width="37" height="34"></a>
                                             <span class="cart-content-count">x ${productSelected.amount}</span>
                                             <strong>
@@ -307,6 +307,7 @@
                                     <div class="col-lg-1"></div>
                                     <div class="col-lg-10 has-error">
                                         <input type="text" class="form-control" id="loginStr" name="loginStr" placeholder="邮箱/用户名/已验证手机"  required="true"/>
+                                        <input type="hidden" name="mergeCart" id="mergeCart"/>
                                         <span class="glyphicon glyphicon-remove form-control-feedback"></span>
                                     </div>
                                     <div class="col-lg-1"></div>

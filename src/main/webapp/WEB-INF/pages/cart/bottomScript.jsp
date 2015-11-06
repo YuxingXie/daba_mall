@@ -67,6 +67,7 @@
             });
             cart.productSelectedList=productSelectedList;
             var url=$("#form").attr("action");
+            alert(url);
             $.ajax({
                 url: url,
                 contentType: "application/json",

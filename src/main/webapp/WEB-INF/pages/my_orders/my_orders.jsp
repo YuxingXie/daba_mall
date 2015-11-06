@@ -69,7 +69,7 @@
                                                                             &times;
                                                                         </button>
                                                                         <h2 class="modal-title" id="myModalLabel">
-                                                                            订单详情&nbsp;&nbsp;
+                                                                            订单详情&nbsp;&nbsp;订单号:${order.id}
                                                                         </h2>
                                                                     </div>
                                                                     <div class="modal-body">
