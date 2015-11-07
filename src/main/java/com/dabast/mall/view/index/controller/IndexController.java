@@ -204,7 +204,7 @@ public class IndexController extends BaseRestSpringController {
     @RequestMapping(value = "/index/order/submit", method = RequestMethod.GET)
     public String orderSubmit(@ModelAttribute String  id,@ModelAttribute String address,@ModelAttribute String payWay, ModelMap model) {
         Order order=ServiceManager.orderService.findById(id);
-       order.setPostAddress(address);
+       order.setAcceptAddress(address);
         order.setPayWay(payWay);
         ServiceManager.orderService.update(order);
         model.addAttribute("order",order);
