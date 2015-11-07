@@ -2,6 +2,7 @@ package com.dabast.entity;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -32,7 +33,8 @@ public class ProductSeries {
     private String brand;
     @Field(value = "subCategoryId")
     private String subCategoryId;
-
+    @Transient
+    private List<ProductProperty> productProperties;
     public String getSubCategoryId() {
         return subCategoryId;
     }
@@ -55,8 +57,7 @@ public class ProductSeries {
         }
         return false;
     }
-    @DBRef
-    private List<ProductProperty> productProperties;
+
 
     public List<ProductProperty> getProductProperties() {
         return productProperties;

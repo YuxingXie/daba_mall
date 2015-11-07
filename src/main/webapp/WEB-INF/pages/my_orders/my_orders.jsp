@@ -27,21 +27,22 @@
                             <form action="${path}/cart/adjust" method="post" id="form" enctype='application/json'>
                                 <input type="hidden" name="cart"/>
                                 <table summary="Shopping cart">
-                                    <tr>
-                                        <th class="shopping-cart-image">订单号</th>
-                                        <th class="shopping-cart-description">下单日期</th>
-                                        <th class="shopping-cart-price">是否付款</th>
-                                        <th class="shopping-cart-ref-no">商品金额</th>
-                                        <th class="shopping-cart-price">操作</th>
-                                        <th class="shopping-cart-total"></th>
-                                    </tr>
                                     <c:choose>
                                         <c:when test="${empty orders}">
                                             <tr>
-                                                <td colspan="6">您没有生成过订单</td>
+                                                <th colspan="5" class="text-info center-block shopping-cart-description">您没有生成过订单</th><th><a href="${path}">返回首页</a> </th>
                                             </tr>
                                         </c:when>
                                         <c:otherwise>
+                                            <tr>
+                                                <th class="shopping-cart-image">订单号</th>
+                                                <th class="shopping-cart-description">下单日期</th>
+                                                <th class="shopping-cart-price">是否付款</th>
+                                                <th class="shopping-cart-ref-no">商品金额</th>
+                                                <th class="shopping-cart-price">操作</th>
+                                                <th class="shopping-cart-total"></th>
+                                            </tr>
+
                                             <c:forEach var="order" items="${orders}" varStatus="selectedIndex">
                                                 <tr>
                                                     <td><a href="javascript:void(0);"
@@ -53,7 +54,10 @@
                                                     <td><a href="javascript:void(0)"
                                                            data-toggle="modal"
                                                            data-target="#orderDetail${selectedIndex.index}">查看详情</a>
-                                                        <c:if test="${order.payStatus eq 'n'}"><a href="javascript:void(0); " data-href="${path}/index/order/delete/${order.id}" class="del-order">删除订单</a></c:if>
+                                                        <c:if test="${order.payStatus eq 'n'}">
+                                                            <a href="javascript:void(0); " data-href="${path}/index/order/delete/${order.id}" class="del-order">删除订单</a>
+                                                            <a href="${path}/cart/to_bill/${order.id}">提交订单</a>
+                                                        </c:if>
                                                     </td>
                                                     <td>
                                                         <div class="modal fade"

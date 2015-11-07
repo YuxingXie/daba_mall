@@ -28,6 +28,8 @@
 
 <script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
+<script type="text/javascript" src="${path}/statics/assets/plugins/sco.js-master/js/sco.modal.js"></script>
+<script type="text/javascript" src="${path}/statics/assets/plugins/sco.js-master/js/sco.confirm.js"></script>
 <script type="text/javascript">
     var nonHtml5Post =function(){
         return function(){
@@ -35,7 +37,6 @@
             var cart={};
             var productSelectedList=[];
             $('[name="productSelected"]').each(function(){
-
                 var productSelected={};
                 var productSeries={};
                 var productSeriesId= $(this).data("productSeriesId");
@@ -44,14 +45,14 @@
                 var commonPrice=$(this).data("commonPrice");
                 var pictures0=$(this).find("[name='pictures0']").data("pictures0");
                 var pictures=[pictures0];
+                var name=$(this).data("productSeriesName");
                 productSeries.pictures=pictures;
                 productSeries.id=productSeriesId;
                 productSeries.commonPrice=commonPrice;
+                productSeries.name=name;
                 productSelected.productSeries=productSeries;
-//            productSelected.commonPrice=commonPrice;
                 var productPropertyValueList=[];
                 var $productPropertyValue=$(this).find('[name="productPropertyValue"]');
-
                 $productPropertyValue.each(function(){
                     var productPropertyValue={};
                     productPropertyValue.id=$(this).data("productPropertyValueId");
@@ -59,7 +60,6 @@
                     productPropertyValue.productPropertyId==$(this).data("productPropertyValueProductPropertyId");;
                     productPropertyValueList.push(productPropertyValue);
                 });
-//            console.log($productPropertyValue.length);
                 if($productPropertyValue &&$productPropertyValue.length>0){
                     productSelected.productPropertyValueList=productPropertyValueList;
                 }
@@ -67,15 +67,22 @@
             });
             cart.productSelectedList=productSelectedList;
             var url=$("#form").attr("action");
-            alert(url);
+
+
             $.ajax({
                 url: url,
                 contentType: "application/json",
                 data: JSON.stringify(cart),
                 method: "post"
-            }).done(function () {
-                window.location.href=path+"/cart/to_bill";
-//            alert(url);
+            }).done(function (order) {
+                $(".text-order-id").text(order.id);
+                $(".text-total-amount").text(order.totalAmount);
+                $(".text-total-price").text(order.totalPrice);
+//                $("#ensure-to-bill").attr("href",path+"/cart/to_bill");
+                $(this).scojs_confirm({
+                    target:'#orderModal'
+                });
+//                window.location.href=path+"/cart/to_bill";
             }).fail(function(){ console.log("error！"); });
         }
     }

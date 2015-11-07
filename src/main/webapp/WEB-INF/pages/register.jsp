@@ -59,9 +59,9 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12">
                                     <form:form name="signupForm" modelAttribute="form"
-                                               class="form-horizontal form-without-legend" role="form"
+                                                role="form"
                                                action="${path}/user/register/email"
-                                               novalidate="novalidate" _method="POST">
+                                                class="form-horizontal form-without-legend" novalidate="novalidate" _method="POST">
                                         <fieldset>
                                             <div class="form-group has-feedback">
                                                 <div class="row">

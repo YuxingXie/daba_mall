@@ -2,6 +2,7 @@ package com.dabast.mall.view.index.controller;
 
 import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.helper.service.ServiceManager;
+import com.dabast.common.util.LocationUtil;
 import com.dabast.common.util.MD5;
 import com.dabast.common.web.CookieTool;
 import com.dabast.entity.*;
@@ -9,7 +10,6 @@ import com.dabast.mall.Constant;
 import com.dabast.mall.form.UserLoginForm;
 import com.dabast.mall.model.productseries.dao.UserDao;
 import com.dabast.mall.model.productseries.service.impl.CartService;
-import com.dabast.mall.model.productseries.service.impl.OrderService;
 import com.dabast.mall.view.index.service.impl.RegisterValidateService;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -46,23 +46,25 @@ public class IndexController extends BaseRestSpringController {
     @Resource private CartService cartService;
     @RequestMapping(value = "/index")
     public String index(HttpServletRequest request, ModelMap model, HttpSession session) {
-
-        Cookie nameCookie = CookieTool.getCookieByName(request, "loginStr");
-        Cookie pwdCookie = CookieTool.getCookieByName(request, "password");
-        String name = null;
-        try {
-            name = nameCookie == null ? null : URLDecoder.decode(nameCookie.getValue(), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        String password = pwdCookie == null ? null : pwdCookie.getValue();
-        if (name != null && password != null) {
-            User user = userDao.findByEmailOrPhone(name);
-            if (user.getPassword().equalsIgnoreCase(password)) {
-                session.setAttribute("loginUser", user);
-                session.setAttribute(Constant.CART,user.getCart());
+        if (session.getAttribute(Constant.LOGIN_USER)==null){
+            Cookie nameCookie = CookieTool.getCookieByName(request, "loginStr");
+            Cookie pwdCookie = CookieTool.getCookieByName(request, "password");
+            String name = null;
+            try {
+                name = nameCookie == null ? null : URLDecoder.decode(nameCookie.getValue(), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            String password = pwdCookie == null ? null : pwdCookie.getValue();
+            if (name != null && password != null) {
+                User user = userDao.findByEmailOrPhone(name);
+                if (user.getPassword().equalsIgnoreCase(password)) {
+                    session.setAttribute(Constant.LOGIN_USER, user);
+                    session.setAttribute(Constant.CART,user.getCart());
+                }
             }
         }
+
         List<String[]> top3 = ServiceManager.productSeriesService.getTop3ProductSeries();
         model.addAttribute("top3", top3);
         List<ProductSeries> hotSells = ServiceManager.productSeriesService.getHotSell();
@@ -193,8 +195,11 @@ public class IndexController extends BaseRestSpringController {
         if (cart.getProductSelectedList()!=null &&cart.getProductSelectedList().size()>selectedIndex){
             cart.getProductSelectedList().remove(selectedIndex.intValue());
         }
+        User user=session.getAttribute(Constant.LOGIN_USER)==null?null:((User)(session.getAttribute(Constant.LOGIN_USER)));
+        user.setCart(cart);
+        ServiceManager.userService.update(user);
         session.setAttribute(Constant.CART, cart);
-        return "cart/cart";
+        return "redirect:/cart";
     }
     @RequestMapping(value = "/index/order/submit", method = RequestMethod.GET)
     public String orderSubmit(@ModelAttribute String  id,@ModelAttribute String address,@ModelAttribute String payWay, ModelMap model) {
@@ -204,6 +209,23 @@ public class IndexController extends BaseRestSpringController {
         ServiceManager.orderService.update(order);
         model.addAttribute("order",order);
         return "redirect:/order_submit_result";
+    }
+    @RequestMapping(value = "/order/cancel")
+    public String orderCancel(ModelMap model,HttpSession session) {
+        Order order=session.getAttribute("order")==null?null:(Order)session.getAttribute("order");
+        User user=session.getAttribute(Constant.LOGIN_USER)==null?null:(User)session.getAttribute(Constant.LOGIN_USER);
+        Assert.notNull(order.getId());
+        System.out.println("订单取消：" + order.getId());
+        ServiceManager.orderService.removeById(order.getId());
+        session.setAttribute("order", null);
+        session.removeAttribute("order");
+        Cart cart=new Cart();
+        cart.setProductSelectedList(order.getProductSelectedList());
+        user.setCart(cart);
+        ServiceManager.userService.update(user);
+        session.setAttribute(Constant.CART,cart);
+        model.addAttribute(Constant.CART,cart);
+        return "redirect:/cart";
     }
     @RequestMapping(value = "/index/order/delete/{id}", method = RequestMethod.GET)
     public String orderRemove(@PathVariable String id, ModelMap model, HttpSession session) {
@@ -287,39 +309,42 @@ public class IndexController extends BaseRestSpringController {
     }
     @RequestMapping(value = "/cart/adjust")
     public ResponseEntity adjust(@RequestBody Cart cart,ModelMap model, HttpSession session) {
-        System.out.println(cart);
+        Assert.notNull(cart);
         User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
-        Cart cart1=session.getAttribute("cart")==null?null:(Cart)session.getAttribute(Constant.CART);
-        cart1.setProductSelectedList(cart.getProductSelectedList());
-        user.setCart(cart1);
+        user.setCart(new Cart());
         ServiceManager.userService.update(user);
-        session.setAttribute(Constant.CART,cart1);
-        return null;
+        Order order=new Order();
+        order.setUserId(user.getId());
+        order.setUser(user);
+        order.setOrderDate(new Date());
+        order.setPayStatus("n");
+        order.setProductSelectedList(cart.getProductSelectedList());
+        ServiceManager.orderService.insert(order);
+        session.setAttribute(Constant.CART, null);
+        session.removeAttribute(Constant.CART);
+        session.setAttribute(Constant.LOGIN_USER,user);
+        model.addAttribute("order", order);
+        session.setAttribute("order", order);
+        return new ResponseEntity<Order>(order,HttpStatus.OK);
     }
     @RequestMapping(value = "/cart/to_bill")
-    public String toBill(ModelMap model, HttpSession session) {
-        //区分从页面跳转过来的还是刷新页面来的
+    public String toBill(ModelMap model, HttpSession session,HttpServletRequest request) {
 
+        Order order=session.getAttribute("order")==null?null:(Order)session.getAttribute("order");
+//        Order order=ServiceManager.orderService.findLastOrderByUserId(orderId);
+        System.out.println(LocationUtil.getIpAddr(request));
+//        model.addAttribute("order", order);
+        return "redirect:/to_bill";
+    }
+    @RequestMapping(value = "/cart/to_bill/{orderId}")
+    public String toBill(@PathVariable String orderId,ModelMap model, HttpSession session,HttpServletRequest request) {
         User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
-//        Cart cart=session.getAttribute(Constant.CART)==null?null:(Cart)session.getAttribute(Constant.CART);
-        Cart cart=user.getCart();
-        Order order=new Order();
-        if (cart==null){
-            order=ServiceManager.orderService.findLastOrderByUserId(user.getId());
-        }else{
-            order.setUserId(user.getId());
-            order.setOrderDate(new Date());
-            order.setPayStatus("n");
-            order.setProductSelectedList(cart.getProductSelectedList());
-            ServiceManager.orderService.insert(order);
-        }
+        Order order=ServiceManager.orderService.findOrderById(orderId);
+//        model.addAttribute("order", order);
         order.setUser(user);
-        model.addAttribute("order",order);
-        //这个时候购物车已经从session中移除了，但在session属性的user中还保存着购物车信息
-        user.setCart(null);
-        ServiceManager.userService.update(user);
-        session.removeAttribute(Constant.CART);
-        return "to_bill";
+        order.setUserId(user.getId());
+        session.setAttribute("order",order);
+        return "redirect:/to_bill";
     }
     @RequestMapping(value = "/index/my_orders")
     public String myOrders(ModelMap model, HttpSession session) {

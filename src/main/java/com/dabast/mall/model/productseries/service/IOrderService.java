@@ -8,4 +8,6 @@ import com.dabast.entity.Order;
  */
 public interface IOrderService  extends IBaseEntityManager<Order> {
     Order findLastOrderByUserId(String userId);
+
+    Order findOrderById(String orderId);
 }

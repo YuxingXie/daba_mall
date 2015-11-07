@@ -32,17 +32,33 @@ public class Order {
     private Date orderDate;
     @Field(value = "userId")
     private String userId;
-    @Field(value = "addressId")
-    private String addressId;
+    @Field(value = "acceptAddress")
+    private String acceptAddress;
     @Field(value = "submitStatus")
     private String submitStatus;
-    @Field(value = "postAddress")
-    private String postAddress;
+
+    @Field(value = "acceptPersonName")
+    private String acceptPersonName;
+    @Field(value = "contactPhone")
+    private String contactPhone;
     @Transient
     private Double totalPrice;
+    @Transient
+    private Integer totalAmount;
+    @Transient
+    private User user;
+
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
+    }
 
     public Double getTotalPrice() {
         Double price=0d;
+        if (productSelectedList==null) return price;
         for (ProductSelected productSelected:productSelectedList){
             Double thePrice=productSelected.getProductSeries()==null?0:(productSelected.getProductSeries().getCommonPrice()==null?0:productSelected.getProductSeries().getCommonPrice());
             price+=thePrice*productSelected.getAmount();
@@ -50,8 +66,15 @@ public class Order {
         return price;
     }
 
-    @Transient
-    private User user;
+    public Integer getTotalAmount() {
+        Integer totalAmount=0;
+        if (productSelectedList==null) return totalAmount;
+        for (ProductSelected productSelected:productSelectedList){
+            totalAmount+=productSelected.getAmount();
+        }
+        return totalAmount;
+    }
+
     public String getId() {
         return id;
     }
@@ -62,6 +85,14 @@ public class Order {
 
     public List<ProductSelected> getProductSelectedList() {
         return productSelectedList;
+    }
+
+    public String getAcceptPersonName() {
+        return acceptPersonName;
+    }
+
+    public void setAcceptPersonName(String acceptPersonName) {
+        this.acceptPersonName = acceptPersonName;
     }
 
     public void setProductSelectedList(List<ProductSelected> productSelectedList) {
@@ -118,20 +149,12 @@ public class Order {
         this.payWay = payWay;
     }
 
-    public String getAddressId() {
-        return addressId;
+    public String getAcceptAddress() {
+        return acceptAddress;
     }
 
-    public void setAddressId(String addressId) {
-        this.addressId = addressId;
-    }
-
-    public String getPostAddress() {
-        return postAddress;
-    }
-
-    public void setPostAddress(String postAddress) {
-        this.postAddress = postAddress;
+    public void setAcceptAddress(String acceptAddress) {
+        this.acceptAddress = acceptAddress;
     }
 
     public String getSubmitStatus() {

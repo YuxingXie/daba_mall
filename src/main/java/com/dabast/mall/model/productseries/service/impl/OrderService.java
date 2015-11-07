@@ -24,4 +24,9 @@ public class OrderService extends BaseEntityManager<Order> implements IOrderServ
     public Order findLastOrderByUserId(String userId) {
         return orderDao.findLastOrderByUserId(userId);
     }
+
+    @Override
+    public Order findOrderById(String orderId) {
+        return orderDao.findOrderById(orderId) ;
+    }
 }

@@ -191,10 +191,10 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     }
 
     public E findById(ObjectId id) {
-        DBObject condition=new BasicDBObject();
-        condition.put("_id",id);
-        return findOne(condition);
-//        return mongoTemplate.findById(id, collectionClass);
+//        DBObject condition=new BasicDBObject();
+//        condition.put("_id",id);
+//        return findOne(condition);
+        return mongoTemplate.findById(id, collectionClass);
     }
 
     @Override
