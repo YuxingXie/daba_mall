@@ -17,7 +17,7 @@
         </ul>
         <div class="shopping-cart-data clearfix">
             <div class="table-wrapper-responsive" ng-app>
-                <form class="form-horizontal form-without-legend" novalidate="novalidate" action="${path}/index/order/submit" id="form" autocomplete="off">
+                <form class="form-horizontal form-without-legend" novalidate="novalidate" action="${path}/index/order/submit" id="form" autocomplete="off" method="post">
                     <table summary="Shopping cart">
                         <tr>
                             <th class="bg-info text-center" colspan="2">填写并核对订单</th>

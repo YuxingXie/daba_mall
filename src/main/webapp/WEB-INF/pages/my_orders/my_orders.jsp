@@ -8,7 +8,7 @@
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <!DOCTYPE html>
 
-<div class="main" data-description="from cart page">
+<div class="main">
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="${path}">首页</a></li>

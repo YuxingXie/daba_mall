@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -201,14 +202,19 @@ public class IndexController extends BaseRestSpringController {
         session.setAttribute(Constant.CART, cart);
         return "redirect:/cart";
     }
-    @RequestMapping(value = "/index/order/submit", method = RequestMethod.GET)
-    public String orderSubmit(@ModelAttribute String  id,@ModelAttribute String address,@ModelAttribute String payWay, ModelMap model) {
+    @RequestMapping(value = "/index/order/submit", method = RequestMethod.POST)
+    public String orderSubmit( String  id,String acceptAddress,String payWay,String acceptPersonName, String contactPhone,
+                              ModelMap model,RedirectAttributes redirectAttributes) {
         Order order=ServiceManager.orderService.findById(id);
-       order.setAcceptAddress(address);
+       order.setAcceptAddress(acceptAddress);
         order.setPayWay(payWay);
+        order.setAcceptPersonName(acceptPersonName);
+        order.setContactPhone(contactPhone);
+        order.setSubmitStatus("y");
         ServiceManager.orderService.update(order);
-        model.addAttribute("order",order);
-        return "redirect:/order_submit_result";
+//        model.addAttribute("order",order);
+        redirectAttributes.addFlashAttribute("order",order);
+        return "redirect:/bill";
     }
     @RequestMapping(value = "/order/cancel")
     public String orderCancel(ModelMap model,HttpSession session) {

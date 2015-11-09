@@ -45,6 +45,9 @@ public class User {
     private Cart cart;
     @Field(value = "addresses")
     private String[] addresses;
+
+    @Field(value = "idCardNo")
+    private String idCardNo;
     public String[] getAddresses() {
         return addresses;
     }
@@ -162,5 +165,13 @@ public class User {
 
     public void setCart(Cart cart) {
         this.cart = cart;
+    }
+
+    public String getIdCardNo() {
+        return idCardNo;
+    }
+
+    public void setIdCardNo(String idCardNo) {
+        this.idCardNo = idCardNo;
     }
 }
