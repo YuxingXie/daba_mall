@@ -15,94 +15,77 @@
             <li><a href="">购物车</a></li>
             <li class="active">填写订单</li>
         </ul>
-        <!-- BEGIN SIDEBAR & CONTENT -->
-
-
-
-
-
-
         <div class="shopping-cart-data clearfix">
             <div class="table-wrapper-responsive" ng-app>
                 <form class="form-horizontal form-without-legend" novalidate="novalidate" action="${path}/index/order/submit" id="form" autocomplete="off">
                     <table summary="Shopping cart">
                         <tr>
-                            <th class="shopping-cart-description bg-info text-center" colspan="2">填写并核对订单
-                            </th>
+                            <th class="bg-info text-center" colspan="2">填写并核对订单</th>
                         </tr>
                         <tr>
-                            <td class="shopping-cart-image">订单号：</td>
-                            <td class="shopping-cart-image" colspan="4">${order.id}</td>
-                        </tr>
-                        <tr>
-                            <td>收货人信息：</td>
-
-                            <td colspan="4">
-                                <fieldset>
-                                    <div class="form-group has-feedback">
-                                        <div class="row">
-                                                <label class="col-lg-4 control-label">收件人姓名<span class="require">*</span></label>
-                                                <div class="col-lg-8 has-success">
-                                                    <input type="text"
-                                                                                    name="acceptPersonName"
-                                                                                    value="${order.user.name}"
-                                                                                    placeholder="请填写收件人姓名"
-                                                                                    class="form-control"/>
-                                                    <span ng-show="signupForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                                </div>
+                            <td colspan="5">
+                                <div class="form-group has-feedback">
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <label class="control-label">订单号</label>
                                         </div>
-                                        <div class="row" ng-controller="appCtrl">
-                                                <label class="col-lg-4 control-label">收件地址<span class="require">*</span></label>
-                                                <div class="col-lg-8 has-success">
-                                                    <input name="acceptAddress"
-                                                                                    select-address p="p"
-                                                                                    c="c" a="a" d="d"
-                                                                                    ng-model="xxx"
-                                                                                    placeholder="请选择收件地址"
-                                                                                    type="text"
-                                                                                    class="form-control"/>
-                                                    <span ng-show="signupForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                                </div>
-
+                                        <div class="col-lg-5 has-success">
+                                            ${order.id}<input type="hidden" name="id" value="${order.id}"/>
                                         </div>
-                                        <div class="row">
-                                                <label class="col-lg-4 control-label">联系电话<span class="require">*</span></label>
-                                                <div class="col-lg-8 has-success">
-                                                    <input name="contactPhone"
-                                                                                        placeholder="请填写联系电话"
-                                                                                        type="tel"
-                                                                                        class="form-control"
-                                                                                        value="${order.user.phone}"/>
-                                                    <span ng-show="signupForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                                </div>
+                                    </div><br/>
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <label class="control-label">收件人姓名<span class="require">*</span></label>
+                                        </div>
+                                            <div class="col-lg-5 has-success">
+                                                <input type="text"  name="acceptPersonName" value="${order.user.name}"
+                                                                                placeholder="请填写收件人姓名" class="form-control"/>
+                                                <span ng-show="signupForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                             </div>
+                                    </div><br/>
+                                    <div class="row" ng-controller="appCtrl">
+                                        <div class="col-lg-2">
+                                            <label class="control-label">收件地址<span class="require">*</span></label>
+                                        </div>
+                                        <div class="col-lg-8 has-success">
+                                            <input name="acceptAddress" select-address p="p" c="c" a="a" d="d" ng-model="xxx"
+                                                   placeholder="请选择收件地址" type="text" class="form-control"/>
+                                            <span ng-show="signupForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                        </div>
+                                    </div><br/>
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <label class="control-label">联系电话<span class="require">*</span></label>
+                                        </div>
+                                            <div class="col-lg-8 has-success">
+                                                <input name="contactPhone" placeholder="请填写联系电话" type="tel" class="form-control" value="${order.user.phone}"/>
+                                                <span ng-show="signupForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                            </div>
+                                     </div><br/>
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <label class="control-label">付款方式<span class="require">*</span></label>
+                                        </div>
+                                        <div class="col-lg-8 has-success">
+                                            <div class="radio-button radio-inline"><label><input type="radio" value="1"
+                                                                                                 name="payWay"/>货到付款</label>
+                                            </div>
+                                            <div class="radio-button radio-inline"><label><input type="radio" value="2"
+                                                                                                 name="payWay"/>在线支付</label>
+                                            </div>
+                                            <div class="radio-button radio-inline"><label><input type="radio" value="3"
+                                                                                                 name="payWay"/>公司转账</label>
+                                            </div>
+                                            <div class="radio-button radio-inline"><label><input type="radio" value="4"
+                                                                                                 name="payWay"/>邮局汇款</label>
+                                            </div>
+                                        </div>
                                     </div>
-                                </fieldset>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="shopping-cart-description" colspan="2">支付方式</th>
-                            <th class="shopping-cart-image" colspan="4"></th>
-                        </tr>
-                        <tr>
-                            <td colspan="6">
-                                <div class="radio-button radio-inline"><label><input type="radio" value="1"
-                                                                                     name="payWay"/>货到付款</label>
-                                </div>
-                                <div class="radio-button radio-inline"><label><input type="radio" value="2"
-                                                                                     name="payWay"/>在线支付</label>
-                                </div>
-                                <div class="radio-button radio-inline"><label><input type="radio" value="3"
-                                                                                     name="payWay"/>公司转账</label>
-                                </div>
-                                <div class="radio-button radio-inline"><label><input type="radio" value="4"
-                                                                                     name="payWay"/>邮局汇款</label>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <th class="shopping-cart-description" colspan="2">送货清单</th>
-                            <th class="shopping-cart-image" colspan="4"></th>
+                            <th class="bg-info text-center" colspan="2">送货清单</th>
                         </tr>
                         <c:choose>
                             <c:when test="${empty sessionScope.order ||empty sessionScope.order.productSelectedList}">
@@ -113,7 +96,6 @@
                             <c:otherwise>
                                 <c:set var="totalPrice" value="0"/>
                                 <c:set var="totalCount" value="0"/>
-
                                 <c:forEach var="productSelected"
                                            items="${order.productSelectedList}"
                                            varStatus="selectedIndex">
