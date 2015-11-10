@@ -36,14 +36,21 @@
                                         $scope.banks=response.data;
                                 });
                         $scope.$watch('cardNoOrCode', function (newVal, oldVal, scope) {
-                                if (newVal && newVal !== oldVal) {
-                                        var $bankShortcuts=$(".bank-shortcuts");
+                                var $bankShortcuts=$(".bank-shortcuts");
+                                if( newVal === ""){
+                                        $bankShortcuts.show();
+                                        return;
+                                }
+                                if (newVal && newVal !== "") {
+                                        $bankShortcuts.show();
+                                        if( newVal === "") return;
                                         $bankShortcuts.each(function(){
-                                                if(true){
-
+                                                var theCode=$(this).data("code");
+                                                if(theCode.indexOf(newVal)<0){
+                                                        $(this).hide();
                                                 }
                                         });
-                                        $scope.matchCode=false;
+
                                 }
                         });
 

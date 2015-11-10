@@ -48,11 +48,10 @@
                             <div class="col-lg-12 col-sm-12 tab-pane" id="shortcuts">
                                 <div class="form-inline col-lg-12 col-sm-12">
                                     <input type="text" class="bank-code form-control" placeholder="输入银行卡号或简码识别" ng-model="cardNoOrCode"/>
-                                    <input type="button" class="btn btn-primary" value="确定"/>
                                 </div>
                                 <div>
                                     <div ng-repeat="bank in banks">
-                                            <div class="col-lg-3 col-sm-3 bank-shortcuts" style="margin-top: 5px;margin-bottom: 5px;" ng-if="matchCode"
+                                            <div class="col-lg-3 col-sm-3 bank-shortcuts" style="margin-top: 5px;margin-bottom: 5px;"
                                                  data-code="{{bank.code}}"  data-bank-name="{{bank.name}}" data-ico="{{bank.ico}}">
                                                 <a href="#" class="bank-ico" data-code="{{bank.code}}"  data-bank-name="{{bank.name}}" data-ico="{{bank.ico}}">
                                                     <img src="${path}/statics/assets/plugins/bank/ico/{{bank.ico}}" alt="{{bank.name}}"/></a>
