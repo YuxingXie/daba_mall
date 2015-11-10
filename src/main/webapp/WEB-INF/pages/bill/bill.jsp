@@ -18,7 +18,7 @@
         </ul>
         <div class="shopping-cart-data clearfix">
             <div>
-                <form class="form-without-legend" novalidate="novalidate" action="${path}/index/order/submit" id="form" autocomplete="off">
+                <form class="form-without-legend" novalidate="novalidate" action="${path}/order/pay" id="form" autocomplete="off">
                     <div class="row">
                         <p class="bg-info col-lg-8 text-left ">订单提交成功，请您尽快付款！ 订单号：${order.id},应付金额${order.totalPrice}元</p>
                         <p class="bg-danger text-left col-lg-8" >公告： 请您在6小时内完成支付，否则订单会被自动取消。</p>
@@ -80,15 +80,16 @@
                             <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
                                 <div class="col-lg-2 col-sm-2 text small">付款银行</div>
                                 <div class="col-lg-6 col-sm-6" name="bankName"></div>
+
                             </div>
                             <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
                                 <div class="col-lg-2 col-sm-2 text small bg-success">卡种</div>
                                 <div class="col-lg-6 col-sm-6 form-inline">
-                                    <div class="radio ">
-                                        <label><input type="radio" name="cardSort" value="1" required="true"/>信用卡</label>
+                                    <div class="radio">
+                                        <label><input type="radio" name="cardSort" value="1" required="true" ng-model="cardSort"/>信用卡</label>
                                     </div>
                                     <div class="radio">
-                                        <label><input type="radio" name="cardSort" value="2" checked  required="true"/>储蓄卡</label>
+                                        <label><input type="radio" name="cardSort" value="2" checked  required="true" ng-model="cardSort"/>储蓄卡</label>
                                     </div>
 
                                 </div>
@@ -117,18 +118,42 @@
                                     <input type="text" name="phone" class="form-control " value="${order.user.phone}" required="true"/>
                                 </div>
                             </div>
+
+                            <div class="row" ng-if="cardSort==1&&isShow">
+                                <div class="col-lg-8 col-sm-8" name="credit_card_example"><img src="${path}/statics/assets/plugins/bank/credit_card_example.jpg"></div>
+                            </div>
+                            <div class="form-group row" ng-show="cardSort==1">
+                                <div class="col-lg-2 col-sm-2 text small">有效期</div>
+                                <div class="input-group date form_date col-lg-6 col-sm-6" >
+                                    <input class="form-control" size="16" type="text" name="cardValidDate" required="true"/>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                            </div>
+                            <div class="row " style="margin-bottom: 15px;margin-top: 15px;" ng-if="cardSort==1">
+                                <div class="col-lg-2 col-sm-2 text small bg-success">卡验证码</div>
+                                <div class="col-lg-6 col-sm-6">
+                                    <input type="text" name="cardValidateCode" class="form-control " required="true" placeholder="签名栏后3位数"/>
+
+                                </div>
+                                <div class="col-lg-2 col-sm-2 checkbox-inline">
+                                    <label>
+                                        <input type="checkbox" data-ng-click="showPic()"/>看示例
+                                    </label>
+                                </div>
+                            </div>
                             <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
                                 <div class="col-lg-2 col-sm-2 text small"></div>
                                 <div class="col-lg-6 col-sm-6">
                                     <input type="checkbox" value="${order.user.phone}" required="true"/><a href="${path}/statics/docs/kuaijiezhifuyonghuxieyi.html" target="_blank">《大坝快捷支付用户协议》</a>
                                 </div>
                             </div>
+
                         </div>
                         <div class="modal-footer row">
                             <div class="col-lg-2 col-sm-2"></div>
                             <div class="col-lg-4 col-sm-4">
-                                <input type="submit" value="同意开通并支付" class="btn btn-primary"
-                                                                  ng-disabled="billForm.$invalid"/>
+                                <input type="submit" value="同意开通并支付" class="btn btn-primary" ng-disabled="billForm.$invalid"/>
                             </div>
                             <div class="col-lg-2 col-sm-2">
                                 <button type="button" class="btn btn-primary modal-close" data-dismiss="modal" aria-hidden="true" style=" width:100%;">关闭</button>

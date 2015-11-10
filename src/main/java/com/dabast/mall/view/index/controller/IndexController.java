@@ -216,6 +216,21 @@ public class IndexController extends BaseRestSpringController {
         redirectAttributes.addFlashAttribute("order",order);
         return "redirect:/bill";
     }
+
+    @RequestMapping(value = "/order/pay", method = RequestMethod.POST)
+    public String orderPay( String  id,String acceptAddress,String payWay,String acceptPersonName, String contactPhone,
+                               ModelMap model,RedirectAttributes redirectAttributes) {
+        Order order=ServiceManager.orderService.findById(id);
+        order.setAcceptAddress(acceptAddress);
+        order.setPayWay(payWay);
+        order.setAcceptPersonName(acceptPersonName);
+        order.setContactPhone(contactPhone);
+        order.setSubmitStatus("y");
+        ServiceManager.orderService.update(order);
+//        model.addAttribute("order",order);
+        redirectAttributes.addFlashAttribute("order",order);
+        return "redirect:/bill";
+    }
     @RequestMapping(value = "/order/cancel")
     public String orderCancel(ModelMap model,HttpSession session) {
         Order order=session.getAttribute("order")==null?null:(Order)session.getAttribute("order");

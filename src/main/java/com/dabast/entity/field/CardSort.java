@@ -1,10 +1,8 @@
-package com.dabast.entity;
+package com.dabast.entity.field;
 
+import com.dabast.entity.Bank;
 import org.springframework.data.annotation.Transient;
 
-/**
- * Created by Administrator on 2015/11/10.
- */
 public class CardSort {
     private String noStart;
     private String cardSort;

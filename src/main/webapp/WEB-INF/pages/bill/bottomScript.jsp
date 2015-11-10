@@ -26,8 +26,19 @@
 <%--<script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>--%>
 <script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>
+<script type="text/javascript" src="${path}/statics/assets/plugins/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="${path}/statics/assets/plugins/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 
 <script>
+        $('.form_date').datetimepicker({
+                language:'zh-CN',
+                format:'mm/yy',
+                weekStart: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 3,
+                minView: 3
+        });
         var containsIgnoreCases=function(full,part){
                 if(!full) return false;
                 if(full==="") return false;
@@ -68,6 +79,7 @@
         }
         angular.module("bank",[])
                 .controller("bankController",["$scope","$http",function($scope,$http){
+                        $scope.isShow=false;
                         $http.get(path+"/statics/assets/plugins/bank/bankInfo.json")
                                 .then(function(response){
                                         $scope.banks=response.data;
@@ -83,6 +95,9 @@
                                 }
                                 return false;
                         };
+                        $scope.showPic=function(){
+                                $scope.isShow=! $scope.isShow;
+                        }
 
                 }])
         $(document).ready(function(){
