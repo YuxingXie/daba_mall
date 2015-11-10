@@ -4,7 +4,6 @@
 <script src="${path}/statics/assets/plugins/respond.min.js"></script>
 <![endif]-->
 <script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
-
 <%--<script type="text/javascript" src="${path}/statics/assets/plugins/back-to-top.js"></script>--%>
 <%--<script type="text/javascript" src="${path}/statics/assets/plugins/jQuery-slimScroll/jquery.slimscroll.min.js"></script>--%>
 <!-- END CORE PLUGINS -->
@@ -29,30 +28,61 @@
 <script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>
 
 <script>
+        var containsIgnoreCases=function(full,part){
+                if(!full) return false;
+                if(full==="") return false;
+                if(!part) return true;
+                if(part==="") return true;
+                var fullStr=full.toString();
+                var partStr=part.toString();
+                if(fullStr.length<partStr.length) return false;
+                for(var i=0;i<partStr.length;i++){//abc
+                        var partStrChar=partStr.substring(0,i+1);
+                        if(fullStr.indexOf(partStrChar)<0 &&fullStr.indexOf(partStrChar.toLowerCase())<0&&fullStr.indexOf(partStrChar.toUpperCase())<0){
+                                return false;
+                        }
+                }
+                return true;
+        }
+        var matchCode=function(code,input){
+                return containsIgnoreCases(code,input);
+        }
+        var matchNo=function(cardSorts,input){
+                if(!input) return true;
+                if(input==="") return true;
+                if(!cardSorts) return false;
+                if(cardSorts==="") return false;
+                if(cardSorts==="[]") return false;
+                if(!Array.isArray(cardSorts)) return false;
+                for(var i=0;i<cardSorts.length;i++){
+                        var cardSort=cardSorts[i];
+                        var noStart=cardSort.noStart;
+                        if(!noStart) continue;
+                        if(noStart==="")continue;
+                        if(noStart.indexOf(input)>=0){
+                                return true;
+                        }
+                        continue;
+                }
+                return false;
+        }
         angular.module("bank",[])
                 .controller("bankController",["$scope","$http",function($scope,$http){
                         $http.get(path+"/statics/assets/plugins/bank/bankInfo.json")
                                 .then(function(response){
                                         $scope.banks=response.data;
                                 });
-                        $scope.$watch('cardNoOrCode', function (newVal, oldVal, scope) {
-                                var $bankShortcuts=$(".bank-shortcuts");
-                                if( newVal === ""){
-                                        $bankShortcuts.show();
-                                        return;
+                        $scope.matches=function(bank){
+                                var code=bank.code;
+                                var cardSorts=bank.cardSorts;
+                                if(!$scope.cardNoOrCode){
+                                        return true;
                                 }
-                                if (newVal && newVal !== "") {
-                                        $bankShortcuts.show();
-                                        if( newVal === "") return;
-                                        $bankShortcuts.each(function(){
-                                                var theCode=$(this).data("code");
-                                                if(theCode.indexOf(newVal)<0){
-                                                        $(this).hide();
-                                                }
-                                        });
-
+                                if(matchCode(code,$scope.cardNoOrCode)||matchNo(cardSorts,$scope.cardNoOrCode)){
+                                        return true;
                                 }
-                        });
+                                return false;
+                        };
 
                 }])
         $(document).ready(function(){

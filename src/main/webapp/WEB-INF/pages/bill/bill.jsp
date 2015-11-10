@@ -47,12 +47,12 @@
                             </div>
                             <div class="col-lg-12 col-sm-12 tab-pane" id="shortcuts">
                                 <div class="form-inline col-lg-12 col-sm-12">
-                                    <input type="text" class="bank-code form-control" placeholder="输入银行卡号或简码识别" ng-model="cardNoOrCode"/>
+                                    <input type="text" class="bank-code form-control" placeholder="输入银行卡号或简码识别" ng-model="cardNoOrCode"/>例如：输入"abc"可找到中国农业银行,输入卡号的前几位数字也可以找到对应银行
                                 </div>
                                 <div>
                                     <div ng-repeat="bank in banks">
                                             <div class="col-lg-3 col-sm-3 bank-shortcuts" style="margin-top: 5px;margin-bottom: 5px;"
-                                                 data-code="{{bank.code}}"  data-bank-name="{{bank.name}}" data-ico="{{bank.ico}}">
+                                                 data-code="{{bank.code}}"  data-bank-name="{{bank.name}}" data-ico="{{bank.ico}}" ng-if="matches(bank)">
                                                 <a href="#" class="bank-ico" data-code="{{bank.code}}"  data-bank-name="{{bank.name}}" data-ico="{{bank.ico}}">
                                                     <img src="${path}/statics/assets/plugins/bank/ico/{{bank.ico}}" alt="{{bank.name}}"/></a>
                                             </div>
@@ -75,61 +75,67 @@
                             快捷付款
                         </h2>
                     </div>
-                    <div class="modal-body table-bordered">
-                        <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
-                            <div class="col-lg-2 col-sm-2 text small">付款银行</div>
-                            <div class="col-lg-6 col-sm-6" name="bankName"></div>
-                        </div>
-                        <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
-                            <div class="col-lg-2 col-sm-2 text small bg-success">卡种</div>
-                            <div class="col-lg-6 col-sm-6 form-inline">
-                                <div class="radio ">
-                                    <label><input type="radio" name="cardSort" value="1"/>信用卡</label>
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="cardSort" value="2" checked/>储蓄卡</label>
-                                </div>
+                    <form method="post" name="billForm" action="some url">
+                        <div class="modal-body table-bordered">
+                            <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
+                                <div class="col-lg-2 col-sm-2 text small">付款银行</div>
+                                <div class="col-lg-6 col-sm-6" name="bankName"></div>
+                            </div>
+                            <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
+                                <div class="col-lg-2 col-sm-2 text small bg-success">卡种</div>
+                                <div class="col-lg-6 col-sm-6 form-inline">
+                                    <div class="radio ">
+                                        <label><input type="radio" name="cardSort" value="1" required="true"/>信用卡</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label><input type="radio" name="cardSort" value="2" checked  required="true"/>储蓄卡</label>
+                                    </div>
 
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
+                                <div class="col-lg-2 col-sm-2 text small">银行卡号</div>
+                                <div class="col-lg-6 col-sm-6">
+                                    <input type="text" class="form-control" required="true"/>
+                                </div>
+                            </div>
+                            <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
+                                <div class="col-lg-2 col-sm-2 text small bg-success">姓名</div>
+                                <div class="col-lg-4 col-sm-4">
+                                    <input type="text" class="form-control " value="${order.user.name}" required="true"/>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
+                                <div class="col-lg-2 col-sm-2 text small">身份证</div>
+                                <div class="col-lg-6 col-sm-6">
+                                    <input type="text" name="idCardNo" class="form-control" value="${order.user.idCardNo}" required="true"/>
+                                </div>
+                            </div>
+                            <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
+                                <div class="col-lg-2 col-sm-2 text small bg-success">手机号</div>
+                                <div class="col-lg-6 col-sm-6">
+                                    <input type="text" name="phone" class="form-control " value="${order.user.phone}" required="true"/>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
+                                <div class="col-lg-2 col-sm-2 text small"></div>
+                                <div class="col-lg-6 col-sm-6">
+                                    <input type="checkbox" value="${order.user.phone}" required="true"/><a href="${path}/statics/docs/kuaijiezhifuyonghuxieyi.html" target="_blank">《大坝快捷支付用户协议》</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
-                            <div class="col-lg-2 col-sm-2 text small">银行卡号</div>
-                            <div class="col-lg-6 col-sm-6">
-                                <input type="text" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
-                            <div class="col-lg-2 col-sm-2 text small bg-success">姓名</div>
+                        <div class="modal-footer row">
+                            <div class="col-lg-2 col-sm-2"></div>
                             <div class="col-lg-4 col-sm-4">
-                                <input type="text" class="form-control " value="${order.user.name}"/>
+                                <input type="submit" value="同意开通并支付" class="btn btn-primary"
+                                                                  ng-disabled="billForm.$invalid"/>
+                            </div>
+                            <div class="col-lg-2 col-sm-2">
+                                <button type="button" class="btn btn-primary modal-close" data-dismiss="modal" aria-hidden="true" style=" width:100%;">关闭</button>
                             </div>
                         </div>
-                        <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
-                            <div class="col-lg-2 col-sm-2 text small">身份证</div>
-                            <div class="col-lg-6 col-sm-6">
-                                <input type="text" name="idCardNo" class="form-control" value="${order.user.idCardNo}"/>
-                            </div>
-                        </div>
-                        <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
-                            <div class="col-lg-2 col-sm-2 text small bg-success">手机号</div>
-                            <div class="col-lg-6 col-sm-6">
-                                <input type="text" name="phone" class="form-control " value="${order.user.phone}"/>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
-                            <div class="col-lg-2 col-sm-2 text small"></div>
-                            <div class="col-lg-6 col-sm-6">
-                                <input type="checkbox" value="${order.user.phone}"/><a href="${path}/statics/docs/kuaijiezhifuyonghuxieyi.html" target="_blank">《大坝快捷支付用户协议》</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer row">
-                        <div class="col-lg-2 col-sm-2"></div>
-                        <div class="col-lg-4 col-sm-4"><input type="button" value="同意开通并支付" class="btn btn-primary"/></div>
-                        <div class="col-lg-2 col-sm-2">
-                            <button type="button" class="btn btn-primary modal-close" data-dismiss="modal" aria-hidden="true" style=" width:100%;">关闭</button>
-                        </div>
-                    </div>
+                    </form>
+
                 </div>
             </div>
         </div>
