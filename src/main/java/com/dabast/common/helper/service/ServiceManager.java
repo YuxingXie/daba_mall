@@ -16,6 +16,11 @@ public class ServiceManager implements InitializingBean{
 
 
     public static IUserService userService;
+    public static IAccountService accountService;
+
+    public void setAccountService(IAccountService accountService) {
+        ServiceManager.accountService = accountService;
+    }
 
     public void setOrderService(IOrderService orderService) {
         ServiceManager.orderService = orderService;

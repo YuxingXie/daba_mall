@@ -1,12 +1,23 @@
-package com.dabast.entity.field;
+package com.dabast.entity;
 
 import com.dabast.entity.Bank;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
+@Document(collection = "cardSort")
 public class CardSort {
-    private String noStart;
+    @Id
+    private String id;
+    @Field(value = "noStart")
+    private String noStart;//信用卡或储蓄卡
+    @Field(value = "cardSort")
     private String cardSort;
+    @Field(value = "cardName")
     private String cardName;
+    @Field(value = "bankId")
+    private String bankId;
     @Transient
     private Bank bank;
     public String getNoStart() {
@@ -31,6 +42,14 @@ public class CardSort {
 
     public void setCardName(String cardName) {
         this.cardName = cardName;
+    }
+
+    public String getBankId() {
+        return bankId;
+    }
+
+    public void setBankId(String bankId) {
+        this.bankId = bankId;
     }
 
     public Bank getBank() {

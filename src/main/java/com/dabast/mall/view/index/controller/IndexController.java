@@ -218,18 +218,34 @@ public class IndexController extends BaseRestSpringController {
     }
 
     @RequestMapping(value = "/order/pay", method = RequestMethod.POST)
-    public String orderPay( String  id,String acceptAddress,String payWay,String acceptPersonName, String contactPhone,
+    public String orderPay( @ModelAttribute Account account,String orderId,String acceptAddress,String payWay,String acceptPersonName, String contactPhone,
                                ModelMap model,RedirectAttributes redirectAttributes) {
-        Order order=ServiceManager.orderService.findById(id);
-        order.setAcceptAddress(acceptAddress);
-        order.setPayWay(payWay);
-        order.setAcceptPersonName(acceptPersonName);
-        order.setContactPhone(contactPhone);
+        /**
+         * 付款成功系统需要做的事
+         * 1.更新订单状态
+         * 2.保存用户的账户信息（银行卡号）
+         * 3.通知用户等待收货
+         */
+
+        Order order=ServiceManager.orderService.findById(orderId);
         order.setSubmitStatus("y");
         ServiceManager.orderService.update(order);
-//        model.addAttribute("order",order);
+        //货到付款1，在线支付2，公司转账3，邮局汇款4
+        if (payWay.equals("1")){
+
+        }else if (payWay.equals("2")){
+            Account account0 = ServiceManager.accountService.findAccountsByUserIdAndCardNo(order.getUser().getId(),account.getCardNo());
+            if (account0==null){
+                ServiceManager.accountService.insert(account);
+            }
+        }else if (payWay.equals("3")){
+
+        }else if (payWay.equals("4")){
+
+        }
+
         redirectAttributes.addFlashAttribute("order",order);
-        return "redirect:/bill";
+        return "redirect:/pay_result";
     }
     @RequestMapping(value = "/order/cancel")
     public String orderCancel(ModelMap model,HttpSession session) {

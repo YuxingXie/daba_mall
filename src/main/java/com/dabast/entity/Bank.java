@@ -1,7 +1,7 @@
 package com.dabast.entity;
 
-import com.dabast.entity.field.CardSort;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -20,7 +20,9 @@ public class Bank {
     private String name;
     @Field(value = "ico")
     private String ico;
-    @Field(value = "cartSorts")
+    @Field(value = "cartSortIds")
+    private List<String> cartSortIds;
+    @Transient
     private List<CardSort> cardSorts;
 
     public String getId() {
@@ -53,6 +55,14 @@ public class Bank {
 
     public void setIco(String ico) {
         this.ico = ico;
+    }
+
+    public List<String> getCartSortIds() {
+        return cartSortIds;
+    }
+
+    public void setCartSortIds(List<String> cartSortIds) {
+        this.cartSortIds = cartSortIds;
     }
 
     public List<CardSort> getCardSorts() {

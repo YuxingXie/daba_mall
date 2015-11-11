@@ -4,15 +4,13 @@ import com.dabast.entity.Cart;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Administrator on 2015/5/22.
- */
 @Document(collection = "users")
 public class User {
     @Id private String id;
@@ -48,6 +46,8 @@ public class User {
 
     @Field(value = "idCardNo")
     private String idCardNo;
+    @Transient
+    private List<Account> userAccounts;
     public String[] getAddresses() {
         return addresses;
     }
@@ -88,12 +88,6 @@ public class User {
         this.loginStatus = loginStatus;
     }
 
-    //    public Set<Address> getAddress() {
-//        return address;
-//    }
-//    public void setAddress(Set<Address> address) {
-//        this.address = address;
-//    }
     public String getPassword() {
         return password;
     }
@@ -173,5 +167,13 @@ public class User {
 
     public void setIdCardNo(String idCardNo) {
         this.idCardNo = idCardNo;
+    }
+
+    public List<Account> getUserAccounts() {
+        return userAccounts;
+    }
+
+    public void setUserAccounts(List<Account> userAccounts) {
+        this.userAccounts = userAccounts;
     }
 }
