@@ -20,7 +20,7 @@ public class Order {
     private List<ProductSelected> productSelectedList;
     @Field(value = "payStatus")
     /**
-     * 已支付:y，未支付n
+     * 支付成功:y，支付失败n，为空表示未进行支付
      */
     private String payStatus;
     @Field(value = "payWay")
@@ -36,19 +36,24 @@ public class Order {
     private String userId;
     @Field(value = "acceptAddress")
     private String acceptAddress;
+
     @Field(value = "submitStatus")
-    private String submitStatus;
+    private String submitStatus="n";
 
     @Field(value = "acceptPersonName")
     private String acceptPersonName;
     @Field(value = "contactPhone")
     private String contactPhone;
+    @Field(value = "payAccountId")
+    private String payAccountId;
     @Transient
     private Double totalPrice;
     @Transient
     private Integer totalAmount;
     @Transient
     private User user;
+    @Transient
+    private Account payAccount;
 
     public String getContactPhone() {
         return contactPhone;
@@ -166,7 +171,25 @@ public class Order {
     public void setSubmitStatus(String submitStatus) {
         this.submitStatus = submitStatus;
     }
-//货到付款1，在线支付2，公司转账3，邮局汇款4
+
+
+    public String getPayAccountId() {
+        return payAccountId;
+    }
+
+    public void setPayAccountId(String payAccountId) {
+        this.payAccountId = payAccountId;
+    }
+
+    public Account getPayAccount() {
+        return payAccount;
+    }
+
+    public void setPayAccount(Account payAccount) {
+        this.payAccount = payAccount;
+    }
+
+    //货到付款1，在线支付2，公司转账3，邮局汇款4
     public String getPayWayString() {
         return payWayString==null?null:(payWayString.equals("1")?"货到付款":(payWayString.equals("2")?"在线支付":(payWayString.equals("3")?"公司转账":(payWayString.equals("4")?"邮局汇款":null))));
     }

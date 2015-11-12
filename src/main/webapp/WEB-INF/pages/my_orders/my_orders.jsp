@@ -56,7 +56,15 @@
                                                            data-target="#orderDetail${selectedIndex.index}">查看详情</a>
                                                         <c:if test="${order.payStatus eq 'n'}">
                                                             <a href="javascript:void(0); " data-href="${path}/index/order/delete/${order.id}" class="del-order">删除订单</a>
-                                                            <a href="${path}/cart/to_bill/${order.id}">提交订单</a>
+                                                            <c:choose>
+                                                                <c:when test="${empty order.submitStatus or order.submitStatus eq 'n'}">
+                                                                    <a href="${path}/cart/to_bill/${order.id}">提交订单</a>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <a href="${path}/order/submit/${order.id}">去付款</a>
+                                                                </c:otherwise>
+                                                            </c:choose>
+
                                                         </c:if>
                                                     </td>
                                                     <td>

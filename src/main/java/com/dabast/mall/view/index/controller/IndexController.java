@@ -2,8 +2,7 @@ package com.dabast.mall.view.index.controller;
 
 import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.helper.service.ServiceManager;
-import com.dabast.common.util.LocationUtil;
-import com.dabast.common.util.MD5;
+import com.dabast.common.util.*;
 import com.dabast.common.web.CookieTool;
 import com.dabast.entity.*;
 import com.dabast.mall.Constant;
@@ -27,11 +26,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2015/6/11.
@@ -73,14 +74,7 @@ public class IndexController extends BaseRestSpringController {
         return "index";
     }
 
-    @RequestMapping(value = "/index/user/{id}")
-    public ResponseEntity<User> get(ModelMap model, @PathVariable String id) {
-        User user = new User();
-        user.setName("Tom" + id);
-        user.setHeight(100);
-        user.setSex("f");
-        return new ResponseEntity<User>(user, HttpStatus.OK);
-    }
+
     @RequestMapping(value = "/index/product/search")
     public String  searchProducts(ModelMap model,String keyWord,Integer page) {
         page=page==null?1:page;
@@ -156,7 +150,7 @@ public class IndexController extends BaseRestSpringController {
         productSelected.setProductPropertyValueList(productPropertyValueList);
         cart.merge(productSelected);
         if (session.getAttribute(Constant.LOGIN_USER)!=null){
-            User user=(User)session.getAttribute(Constant.LOGIN_USER);
+            User user=getLoginUser(session);
             user.setCart(cart);
             ServiceManager.userService.update(user);
         }
@@ -176,7 +170,7 @@ public class IndexController extends BaseRestSpringController {
             cart.getProductSelectedList().remove(selectedIndex.intValue());
         }
         if (session.getAttribute(Constant.LOGIN_USER)!=null){
-            User user=(User)session.getAttribute(Constant.LOGIN_USER);
+            User user=getLoginUser(session);
             user.setCart(cart);
             ServiceManager.userService.update(user);
         }
@@ -196,61 +190,127 @@ public class IndexController extends BaseRestSpringController {
         if (cart.getProductSelectedList()!=null &&cart.getProductSelectedList().size()>selectedIndex){
             cart.getProductSelectedList().remove(selectedIndex.intValue());
         }
-        User user=session.getAttribute(Constant.LOGIN_USER)==null?null:((User)(session.getAttribute(Constant.LOGIN_USER)));
+        User user= getLoginUser(session);
         user.setCart(cart);
         ServiceManager.userService.update(user);
         session.setAttribute(Constant.CART, cart);
         return "redirect:/cart";
     }
+
+    private User getLoginUser(HttpSession session) {
+        return session.getAttribute(Constant.LOGIN_USER)==null?null:((User)(session.getAttribute(Constant.LOGIN_USER)));
+    }
+
     @RequestMapping(value = "/index/order/submit", method = RequestMethod.POST)
     public String orderSubmit( String  id,String acceptAddress,String payWay,String acceptPersonName, String contactPhone,
                               ModelMap model,RedirectAttributes redirectAttributes) {
         Order order=ServiceManager.orderService.findById(id);
-       order.setAcceptAddress(acceptAddress);
-        order.setPayWay(payWay);
-        order.setAcceptPersonName(acceptPersonName);
-        order.setContactPhone(contactPhone);
+        if (acceptAddress!=null)order.setAcceptAddress(acceptAddress);
+        if (payWay!=null)order.setPayWay(payWay);
+        if (acceptPersonName!=null)order.setAcceptPersonName(acceptPersonName);
+        if (contactPhone!=null)order.setContactPhone(contactPhone);
         order.setSubmitStatus("y");
         ServiceManager.orderService.update(order);
 //        model.addAttribute("order",order);
         redirectAttributes.addFlashAttribute("order",order);
         return "redirect:/bill";
     }
-
+    @RequestMapping(value = "/order/submit/{id}")
+    public String orderSubmit(@PathVariable String  id,ModelMap model,HttpSession session,RedirectAttributes redirectAttributes) {
+        Order order=ServiceManager.orderService.findById(id);
+        User user=getLoginUser(session);
+        order.setUser(user);
+        if (user.getId()!=null) order.setUserId(user.getId());
+        redirectAttributes.addFlashAttribute("order",order);
+        return "redirect:/bill";
+    }
+    @RequestMapping(value = "/index/user/{id}")
+    public ResponseEntity<User> get(ModelMap model, @PathVariable String id,HttpServletRequest request) {
+        User user = new User();
+        user.setName("Tom" + id);
+        user.setHeight(100);
+        user.setSex("f");
+        Map<String,String[]> params=new CustomServletRequestWrapper(request).getParameterMap();
+        Map<String,String[]> params2=request.getParameterMap();
+        for (String key:params.keySet()){
+            System.out.println("---------------------");
+            String[] values=params.get(key);
+            for (String value :values){
+                System.out.println("key:"+key+",value:"+value);
+            }
+        }
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/index/user/test")
+    public ResponseEntity<User> test(HttpServletRequest request) {
+        User user = new User();
+        user.setName("Tom");
+        user.setHeight(100);
+        user.setSex("f");
+        Map<String,String[]> params=new CustomServletRequestWrapper(request).getParameterMap();
+        Map<String,String[]> params2=request.getParameterMap();
+        for (String key:params.keySet()){
+            String[] values=params.get(key);
+            for (String value :values){
+                System.out.println("key:"+key+",value:"+value);
+            }
+            System.out.println("---------------------");
+        }
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
     @RequestMapping(value = "/order/pay", method = RequestMethod.POST)
-    public String orderPay( @ModelAttribute Account account,String orderId,String acceptAddress,String payWay,String acceptPersonName, String contactPhone,
-                               ModelMap model,RedirectAttributes redirectAttributes) {
+    public String orderPay( @ModelAttribute Account account,String orderId, ModelMap model,HttpServletRequest request,RedirectAttributes redirectAttributes) throws IOException {
         /**
          * 付款成功系统需要做的事
-         * 1.更新订单状态
-         * 2.保存用户的账户信息（银行卡号）
-         * 3.通知用户等待收货
+         * 1.发送请求至外部接口，接收返回数据
+         * 2.更新订单状态
+         * 3.保存用户的账户信息（银行卡号）
+         * 4.通知用户等待收货
          */
-
+        Assert.notNull(orderId);
         Order order=ServiceManager.orderService.findById(orderId);
-        order.setSubmitStatus("y");
-        ServiceManager.orderService.update(order);
+        Assert.notNull(order);
+        Assert.notNull(order.getUserId());
+        String payWay=order.getPayWay();
+        Assert.notNull(payWay);
         //货到付款1，在线支付2，公司转账3，邮局汇款4
         if (payWay.equals("1")){
-
+            order.setPayStatus("n");
         }else if (payWay.equals("2")){
-            Account account0 = ServiceManager.accountService.findAccountsByUserIdAndCardNo(order.getUser().getId(),account.getCardNo());
-            if (account0==null){
-                ServiceManager.accountService.insert(account);
+//            String outUrl="http://127.0.0.1:8088/mall/index/user/test";
+//            CustomServletRequestWrapper requestWrapper=new CustomServletRequestWrapper(request);
+//            Map<String,String[]> requestParams=requestWrapper.getParameterMap();
+//            String result=OuterRequestUtil.sendPost(outUrl,requestParams);
+            if (ThirdPartPayUtil.isPaySuccess()){
+                order.setPayStatus("y");
+                Account account0 = ServiceManager.accountService.findAccountsByUserIdAndCardNo(order.getUserId(),account.getCardNo());
+                if (account0==null){
+                    account.setUserId(order.getUserId());
+                    ServiceManager.accountService.insert(account);
+                    order.setPayAccountId(account.getId());
+                    order.setPayAccount(account);
+                }else {
+                    order.setPayAccountId(account0.getId());
+                    order.setPayAccount(account0);
+                }
+
+            }else{
+                order.setPayStatus("n");
             }
+
         }else if (payWay.equals("3")){
-
+            order.setPayStatus("n");
         }else if (payWay.equals("4")){
-
+            order.setPayStatus("n");
         }
-
+        ServiceManager.orderService.update(order);
         redirectAttributes.addFlashAttribute("order",order);
         return "redirect:/pay_result";
     }
     @RequestMapping(value = "/order/cancel")
     public String orderCancel(ModelMap model,HttpSession session) {
         Order order=session.getAttribute("order")==null?null:(Order)session.getAttribute("order");
-        User user=session.getAttribute(Constant.LOGIN_USER)==null?null:(User)session.getAttribute(Constant.LOGIN_USER);
+        User user=getLoginUser(session);
         Assert.notNull(order.getId());
         System.out.println("订单取消：" + order.getId());
         ServiceManager.orderService.removeById(order.getId());
@@ -335,7 +395,7 @@ public class IndexController extends BaseRestSpringController {
     }
     @RequestMapping(value = "/index/login_user")
     public ResponseEntity loginUser(ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-        User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
+        User user=getLoginUser(session);
         return new ResponseEntity<User>(user,HttpStatus.OK);
     }
 
@@ -347,7 +407,7 @@ public class IndexController extends BaseRestSpringController {
     @RequestMapping(value = "/cart/adjust")
     public ResponseEntity adjust(@RequestBody Cart cart,ModelMap model, HttpSession session) {
         Assert.notNull(cart);
-        User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
+        User user=getLoginUser(session);
         user.setCart(new Cart());
         ServiceManager.userService.update(user);
         Order order=new Order();
@@ -375,7 +435,7 @@ public class IndexController extends BaseRestSpringController {
     }
     @RequestMapping(value = "/cart/to_bill/{orderId}")
     public String toBill(@PathVariable String orderId,ModelMap model, HttpSession session,HttpServletRequest request) {
-        User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
+        User user=getLoginUser(session);
         Order order=ServiceManager.orderService.findOrderById(orderId);
 //        model.addAttribute("order", order);
         order.setUser(user);
@@ -385,7 +445,7 @@ public class IndexController extends BaseRestSpringController {
     }
     @RequestMapping(value = "/index/my_orders")
     public String myOrders(ModelMap model, HttpSession session) {
-        User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
+        User user=getLoginUser(session);
         Order order=new Order();
         order.setUserId(user.getId());
         List<Order> orders=ServiceManager.orderService.findEquals(order);

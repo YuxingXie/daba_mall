@@ -19,6 +19,7 @@
         <div class="shopping-cart-data clearfix">
             <div>
                 <form class="form-without-legend" novalidate="novalidate" action="${path}/order/pay" id="form" autocomplete="off">
+
                     <div class="row">
                         <p class="bg-info col-lg-8 text-left ">订单提交成功，请您尽快付款！ 订单号：${order.id},应付金额${order.totalPrice}元</p>
                         <p class="bg-danger text-left col-lg-8" >公告： 请您在6小时内完成支付，否则订单会被自动取消。</p>
@@ -47,7 +48,7 @@
                             </div>
                             <div class="col-lg-12 col-sm-12 tab-pane" id="shortcuts">
                                 <div class="form-inline col-lg-12 col-sm-12">
-                                    <input type="text" class="bank-code form-control" placeholder="输入银行卡号或简码识别" ng-model="cardNoOrCode"/>例如：输入"abc"可找到中国农业银行,输入卡号的前几位数字也可以找到对应银行
+                                    <input type="text" class="bank-code form-control" placeholder="输入银行卡号或简码识别" ng-model="cardNoOrCode"/>
                                 </div>
                                 <div>
                                     <div ng-repeat="bank in banks">
@@ -75,7 +76,8 @@
                             快捷付款
                         </h2>
                     </div>
-                    <form method="post" name="billForm" action="some url">
+                    <form method="post" name="billForm" action="${path}/order/pay">
+                        <input type="hidden" value="${order.id}" name="orderId"/>
                         <div class="modal-body table-bordered">
                             <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
                                 <div class="col-lg-2 col-sm-2 text small">付款银行</div>
@@ -97,25 +99,25 @@
                             <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
                                 <div class="col-lg-2 col-sm-2 text small">银行卡号</div>
                                 <div class="col-lg-6 col-sm-6">
-                                    <input type="text" class="form-control" required="true"/>
+                                    <input type="text" class="form-control" required="true" name="cardNo"/>
                                 </div>
                             </div>
                             <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
                                 <div class="col-lg-2 col-sm-2 text small bg-success">姓名</div>
                                 <div class="col-lg-4 col-sm-4">
-                                    <input type="text" class="form-control " value="${order.user.name}" required="true"/>
+                                    <input type="text" class="form-control " value="${order.user.name}" required="true" name="cardUserName"/>
                                 </div>
                             </div>
                             <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
                                 <div class="col-lg-2 col-sm-2 text small">身份证</div>
                                 <div class="col-lg-6 col-sm-6">
-                                    <input type="text" name="idCardNo" class="form-control" value="${order.user.idCardNo}" required="true"/>
+                                    <input type="text" name="cardUserIdCardNo" class="form-control" value="${order.user.idCardNo}" required="true"/>
                                 </div>
                             </div>
                             <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
                                 <div class="col-lg-2 col-sm-2 text small bg-success">手机号</div>
                                 <div class="col-lg-6 col-sm-6">
-                                    <input type="text" name="phone" class="form-control " value="${order.user.phone}" required="true"/>
+                                    <input type="text" name="cardUserPhone" class="form-control " value="${order.user.phone}" required="true"/>
                                 </div>
                             </div>
 

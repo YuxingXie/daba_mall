@@ -10,15 +10,18 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class Account {
     @Id
     private String id;
-    @Field(value = "userId")
-    private String userId;
+    @Field(value = "cardUserIdCardNo")
+    private String cardUserIdCardNo;
     @Field(value = "cardNo")
-    @Indexed
     private String cardNo;
-    @Field(value = "cardSortId")
-    private String cardSortId;
-    @Transient
-    private CardSort cardSort;
+    @Field(value = "cardSort")
+    private String cardSort;//1信用卡，2储蓄卡
+    @Field(value = "cardUserPhone")
+    private String cardUserPhone;
+    @Field (value = "userId")
+    private String userId;
+    @Field(value = "cardUserName")
+    private String cardUserName;
     @Transient
     private User user;
 
@@ -34,8 +37,24 @@ public class Account {
         return userId;
     }
 
+    public String getCardUserName() {
+        return cardUserName;
+    }
+
+    public void setCardUserName(String cardUserName) {
+        this.cardUserName = cardUserName;
+    }
+
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getCardUserIdCardNo() {
+        return cardUserIdCardNo;
+    }
+
+    public void setCardUserIdCardNo(String cardUserIdCardNo) {
+        this.cardUserIdCardNo = cardUserIdCardNo;
     }
 
     public String getCardNo() {
@@ -46,24 +65,24 @@ public class Account {
         this.cardNo = cardNo;
     }
 
-    public String getCardSortId() {
-        return cardSortId;
-    }
-
-    public void setCardSortId(String cardSortId) {
-        this.cardSortId = cardSortId;
-    }
-
-    public CardSort getCardSort() {
+    public String getCardSort() {
         return cardSort;
     }
 
-    public void setCardSort(CardSort cardSort) {
+    public void setCardSort(String cardSort) {
         this.cardSort = cardSort;
     }
 
     public User getUser() {
         return user;
+    }
+
+    public String getCardUserPhone() {
+        return cardUserPhone;
+    }
+
+    public void setCardUserPhone(String cardUserPhone) {
+        this.cardUserPhone = cardUserPhone;
     }
 
     public void setUser(User user) {
