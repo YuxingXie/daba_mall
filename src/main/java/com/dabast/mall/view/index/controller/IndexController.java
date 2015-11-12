@@ -82,7 +82,7 @@ public class IndexController extends BaseRestSpringController {
         Page<ProductSeries> productSeriesList=ServiceManager.productSeriesService.findProductSeriesesByKeyWord(keyWord,page);
         model.addAttribute("_page", productSeriesList);
         model.addAttribute("page", page);
-        model.addAttribute("keyWord",keyWord);
+        model.addAttribute("keyWord", keyWord);
         return "search-result";
     }
 
@@ -222,6 +222,7 @@ public class IndexController extends BaseRestSpringController {
         order.setUser(user);
         if (user.getId()!=null) order.setUserId(user.getId());
         redirectAttributes.addFlashAttribute("order",order);
+        session.setAttribute("order",order);
         return "redirect:/bill";
     }
     @RequestMapping(value = "/index/user/{id}")

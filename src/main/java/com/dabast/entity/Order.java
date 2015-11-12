@@ -38,7 +38,7 @@ public class Order {
     private String acceptAddress;
 
     @Field(value = "submitStatus")
-    private String submitStatus="n";
+    private String submitStatus;
 
     @Field(value = "acceptPersonName")
     private String acceptPersonName;
