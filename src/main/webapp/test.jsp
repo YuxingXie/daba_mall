@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<%@page contentType="text/html; charset=utf-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html >
 <head>
 </head>
@@ -23,5 +24,10 @@
 </ul>
 <h3>表单属性中文</h3>
 <form action="test/input_chn.do"><input name="json" type="text" value="{'中国名':'谢宇星'}"/><input type="submit" value="submit"/> </form>
+<p class="bg-info col-lg-8 text-left ">订单号session：${order.id}</p>
+<p class="bg-info col-lg-8 text-left ">订单号flash attribute：${order2}</p>
+<p class="bg-info col-lg-8 text-left ">订单号model attribute：${order1}</p>
+<p class="bg-info col-lg-8 text-left ">msg：${msg}</p>
+<p class="bg-info col-lg-8 text-left ">param msg：${param.msg}</p>
 </body>
 </html>

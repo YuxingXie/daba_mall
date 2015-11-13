@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -21,8 +22,12 @@ public class ProductSeries {
     private String name;
     @Field(value = "pictures")
     private String[] pictures;
-    @Field(value = "commonPrice")
+//    @Field(value = "commonPrice")
+    @Transient
     private Double commonPrice;
+    @Field(value = "priceHistoryId")
+    @DBRef(db = "productSeriesPriceHistory")
+    private String priceHistoryId;
     @Field(value = "description")
     private String description;
 //    @Past
@@ -35,6 +40,8 @@ public class ProductSeries {
     private String subCategoryId;
     @Transient
     private List<ProductProperty> productProperties;
+    @Transient
+    private ProductSeriesPriceHistory productSeriesPriceHistory;
     public String getSubCategoryId() {
         return subCategoryId;
     }
@@ -58,6 +65,21 @@ public class ProductSeries {
         return false;
     }
 
+    public String getPriceHistoryId() {
+        return priceHistoryId;
+    }
+
+    public void setPriceHistoryId(String priceHistoryId) {
+        this.priceHistoryId = priceHistoryId;
+    }
+
+    public ProductSeriesPriceHistory getProductSeriesPriceHistory() {
+        return productSeriesPriceHistory;
+    }
+
+    public void setProductSeriesPriceHistory(ProductSeriesPriceHistory productSeriesPriceHistory) {
+        this.productSeriesPriceHistory = productSeriesPriceHistory;
+    }
 
     public List<ProductProperty> getProductProperties() {
         return productProperties;

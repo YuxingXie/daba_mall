@@ -1,7 +1,7 @@
 package com.dabast.common.web.taglib;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,7 +33,7 @@ public class PageTagBootStrap extends BodyTagSupport {
 
     private static final String LI_LINK_STR = "<li><a href='";
 
-    private static Logger logger = Logger.getLogger(PageTagBootStrap.class);
+//    private static Logger logger = Logger.getLogger(PageTagBootStrap.class);
 
     /**
      * property declaration for tag attribute: TotalPages.
@@ -87,7 +87,8 @@ public class PageTagBootStrap extends BodyTagSupport {
         } catch (IOException ex) {
             // do something
         } catch (Exception e) {
-            logger.error("", e);
+//            logger.error("", e);
+            e.printStackTrace();
         }
     }
 

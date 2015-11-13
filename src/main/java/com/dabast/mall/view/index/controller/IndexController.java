@@ -197,13 +197,11 @@ public class IndexController extends BaseRestSpringController {
         return "redirect:/cart";
     }
 
-    private User getLoginUser(HttpSession session) {
-        return session.getAttribute(Constant.LOGIN_USER)==null?null:((User)(session.getAttribute(Constant.LOGIN_USER)));
-    }
+
 
     @RequestMapping(value = "/index/order/submit", method = RequestMethod.POST)
     public String orderSubmit( String  id,String acceptAddress,String payWay,String acceptPersonName, String contactPhone,
-                              ModelMap model,RedirectAttributes redirectAttributes) {
+                              ModelMap model,RedirectAttributes redirectAttributes,HttpSession session) {
         Order order=ServiceManager.orderService.findById(id);
         if (acceptAddress!=null)order.setAcceptAddress(acceptAddress);
         if (payWay!=null)order.setPayWay(payWay);
@@ -211,17 +209,20 @@ public class IndexController extends BaseRestSpringController {
         if (contactPhone!=null)order.setContactPhone(contactPhone);
         order.setSubmitStatus("y");
         ServiceManager.orderService.update(order);
-//        model.addAttribute("order",order);
-        redirectAttributes.addFlashAttribute("order",order);
+        User user=getLoginUser(session);
+        order.setUser(user);
+        order.setUserId(user.getId());
+        session.setAttribute("order",order);
         return "redirect:/bill";
     }
     @RequestMapping(value = "/order/submit/{id}")
-    public String orderSubmit(@PathVariable String  id,ModelMap model,HttpSession session,RedirectAttributes redirectAttributes) {
-        Order order=ServiceManager.orderService.findById(id);
+    public String orderSubmit(@PathVariable String id,HttpSession session,ModelMap model,RedirectAttributes redirectAttributes) {
+
         User user=getLoginUser(session);
+        Order order = ServiceManager.orderService.findOrderById(id);
+//        model.addAttribute("order", order);
         order.setUser(user);
-        if (user.getId()!=null) order.setUserId(user.getId());
-        redirectAttributes.addFlashAttribute("order",order);
+        order.setUserId(user.getId());
         session.setAttribute("order",order);
         return "redirect:/bill";
     }
@@ -437,7 +438,7 @@ public class IndexController extends BaseRestSpringController {
     @RequestMapping(value = "/cart/to_bill/{orderId}")
     public String toBill(@PathVariable String orderId,ModelMap model, HttpSession session,HttpServletRequest request) {
         User user=getLoginUser(session);
-        Order order=ServiceManager.orderService.findOrderById(orderId);
+        Order order = ServiceManager.orderService.findOrderById(orderId);
 //        model.addAttribute("order", order);
         order.setUser(user);
         order.setUserId(user.getId());
@@ -467,6 +468,9 @@ public class IndexController extends BaseRestSpringController {
         }
         model.addAttribute("orders",orders);
         return "my_orders";
+    }
+    private User getLoginUser(HttpSession session) {
+        return session.getAttribute(Constant.LOGIN_USER)==null?null:((User)(session.getAttribute(Constant.LOGIN_USER)));
     }
     public static void main(String[] args) {
         String jsonStr = "[{id:100,name:'Johnson'},{id:101,name:'Jackson'}]";

@@ -14,7 +14,7 @@ import java.util.List;
  * Created by Administrator on 2015/10/12.
  */
 @Service
-public class ProductSubCategoryService  extends BaseEntityManager<ProductSubCategory> implements IProductSubCategoryService {
+public class ProductSubCategoryService extends BaseEntityManager<ProductSubCategory> implements IProductSubCategoryService {
     @Resource
     private ProductSubCategoryDao productSubCategoryDao;
     protected EntityDao<ProductSubCategory> getEntityDao() {

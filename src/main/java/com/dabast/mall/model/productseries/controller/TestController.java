@@ -1,6 +1,8 @@
 package com.dabast.mall.model.productseries.controller;
 
 import com.dabast.common.base.BaseRestSpringController;
+import com.dabast.common.helper.service.ServiceManager;
+import com.dabast.entity.TestPosts;
 import com.dabast.entity.User;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,12 @@ public class TestController extends BaseRestSpringController {
 //    public void init(ModelMap model) {
 //        model.put("now", new java.sql.Timestamp(System.currentTimeMillis()));
 //    }
+@RequestMapping(value = "/dbref/example")
+public String getDBRefExample(ModelMap model) {
+    List<TestPosts> testPostsList= ServiceManager.testPostsService.findAll();
+    model.addAttribute("testPostsList",testPostsList);
+    return "forward:/dbrefTest.jsp";
+}
     @RequestMapping(value = "/user/{id}")
     public ResponseEntity<User> get(ModelMap model, @PathVariable String id) {
         User user=new User();
