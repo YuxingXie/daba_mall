@@ -2,12 +2,16 @@ package com.dabast.mall.model.productseries.controller;
 
 import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.helper.service.ServiceManager;
+import com.dabast.entity.TestAuthors;
 import com.dabast.entity.TestPosts;
 import com.dabast.entity.User;
+import com.mongodb.DBRefBase;
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,12 +33,32 @@ public class TestController extends BaseRestSpringController {
 //    public void init(ModelMap model) {
 //        model.put("now", new java.sql.Timestamp(System.currentTimeMillis()));
 //    }
-@RequestMapping(value = "/dbref/example")
+@RequestMapping(value = "/dbref/retrieve")
 public String getDBRefExample(ModelMap model) {
     List<TestPosts> testPostsList= ServiceManager.testPostsService.findAll();
     model.addAttribute("testPostsList",testPostsList);
     return "forward:/dbrefTest.jsp";
 }
+    @RequestMapping(value = "/dbref/create")
+    public String DBRefCreate(ModelMap model,String name,String email,String title) {
+        TestPosts testPosts=new TestPosts();
+        testPosts.setTitle(title);
+        TestAuthors testAuthors=new TestAuthors();
+        testAuthors.setEmail(email);
+        testAuthors.setName(name);
+        //先保存TestAuthors
+        ServiceManager.testAuthorsService.insert(testAuthors);
+        List<TestAuthors> testAuthorses=new ArrayList<TestAuthors>();
+        testAuthorses.add(testAuthors);
+
+        testPosts.setAuthors(testAuthorses);
+        /**
+         *  下面这样保存是错误的
+         * ServiceManager.testPostsService.insert(testPosts);
+         */
+        ServiceManager.testPostsService.insertDBRef(testPosts);
+        return "forward:/dbrefTest.jsp";
+    }
     @RequestMapping(value = "/user/{id}")
     public ResponseEntity<User> get(ModelMap model, @PathVariable String id) {
         User user=new User();

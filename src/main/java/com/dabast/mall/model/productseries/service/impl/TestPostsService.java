@@ -17,4 +17,8 @@ public class TestPostsService extends BaseEntityManager<TestPosts> implements IT
         return this.testPostsDao;
     }
 
+    @Override
+    public void insertDBRef(TestPosts testPosts) {
+        testPostsDao.insertDBRef(testPosts);
+    }
 }
