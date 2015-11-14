@@ -5,7 +5,6 @@ import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.TestAuthors;
 import com.dabast.entity.TestPosts;
 import com.dabast.entity.User;
-import com.mongodb.DBRefBase;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.http.HttpStatus;
@@ -52,11 +51,8 @@ public String getDBRefExample(ModelMap model) {
         testAuthorses.add(testAuthors);
 
         testPosts.setAuthors(testAuthorses);
-        /**
-         *  下面这样保存是错误的
-         * ServiceManager.testPostsService.insert(testPosts);
-         */
-        ServiceManager.testPostsService.insertDBRef(testPosts);
+
+        ServiceManager.testPostsService.insert(testPosts);
         return "forward:/dbrefTest.jsp";
     }
     @RequestMapping(value = "/user/{id}")

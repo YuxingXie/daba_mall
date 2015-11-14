@@ -17,8 +17,8 @@ public abstract class BaseEntityManager<E> implements IBaseEntityManager<E> {
 
     protected abstract EntityDao<E> getEntityDao();
 
-    public E insert(E e) {
-        return getEntityDao().insert(e);
+    public void insert(E e) {
+        getEntityDao().insert(e);
     }
 
     @Override

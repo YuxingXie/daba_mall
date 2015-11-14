@@ -14,7 +14,7 @@ public interface EntityDao <E>{
     public String saveFile(String fileName,byte[] file);
     public GridFSDBFile findFileById(String id);
     public int upsert(E queryEntity,E updateEntity);
-    E insert(E e);
+    void insert(E e);
     List<E> findEquals(E e);
     List<E> findAll();
     List<E> findAll(DBObject condition);

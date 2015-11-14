@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapping.*;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.query.*;
 import org.springframework.util.Assert;
@@ -84,16 +85,39 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     }
 
     @Override
-    public E insert(E e) {
+    public void insert(E e) {
         //TODO
 //        System.out.println("invoke insert method......");
         mongoTemplate.insert(e);
 //        DB db = mongoTemplate.getDb();
 //        DBCollection collection = db.getCollection(getCollectionName());
 //        collection.insert(e)
-        return e;
+//        return e;
     }
+    public void insertDBRef(E e) {
+        DB db = mongoTemplate.getDb();
+        DBCollection collection = db.getCollection(getCollectionName());
+        for (java.lang.reflect.Field field:collectionClass.getDeclaredFields()){
+            if (field.isAnnotationPresent(DBRef.class)){
+                String refDB= field.getAnnotation(DBRef.class).db();
+                if (refDB==null){
+                   if (field.getType().isAnnotationPresent(Document.class)){
+                       if (field.getType().getAnnotation(Document.class).collection()==null ||field.getType().getAnnotation(Document.class).collection().equals("")){
+                           refDB=field.getType().getName();
+                       }else{
+                           refDB=field.getType().getAnnotation(Document.class).collection();
+                       }
+                   }else{
+                       refDB=field.getType().getName();
+                   }
 
+                }
+
+            }
+        }
+        mongoTemplate.insert(e);
+
+    }
     @Override
     public E findById(String id) {
         if (id == null) return null;
