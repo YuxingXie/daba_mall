@@ -2,30 +2,37 @@ package com.dabast.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 
-@Document(collection = "productSeriesPriceHistory")
-public class ProductSeriesPriceHistory {
+@Document(collection = "productSeriesPrice")
+public class ProductSeriesPrice {
     @Id
     private String id;
+    @NotNull
     @Field(value = "price")
     private Double price;
+    @NotNull
+    @Future
     @Field(value = "beginDate")
     private Date beginDate;
     @Field(value = "endDate")
     private Date endDate;
+    @NotNull
     @Field(value = "adjustDate")
     private Date adjustDate;
-    @Field(value = "productSeriesId")
-    private String productSeriesId;
+    @DBRef
+    private ProductSeriesPrice prevPrice;
+    @DBRef(db = "productSeries")
+    private ProductSeries productSeries;
     @Field(value = "comment")
     private String comment;
-    @Transient
-    private ProductSeries productSeries;
     public String getId() {
         return id;
     }
@@ -66,14 +73,6 @@ public class ProductSeriesPriceHistory {
         this.adjustDate = adjustDate;
     }
 
-    public String getProductSeriesId() {
-        return productSeriesId;
-    }
-
-    public void setProductSeriesId(String productSeriesId) {
-        this.productSeriesId = productSeriesId;
-    }
-
     public String getComment() {
         return comment;
     }
@@ -88,5 +87,13 @@ public class ProductSeriesPriceHistory {
 
     public void setProductSeries(ProductSeries productSeries) {
         this.productSeries = productSeries;
+    }
+
+    public ProductSeriesPrice getPrevPrice() {
+        return prevPrice;
+    }
+
+    public void setPrevPrice(ProductSeriesPrice prevPrice) {
+        this.prevPrice = prevPrice;
     }
 }

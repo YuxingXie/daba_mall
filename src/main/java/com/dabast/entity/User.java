@@ -27,6 +27,8 @@ public class User {
     @Field("email")
     @Email
     private String email;
+    @Field(value = "userCategory")
+    private String userCategory;//1注册用户 2,。经销商
 //    @DBRef private Set<Address> address;
     @Field("registerTime")
     private Date registerTime;
@@ -175,5 +177,13 @@ public class User {
 
     public void setUserAccounts(List<Account> userAccounts) {
         this.userAccounts = userAccounts;
+    }
+
+    public String getUserCategory() {
+        return userCategory;
+    }
+
+    public void setUserCategory(String userCategory) {
+        this.userCategory = userCategory;
     }
 }

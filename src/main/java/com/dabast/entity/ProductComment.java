@@ -1,6 +1,7 @@
 package com.dabast.entity;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -15,12 +16,22 @@ public class ProductComment {
     private String id;
     @Field(value = "productSeriesId")
     private String productSeriesId;
+    @DBRef(db = "productSeries")
+    private ProductSeries productSeries;
     @Field(value = "userId")
     private String userId;
     @Field(value = "content")
     private String content;
     @Field(value = "commentDate")
     private Date commentDate;
+
+    public ProductSeries getProductSeries() {
+        return productSeries;
+    }
+
+    public void setProductSeries(ProductSeries productSeries) {
+        this.productSeries = productSeries;
+    }
 
     public String getId() {
         return id;

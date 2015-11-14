@@ -1,6 +1,7 @@
 package com.dabast.entity;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -11,8 +12,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class ProductSubCategory {
     @Id
     private String id;
-    @Field(value = "categoryId")
-    private String categoryId;
+    @DBRef(db = "productCategory")
+    private ProductCategory productCategory;
     @Field(value = "subCategoryName")
     private String subCategoryName;
 
@@ -24,12 +25,12 @@ public class ProductSubCategory {
         this.id = id;
     }
 
-    public String getCategoryId() {
-        return categoryId;
+    public ProductCategory getProductCategory() {
+        return productCategory;
     }
 
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
+    public void setProductCategory(ProductCategory productCategory) {
+        this.productCategory = productCategory;
     }
 
     public String getSubCategoryName() {

@@ -13,3 +13,20 @@ db.testPosts.insert({"title":"Hello Mongodb DBRef2","authors":[new DBRef('testAu
 db.testAuthors.insert({"name" : "xieyuxing","email" : "xieyuxing@126.com"})
 author2=db.testAuthors.find({name:"xieyuxing"})[0]
 db.testPosts.insert({"title":"Hello Mongodb DBRef3","authors":[new DBRef('testAuthors',author._id),new DBRef('testAuthors',author2._id)]})
+--------------------------------------------------------------------------------------------------------------------------------------------------
+> show collections
+
+> db.account.drop()
+
+> show collections
+
+> db.cart.drop()
+
+> show collections
+
+> db.order.drop()
+
+> db.propertyValue.drop()
+
+
+> db.productCategory.drop()

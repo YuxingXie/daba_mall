@@ -2,6 +2,7 @@ package com.dabast.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -50,9 +51,9 @@ public class Order {
     private Double totalPrice;
     @Transient
     private Integer totalAmount;
-    @Transient
+    @DBRef(db = "users")
     private User user;
-    @Transient
+    @DBRef(db = "account")
     private Account payAccount;
 
     public String getContactPhone() {

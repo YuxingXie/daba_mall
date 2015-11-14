@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -17,9 +18,10 @@ public class ProductProperty {
     private String id;
     @Field(value = "propertyName")
     private String propertyName;
-    @Field(value = "productSeries")
-    private String productSeriesId;
     @DBRef
+    @NotNull
+    private ProductSeries productSeries;
+    @DBRef(db = "productPropertyValue")
     private List<ProductPropertyValue> propertyValues;
     public List<ProductPropertyValue> getPropertyValues() {
         return propertyValues;
@@ -45,11 +47,11 @@ public class ProductProperty {
         this.propertyName = propertyName;
     }
 
-    public String getProductSeriesId() {
-        return productSeriesId;
+    public ProductSeries getProductSeries() {
+        return productSeries;
     }
 
-    public void setProductSeriesId(String productSeriesId) {
-        this.productSeriesId = productSeriesId;
+    public void setProductSeries(ProductSeries productSeries) {
+        this.productSeries = productSeries;
     }
 }

@@ -70,7 +70,12 @@ public class IndexController extends BaseRestSpringController {
         List<String[]> top3 = ServiceManager.productSeriesService.getTop3ProductSeries();
         model.addAttribute("top3", top3);
         List<ProductSeries> hotSells = ServiceManager.productSeriesService.getHotSell();
+        model.addAttribute("newProducts", hotSells);
+        model.addAttribute("newProducts2", hotSells);
         model.addAttribute("hotSells", hotSells);
+        model.addAttribute("hotSells2", hotSells);
+        model.addAttribute("lowPrices", hotSells);
+        model.addAttribute("lowPrices2", hotSells);
         return "index";
     }
 
@@ -141,7 +146,7 @@ public class IndexController extends BaseRestSpringController {
        for(String productPropertyValueId : productSelected.getProductPropertyValueIds()){
            DBObject ppCon=new BasicDBObject();
            ProductPropertyValue value=ServiceManager.productPropertyValueService.findById(productPropertyValueId);
-           ppCon.put("_id",value.getProductPropertyId());
+           ppCon.put("_id",value.getProductProperty().getId());
            ProductProperty productProperty=ServiceManager.productPropertyService.findOne(ppCon);
            value.setProductProperty(productProperty);
            productPropertyValueList.add(value);

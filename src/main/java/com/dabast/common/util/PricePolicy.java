@@ -1,0 +1,41 @@
+package com.dabast.common.util;
+
+import com.dabast.entity.SalesCampaign;
+import com.dabast.entity.User;
+import org.springframework.util.Assert;
+
+import java.util.List;
+
+/**
+ * Created by Administrator on 2015/11/14.
+ */
+public class PricePolicy {
+    public List<SalesCampaign> getSalesCampaignsNow() {
+        return salesCampaignsNow;
+    }
+
+    public void setSalesCampaignsNow(List<SalesCampaign> salesCampaignsNow) {
+        this.salesCampaignsNow = salesCampaignsNow;
+    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    public boolean canJoin(SalesCampaign salesCampaign){
+        Assert.notNull(salesCampaign);
+        if (salesCampaign.isAllProductParticipateIn()) return true;
+        if (user==null) return false;
+        if (salesCampaignsNow==null) return false;
+        if (salesCampaign.getParticipants()==null) return true;//未指定表示都能参加
+        if (salesCampaign.getParticipants().contains(user.getUserCategory())){
+           return true ;
+        }
+        return false;
+    }
+
+    private User user;
+    private List<SalesCampaign> salesCampaignsNow;
+}

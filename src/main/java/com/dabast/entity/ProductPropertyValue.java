@@ -2,6 +2,7 @@ package com.dabast.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -13,12 +14,21 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class ProductPropertyValue {
     @Id
     private String id;
-    @Field(value = "productPropertyId")
-    private String productPropertyId;
     @Field(value = "value")
     private String value;
-    @Transient
+    @DBRef(db = "productSeries")
+    private ProductSeries productSeries;
+
+    @DBRef(db = "productProperty")
     private ProductProperty productProperty;
+
+    public ProductSeries getProductSeries() {
+        return productSeries;
+    }
+
+    public void setProductSeries(ProductSeries productSeries) {
+        this.productSeries = productSeries;
+    }
 
     public ProductProperty getProductProperty() {
         return productProperty;
@@ -44,11 +54,4 @@ public class ProductPropertyValue {
         this.value = value;
     }
 
-    public String getProductPropertyId() {
-        return productPropertyId;
-    }
-
-    public void setProductPropertyId(String productPropertyId) {
-        this.productPropertyId = productPropertyId;
-    }
 }

@@ -1,5 +1,6 @@
 package com.dabast.entity;
 
+import com.sun.org.apache.bcel.internal.generic.LSTORE;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -8,11 +9,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.util.Assert;
 
+import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Administrator on 2015/6/2.
- */
 @Document(collection = "productSeries")
 public class ProductSeries {
     @Id
@@ -25,60 +24,47 @@ public class ProductSeries {
 //    @Field(value = "commonPrice")
     @Transient
     private Double commonPrice;
-    @Field(value = "priceHistoryId")
-    @DBRef(db = "productSeriesPriceHistory")
-    private String priceHistoryId;
+
     @Field(value = "description")
     private String description;
 //    @Past
 //    @NotNull
     @Field(value = "shelvesDate")
-    private Long shelvesDate;
+    private Date shelvesDate;
     @Field(value = "brand")
     private String brand;
-    @Field(value = "subCategoryId")
-    private String subCategoryId;
     @Transient
-    private List<ProductProperty> productProperties;
-    @Transient
-    private ProductSeriesPriceHistory productSeriesPriceHistory;
-    public String getSubCategoryId() {
-        return subCategoryId;
-    }
+    private boolean newProduct;
+    @DBRef
+    private ProductSubCategory productSubCategory;
 
-    public void setSubCategoryId(String subCategoryId) {
-        this.subCategoryId = subCategoryId;
-    }
+    private Integer evaluateCount;
+    @DBRef(db = "productProperty")
+    private List<ProductProperty> productProperties;
+    @DBRef
+    private List<ProductSeriesPrice> productSeriesPrices;
+
 
     public void setNewProduct(boolean newProduct) {
         this.newProduct = newProduct;
     }
 
-    private boolean newProduct;
-    private Integer evaluateCount;
+
     public boolean isNewProduct() {
         long now=System.currentTimeMillis();
         if (shelvesDate==null) return false;
-        if ((now-shelvesDate) <=(30L*24L*60L*60L*1000L)) {
+        if ((now-shelvesDate.getTime()) <=(30L*24L*60L*60L*1000L)) {
             return true;
         }
         return false;
     }
 
-    public String getPriceHistoryId() {
-        return priceHistoryId;
+    public List<ProductSeriesPrice> getProductSeriesPrices() {
+        return productSeriesPrices;
     }
 
-    public void setPriceHistoryId(String priceHistoryId) {
-        this.priceHistoryId = priceHistoryId;
-    }
-
-    public ProductSeriesPriceHistory getProductSeriesPriceHistory() {
-        return productSeriesPriceHistory;
-    }
-
-    public void setProductSeriesPriceHistory(ProductSeriesPriceHistory productSeriesPriceHistory) {
-        this.productSeriesPriceHistory = productSeriesPriceHistory;
+    public void setProductSeriesPrices(List<ProductSeriesPrice> productSeriesPrices) {
+        this.productSeriesPrices = productSeriesPrices;
     }
 
     public List<ProductProperty> getProductProperties() {
@@ -114,12 +100,28 @@ public class ProductSeries {
     }
 
     public Double getCommonPrice() {
-        return commonPrice;
+        if (productSeriesPrices==null) return null;
+        Date now=new Date();
+        for (ProductSeriesPrice productSeriesPrice:productSeriesPrices){
+            Assert.notNull(productSeriesPrice.getBeginDate());
+            if (productSeriesPrice.getEndDate()==null){
+                if (now.after(productSeriesPrice.getBeginDate())){
+                    return productSeriesPrice.getPrice();
+                }else{
+                    continue;
+                }
+            }else{
+                if (now.after(productSeriesPrice.getBeginDate()) &&now.before(productSeriesPrice.getEndDate())){
+                    return productSeriesPrice.getPrice();
+                }else {
+                    continue;
+                }
+            }
+        }
+        return null;//这里表示定价的所有时间段都在未来
     }
 
-    public void setCommonPrice(Double commonPrice) {
-        this.commonPrice = commonPrice;
-    }
+
 
     public Integer getEvaluateCount() {
         return evaluateCount;
@@ -129,11 +131,11 @@ public class ProductSeries {
         this.evaluateCount = evaluateCount;
     }
 
-    public Long getShelvesDate() {
+    public Date getShelvesDate() {
         return shelvesDate;
     }
 
-    public void setShelvesDate(Long shelvesDate) {
+    public void setShelvesDate(Date shelvesDate) {
         this.shelvesDate = shelvesDate;
     }
 
@@ -151,5 +153,13 @@ public class ProductSeries {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ProductSubCategory getProductSubCategory() {
+        return productSubCategory;
+    }
+
+    public void setProductSubCategory(ProductSubCategory productSubCategory) {
+        this.productSubCategory = productSubCategory;
     }
 }
