@@ -13,7 +13,8 @@ import java.util.List;
 public class ProductSubCategoryDao  extends BaseMongoDao<ProductSubCategory> {
     public List<ProductSubCategory> getProductSubCategoriesByCategoryId(String categoryId) {
         ProductSubCategory productSubCategory=new ProductSubCategory();
-        productSubCategory.setCategoryId(categoryId);
+        //TODO
+//        productSubCategory.setCategoryId(categoryId);
         return findEquals(productSubCategory);
     }
 }

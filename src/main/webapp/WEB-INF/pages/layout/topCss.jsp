@@ -7,6 +7,7 @@
 <link href="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet">
 <link href="${path}/statics/assets/plugins/bxslider/jquery.bxslider.css" rel="stylesheet">
 <link href="${path}/statics/assets/plugins/layerslider/css/layerslider.css" rel="stylesheet" type="text/css">
+<%--style-metronic.css，style-responsive.css和顶部弹出的二级菜单有关--%>
 <link href="${path}/statics/assets/css/style-metronic.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/style-responsive.css" rel="stylesheet" type="text/css">

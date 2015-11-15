@@ -19,6 +19,11 @@ public class ServiceManager implements InitializingBean{
     public static IAccountService accountService;
     public static ITestPostsService testPostsService;
     public static ITestAuthorsService testAuthorsService;
+    public static IProductCategoryService productCategoryService;
+
+    public void setProductCategoryService(IProductCategoryService productCategoryService) {
+        ServiceManager.productCategoryService = productCategoryService;
+    }
 
     public void setTestAuthorsService(ITestAuthorsService testAuthorsService) {
         ServiceManager.testAuthorsService = testAuthorsService;

@@ -17,6 +17,6 @@ public class ProductCategoryDao extends BaseMongoDao<ProductCategory> {
         ProductSeries productSeries= ServiceManager.productSeriesService.findById(productSeriesId);
         if (productSeries==null) return null;
         ProductSubCategory productSubCategory=ServiceManager.productSubCategoryService.findById(productSeries.getProductSubCategory().getId());
-        return productSubCategory==null?null:productSubCategory.getCategoryId();
+        return productSubCategory==null?null:productSubCategory.getId();
     }
 }
