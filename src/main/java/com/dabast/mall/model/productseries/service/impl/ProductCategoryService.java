@@ -8,6 +8,7 @@ import com.dabast.mall.model.productseries.service.IProductCategoryService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/10/12.
@@ -23,5 +24,10 @@ public class ProductCategoryService extends BaseEntityManager<ProductCategory> i
     @Override
     public String getProductCategoryIdByProductSeriesId(String productSeriesId) {
         return productCategoryDao.getProductCategoryIdByProductSeriesId(productSeriesId);
+    }
+
+    @Override
+    public List<ProductCategory> findAllCategories() {
+        return productCategoryDao.findAllCategories();
     }
 }

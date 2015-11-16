@@ -53,7 +53,18 @@ public class BaseRestSpringController  {
 //        return model;
 //    }
     
-
+    public void printRequestParameters(HttpServletRequest request){
+        Map<String,String[]> requestMap=request.getParameterMap();
+        for (String key:requestMap.keySet()){
+            String str=new String();
+            str+=key + ":[";
+            for (String val:requestMap.get(key)){
+                str+=val + ",";
+            }
+            if (str.endsWith(","))  System.out.print(str.substring(0,str.length()-1)+"]\n");
+            else System.out.print(str+"]\n");
+        }
+    }
     
     public static <T> T getOrCreateRequestAttribute(HttpServletRequest request, String key,Class<T> clazz) {
         Object value = request.getAttribute(key);

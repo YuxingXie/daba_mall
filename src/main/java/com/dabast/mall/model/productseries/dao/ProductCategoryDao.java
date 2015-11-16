@@ -7,6 +7,8 @@ import com.dabast.entity.ProductSeries;
 import com.dabast.entity.ProductSubCategory;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2015/10/12.
  */
@@ -18,5 +20,18 @@ public class ProductCategoryDao extends BaseMongoDao<ProductCategory> {
         if (productSeries==null) return null;
         ProductSubCategory productSubCategory=ServiceManager.productSubCategoryService.findById(productSeries.getProductSubCategory().getId());
         return productSubCategory==null?null:productSubCategory.getId();
+    }
+
+    public List<ProductCategory> findAllCategories() {
+        List<ProductCategory> productCategories=findAll();
+        for (ProductCategory productCategory:productCategories){
+//            System.out.println("大类名称："+productCategory.getCategoryName());
+            List<ProductSubCategory> productSubCategories=ServiceManager.productSubCategoryService.getProductSubCategoriesByCategoryId(productCategory.getId());
+            for (ProductSubCategory productSubCategory:productSubCategories){
+//                System.out.println("小类名称："+productSubCategory.getSubCategoryName());
+            }
+            productCategory.setProductSubCategories(productSubCategories);
+        }
+        return productCategories;
     }
 }

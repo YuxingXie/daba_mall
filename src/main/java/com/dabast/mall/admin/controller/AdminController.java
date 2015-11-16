@@ -5,6 +5,7 @@ import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.ProductCategory;
 import com.dabast.entity.ProductSeries;
+import com.dabast.entity.ProductSubCategory;
 import com.dabast.mall.model.productseries.service.IProductSeriesService;
 import com.mongodb.gridfs.GridFSDBFile;
 import org.bson.types.ObjectId;
@@ -13,15 +14,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
@@ -31,6 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -69,7 +71,7 @@ public class AdminController extends BaseRestSpringController {
     }
     @RequestMapping(value="/product/categories")
     public ResponseEntity<List<ProductCategory>> popover(ModelMap model) {
-        List<ProductCategory> productCategories= ServiceManager.productCategoryService.findAll();
+        List<ProductCategory> productCategories= ServiceManager.productCategoryService.findAllCategories();
         ResponseEntity<List<ProductCategory>> rt=new ResponseEntity<List<ProductCategory>>(productCategories, HttpStatus.OK);
         return rt;
     }
@@ -94,30 +96,45 @@ public class AdminController extends BaseRestSpringController {
         return path;
     }
     @RequestMapping(value="/product_series/new")
-    public String create(ModelMap model,ProductSeries productSeries,BindingResult errors,MultipartFile file,HttpServletRequest request)  {
-//    public String create(ModelMap model,@Valid ProductSeries productSeries,BindingResult errors,MultipartFile file)  {
-//        if(errors.hasErrors()) {
-//            this.setFailure(model);
-//            return  "admin/product_series/create_input";
-//        }
-//        setSuccess(model);
-
-//        try {
-
-//            String picture=productSeriesService.saveFile(file.getOriginalFilename(),file.getBytes());
-//            productSeries.setPictures(new String[]{picture});
-//            productSeriesService.insert(productSeries);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        Map<String,String[]> requestMap=request.getParameterMap();
-        for (String key:requestMap.keySet()){
-            System.out.print(key + ":[");
-            for (String val:requestMap.get(key)){
-                System.out.print(val + ",");
+    public String createProductSeries(ProductSeries productSeries,String productSubCategoryId,@RequestParam("files") MultipartFile[] files) throws IOException {
+//        printRequestParameters(request);
+        if(files!=null&&files.length>0){
+            //循环获取file数组中得文件
+            String[] pictures=new String[files.length];
+            for(int i = 0;i<files.length;i++){
+                MultipartFile file = files[i];
+                //保存文件
+                String picture=productSeriesService.saveFile(file.getOriginalFilename(),file.getBytes());
+                pictures[i]=picture;
             }
-            System.out.print("]\n");
-
+            productSeries.setPictures(pictures);
+//            productSeriesService.insert(productSeries);
+        }
+        ProductSubCategory productSubCategory=ServiceManager.productSubCategoryService.findById(productSubCategoryId);
+        productSeries.setProductSubCategory(productSubCategory);
+        productSeriesService.insert(productSeries);
+        return "redirect:admin/product_series/list";
+    }
+    @RequestMapping(value="/product_category/new")
+    public String createProductCategory(ModelMap model, HttpServletRequest request,String categoryType,String categoryName,String subCategoryName,String productCategoryId){
+        Assert.notNull(subCategoryName);
+        printRequestParameters(request);
+        if (categoryType.equals("1")){
+            Assert.notNull(categoryName);
+            ProductCategory productCategory=new ProductCategory();
+            productCategory.setCategoryName(categoryName);
+            ServiceManager.productCategoryService.insert(productCategory);
+            ProductSubCategory productSubCategory=new ProductSubCategory();
+            productSubCategory.setProductCategory(productCategory);
+            productSubCategory.setSubCategoryName(subCategoryName);
+            ServiceManager.productSubCategoryService.insert(productSubCategory);
+        }else if (categoryType.equals("2")){
+            Assert.notNull(productCategoryId);
+            ProductCategory productCategory=ServiceManager.productCategoryService.findById(productCategoryId);
+            ProductSubCategory productSubCategory=new ProductSubCategory();
+            productSubCategory.setSubCategoryName(subCategoryName);
+            productSubCategory.setProductCategory(productCategory);
+            ServiceManager.productSubCategoryService.insert(productSubCategory);
         }
         return "redirect:admin/product_series/list";
     }

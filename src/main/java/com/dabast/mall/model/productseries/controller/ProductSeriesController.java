@@ -86,6 +86,7 @@ public class ProductSeriesController extends BaseRestSpringController {
         String path=resource.getPath();
         String pathWithContext=resource.getPathWithinContext();
 //        model.addAttribute("uri",path);
+        System.out.println(path);
         return path;
     }
     @RequestMapping(value="/new.do")

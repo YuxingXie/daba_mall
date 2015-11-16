@@ -20,8 +20,8 @@
                 <div class="col-lg-2 col-sm-2  text-right">创建方式</div>
                 <div class="col-lg-6 col-sm-6 form-inline">
 
-                    <input type="radio" value="1" data-ng-click="" name="categoryType" ng-model="categoryType">创建新的大类
-                    <input type="radio" value="2" data-ng-click="" name="categoryType" ng-model="categoryType">使用已有大类
+                    <input type="radio" value="1" name="categoryType" ng-model="categoryType">创建新的大类
+                    <input type="radio" value="2" name="categoryType" ng-model="categoryType">使用已有大类
 
                 </div>
             </div>
@@ -41,8 +41,8 @@
                     <div class="col-lg-2 col-sm-2  text-right">选择大类</div>
                     <div class="col-lg-6 col-sm-6 form-inline">
                         <div>
-                            <select ng-model="$parent.$parent.productCategory" ng-options="obj as obj.categoryName for obj in list" name="productCategory" >
-                                <option>--选择大类--</option>
+                            <select ng-model="$parent.$parent.productCategory" name="productCategoryId" >
+                                <option ng-repeat="productCategory in list" value="{{productCategory.id}}">{{productCategory.categoryName}}</option>
                             </select>
                         </div>
 
