@@ -163,7 +163,7 @@
                                             <div class="pi-img-wrapper">
                                                 <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
                                                 <div>
-                                                    <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
+                                                    <a href="${path}//${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
                                                     <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
                                                 </div>
                                             </div>

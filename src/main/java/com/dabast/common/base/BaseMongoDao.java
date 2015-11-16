@@ -174,16 +174,17 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         return page;
     }
     public List<E> findAll(DBObject condition){
-        DB db = mongoTemplate.getDb();
-        DBCollection collection = db.getCollection(getCollectionName());
-        DBCursor cur =null;
-        if (condition==null){
-            cur = collection.find();
-        }else {
-            cur=collection.find(condition);
-        }
-        List<E> list = dbCursor2List(cur);
-        return list;
+        return mongoTemplate.find(new BasicQuery(condition),collectionClass);
+//        DB db = mongoTemplate.getDb();
+//        DBCollection collection = db.getCollection(getCollectionName());
+//        DBCursor cur =null;
+//        if (condition==null){
+//            cur = collection.find();
+//        }else {
+//            cur=collection.find(condition);
+//        }
+//        List<E> list = dbCursor2List(cur);
+//        return list;
     }
 
     private List<E> dbCursor2List(DBCursor cur) {

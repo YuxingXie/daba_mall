@@ -68,27 +68,7 @@ public class ProductSeriesController extends BaseRestSpringController {
         ResponseEntity<ProductSeries> rt=new ResponseEntity<ProductSeries>(productSeries, HttpStatus.OK);
         return rt;
     }
-    @RequestMapping(value="pic/{id}")
-    public String showPic(ModelMap model,@PathVariable java.lang.String id) {
-       GridFSDBFile picture =productSeriesService.findFileById(id);
-        String suffix=picture.getFilename().substring(picture.getFilename().lastIndexOf("."));
-        ServletContext context=ProjectContext.getServletContext();
-        ServletContextResource resource=new ServletContextResource(context,"img/product/"+id+suffix);
-        try {
-            File file=resource.getFile();
-            if (!file.exists()){
-                file.createNewFile();
-                picture.writeTo(resource.getFile());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String path=resource.getPath();
-        String pathWithContext=resource.getPathWithinContext();
-//        model.addAttribute("uri",path);
-        System.out.println(path);
-        return path;
-    }
+
     @RequestMapping(value="/new.do")
     public String create(ModelMap model,@Valid ProductSeries productSeries,BindingResult errors,MultipartFile file)  {
         if(errors.hasErrors()) {

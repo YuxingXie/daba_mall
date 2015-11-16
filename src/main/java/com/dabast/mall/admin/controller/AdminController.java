@@ -5,6 +5,7 @@ import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.ProductCategory;
 import com.dabast.entity.ProductSeries;
+import com.dabast.entity.ProductSeriesPrice;
 import com.dabast.entity.ProductSubCategory;
 import com.dabast.mall.model.productseries.service.IProductSeriesService;
 import com.mongodb.gridfs.GridFSDBFile;
@@ -96,7 +97,7 @@ public class AdminController extends BaseRestSpringController {
         return path;
     }
     @RequestMapping(value="/product_series/new")
-    public String createProductSeries(ProductSeries productSeries,String productSubCategoryId,@RequestParam("files") MultipartFile[] files) throws IOException {
+    public String createProductSeries(ProductSeries productSeries,Double price,String productSubCategoryId,@RequestParam("files") MultipartFile[] files) throws IOException {
 //        printRequestParameters(request);
         if(files!=null&&files.length>0){
             //循环获取file数组中得文件
@@ -105,14 +106,23 @@ public class AdminController extends BaseRestSpringController {
                 MultipartFile file = files[i];
                 //保存文件
                 String picture=productSeriesService.saveFile(file.getOriginalFilename(),file.getBytes());
-                pictures[i]=picture;
+                pictures[i]="pic/"+picture;
             }
             productSeries.setPictures(pictures);
 //            productSeriesService.insert(productSeries);
         }
         ProductSubCategory productSubCategory=ServiceManager.productSubCategoryService.findById(productSubCategoryId);
         productSeries.setProductSubCategory(productSubCategory);
+
         productSeriesService.insert(productSeries);
+
+        ProductSeriesPrice productSeriesPrice=new ProductSeriesPrice();
+        Date now=new Date();
+        productSeriesPrice.setAdjustDate(now);
+        productSeriesPrice.setBeginDate(now);
+        productSeriesPrice.setPrice(price);
+        productSeriesPrice.setProductSeries(productSeries);
+        ServiceManager.productSeriesPriceService.insert(productSeriesPrice);
         return "redirect:admin/product_series/list";
     }
     @RequestMapping(value="/product_category/new")
@@ -129,8 +139,13 @@ public class AdminController extends BaseRestSpringController {
             productSubCategory.setSubCategoryName(subCategoryName);
             ServiceManager.productSubCategoryService.insert(productSubCategory);
         }else if (categoryType.equals("2")){
-            Assert.notNull(productCategoryId);
-            ProductCategory productCategory=ServiceManager.productCategoryService.findById(productCategoryId);
+            ProductCategory productCategory=null;
+            if(productCategoryId==null){
+                Assert.notNull(categoryName);
+                productCategory=new ProductCategory();
+                productCategory.setCategoryName(categoryName);
+                ServiceManager.productCategoryService.insert(productCategory);
+            }else productCategory=ServiceManager.productCategoryService.findById(productCategoryId);
             ProductSubCategory productSubCategory=new ProductSubCategory();
             productSubCategory.setSubCategoryName(subCategoryName);
             productSubCategory.setProductCategory(productCategory);

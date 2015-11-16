@@ -1,6 +1,7 @@
 package com.dabast.mall.view.index.controller;
 
 import com.dabast.common.base.BaseRestSpringController;
+import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.common.util.*;
 import com.dabast.common.web.CookieTool;
@@ -12,6 +13,7 @@ import com.dabast.mall.model.productseries.service.impl.CartService;
 import com.dabast.mall.view.index.service.impl.RegisterValidateService;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.gridfs.GridFSDBFile;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +21,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -219,6 +225,33 @@ public class IndexController extends BaseRestSpringController {
         order.setUserId(user.getId());
         session.setAttribute("order",order);
         return "redirect:/bill";
+    }
+    @RequestMapping(value="pic/{id}")
+    public void showPic(@PathVariable String id,HttpServletRequest request,HttpServletResponse response) {
+        GridFSDBFile picture =ServiceManager.productSeriesService.findFileById(id);
+        String suffix=picture.getFilename().substring(picture.getFilename().lastIndexOf("."));
+        ServletContext context= ProjectContext.getServletContext();
+        ServletContextResource resource=new ServletContextResource(context,"statics/img/product/"+id+suffix);
+        try {
+            File file=resource.getFile();
+            if (!file.exists()){
+                file.createNewFile();
+                picture.writeTo(resource.getFile());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String path=resource.getPath();
+        String pathWithContext=resource.getPathWithinContext();
+//        model.addAttribute("uri",path);
+        System.out.println(path);
+        try {
+            request.getRequestDispatcher(path).forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @RequestMapping(value = "/order/submit/{id}")
     public String orderSubmit(@PathVariable String id,HttpSession session,ModelMap model,RedirectAttributes redirectAttributes) {

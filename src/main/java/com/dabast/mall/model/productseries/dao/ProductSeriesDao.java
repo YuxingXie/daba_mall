@@ -5,9 +5,11 @@ import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.ProductProperty;
 import com.dabast.entity.ProductPropertyValue;
 import com.dabast.entity.ProductSeries;
+import com.dabast.entity.ProductSeriesPrice;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.DBRef;
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -41,7 +43,14 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
     public List<ProductSeries> getHotSell() {
         //可规定热卖商品数量
         List<ProductSeries> productSeriesList=findAll();
+        for (ProductSeries productSeries:productSeriesList){
+            DBRef dbRef=new DBRef("productSeries",new ObjectId(productSeries.getId()));
+            DBObject dbObject=new BasicDBObject();
+            dbObject.put("productSeries",dbRef);
+            List<ProductSeriesPrice> productSeriesPrices=ServiceManager.productSeriesPriceService.findAll(dbObject);
+            productSeries.setProductSeriesPrices(productSeriesPrices);
 
+        }
         return productSeriesList;
     }
 

@@ -20,6 +20,11 @@ public class ServiceManager implements InitializingBean{
     public static ITestPostsService testPostsService;
     public static ITestAuthorsService testAuthorsService;
     public static IProductCategoryService productCategoryService;
+    public static IProductSeriesPriceService productSeriesPriceService;
+
+    public void setProductSeriesPriceService(IProductSeriesPriceService productSeriesPriceService) {
+        ServiceManager.productSeriesPriceService = productSeriesPriceService;
+    }
 
     public void setProductCategoryService(IProductCategoryService productCategoryService) {
         ServiceManager.productCategoryService = productCategoryService;
