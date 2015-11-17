@@ -38,7 +38,9 @@
                   </a>
                   <ul class="dropdown-menu" style="display:block;">
                     <c:forEach var="subCategory" items="${f:getProductSubCategoriesByCategoryId(productCategory.id)}">
-                      <li <c:if test="${productSeries.subCategoryId eq subCategory.id}">class="list-group-item dropdown clearfix active"</c:if>>
+                      <li
+                              <%--<!--c:if test="${productSeries.subCategoryId eq subCategory.id}">class="list-group-item dropdown clearfix active"<7/c:if-->--%>
+                              >
                         <a href="${path}/sort/${subCategory.id}"><i class="fa fa-circle"></i>${subCategory.subCategoryName}</a>
                       </li>
                     </c:forEach>

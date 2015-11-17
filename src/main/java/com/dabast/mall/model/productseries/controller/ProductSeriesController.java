@@ -55,12 +55,12 @@ public class ProductSeriesController extends BaseRestSpringController {
 
 
     @RequestMapping(value="/{id}")
-    public String show(ModelMap model,@PathVariable java.lang.Integer id) {
-        ProductSeries productSeries = null;//(ProductSeries)productSeriesService.getById(id);
+    public String show(ModelMap model,@PathVariable java.lang.String id) {
+        ProductSeries productSeries = productSeriesService.findById(id);
         model.addAttribute("productSeries",productSeries);
 
         
-        return "baseInfo/rm_baseInfo_update_input";
+        return "item";
     }
     @RequestMapping(value="/popover/{id}")
     public ResponseEntity<ProductSeries> popover(ModelMap model,@PathVariable java.lang.String id) {

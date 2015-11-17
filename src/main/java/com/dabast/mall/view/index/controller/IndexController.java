@@ -226,32 +226,50 @@ public class IndexController extends BaseRestSpringController {
         session.setAttribute("order",order);
         return "redirect:/bill";
     }
-    @RequestMapping(value="pic/{id}")
+    @RequestMapping(value="/pic/{id}")
     public void showPic(@PathVariable String id,HttpServletRequest request,HttpServletResponse response) {
-        GridFSDBFile picture =ServiceManager.productSeriesService.findFileById(id);
-        String suffix=picture.getFilename().substring(picture.getFilename().lastIndexOf("."));
+        String dirStr="statics/img/product";
         ServletContext context= ProjectContext.getServletContext();
-        ServletContextResource resource=new ServletContextResource(context,"statics/img/product/"+id+suffix);
+        ServletContextResource dirResource=new ServletContextResource(context,dirStr);
+
         try {
+            File dirFile=dirResource.getFile();
+            if (!dirFile.exists() || !dirFile.isDirectory()){
+                System.out.println("make directory");
+                dirFile.mkdirs();
+            }
+            String[] files=dirFile.list();
+            if (files!=null){
+                for (String fileInDir:files){
+                    if (fileInDir.indexOf(id)>=0){
+                        String path=new ServletContextResource(context,dirStr+"/"+fileInDir).getPath();
+                        request.getRequestDispatcher(path+"?"+Math.random()).forward(request,response);
+                        return;
+                    }
+                }
+            }
+            GridFSDBFile picture =ServiceManager.productSeriesService.findFileById(id);
+            if (picture==null) {
+                request.getRequestDispatcher("/statics/img/img_not_found.jpg").forward(request,response);
+                return;
+            }
+            String suffix=picture.getFilename().substring(picture.getFilename().lastIndexOf("."));
+            ServletContextResource resource=new ServletContextResource(context,dirStr+"/"+id+suffix);
             File file=resource.getFile();
             if (!file.exists()){
                 file.createNewFile();
                 picture.writeTo(resource.getFile());
             }
+            String path=resource.getPath();
+            request.getRequestDispatcher(path+"?"+Math.random()).forward(request,response);
+            return;
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        String path=resource.getPath();
-        String pathWithContext=resource.getPathWithinContext();
-//        model.addAttribute("uri",path);
-        System.out.println(path);
-        try {
-            request.getRequestDispatcher(path).forward(request,response);
         } catch (ServletException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
+
     }
     @RequestMapping(value = "/order/submit/{id}")
     public String orderSubmit(@PathVariable String id,HttpSession session,ModelMap model,RedirectAttributes redirectAttributes) {

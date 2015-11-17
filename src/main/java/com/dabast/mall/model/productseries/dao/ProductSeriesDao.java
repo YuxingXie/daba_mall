@@ -44,34 +44,34 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         //可规定热卖商品数量
         List<ProductSeries> productSeriesList=findAll();
         for (ProductSeries productSeries:productSeriesList){
-            DBRef dbRef=new DBRef("productSeries",new ObjectId(productSeries.getId()));
-            DBObject dbObject=new BasicDBObject();
-            dbObject.put("productSeries",dbRef);
-            List<ProductSeriesPrice> productSeriesPrices=ServiceManager.productSeriesPriceService.findAll(dbObject);
+            List<ProductSeriesPrice> productSeriesPrices = getProductSeriesPrices(productSeries);
             productSeries.setProductSeriesPrices(productSeriesPrices);
 
         }
         return productSeriesList;
     }
 
+    public List<ProductSeriesPrice> getProductSeriesPrices(ProductSeries productSeries) {
+        DBRef dbRef=new DBRef("productSeries",new ObjectId(productSeries.getId()));
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("productSeries",dbRef);
+        return ServiceManager.productSeriesPriceService.findAll(dbObject);
+    }
+
     public ProductSeries findProductSeriesById(ObjectId objectId) {
 
         ProductSeries productSeries=findById(objectId);
-//        ProductProperty queryEntity=new ProductProperty();
-//        queryEntity.setProductSeriesId(objectId.toString());
-//        List<ProductProperty> productProperties= ServiceManager.productPropertyService.findEquals(queryEntity);
         DBObject dbObject=new BasicDBObject();
         dbObject.put("productSeries",objectId.toString());
         List<ProductProperty> productProperties= ServiceManager.productPropertyService.findAll(dbObject);
         for (ProductProperty productProperty :productProperties){
-//            ProductPropertyValue cond=new ProductPropertyValue();
             DBObject cond=new BasicDBObject();
             cond.put("productPropertyId", productProperty.getId());
             List<ProductPropertyValue> propertyValues=ServiceManager.productPropertyValueService.findAll(cond);
             productProperty.setPropertyValues(propertyValues);
         }
         productSeries.setProductProperties(productProperties);
-
+        productSeries.setProductSeriesPrices(getProductSeriesPrices(productSeries));
         return productSeries;
     }
 

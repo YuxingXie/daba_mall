@@ -100,12 +100,23 @@ public class AdminController extends BaseRestSpringController {
     public String createProductSeries(ProductSeries productSeries,Double price,String productSubCategoryId,@RequestParam("files") MultipartFile[] files) throws IOException {
 //        printRequestParameters(request);
         if(files!=null&&files.length>0){
+            String dirStr="statics/img/product";
+            ServletContext context= ProjectContext.getServletContext();
+            ServletContextResource dirResource=new ServletContextResource(context,dirStr);
+            File dirFile=dirResource.getFile();
+            if (!dirFile.exists() || !dirFile.isDirectory()){
+                dirFile.mkdirs();
+            }
             //循环获取file数组中得文件
             String[] pictures=new String[files.length];
             for(int i = 0;i<files.length;i++){
                 MultipartFile file = files[i];
                 //保存文件
                 String picture=productSeriesService.saveFile(file.getOriginalFilename(),file.getBytes());
+                String originalFilename=file.getOriginalFilename();
+                String destFileStr=dirStr+"/"+picture+originalFilename.substring(originalFilename.lastIndexOf("."));
+                System.out.println("dest file to save:"+destFileStr);
+                file.transferTo(new ServletContextResource(context,destFileStr).getFile());
                 pictures[i]="pic/"+picture;
             }
             productSeries.setPictures(pictures);
