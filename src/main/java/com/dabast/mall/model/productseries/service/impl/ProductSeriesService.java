@@ -37,7 +37,10 @@ public class ProductSeriesService extends BaseEntityManager<ProductSeries> imple
     public ProductSeries findProductSeriesById(ObjectId objectId) {
         return productSeriesDao.findProductSeriesById(objectId);
     }
-
+    @Override
+    public ProductSeries findProductSeriesById(String id) {
+        return productSeriesDao.findProductSeriesById(id);
+    }
     @Override
     public Page<ProductSeries> findProductSeriesesByKeyWord(String keyWord, int currentPage) {
         return productSeriesDao.findProductSeriesesByKeyWord(keyWord,currentPage);

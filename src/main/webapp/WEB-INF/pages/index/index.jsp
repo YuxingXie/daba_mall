@@ -87,11 +87,11 @@
                                             <div class="pi-img-wrapper">
                                                 <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
                                                 <div>
-                                                    <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
+                                                    <%--<a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>--%>
                                                     <a href="#product-pop-up" data-prod="${prod.id}" class="btn btn-default fancybox-fast-view">详情</a>
                                                 </div>
                                             </div>
-                                            <h3><a href="${prod.id}">${prod.name}</a></h3>
+                                            <h3><a href="${path}/product_series/${prod.id}">${prod.name}</a></h3>
                                             <div class="pi-price">￥${prod.commonPrice}</div>
                                             <a href="#product-pop-up"  class="btn btn-default fancybox-fast-view" data-prod="${prod.id}">添加到购物车</a>
                                                 <%--新品--%>
@@ -124,8 +124,8 @@
                                     <div class="pi-img-wrapper">
                                         <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
                                         <div>
-                                            <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
-                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
+                                            <%--<a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>--%>
+                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-prod="${prod.id}"  data-url="${path}/product_series/popover/${prod.id}">详情</a>
                                         </div>
                                     </div>
                                     <h3><a href="${path}/product_series/${prod.id}">${prod.name}</a></h3>
@@ -163,8 +163,8 @@
                                             <div class="pi-img-wrapper">
                                                 <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
                                                 <div>
-                                                    <a href="${path}//${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
-                                                    <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
+                                                    <%--<a href="${path}//${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>--%>
+                                                    <a href="#product-pop-up" data-prod="${prod.id}" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
                                                 </div>
                                             </div>
                                             <h3><a href="${path}/product_series/${prod.id}">${prod.name}</a></h3>
@@ -200,8 +200,8 @@
                                             <div class="pi-img-wrapper">
                                                 <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
                                                 <div>
-                                                    <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
-                                                    <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
+                                                    <%--<a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>--%>
+                                                    <a href="#product-pop-up" data-prod="${prod.id}" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
                                                 </div>
                                             </div>
                                             <h3><a href="${path}/product_series/${prod.id}">${prod.name}</a></h3>
@@ -237,8 +237,8 @@
                                             <div class="pi-img-wrapper">
                                                 <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
                                                 <div>
-                                                    <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
-                                                    <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
+                                                    <%--<a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>--%>
+                                                    <a href="#product-pop-up" data-prod="${prod.id}" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
                                                 </div>
                                             </div>
                                             <h3><a href="${path}/product_series/${prod.id}">${prod.name}</a></h3>
@@ -273,8 +273,8 @@
                                         <div class="pi-img-wrapper">
                                             <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
                                             <div>
-                                                <a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
-                                                <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
+                                                <%--<a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>--%>
+                                                <a href="#product-pop-up" data-prod="${prod.id}" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
                                             </div>
                                         </div>
                                         <h3><a href="${path}/product_series/${prod.id}">${prod.name}</a></h3>

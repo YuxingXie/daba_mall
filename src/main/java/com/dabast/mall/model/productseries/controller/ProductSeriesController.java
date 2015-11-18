@@ -56,7 +56,7 @@ public class ProductSeriesController extends BaseRestSpringController {
 
     @RequestMapping(value="/{id}")
     public String show(ModelMap model,@PathVariable java.lang.String id) {
-        ProductSeries productSeries = productSeriesService.findById(id);
+        ProductSeries productSeries = productSeriesService.findProductSeriesById(id);
         model.addAttribute("productSeries",productSeries);
 
         
@@ -69,24 +69,24 @@ public class ProductSeriesController extends BaseRestSpringController {
         return rt;
     }
 
-    @RequestMapping(value="/new.do")
-    public String create(ModelMap model,@Valid ProductSeries productSeries,BindingResult errors,MultipartFile file)  {
-        if(errors.hasErrors()) {
-            this.setFailure(model);
-            return  "admin/product_series/create_input";
-        }
-        setSuccess(model);
-
-        try {
-
-            String picture=productSeriesService.saveFile(file.getOriginalFilename(),file.getBytes());
-            productSeries.setPictures(new String[]{picture});
-            productSeriesService.insert(productSeries);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "redirect:admin/product_series/list";
-    }
+//    @RequestMapping(value="/new.do")
+//    public String create(ModelMap model,@Valid ProductSeries productSeries,BindingResult errors,MultipartFile file)  {
+//        if(errors.hasErrors()) {
+//            this.setFailure(model);
+//            return  "admin/product_series/create_input";
+//        }
+//        setSuccess(model);
+//
+//        try {
+//
+//            String picture=productSeriesService.saveFile(file.getOriginalFilename(),file.getBytes());
+//            productSeries.setPictures(new String[]{picture});
+//            productSeriesService.insert(productSeries);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return "redirect:admin/product_series/list";
+//    }
 
 
     @RequestMapping("/create_input.do")

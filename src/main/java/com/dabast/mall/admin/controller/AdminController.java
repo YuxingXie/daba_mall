@@ -97,8 +97,23 @@ public class AdminController extends BaseRestSpringController {
         return path;
     }
     @RequestMapping(value="/product_series/new")
-    public String createProductSeries(ProductSeries productSeries,Double price,String productSubCategoryId,@RequestParam("files") MultipartFile[] files) throws IOException {
+    public String createProductSeries(ProductSeries productSeries,Double price,String productSubCategoryId,@RequestParam("files") MultipartFile[] files,HttpServletRequest request) throws IOException {
+
 //        printRequestParameters(request);
+        Map<String,String[]> requestMap=request.getParameterMap();
+        for (String key:requestMap.keySet()){
+            for (String val:requestMap.get(key)){
+                if (key.indexOf("propertyName")<0 ||key.indexOf("propertyValue")<0) continue;
+                System.out.print("key:"+key);
+                System.out.print(",value:");
+                String[] values=requestMap.get(key);
+                for (String value:values){
+                    System.out.print(value+"\t");
+                }
+                System.out.println("");
+            }
+        }
+        if (true) return null;
         if(files!=null&&files.length>0){
             String dirStr="statics/img/product";
             ServletContext context= ProjectContext.getServletContext();

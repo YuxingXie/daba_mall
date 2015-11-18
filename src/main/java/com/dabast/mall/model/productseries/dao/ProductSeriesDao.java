@@ -74,7 +74,9 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         productSeries.setProductSeriesPrices(getProductSeriesPrices(productSeries));
         return productSeries;
     }
-
+    public ProductSeries findProductSeriesById(String id) {
+        return findProductSeriesById(new ObjectId(id));
+    }
     public Page<ProductSeries> findProductSeriesesByKeyWord(String keyWord,int currentPage) {
 //        Criteria criteria = new Criteria().orOperator(Criteria.where("name").regex(".*?" + keyWord + ".*"), Criteria.where("description").regex(".*?" + keyWord + ".*"));
         Pattern pattern = Pattern.compile(".*?" + keyWord + ".*");
