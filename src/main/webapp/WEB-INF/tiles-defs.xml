@@ -3,7 +3,10 @@
         "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-    <definition name="baseDefinition" template="/WEB-INF/pages/layout/layout.jsp">
+    <!--The "definition" element describes a definition that can be inserted in a jsp page.
+    This definition is identified by its logical name.
+     A definition allows to define all the attributes that can be set in <insert> tag from a jsp page.-->
+    <definition name="baseDefinition" template="/WEB-INF/pages/layout/layout.jsp" preparer="com.dabast.common.web.tiles.Prepare">
         <put-attribute name="footer" value="/WEB-INF/pages/layout/footer.jsp" />
         <put-attribute name="meta" value="/WEB-INF/pages/layout/meta.jsp" />
         <put-attribute name="topCss" value="/WEB-INF/pages/layout/topCss.jsp" />

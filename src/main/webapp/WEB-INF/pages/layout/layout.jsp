@@ -6,8 +6,8 @@
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <!DOCTYPE html>
-<html data-description="from decorator">
-<head data-description="from decorator">
+<html>
+<head>
     <tiles:insertAttribute name="meta" />
     <title></title>
     <tiles:insertAttribute name="topCss"/>
