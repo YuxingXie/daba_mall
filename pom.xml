@@ -79,6 +79,11 @@
       <artifactId>tiles-jsp</artifactId>
       <version>3.0.5</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-core</artifactId>
+      <version>1.2.4</version>
+    </dependency>
     <!--<dependency>-->
       <!--<groupId>org.apache</groupId>-->
       <!--<artifactId>commons-dbcp</artifactId>-->
@@ -284,6 +289,22 @@
         <version>2.2</version>
         <configuration>
           <port>8088</port>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>java</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <classpathScope>test</classpathScope>
+          <mainClass>Tutorial</mainClass>
         </configuration>
       </plugin>
     </plugins>

@@ -8,32 +8,29 @@ import com.dabast.mall.model.productseries.service.IProductSeriesService;
 import com.mongodb.gridfs.GridFSDBFile;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.bson.types.ObjectId;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/admin")
 public class AdminController extends BaseRestSpringController {
     protected static final String DEFAULT_SORT_COLUMNS = null;
@@ -167,9 +164,29 @@ public class AdminController extends BaseRestSpringController {
         return "redirect:/admin/index/index.jsp";
     }
 
+    @RequestMapping(value = "/index")
+    public String index(HttpServletRequest request, HttpServletResponse response,ModelMap map){
+        Subject currentUser = SecurityUtils.getSubject();
+        String id=currentUser.getPrincipal().toString();
+        System.out.println("id: "+id);
+        User user= ServiceManager.userService.findById(id);
+        map.addAttribute("LoginUser",user);
+        return "admin/index/index";
+    }
 
-    @RequestMapping("/create_input.do")
-    public String createInput(ModelMap model){
-        return "admin/product_series/create_input";
+    @RequestMapping(value = "/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response,ModelMap map){
+        Subject currentUser = SecurityUtils.getSubject();
+        currentUser.logout();
+        return "login.jsp";
+    }
+
+    private void setLogin(String userName, String password) {
+        Subject currentUser = SecurityUtils.getSubject();
+        if (!currentUser.isAuthenticated()) {
+            UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
+            token.setRememberMe(false);
+            currentUser.login(token);
+        }
     }
 } 

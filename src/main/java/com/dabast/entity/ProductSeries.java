@@ -1,6 +1,5 @@
 package com.dabast.entity;
 
-import com.sun.org.apache.bcel.internal.generic.LSTORE;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;

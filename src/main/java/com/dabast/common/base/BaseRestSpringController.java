@@ -11,21 +11,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 
-/**
- * 标准的rest方法列表
- * <pre>
- * /userinfo                => index()  
- * /userinfo/new            => _new()  注意: 不使用/userinfo/add => add()的原因是ad会被一些浏览器当做广告URL拦截
- * /userinfo/{id}           => show()  
- * /userinfo/{id}/edit      => edit()  
- * /userinfo        POST    => create()  
- * /userinfo/{id}   PUT     => update()  
- * /userinfo/{id}   DELETE  => delete()  
- * /userinfo        DELETE  => batchDelete()  
- * </pre>
- * 
- * @author badqiu
- */
 public class BaseRestSpringController  {
     protected static final String CREATED_SUCCESS = "创建成功";
     protected static final String UPDATE_SUCCESS = "更新成功";
@@ -39,20 +24,6 @@ public class BaseRestSpringController  {
         BeanUtils.copyProperties(target, source);
     }
 
-//    public static <T> T copyProperties(Class<T> destClass,Object orig) {
-//        return BeanUtils.copyProperties(destClass, orig);
-//    }
-//
-//    public static ModelMap toModelMap(Page page,PageRequest pageRequest) {
-//        return toModelMap("",page, pageRequest);
-//    }
-//
-//    public static ModelMap toModelMap(String tableId,Page page,PageRequest pageRequest) {
-//        ModelMap model = new ModelMap();
-//        saveIntoModelMap(tableId,page,pageRequest,model);
-//        return model;
-//    }
-    
     public void printRequestParameters(HttpServletRequest request){
         Map<String,String[]> requestMap=request.getParameterMap();
         for (String key:requestMap.keySet()){

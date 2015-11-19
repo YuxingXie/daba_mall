@@ -333,8 +333,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 
     public CommandResult runCommand(String command) {
 
-        CommandResult commandResult = mongoTemplate.executeCommand(command);
-        return commandResult;
+        return  mongoTemplate.executeCommand(command);
     }
 
     @Override
