@@ -3,12 +3,11 @@ package com.dabast.mall.admin.controller;
 import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.common.helper.service.ServiceManager;
-import com.dabast.entity.ProductCategory;
-import com.dabast.entity.ProductSeries;
-import com.dabast.entity.ProductSeriesPrice;
-import com.dabast.entity.ProductSubCategory;
+import com.dabast.entity.*;
 import com.dabast.mall.model.productseries.service.IProductSeriesService;
 import com.mongodb.gridfs.GridFSDBFile;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.bson.types.ObjectId;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
@@ -32,14 +31,8 @@ import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-/**
- * Created by Administrator on 2015/6/11.
- */
 @Controller
 @RequestMapping("/admin")
 public class AdminController extends BaseRestSpringController {
@@ -47,8 +40,6 @@ public class AdminController extends BaseRestSpringController {
     protected static final String REDIRECT_ACTION = "";
 
     @Resource private IProductSeriesService productSeriesService;
-    @Resource private Validator validator;
-
 
     @InitBinder("productSeries")
     public void initBinder(WebDataBinder binder) {
@@ -61,21 +52,11 @@ public class AdminController extends BaseRestSpringController {
         model.put("now", new java.sql.Timestamp(System.currentTimeMillis()));
     }
 
-
-    @RequestMapping(value="/{id}")
-    public String show(ModelMap model,@PathVariable Integer id) {
-        ProductSeries productSeries = null;//(ProductSeries)productSeriesService.getById(id);
-        model.addAttribute("productSeries",productSeries);
-
-
-        return "baseInfo/rm_baseInfo_update_input";
+    @RequestMapping(value="/")
+    public String index() {
+         return "admin/index/index";
     }
-    @RequestMapping(value="/product/categories")
-    public ResponseEntity<List<ProductCategory>> popover(ModelMap model) {
-        List<ProductCategory> productCategories= ServiceManager.productCategoryService.findAllCategories();
-        ResponseEntity<List<ProductCategory>> rt=new ResponseEntity<List<ProductCategory>>(productCategories, HttpStatus.OK);
-        return rt;
-    }
+
     @RequestMapping(value="pic/{id}")
     public String showPic(ModelMap model,@PathVariable String id) {
        GridFSDBFile picture =productSeriesService.findFileById(id);
@@ -97,23 +78,9 @@ public class AdminController extends BaseRestSpringController {
         return path;
     }
     @RequestMapping(value="/product_series/new")
-    public String createProductSeries(ProductSeries productSeries,Double price,String productSubCategoryId,@RequestParam("files") MultipartFile[] files,HttpServletRequest request) throws IOException {
+    public String createProductSeries(ProductSeries productSeries,Double price,String productSubCategoryId,@RequestParam("files") MultipartFile[] files,String productPropertiesJson,HttpServletRequest request) throws IOException {
 
 //        printRequestParameters(request);
-        Map<String,String[]> requestMap=request.getParameterMap();
-        for (String key:requestMap.keySet()){
-            for (String val:requestMap.get(key)){
-                if (key.indexOf("propertyName")<0 ||key.indexOf("propertyValue")<0) continue;
-                System.out.print("key:"+key);
-                System.out.print(",value:");
-                String[] values=requestMap.get(key);
-                for (String value:values){
-                    System.out.print(value+"\t");
-                }
-                System.out.println("");
-            }
-        }
-        if (true) return null;
         if(files!=null&&files.length>0){
             String dirStr="statics/img/product";
             ServletContext context= ProjectContext.getServletContext();
@@ -141,7 +108,27 @@ public class AdminController extends BaseRestSpringController {
         productSeries.setProductSubCategory(productSubCategory);
 
         productSeriesService.insert(productSeries);
+        List<ProductProperty> productProperties=new ArrayList<ProductProperty>();
+        JSONArray productPropertiesJsonArray=JSONArray.fromObject(productPropertiesJson);
+        for (Object object:productPropertiesJsonArray.toArray()){
+            JSONObject jsonObjectProductProperty=(JSONObject) object;
+            ProductProperty productProperty=new ProductProperty();
+            Assert.notNull(jsonObjectProductProperty.get("propertyName"));
+            productProperty.setPropertyName(jsonObjectProductProperty.get("propertyName").toString());
+            productProperty.setProductSeries(productSeries);
+            ServiceManager.productPropertyService.insert(productProperty);
+            JSONArray jsonArrayPropertyValues=JSONArray.fromObject(jsonObjectProductProperty.get("propertyValues"));
 
+            for (Object productPropertyValueObject:jsonArrayPropertyValues){
+                ProductPropertyValue productPropertyValue=new ProductPropertyValue();
+                JSONObject productPropertyValueJSONObject=(JSONObject)productPropertyValueObject;
+                Assert.notNull(productPropertyValueJSONObject.get("value"));
+                System.out.println(productPropertyValueJSONObject.get("value"));
+                productPropertyValue.setValue(productPropertyValueJSONObject.get("value").toString());
+                productPropertyValue.setProductProperty(productProperty);
+                ServiceManager.productPropertyValueService.insert(productPropertyValue);
+            }
+        }
         ProductSeriesPrice productSeriesPrice=new ProductSeriesPrice();
         Date now=new Date();
         productSeriesPrice.setAdjustDate(now);
@@ -149,7 +136,7 @@ public class AdminController extends BaseRestSpringController {
         productSeriesPrice.setPrice(price);
         productSeriesPrice.setProductSeries(productSeries);
         ServiceManager.productSeriesPriceService.insert(productSeriesPrice);
-        return "redirect:admin/product_series/list";
+        return "redirect:/admin/index/index.jsp";
     }
     @RequestMapping(value="/product_category/new")
     public String createProductCategory(ModelMap model, HttpServletRequest request,String categoryType,String categoryName,String subCategoryName,String productCategoryId){
@@ -177,7 +164,7 @@ public class AdminController extends BaseRestSpringController {
             productSubCategory.setProductCategory(productCategory);
             ServiceManager.productSubCategoryService.insert(productSubCategory);
         }
-        return "redirect:admin/product_series/list";
+        return "redirect:/admin/index/index.jsp";
     }
 
 

@@ -21,7 +21,7 @@ public class ProductProperty {
     @DBRef
     @NotNull
     private ProductSeries productSeries;
-    @DBRef(db = "productPropertyValue")
+    @Transient
     private List<ProductPropertyValue> propertyValues;
     public List<ProductPropertyValue> getPropertyValues() {
         return propertyValues;

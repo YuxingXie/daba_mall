@@ -12,6 +12,8 @@ public class Prepare implements ViewPreparer{
 
     @Override
     public void execute(Request tilesContext, AttributeContext attributeContext) {
+//        System.out.println(attributeContext.getAttribute("role"));
+//        System.out.println(attributeContext.getAttribute("name"));
         System.out.println("viewPreparer executed");
     }
 }

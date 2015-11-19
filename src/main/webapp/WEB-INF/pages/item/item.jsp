@@ -5,15 +5,6 @@
 <%@taglib prefix="f" uri="/functions" %>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
-<
-<head>
-  <meta charset="utf-8">
-  <title>物品详情页</title>
- </head>
-
-<body>
-    <!-- BEGIN TOP BAR -->
-
 
     <div class="main">
       <div class="container">
@@ -225,7 +216,4 @@
 
     <!-- Load javascripts at bottom, this will reduce page load time -->
     <!-- BEGIN CORE PLUGINS(REQUIRED FOR ALL PAGES) -->
-
-
-</body>
 

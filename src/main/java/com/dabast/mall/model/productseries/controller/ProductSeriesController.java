@@ -2,6 +2,8 @@ package com.dabast.mall.model.productseries.controller;
 
 import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.helper.service.ProjectContext;
+import com.dabast.common.helper.service.ServiceManager;
+import com.dabast.entity.ProductCategory;
 import com.dabast.entity.ProductSeries;
 import com.dabast.mall.model.productseries.service.IProductSeriesService;
 import com.mongodb.gridfs.GridFSDBFile;
@@ -28,10 +30,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
-/**
- * Created by Administrator on 2015/6/11.
- */
 @Controller
 @RequestMapping("/product_series")
 public class ProductSeriesController extends BaseRestSpringController {
@@ -58,8 +58,6 @@ public class ProductSeriesController extends BaseRestSpringController {
     public String show(ModelMap model,@PathVariable java.lang.String id) {
         ProductSeries productSeries = productSeriesService.findProductSeriesById(id);
         model.addAttribute("productSeries",productSeries);
-
-        
         return "item";
     }
     @RequestMapping(value="/popover/{id}")
@@ -68,26 +66,12 @@ public class ProductSeriesController extends BaseRestSpringController {
         ResponseEntity<ProductSeries> rt=new ResponseEntity<ProductSeries>(productSeries, HttpStatus.OK);
         return rt;
     }
-
-//    @RequestMapping(value="/new.do")
-//    public String create(ModelMap model,@Valid ProductSeries productSeries,BindingResult errors,MultipartFile file)  {
-//        if(errors.hasErrors()) {
-//            this.setFailure(model);
-//            return  "admin/product_series/create_input";
-//        }
-//        setSuccess(model);
-//
-//        try {
-//
-//            String picture=productSeriesService.saveFile(file.getOriginalFilename(),file.getBytes());
-//            productSeries.setPictures(new String[]{picture});
-//            productSeriesService.insert(productSeries);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return "redirect:admin/product_series/list";
-//    }
-
+    @RequestMapping(value="/categories")
+    public ResponseEntity<List<ProductCategory>> popover(ModelMap model) {
+        List<ProductCategory> productCategories= ServiceManager.productCategoryService.findAllCategories();
+        ResponseEntity<List<ProductCategory>> rt=new ResponseEntity<List<ProductCategory>>(productCategories, HttpStatus.OK);
+        return rt;
+    }
 
     @RequestMapping("/create_input.do")
     public String createInput(ModelMap model){
