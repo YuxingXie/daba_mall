@@ -12,6 +12,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.WebDataBinder;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/admin")
 public class AdminController extends BaseRestSpringController {
     protected static final String DEFAULT_SORT_COLUMNS = null;
@@ -43,17 +44,19 @@ public class AdminController extends BaseRestSpringController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
     }
 
-
-    @ModelAttribute
-    public void init(ModelMap model) {
-        model.put("now", new java.sql.Timestamp(System.currentTimeMillis()));
-    }
-
     @RequestMapping(value="/")
     public String index() {
-         return "admin/index/index";
+         return "redirect:/admin/index/index";
     }
-
+//    @RequestMapping(value = "/index")
+//    public String index(ModelMap map){
+////        Subject currentUser = SecurityUtils.getSubject();
+////        String id=currentUser.getPrincipal().toString();
+////        System.out.println("id: "+id);
+////        User user= ServiceManager.userService.findById(id);
+////        map.addAttribute("LoginUser",user);
+//        return "redirect:/admin/index/index";
+//    }
     @RequestMapping(value="pic/{id}")
     public String showPic(ModelMap model,@PathVariable String id) {
        GridFSDBFile picture =productSeriesService.findFileById(id);
@@ -133,7 +136,12 @@ public class AdminController extends BaseRestSpringController {
         productSeriesPrice.setPrice(price);
         productSeriesPrice.setProductSeries(productSeries);
         ServiceManager.productSeriesPriceService.insert(productSeriesPrice);
-        return "redirect:/admin/index/index.jsp";
+        List<ProductSeriesPrice> prices=productSeries.getProductSeriesPrices();
+        if (prices==null) prices=new ArrayList<ProductSeriesPrice>();
+        prices.add(productSeriesPrice);
+        productSeries.setProductSeriesPrices(prices);
+        ServiceManager.productSeriesService.update(productSeries);
+        return "redirect:/admin/index/login.jsp";
     }
     @RequestMapping(value="/product_category/new")
     public String createProductCategory(ModelMap model, HttpServletRequest request,String categoryType,String categoryName,String subCategoryName,String productCategoryId){
@@ -161,18 +169,10 @@ public class AdminController extends BaseRestSpringController {
             productSubCategory.setProductCategory(productCategory);
             ServiceManager.productSubCategoryService.insert(productSubCategory);
         }
-        return "redirect:/admin/index/index.jsp";
+        return "redirect:/admin/index/login.jsp";
     }
 
-    @RequestMapping(value = "/index")
-    public String index(HttpServletRequest request, HttpServletResponse response,ModelMap map){
-        Subject currentUser = SecurityUtils.getSubject();
-        String id=currentUser.getPrincipal().toString();
-        System.out.println("id: "+id);
-        User user= ServiceManager.userService.findById(id);
-        map.addAttribute("LoginUser",user);
-        return "admin/index/index";
-    }
+
 
     @RequestMapping(value = "/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response,ModelMap map){

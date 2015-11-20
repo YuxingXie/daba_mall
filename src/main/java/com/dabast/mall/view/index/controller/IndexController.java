@@ -146,7 +146,7 @@ public class IndexController extends BaseRestSpringController {
        }else{
            cart=(Cart)session.getAttribute(Constant.CART);
        }
-        ProductSeries productSeries=ServiceManager.productSeriesService.findById(productSelected.getProductSeriesId());
+        ProductSeries productSeries=ServiceManager.productSeriesService.findProductSeriesById(productSelected.getProductSeriesId());
         productSelected.setProductSeries(productSeries);
         List<ProductPropertyValue> productPropertyValueList=new ArrayList<ProductPropertyValue>();
        for(String productPropertyValueId : productSelected.getProductPropertyValueIds()){

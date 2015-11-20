@@ -24,7 +24,7 @@ public class BaseRestSpringController  {
         BeanUtils.copyProperties(target, source);
     }
 
-    public void printRequestParameters(HttpServletRequest request){
+    protected void printRequestParameters(HttpServletRequest request){
         Map<String,String[]> requestMap=request.getParameterMap();
         for (String key:requestMap.keySet()){
             String str=new String();
@@ -50,27 +50,6 @@ public class BaseRestSpringController  {
         return (T)value;
     }
 
-    protected Map<String,Object> getParams(HttpServletRequest request){
-        Map<String,Object> params = new HashMap();
-        //获得POST 过来参数设置到新的params中
-        Map requestParams = request.getParameterMap();
-        for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext(); ) {
-            String name = (String) iter.next();
-            String[] values = request.getParameterValues(name);
-            StringBuffer valueStr =new StringBuffer();
-            for (int i = 0; i < values.length; i++) {
-                valueStr.append((i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",");
-            }
-            params.put(name, valueStr.toString());
-        }
-        return params;
-    }
 
-    public void setSuccess(ModelMap model){
-        model.put("success","true");
-    }
 
-    public void setFailure(ModelMap model){
-        model.put("success","false");
-    }
 }

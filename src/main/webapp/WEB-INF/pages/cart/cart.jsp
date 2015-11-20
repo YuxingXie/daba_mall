@@ -7,7 +7,7 @@
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <!DOCTYPE html>
-<div class="main" data-description="from cart page">
+<div class="main">
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="${path}">首页</a></li>
@@ -55,7 +55,7 @@
                                                             <span name="productPropertyValue"
                                                                   data-product-property-value-id="${productPropertyValue.id}"
                                                                   data-product-property-value-value="${productPropertyValue.value}"
-                                                                  data-product-property-value-product-property-id="${productPropertyValue.productPropertyId}" >
+                                                                  data-product-property-value-product-property-id="${productPropertyValue.productProperty.id}" >
                                                             ${productPropertyValue.value}
                                                             </span>
                                                         </c:forEach>
@@ -71,7 +71,8 @@
                                                     </span>
                                                     </td>
                                                     <td class="shopping-cart-price">
-                                                        <span>￥{{amount_${selectedIndex.index}*${productSelected.productSeries.commonPrice} | number:2}}</span>
+                                                        <%--<span>￥{{amount_${selectedIndex.index}*${productSelected.productSeries.commonPrice} | number:2}}</span>--%>
+                                                        <span>${selectedIndex.index}*${productSelected.productSeries.commonPrice}</span>
                                                     </td>
                                                     <td class="shopping-cart-total">
                                                         <p><a href="${path}/cart/remove/${selectedIndex.index}">删除</a></p>

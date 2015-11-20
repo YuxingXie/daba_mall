@@ -38,7 +38,7 @@ public enum EmailEnum implements ICodeEnum {
     wo("wo","http://mail.wo.com.cn/mail/login.action"),
     iCloud("iCloud","https://www.icloud.com/"),
     yeah("yeah","http://www.yeah.net/"),
-    tianya("tianya","http://mail.tianya.cn/home/hn/index.jsp"),
+    tianya("tianya","http://mail.tianya.cn/home/hn/login.jsp"),
     sunmail("sunmail","http://www.sunmail.cn/login.php"),
     chinaacc("chinaacc","http://mail.chinaacc.com/"),
     eastday("eastday","http://mail.eastday.com/"),

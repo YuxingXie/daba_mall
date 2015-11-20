@@ -106,7 +106,7 @@
                                                 ${productPropertyValue.value}
                                                 </c:forEach>
                                             </strong>
-                                            <em>￥${productSelected.productSeries.commonPrice}</em>
+                                            <em>￥${productSelected.productSeries.commonPrice*productSelected.amount}</em>
                                             <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
                                         </li>
                                     </c:forEach>

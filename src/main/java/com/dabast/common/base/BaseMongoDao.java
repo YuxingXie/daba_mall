@@ -498,7 +498,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     private Update getUpdateFromEntity(E e) {
         Update update = new Update();
         for (java.lang.reflect.Field field : collectionClass.getDeclaredFields()) {
-            if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class) && !field.isAnnotationPresent(Id.class))
+            if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class) && !field.isAnnotationPresent(DBRef.class))
                 continue;
             String setterMethodName = ReflectUtil.getSetterMethodName(field.getName());
             Class fieldType = field.getType();
@@ -511,10 +511,14 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
                     String fieldName = docField.value() == null || docField.value().equals("") ? field.getName() : docField.value();
                     update.set(fieldName, fieldValue);
                 }
-                if (field.isAnnotationPresent(Id.class)) {
-                    Id id = field.getAnnotation(Id.class);
-                    update.set("_id", fieldValue);
+                if (field.isAnnotationPresent(DBRef.class)) {
+                    String fieldName = field.getName();
+                    update.set(fieldName, fieldValue);
                 }
+//                if (field.isAnnotationPresent(Id.class)) {
+//                    Id id = field.getAnnotation(Id.class);
+//                    update.set("_id", fieldValue);
+//                }
             } catch (IllegalAccessException e1) {
                 e1.printStackTrace();
             }

@@ -29,20 +29,41 @@
     <div class="row">
       <div class="sidebar col-md-3 col-sm-5 bg-primary" style="margin-top: 15px;">
         <ul class="list-group margin-bottom-25 sidebar-menu">
-          <c:forEach var="productCategory" items="${f:getProductCategories()}">
+
 
             <li class="list-group-item clearfix dropdown"><a href="javascript:void(0);" class="collapsed">
-              <i class="fa fa-angle-right"></i> ${productCategory.categoryName}<i class="fa fa-angle-down"></i>
+              <i class="fa fa-angle-right"></i> 商品管理<i class="fa fa-angle-down"></i>
             </a>
               <ul class="dropdown-menu" style="display:block;">
-                <c:forEach var="subCategory" items="${f:getProductSubCategoriesByCategoryId(productCategory.id)}">
-                  <li class="list-group-item dropdown clearfix active">
-                    <a href="${path}/sort/${subCategory.id}" target="main-content"><i class="fa fa-circle"></i>${subCategory.subCategoryName} open</a>
+                <li class="list-group-item dropdown clearfix active">
+                  <a href="${path}/admin/product_series/list"><i class="fa fa-circle"></i>产品信息</a>
+                </li>
+                  <li class="list-group-item dropdown clearfix">
+                    <a href="${path}/admin/product_series/create_input"><i class="fa fa-circle"></i>产品上架</a>
                   </li>
-                </c:forEach>
+                <li class="list-group-item dropdown clearfix">
+                  <a href="${path}/sort/" target="main-content"><i class="fa fa-circle"></i>修改产品信息</a>
+                </li>
+                <li class="list-group-item dropdown clearfix">
+                  <a href="${path}/sort/" target="main-content"><i class="fa fa-circle"></i>首页轮播图片管理</a>
+                </li>
               </ul>
             </li>
-          </c:forEach>
+          <li class="list-group-item clearfix dropdown"><a href="javascript:void(0);" class="collapsed">
+            <i class="fa fa-angle-right"></i> 订单管理<i class="fa fa-angle-down"></i>
+          </a>
+            <ul class="dropdown-menu" style="display:block;">
+              <li class="list-group-item dropdown clearfix active">
+                <a href="${path}/admin/product_series/list"><i class="fa fa-circle"></i>产品信息</a>
+              </li>
+              <li class="list-group-item dropdown clearfix">
+                <a href="${path}/admin/product_series/create_input"><i class="fa fa-circle"></i>产品上架</a>
+              </li>
+              <li class="list-group-item dropdown clearfix">
+                <a href="${path}/sort/" target="main-content"><i class="fa fa-circle"></i>修改产品信息</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </div>
       <div class="col-md-9 col-sm-7">

@@ -10,12 +10,13 @@ import java.util.List;
  */
 
 public class ProductSelected {
+
     private String productSeriesId;
     private Integer amount;
     private List<String> productPropertyValueIds;
     @Transient
     private List<ProductPropertyValue> productPropertyValueList;
-    @Transient
+    @DBRef
     private ProductSeries productSeries;
     private String receiveStatus;
     public String getReceiveStatus() {

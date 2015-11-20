@@ -32,7 +32,7 @@ var renderCart = function(cart){
                 $pps.appendTo($strong);
             }
         }
-        var $em=$('<em>￥'+productSelected.productSeries.commonPrice+'</em>');
+        var $em=$('<em>￥'+((productSelected.productSeries.commonPrice*productSelected.amount).toFixed(2))+'</em>');
         totalPrice+=Number(productSelected.amount*productSelected.productSeries.commonPrice);
         $em.appendTo($li);
         var $a_end=$('<a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>');
