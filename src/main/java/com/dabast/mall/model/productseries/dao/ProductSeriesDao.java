@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
@@ -61,12 +62,17 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
     public ProductSeries findProductSeriesById(ObjectId objectId) {
 
         ProductSeries productSeries=findById(objectId);
-        DBObject dbObject=new BasicDBObject();
-        dbObject.put("productSeries",objectId.toString());
-        List<ProductProperty> productProperties= ServiceManager.productPropertyService.findAll(dbObject);
+        DBObject productPropertyDbObject=new BasicDBObject();
+        productPropertyDbObject.put("productSeries", new DBRef("productSeries", objectId));
+        List<ProductProperty> productProperties= ServiceManager.productPropertyService.findAll(productPropertyDbObject);
+//        DBRef dbRef=new DBRef("productSeries",objectId);
+//        Query query=new BasicQuery(new BasicDBObject("productSeries",dbRef));
+//        List<ProductSeriesPrice> prices=getMongoTemplate().find(query, ProductSeriesPrice.class);
+//        productSeries.setProductSeriesPrices(prices);
         for (ProductProperty productProperty :productProperties){
             DBObject cond=new BasicDBObject();
-            cond.put("productPropertyId", productProperty.getId());
+//            cond.put("productPropertyId", productProperty.getId());
+            cond.put("productProperty", new DBRef("productProperty",productProperty.getId()));
             List<ProductPropertyValue> propertyValues=ServiceManager.productPropertyValueService.findAll(cond);
             productProperty.setPropertyValues(propertyValues);
         }

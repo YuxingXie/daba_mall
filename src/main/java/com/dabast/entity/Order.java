@@ -1,10 +1,12 @@
 package com.dabast.entity;
 
+import com.dabast.common.helper.service.ServiceManager;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,7 +35,7 @@ public class Order {
     private String payWayString;
     @Field(value = "orderDate")
     private Date orderDate;
-    @Field(value = "userId")
+    @Transient
     private String userId;
     @Field(value = "acceptAddress")
     private String acceptAddress;
@@ -194,4 +196,12 @@ public class Order {
     public String getPayWayString() {
         return payWayString==null?null:(payWayString.equals("1")?"货到付款":(payWayString.equals("2")?"在线支付":(payWayString.equals("3")?"公司转账":(payWayString.equals("4")?"邮局汇款":null))));
     }
+//    private ProductSeriesPrice getProductSeriesPriceByDate(Date orderDate, List<ProductSeriesPrice> prices) {
+//        for (ProductSeriesPrice productSeriesPrice:prices){
+//            if (orderDate.after(productSeriesPrice.getBeginDate())&&orderDate.before(productSeriesPrice.getEndDate())){
+//                return productSeriesPrice;
+//            }
+//        }
+//        return null;
+//    }
 }

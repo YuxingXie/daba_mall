@@ -72,7 +72,7 @@
                                                     </td>
                                                     <td class="shopping-cart-price">
                                                         <%--<span>￥{{amount_${selectedIndex.index}*${productSelected.productSeries.commonPrice} | number:2}}</span>--%>
-                                                        <span>${selectedIndex.index}*${productSelected.productSeries.commonPrice}</span>
+                                                        <span>{{amount_${selectedIndex.index}*${productSelected.productSeries.commonPrice}}}</span>
                                                     </td>
                                                     <td class="shopping-cart-total">
                                                         <p><a href="${path}/cart/remove/${selectedIndex.index}">删除</a></p>

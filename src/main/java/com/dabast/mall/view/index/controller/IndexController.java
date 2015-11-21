@@ -68,7 +68,12 @@ public class IndexController extends BaseRestSpringController {
                 User user = userDao.findByEmailOrPhone(name);
                 if (user.getPassword().equalsIgnoreCase(password)) {
                     session.setAttribute(Constant.LOGIN_USER, user);
-                    session.setAttribute(Constant.CART,user.getCart());
+                    Cart cart=user.getCart();
+                    if (cart.getProductSelectedList()!=null){
+
+                    }
+                    session.setAttribute(Constant.CART,cart);
+
                 }
             }
         }
@@ -452,8 +457,12 @@ public class IndexController extends BaseRestSpringController {
         return new ResponseEntity("{}", HttpStatus.OK);
     }
     @RequestMapping(value = "/index/login_user")
-    public ResponseEntity loginUser(ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity loginUser(HttpSession session) {
         User user=getLoginUser(session);
+//        System.out.println(new ResponseEntity<User>(user,HttpStatus.OK));
+//        User test=new User();
+//        test.setName("John");
+//        user.setCart(null);
         return new ResponseEntity<User>(user,HttpStatus.OK);
     }
 
@@ -466,15 +475,11 @@ public class IndexController extends BaseRestSpringController {
     public ResponseEntity adjust(@RequestBody Cart cart,ModelMap model, HttpSession session) {
         Assert.notNull(cart);
         User user=getLoginUser(session);
-        user.setCart(new Cart());
+
+        user.setCart(cart);
+        Order order=ServiceManager.orderService.insertOrder(user);
+        user.setCart(null);
         ServiceManager.userService.update(user);
-        Order order=new Order();
-        order.setUserId(user.getId());
-        order.setUser(user);
-        order.setOrderDate(new Date());
-        order.setPayStatus("n");
-        order.setProductSelectedList(cart.getProductSelectedList());
-        ServiceManager.orderService.insert(order);
         session.setAttribute(Constant.CART, null);
         session.removeAttribute(Constant.CART);
         session.setAttribute(Constant.LOGIN_USER,user);

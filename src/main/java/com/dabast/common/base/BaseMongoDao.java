@@ -2,13 +2,16 @@ package com.dabast.common.base;
 
 import com.dabast.common.util.MongoDbUtil;
 import com.dabast.common.util.ReflectUtil;
+import com.dabast.entity.User;
 import com.mongodb.*;
 import com.mongodb.gridfs.GridFS;
 import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSInputFile;
+import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -311,11 +314,11 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     }
 
     @Deprecated
-    public E update(E e) {
+    public void update(E e) {
         String id = MongoDbUtil.getId(e);
         if (null == id || "".equals(id.trim())) {
             //如果主键为空,则不进行修改
-            return null;
+            return;
         }
         E qe = null;
         try {
@@ -328,7 +331,6 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         }
         Update update = getUpdateFromEntity(e);
         mongoTemplate.updateFirst(getEqualsQuery(qe), update, collectionClass);
-        return e;
     }
 
     public CommandResult runCommand(String command) {
@@ -497,28 +499,72 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 
     private Update getUpdateFromEntity(E e) {
         Update update = new Update();
+        String id=MongoDbUtil.getId(e);
         for (java.lang.reflect.Field field : collectionClass.getDeclaredFields()) {
-            if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class) && !field.isAnnotationPresent(DBRef.class))
-                continue;
+            if (field.isAnnotationPresent(Transient.class)||field.isAnnotationPresent(Id.class)) continue;
             String setterMethodName = ReflectUtil.getSetterMethodName(field.getName());
             Class fieldType = field.getType();
             try {
                 field.setAccessible(true);
+                String fieldName=field.getName();
                 Object fieldValue = field.get(e);
-                if (fieldValue == null) continue;
-                if (field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)) {
+                if (fieldValue == null){
+                    update.set(fieldName, null);
+                }else if (field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)) {
                     org.springframework.data.mongodb.core.mapping.Field docField = field.getAnnotation(org.springframework.data.mongodb.core.mapping.Field.class);
-                    String fieldName = docField.value() == null || docField.value().equals("") ? field.getName() : docField.value();
+                    fieldName = docField.value() == null || docField.value().equals("") ? field.getName() : docField.value();
+                    update.set(fieldName, fieldValue);
+
+                }else if(field.isAnnotationPresent(DBRef.class)){
+                    //such as //[{"$id":"theId1",$ref:"a db"},{"$id":"theId2",$ref:"a db"}]
+                    DBRef dbRef=field.getAnnotation(DBRef.class);
+                    String db=dbRef.db();
+                    if (fieldValue.getClass().isArray()){
+                        Object[] objects=(Object[]) fieldValue;
+                        BasicDBList dbListObject=new BasicDBList();
+                        for (Object object:objects){
+                            DBObject dbObject=new BasicDBObject();
+                            if (StringUtils.isEmpty(db)){
+                                db=MongoDbUtil.getDbName(object);
+                            }
+                            dbObject.put("$ref",db);
+                            String objectId=MongoDbUtil.getId(object);
+                            dbObject.put("$id",new ObjectId(objectId));
+                            dbListObject.add(dbObject);
+                        }
+                        update.set(fieldName,dbListObject);
+                    }else if (Collection.class.isAssignableFrom(fieldValue.getClass())){
+                        Collection collection=(Collection) fieldValue;
+                        Iterator iterator=collection.iterator();
+                        BasicDBList dbListObject=new BasicDBList();
+                        while (iterator.hasNext()){
+                            Object valueObject=iterator.next();
+                            DBObject dbObject=new BasicDBObject();
+                            if (StringUtils.isEmpty(db)){
+                                db=MongoDbUtil.getDbName(valueObject);
+                            }
+                            dbObject.put("$ref",db);
+                            String objectId=MongoDbUtil.getId(valueObject);
+                            dbObject.put("$id",new ObjectId(objectId));
+                            dbListObject.add(dbObject);
+                        }
+                        update.set(fieldName,dbListObject);
+                    }else{//such as //{"$id":"theId1",$ref:"a db"}
+
+                        DBObject dbObject=new BasicDBObject();
+                        if (StringUtils.isEmpty(db)){
+                            db=MongoDbUtil.getDbName(fieldValue);
+                        }
+                        dbObject.put("$ref",db);
+                        String objectId=MongoDbUtil.getId(fieldValue);
+                        dbObject.put("$id",new ObjectId(objectId));
+                        update.set(fieldName,dbObject);
+                    }
+                }else{
+                    fieldName = field.getName();
                     update.set(fieldName, fieldValue);
                 }
-                if (field.isAnnotationPresent(DBRef.class)) {
-                    String fieldName = field.getName();
-                    update.set(fieldName, fieldValue);
-                }
-//                if (field.isAnnotationPresent(Id.class)) {
-//                    Id id = field.getAnnotation(Id.class);
-//                    update.set("_id", fieldValue);
-//                }
+
             } catch (IllegalAccessException e1) {
                 e1.printStackTrace();
             }
@@ -531,5 +577,20 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         dbObject.put("_id",new ObjectId(id));
         Query query=new BasicQuery(dbObject);
         getMongoTemplate().remove(query,collectionClass);
+    }
+    public static void main(String[] args){
+        List<User> users=new ArrayList<User>();
+        User john=new User();
+        john.setName("John");
+        users.add(john);
+        Object usersObject=users;
+        Collection usersCollection=(Collection)users;
+        Iterator iterator=usersCollection.iterator();
+        while (iterator.hasNext()){
+            User user=(User)iterator.next();
+            System.out.println(user.getName());
+            System.out.println(user.getClass().getSimpleName());
+            System.out.println(user.getClass().getName());
+        }
     }
 }

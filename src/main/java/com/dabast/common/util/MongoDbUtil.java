@@ -4,7 +4,9 @@ package com.dabast.common.util;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -122,5 +124,15 @@ public class MongoDbUtil {
             return idValue == null ? null : idValue.toString();
         }
         return null;
+    }
+
+    public static  <T>  String getDbName(T t) {
+        Class<?> clazz = t.getClass();
+        if (clazz == null) return null;
+        if (!clazz.isAnnotationPresent(Document.class)) return clazz.getSimpleName();
+        String  collection=clazz.getAnnotation(Document.class).collection();
+        if (!org.apache.commons.lang.StringUtils.isEmpty(collection)) return collection;
+        return clazz.getSimpleName();
+
     }
 }

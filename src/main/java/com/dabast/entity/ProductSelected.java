@@ -6,19 +6,31 @@ import org.springframework.util.Assert;
 import java.util.List;
 
 /**
- * 这不是一个持久化了，是一个持久化中间类(作为Cart的一个field)
+ * 这不是一个持久化document，是一个持久化中间类(作为Cart和order的一个field)
  */
 
 public class ProductSelected {
-
+    @Transient
     private String productSeriesId;
     private Integer amount;
-    private List<String> productPropertyValueIds;
     @Transient
+    private List<String> productPropertyValueIds;
+    @DBRef
     private List<ProductPropertyValue> productPropertyValueList;
     @DBRef
     private ProductSeries productSeries;
     private String receiveStatus;
+    @DBRef
+    private ProductSeriesPrice orderPrice;
+
+    public ProductSeriesPrice getOrderPrice() {
+        return orderPrice;
+    }
+
+    public void setOrderPrice(ProductSeriesPrice orderPrice) {
+        this.orderPrice = orderPrice;
+    }
+
     public String getReceiveStatus() {
         return receiveStatus;
     }

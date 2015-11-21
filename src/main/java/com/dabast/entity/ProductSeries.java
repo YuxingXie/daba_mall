@@ -1,5 +1,7 @@
 package com.dabast.entity;
 
+import com.dabast.common.helper.service.ServiceManager;
+import com.mongodb.DBObject;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -21,8 +23,6 @@ public class ProductSeries {
     @Field(value = "pictures")
     private String[] pictures;
 //    @Field(value = "commonPrice")
-    @Transient
-    private Double commonPrice;
 
     @Field(value = "description")
     private String description;
@@ -32,18 +32,18 @@ public class ProductSeries {
     private Date shelvesDate;
     @Field(value = "brand")
     private String brand;
-    @Transient
-    private boolean newProduct;
+
     @DBRef
     private ProductSubCategory productSubCategory;
-
     private Integer evaluateCount;
     @Transient
+    private boolean newProduct;
+    @Transient
     private List<ProductProperty> productProperties;
-    @DBRef
+    @Transient
     private List<ProductSeriesPrice> productSeriesPrices;
-
-
+    @Transient
+    private Double commonPrice;
     public void setNewProduct(boolean newProduct) {
         this.newProduct = newProduct;
     }
@@ -98,8 +98,11 @@ public class ProductSeries {
         this.pictures = pictures;
     }
 
-    public Double getCommonPrice() {
-        if (productSeriesPrices==null) return null;
+    public Double getCommonPrice(){
+        if (productSeriesPrices==null) {
+//            productSeriesPrices=ServiceManager.productSeriesPriceService.findByProductSeriesId(id);
+            return null;
+        }
         Date now=new Date();
         for (ProductSeriesPrice productSeriesPrice:productSeriesPrices){
             Assert.notNull(productSeriesPrice.getBeginDate());

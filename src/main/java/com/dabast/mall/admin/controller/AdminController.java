@@ -93,11 +93,10 @@ public class AdminController extends BaseRestSpringController {
             String[] pictures=new String[files.length];
             for(int i = 0;i<files.length;i++){
                 MultipartFile file = files[i];
-                //保存文件
+                //保存文件到数据库
                 String picture=productSeriesService.saveFile(file.getOriginalFilename(),file.getBytes());
                 String originalFilename=file.getOriginalFilename();
                 String destFileStr=dirStr+"/"+picture+originalFilename.substring(originalFilename.lastIndexOf("."));
-                System.out.println("dest file to save:"+destFileStr);
                 file.transferTo(new ServletContextResource(context,destFileStr).getFile());
                 pictures[i]="pic/"+picture;
             }
@@ -108,7 +107,7 @@ public class AdminController extends BaseRestSpringController {
         productSeries.setProductSubCategory(productSubCategory);
 
         productSeriesService.insert(productSeries);
-        List<ProductProperty> productProperties=new ArrayList<ProductProperty>();
+//        List<ProductProperty> productProperties=new ArrayList<ProductProperty>();
         JSONArray productPropertiesJsonArray=JSONArray.fromObject(productPropertiesJson);
         for (Object object:productPropertiesJsonArray.toArray()){
             JSONObject jsonObjectProductProperty=(JSONObject) object;
@@ -139,8 +138,8 @@ public class AdminController extends BaseRestSpringController {
         List<ProductSeriesPrice> prices=productSeries.getProductSeriesPrices();
         if (prices==null) prices=new ArrayList<ProductSeriesPrice>();
         prices.add(productSeriesPrice);
-        productSeries.setProductSeriesPrices(prices);
-        ServiceManager.productSeriesService.update(productSeries);
+//        productSeries.setProductSeriesPrices(prices);
+//        ServiceManager.productSeriesService.update(productSeries);
         return "redirect:/admin/index/login.jsp";
     }
     @RequestMapping(value="/product_category/new")

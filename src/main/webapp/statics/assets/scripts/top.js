@@ -1,5 +1,7 @@
 var loginCheckBeforeHandler=function(handler){
     $.ajax({
+        //dataType:"json",
+        data:{},
         url: path + "/index/login_user"
     }).done(function (data) {
         if (!data.id) {
@@ -10,8 +12,12 @@ var loginCheckBeforeHandler=function(handler){
             handler();
             return true;
         }
-    }).fail(function(){
+    }).fail(function(XMLHttpRequest, textStatus, errorThrown){
         console.log("error ");
+        console.log(textStatus);
+        console.log(XMLHttpRequest.status);
+        console.log(XMLHttpRequest.readyState);
+
         return false;
     });
 }

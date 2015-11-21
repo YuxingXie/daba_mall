@@ -2,18 +2,19 @@ package com.dabast.mall.model.productseries.dao;
 
 import com.dabast.common.base.BaseMongoDao;
 import com.dabast.common.helper.service.ServiceManager;
-import com.dabast.entity.Order;
-import com.dabast.entity.ProductPropertyValue;
-import com.dabast.entity.ProductSelected;
-import com.dabast.entity.ProductSeries;
+import com.dabast.entity.*;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.DBRef;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -44,5 +45,37 @@ public class OrderDao extends BaseMongoDao<Order> {
             }
         }
         return order;
+    }
+
+    public Order insertOrder(User user) {
+        {
+            Assert.notNull(user.getCart());
+            Order order=new Order();
+            order.setUserId(user.getId());
+            order.setUser(user);
+            order.setOrderDate(new Date());
+            order.setPayStatus("n");
+//            DBObject orderObject=new BasicDBObject();
+//            orderObject.put("user",user);
+//            orderObject.put("orderDate",new Date());
+//            orderObject.put("payStatus","n");
+            List<ProductSelected> productSelectedList=user.getCart().getProductSelectedList();
+//            BasicDBList dbProductSelectedList=new BasicDBList();
+            for (ProductSelected productSelected:productSelectedList){
+//                DBObject productSelectedDbObject=new BasicDBObject();
+//                DBRef dbRef=new DBRef("productSeries",productSelected.getProductSeriesId());
+//                productSelectedDbObject.put("productSeries",dbRef);
+//                productSelectedDbObject.put("amount",productSelected.getAmount());
+                ProductSeriesPrice currentPrice =ServiceManager.productSeriesPriceService.findCurrentPriceByProductSeriesId(productSelected.getProductSeriesId());
+//                productSelectedDbObject.put("orderPrice",null);
+//                dbProductSelectedList.add(productSelectedDbObject);
+                ProductSeries productSeries=new ProductSeries();
+                productSeries.setId(productSelected.getProductSeriesId());
+                productSelected.setProductSeries(productSeries);
+                productSelected.setOrderPrice(currentPrice);
+            }
+            getMongoTemplate().insert(order);
+            return order;
+        }
     }
 }
