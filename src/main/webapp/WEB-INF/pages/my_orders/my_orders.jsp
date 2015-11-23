@@ -94,14 +94,18 @@
                                                                                 <th></th>
                                                                             </tr>
                                                                             <c:set var="totalPrice" value="0"/>
+                                                                            <c:set var="hasEmptyProduct" value="false"/>
                                                                             <c:forEach var="productSelected" items="${order.productSelectedList}"
                                                                                        varStatus="selectedIndex">
-                                                                                <c:set var="totalPrice"
-                                                                                       value="${totalPrice+productSelected.amount*productSelected.productSeries.commonPrice}"/>
+                                                                                <c:set var="totalPrice" value="${totalPrice+productSelected.amount*productSelected.productSeries.commonPrice}"/>
+
                                                                                 <c:choose>
                                                                                     <c:when test="${empty productSelected.productSeriesId}">
                                                                                         <tr>
-                                                                                            <td class="text-center" colspan="6">没有找到您当时选择的商品，商品可能已被移除或下架</td>
+                                                                                            <td class="text-center" colspan="6">
+                                                                                                <c:set var="hasEmptyProduct" value="true"/>
+                                                                                                没有找到您当时选择的商品，商品可能已被移除或下架,如果您已经付款请联系客服，如果没有付款，您可以删除该订单。
+                                                                                            </td>
                                                                                         </tr>
                                                                                     </c:when>
                                                                                     <c:otherwise>
@@ -149,10 +153,21 @@
                                                                     </div>
 
                                                                     <div class="modal-footer">
-                                                                        <div class="col-lg-10 col-sm-10"></div>
+                                                                        <div class="col-lg-8 col-sm-8"></div>
+
+                                                                            <c:if test="${hasEmptyProduct && (empty order.payStatus || order.payStatus eq 'n')}">
+                                                                                <div class="col-lg-2 col-sm-2">
+                                                                                    <input type="button" class="btn btn-primary modal-close" data-dismiss="modal" aria-hidden="true" style=" width:100%;" value="删除订单"/>
+                                                                                </div>
+                                                                            </c:if>
+                                                                            <c:if test="${hasEmptyProduct &&  order.payStatus eq 'y'}">
+                                                                                <div class="col-lg-2 col-sm-2">
+                                                                                    <input type="button" class="btn btn-primary modal-close" data-dismiss="modal" aria-hidden="true" style=" width:100%;" value="联系客服"/>
+                                                                                </div>
+                                                                            </c:if>
                                                                         <div class="col-lg-2 col-sm-2">
-                                                                            <button type="button" class="btn btn-primary modal-close" data-dismiss="modal"
-                                                                                    aria-hidden="true" style=" width:100%;">关闭</button>
+                                                                            <button type="button" class="btn btn-primary modal-close" data-dismiss="modal" aria-hidden="true" style=" width:100%;">关闭</button>
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
