@@ -98,42 +98,52 @@
                                                                                        varStatus="selectedIndex">
                                                                                 <c:set var="totalPrice"
                                                                                        value="${totalPrice+productSelected.amount*productSelected.productSeries.commonPrice}"/>
-                                                                                <tr name="productSelected"
-                                                                                    data-product-series-id="${productSelected.productSeriesId}"
-                                                                                    data-amount="${productSelected.amount}"
-                                                                                    data-common-price="${productSelected.productSeries.commonPrice}">
-                                                                                    <td class="shopping-cart-image" name="pictures0"
-                                                                                        data-pictures0="${productSelected.productSeries.pictures[0]}">
-                                                                                        <a href="${path}/product/${productSelected.productSeriesId}">
-                                                                                            <img src="${path}/${productSelected.productSeries.pictures[0]}"></a>
-                                                                                    </td>
-                                                                                    <td class="shopping-cart-description">
-                                                                                        <h3>${productSelected.productSeries.name}</h3>
-                                                                                        <c:forEach var="productPropertyValue"
-                                                                                                   items="${productSelected.productPropertyValueList}">
+                                                                                <c:choose>
+                                                                                    <c:when test="${empty productSelected.productSeriesId}">
+                                                                                        <tr>
+                                                                                            <td class="text-center" colspan="6">没有找到您当时选择的商品，商品可能已被移除或下架</td>
+                                                                                        </tr>
+                                                                                    </c:when>
+                                                                                    <c:otherwise>
+                                                                                        <tr name="productSelected"
+                                                                                            data-product-series-id="${productSelected.productSeriesId}"
+                                                                                            data-amount="${productSelected.amount}"
+                                                                                            data-common-price="${productSelected.productSeries.commonPrice}">
+                                                                                            <td class="shopping-cart-image" name="pictures0"
+                                                                                                data-pictures0="${productSelected.productSeries.pictures[0]}">
+                                                                                                <a href="${path}/product/${productSelected.productSeriesId}">
+                                                                                                    <img src="${path}/${productSelected.productSeries.pictures[0]}"></a>
+                                                                                            </td>
+                                                                                            <td class="shopping-cart-description">
+                                                                                                <h3>${productSelected.productSeries.name}</h3>
+                                                                                                <c:forEach var="productPropertyValue"
+                                                                                                           items="${productSelected.productPropertyValueList}">
                                                             <span name="productPropertyValue"
                                                                   data-product-property-value-id="${productPropertyValue.id}"
                                                                   data-product-property-value-value="${productPropertyValue.value}"
                                                                   data-product-property-value-product-property-id="${productPropertyValue.productProperty.id}">
                                                                     ${productPropertyValue.value}
                                                             </span>
-                                                                                        </c:forEach>
-                                                                                    </td>
-                                                                                    <td class="shopping-cart-price">
-                                                            ￥<fmt:formatNumber
-                                                                    value="${productSelected.productSeries.commonPrice}"
-                                                                    pattern="##.##"
-                                                                    minFractionDigits="2"></fmt:formatNumber>
-                                                                                    </td>
-                                                                                    <td class="shopping-cart-quantity">${productSelected.amount}</td>
-                                                                                    <td class="shopping-cart-price">
-                                                                                        ￥<fmt:formatNumber
-                                                                                                value="${productSelected.amount*productSelected.productSeries.commonPrice}"
-                                                                                                pattern="##.##"
-                                                                                                minFractionDigits="2"></fmt:formatNumber>
-                                                                                    </td>
-                                                                                    <td><c:if test="${not empty productSelected.receiveStatus && productSelected.receiveStatus eq 'y'}">去评价</c:if></td>
-                                                                                </tr>
+                                                                                                </c:forEach>
+                                                                                            </td>
+                                                                                            <td class="shopping-cart-price">
+                                                                                                ￥<fmt:formatNumber
+                                                                                                    value="${productSelected.productSeries.commonPrice}"
+                                                                                                    pattern="##.##"
+                                                                                                    minFractionDigits="2"></fmt:formatNumber>
+                                                                                            </td>
+                                                                                            <td class="shopping-cart-quantity">${productSelected.amount}</td>
+                                                                                            <td class="shopping-cart-price">
+                                                                                                ￥<fmt:formatNumber
+                                                                                                    value="${productSelected.amount*productSelected.productSeries.commonPrice}"
+                                                                                                    pattern="##.##"
+                                                                                                    minFractionDigits="2"></fmt:formatNumber>
+                                                                                            </td>
+                                                                                            <td><c:if test="${not empty productSelected.receiveStatus && productSelected.receiveStatus eq 'y'}">去评价</c:if></td>
+                                                                                        </tr>
+
+                                                                                    </c:otherwise>
+                                                                                </c:choose>
                                                                             </c:forEach>
                                                                         </table>
                                                                     </div>

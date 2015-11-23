@@ -42,53 +42,17 @@ var renderCart = function(cart){
     $('.J-shoping-num').text(cart.productSelectedList.length);
 }
 $(document).ready(function(){
-    $(document).on("click","#product-pop-up .add2cart",function(){
-        var form=$('[name="popForm"]');
-        var amount=$("#product-quantity").val();
-        var productSelected={};
-        productSelected.amount=amount;
-        productSelected.productSeriesId=form.find("[name='productSeriesId']").val();
-        var productPropertyValueIds=[];
-        form.find("select").each(function(){
-            //productPropertySelect.productPropertyId=$(this).data("productPropertyId");
-            var productPropertyValueId=$(this).val();
-            productPropertyValueIds.push(productPropertyValueId);
-        });
-        productSelected.productPropertyValueIds=productPropertyValueIds;
-        console.log(JSON.stringify(productSelected));
-        $.ajax({
-            url: path+"/index/cart",
-            contentType: "application/json",
-            data: JSON.stringify(productSelected),
-            method: "post"
-        }).done(function (cart) {
-            $.fancybox.close();
-            renderCart(cart);
-            console.log("success")
-        }).fail(function(){ console.log("error！"); });
-        return false;
-    });
-    $(document).on("click",".del-goods",function(){
-        var $li=$(this).parent();
-        var selectedIndex =$li.data("selectedIndex");
-        $.ajax({
-            url: path+"/index/cart/remove",
-            data: "selectedIndex="+selectedIndex,
-            method: "post",
-            success: function (data) {
-                renderCart(data);
-            },
-            error:function(data){
-                console.log("there is an error!")
-            }
-        });
-    });
     $(".fancybox-fast-view").click(function(){
         var prod=$(this).data("prod");
         $.ajax(path+"/product_series/popover/"+prod).done(function(productSeries){
             $("#product-pop-up .product-main-image>img").attr("src",path+"/"+productSeries.pictures[0]);
             $("#product-pop-up h1").text(productSeries.name);
-            $("#product-pop-up .price").html("<strong><span>￥</span>"+productSeries.commonPrice+"</strong><em>￥<span>62.00</span></em>");
+            //
+            if(productSeries.currentPrice && productSeries.currentPrice.prevPrice){
+                $("#product-pop-up .price").html("<strong><span>￥</span>"+productSeries.commonPrice+"</strong><em>$<span>productSeries.currentPrice.prevPrice.price</span></em>");
+            }else{
+                $("#product-pop-up .price").html("<strong><span>￥</span>"+productSeries.commonPrice+"</strong>");
+            }
             var remainStr="";
             if(productSeries.productStore){
                 var warningAmount=productSeries.productStore.warningAmount;
@@ -135,6 +99,48 @@ $(document).ready(function(){
             App.initImageZoom();
             $('.add2cart').shoping();
         }).fail(function(){ console.log("error！"); });
+    });
+
+    $(document).on("click","#product-pop-up .add2cart",function(){
+        var form=$('[name="popForm"]');
+        var amount=$("#product-quantity").val();
+        var productSelected={};
+        productSelected.amount=amount;
+        productSelected.productSeriesId=form.find("[name='productSeriesId']").val();
+        var productPropertyValueIds=[];
+        form.find("select").each(function(){
+            //productPropertySelect.productPropertyId=$(this).data("productPropertyId");
+            var productPropertyValueId=$(this).val();
+            productPropertyValueIds.push(productPropertyValueId);
+        });
+        productSelected.productPropertyValueIds=productPropertyValueIds;
+        console.log(JSON.stringify(productSelected));
+        $.ajax({
+            url: path+"/index/cart",
+            contentType: "application/json",
+            data: JSON.stringify(productSelected),
+            method: "post"
+        }).done(function (cart) {
+            $.fancybox.close();
+            renderCart(cart);
+            console.log("success")
+        }).fail(function(){ console.log("error！"); });
+        return false;
+    });
+    $(document).on("click",".del-goods",function(){
+        var $li=$(this).parent();
+        var selectedIndex =$li.data("selectedIndex");
+        $.ajax({
+            url: path+"/index/cart/remove",
+            data: "selectedIndex="+selectedIndex,
+            method: "post",
+            success: function (data) {
+                renderCart(data);
+            },
+            error:function(data){
+                console.log("there is an error!")
+            }
+        });
     });
     $(document).on("click",".product-other-images a",function(){
         $(".product-main-image").find("img").attr("src",($(this).find("img").attr("src")));

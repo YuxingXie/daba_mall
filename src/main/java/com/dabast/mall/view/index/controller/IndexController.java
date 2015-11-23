@@ -515,6 +515,9 @@ public class IndexController extends BaseRestSpringController {
     public String myOrders(ModelMap model, HttpSession session) {
         User user=getLoginUser(session);
         Order order=new Order();
+        if (user==null){
+            return null;
+        }
         order.setUserId(user.getId());
         List<Order> orders=ServiceManager.orderService.findEquals(order);
         for (Order order1:orders){
@@ -522,24 +525,28 @@ public class IndexController extends BaseRestSpringController {
             for (ProductSelected productSelected:productSelectedList){
 //                ProductSeries productSeries=ServiceManager.productSeriesService.findById(productSelected.getProductSeriesId());
                 ProductSeries productSeries=productSelected.getProductSeries();
-                productSeries.setProductSeriesPrices(ServiceManager.productSeriesPriceService.findByProductSeriesId(productSeries.getId()));
-//                productSelected.setProductSeries(productSeries);
-                List<String> valueIds=productSelected.getProductPropertyValueIds();
-                if (valueIds==null) continue;
-                List<ProductPropertyValue> productPropertyValueList=new ArrayList<ProductPropertyValue>();
-                for (String valueId:valueIds){
-                    ProductPropertyValue productPropertyValue=ServiceManager.productPropertyValueService.findById(valueId);
-                    productPropertyValueList.add(productPropertyValue);
+                if (productSeries!=null){
+                    productSeries.setProductSeriesPrices(ServiceManager.productSeriesPriceService.findByProductSeriesId(productSeries.getId()));
+                    DBObject dbObject=new BasicDBObject();
+                    dbObject.put("productSeries",productSeries);
+                    List<ProductPropertyValue> productPropertyValueList=ServiceManager.productPropertyValueService.findAll(dbObject);
+                    productSelected.setProductPropertyValueList(productPropertyValueList);
+
                 }
-                productSelected.setProductPropertyValueList(productPropertyValueList);
+//                productSelected.setProductSeries(productSeries);
+//                List<String> valueIds=productSelected.getProductPropertyValueIds();
+//                if (valueIds==null) continue;
+
+//                for (String valueId:valueIds){
+//                    ProductPropertyValue productPropertyValue=ServiceManager.productPropertyValueService.findById(valueId);
+//                    productPropertyValueList.add(productPropertyValue);
+//                }
             }
         }
         model.addAttribute("orders",orders);
         return "my_orders";
     }
-    private User getLoginUser(HttpSession session) {
-        return session.getAttribute(Constant.LOGIN_USER)==null?null:((User)(session.getAttribute(Constant.LOGIN_USER)));
-    }
+
     public static void main(String[] args) {
         String jsonStr = "[{id:100,name:'Johnson'},{id:101,name:'Jackson'}]";
     }

@@ -1,11 +1,14 @@
 package com.dabast.common.base;
 
 
+import com.dabast.entity.User;
+import com.dabast.mall.Constant;
 import org.springframework.beans.BeanUtils;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.ReflectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -36,7 +39,9 @@ public class BaseRestSpringController  {
             else System.out.print(str+"]\n");
         }
     }
-    
+    protected User getLoginUser(HttpSession session) {
+        return session.getAttribute(Constant.LOGIN_USER)==null?null:((User)(session.getAttribute(Constant.LOGIN_USER)));
+    }
     public static <T> T getOrCreateRequestAttribute(HttpServletRequest request, String key,Class<T> clazz) {
         Object value = request.getAttribute(key);
         if(value == null) {

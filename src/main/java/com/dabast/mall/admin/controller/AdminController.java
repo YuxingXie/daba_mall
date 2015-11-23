@@ -24,6 +24,7 @@ import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -78,7 +79,13 @@ public class AdminController extends BaseRestSpringController {
         return path;
     }
     @RequestMapping(value="/product_series/new")
-    public String createProductSeries(ProductSeries productSeries,Double price,Integer storeAmount,Integer warningAmount,String productSubCategoryId,@RequestParam("files") MultipartFile[] files,String productPropertiesJson,HttpServletRequest request) throws IOException {
+    public String createProductSeries(ProductSeries productSeries,
+                                      Double price,Integer storeAmount,
+                                      Integer warningAmount,
+                                      String productSubCategoryId,
+                                      @RequestParam("files") MultipartFile[] files,
+                                      String productPropertiesJson,
+                                      HttpServletRequest request,HttpSession session) throws IOException {
 
 //        printRequestParameters(request);
         if(files!=null&&files.length>0){
@@ -127,6 +134,7 @@ public class AdminController extends BaseRestSpringController {
                 System.out.println(productPropertyValueJSONObject.get("value"));
                 productPropertyValue.setValue(productPropertyValueJSONObject.get("value").toString());
                 productPropertyValue.setProductProperty(productProperty);
+                productProperty.setProductSeries(productSeries);
                 ServiceManager.productPropertyValueService.insert(productPropertyValue);
             }
         }
@@ -153,6 +161,7 @@ public class AdminController extends BaseRestSpringController {
         inAndOut.setDate(new Date());
         inAndOut.setProductSeries(productSeries);
         inAndOut.setType("in");
+        inAndOut.setOperator(getLoginUser(session));
         ServiceManager.productStoreInAndOutService.insert(inAndOut);
         productSeries.setProductStore(store);
 //        ServiceManager.productSeriesService.update(productSeries);

@@ -45,7 +45,8 @@ public class ProductSeries {
     private List<ProductSeriesPrice> productSeriesPrices;
     @Transient
     private Double commonPrice;
-
+    @Transient
+    private ProductSeriesPrice currentPrice;
     public void setNewProduct(boolean newProduct) {
         this.newProduct = newProduct;
     }
@@ -109,6 +110,9 @@ public class ProductSeries {
     }
 
     public Double getCommonPrice(){
+        return getCurrentPrice()==null?0d:getCurrentPrice().getPrice();
+    }
+    public ProductSeriesPrice getCurrentPrice(){
         if (productSeriesPrices==null) {
 //            productSeriesPrices=ServiceManager.productSeriesPriceService.findByProductSeriesId(id);
             return null;
@@ -118,13 +122,13 @@ public class ProductSeries {
             Assert.notNull(productSeriesPrice.getBeginDate());
             if (productSeriesPrice.getEndDate()==null){
                 if (now.after(productSeriesPrice.getBeginDate())){
-                    return productSeriesPrice.getPrice();
+                    return productSeriesPrice;
                 }else{
                     continue;
                 }
             }else{
                 if (now.after(productSeriesPrice.getBeginDate()) &&now.before(productSeriesPrice.getEndDate())){
-                    return productSeriesPrice.getPrice();
+                    return productSeriesPrice;
                 }else {
                     continue;
                 }

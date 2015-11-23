@@ -173,7 +173,8 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 //        List<ProductSeries> list = getMongoTemplate().find(query, ProductSeries.class);
         Long count = collection.count(condition);
         System.out.println(condition.toString());
-        List<E> list = dbCursor2List(collection.find(condition).limit(pageSize).skip((currentPage - 1) * pageSize));
+//        List<E> list = dbCursor2List(collection.find(condition).limit(pageSize).skip((currentPage - 1) * pageSize));
+        List<E> list = mongoTemplate.find(new BasicQuery(condition).limit(pageSize).skip((currentPage - 1) * pageSize),collectionClass);
         Page<E> page = new PageImpl<E>(list, pageable, count);
         return page;
     }
