@@ -32,7 +32,8 @@ public class ProductSeries {
     private Date shelvesDate;
     @Field(value = "brand")
     private String brand;
-
+    @Field(value = "productStore")
+    private ProductStore productStore;
     @DBRef
     private ProductSubCategory productSubCategory;
     private Integer evaluateCount;
@@ -44,6 +45,7 @@ public class ProductSeries {
     private List<ProductSeriesPrice> productSeriesPrices;
     @Transient
     private Double commonPrice;
+
     public void setNewProduct(boolean newProduct) {
         this.newProduct = newProduct;
     }
@@ -56,6 +58,14 @@ public class ProductSeries {
             return true;
         }
         return false;
+    }
+
+    public ProductStore getProductStore() {
+        return productStore;
+    }
+
+    public void setProductStore(ProductStore productStore) {
+        this.productStore = productStore;
     }
 
     public List<ProductSeriesPrice> getProductSeriesPrices() {

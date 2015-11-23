@@ -144,24 +144,25 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 
     @Override
     public E findOne(DBObject queryCondition){
-        DB db = mongoTemplate.getDb();
-        DBCollection collection = db.getCollection(getCollectionName());
-        DBObject dbObject=collection.findOne(queryCondition);
-
-        E e = null;
-        try {
-            e = collectionClass.newInstance();
-            e=MongoDbUtil.dbObject2Bean(dbObject,e);
-        } catch (InstantiationException e1) {
-            e1.printStackTrace();
-        } catch (IllegalAccessException e1) {
-            e1.printStackTrace();
-        } catch (NoSuchMethodException e1) {
-            e1.printStackTrace();
-        } catch (InvocationTargetException e1) {
-            e1.printStackTrace();
-        }
-        return e;
+//        DB db = mongoTemplate.getDb();
+       return mongoTemplate.findOne(new BasicQuery(queryCondition),collectionClass);
+//        DBCollection collection = db.getCollection(getCollectionName());
+//        DBObject dbObject=collection.findOne(queryCondition);
+//
+//        E e = null;
+//        try {
+//            e = collectionClass.newInstance();
+//            e=MongoDbUtil.dbObject2Bean(dbObject,e);
+//        } catch (InstantiationException e1) {
+//            e1.printStackTrace();
+//        } catch (IllegalAccessException e1) {
+//            e1.printStackTrace();
+//        } catch (NoSuchMethodException e1) {
+//            e1.printStackTrace();
+//        } catch (InvocationTargetException e1) {
+//            e1.printStackTrace();
+//        }
+//        return e;
     }
     public Page<E> findPage(DBObject condition,int currentPage){
         DB db = mongoTemplate.getDb();

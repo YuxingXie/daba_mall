@@ -44,10 +44,10 @@
         $(document).on("click",".add2cart",function(){
 //          var propertyId=$(".product-property").attr("propertyId");
             var form=$('[name="cartForm"]');
-            var amount=$("#product-quantity").val();
-            console.log("amount "+amount);
+            var remain=$("#product-quantity").val();
+            console.log("remain "+remain);
             var data={};
-            data.amount=amount;
+            data.remain=remain;
             data.productSeriesId=form.find("[name='productSeriesId']").val();
 //            var productPropertySelects=[];
 //            form.find("select").each(function(){

@@ -316,7 +316,7 @@
                                 <em>$<span>62.00</span></em>
                             </div>
                             <div class="availability">
-                                状态: <strong>货源充足</strong>
+                                库存: <strong>货源充足</strong>
                             </div>
                         </div>
                         <div class="description" style=" direction:ltr;">

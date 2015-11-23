@@ -2,16 +2,16 @@
 (function() {
   var app;
 
-  app = angular.module('app', ['selectAddress']);
+  app = angular.module('toBillApp', ['selectAddress']);
 
-  app.controller('appCtrl', function($scope) {
+  app.controller('toBillAppCtrl', function($scope) {
     $scope.p = '';
     $scope.c = '';
     $scope.a = '';
     return $scope.d = '';
   });
 
-  angular.bootstrap(document, ['app']);
+  //angular.bootstrap(document, ['toBillApp']);
 
 }).call(this);
 

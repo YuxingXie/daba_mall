@@ -35,6 +35,18 @@
                     </div>
                 </div>
                 <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
+                    <div class="col-lg-2 col-sm-2  text-right">库存数量</div>
+                    <div class="col-lg-6 col-sm-6">
+                        <input type="number" name="storeAmount" class="form-control " required="true" ng-model="storeAmount"/>
+                    </div>
+                </div>
+                <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
+                <div class="col-lg-2 col-sm-2  text-right">库存警告数量</div>
+                <div class="col-lg-6 col-sm-6">
+                    <input type="number" name="warningAmount" class="form-control " required="true" ng-model="warningAmount"/>
+                </div>
+            </div>
+                <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
                     <div class="col-lg-2 col-sm-2  text-right">产品分类{{list.length}}</div>
                     <div class="col-lg-6 col-sm-6 form-inline">
                         <div ng-controller='psiCtrl'>

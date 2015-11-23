@@ -1,4 +1,5 @@
 package com.dabast.common.helper.service;
+import com.dabast.entity.ProductStoreInAndOut;
 import com.dabast.mall.model.productseries.service.*;
 import com.mongodb.DBCollection;
 import org.springframework.beans.factory.InitializingBean;
@@ -21,10 +22,17 @@ public class ServiceManager implements InitializingBean{
     public static ITestAuthorsService testAuthorsService;
     public static IProductCategoryService productCategoryService;
     public static IProductSeriesPriceService productSeriesPriceService;
+    public static IProductStoreInAndOutService productStoreInAndOutService;
 
     public void setProductSeriesPriceService(IProductSeriesPriceService productSeriesPriceService) {
         ServiceManager.productSeriesPriceService = productSeriesPriceService;
     }
+
+    public void setProductStoreInAndOutService(IProductStoreInAndOutService productStoreInAndOutService) {
+        ServiceManager.productStoreInAndOutService = productStoreInAndOutService;
+    }
+
+
 
     public void setProductCategoryService(IProductCategoryService productCategoryService) {
         ServiceManager.productCategoryService = productCategoryService;

@@ -515,8 +515,10 @@ public class IndexController extends BaseRestSpringController {
         for (Order order1:orders){
             List<ProductSelected> productSelectedList=order1.getProductSelectedList();
             for (ProductSelected productSelected:productSelectedList){
-                ProductSeries productSeries=ServiceManager.productSeriesService.findById(productSelected.getProductSeriesId());
-                productSelected.setProductSeries(productSeries);
+//                ProductSeries productSeries=ServiceManager.productSeriesService.findById(productSelected.getProductSeriesId());
+                ProductSeries productSeries=productSelected.getProductSeries();
+                productSeries.setProductSeriesPrices(ServiceManager.productSeriesPriceService.findByProductSeriesId(productSeries.getId()));
+//                productSelected.setProductSeries(productSeries);
                 List<String> valueIds=productSelected.getProductPropertyValueIds();
                 if (valueIds==null) continue;
                 List<ProductPropertyValue> productPropertyValueList=new ArrayList<ProductPropertyValue>();
@@ -536,6 +538,4 @@ public class IndexController extends BaseRestSpringController {
     public static void main(String[] args) {
         String jsonStr = "[{id:100,name:'Johnson'},{id:101,name:'Jackson'}]";
     }
-
-
 }

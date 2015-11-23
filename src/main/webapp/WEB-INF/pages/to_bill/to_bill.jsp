@@ -16,7 +16,7 @@
             <li class="active">填写订单</li>
         </ul>
         <div class="shopping-cart-data clearfix">
-            <div class="table-wrapper-responsive" ng-app>
+            <div class="table-wrapper-responsive" ng-app="toBillApp">
                 <form class="form-horizontal form-without-legend" novalidate="novalidate" action="${path}/index/order/submit" id="form" autocomplete="off" method="post">
                     <table summary="Shopping cart">
                         <tr>
@@ -43,7 +43,7 @@
                                                 <span ng-show="signupForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                             </div>
                                     </div><br/>
-                                    <div class="row" ng-controller="appCtrl">
+                                    <div class="row" ng-controller="toBillAppCtrl">
                                         <div class="col-lg-2">
                                             <label class="control-label">收件地址<span class="require">*</span></label>
                                         </div>
@@ -96,6 +96,12 @@
                             <c:otherwise>
                                 <c:set var="totalPrice" value="0"/>
                                 <c:set var="totalCount" value="0"/>
+                                <tr>
+                                    <th colspan="3" class="text-center">商品</th>
+                                    <th class="text-center">单价</th>
+                                    <th class="text-center">总价</th>
+                                    <th class="text-center">货源</th>
+                                </tr>
                                 <c:forEach var="productSelected"
                                            items="${order.productSelectedList}"
                                            varStatus="selectedIndex">
@@ -110,26 +116,50 @@
                                             <h3>${productSelected.productSeries.name}</h3>
 
                                         </td>
-                                        <td class="shopping-cart-price">
+                                        <td class="shopping-cart-price text-center">
                                             <c:forEach var="productPropertyValue"
                                                        items="${productSelected.productPropertyValueList}">
                                                 ${productPropertyValue.value}
                                             </c:forEach>
                                         </td>
-                                        <td class="shopping-cart-quantity">
+                                        <td class="shopping-cart-price text-center">
                                             <span>￥<fmt:formatNumber
                                                     value="${productSelected.productSeries.commonPrice}"
                                                     pattern="##.##"
-                                                    minFractionDigits="2"></fmt:formatNumber>* ${productSelected.amount}</span>
+                                                    minFractionDigits="2"></fmt:formatNumber></span>
                                             <c:set var="totalCount"
                                                    value="${totalCount+productSelected.amount}"/>
 
                                         </td>
-                                        <td class="shopping-cart-price">
-                                            <span>￥${productSelected.productSeries.commonPrice}</span>
+                                        <td class="shopping-cart-price text-center">
+                                            <span>￥<fmt:formatNumber
+                                        value="${productSelected.productSeries.commonPrice*productSelected.amount}"
+                                        pattern="##.##"
+                                        minFractionDigits="2"></fmt:formatNumber></span>
                                         </td>
-                                        <td class="shopping-cart-total">
-                                            有货
+                                        <td class="shopping-cart-total text-center">
+                                                <c:choose>
+                                                    <c:when test="${empty productSelected.productSeries.productStore}">
+                                                        无库存信息
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:choose>
+                                                            <c:when test="${not empty productSelected.productSeries.productStore.remain}">
+                                                                <c:choose>
+                                                                    <c:when test="${productSelected.productSeries.productStore.remain ge productSelected.productSeries.productStore.warningAmount}">
+                                                                        货源充足
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        仅剩${productSelected.productSeries.productStore.remain}件
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                无法获取
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:otherwise>
+                                                </c:choose>
                                         </td>
                                     </tr>
                                 </c:forEach>

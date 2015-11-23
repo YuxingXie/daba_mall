@@ -2,10 +2,7 @@ package com.dabast.mall.model.productseries.dao;
 
 import com.dabast.common.base.BaseMongoDao;
 import com.dabast.common.helper.service.ServiceManager;
-import com.dabast.entity.ProductProperty;
-import com.dabast.entity.ProductPropertyValue;
-import com.dabast.entity.ProductSeries;
-import com.dabast.entity.ProductSeriesPrice;
+import com.dabast.entity.*;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -43,11 +40,18 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
 
     public List<ProductSeries> getHotSell() {
         //可规定热卖商品数量
+
+        return getAll();
+    }
+    public List<ProductSeries> getAll() {
         List<ProductSeries> productSeriesList=findAll();
         for (ProductSeries productSeries:productSeriesList){
             List<ProductSeriesPrice> productSeriesPrices = getProductSeriesPrices(productSeries);
             productSeries.setProductSeriesPrices(productSeriesPrices);
-
+            ProductStore store=productSeries.getProductStore();
+            if (store!=null){
+                productSeries.getProductStore().setInAndOutList(ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries));
+            }
         }
         return productSeriesList;
     }
@@ -65,19 +69,19 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         DBObject productPropertyDbObject=new BasicDBObject();
         productPropertyDbObject.put("productSeries", new DBRef("productSeries", objectId));
         List<ProductProperty> productProperties= ServiceManager.productPropertyService.findAll(productPropertyDbObject);
-//        DBRef dbRef=new DBRef("productSeries",objectId);
-//        Query query=new BasicQuery(new BasicDBObject("productSeries",dbRef));
-//        List<ProductSeriesPrice> prices=getMongoTemplate().find(query, ProductSeriesPrice.class);
-//        productSeries.setProductSeriesPrices(prices);
+
         for (ProductProperty productProperty :productProperties){
             DBObject cond=new BasicDBObject();
-//            cond.put("productPropertyId", productProperty.getId());
             cond.put("productProperty", new DBRef("productProperty",productProperty.getId()));
             List<ProductPropertyValue> propertyValues=ServiceManager.productPropertyValueService.findAll(cond);
             productProperty.setPropertyValues(propertyValues);
         }
         productSeries.setProductProperties(productProperties);
         productSeries.setProductSeriesPrices(getProductSeriesPrices(productSeries));
+        if (productSeries.getProductStore()!=null){
+            List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
+            productSeries.getProductStore().setInAndOutList(inAndOuts);
+        }
         return productSeries;
     }
     public ProductSeries findProductSeriesById(String id) {

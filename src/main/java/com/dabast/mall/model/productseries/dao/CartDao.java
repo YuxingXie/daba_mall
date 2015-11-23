@@ -20,7 +20,7 @@ public class CartDao extends BaseMongoDao<Cart> {
 //        Cart cart=new Cart();
 //        List<ProductSelected> productSelectedList=new ArrayList<ProductSelected>();
 //        ProductSelected productSelected1=new ProductSelected();
-//        productSelected1.setAmount(3);
+//        productSelected1.setRemain(3);
 //        productSelected1.setProductSeriesId("5595f39fe7c7fa5690325b11");
 //        ProductPropertySelect productPropertySelect=new ProductPropertySelect();
 //        productPropertySelect.setProductPropertyId("5595f892e7c7fa5690325b12");

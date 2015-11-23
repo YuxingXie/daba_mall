@@ -78,7 +78,7 @@ public class AdminController extends BaseRestSpringController {
         return path;
     }
     @RequestMapping(value="/product_series/new")
-    public String createProductSeries(ProductSeries productSeries,Double price,String productSubCategoryId,@RequestParam("files") MultipartFile[] files,String productPropertiesJson,HttpServletRequest request) throws IOException {
+    public String createProductSeries(ProductSeries productSeries,Double price,Integer storeAmount,Integer warningAmount,String productSubCategoryId,@RequestParam("files") MultipartFile[] files,String productPropertiesJson,HttpServletRequest request) throws IOException {
 
 //        printRequestParameters(request);
         if(files!=null&&files.length>0){
@@ -105,7 +105,9 @@ public class AdminController extends BaseRestSpringController {
         }
         ProductSubCategory productSubCategory=ServiceManager.productSubCategoryService.findById(productSubCategoryId);
         productSeries.setProductSubCategory(productSubCategory);
-
+        ProductStore store=new ProductStore();
+        store.setWarningAmount(warningAmount);
+        productSeries.setProductStore(store);
         productSeriesService.insert(productSeries);
 //        List<ProductProperty> productProperties=new ArrayList<ProductProperty>();
         JSONArray productPropertiesJsonArray=JSONArray.fromObject(productPropertiesJson);
@@ -138,7 +140,21 @@ public class AdminController extends BaseRestSpringController {
         List<ProductSeriesPrice> prices=productSeries.getProductSeriesPrices();
         if (prices==null) prices=new ArrayList<ProductSeriesPrice>();
         prices.add(productSeriesPrice);
-//        productSeries.setProductSeriesPrices(prices);
+        productSeries.setProductSeriesPrices(prices);
+//        ServiceManager.productSeriesService.update(productSeries);
+
+
+
+
+
+//        ServiceManager.productStoreService.insert(store);
+        ProductStoreInAndOut inAndOut=new ProductStoreInAndOut();
+        inAndOut.setAmount(storeAmount);
+        inAndOut.setDate(new Date());
+        inAndOut.setProductSeries(productSeries);
+        inAndOut.setType("in");
+        ServiceManager.productStoreInAndOutService.insert(inAndOut);
+        productSeries.setProductStore(store);
 //        ServiceManager.productSeriesService.update(productSeries);
         return "redirect:/admin/index/login.jsp";
     }

@@ -50,7 +50,7 @@
                                                            data-target="#orderDetail${selectedIndex.index}">${order.id}</a></td>
                                                     <td><fmt:formatDate value="${order.orderDate}" type="both" dateStyle="default"/></td>
                                                     <td><c:choose><c:when test="${order.payStatus eq 'y'}">是</c:when><c:otherwise>否</c:otherwise></c:choose></td>
-                                                    <td>${order.totalPrice}</td>
+                                                    <td><fmt:formatNumber value="${order.totalPrice}" pattern="##.##"></fmt:formatNumber></td>
                                                     <td><a href="javascript:void(0)"
                                                            data-toggle="modal"
                                                            data-target="#orderDetail${selectedIndex.index}">查看详情</a>
@@ -114,7 +114,7 @@
                                                             <span name="productPropertyValue"
                                                                   data-product-property-value-id="${productPropertyValue.id}"
                                                                   data-product-property-value-value="${productPropertyValue.value}"
-                                                                  data-product-property-value-product-property-id="${productPropertyValue.productPropertyId}">
+                                                                  data-product-property-value-product-property-id="${productPropertyValue.productProperty.id}">
                                                                     ${productPropertyValue.value}
                                                             </span>
                                                                                         </c:forEach>

@@ -47,6 +47,9 @@
                 <li class="list-group-item dropdown clearfix">
                   <a href="${path}/sort/" target="main-content"><i class="fa fa-circle"></i>首页轮播图片管理</a>
                 </li>
+                <li class="list-group-item dropdown clearfix">
+                  <a href="${path}/sort/" target="main-content"><i class="fa fa-circle"></i>产品库存管理</a>
+                </li>
               </ul>
             </li>
           <li class="list-group-item clearfix dropdown"><a href="javascript:void(0);" class="collapsed">

@@ -89,6 +89,22 @@ $(document).ready(function(){
             $("#product-pop-up .product-main-image>img").attr("src",path+"/"+productSeries.pictures[0]);
             $("#product-pop-up h1").text(productSeries.name);
             $("#product-pop-up .price").html("<strong><span>￥</span>"+productSeries.commonPrice+"</strong><em>￥<span>62.00</span></em>");
+            var remainStr="";
+            if(productSeries.productStore){
+                var warningAmount=productSeries.productStore.warningAmount;
+                var remain=productSeries.productStore.remain;
+                if(remain>warningAmount){
+                    remainStr="货源充足";
+                }else if(remain===0){
+                    remainStr="售罄";
+                }else{
+                    remainStr="仅剩 "+remain+"件";
+                }
+            }else{
+                remainStr="无库存信息"
+            }
+
+            $("#product-pop-up .availability").html("库存 <strong><span>"+remainStr+"</span></strong>");
             $("#product-pop-up .description>p").html(productSeries.description);
             $("#product-pop-up  .add2cart").unbind("click");
             var productProperties =productSeries.productProperties;

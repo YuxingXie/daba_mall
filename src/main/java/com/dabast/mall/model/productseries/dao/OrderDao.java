@@ -31,8 +31,10 @@ public class OrderDao extends BaseMongoDao<Order> {
         List<ProductSelected> productSelectedList=order.getProductSelectedList();
         if (productSelectedList!=null){
             for (ProductSelected productSelected:productSelectedList){
-                ProductSeries productSeries= ServiceManager.productSeriesService.findById(productSelected.getProductSeriesId());
-                productSelected.setProductSeries(productSeries);
+//                ProductSeries productSeries= ServiceManager.productSeriesService.findById(productSelected.getProductSeriesId());
+                ProductSeries productSeries= productSelected.getProductSeries();
+                productSeries.setProductSeriesPrices(ServiceManager.productSeriesPriceService.findByProductSeriesId(productSeries.getId()));
+//                productSelected.setProductSeries(productSeries);
                 List<String> productPropertyValueIds=productSelected.getProductPropertyValueIds();
                 if (productPropertyValueIds!=null){
                     List<ProductPropertyValue> productPropertyValueList=new ArrayList<ProductPropertyValue>();
@@ -65,7 +67,7 @@ public class OrderDao extends BaseMongoDao<Order> {
 //                DBObject productSelectedDbObject=new BasicDBObject();
 //                DBRef dbRef=new DBRef("productSeries",productSelected.getProductSeriesId());
 //                productSelectedDbObject.put("productSeries",dbRef);
-//                productSelectedDbObject.put("amount",productSelected.getAmount());
+//                productSelectedDbObject.put("amount",productSelected.getRemain());
                 ProductSeriesPrice currentPrice =ServiceManager.productSeriesPriceService.findCurrentPriceByProductSeriesId(productSelected.getProductSeriesId());
 //                productSelectedDbObject.put("orderPrice",null);
 //                dbProductSelectedList.add(productSelectedDbObject);
