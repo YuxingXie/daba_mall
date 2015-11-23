@@ -12,4 +12,5 @@ import java.util.List;
  */
 public interface IProductStoreInAndOutService extends IBaseEntityManager<ProductStoreInAndOut> {
     List<ProductStoreInAndOut> findByProductSeries(ProductSeries productSeries);
+    void clearNullUserInAndOut();
 }

@@ -25,4 +25,8 @@ public class ProductStoreInAndOutService extends BaseEntityManager<ProductStoreI
     public List<ProductStoreInAndOut> findByProductSeries(ProductSeries productSeries) {
         return productStoreInAndOutDao.findByProductSeries(productSeries);
     }
+    @Override
+    public void clearNullUserInAndOut(){
+        productStoreInAndOutDao.clearNullUserInAndOut();
+    }
 }

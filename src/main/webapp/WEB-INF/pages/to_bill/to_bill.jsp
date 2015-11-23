@@ -138,28 +138,21 @@
                                         minFractionDigits="2"></fmt:formatNumber></span>
                                         </td>
                                         <td class="shopping-cart-total text-center">
-                                                <c:choose>
-                                                    <c:when test="${empty productSelected.productSeries.productStore}">
-                                                        无库存信息
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <c:choose>
-                                                            <c:when test="${not empty productSelected.productSeries.productStore.remain}">
-                                                                <c:choose>
-                                                                    <c:when test="${productSelected.productSeries.productStore.remain ge productSelected.productSeries.productStore.warningAmount}">
-                                                                        货源充足
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                                        仅剩${productSelected.productSeries.productStore.remain}件
-                                                                    </c:otherwise>
-                                                                </c:choose>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                无法获取
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </c:otherwise>
-                                                </c:choose>
+                                            <c:choose>
+                                                <c:when test="${empty productSelected.productSeries.productStore}">
+                                                    无库存信息
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:choose>
+                                                        <c:when test="${not empty productSelected.productSeries.productStore.remain}">
+                                                            剩余${productSelected.productSeries.productStore.remain}件
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            无法获取
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
                                     </tr>
                                 </c:forEach>

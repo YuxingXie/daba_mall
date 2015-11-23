@@ -11,8 +11,8 @@
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="${path}">首页</a></li>
-            <li><a href="">商店</a></li>
-            <li class="active">购物车</li>
+            <li><a href="">购物车</a></li>
+            <li class="active">调整购物车</li>
         </ul>
         <div class="col-md-9 col-sm-7">
 
@@ -28,6 +28,7 @@
                                         <th class="shopping-cart-price">商品单价</th>
                                         <th class="shopping-cart-ref-no">商品数量</th>
                                         <th class="shopping-cart-price">商品金额</th>
+                                        <th class="shopping-cart-price">库存信息</th>
                                         <th class="shopping-cart-total">交易操作</th>
                                     </tr>
                                     <c:choose>
@@ -67,12 +68,30 @@
                                                     <span style=" font-size:14px;">
                                                         <input type="number" name="amount"
                                                                ng-model="amount_${selectedIndex.index}" min="1"
+                                                               <c:if test="${not empty productSelected.productSeries.productStore.remain}">max="${productSelected.productSeries.productStore.remain}" </c:if>
                                                                ng-init="amount_${selectedIndex.index}=${productSelected.amount}"/>
                                                     </span>
                                                     </td>
                                                     <td class="shopping-cart-price">
                                                         <%--<span>￥{{amount_${selectedIndex.index}*${productSelected.productSeries.commonPrice} | number:2}}</span>--%>
                                                         <span>{{amount_${selectedIndex.index}*${productSelected.productSeries.commonPrice}| number:2}}</span>
+                                                    </td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${empty productSelected.productSeries.productStore}">
+                                                                无库存信息
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <c:choose>
+                                                                    <c:when test="${not empty productSelected.productSeries.productStore.remain}">
+                                                                        剩余${productSelected.productSeries.productStore.remain}件
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        无法获取
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </td>
                                                     <td class="shopping-cart-total">
                                                         <p><a href="${path}/cart/remove/${selectedIndex.index}">删除</a></p>

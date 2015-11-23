@@ -20,6 +20,8 @@ public class ProductStoreInAndOut {
     private Date date;
     @DBRef(db = "productSeries")
     private ProductSeries productSeries;
+    @DBRef
+    private User operator;
 
     public String getId() {
         return id;
@@ -42,6 +44,14 @@ public class ProductStoreInAndOut {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public User getOperator() {
+        return operator;
+    }
+
+    public void setOperator(User operator) {
+        this.operator = operator;
     }
 
     public Date getDate() {

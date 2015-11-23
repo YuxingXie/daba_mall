@@ -77,7 +77,23 @@
                         <%--<em>￥<span>62.00</span></em>--%>
                       </div>
                       <div class="availability">
-                        状态:<strong>货源充足</strong>
+                        状态:<strong>
+                        <c:choose>
+                          <c:when test="${empty productSeries.productStore}">
+                            无库存信息
+                          </c:when>
+                          <c:otherwise>
+                            <c:choose>
+                              <c:when test="${not empty productSeries.productStore.remain}">
+                                剩余${productSeries.productStore.remain}件
+                              </c:when>
+                              <c:otherwise>
+                                无法获取
+                              </c:otherwise>
+                            </c:choose>
+                          </c:otherwise>
+                        </c:choose>
+                      </strong>
                       </div>
                     </div>
                     <div class="description">

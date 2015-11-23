@@ -87,6 +87,7 @@ public class IndexController extends BaseRestSpringController {
         model.addAttribute("hotSells2", hotSells);
         model.addAttribute("lowPrices", hotSells);
         model.addAttribute("lowPrices2", hotSells);
+        ServiceManager.productStoreInAndOutService.clearNullUserInAndOut();
         return "index";
     }
 
@@ -153,6 +154,13 @@ public class IndexController extends BaseRestSpringController {
        }
         ProductSeries productSeries=ServiceManager.productSeriesService.findProductSeriesById(productSelected.getProductSeriesId());
         productSelected.setProductSeries(productSeries);
+        ProductStoreInAndOut inAndOut=new ProductStoreInAndOut();
+        inAndOut.setProductSeries(productSeries);
+        inAndOut.setAmount(productSelected.getAmount());
+        inAndOut.setType("out");
+        inAndOut.setDate(new Date());
+        inAndOut.setOperator(getLoginUser(session));
+        ServiceManager.productStoreInAndOutService.insert(inAndOut);
         List<ProductPropertyValue> productPropertyValueList=new ArrayList<ProductPropertyValue>();
        for(String productPropertyValueId : productSelected.getProductPropertyValueIds()){
            DBObject ppCon=new BasicDBObject();
@@ -301,23 +309,6 @@ public class IndexController extends BaseRestSpringController {
             for (String value :values){
                 System.out.println("key:"+key+",value:"+value);
             }
-        }
-        return new ResponseEntity<User>(user, HttpStatus.OK);
-    }
-    @RequestMapping(value = "/index/user/test")
-    public ResponseEntity<User> test(HttpServletRequest request) {
-        User user = new User();
-        user.setName("Tom");
-        user.setHeight(100);
-        user.setSex("f");
-        Map<String,String[]> params=new CustomServletRequestWrapper(request).getParameterMap();
-        Map<String,String[]> params2=request.getParameterMap();
-        for (String key:params.keySet()){
-            String[] values=params.get(key);
-            for (String value :values){
-                System.out.println("key:"+key+",value:"+value);
-            }
-            System.out.println("---------------------");
         }
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
@@ -478,6 +469,20 @@ public class IndexController extends BaseRestSpringController {
 
         user.setCart(cart);
         Order order=ServiceManager.orderService.insertOrder(user);
+        if (cart.getProductSelectedList()!=null){
+            for (ProductSelected productSelected:cart.getProductSelectedList()){
+                ProductSeries productSeries=productSelected.getProductSeries();
+                ProductStoreInAndOut inAndOut=new ProductStoreInAndOut();
+                inAndOut.setProductSeries(productSeries);
+                inAndOut.setAmount(productSelected.getAmount());
+                inAndOut.setType("out");
+                inAndOut.setDate(new Date());
+                inAndOut.setOperator(user);
+                ServiceManager.productStoreInAndOutService.insert(inAndOut);
+            }
+        }
+
+
         user.setCart(null);
         ServiceManager.userService.update(user);
         session.setAttribute(Constant.CART, null);
