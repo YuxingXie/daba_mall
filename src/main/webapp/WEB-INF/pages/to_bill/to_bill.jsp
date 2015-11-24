@@ -99,6 +99,7 @@
                                 <tr>
                                     <th colspan="3" class="text-center">商品</th>
                                     <th class="text-center">单价</th>
+                                    <th class="text-center">数量</th>
                                     <th class="text-center">总价</th>
                                     <th class="text-center">货源</th>
                                 </tr>
@@ -130,6 +131,9 @@
                                             <c:set var="totalCount"
                                                    value="${totalCount+productSelected.amount}"/>
 
+                                        </td>
+                                        <td class="shopping-cart-price text-center">
+                                            <span>${productSelected.amount}</span>
                                         </td>
                                         <td class="shopping-cart-price text-center">
                                             <span>￥<fmt:formatNumber

@@ -87,8 +87,8 @@ public class ProductSelected {
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
         ProductSelected other = (ProductSelected) obj;
-        Assert.notNull(this.productSeriesId);
-        Assert.notNull(other.productSeriesId);
+        Assert.notNull(this.productSeries.getId());
+        Assert.notNull(other.productSeries.getId());
         if (!this.productSeriesId.equalsIgnoreCase(other.productSeriesId)) return false;
         if (other.getProductPropertyValueIds() == null && this.getProductPropertyValueIds() == null) return true;
         if (other.getProductPropertyValueIds() == null && this.getProductPropertyValueIds() != null) return false;

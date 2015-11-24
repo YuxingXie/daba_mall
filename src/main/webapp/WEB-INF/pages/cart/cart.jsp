@@ -66,7 +66,7 @@
                                                     </td>
                                                     <td class="shopping-cart-quantity">
                                                     <span style=" font-size:14px;">
-                                                        <input type="number" name="amount"
+                                                        <input type="number" name="amount" class="form-control"
                                                                ng-model="amount_${selectedIndex.index}" min="1"
                                                                <c:if test="${not empty productSelected.productSeries.productStore.remain}">max="${productSelected.productSeries.productStore.remain}" </c:if>
                                                                ng-init="amount_${selectedIndex.index}=${productSelected.amount}"/>

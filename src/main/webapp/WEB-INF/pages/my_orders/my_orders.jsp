@@ -100,7 +100,7 @@
                                                                                 <c:set var="totalPrice" value="${totalPrice+productSelected.amount*productSelected.productSeries.commonPrice}"/>
 
                                                                                 <c:choose>
-                                                                                    <c:when test="${empty productSelected.productSeriesId}">
+                                                                                    <c:when test="${empty productSelected.productSeries.id}">
                                                                                         <tr>
                                                                                             <td class="text-center" colspan="6">
                                                                                                 <c:set var="hasEmptyProduct" value="true"/>
@@ -110,24 +110,24 @@
                                                                                     </c:when>
                                                                                     <c:otherwise>
                                                                                         <tr name="productSelected"
-                                                                                            data-product-series-id="${productSelected.productSeriesId}"
+                                                                                            data-product-series-id="${productSelected.productSeries.id}"
                                                                                             data-amount="${productSelected.amount}"
                                                                                             data-common-price="${productSelected.productSeries.commonPrice}">
                                                                                             <td class="shopping-cart-image" name="pictures0"
                                                                                                 data-pictures0="${productSelected.productSeries.pictures[0]}">
-                                                                                                <a href="${path}/product/${productSelected.productSeriesId}">
+                                                                                                <a href="${path}/product/${productSelected.productSeries.id}">
                                                                                                     <img src="${path}/${productSelected.productSeries.pictures[0]}"></a>
                                                                                             </td>
                                                                                             <td class="shopping-cart-description">
                                                                                                 <h3>${productSelected.productSeries.name}</h3>
                                                                                                 <c:forEach var="productPropertyValue"
                                                                                                            items="${productSelected.productPropertyValueList}">
-                                                            <span name="productPropertyValue"
-                                                                  data-product-property-value-id="${productPropertyValue.id}"
-                                                                  data-product-property-value-value="${productPropertyValue.value}"
-                                                                  data-product-property-value-product-property-id="${productPropertyValue.productProperty.id}">
-                                                                    ${productPropertyValue.value}
-                                                            </span>
+                                                                                                    <span name="productPropertyValue"
+                                                                                                          data-product-property-value-id="${productPropertyValue.id}"
+                                                                                                          data-product-property-value-value="${productPropertyValue.value}"
+                                                                                                          data-product-property-value-product-property-id="${productPropertyValue.productProperty.id}">
+                                                                                                            ${productPropertyValue.value}
+                                                                                                    </span>
                                                                                                 </c:forEach>
                                                                                             </td>
                                                                                             <td class="shopping-cart-price">

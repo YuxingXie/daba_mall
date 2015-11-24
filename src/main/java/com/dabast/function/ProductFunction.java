@@ -4,11 +4,9 @@ import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.entity.ProductCategory;
 import com.dabast.entity.ProductProperty;
 import com.dabast.entity.ProductSubCategory;
-import com.dabast.mall.model.productseries.service.IProductCategoryService;
-import com.dabast.mall.model.productseries.service.IProductSubCategoryService;
-import com.dabast.mall.model.productseries.service.impl.ProductPropertyService;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
+import com.dabast.mall.service.IProductCategoryService;
+import com.dabast.mall.service.IProductSubCategoryService;
+import com.dabast.mall.service.impl.ProductPropertyService;
 
 import java.util.List;
 

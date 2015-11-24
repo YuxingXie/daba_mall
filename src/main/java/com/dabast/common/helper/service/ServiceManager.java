@@ -1,7 +1,5 @@
 package com.dabast.common.helper.service;
-import com.dabast.entity.ProductStoreInAndOut;
-import com.dabast.mall.model.productseries.service.*;
-import com.mongodb.DBCollection;
+import com.dabast.mall.service.*;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 @Component

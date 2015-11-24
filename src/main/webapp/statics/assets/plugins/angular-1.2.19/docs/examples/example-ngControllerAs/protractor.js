@@ -1,4 +1,4 @@
-  it('should check controller as', function() {
+  it('should check handler as', function() {
     var container = element(by.id('ctrl-as-exmpl'));
       expect(container.findElement(by.model('settings.name'))
         .getAttribute('value')).toBe('John Smith');

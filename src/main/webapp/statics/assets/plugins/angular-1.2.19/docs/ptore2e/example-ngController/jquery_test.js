@@ -3,7 +3,7 @@ describe("module:ng.directive:ngController", function() {
     browser.get("./examples/example-ngController/index-jquery.html");
   });
 
-  it('should check controller', function() {
+  it('should check handler', function() {
     var container = element(by.id('ctrl-exmpl'));
 
     expect(container.findElement(by.model('name'))

@@ -35,8 +35,11 @@
               <i class="fa fa-angle-right"></i> 商品管理<i class="fa fa-angle-down"></i>
             </a>
               <ul class="dropdown-menu" style="display:block;">
-                <li class="list-group-item dropdown clearfix active">
+                <li class="list-group-item dropdown clearfix">
                   <a href="${path}/admin/product_series/list"><i class="fa fa-circle"></i>产品信息</a>
+                </li>
+                <li class="list-group-item dropdown clearfix">
+                  <a href="${path}/admin/product_category/create_input"><i class="fa fa-circle"></i>产品分类信息</a>
                 </li>
                   <li class="list-group-item dropdown clearfix">
                     <a href="${path}/admin/product_series/create_input"><i class="fa fa-circle"></i>产品上架</a>

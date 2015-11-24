@@ -1,12 +1,11 @@
 package com.dabast.common.base;
 
-import com.dabast.entity.Order;
-import com.dabast.entity.ProductProperty;
 import com.mongodb.CommandResult;
 import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
+import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.Collection;
 import java.util.List;
@@ -48,4 +47,6 @@ public interface IBaseEntityManager<E> {
    E findOne(DBObject condition);
 
    void removeById(String id);
+
+   List<E> findAll(Query query);
 }

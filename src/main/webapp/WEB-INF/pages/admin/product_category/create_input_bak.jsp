@@ -52,7 +52,7 @@
                         <div class="col-lg-2 col-sm-2  text-right">选择大类</div>
                         <div class="col-lg-6 col-sm-6 form-inline">
                             <div>
-                                没有已有的大类数据，请创建一个新的大类：
+                                没有大类数据，请创建一个新的大类：
                                 <input type="text" name="categoryName" placeholder="输入大类名称" ng-model="$parent.$parent.productCategory"/>
                             </div>
 

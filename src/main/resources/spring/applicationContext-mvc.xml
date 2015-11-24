@@ -27,7 +27,7 @@
     <!-- 自动搜索@Controller标注的类 <context:component-scan base-package="com.dabast.*.controller">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         </context:component-scan> -->
-    <context:component-scan base-package="com.dabast.mall.**.controller">
+    <context:component-scan base-package="com.dabast.**.controller">
     </context:component-scan>
     <context:component-scan base-package="com.dabast.common.helper.service">
     </context:component-scan>
@@ -36,7 +36,7 @@
     </bean>
     <bean id="defaultHandler" class="org.springframework.web.servlet.HandlerExecutionChain">
         <constructor-arg index="0">
-            <bean class="com.dabast.common.controller.EmptyHandler"/>
+            <bean class="com.dabast.common.handler.EmptyHandler"/>
         </constructor-arg>
     </bean>
     <bean

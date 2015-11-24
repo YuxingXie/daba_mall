@@ -1,10 +1,12 @@
 package com.dabast.common.base;
 
+import com.dabast.entity.ProductSeriesPrice;
 import com.mongodb.CommandResult;
 import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
@@ -129,5 +131,9 @@ public abstract class BaseEntityManager<E> implements IBaseEntityManager<E> {
     @Override
     public void  removeById(String id){
         getEntityDao().removeById(id);
+    }
+    @Override
+    public List<E> findAll(Query query){
+        return getEntityDao().findAll(query);
     }
 }

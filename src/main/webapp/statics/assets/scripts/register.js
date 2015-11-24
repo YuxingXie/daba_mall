@@ -162,7 +162,7 @@ angular.module('registerApp', ['ngRoute'])
             }
 
         }])
-    //.controller("mainController",["$location","$scope",function($location,$scope){
+    //.handler("mainController",["$location","$scope",function($location,$scope){
     //    $scope.goEmail=function(){
     //        $location.path('/email');
     //    }

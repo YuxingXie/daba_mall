@@ -189,7 +189,7 @@
             $el.removeClass(css).addClass(css);
         },
         STYLE_SETTING = 'style="width:{width};height:{height};"',
-        OBJECT_PARAMS = '      <param name="controller" value="true" />\n' +
+        OBJECT_PARAMS = '      <param name="handler" value="true" />\n' +
             '      <param name="allowFullScreen" value="true" />\n' +
             '      <param name="allowScriptAccess" value="always" />\n' +
             '      <param name="autoPlay" value="false" />\n' +

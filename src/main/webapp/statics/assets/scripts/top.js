@@ -26,43 +26,43 @@ var loginCheckBeforeHandler=function(handler){
             if(url&&url!==undefined&&url!=="") window.location.href=url;
         }
     }
-var loginAndCallBack=function (callBack) {
-    return function(){
-        var pwd=$.md5($("#password").val());
-        $("#password").val(pwd);
-        //var $cartList=$("#cart_list");
-        //if($cartList.find(".j-shoping-item")&&$cartList.find(".j-shoping-item").length>0){
-        //    alert("购物车发现商品:"+$cartList.find(".j-shoping-item").length);
-        //    $('#mergeCart').val(true);
-        //}
-        $.ajax({
-            url: path+"/index/user/login",
-            contentType: "application/json",
-            data: JSON.stringify($('#loginForm').serializeObject()),
-            method: "post"
-        }).done(function (data) {
-            if(data.loginStatus!=undefined){
-                $("#error-msg").text(data.loginStatus);
-                return;
-            }
+    var loginAndCallBack=function (callBack) {
+        return function(){
+            var pwd=$.md5($("#password").val());
+            $("#password").val(pwd);
+            //var $cartList=$("#cart_list");
+            //if($cartList.find(".j-shoping-item")&&$cartList.find(".j-shoping-item").length>0){
+            //    alert("购物车发现商品:"+$cartList.find(".j-shoping-item").length);
+            //    $('#mergeCart').val(true);
+            //}
+            $.ajax({
+                url: path+"/index/user/login",
+                contentType: "application/json",
+                data: JSON.stringify($('#loginForm').serializeObject()),
+                method: "post"
+            }).done(function (data) {
+                if(data.loginStatus!=undefined){
+                    $("#error-msg").text(data.loginStatus);
+                    return;
+                }
 
-            $(".additional-nav>ul>li:eq(0)").remove();
-            $(".additional-nav>ul>li:eq(0)").remove();
-            var $new_li = $('<li>欢迎您,<a href="#">' + data.name + '</a>! </li><li><a href="#" id="logout">退出</a></li>');
-            $new_li.insertBefore($(".additional-nav>ul>li:eq(0)"));
-            $('#myModal').modal('hide');
-            if(callBack!==undefined){
-                console.log("login,now invoke callback");
-                callBack();
-            }
-            renderCart(data.cart);
+                $(".additional-nav>ul>li:eq(0)").remove();
+                $(".additional-nav>ul>li:eq(0)").remove();
+                var $new_li = $('<li>欢迎您,<a href="#">' + data.name + '</a>! </li><li><a href="#" id="logout">退出</a></li>');
+                $new_li.insertBefore($(".additional-nav>ul>li:eq(0)"));
+                $('#myModal').modal('hide');
+                if(callBack!==undefined){
+                    console.log("login,now invoke callback");
+                    callBack();
+                }
+                renderCart(data.cart);
 
-        }).fail(function(data){
-            console.log("there is an error!");
-        });
+            }).fail(function(data){
+                console.log("there is an error!");
+            });
+        }
+
     }
-
-}
 $(document).ready(function () {
     $(document).on("click", "#login", new loginAndCallBack());
     $(".login-need").click(function(){

@@ -37,7 +37,7 @@ public class ProductSeries {
     @DBRef
     private ProductSubCategory productSubCategory;
     private Integer evaluateCount;
-    @Transient
+    @Field
     private boolean newProduct;
     @Transient
     private List<ProductProperty> productProperties;

@@ -6,6 +6,7 @@ import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
+import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.Collection;
 import java.util.List;
@@ -47,4 +48,6 @@ public interface EntityDao <E>{
     E findById(String id);
 
     void removeById(String id);
+
+    List<E> findAll(Query query);
 }
