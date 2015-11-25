@@ -14,7 +14,7 @@
             <li><a href="">购物车</a></li>
             <li class="active">调整购物车</li>
         </ul>
-        <div class="col-md-9 col-sm-7">
+        <div class="col-md-9 col-sm-7"  ng-init="totalPrice=0">
 
             <div class="row list-view-sorting clearfix">
                 <div class="shopping-cart-page">
@@ -32,52 +32,50 @@
                                         <th class="shopping-cart-total">交易操作</th>
                                     </tr>
 
-                                            <tr ng-if="!cart||!cart.productSelectedList">
-                                                <td colspan="5">您的购物车中还没有商品</td>
-                                            </tr>
+                                    <tr ng-if="!cart||!cart.productSelectedList">
+                                        <td colspan="5">您的购物车中还没有商品</td>
+                                    </tr>
 
-                                            <tr name="productSelected" ng-if="cart&&cart.productSelectedList" ng-repeat="productSelected in cart.productSelectedList">
-                                                    <td class="shopping-cart-image" name="pictures0" data-pictures0="{{productSelected.productSeries.pictures[0]}}">
-                                                        <a href="${path}/product/{{productSelected.productSeriesId}}">
-                                                            <img ng-src="${path}/{{productSelected.productSeries.pictures[0]}}"></a>
-                                                    </td>
-                                                    <td class="shopping-cart-description">
-                                                        <h3>{{productSelected.productSeries.name}}</h3>
-                                                            <span name="productPropertyValue" ng-repeat="productPropertyValue in productSelected.productPropertyValueList">
-                                                            {{productPropertyValue.value}}
-                                                            </span>
-                                                    </td>
-                                                    <td class="shopping-cart-price">
-                                                    <span>￥{{productSelected.productSeries.commonPrice | number:2}}</span>
-                                                    </td>
-                                                    <td class="shopping-cart-quantity">
-                                                    <span style=" font-size:14px;">
-                                                        <input type="number" name="amount" ng-model="productSelected.amount" class="form-control" min="1"  edit-amount/>
+                                    <tr name="productSelected" ng-if="cart&&cart.productSelectedList" ng-repeat="productSelected in cart.productSelectedList" >
+                                            <td class="shopping-cart-image">
+                                                <a ng-href="${path}/product/{{productSelected.productSeriesId}}">
+                                                    <img ng-src="${path}/{{productSelected.productSeries.pictures[0]}}"></a>
+                                            </td>
+                                            <td class="shopping-cart-description">
+                                                <h3>{{productSelected.productSeries.name}}</h3>
+                                                    <span name="productPropertyValue" ng-repeat="productPropertyValue in productSelected.productPropertyValueList">
+                                                    {{productPropertyValue.value}}
                                                     </span>
-                                                    </td>
-                                                    <td class="shopping-cart-price">
-                                                        <span>{{productSelected.productSeries.commonPrice*amount_$index| number:2}}</span>
-                                                    </td>
-                                                    <td>
-                                                        <span ng-if="!productSelected.productSeries.productStore">无库存信息</span>
-                                                        <span ng-if="productSelected.productSeries.productStore &&productSelected.productSeries.productStore.remain">
-                                                        剩余{{productSelected.productSeries.productStore.remain}}件
-                                                        </span>
-                                                            <span ng-if="productSelected.productSeries.productStore &&!productSelected.productSeries.productStore.remain">
-                                                        无法获取
-                                                        </span>
-                                                    </td>
-                                                    <td class="shopping-cart-total">
-                                                        <p><a href="${path}/cart/remove/{{$index}}">删除</a></p>
-                                                        <p>移到我的关注</p>
-                                                    </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="4">
-                                                    总计：s件商品,共b 元
-                                                </td>
-                                                <td><button  class="btn btn-primary col-lg-8" type="button" id="toBill" data-ng-click="toBill()">确&nbsp;&nbsp;&nbsp;认</button></td>
-                                            </tr>
+                                            </td>
+                                            <td class="shopping-cart-price">
+                                            <span>￥{{productSelected.productSeries.commonPrice | number:2}}</span>
+                                            </td>
+                                            <td class="shopping-cart-quantity">
+                                            <span style=" font-size:14px;">
+                                                <input type="number" name="amount" ng-model="productSelected.amount" class="form-control" min="1" ng-change="change()"/>
+                                            </span>
+                                            </td>
+                                            <td class="shopping-cart-price">
+                                                <span>{{productSelected.productSeries.commonPrice*productSelected.amount| number:2}}</span>
+                                            </td>
+                                            <td>
+                                                <span ng-if="!productSelected.productSeries.productStore">无库存信息</span>
+                                                <span ng-if="productSelected.productSeries.productStore&&productSelected.productSeries.productStore.remain">
+                                                剩余{{productSelected.productSeries.productStore.remain}}件
+                                                </span>
+                                                <span ng-if="productSelected.productSeries.productStore&&!productSelected.productSeries.productStore.remain">无法获取</span>
+                                            </td>
+                                            <td class="shopping-cart-total">
+                                                <p><a href="${path}/cart/remove/{{$index}}">删除</a></p>
+                                                <p>移到我的关注</p>
+                                            </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            总计：{{totalAmount}}件商品,共{{totalPrice | number:2}} 元
+                                        </td>
+                                        <td><button  class="btn btn-primary col-lg-8" type="button" id="toBill" data-ng-click="toBill()">确&nbsp;&nbsp;&nbsp;认</button></td>
+                                    </tr>
 
                                 </table>
                             </form>
