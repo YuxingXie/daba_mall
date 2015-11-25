@@ -35,8 +35,6 @@ public class Order {
     private String payWayString;
     @Field(value = "orderDate")
     private Date orderDate;
-    @Transient
-    private String userId;
     @Field(value = "acceptAddress")
     private String acceptAddress;
 
@@ -133,14 +131,6 @@ public class Order {
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public User getUser() {

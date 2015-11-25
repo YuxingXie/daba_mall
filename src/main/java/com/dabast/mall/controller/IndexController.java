@@ -69,8 +69,12 @@ public class IndexController extends BaseRestSpringController {
                 if (user.getPassword().equalsIgnoreCase(password)) {
                     session.setAttribute(Constant.LOGIN_USER, user);
                     Cart cart=user.getCart();
-                    if (cart.getProductSelectedList()!=null){
-
+                    if (cart!=null && cart.getProductSelectedList()!=null){
+                        for (ProductSelected productSelected:cart.getProductSelectedList()){
+                            ProductSeries productSeries=productSelected.getProductSeries();
+                            List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
+                            if (productSeries.getProductStore()!=null) productSeries.getProductStore().setInAndOutList(inAndOuts);
+                        }
                     }
                     session.setAttribute(Constant.CART,cart);
 
@@ -147,7 +151,7 @@ public class IndexController extends BaseRestSpringController {
      * @return
      */
     @RequestMapping(value = "/index/cart", method = RequestMethod.POST)
-    public ResponseEntity<Cart> login(@RequestBody ProductSelected productSelected,HttpSession session) {
+    public ResponseEntity<Cart> cart(@RequestBody ProductSelected productSelected,HttpSession session) {
         Cart cart=null;
        if (session.getAttribute(Constant.CART)==null){
            cart=new Cart();
@@ -156,13 +160,6 @@ public class IndexController extends BaseRestSpringController {
        }
         ProductSeries productSeries=ServiceManager.productSeriesService.findProductSeriesById(productSelected.getProductSeriesId());
         productSelected.setProductSeries(productSeries);
-//        ProductStoreInAndOut inAndOut=new ProductStoreInAndOut();
-//        inAndOut.setProductSeries(productSeries);
-//        inAndOut.setAmount(productSelected.getAmount());
-//        inAndOut.setType("out");
-//        inAndOut.setDate(new Date());
-//        inAndOut.setOperator(getLoginUser(session));
-//        ServiceManager.productStoreInAndOutService.insert(inAndOut);
         List<ProductPropertyValue> productPropertyValueList=new ArrayList<ProductPropertyValue>();
        for(String productPropertyValueId : productSelected.getProductPropertyValueIds()){
            DBObject ppCon=new BasicDBObject();
@@ -230,19 +227,25 @@ public class IndexController extends BaseRestSpringController {
     @RequestMapping(value = "/index/order/submit", method = RequestMethod.POST)
     public String orderSubmit( String  id,String acceptAddress,String payWay,String acceptPersonName, String contactPhone,
                               ModelMap model,RedirectAttributes redirectAttributes,HttpSession session) {
-        Order order=ServiceManager.orderService.findById(id);
+        Order order=getOrder(session);
+        if (order==null) order=ServiceManager.orderService.findById(id);
         if (acceptAddress!=null)order.setAcceptAddress(acceptAddress);
         if (payWay!=null)order.setPayWay(payWay);
         if (acceptPersonName!=null)order.setAcceptPersonName(acceptPersonName);
         if (contactPhone!=null)order.setContactPhone(contactPhone);
         order.setSubmitStatus("y");
         ServiceManager.orderService.update(order);
-        User user=getLoginUser(session);
-        order.setUser(user);
-        order.setUserId(user.getId());
         session.setAttribute("order",order);
         return "redirect:/bill";
     }
+    @RequestMapping(value = "/order/submit/{id}")
+    public String orderSubmit(@PathVariable String id,HttpSession session,ModelMap model,RedirectAttributes redirectAttributes) {
+        Order order = ServiceManager.orderService.findOrderById(id);
+        session.setAttribute("order",order);
+        return "redirect:/bill";
+    }
+
+
     @RequestMapping(value="/pic/{id}")
     public void showPic(@PathVariable String id,HttpServletRequest request,HttpServletResponse response) {
         String dirStr="statics/img/product";
@@ -252,7 +255,6 @@ public class IndexController extends BaseRestSpringController {
         try {
             File dirFile=dirResource.getFile();
             if (!dirFile.exists() || !dirFile.isDirectory()){
-                System.out.println("make directory");
                 dirFile.mkdirs();
             }
             String[] files=dirFile.list();
@@ -285,20 +287,8 @@ public class IndexController extends BaseRestSpringController {
         } catch (ServletException e) {
             e.printStackTrace();
         }
-
-
     }
-    @RequestMapping(value = "/order/submit/{id}")
-    public String orderSubmit(@PathVariable String id,HttpSession session,ModelMap model,RedirectAttributes redirectAttributes) {
 
-        User user=getLoginUser(session);
-        Order order = ServiceManager.orderService.findOrderById(id);
-//        model.addAttribute("order", order);
-        order.setUser(user);
-        order.setUserId(user.getId());
-        session.setAttribute("order",order);
-        return "redirect:/bill";
-    }
     @RequestMapping(value = "/index/user/{id}")
     public ResponseEntity<User> get(ModelMap model, @PathVariable String id,HttpServletRequest request) {
         User user = new User();
@@ -328,7 +318,7 @@ public class IndexController extends BaseRestSpringController {
         Assert.notNull(orderId);
         Order order=ServiceManager.orderService.findById(orderId);
         Assert.notNull(order);
-        Assert.notNull(order.getUserId());
+        Assert.notNull(order.getUser());
         String payWay=order.getPayWay();
         Assert.notNull(payWay);
         //货到付款1，在线支付2，公司转账3，邮局汇款4
@@ -341,9 +331,9 @@ public class IndexController extends BaseRestSpringController {
 //            String result=OuterRequestUtil.sendPost(outUrl,requestParams);
             if (ThirdPartPayUtil.isPaySuccess()){
                 order.setPayStatus("y");
-                Account account0 = ServiceManager.accountService.findAccountsByUserIdAndCardNo(order.getUserId(),account.getCardNo());
+                Account account0 = ServiceManager.accountService.findAccountsByUserIdAndCardNo(order.getUser().getId(),account.getCardNo());
                 if (account0==null){
-                    account.setUserId(order.getUserId());
+                    account.setUser(order.getUser());
                     ServiceManager.accountService.insert(account);
                     order.setPayAccountId(account.getId());
                     order.setPayAccount(account);
@@ -415,7 +405,14 @@ public class IndexController extends BaseRestSpringController {
                if (user.getCart()==null){
                    user.setCart(sessionCart);
                }else{
-                   user.getCart().merge(sessionCart);
+                   Cart userCart=user.getCart();
+                   for (ProductSelected productSelected:userCart.getProductSelectedList()){
+                       ProductSeries productSeries=productSelected.getProductSeries();
+                       if(productSeries.getProductStore()==null) continue;
+                       List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
+                       productSeries.getProductStore().setInAndOutList(inAndOuts);
+                   }
+                   userCart.merge(sessionCart);
                }
                if (sessionCart!=null){
                    ServiceManager.userService.update(user);
@@ -473,20 +470,6 @@ public class IndexController extends BaseRestSpringController {
 
         user.setCart(cart);
         Order order=ServiceManager.orderService.insertOrder(user);
-//        if (cart.getProductSelectedList()!=null){
-//            for (ProductSelected productSelected:cart.getProductSelectedList()){
-//                ProductSeries productSeries=productSelected.getProductSeries();
-//                ProductStoreInAndOut inAndOut=new ProductStoreInAndOut();
-//                inAndOut.setProductSeries(productSeries);
-//                inAndOut.setAmount(productSelected.getAmount());
-//                inAndOut.setType("out");
-//                inAndOut.setDate(new Date());
-//                inAndOut.setOperator(user);
-//                ServiceManager.productStoreInAndOutService.insert(inAndOut);
-//            }
-//        }
-
-
         user.setCart(null);
         ServiceManager.userService.update(user);
         session.setAttribute(Constant.CART, null);
@@ -498,20 +481,24 @@ public class IndexController extends BaseRestSpringController {
     }
     @RequestMapping(value = "/cart/to_bill")
     public String toBill(ModelMap model, HttpSession session,HttpServletRequest request) {
-
         Order order=session.getAttribute("order")==null?null:(Order)session.getAttribute("order");
 //        Order order=ServiceManager.orderService.findLastOrderByUserId(orderId);
-        System.out.println(LocationUtil.getIpAddr(request));
-//        model.addAttribute("order", order);
         return "redirect:/to_bill";
     }
     @RequestMapping(value = "/cart/to_bill/{orderId}")
     public String toBill(@PathVariable String orderId,ModelMap model, HttpSession session,HttpServletRequest request) {
-        User user=getLoginUser(session);
+//        User user=getLoginUser(session);
         Order order = ServiceManager.orderService.findOrderById(orderId);
-//        model.addAttribute("order", order);
-        order.setUser(user);
-        order.setUserId(user.getId());
+        Assert.notNull(order);
+        if (order.getProductSelectedList()!=null ){
+            for (ProductSelected productSelected:order.getProductSelectedList()){
+                ProductSeries productSeries=productSelected.getProductSeries();
+                if (productSeries.getProductStore()!=null){
+                    List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
+                    productSeries.getProductStore().setInAndOutList(inAndOuts);
+                }
+            }
+        }
         session.setAttribute("order",order);
         return "redirect:/to_bill";
     }
@@ -522,7 +509,7 @@ public class IndexController extends BaseRestSpringController {
         if (user==null){
             return null;
         }
-        order.setUserId(user.getId());
+        order.setUser(user);
         List<Order> orders=ServiceManager.orderService.findEquals(order);
         if (orders==null){
             model.addAttribute("orders",orders);
@@ -531,24 +518,11 @@ public class IndexController extends BaseRestSpringController {
         for (Order order1:orders){
             List<ProductSelected> productSelectedList=order1.getProductSelectedList();
             for (ProductSelected productSelected:productSelectedList){
-//                ProductSeries productSeries=ServiceManager.productSeriesService.findById(productSelected.getProductSeriesId());
                 ProductSeries productSeries=productSelected.getProductSeries();
                 if (productSeries!=null){
                     productSeries.setProductSeriesPrices(ServiceManager.productSeriesPriceService.findByProductSeriesId(productSeries.getId()));
-                    DBObject dbObject=new BasicDBObject();
-                    dbObject.put("productSeries",productSeries);
-                    List<ProductPropertyValue> productPropertyValueList=ServiceManager.productPropertyValueService.findAll(dbObject);
-                    productSelected.setProductPropertyValueList(productPropertyValueList);
-
                 }
-//                productSelected.setProductSeries(productSeries);
-//                List<String> valueIds=productSelected.getProductPropertyValueIds();
-//                if (valueIds==null) continue;
 
-//                for (String valueId:valueIds){
-//                    ProductPropertyValue productPropertyValue=ServiceManager.productPropertyValueService.findById(valueId);
-//                    productPropertyValueList.add(productPropertyValue);
-//                }
             }
         }
         model.addAttribute("orders",orders);

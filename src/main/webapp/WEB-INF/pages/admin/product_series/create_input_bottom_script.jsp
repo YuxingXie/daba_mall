@@ -45,22 +45,22 @@
         var propertyValues=[];
         $("#form").find("input.propertyValue").each(function () {
           if($(this).data("propertyIndex")===index){
-
-
-            var valuesString=$(this).val();
-            if(valuesString.indexOf(",")<0){
-              var propertyValue={};
-              propertyValue.value=valuesString;
-              propertyValues.push(propertyValue);
-            }else{
-              var values=valuesString.split(",");
-              for(var i=0;i<values.length;i++){
-                var propertyValue={};
-                var value=values[i];
-                propertyValue.value=value;
-                propertyValues.push(propertyValue);
+              var valuesString=$(this).val();
+              if(valuesString!==""){
+                  if(valuesString.indexOf(",")<0){
+                      var propertyValue={};
+                      propertyValue.value=valuesString;
+                      propertyValues.push(propertyValue);
+                  }else{
+                      var values=valuesString.split(",");
+                      for(var i=0;i<values.length;i++){
+                          var propertyValue={};
+                          var value=values[i];
+                          propertyValue.value=value;
+                          propertyValues.push(propertyValue);
+                      }
+                  }
               }
-            }
           }
         });
         productProperty.propertyValues=propertyValues;

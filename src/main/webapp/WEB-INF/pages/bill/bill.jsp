@@ -21,7 +21,7 @@
                 <form class="form-without-legend" novalidate="novalidate" action="${path}/order/pay" id="form" autocomplete="off">
 
                     <div class="row">
-                        <p class="bg-info col-lg-8 text-left ">订单提交成功，请您尽快付款！ 订单号：${sessionScope.order.id},应付金额${sessionScope.order.totalPrice}元</p>
+                        <p class="bg-info col-lg-8 text-left ">订单提交成功，请您尽快付款！ 订单号：${sessionScope.order.id},应付金额<fmt:formatNumber value="${order.totalPrice}" pattern="##.##" minFractionDigits="2"></fmt:formatNumber>元</p>
                         <p class="bg-danger text-left col-lg-8" >公告： 请您在6小时内完成支付，否则订单会被自动取消。</p>
                     </div>
                     <div class="row"><br/><br/></div>
@@ -61,9 +61,7 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                 </form>
             </div>
         </div>

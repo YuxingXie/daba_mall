@@ -6,4 +6,6 @@ package com.dabast.mall;
 public class Constant {
     public static String LOGIN_USER="loginUser";
     public static String CART="cart";
+    public static String ORDER="order";
+
 }

@@ -120,14 +120,8 @@
                                                                                             </td>
                                                                                             <td class="shopping-cart-description">
                                                                                                 <h3>${productSelected.productSeries.name}</h3>
-                                                                                                <c:forEach var="productPropertyValue"
-                                                                                                           items="${productSelected.productPropertyValueList}">
-                                                                                                    <span name="productPropertyValue"
-                                                                                                          data-product-property-value-id="${productPropertyValue.id}"
-                                                                                                          data-product-property-value-value="${productPropertyValue.value}"
-                                                                                                          data-product-property-value-product-property-id="${productPropertyValue.productProperty.id}">
-                                                                                                            ${productPropertyValue.value}
-                                                                                                    </span>
+                                                                                                <c:forEach var="productPropertyValue" items="${productSelected.productPropertyValueList}">
+                                                                                                    <span>${productPropertyValue.value}</span>
                                                                                                 </c:forEach>
                                                                                             </td>
                                                                                             <td class="shopping-cart-price">

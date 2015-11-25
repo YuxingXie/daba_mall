@@ -21,7 +21,17 @@ public class ProductStoreInAndOut {
     @DBRef(db = "productSeries")
     private ProductSeries productSeries;
     @DBRef
+    private ProductPropertyValue productPropertyValue;
+    @DBRef
     private User operator;
+
+    public ProductPropertyValue getProductPropertyValue() {
+        return productPropertyValue;
+    }
+
+    public void setProductPropertyValue(ProductPropertyValue productPropertyValue) {
+        this.productPropertyValue = productPropertyValue;
+    }
 
     public String getId() {
         return id;

@@ -98,8 +98,7 @@
                         $scope.showPic=function(){
                                 $scope.isShow=! $scope.isShow;
                         }
-
-                }])
+        }])
         $(document).ready(function(){
                 $(document).on("click","#shortcuts .bank-ico",function () {
                         var $shortcutsPayModal=$("#shortcutsPayModal");

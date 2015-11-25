@@ -49,35 +49,41 @@ public class AdminController extends BaseRestSpringController {
     public String index() {
          return "redirect:/admin/index/index";
     }
-//    @RequestMapping(value = "/index")
-//    public String index(ModelMap map){
-////        Subject currentUser = SecurityUtils.getSubject();
-////        String id=currentUser.getPrincipal().toString();
-////        System.out.println("id: "+id);
-////        User user= ServiceManager.userService.findById(id);
-////        map.addAttribute("LoginUser",user);
-//        return "redirect:/admin/index/index";
+
+//    @RequestMapping(value="pic/{id}")
+//    public String showPic(ModelMap model,@PathVariable String id) {
+//
+//        ServletContext context=ProjectContext.getServletContext();
+//        ServletContextResource imgPathResource=new ServletContextResource(context,"img/product");
+//        ServletContextResource imgResource=null;
+//        try {
+//            File imgPathFile=imgPathResource.getFile();
+//            if (!imgPathFile.exists()){
+//                imgPathFile.mkdirs();
+//            }
+//            File[] files=imgPathFile.listFiles();
+//            if (files!=null&&files.length>0){
+//                for (File imgFile:files){
+//                    if (imgFile.getName().indexOf(id)>=0){
+//                        imgResource=new ServletContextResource(context,imgFile.getPath());
+//                        return imgResource.getPath();
+//                    }
+//                }
+//            }
+//            GridFSDBFile picture =productSeriesService.findFileById(id);
+//            String suffix=picture.getFilename().substring(picture.getFilename().lastIndexOf("."));
+//            imgResource=new ServletContextResource(context,"img/product/"+id+suffix);
+//            File file=imgResource.getFile();
+//            if (!file.exists()){
+//                file.createNewFile();
+//                picture.writeTo(imgResource.getFile());
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        String path=imgResource.getPath();
+//        return path;
 //    }
-    @RequestMapping(value="pic/{id}")
-    public String showPic(ModelMap model,@PathVariable String id) {
-       GridFSDBFile picture =productSeriesService.findFileById(id);
-        String suffix=picture.getFilename().substring(picture.getFilename().lastIndexOf("."));
-        ServletContext context=ProjectContext.getServletContext();
-        ServletContextResource resource=new ServletContextResource(context,"img/product/"+id+suffix);
-        try {
-            File file=resource.getFile();
-            if (!file.exists()){
-                file.createNewFile();
-                picture.writeTo(resource.getFile());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String path=resource.getPath();
-        String pathWithContext=resource.getPathWithinContext();
-//        model.addAttribute("uri",path);
-        return path;
-    }
     @RequestMapping(value="/product_series/new")
     public String createProductSeries(ProductSeries productSeries,
                                       Double price,Integer storeAmount,
@@ -121,6 +127,7 @@ public class AdminController extends BaseRestSpringController {
         JSONArray productPropertiesJsonArray=JSONArray.fromObject(productPropertiesJson);
         for (Object object:productPropertiesJsonArray.toArray()){
             JSONObject jsonObjectProductProperty=(JSONObject) object;
+//            if(jsonObjectProductProperty.get("propertyName")==null||jsonObjectProductProperty.get("propertyName").toString().length()==0) continue;
             ProductProperty productProperty=new ProductProperty();
             Assert.notNull(jsonObjectProductProperty.get("propertyName"));
             productProperty.setPropertyName(jsonObjectProductProperty.get("propertyName").toString());
@@ -132,6 +139,7 @@ public class AdminController extends BaseRestSpringController {
                 ProductPropertyValue productPropertyValue=new ProductPropertyValue();
                 JSONObject productPropertyValueJSONObject=(JSONObject)productPropertyValueObject;
                 Assert.notNull(productPropertyValueJSONObject.get("value"));
+                if (productPropertyValueJSONObject.get("value").toString().equals("")) continue;
 //                System.out.println(productPropertyValueJSONObject.get("value"));
                 productPropertyValue.setValue(productPropertyValueJSONObject.get("value").toString());
                 productPropertyValue.setProductProperty(productProperty);

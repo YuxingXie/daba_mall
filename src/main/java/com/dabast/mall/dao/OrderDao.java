@@ -53,29 +53,12 @@ public class OrderDao extends BaseMongoDao<Order> {
         {
             Assert.notNull(user.getCart());
             Order order=new Order();
-            order.setUserId(user.getId());
             order.setUser(user);
             order.setOrderDate(new Date());
             order.setPayStatus("n");
-//            DBObject orderObject=new BasicDBObject();
-//            orderObject.put("user",user);
-//            orderObject.put("orderDate",new Date());
-//            orderObject.put("payStatus","n");
             List<ProductSelected> productSelectedList=user.getCart().getProductSelectedList();
-//            BasicDBList dbProductSelectedList=new BasicDBList();
-            for (ProductSelected productSelected:productSelectedList){
-//                DBObject productSelectedDbObject=new BasicDBObject();
-//                DBRef dbRef=new DBRef("productSeries",productSelected.getProductSeriesId());
-//                productSelectedDbObject.put("productSeries",dbRef);
-//                productSelectedDbObject.put("amount",productSelected.getRemain());
-                ProductSeriesPrice currentPrice =ServiceManager.productSeriesPriceService.findCurrentPriceByProductSeriesId(productSelected.getProductSeriesId());
-//                productSelectedDbObject.put("orderPrice",null);
-//                dbProductSelectedList.add(productSelectedDbObject);
-                ProductSeries productSeries=new ProductSeries();
-                productSeries.setId(productSelected.getProductSeriesId());
-                productSelected.setProductSeries(productSeries);
-                productSelected.setOrderPrice(currentPrice);
-            }
+            Assert.notNull(productSelectedList);
+            order.setProductSelectedList(productSelectedList);
             getMongoTemplate().insert(order);
             return order;
         }

@@ -30,71 +30,97 @@
 <script type="text/javascript" src="${path}/statics/assets/plugins/sco.js-master/js/sco.modal.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/sco.js-master/js/sco.confirm.js"></script>
 <script type="text/javascript">
-    var nonHtml5Post =function(){
-        return function(){
-
-            var cart={};
-            var productSelectedList=[];
-            $('[name="productSelected"]').each(function(){
-                var productSelected={};
-                var productSeries={};
-                var productSeriesId= $(this).data("productSeriesId");
-                productSelected.productSeriesId=productSeriesId;
-                productSelected.amount=$(this).find("[name='amount']").val();
-                var commonPrice=$(this).data("commonPrice");
-                var pictures0=$(this).find("[name='pictures0']").data("pictures0");
-                var pictures=[pictures0];
-                var name=$(this).data("productSeriesName");
-                productSeries.pictures=pictures;
-                productSeries.id=productSeriesId;
-                productSeries.commonPrice=commonPrice;
-                productSeries.name=name;
-                productSelected.productSeries=productSeries;
-                var productPropertyValueList=[];
-                var $productPropertyValue=$(this).find('[name="productPropertyValue"]');
-                $productPropertyValue.each(function(){
-                    var productPropertyValue={};
-                    productPropertyValue.id=$(this).data("productPropertyValueId");
-                    productPropertyValue.value=$(this).data("productPropertyValueValue");
-                    productPropertyValue.productPropertyId==$(this).data("productPropertyValueProductPropertyId");;
-                    productPropertyValueList.push(productPropertyValue);
+    angular.module("cartAdjustApp",[])
+            .controller("cartAdjustController",["$scope","$http",function($scope,$http){
+                $http.get(path+"/cart/text")
+                .then(function(cart){
+                    $scope.cart=cart.data;
                 });
-                if($productPropertyValue &&$productPropertyValue.length>0){
-                    productSelected.productPropertyValueList=productPropertyValueList;
+                $scope.toBill=function(){
+                loginCheckBeforeHandler(function(){
+                    var url=$("#form").attr("action");
+                    $.ajax({
+                        url: url,
+                        contentType: "application/json",
+                        data: JSON.stringify($scope.cart),
+                        method: "post"
+                    }).done(function (order) {
+                        $(".text-order-id").text(order.id);
+                        $(".text-total-amount").text(order.totalAmount);
+                        $(".text-total-price").text(order.totalPrice);
+                        $(this).scojs_confirm({
+                            target:'#orderModal'
+                        });
+                    }).fail(function(){ console.log("error！"); });
+                });
                 }
-                productSelectedList.push(productSelected);
-            });
-            cart.productSelectedList=productSelectedList;
-            var url=$("#form").attr("action");
+            }])
 
-
-            $.ajax({
-                url: url,
-                contentType: "application/json",
-                data: JSON.stringify(cart),
-                method: "post"
-            }).done(function (order) {
-                $(".text-order-id").text(order.id);
-                $(".text-total-amount").text(order.totalAmount);
-                $(".text-total-price").text(order.totalPrice);
-//                $("#ensure-to-bill").attr("href",path+"/cart/to_bill");
-                $(this).scojs_confirm({
-                    target:'#orderModal'
-                });
-//                window.location.href=path+"/cart/to_bill";
-            }).fail(function(){ console.log("error！"); });
-        }
-    }
+//    var nonHtml5Post =function(){
+//        return function(){
+//
+//            var cart={};
+//            var productSelectedList=[];
+//            $('[name="productSelected"]').each(function(){
+//                var productSelected={};
+//                var productSeries={};
+//                var productSeriesId= $(this).data("productSeriesId");
+//                productSelected.productSeriesId=productSeriesId;
+//                productSelected.amount=$(this).find("[name='amount']").val();
+//                var commonPrice=$(this).data("commonPrice");
+//                var pictures0=$(this).find("[name='pictures0']").data("pictures0");
+//                var pictures=[pictures0];
+//                var name=$(this).data("productSeriesName");
+//                productSeries.pictures=pictures;
+//                productSeries.id=productSeriesId;
+//                productSeries.commonPrice=commonPrice;
+//                productSeries.name=name;
+//                productSelected.productSeries=productSeries;
+//                var productPropertyValueList=[];
+//                var $productPropertyValue=$(this).find('[name="productPropertyValue"]');
+//                $productPropertyValue.each(function(){
+//                    var productPropertyValue={};
+//                    productPropertyValue.id=$(this).data("productPropertyValueId");
+//                    productPropertyValue.value=$(this).data("productPropertyValueValue");
+//                    productPropertyValue.productPropertyId==$(this).data("productPropertyValueProductPropertyId");;
+//                    productPropertyValueList.push(productPropertyValue);
+//                });
+//                if($productPropertyValue &&$productPropertyValue.length>0){
+//                    productSelected.productPropertyValueList=productPropertyValueList;
+//                }
+//                productSelectedList.push(productSelected);
+//            });
+//            cart.productSelectedList=productSelectedList;
+//            var url=$("#form").attr("action");
+//
+//
+//            $.ajax({
+//                url: url,
+//                contentType: "application/json",
+//                data: JSON.stringify(cart),
+//                method: "post"
+//            }).done(function (order) {
+//                $(".text-order-id").text(order.id);
+//                $(".text-total-amount").text(order.totalAmount);
+//                $(".text-total-price").text(order.totalPrice);
+////                $("#ensure-to-bill").attr("href",path+"/cart/to_bill");
+//                $(this).scojs_confirm({
+//                    target:'#orderModal'
+//                });
+////                window.location.href=path+"/cart/to_bill";
+//            }).fail(function(){ console.log("error！"); });
+//        }
+//    }
     $(document).ready(function () {
-        $("#toBill").click(function () {
-            var supportHtml5=false;
-            if (window.applicationCache) {
-                supportHtml5=true;
-            } else {
-                supportHtml5=false;
-            }
-            loginCheckBeforeHandler(new nonHtml5Post());
-
-        });
+//        $("#toBill").click(function () {
+//            var supportHtml5=false;
+//            if (window.applicationCache) {
+//                supportHtml5=true;
+//            } else {
+//                supportHtml5=false;
+//            }
+//            loginCheckBeforeHandler(new nonHtml5Post());
+//
+//        });
     });
 </script>

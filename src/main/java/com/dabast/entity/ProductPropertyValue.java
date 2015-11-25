@@ -21,6 +21,16 @@ public class ProductPropertyValue {
 
     @DBRef(db = "productProperty")
     private ProductProperty productProperty;
+    @Field
+    private Integer amount;
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
 
     public ProductSeries getProductSeries() {
         return productSeries;

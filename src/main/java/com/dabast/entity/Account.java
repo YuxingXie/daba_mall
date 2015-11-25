@@ -19,8 +19,6 @@ public class Account {
     private String cardSort;//1信用卡，2储蓄卡
     @Field(value = "cardUserPhone")
     private String cardUserPhone;
-    @Field (value = "userId")
-    private String userId;
     @Field(value = "cardUserName")
     private String cardUserName;
     @DBRef(db = "users")
@@ -34,9 +32,6 @@ public class Account {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
-    }
 
     public String getCardUserName() {
         return cardUserName;
@@ -46,9 +41,6 @@ public class Account {
         this.cardUserName = cardUserName;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public String getCardUserIdCardNo() {
         return cardUserIdCardNo;

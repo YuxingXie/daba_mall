@@ -89,15 +89,28 @@ public class ProductSelected {
         ProductSelected other = (ProductSelected) obj;
         Assert.notNull(this.productSeries.getId());
         Assert.notNull(other.productSeries.getId());
-        if (!this.productSeriesId.equalsIgnoreCase(other.productSeriesId)) return false;
-        if (other.getProductPropertyValueIds() == null && this.getProductPropertyValueIds() == null) return true;
-        if (other.getProductPropertyValueIds() == null && this.getProductPropertyValueIds() != null) return false;
-        if (other.getProductPropertyValueIds() != null && this.getProductPropertyValueIds() == null) return false;
-        if (other.getProductPropertyValueIds().size() != this.getProductPropertyValueIds().size()) return false;
-        for (String productPropertyValueId : this.getProductPropertyValueIds()) {
+//        if (!this.productSeries.getId().equalsIgnoreCase(other.productSeries.getId())) return false;
+//        if (other.getProductPropertyValueIds() == null && this.getProductPropertyValueIds() == null) return true;
+//        if (other.getProductPropertyValueIds() == null && this.getProductPropertyValueIds() != null) return false;
+//        if (other.getProductPropertyValueIds() != null && this.getProductPropertyValueIds() == null) return false;
+//        if (other.getProductPropertyValueIds().size() != this.getProductPropertyValueIds().size()) return false;
+        if ((other.getProductPropertyValueList() == null||other.getProductPropertyValueList().size()==0) && (this.getProductPropertyValueList() == null||this.getProductPropertyValueList().size()==0)) return true;
+        if ((other.getProductPropertyValueList() == null||other.getProductPropertyValueList().size()==0) && this.getProductPropertyValueList().size()>0) return false;
+        if (other.getProductPropertyValueList().size()>0 && (this.getProductPropertyValueList() == null||this.getProductPropertyValueList().size()==0)) return false;
+        if (other.getProductPropertyValueList().size()!= this.getProductPropertyValueList().size()) return false;
+//        for (String productPropertyValueId : this.getProductPropertyValueIds()) {
+//            boolean equals=false;
+//            for (String otherProductPropertyValueId : other.getProductPropertyValueIds()) {
+//                if (productPropertyValueId.equalsIgnoreCase(otherProductPropertyValueId)) {
+//                    equals=true;
+//                }
+//            }
+//            if (!equals) return false;
+//        }
+        for (ProductPropertyValue thisProductPropertyValue : this.getProductPropertyValueList()) {
             boolean equals=false;
-            for (String otherProductPropertyValueId : other.getProductPropertyValueIds()) {
-                if (productPropertyValueId.equalsIgnoreCase(otherProductPropertyValueId)) {
+            for (ProductPropertyValue otherProductPropertyValue : other.getProductPropertyValueList()) {
+                if (thisProductPropertyValue.getId().equalsIgnoreCase(otherProductPropertyValue.getId())) {
                     equals=true;
                 }
             }

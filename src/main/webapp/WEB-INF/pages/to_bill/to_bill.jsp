@@ -162,11 +162,8 @@
                                 </c:forEach>
                                 <tr>
                                     <th colspan="4">
-                                        总计：${totalCount}件商品,共<fmt:formatNumber value="${totalPrice}"
-                                                                               pattern="##.##"
-                                                                               minFractionDigits="2"></fmt:formatNumber>元
+                                        总计：${totalCount}件商品,共<fmt:formatNumber value="${totalPrice}" pattern="##.##" minFractionDigits="2"></fmt:formatNumber>元
                                     </th>
-                                        <%--<td><button href="#" class="btn btn-primary col-lg-8" data-toggle="modal" data-target="#myModal">去结算</button></td>--%>
                                     <td>
                                         <button class="btn btn-primary col-lg-8" type="submit">提交订单</button>
                                     </td>

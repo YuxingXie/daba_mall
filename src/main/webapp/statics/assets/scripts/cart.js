@@ -75,17 +75,28 @@ $(document).ready(function(){
             product_page_options.empty();
             var productSeriesId=$('<input type="hidden" name="productSeriesId" value="'+prod+'"/>');
             productSeriesId.appendTo(product_page_options);
-            for(var i=0;i<productProperties.length;i++){
-                var pull_left=$('<div class="pull-left"></div>');
-                pull_left.appendTo(product_page_options);
-                var control_label=$('<label class="control-label" style=" direction:ltr;">'+productProperties[i]["propertyName"]+'&nbsp;:&nbsp;</label>');
-                control_label.appendTo(pull_left);
-                var select=$('<select class="form-control input-sm product-property" name="productPropertyId" data-product-property-id="'+productProperties[i]["id"]+'">');
-                select.appendTo(pull_left);
-                var propertyValues= productProperties[i]["propertyValues"];
-                for(var j=0;j<propertyValues.length;j++){
-                    var option=$("<option value='"+propertyValues[j].id+"'>"+propertyValues[j].value+"</option>");
-                    option.appendTo(select);
+            if(productProperties.length&&productProperties.length>0){
+                for(var i=0;i<productProperties.length;i++){
+                    var pull_left=$('<div class="pull-left"></div>');
+                    pull_left.appendTo(product_page_options);
+                    var control_label=$('<label class="control-label" style=" direction:ltr;">'+productProperties[i]["propertyName"]+'&nbsp;:&nbsp;</label>');
+                    control_label.appendTo(pull_left);
+                    var propertyValues= productProperties[i]["propertyValues"];
+                    if(propertyValues.length&&propertyValues.length>0){
+                        if(propertyValues.length==1){
+                            var select=$('<label class="control-label" style=" direction:ltr;">'+propertyValues[0].value+'</label><input type="hidden" name="productPropertyId" data-product-property-id="'+productProperties[i]["id"]+'" value="'+propertyValues[0].id+'"/>');
+                            select.appendTo(pull_left);
+                        }else{
+                            var select=$('<select class="form-control input-sm product-property" name="productPropertyId" data-product-property-id="'+productProperties[i]["id"]+'">');
+                            select.appendTo(pull_left);
+                            for(var j=0;j<propertyValues.length;j++){
+                                var option=$("<option value='"+propertyValues[j].id+"'>"+propertyValues[j].value+"</option>");
+                                option.appendTo(select);
+                            }
+                        }
+
+                    }
+
                 }
             }
             $(".product-other-images").empty();

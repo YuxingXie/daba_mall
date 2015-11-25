@@ -26,6 +26,7 @@ public class ServiceManager implements InitializingBean{
         ServiceManager.productSeriesPriceService = productSeriesPriceService;
     }
 
+
     public void setProductStoreInAndOutService(IProductStoreInAndOutService productStoreInAndOutService) {
         ServiceManager.productStoreInAndOutService = productStoreInAndOutService;
     }

@@ -1,6 +1,8 @@
 package com.dabast.common.base;
 
 
+import com.dabast.entity.Cart;
+import com.dabast.entity.Order;
 import com.dabast.entity.User;
 import com.dabast.mall.Constant;
 import org.springframework.beans.BeanUtils;
@@ -41,6 +43,12 @@ public class BaseRestSpringController  {
     }
     protected User getLoginUser(HttpSession session) {
         return session.getAttribute(Constant.LOGIN_USER)==null?null:((User)(session.getAttribute(Constant.LOGIN_USER)));
+    }
+    protected Cart getCart(HttpSession session) {
+        return session.getAttribute(Constant.CART)==null?null:((Cart)(session.getAttribute(Constant.CART)));
+    }
+    protected Order getOrder(HttpSession session) {
+        return session.getAttribute(Constant.ORDER)==null?null:((Order)(session.getAttribute(Constant.ORDER)));
     }
     public static <T> T getOrCreateRequestAttribute(HttpServletRequest request, String key,Class<T> clazz) {
         Object value = request.getAttribute(key);
