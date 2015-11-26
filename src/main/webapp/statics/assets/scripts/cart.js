@@ -42,75 +42,6 @@ var renderCart = function(cart){
     $('.J-shoping-num').text(cart.productSelectedList.length);
 }
 $(document).ready(function(){
-    $(".fancybox-fast-view").click(function(){
-        var prod=$(this).data("prod");
-        $.ajax(path+"/product_series/popover/"+prod).done(function(productSeries){
-            $("#product-pop-up .product-main-image>img").attr("src",path+"/"+productSeries.pictures[0]);
-            $("#product-pop-up h1").text(productSeries.name);
-            //
-            if(productSeries.currentPrice && productSeries.currentPrice.prevPrice){
-                $("#product-pop-up .price").html("<strong><span>￥</span>"+productSeries.commonPrice+"</strong><em>$<span>productSeries.currentPrice.prevPrice.price</span></em>");
-            }else{
-                $("#product-pop-up .price").html("<strong><span>￥</span>"+productSeries.commonPrice+"</strong>");
-            }
-            var remainStr="";
-            if(productSeries.productStore){
-                var warningAmount=productSeries.productStore.warningAmount;
-                var remain=productSeries.productStore.remain;
-                if(remain===undefined){
-                    remainStr="无库存信息";
-                }else if(remain){
-                    remainStr="剩余"+remain+"件";
-                }else{
-                    remainStr="售罄";
-                }
-            }else{
-                remainStr="无库存信息";
-            }
-            $("#product-pop-up .availability").html("库存 <strong><span>"+remainStr+"</span></strong>");
-            $("#product-pop-up .description>p").html(productSeries.description);
-            $("#product-pop-up  .add2cart").unbind("click");
-            var productProperties =productSeries.productProperties;
-            var product_page_options=$("#product-pop-up .product-page-options");
-            product_page_options.empty();
-            var productSeriesId=$('<input type="hidden" name="productSeriesId" value="'+prod+'"/>');
-            productSeriesId.appendTo(product_page_options);
-            if(productProperties.length&&productProperties.length>0){
-                for(var i=0;i<productProperties.length;i++){
-                    var pull_left=$('<div class="pull-left"></div>');
-                    pull_left.appendTo(product_page_options);
-                    var control_label=$('<label class="control-label" style=" direction:ltr;">'+productProperties[i]["propertyName"]+'&nbsp;:&nbsp;</label>');
-                    control_label.appendTo(pull_left);
-                    var propertyValues= productProperties[i]["propertyValues"];
-                    if(propertyValues.length&&propertyValues.length>0){
-                        if(propertyValues.length==1){
-                            var select=$('<label class="control-label" style=" direction:ltr;">'+propertyValues[0].value+'</label><input type="hidden" name="productPropertyId" data-product-property-id="'+productProperties[i]["id"]+'" value="'+propertyValues[0].id+'"/>');
-                            select.appendTo(pull_left);
-                        }else{
-                            var select=$('<select class="form-control input-sm product-property" name="productPropertyId" data-product-property-id="'+productProperties[i]["id"]+'">');
-                            select.appendTo(pull_left);
-                            for(var j=0;j<propertyValues.length;j++){
-                                var option=$("<option value='"+propertyValues[j].id+"'>"+propertyValues[j].value+"</option>");
-                                option.appendTo(select);
-                            }
-                        }
-
-                    }
-
-                }
-            }
-            $(".product-other-images").empty();
-            for(var j=0;j<productSeries.pictures.length;j++){
-                if(j==0){
-                    $(".product-other-images").append("<a href='javascript:void(0)' class='active'><img src='"+path+"/"+productSeries.pictures[j]+"'/></a>");
-                }else{
-                    $(".product-other-images").append("<a href='javascript:void(0)'><img src='"+path+"/"+productSeries.pictures[j]+"'/></a>");
-                }
-            }
-            App.initImageZoom();
-            $('.add2cart').shoping();
-        }).fail(function(){ console.log("error！"); });
-    });
 
     $(document).on("click","#product-pop-up .add2cart",function(){
         var form=$('[name="popForm"]');
@@ -125,7 +56,7 @@ $(document).ready(function(){
             productPropertyValueIds.push(productPropertyValueId);
         });
         productSelected.productPropertyValueIds=productPropertyValueIds;
-        console.log(JSON.stringify(productSelected));
+        //console.log(JSON.stringify(productSelected));
         $.ajax({
             url: path+"/index/cart",
             contentType: "application/json",

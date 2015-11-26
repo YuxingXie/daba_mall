@@ -2,6 +2,7 @@ package com.dabast.mall.service.impl;
 
 import com.dabast.common.base.BaseEntityManager;
 import com.dabast.common.base.EntityDao;
+import com.dabast.entity.ProductSeries;
 import com.dabast.entity.ProductSubCategory;
 import com.dabast.mall.dao.ProductSubCategoryDao;
 import com.dabast.mall.service.IProductSubCategoryService;
@@ -24,5 +25,10 @@ public class ProductSubCategoryService extends BaseEntityManager<ProductSubCateg
     @Override
     public List<ProductSubCategory> getProductSubCategoriesByCategoryId(String categoryId) {
         return productSubCategoryDao.getProductSubCategoriesByCategoryId(categoryId);
+    }
+
+    @Override
+    public ProductSubCategory getProductSubCategoriesByProductSeries(ProductSeries productSeries) {
+        return productSubCategoryDao.getProductSubCategoriesByProductSeries(productSeries);
     }
 }

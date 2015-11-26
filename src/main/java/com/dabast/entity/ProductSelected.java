@@ -6,7 +6,7 @@ import org.springframework.util.Assert;
 import java.util.List;
 
 /**
- * 这不是一个持久化document，是一个持久化中间类(作为Cart和order的一个field)
+ * 这不是一个持久化document，是一个持久化中间类(作为Cart,Interest和order的一个field)
  */
 
 public class ProductSelected {
@@ -19,7 +19,9 @@ public class ProductSelected {
     private List<ProductPropertyValue> productPropertyValueList;
     @DBRef
     private ProductSeries productSeries;
+
     private String receiveStatus;
+
     @DBRef
     private ProductSeriesPrice orderPrice;
 

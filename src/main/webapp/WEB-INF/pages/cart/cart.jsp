@@ -32,8 +32,8 @@
                                         <th class="shopping-cart-total">交易操作</th>
                                     </tr>
 
-                                    <tr ng-if="!cart||!cart.productSelectedList">
-                                        <td colspan="5">您的购物车中还没有商品</td>
+                                    <tr ng-if="!cart||!cart.productSelectedList||cart.productSelectedList.length==0">
+                                        <td colspan="5">您的购物车中空空如也!<a href="${path}">返回首页继续购物</a></td>
                                     </tr>
 
                                     <tr name="productSelected" ng-if="cart&&cart.productSelectedList" ng-repeat="productSelected in cart.productSelectedList" >
@@ -66,15 +66,15 @@
                                                 <span ng-if="productSelected.productSeries.productStore&&!productSelected.productSeries.productStore.remain">无法获取</span>
                                             </td>
                                             <td class="shopping-cart-total">
-                                                <p><a href="${path}/cart/remove/{{$index}}">删除</a></p>
-                                                <p>移到我的关注</p>
+                                                <a href="${path}/cart/remove/{{$index}}">删除</a>&nbsp;&nbsp;
+                                                <a href="${path}/cart/remove_to_interest/{{$index}}">移到我的关注</a>
                                             </td>
                                     </tr>
                                     <tr>
                                         <td colspan="4">
                                             总计：{{totalAmount}}件商品,共{{totalPrice | number:2}} 元
                                         </td>
-                                        <td><button  class="btn btn-primary col-lg-8" type="button" id="toBill" data-ng-click="toBill()">确&nbsp;&nbsp;&nbsp;认</button></td>
+                                        <td><button  class="btn btn-primary" type="button" id="toBill" data-ng-click="toBill()">确&nbsp;认</button></td>
                                     </tr>
 
                                 </table>

@@ -19,9 +19,9 @@
           <div class="sidebar col-md-3 col-sm-5">
             <ul class="list-group margin-bottom-25 sidebar-menu">
               <c:forEach var="productCategory" items="${f:getProductCategories()}">
-                <c:set var="productSeriesCategoryId" value="${f:getProductCategoryIdByProductSeriesId(productSeries.id)}"/>
+
                 <li class="list-group-item clearfix dropdown
-                <c:if test="${productSeriesCategoryId eq productCategory.id}"> active</c:if>
+                <c:if test="${productSeries.productSubCategory.productCategory.id eq productCategory.id}"> active</c:if>
                         "><a href="javascript:void(0);" class="collapsed">
                     <i class="fa fa-angle-right"></i>
                     ${productCategory.categoryName}
@@ -29,9 +29,7 @@
                   </a>
                   <ul class="dropdown-menu" style="display:block;">
                     <c:forEach var="subCategory" items="${f:getProductSubCategoriesByCategoryId(productCategory.id)}">
-                      <li
-                              <%--<!--c:if test="${productSeries.subCategoryId eq subCategory.id}">class="list-group-item dropdown clearfix active"<7/c:if-->--%>
-                              >
+                      <li <c:if test="${productSeries.productSubCategory.id eq subCategory.id}">class="list-group-item dropdown clearfix active"</c:if>>
                         <a href="${path}/sort/${subCategory.id}"><i class="fa fa-circle"></i>${subCategory.subCategoryName}</a>
                       </li>
                     </c:forEach>

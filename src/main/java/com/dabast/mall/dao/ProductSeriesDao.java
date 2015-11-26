@@ -78,7 +78,6 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         DBObject productPropertyDbObject=new BasicDBObject();
         productPropertyDbObject.put("productSeries", new DBRef("productSeries", objectId));
         List<ProductProperty> productProperties= ServiceManager.productPropertyService.findAll(productPropertyDbObject);
-
         for (ProductProperty productProperty :productProperties){
             DBObject cond=new BasicDBObject();
             cond.put("productProperty", new DBRef("productProperty",productProperty.getId()));

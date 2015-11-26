@@ -32,7 +32,7 @@
 <script type="text/javascript">
     angular.module("cartAdjustApp",[])
             .controller("cartAdjustController",["$scope","$http",function($scope,$http){
-                $http.get(path+"/cart/text").then(function(cart){
+                $http.get(path+"/personal/cart/text").then(function(cart){
                     $scope.cart=cart.data;
                     $scope.getTotalAmountAndPrice();
                 });

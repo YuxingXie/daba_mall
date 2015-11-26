@@ -42,6 +42,8 @@ public class ProductSeries {
     @Transient
     private List<ProductProperty> productProperties;
     @Transient
+    private List<ProductPropertyValue> productPropertyValues;
+    @Transient
     private List<ProductSeriesPrice> productSeriesPrices;
     @Transient
     private Double commonPrice;
@@ -177,5 +179,13 @@ public class ProductSeries {
 
     public void setProductSubCategory(ProductSubCategory productSubCategory) {
         this.productSubCategory = productSubCategory;
+    }
+
+    public List<ProductPropertyValue> getProductPropertyValues() {
+        return productPropertyValues;
+    }
+
+    public void setProductPropertyValues(List<ProductPropertyValue> productPropertyValues) {
+        this.productPropertyValues = productPropertyValues;
     }
 }

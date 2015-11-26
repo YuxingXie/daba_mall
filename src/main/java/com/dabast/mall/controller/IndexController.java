@@ -181,6 +181,37 @@ public class IndexController extends BaseRestSpringController {
         ResponseEntity<Cart> cartResponseEntity=new ResponseEntity<Cart>(cart, HttpStatus.OK);
         return cartResponseEntity;
     }
+    @RequestMapping(value = "/index/cart2", method = RequestMethod.POST)
+    public ResponseEntity<Cart> cart2(@RequestBody ProductSelected productSelected,HttpSession session) {
+        Cart cart=null;
+        if (session.getAttribute(Constant.CART)==null){
+            cart=new Cart();
+        }else{
+            cart=(Cart)session.getAttribute(Constant.CART);
+        }
+        ProductSeries productSeries=ServiceManager.productSeriesService.findProductSeriesById(productSelected.getProductSeriesId());
+        productSelected.setProductSeries(productSeries);
+        List<ProductPropertyValue> productPropertyValueList=new ArrayList<ProductPropertyValue>();
+        for(String productPropertyValueId : productSelected.getProductPropertyValueIds()){
+            DBObject ppCon=new BasicDBObject();
+            ProductPropertyValue value=ServiceManager.productPropertyValueService.findById(productPropertyValueId);
+            ppCon.put("_id",value.getProductProperty().getId());
+            ProductProperty productProperty=ServiceManager.productPropertyService.findOne(ppCon);
+            value.setProductProperty(productProperty);
+            productPropertyValueList.add(value);
+        }
+//        productSelected.((ProductPropertySelect[])ProductPropertyValueList.toArray(new ProductPropertySelect[ProductPropertyValueList.size()]));
+        productSelected.setProductPropertyValueList(productPropertyValueList);
+        cart.merge(productSelected);
+        if (session.getAttribute(Constant.LOGIN_USER)!=null){
+            User user=getLoginUser(session);
+            user.setCart(cart);
+            ServiceManager.userService.update(user);
+        }
+        session.setAttribute(Constant.CART, cart);
+        ResponseEntity<Cart> cartResponseEntity=new ResponseEntity<Cart>(cart, HttpStatus.OK);
+        return cartResponseEntity;
+    }
     @RequestMapping(value = "/index/cart/remove", method = {RequestMethod.POST})
     public ResponseEntity<Cart> cartRemove(Integer selectedIndex, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         Cart cart=null;
@@ -221,7 +252,32 @@ public class IndexController extends BaseRestSpringController {
         session.setAttribute(Constant.CART, cart);
         return "redirect:/cart";
     }
+    @RequestMapping(value = "/cart/remove_to_interest/{selectedIndex}", method = RequestMethod.GET)
+    public String removeToInterest(@PathVariable Integer selectedIndex, ModelMap model, HttpSession session) {
+        User user= getLoginUser(session);
+        Assert.notNull(user);
+        Cart cart=null;
+        if (session.getAttribute(Constant.CART)==null){
+            cart=new Cart();
+        }else{
+            cart=(Cart)session.getAttribute(Constant.CART);
+        }
+        if (cart.getProductSelectedList()!=null &&cart.getProductSelectedList().size()>selectedIndex){
+            ProductSelected productSelected=cart.getProductSelectedList().get(selectedIndex.intValue());
+            if (!ServiceManager.interestService.alreadyInterested(user,productSelected.getProductSeries())){
+                Interest interest=new Interest();
+                interest.setProductSeries(productSelected.getProductSeries());
+                interest.setUser(user);
+                ServiceManager.interestService.insert(interest);
+            }
 
+            cart.getProductSelectedList().remove(selectedIndex.intValue());
+        }
+        user.setCart(cart);
+        ServiceManager.userService.update(user);
+        session.setAttribute(Constant.CART, cart);
+        return "redirect:/cart";
+    }
 
 
     @RequestMapping(value = "/index/order/submit", method = RequestMethod.POST)
