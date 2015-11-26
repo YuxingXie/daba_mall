@@ -41,8 +41,8 @@
               <h2>热销商品</h2>
               <c:forEach var="productSeries" items="${hotSells}">
                 <div class="item">
-                  <a href="${path}/product/${productSeries.id}"><img src="${path}/${productSeries.pictures[0]}" alt="腊肉"></a>
-                  <h3><a href="${path}/product/${productSeries.id}">${productSeries.description}</a></h3>
+                  <a href="${path}/product/${productSeries.id}"><img src="${path}/${productSeries.pictures[0]}"></a>
+                  <h3><a href="${path}/product/${productSeries.id}">${productSeries.name}</a></h3>
                   <div class="price">$${productSeries.commonPrice}</div>
                 </div>
               </c:forEach>

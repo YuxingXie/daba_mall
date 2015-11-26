@@ -7,7 +7,7 @@
     This definition is identified by its logical name.
      A definition allows to define all the attributes that can be set in <insert> tag from a jsp page.-->
     <definition name="baseDefinition" template="/WEB-INF/pages/layout/layout.jsp" preparer="com.dabast.common.web.tiles.Prepare">
-        <put-attribute name="footer" value="/WEB-INF/pages/layout/footer.jsp" role="a" />
+        <put-attribute name="footer" value="/WEB-INF/pages/layout/footer.jsp"/>
         <put-attribute name="meta" value="/WEB-INF/pages/layout/meta.jsp" />
         <put-attribute name="topCss" value="/WEB-INF/pages/layout/topCss.jsp" />
         <put-attribute name="topScript" value="/WEB-INF/pages/layout/topScript.jsp" />

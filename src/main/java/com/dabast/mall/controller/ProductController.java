@@ -34,7 +34,7 @@ public class ProductController extends BaseRestSpringController {
     @RequestMapping(value = "/{id}")
     public String loginDirect(@PathVariable String id, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
-        ProductSeries productSeries=productSeriesService.findById(id);
+        ProductSeries productSeries=productSeriesService.findProductSeriesById(id);
         model.addAttribute("productSeries",productSeries);
         List<ProductSeries> hotSells = ServiceManager.productSeriesService.getHotSell();
         model.addAttribute("hotSells", hotSells);

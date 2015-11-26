@@ -74,7 +74,7 @@
                                         <td colspan="4">
                                             总计：{{totalAmount}}件商品,共{{totalPrice | number:2}} 元
                                         </td>
-                                        <td><button  class="btn btn-primary" type="button" id="toBill" data-ng-click="toBill()">确&nbsp;认</button></td>
+                                        <td><input  class="btn btn-primary" type="button" id="toBill" data-ng-click="toBill()" ng-if="cart&&cart.productSelectedList" ng-repeat="productSelected in cart.productSelectedList" value="确认"/></td>
                                     </tr>
 
                                 </table>
