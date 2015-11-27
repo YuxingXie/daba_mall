@@ -294,12 +294,7 @@ public class IndexController extends BaseRestSpringController {
         session.setAttribute("order",order);
         return "redirect:/bill";
     }
-    @RequestMapping(value = "/order/submit/{id}")
-    public String orderSubmit(@PathVariable String id,HttpSession session,ModelMap model,RedirectAttributes redirectAttributes) {
-        Order order = ServiceManager.orderService.findOrderById(id);
-        session.setAttribute("order",order);
-        return "redirect:/bill";
-    }
+
 
 
     @RequestMapping(value="/pic/{id}")
@@ -362,72 +357,7 @@ public class IndexController extends BaseRestSpringController {
         }
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
-    @RequestMapping(value = "/order/pay", method = RequestMethod.POST)
-    public String orderPay( @ModelAttribute Account account,String orderId, ModelMap model,HttpServletRequest request,RedirectAttributes redirectAttributes) throws IOException {
-        /**
-         * 付款成功系统需要做的事
-         * 1.发送请求至外部接口，接收返回数据
-         * 2.更新订单状态
-         * 3.保存用户的账户信息（银行卡号）
-         * 4.通知用户等待收货
-         */
-        Assert.notNull(orderId);
-        Order order=ServiceManager.orderService.findById(orderId);
-        Assert.notNull(order);
-        Assert.notNull(order.getUser());
-        String payWay=order.getPayWay();
-        Assert.notNull(payWay);
-        //货到付款1，在线支付2，公司转账3，邮局汇款4
-        if (payWay.equals("1")){
-            order.setPayStatus("n");
-        }else if (payWay.equals("2")){
-//            String outUrl="http://127.0.0.1:8088/mall/index/user/test";
-//            CustomServletRequestWrapper requestWrapper=new CustomServletRequestWrapper(request);
-//            Map<String,String[]> requestParams=requestWrapper.getParameterMap();
-//            String result=OuterRequestUtil.sendPost(outUrl,requestParams);
-            if (ThirdPartPayUtil.isPaySuccess()){
-                order.setPayStatus("y");
-                Account account0 = ServiceManager.accountService.findAccountsByUserIdAndCardNo(order.getUser().getId(),account.getCardNo());
-                if (account0==null){
-                    account.setUser(order.getUser());
-                    ServiceManager.accountService.insert(account);
-                    order.setPayAccountId(account.getId());
-                    order.setPayAccount(account);
-                }else {
-                    order.setPayAccountId(account0.getId());
-                    order.setPayAccount(account0);
-                }
 
-            }else{
-                order.setPayStatus("n");
-            }
-
-        }else if (payWay.equals("3")){
-            order.setPayStatus("n");
-        }else if (payWay.equals("4")){
-            order.setPayStatus("n");
-        }
-        ServiceManager.orderService.update(order);
-        redirectAttributes.addFlashAttribute("order",order);
-        return "redirect:/pay_result";
-    }
-    @RequestMapping(value = "/order/cancel")
-    public String orderCancel(ModelMap model,HttpSession session) {
-        Order order=session.getAttribute("order")==null?null:(Order)session.getAttribute("order");
-        User user=getLoginUser(session);
-        Assert.notNull(order.getId());
-        System.out.println("订单取消：" + order.getId());
-        ServiceManager.orderService.removeById(order.getId());
-        session.setAttribute("order", null);
-        session.removeAttribute("order");
-        Cart cart=new Cart();
-        cart.setProductSelectedList(order.getProductSelectedList());
-        user.setCart(cart);
-        ServiceManager.userService.update(user);
-        session.setAttribute(Constant.CART,cart);
-        model.addAttribute(Constant.CART,cart);
-        return "redirect:/cart";
-    }
     @RequestMapping(value = "/index/order/delete/{id}", method = RequestMethod.GET)
     public String orderRemove(@PathVariable String id, ModelMap model, HttpSession session) {
         Assert.notNull(id);

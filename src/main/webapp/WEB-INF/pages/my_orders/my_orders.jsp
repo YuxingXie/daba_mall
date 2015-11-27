@@ -37,10 +37,9 @@
                                             <tr>
                                                 <th class="shopping-cart-image">订单号</th>
                                                 <th class="shopping-cart-description">下单日期</th>
-                                                <th class="shopping-cart-price">是否付款</th>
+                                                <th class="shopping-cart-price">订单状态</th>
                                                 <th class="shopping-cart-ref-no">商品金额</th>
                                                 <th class="shopping-cart-price">操作</th>
-                                                <th class="shopping-cart-total"></th>
                                             </tr>
 
                                             <c:forEach var="order" items="${orders}" varStatus="selectedIndex">
@@ -49,23 +48,52 @@
                                                            data-toggle="modal"
                                                            data-target="#orderDetail${selectedIndex.index}">${order.id}</a></td>
                                                     <td><fmt:formatDate value="${order.orderDate}" type="both" dateStyle="default"/></td>
-                                                    <td><c:choose><c:when test="${order.payStatus eq 'y'}">是</c:when><c:otherwise>否</c:otherwise></c:choose></td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${empty order.submitStatus or order.submitStatus eq 'n'}">未提交</c:when>
+                                                            <c:otherwise>
+                                                                <c:choose>
+                                                                    <c:when test="${empty order.payStatus or order.payStatus eq 'n'}">已提交,未付款</c:when>
+                                                                    <c:otherwise>
+                                                                        <c:choose>
+                                                                            <c:when test="${not empty order.receiveStatus}">
+                                                                                <c:choose>
+                                                                                    <c:when test="${order.receiveStatus eq 'none'}">已付款,未收货</c:when>
+                                                                                    <c:when test="${order.receiveStatus eq 'part'}">已付款,未全部收货</c:when>
+                                                                                    <c:otherwise>已收货</c:otherwise>
+                                                                                </c:choose>
+                                                                            </c:when>
+                                                                            <c:otherwise>未知</c:otherwise>
+                                                                        </c:choose>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </td>
                                                     <td><fmt:formatNumber value="${order.totalPrice}" pattern="##.##"></fmt:formatNumber></td>
-                                                    <td><a href="javascript:void(0)"
-                                                           data-toggle="modal"
-                                                           data-target="#orderDetail${selectedIndex.index}">查看详情</a>
-                                                        <c:if test="${order.payStatus eq 'n'}">
-                                                            <a href="javascript:void(0); " data-href="${path}/index/order/delete/${order.id}" class="del-order">删除订单</a>
-                                                            <c:choose>
-                                                                <c:when test="${empty order.submitStatus or order.submitStatus eq 'n'}">
-                                                                    <a href="${path}/cart/to_bill/${order.id}">提交订单</a>
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                    <a href="${path}/order/submit/${order.id}">去付款</a>
-                                                                </c:otherwise>
-                                                            </c:choose>
-
-                                                        </c:if>
+                                                    <td><a href="javascript:void(0)" data-toggle="modal" data-target="#orderDetail${selectedIndex.index}">查看详情</a>
+                                                        <c:choose>
+                                                            <c:when test="${empty order.submitStatus or order.submitStatus eq 'n'}"><a href="${path}/cart/to_bill/${order.id}">提交订单</a></c:when>
+                                                            <c:otherwise>
+                                                                <c:choose>
+                                                                    <c:when test="${empty order.payStatus or order.payStatus eq 'n'}"><a href="${path}/order/submit/${order.id}">去付款</a></c:when>
+                                                                    <c:otherwise>
+                                                                        <c:choose>
+                                                                            <c:when test="${not empty order.receiveStatus}">
+                                                                                <c:choose>
+                                                                                    <c:when test="${order.receiveStatus eq 'none'}"><a href="${path}/order/receive/${order.id}">确认收货</a></c:when>
+                                                                                    <c:when test="${order.receiveStatus eq 'part'}"><a href="${path}/order/receive/${order.id}">确认收货</a><a href="${path}/order/evaluate/${order.id}">去评价</a></c:when>
+                                                                                    <c:otherwise>
+                                                                                            <c:if test="${order.evaluateStatus eq 'none' or order.evaluateStatus eq 'part'}"><a href="${path}/order/evaluate/${order.id}">去评价</a></c:if>
+                                                                                    </c:otherwise>
+                                                                                </c:choose>
+                                                                            </c:when>
+                                                                            <c:otherwise>未知</c:otherwise>
+                                                                        </c:choose>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </td>
                                                     <td>
                                                         <div class="modal fade"
@@ -75,11 +103,7 @@
                                                             <div class="modal-dialog" style="width: 68%;">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <button type="button" class="close"
-                                                                                data-dismiss="modal"
-                                                                                aria-hidden="true">
-                                                                            &times;
-                                                                        </button>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
                                                                         <h2 class="modal-title" id="myModalLabel">
                                                                             订单详情&nbsp;&nbsp;订单号:${order.id}
                                                                         </h2>
@@ -137,7 +161,6 @@
                                                                                                     pattern="##.##"
                                                                                                     minFractionDigits="2"></fmt:formatNumber>
                                                                                             </td>
-                                                                                            <td><c:if test="${not empty productSelected.receiveStatus && productSelected.receiveStatus eq 'y'}">去评价</c:if></td>
                                                                                         </tr>
 
                                                                                     </c:otherwise>

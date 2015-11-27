@@ -43,32 +43,6 @@ var renderCart = function(cart){
 }
 $(document).ready(function(){
 
-    $(document).on("click","#product-pop-up .add2cart",function(){
-        var form=$('[name="popForm"]');
-        var amount=$("#product-quantity").val();
-        var productSelected={};
-        productSelected.amount=amount;
-        productSelected.productSeriesId=form.find("[name='productSeriesId']").val();
-        var productPropertyValueIds=[];
-        form.find("select").each(function(){
-            //productPropertySelect.productPropertyId=$(this).data("productPropertyId");
-            var productPropertyValueId=$(this).val();
-            productPropertyValueIds.push(productPropertyValueId);
-        });
-        productSelected.productPropertyValueIds=productPropertyValueIds;
-        //console.log(JSON.stringify(productSelected));
-        $.ajax({
-            url: path+"/index/cart",
-            contentType: "application/json",
-            data: JSON.stringify(productSelected),
-            method: "post"
-        }).done(function (cart) {
-            $.fancybox.close();
-            renderCart(cart);
-            console.log("success")
-        }).fail(function(){ console.log("error！"); });
-        return false;
-    });
     $(document).on("click",".del-goods",function(){
         var $li=$(this).parent();
         var selectedIndex =$li.data("selectedIndex");
@@ -84,10 +58,7 @@ $(document).ready(function(){
             }
         });
     });
-    $(document).on("click",".product-other-images a",function(){
-        $(".product-main-image").find("img").attr("src",($(this).find("img").attr("src")));
-        App.initImageZoom();
-    })
+
 
 });
 $(function(){

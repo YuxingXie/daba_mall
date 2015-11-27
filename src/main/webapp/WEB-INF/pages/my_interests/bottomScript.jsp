@@ -25,7 +25,6 @@
         type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.transitions.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>
-<script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>
 <script>
     angular.module("myInterestsApp",[])
             .controller("myInterestsController",["$scope","$http",function($scope,$http){
@@ -38,7 +37,38 @@
                     $('.add2cart').shoping();
                 };
             }])
+
     $(document).ready(function() {
+        $(document).on("click","#product-pop-up .add2cart",function(){
+            var form=$('[name="popForm"]');
+            var amount=$("#product-quantity").val();
+            var productSelected={};
+            productSelected.amount=amount;
+            productSelected.productSeriesId=form.find("[name='productSeriesId']").val();
+            var productPropertyValueIds=[];
+            form.find("select").each(function(){
+                //productPropertySelect.productPropertyId=$(this).data("productPropertyId");
+                var productPropertyValueId=$(this).val();
+                productPropertyValueIds.push(productPropertyValueId);
+            });
+            productSelected.productPropertyValueIds=productPropertyValueIds;
+            //console.log(JSON.stringify(productSelected));
+            $.ajax({
+                url: path+"/index/cart",
+                contentType: "application/json",
+                data: JSON.stringify(productSelected),
+                method: "post"
+            }).done(function (cart) {
+                $.fancybox.close();
+                renderCart(cart);
+                console.log("success")
+            }).fail(function(){ console.log("error！"); });
+            return false;
+        });
+        $(document).on("click",".product-other-images a",function(){
+            $(".product-main-image").find("img").attr("src",($(this).find("img").attr("src")));
+            App.initImageZoom();
+        })
         App.init();
         App.initBxSlider();
         Index.initLayerSlider();

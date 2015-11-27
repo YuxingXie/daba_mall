@@ -55,6 +55,48 @@ public class Order {
     private User user;
     @DBRef(db = "account")
     private Account payAccount;
+    @Transient
+    private String receiveStatus;//全部未确认收货none,部分确认:part,全部确认:all
+    @Transient
+    private String evaluateStatus;//全部未评价none,部分:part,全部:all
+    @Transient
+    private List<ProductSeries> selectedProductSeriesList;
+    public List<ProductSeries> getSelectedProductSeriesList() {
+        Assert.notNull(this.productSelectedList);
+        List<ProductSeries> selectedProductSeriesList=new ArrayList<ProductSeries>();
+        for(ProductSelected productSelected:this.productSelectedList){
+            Assert.notNull(productSelected.getProductSeries());
+            if (!selectedProductSeriesList.contains(productSelected)){
+                selectedProductSeriesList.add(productSelected.getProductSeries());
+            }
+        }
+        this.selectedProductSeriesList=selectedProductSeriesList;
+        return this.selectedProductSeriesList;
+    }
+
+    public String getReceiveStatus() {
+        Assert.notNull(this.productSelectedList);
+        boolean all=true,none=true;
+        for(ProductSelected productSelected:this.productSelectedList){
+            if (productSelected.getReceiveStatus()==null||productSelected.getReceiveStatus().equalsIgnoreCase("n")) all=false;
+            else none= false;
+        }
+        if (all) return "all";
+        if (none) return "none";
+        return "part";
+    }
+
+    public String getEvaluateStatus() {
+        Assert.notNull(this.getProductSelectedList());
+        boolean all=true,none=true;
+        for(ProductSelected productSelected:this.getProductSelectedList()){
+            if (productSelected.getProductEvaluate()==null) all=false;
+            else none= false;
+        }
+        if (all) return "all";
+        if (none) return "none";
+        return "part";
+    }
 
     public String getContactPhone() {
         return contactPhone;
@@ -92,6 +134,28 @@ public class Order {
     }
 
     public List<ProductSelected> getProductSelectedList() {
+        if (productSelectedList!=null &&productSelectedList.size()>0){
+            boolean hasEvaluated=false;
+            ProductSeries evaluatedProductSeries=null;
+            ProductEvaluate evaluate=null;
+            for (ProductSelected productSelected:productSelectedList){
+                if (productSelected.getProductEvaluate()!=null){
+                    hasEvaluated=true;
+                    evaluatedProductSeries=productSelected.getProductSeries();
+                    evaluate=productSelected.getProductEvaluate();
+                    break;
+                }
+            }
+            if (hasEvaluated){
+                for (ProductSelected productSelected:productSelectedList){
+                    if (evaluatedProductSeries.getId().equalsIgnoreCase(productSelected.getProductSeries().getId())){
+                        if (productSelected.getProductEvaluate()==null){
+                            productSelected.setProductEvaluate(evaluate);
+                        }
+                    }
+                }
+            }
+        }
         return productSelectedList;
     }
 

@@ -13,6 +13,9 @@ public class ProductSelected {
     @Transient
     private String productSeriesId;
     private Integer amount;
+    @DBRef
+    private ProductEvaluate productEvaluate;
+
     @Transient
     private List<String> productPropertyValueIds;
     @DBRef
@@ -72,7 +75,13 @@ public class ProductSelected {
         this.productPropertyValueIds = productPropertyValueIds;
     }
 
+    public ProductEvaluate getProductEvaluate() {
+        return productEvaluate;
+    }
 
+    public void setProductEvaluate(ProductEvaluate productEvaluate) {
+        this.productEvaluate = productEvaluate;
+    }
 
     public ProductSeries getProductSeries() {
         return productSeries;
@@ -81,6 +90,7 @@ public class ProductSelected {
     public void setProductSeries(ProductSeries productSeries) {
         this.productSeries = productSeries;
     }
+
 
     @Override
     public boolean equals(Object obj) {

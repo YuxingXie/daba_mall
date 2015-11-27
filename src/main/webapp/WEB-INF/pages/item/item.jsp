@@ -113,10 +113,10 @@
                       <div class="product-quantity">
                         <input type="text" value="1" readonly class="form-control input-sm" id="product-quantity">
                       </div>
-                      <button class="btn btn-primary add2cart" type="submit">添加到购物车</button>
+                      <button class="btn btn-primary add2cart" type="button">添加到购物车</button>
                     </div>
                     <div class="review">
-                      <input type="range" value="4" step="0.25" id="backing4">
+                      <input type="range" value="4" step="0.25" id="backing4" disabled/>
                       <div class="rateit" data-rateit-backingfld="#backing4" data-rateit-resetable="false"  data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
                       </div>
                       <a href="#"><c:choose><c:when test="${empty productSeries.evaluateCount}">0</c:when><c:otherwise>${ productSeries.evaluateCount}</c:otherwise></c:choose>条评论</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#">发表评论</a>

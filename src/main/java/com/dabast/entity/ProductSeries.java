@@ -2,6 +2,7 @@ package com.dabast.entity;
 
 import com.dabast.common.helper.service.ServiceManager;
 import com.mongodb.DBObject;
+import org.apache.commons.lang.builder.EqualsBuilder;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -187,5 +188,14 @@ public class ProductSeries {
 
     public void setProductPropertyValues(List<ProductPropertyValue> productPropertyValues) {
         this.productPropertyValues = productPropertyValues;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this.id == null){return false;}
+        if(!(obj instanceof ProductSeries)) return false;
+        if(this == obj) return true;
+        ProductSeries other = (ProductSeries)obj;
+        return new EqualsBuilder() .append(id,other.getId()) .isEquals();
     }
 }

@@ -24,7 +24,6 @@
 
 
 
-
 <script type="text/javascript">
     jQuery(document).ready(function() {
         App.init();
@@ -42,38 +41,29 @@
             $('.add2cart').shoping();
         });
         $(document).on("click",".add2cart",function(){
-//          var propertyId=$(".product-property").attr("propertyId");
+            $('.add2cart').shoping();
             var form=$('[name="cartForm"]');
-            var remain=$("#product-quantity").val();
-            console.log("remain "+remain);
-            var data={};
-            data.remain=remain;
-            data.productSeriesId=form.find("[name='productSeriesId']").val();
-//            var productPropertySelects=[];
-//            form.find("select").each(function(){
-//                var productPropertySelect={};
-//                productPropertySelect.productPropertyId=$(this).data("productPropertyId");
-//                productPropertySelect.selectIndex=$(this).val();
-//                productPropertySelects.push(productPropertySelect);
-//            });
-//            data.productPropertySelects=productPropertySelects;
+            var amount=$("#product-quantity").val();
+            var productSelected={};
+            productSelected.amount=amount;
+            productSelected.productSeriesId=form.find("[name='productSeriesId']").val();
             var productPropertyValueIds=[];
             form.find("select").each(function(){
                 var productPropertyValueId=$(this).val();
-                console.log(productPropertyValueId);
+//                console.log(productPropertyValueId);
                 productPropertyValueIds.push(productPropertyValueId);
             });
-            data.productPropertyValueIds=productPropertyValueIds;
-            console.log(JSON.stringify(data));
+            productSelected.productPropertyValueIds=productPropertyValueIds;
+            console.log(JSON.stringify(productSelected));
             $.ajax({
                 url: path+"/index/cart",
                 contentType: "application/json",
-                data: JSON.stringify(data),
+                data: JSON.stringify(productSelected),
                 method: "post",
                 success: function (data) {
-                    console.log("add to cart success");
-//              $.fancybox.close();
+//                    console.log("add to cart success");
                     renderCart(data);
+                    $('.add2cart').shoping();
                 },
                 error:function(data){
 

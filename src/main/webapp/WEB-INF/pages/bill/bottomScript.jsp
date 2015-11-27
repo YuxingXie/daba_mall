@@ -25,7 +25,7 @@
 <%--<script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>--%>
 <%--<script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>--%>
 <script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
-<script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>
+<%--<script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>--%>
 <script type="text/javascript" src="${path}/statics/assets/plugins/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 

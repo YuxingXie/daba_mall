@@ -36,9 +36,9 @@
                                         <td colspan="5">您的购物车中空空如也!<a href="${path}">返回首页继续购物</a></td>
                                     </tr>
 
-                                    <tr name="productSelected" ng-if="cart&&cart.productSelectedList" ng-repeat="productSelected in cart.productSelectedList" >
+                                    <tr name="productSelected" ng-if="cart&&cart.productSelectedList&&cart.productSelectedList.length>0" ng-repeat="productSelected in cart.productSelectedList" >
                                             <td class="shopping-cart-image">
-                                                <a ng-href="${path}/product/{{productSelected.productSeriesId}}">
+                                                <a ng-href="${path}/product/{{productSelected.productSeries.id}}">
                                                     <img ng-src="${path}/{{productSelected.productSeries.pictures[0]}}"></a>
                                             </td>
                                             <td class="shopping-cart-description">
@@ -71,10 +71,12 @@
                                             </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="4">
+                                        <th colspan="7" class="text-right">
                                             总计：{{totalAmount}}件商品,共{{totalPrice | number:2}} 元
-                                        </td>
-                                        <td><input  class="btn btn-primary" type="button" id="toBill" data-ng-click="toBill()" ng-if="cart&&cart.productSelectedList" ng-repeat="productSelected in cart.productSelectedList" value="确认"/></td>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td  colspan="7"><input  class="btn btn-primary" type="button" id="toBill" data-ng-click="toBill()" ng-if="cart&&cart.productSelectedList&&cart.productSelectedList.length>0" value="确认"/></td>
                                     </tr>
 
                                 </table>

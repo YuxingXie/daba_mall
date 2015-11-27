@@ -28,7 +28,7 @@
         type="text/javascript"></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
-<script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>
+<%--<script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>--%>
 
 <script src="${path}/statics/assets/plugins/cascading-select-address-master/js/selectAddress2.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/cascading-select-address-master/js/index.js"></script>

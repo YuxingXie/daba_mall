@@ -512,7 +512,7 @@
     <script type="text/javascript" src="${path}/statics/assets/plugins/bootstrap/js/bootstrap.min.js" ></script>
     <script type="text/javascript" src="${path}/statics/assets/scripts/app.js"></script>
     <script type="text/javascript" src="${path}/statics/assets/scripts/top.js"></script>
-    <script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>
+    <%--<script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>--%>
     <!--end:these scripts are imported form decorator-->
     <sitemesh:write property='#scripts'/>
 </div>

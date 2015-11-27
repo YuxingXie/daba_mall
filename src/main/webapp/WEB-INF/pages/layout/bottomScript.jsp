@@ -6,5 +6,6 @@
 <script type="text/javascript" src="${path}/statics/assets/plugins/bootstrap/js/bootstrap.js" ></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/app.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/top.js"></script>
+<script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
