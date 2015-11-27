@@ -119,7 +119,10 @@
                       <input type="range" value="4" step="0.25" id="backing4" disabled/>
                       <div class="rateit" data-rateit-backingfld="#backing4" data-rateit-resetable="false"  data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
                       </div>
-                      <a href="#"><c:choose><c:when test="${empty productSeries.evaluateCount}">0</c:when><c:otherwise>${ productSeries.evaluateCount}</c:otherwise></c:choose>条评论</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#">发表评论</a>
+                      <a href="#"><c:choose><c:when test="${empty productSeries.evaluateCount}">0</c:when><c:otherwise>${ productSeries.evaluateCount}</c:otherwise></c:choose>条评论</a>
+                      <c:if test="${not empty requestScope.order}">
+                        &nbsp;&nbsp;|&nbsp;&nbsp;<button href="#" class="bootstro">发表评论</button>
+                      </c:if>
                     </div>
                     <ul class="social-icons">
                       <div class="bdsharebuttonbox">

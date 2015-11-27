@@ -2,6 +2,7 @@ package com.dabast.mall.controller;
 
 import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.helper.service.ServiceManager;
+import com.dabast.entity.Order;
 import com.dabast.entity.ProductSeries;
 import com.dabast.mall.dao.UserDao;
 import com.dabast.mall.service.impl.CartService;
@@ -32,12 +33,16 @@ public class ProductController extends BaseRestSpringController {
 
 
     @RequestMapping(value = "/{id}")
-    public String loginDirect(@PathVariable String id, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public String loginDirect(@PathVariable String id, ModelMap model,String orderId) {
 
         ProductSeries productSeries=productSeriesService.findProductSeriesById(id);
         model.addAttribute("productSeries",productSeries);
         List<ProductSeries> hotSells = ServiceManager.productSeriesService.getHotSell();
         model.addAttribute("hotSells", hotSells);
+        if (orderId!=null){
+            Order order=ServiceManager.orderService.findOrderById(orderId);
+            model.addAttribute("order",order);
+        }
         return "item";
     }
 

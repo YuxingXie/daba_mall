@@ -13,9 +13,11 @@
 <link href="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 <link href="${path}/statics/assets/plugins/bxslider/jquery.bxslider.css" rel="stylesheet">
-<link href="${path}/statics/assets/plugins/rateit/src/rateit.css" rel="stylesheet" type="text/css">
-<link href="${path}/statics/assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
-<link href="${path}/statics/assets/css/style-metronic.css" rel="stylesheet" type="text/css">
-<link href="${path}/statics/assets/css/style.css" rel="stylesheet" type="text/css">
-<link href="${path}/statics/assets/css/style-responsive.css" rel="stylesheet" type="text/css">
+<%--<link href="${path}/statics/assets/plugins/rateit/src/rateit.css" rel="stylesheet" type="text/css">--%>
+<%--<link href="${path}/statics/assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">--%>
+<%--<link href="${path}/statics/assets/css/style-metronic.css" rel="stylesheet" type="text/css">--%>
+<%--<link href="${path}/statics/assets/css/style.css" rel="stylesheet" type="text/css">--%>
+<%--<link href="${path}/statics/assets/css/style-responsive.css" rel="stylesheet" type="text/css">--%>
 <link href="${path}/statics/assets/css/custom.css" rel="stylesheet" type="text/css">
+<%--<link href="${path}/statics/assets/plugins/bootstro.js-master/bootstro.css" rel="stylesheet" type="text/css">--%>
+<link href="${path}/statics/assets/plugins/bootstrap-tour-0.10.2/css/bootstrap-tour.css" rel="stylesheet">

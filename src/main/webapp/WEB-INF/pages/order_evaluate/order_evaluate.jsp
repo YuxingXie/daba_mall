@@ -83,7 +83,7 @@
                                                             <c:choose>
                                                                 <c:when test="${empty productSelected.receiveStatus or productSelected.receiveStatus eq 'n'}"><a href="${path}/order/receive_item?id=${order.id}&index=${selectedIndex.index}">确认收货</c:when>
                                                                 <c:otherwise>
-                                                                    <c:if test="${empty productSelected.productEvaluate}"><a href="javascript:void(0)" data-toggle="modal" data-target="#evaluteModal">评价</a></c:if>
+                                                                    <c:if test="${empty productSelected.productEvaluate}"><a href="${path}/product/${productSelected.productSeries.id}?orderId=${order.id}">评价</a></c:if>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </td>

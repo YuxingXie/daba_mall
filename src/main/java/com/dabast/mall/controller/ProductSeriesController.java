@@ -2,6 +2,7 @@ package com.dabast.mall.controller;
 
 import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.helper.service.ServiceManager;
+import com.dabast.entity.Order;
 import com.dabast.entity.ProductCategory;
 import com.dabast.entity.ProductSeries;
 import com.dabast.mall.service.IProductSeriesService;
@@ -46,9 +47,13 @@ public class ProductSeriesController extends BaseRestSpringController {
 
 
     @RequestMapping(value="/{id}")
-    public String show(ModelMap model,@PathVariable java.lang.String id) {
+    public String show(ModelMap model,@PathVariable String id,String orderId) {
         ProductSeries productSeries = productSeriesService.findProductSeriesById(id);
         model.addAttribute("productSeries",productSeries);
+        if (orderId!=null){
+            Order order=ServiceManager.orderService.findOrderById(orderId);
+            model.addAttribute("order",order);
+        }
         return "item";
     }
     @RequestMapping(value="/popover/{id}")

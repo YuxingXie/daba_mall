@@ -20,12 +20,32 @@
 <script src="${path}/statics/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/app.js"></script>
-
+<%--<script type="text/javascript" src="${path}/statics/assets/plugins/bootstro.js-master/bootstro.js"></script>--%>
+<script src="${path}/statics/assets/plugins/bootstrap-tour-0.10.2/js/bootstrap-tour.js"></script>
 
 
 
 <script type="text/javascript">
     jQuery(document).ready(function() {
+//        bootstro.start(".bootstro",{finishButton : '<div class="text-danger"><img src="http://tp4.sinaimg.cn/5138058543/180/5732423186/1">点击这里发表评论</div>',margin:50});
+        var tour = new Tour({
+            storage:false,
+            debug:true,
+            backdrop:true,
+            steps: [
+                {
+                    element: ".bootstro",
+                    title: "Title of my step",
+                    content: "Content of my step"
+                },
+                {
+                    element: ".bootstro",
+                    title: "Title of my step",
+                    content: "Content of my step"
+                }
+            ]});
+        tour.init();
+        tour.start();
         App.init();
         App.initBxSlider();
         App.initImageZoom();
