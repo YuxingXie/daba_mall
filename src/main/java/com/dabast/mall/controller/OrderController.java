@@ -75,6 +75,27 @@ public class OrderController extends BaseRestSpringController {
         model.addAttribute("order", order);
         return "order_evaluate";
     }
+    @RequestMapping(value = "/evaluate/product")
+    public String orderProductEvaluate(@ModelAttribute ProductEvaluate productEvaluate,HttpSession session) {
+        User user=getLoginUser(session);
+        Assert.notNull(user);
+        Order order=ServiceManager.orderService.findById(productEvaluate.getOrderId());
+        if (order!=null&&order.getProductSelectedList()!=null){
+            for (ProductSelected productSelected:order.getProductSelectedList()){
+                ProductSeries productSeries=productSelected.getProductSeries();
+                if (productSeries!=null && productSeries.getId().equalsIgnoreCase(productEvaluate.getProductSeriesId())){
+                    productEvaluate.setProductSeries(productSeries);
+                    productEvaluate.setOrder(order);
+                    productEvaluate.setUser(user);
+                    ServiceManager.productEvaluateService.insert(productEvaluate);
+                    productSelected.setProductEvaluate(productEvaluate);
+//                    ServiceManager.orderService.update(order);
+                    break;
+                }
+            }
+        }
+        return "redirect:/product/"+productEvaluate.getProductSeriesId();
+    }
     @RequestMapping(value = "/receive_item",method = RequestMethod.GET)
     public String orderReceive(String id,Integer index,ModelMap model,RedirectAttributes redirectAttributes) {
         Assert.notNull(id);

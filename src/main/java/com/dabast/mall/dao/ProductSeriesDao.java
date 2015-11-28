@@ -90,6 +90,8 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
             List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
             productSeries.getProductStore().setInAndOutList(inAndOuts);
         }
+        List<ProductEvaluate> productEvaluateList=ServiceManager.productEvaluateService.findAll(new BasicDBObject("productSeries",productSeries));
+        productSeries.setProductEvaluateList(productEvaluateList);
         return productSeries;
     }
     public ProductSeries findProductSeriesById(String id) {

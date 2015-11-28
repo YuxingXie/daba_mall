@@ -3,6 +3,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="p" uri="/pageTag" %>
 <%@taglib prefix="f" uri="/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 
@@ -119,9 +120,9 @@
                       <input type="range" value="4" step="0.25" id="backing4" disabled/>
                       <div class="rateit" data-rateit-backingfld="#backing4" data-rateit-resetable="false"  data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
                       </div>
-                      <a href="#"><c:choose><c:when test="${empty productSeries.evaluateCount}">0</c:when><c:otherwise>${ productSeries.evaluateCount}</c:otherwise></c:choose>条评论</a>
+                      <c:choose><c:when test="${empty productSeries.evaluateCount}">0</c:when><c:otherwise>${ productSeries.evaluateCount}</c:otherwise></c:choose>条评论
                       <c:if test="${not empty requestScope.order}">
-                        &nbsp;&nbsp;|&nbsp;&nbsp;<button href="#" class="bootstro">发表评论</button>
+                        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0)" class="tour-step1" data-toggle="modal" data-target="#evaluateModal">发表评论</a>
                       </c:if>
                     </div>
                     <ul class="social-icons">
@@ -140,20 +141,13 @@
                   <ul id="myTab" class="nav nav-tabs">
                     <li class="active"><a href="#Description" data-toggle="tab">商品介绍</a></li>
                     <li><a href="#Information" data-toggle="tab">规格参数</a></li>
-                    <li><a href="#Reviews" data-toggle="tab">商品评论</a></li>
+                    <li class="tour-step2"><a href="#Reviews" data-toggle="tab">商品评论</a></li>
                   </ul>
                   <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade in active" id="Description">
                       <p>由于不同地区自然条件和饮食习惯的不同，腌腊鱼的生产工艺也有所差异，其风味也就不同</p>
                       <div class="imgdisp">
-                      <%--<img src="images/1.jpg">--%>
-                      <%--<img src="images/2.jpg">--%>
-                      <%--<img src="images/3.jpg">--%>
-                      <%--<img src="images/4.jpg">--%>
-                      <%--<img src="images/5.jpg">--%>
-                      <%--<img src="images/6.jpg">--%>
-                      <%--<img src="images/7.jpg">--%>
-                      <%--<img src="images/8.jpg">--%>
+                        <%--<img src="${path}/images/1.jpg">--%>
                       </div>
                     </div>
                     <div class="tab-pane fade" id="Information">
@@ -201,17 +195,24 @@
                     </div>
                     <div class="tab-pane fade" id="Reviews">
                       <!--<p>There are no reviews for this product.</p>-->
-                      <div class="review-item clearfix">
-                        <div class="review-item-submitted">
-                          <strong>马云</strong>
-                          <em>2015/06/20 - 07:37</em>
-                          <div class="rateit" data-rateit-value="5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
-                        </div>                                              
-                        <div class="review-item-content">
-                            <p>商品评价是指生产厂家、商家或者消费者根据具体商品的性能、规格、材质、使用寿命、外观等商品的内在价值设定一个可量化或定性的评价体系，由消费者对商品使用价值进行评价的过程。</p>
-                        </div>
-                      </div>
 
+                      <c:forEach var="productEvaluate" items="${productSeries.productEvaluateList}">
+                        <div class="review-item clearfix">
+                          <div class="review-item-submitted">
+                            <strong>
+                               <c:choose>
+                                  <c:when test="${productEvaluate.anonymous}">匿名用户</c:when>
+                                  <c:otherwise>${productEvaluate.order.user.name}</c:otherwise>
+                               </c:choose>
+                            </strong>
+                            <em><fmt:formatDate value="${productEvaluate.date}" type="both" dateStyle="default"/></em>
+                            <div class="rateit" data-rateit-value="${productEvaluate.grade}" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+                          </div>
+                          <div class="review-item-content">
+                            <p>${productEvaluate.content}</p>
+                          </div>
+                        </div>
+                      </c:forEach>
                     </div>
                   </div>
                 </div>
@@ -229,7 +230,61 @@
         <!-- END SIMILAR PRODUCTS -->
       </div>
     </div>
+<div class="modal fade" id="evaluateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <form name="evaluateForm" id="evaluateForm" action="${path}/order/evaluate/product" class="form-horizontal form-without-legend" novalidate="novalidate" method="POST">
 
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+        <h2 class="modal-title">评论</h2>
+      </div>
+      <div class="modal-body">
+          <fieldset>
+            <div class="form-group has-feedback">
+              <div class="row">
+                <label class="col-lg-2 control-label">满意度<span class="require">*</span></label>
+
+                <div class="col-lg-8 has-success">
+                  <input type="range" value="3" step="1" id="backing0" name="grade"/>
+                  <div class="rateit" data-rateit-backingfld="#backing0" data-rateit-resetable="false"  data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group has-feedback">
+              <div class="row">
+                <label class="col-lg-2 control-label">评价内容 <span class="require">*</span></label>
+                <div class="col-lg-8 has-success">
+                  <textarea name="content" class="form-control text-area" rows="6"  placeholder="请发表您的评价" required="true"></textarea>
+                </div>
+              </div>
+              </div>
+            <div class="form-group has-feedback">
+              <div class="row">
+                <label  class="col-lg-2 control-label">上传图片</label>
+                <div class="col-lg-8 has-success">
+                  <input type="file" name="files" class="form-control"/>
+                  <input type="hidden" value="${order.id}" name="orderId"/>
+                  <input type="hidden" value="${productSeries.id}" name="productSeriesId"/>
+                </div>
+              </div>
+
+            </div>
+          </fieldset>
+      </div>
+      <div class="modal-footer">
+        <div class="col-lg-6 col-sm-6"></div>
+        <div class="col-lg-4 col-sm-4">
+          <button type="submit" class="btn btn-primary" >提交</button>
+          <button type="button" class="btn btn-primary modal-close" data-dismiss="modal" aria-hidden="true">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </form>
+
+</div>
 
     <!-- Load javascripts at bottom, this will reduce page load time -->
     <!-- BEGIN CORE PLUGINS(REQUIRED FOR ALL PAGES) -->

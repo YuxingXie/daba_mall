@@ -3,10 +3,8 @@ package com.dabast.mall.dao;
 import com.dabast.common.base.BaseMongoDao;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.*;
-import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import com.mongodb.DBRef;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Query;
@@ -23,18 +21,28 @@ public class OrderDao extends BaseMongoDao<Order> {
         DBObject dbObject=new BasicDBObject();
         dbObject.put("userId",userId);
         Query query=new BasicQuery(dbObject).with(new Sort(Sort.Direction.DESC, "orderDate"));
-        return getMongoTemplate().findOne(query,Order.class);
+        Order order= getMongoTemplate().findOne(query,Order.class);
+        getDBRefs(order);
+        return order;
     }
 
     public Order findOrderById(String orderId) {
         Order order=findById(orderId);
+        getDBRefs(order);
+        return order;
+    }
+
+    public void getDBRefs(Order order) {
+        if (order==null) return;
         List<ProductSelected> productSelectedList=order.getProductSelectedList();
+//        List<ProductSeries> productSeriesList=new ArrayList<ProductSeries>();
         if (productSelectedList!=null){
             for (ProductSelected productSelected:productSelectedList){
-//                ProductSeries productSeries= ServiceManager.productSeriesService.findById(productSelected.getProductSeriesId());
                 ProductSeries productSeries= productSelected.getProductSeries();
+//
+               ProductEvaluate productEvaluate= ServiceManager.productEvaluateService.findByOrderAndProductSeries(order, productSeries);
+               productSelected.setProductEvaluate(productEvaluate);
                 productSeries.setProductSeriesPrices(ServiceManager.productSeriesPriceService.findByProductSeriesId(productSeries.getId()));
-//                productSelected.setProductSeries(productSeries);
                 List<String> productPropertyValueIds=productSelected.getProductPropertyValueIds();
                 if (productPropertyValueIds!=null){
                     List<ProductPropertyValue> productPropertyValueList=new ArrayList<ProductPropertyValue>();
@@ -46,7 +54,6 @@ public class OrderDao extends BaseMongoDao<Order> {
                 }
             }
         }
-        return order;
     }
 
     public Order insertOrder(User user) {

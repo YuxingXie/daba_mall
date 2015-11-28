@@ -64,7 +64,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 
     public int upsert(E queryEntity, E updateEntity) {
         Query query = getEqualsQuery(queryEntity);
-        System.out.println("update:" + getEqualsQuery(updateEntity).toString());
+//        System.out.println("update:" + getEqualsQuery(updateEntity).toString());
         List<E> list = mongoTemplate.find(query, collectionClass);
         Assert.isTrue(list == null || list.size() <= 1);
         if (list == null || list.size() == 0) {
@@ -172,7 +172,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 //        query = query.limit(pageSize).skip((currentPage - 1) * pageSize);
 //        List<ProductSeries> list = getMongoTemplate().find(query, ProductSeries.class);
         Long count = collection.count(condition);
-        System.out.println(condition.toString());
+//        System.out.println(condition.toString());
 //        List<E> list = dbCursor2List(collection.find(condition).limit(pageSize).skip((currentPage - 1) * pageSize));
         List<E> list = mongoTemplate.find(new BasicQuery(condition).limit(pageSize).skip((currentPage - 1) * pageSize),collectionClass);
         Page<E> page = new PageImpl<E>(list, pageable, count);
@@ -371,36 +371,36 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         for (java.lang.reflect.Field field : cls.getDeclaredFields()) {
             if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)) continue;
             String fieldName = field.getName();
-            System.out.println("field name:" + fieldName);
+//            System.out.println("field name:" + fieldName);
             field.setAccessible(true);
             Object fieldValue = dbObject.get(fieldName);
             if (fieldValue == null) continue;
             Type genericType = field.getGenericType();
             if (field.getType().isPrimitive() || ReflectUtil.isWrapClass(field.getType()) || field.getType() == String.class) {
-                System.out.println("field is a primitive type type");
+//                System.out.println("field is a primitive type type");
                 Method setter = cls.getDeclaredMethod(ReflectUtil.getSetterMethodName(fieldName), field.getType());
                 setter.invoke(o, fieldValue);
             } else if (field.getType().isArray()) {
-                System.out.print("field is an array");
+//                System.out.print("field is an array");
                 Object[] fieldArrayObject = (Object[]) fieldValue;
                 for (Object fieldArrayObjectItem : fieldArrayObject) {
-                    System.out.print(fieldArrayObjectItem + ",class is:" + fieldArrayObjectItem.getClass() + ",");
+//                    System.out.print(fieldArrayObjectItem + ",class is:" + fieldArrayObjectItem.getClass() + ",");
                 }
-                System.out.println("");
+//                System.out.println("");
 
             } else if (genericType instanceof ParameterizedType) {
                 ParameterizedType parameterizedType = (ParameterizedType) genericType;
-                System.out.println("field is a parameterized type:" + parameterizedType);
+//                System.out.println("field is a parameterized type:" + parameterizedType);
                 Type[] actualTypes = parameterizedType.getActualTypeArguments();
                 Type rawType = parameterizedType.getRawType();
 
                 if (rawType == List.class) {
-                    System.out.println("field is a java.util.List");
+//                    System.out.println("field is a java.util.List");
                 }
 
 //                if (actualTypes.length>0){
                 Class class0 = (Class<?>) actualTypes[0];
-                System.out.println("field parameterized type:" + class0);
+//                System.out.println("field parameterized type:" + class0);
 //                }
                 if (fieldValue != null && rawType == List.class) {
                     BasicDBList dd = (BasicDBList) fieldValue;
@@ -412,9 +412,9 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
                     }
                 }
             } else {
-                System.out.println("field is a simple class");
+//                System.out.println("field is a simple class");
             }
-            System.out.println("--------------------------------------------------------------");
+//            System.out.println("--------------------------------------------------------------");
         }
         return o;
     }

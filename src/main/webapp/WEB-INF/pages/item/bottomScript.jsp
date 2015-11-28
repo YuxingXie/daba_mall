@@ -6,46 +6,56 @@
 <script src="${path}/statics/assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="${path}/statics/assets/plugins/back-to-top.js"></script>
-<script type="text/javascript" src="${path}/statics/assets/plugins/jQuery-slimScroll/jquery.slimscroll.min.js"></script>
+<script src="${path}/statics/assets/plugins/back-to-top.js" type="text/javascript" ></script>
+<script src="${path}/statics/assets/plugins/jQuery-slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <!-- END CORE PLUGINS -->
 
 <!-- BEGIN PAGE LEVEL JAVASCRIPTS(REQUIRED ONLY FOR CURRENT PAGE) -->
-<script type="text/javascript" src="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.pack.js"></script>
-<script type="text/javascript" src="${path}/statics/assets/plugins/bxslider/jquery.bxslider.min.js"></script><!-- slider for products -->
+<script src="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script>
+<script src="${path}/statics/assets/plugins/bxslider/jquery.bxslider.min.js" type="text/javascript"></script><!-- slider for products -->
 <script src="${path}/statics/assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script><!-- Quantity -->
 <script src="${path}/statics/assets/plugins/rateit/src/jquery.rateit.js" type="text/javascript"></script>
 <script type="text/javascript" src='${path}/statics/assets/plugins/zoom/jquery.zoom.min.js'></script><!-- product zoom -->
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script><!-- for slider-range -->
+<script src="${path}/statics/assets/plugins/jquery-ui.js" type="text/javascript" ></script>
 <script src="${path}/statics/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
-<script type="text/javascript" src="${path}/statics/assets/scripts/app.js"></script>
-<%--<script type="text/javascript" src="${path}/statics/assets/plugins/bootstro.js-master/bootstro.js"></script>--%>
+
+<%--<script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/modal.js"></script>--%>
 <script src="${path}/statics/assets/plugins/bootstrap-tour-0.10.2/js/bootstrap-tour.js"></script>
 
 
 
 <script type="text/javascript">
     jQuery(document).ready(function() {
-//        bootstro.start(".bootstro",{finishButton : '<div class="text-danger"><img src="http://tp4.sinaimg.cn/5138058543/180/5732423186/1">点击这里发表评论</div>',margin:50});
-        var tour = new Tour({
-            storage:false,
-            debug:true,
-            backdrop:true,
-            steps: [
-                {
-                    element: ".bootstro",
-                    title: "Title of my step",
-                    content: "Content of my step"
-                },
-                {
-                    element: ".bootstro",
-                    title: "Title of my step",
-                    content: "Content of my step"
-                }
-            ]});
-        tour.init();
-        tour.start();
+        var $tour_step1=$(".tour-step1");
+        if($tour_step1.length){
+            var tour = new Tour({
+                storage:false,
+                debug:true,
+                backdrop:true,
+                template: "<div class='popover tour'><div class='arrow'></div>" +
+                "<h3 class='popover-title'></h3>" +
+                "<div class='popover-content'></div>" +
+                "<div class='popover-navigation'>" +
+                " <button class='btn btn-default' data-role='prev'>« 前一步</button>" +
+                " <span data-role='separator'>|</span> " +
+                "<button class='btn btn-default' data-role='next'>下一步 »</button> " +
+                "</div><a class='btn btn-primary pull-right' data-role='end'>我知道了!</a></nav></div>",
+                steps: [
+                    {
+                        element: ".tour-step1",
+                        title: "提示",
+                        content: "点击这个按钮可以发表评论"
+                    },{
+                        element: ".tour-step2",
+                        title: "提示",
+                        content: "在这里可以查看你发表的评论"
+                    }
+                ]});
+            tour.init();
+            tour.start();
+        }
+
         App.init();
         App.initBxSlider();
         App.initImageZoom();
@@ -90,7 +100,26 @@
                 }
             })
         });
+        $("#evaluateForm").submit(function () {
+            return false;
+//            var $form=$("#evaluateForm");
+//            var url=$form.attr("action");
+//            var data={};
+//            data.productSeriesId=$form.find("[name='productSeriesId']").val();
+//            data.orderId=$form.find("[name='orderId']").val();
+//            data.grade=$form.find("[name='grade']").val();
+//            data.content=$form.find("[name='content']").val();
+//
+//            $.ajax({
+//                url: url,
+//                contentType: "application/json",
+//                data: JSON.stringify(data),
+//                method: "post"
+//            }).done(function (order) {
+//                $('#evaluateModal').modal('hide');
+//            }).fail(function(){ console.log("error！"); });
+        });
     });
 </script>
-<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+<%--<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>--%>
 <!-- END PAGE LEVEL JAVASCRIPTS -->

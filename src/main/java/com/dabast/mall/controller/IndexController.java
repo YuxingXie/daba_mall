@@ -87,12 +87,12 @@ public class IndexController extends BaseRestSpringController {
         List<ProductSeries> hotSells = ServiceManager.productSeriesService.getHotSell();
         List<ProductSeries> newProducts = ServiceManager.productSeriesService.getNewProducts();
         List<ProductSeries> lowPrices = ServiceManager.productSeriesService.getLowPrices();
-        model.addAttribute("newProducts", hotSells);
-        model.addAttribute("newProducts2", hotSells);
+        model.addAttribute("newProducts", newProducts);
+        model.addAttribute("newProducts2", newProducts);
         model.addAttribute("hotSells", hotSells);
         model.addAttribute("hotSells2", hotSells);
-        model.addAttribute("lowPrices", hotSells);
-        model.addAttribute("lowPrices2", hotSells);
+        model.addAttribute("lowPrices", lowPrices);
+        model.addAttribute("lowPrices2", lowPrices);
         ServiceManager.productStoreInAndOutService.clearNullUserInAndOut();
         return "index";
     }

@@ -13,7 +13,7 @@ public class ProductSelected {
     @Transient
     private String productSeriesId;
     private Integer amount;
-    @DBRef
+    @Transient
     private ProductEvaluate productEvaluate;
 
     @Transient

@@ -37,6 +37,7 @@ public class ProductSeries {
     private ProductStore productStore;
     @DBRef
     private ProductSubCategory productSubCategory;
+    @Transient
     private Integer evaluateCount;
     @Field
     private boolean newProduct;
@@ -56,12 +57,13 @@ public class ProductSeries {
 
 
     public boolean isNewProduct() {
-        long now=System.currentTimeMillis();
-        if (shelvesDate==null) return false;
-        if ((now-shelvesDate.getTime()) <=(30L*24L*60L*60L*1000L)) {
-            return true;
-        }
-        return false;
+//        long now=System.currentTimeMillis();
+//        if (shelvesDate==null) return false;
+//        if ((now-shelvesDate.getTime()) <=(30L*24L*60L*60L*1000L)) {
+//            return true;
+//        }
+//        return false;
+        return newProduct;
     }
 
     public ProductStore getProductStore() {
@@ -141,14 +143,25 @@ public class ProductSeries {
     }
 
 
+    @Transient
+    private List<ProductEvaluate> productEvaluateList;
+
+    public void setProductEvaluateList(List<ProductEvaluate> productEvaluateList) {
+        this.productEvaluateList = productEvaluateList;
+    }
+
+    public List<ProductEvaluate> getProductEvaluateList() {
+        return productEvaluateList;
+    }
 
     public Integer getEvaluateCount() {
-        return evaluateCount;
+        if (productEvaluateList==null) return 0;
+        return productEvaluateList.size();
     }
 
-    public void setEvaluateCount(Integer evaluateCount) {
-        this.evaluateCount = evaluateCount;
-    }
+//    public void setEvaluateCount(Integer evaluateCount) {
+//        this.evaluateCount = evaluateCount;
+//    }
 
     public Date getShelvesDate() {
         return shelvesDate;

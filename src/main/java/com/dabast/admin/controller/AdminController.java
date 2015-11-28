@@ -50,40 +50,6 @@ public class AdminController extends BaseRestSpringController {
          return "redirect:/admin/index/index";
     }
 
-//    @RequestMapping(value="pic/{id}")
-//    public String showPic(ModelMap model,@PathVariable String id) {
-//
-//        ServletContext context=ProjectContext.getServletContext();
-//        ServletContextResource imgPathResource=new ServletContextResource(context,"img/product");
-//        ServletContextResource imgResource=null;
-//        try {
-//            File imgPathFile=imgPathResource.getFile();
-//            if (!imgPathFile.exists()){
-//                imgPathFile.mkdirs();
-//            }
-//            File[] files=imgPathFile.listFiles();
-//            if (files!=null&&files.length>0){
-//                for (File imgFile:files){
-//                    if (imgFile.getName().indexOf(id)>=0){
-//                        imgResource=new ServletContextResource(context,imgFile.getPath());
-//                        return imgResource.getPath();
-//                    }
-//                }
-//            }
-//            GridFSDBFile picture =productSeriesService.findFileById(id);
-//            String suffix=picture.getFilename().substring(picture.getFilename().lastIndexOf("."));
-//            imgResource=new ServletContextResource(context,"img/product/"+id+suffix);
-//            File file=imgResource.getFile();
-//            if (!file.exists()){
-//                file.createNewFile();
-//                picture.writeTo(imgResource.getFile());
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        String path=imgResource.getPath();
-//        return path;
-//    }
     @RequestMapping(value="/product_series/new")
     public String createProductSeries(ProductSeries productSeries,
                                       Double price,Integer storeAmount,
@@ -117,6 +83,7 @@ public class AdminController extends BaseRestSpringController {
 
         }
         productSeries.setNewProduct(true);
+        productSeries.setShelvesDate(new Date());
         ProductSubCategory productSubCategory=ServiceManager.productSubCategoryService.findById(productSubCategoryId);
         productSeries.setProductSubCategory(productSubCategory);
         ProductStore store=new ProductStore();

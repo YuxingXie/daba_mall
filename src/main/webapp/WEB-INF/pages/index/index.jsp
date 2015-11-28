@@ -170,7 +170,6 @@
                                             <h3><a href="${path}/product_series/${prod.id}">${prod.name}</a></h3>
                                             <div class="pi-price">￥${prod.commonPrice}</div>
                                             <a href="javascript:void(0)" data-id="${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
-
                                             <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
                                         </div>
                                     </li>

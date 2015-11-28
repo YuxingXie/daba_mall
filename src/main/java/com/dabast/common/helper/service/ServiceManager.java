@@ -1,5 +1,6 @@
 package com.dabast.common.helper.service;
 import com.dabast.mall.service.*;
+import com.dabast.mall.service.impl.IProductEvaluateService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 @Component
@@ -22,6 +23,11 @@ public class ServiceManager implements InitializingBean{
     public static IProductSeriesPriceService productSeriesPriceService;
     public static IProductStoreInAndOutService productStoreInAndOutService;
     public static IInterestService interestService;
+    public static IProductEvaluateService productEvaluateService;
+
+    public void setProductEvaluateService(IProductEvaluateService productEvaluateService) {
+        ServiceManager.productEvaluateService = productEvaluateService;
+    }
 
     public void setProductSeriesPriceService(IProductSeriesPriceService productSeriesPriceService) {
         ServiceManager.productSeriesPriceService = productSeriesPriceService;
