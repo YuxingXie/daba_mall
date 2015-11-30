@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="p" uri="/pageTag" %>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
@@ -19,11 +20,11 @@
         <!-- BEGIN SIDEBAR & CONTENT -->
 
         <!-- BEGIN CONTENT -->
-        <div class="col-md-9 col-sm-7">
+        <div class="col-md-12 col-sm-12">
             <div class="content-search margin-bottom-20">
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
-                        <h1>搜索结果页</h1>
+                        <h1>搜索到以下商品</h1>
                     </div>
                     <div class="col-md-6 col-sm-6">
                         <form action="${path}/index/product/search" method="post">
@@ -38,66 +39,52 @@
                     </div>
                 </div>
             </div>
-            <div class="row list-view-sorting clearfix">
-                <div class="col-md-10 col-sm-10" style=" width:100%;">
-                    <%--<div class="pull-left">--%>
-                        <%--<label class="control-label"><a href="#" title="点击后恢复默认排序">综合排序&nbsp;&nbsp;<i--%>
-                                <%--class="fa fa-chevron-down"></i></a></label>--%>
-                    <%--</div>--%>
-                    <%--<div class="pull-left">--%>
-                        <%--<label class="control-label"><a href="#" title="点击后按照价格从高到低排序">价格排序&nbsp;&nbsp;<i--%>
-                                <%--class="fa fa-chevron-down"></i></a></label>--%>
-                    <%--</div>--%>
-                    <%--<div class="pull-left">--%>
-                        <%--<label class="control-label"><a href="#" title="点击后按照销量从多到少排序">销量排序&nbsp;&nbsp;<i--%>
-                                <%--class="fa fa-chevron-down"></i></a></label>--%>
-                    <%--</div>--%>
-                    <%--<div class="pull-left">--%>
-                        <%--<label class="control-label"><a href="#" title="点击后按照评论从多到少排序">评论排序&nbsp;&nbsp;<i--%>
-                                <%--class="fa fa-chevron-down"></i></a></label>--%>
-                    <%--</div>--%>
-                    <%--<div class="pull-left">--%>
-                        <%--<label class="control-label"><a href="#" title="点击后按照人气从高到低排序">热卖商品&nbsp;&nbsp;<i--%>
-                                <%--class="fa fa-chevron-down"></i></a></label>--%>
-                    <%--</div>--%>
-                    <%--<div class="pull-left">--%>
-                        <%--<label class="control-label"><a href="#" title="点击后按照人气从高到低排序">新品上市&nbsp;&nbsp;<i--%>
-                                <%--class="fa fa-chevron-down"></i></a></label>--%>
-                    <%--</div>--%>
 
-                </div>
-            </div>
             <!-- BEGIN PRODUCT LIST -->
-            <div class="row product-list">
+            <div class="product-list">
                 <!-- PRODUCT ITEM START -->
                 <c:choose>
                     <c:when test="${empty _page.content}">
-                        对不起，没有找到合适的记录!
+                    <div class="row text-danger high-lighter text-center" style="margin-top: 20px;margin-bottom: 10px;">
+                        <h6>对不起，没有找到关于"${keyWord}"的记录!</h6>
+                    </div>
                     </c:when>
                     <c:otherwise>
-                        <c:forEach var="productSeries" items="${_page.content}">
-                            <div class="col-md-12 col-sm-0 col-xs-12">
-                                <div class="product-item">
-                                    <a href="${path}/product/${productSeries.id}"><img src="${path}/${productSeries.pictures[0]}" class="pull-left resule-thumb"
-                                         alt="${productSeries.name}"></a>
+                        <c:forEach var="productSeries" items="${_page.content}" varStatus="varStatus">
+                            <c:choose>
+                                <c:when test="${varStatus.index mod 2 eq 0}">
+                                    <div class="row bg-info text-center" style="margin-top: 20px;margin-bottom: 10px;">
+                                 </c:when>
+                                <c:otherwise>
+                                    <div class="row text-center" style="margin-top: 20px;margin-bottom: 10px;">
+                                </c:otherwise>
+                            </c:choose>
 
-                                    <div class="introduce">
-                                        <h3><a href="${path}/product/${productSeries.id}" class="high-lighter">${productSeries.name}</a></h3>
-
-                                        <p class="ware-desc pull-left high-lighter">${productSeries.description}</p>
-                                    </div>
-                                    <div class="price-avail pull-right">
-                                        <div class="form-groupx">
-                                            <div class="rateit" data-rateit-value="5" data-rateit-ispreset="true"
-                                                 data-rateit-readonly="true"></div>
-                                        </div>
-                                        <p class="discuss">评论数&nbsp;:&nbsp;<a>${productSeries.evaluateCount}</a></p>
-
-                                        <p class="price">￥${productSeries.commonPrice}</p>
-                                        <a href="#product-pop-up" class="btn btn-default fancybox-fast-view"
-                                           data-prod="${productSeries.id}">添加到购物车</a>
-                                    </div>
+                                <div class="col-lg-2 col-sm-2">
+                                    <a href="${path}/product/${productSeries.id}">
+                                        <img src="${path}/${productSeries.pictures[0]}" class="pull-left resule-thumb" alt="${productSeries.name}">
+                                    </a>
                                 </div>
+                                <div class="col-lg-2 col-sm-2">
+                                    <div>
+                                    <h5><a href="${path}/product/${productSeries.id}" class="high-lighter">${productSeries.name}</a></h5>
+                                </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-3">
+                                    <p class="fa fa-file-text-o high-lighter">${productSeries.description}</p>
+                                </div>
+                                <div class="col-lg-3 col-sm-3">
+                                    <p class="fa fa-inbox">库存:<a><c:choose><c:when test="${empty productSeries.productStore}">0</c:when><c:otherwise>${productSeries.productStore.remain}</c:otherwise></c:choose></a></p>
+                                    <p class="fa fa-pencil">评论数:<a>${productSeries.evaluateCount}</a></p>
+                                    <p class="fa fa-rmb">价格:<a>${productSeries.commonPrice}</a></p>
+                                </div>
+                                <div class="col-lg-1 col-sm-1  pull-right">
+                                    <button class="btn btn-primary fa fa-shopping-cart fancybox-fast-view" data-prod="${productSeries.id}">添加到购物车</button>
+                                </div>
+
+
+
+
                             </div>
                         </c:forEach>
                     </c:otherwise>
@@ -110,74 +97,60 @@
             <!-- BEGIN PAGINATOR -->
             <div class="row" style=" padding-bottom:20px;">
                 <div class="col-md-12 col-sm-12">
-                    <ul class="pagination pull-right">
-                        <c:set var="maxShowPage" value="3"/>
-                        <c:set var="totalPages" value="${_page.totalPages}"/>
-                        <c:if test="${page gt 1}">
-                            <li>
-                                <a href="javascript:void(0)" class="prev-pages">&laquo;
-                                    <form action="${path}/index/product/search" method="post">
-                                        <input type="hidden" name="keyWord" value="${keyWord}">
-                                        <input type="hidden" name="page" value="${page-1}">
-                                    </form>
-                                </a>
-                            </li>
-                        </c:if>
+                    <p class="demo demo4_top pull-right"></p>
+                    <%--<ul class="pagination pull-right">--%>
+                        <%--<c:set var="maxShowPage" value="3"/>--%>
+                        <%--<c:set var="totalPages" value="${_page.totalPages}"/>--%>
+                        <%--<c:if test="${page gt 1}">--%>
+                            <%--<li>--%>
+                                <%--<a href="javascript:void(0)" class="prev-pages">&laquo;--%>
+                                    <%--<form action="${path}/index/product/search" method="post">--%>
+                                        <%--<input type="hidden" name="keyWord" value="${keyWord}">--%>
+                                        <%--<input type="hidden" name="page" value="${page-1}">--%>
+                                    <%--</form>--%>
+                                <%--</a>--%>
+                            <%--</li>--%>
+                        <%--</c:if>--%>
 
-                        <c:forEach begin="${page}" end="${page+maxShowPage}" varStatus="varStatus">
-                            <c:choose>
-                                <c:when test="${varStatus.index eq page}">
-                                    <li class="now-page" pageIndex="${varStatus.index}">
-                                        <span>${varStatus.index}</span></li>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:if test="${varStatus.index le totalPages}">
-                                        <li class="li-form" pageIndex="${varStatus.index}">
-                                            <a href="javascript:void(0) ">${varStatus.index}</a>
+                        <%--<c:forEach begin="${page}" end="${page+maxShowPage}" varStatus="varStatus">--%>
+                            <%--<c:choose>--%>
+                                <%--<c:when test="${varStatus.index eq page}">--%>
+                                    <%--<li class="now-page" pageIndex="${varStatus.index}">--%>
+                                        <%--<span>${varStatus.index}</span></li>--%>
+                                <%--</c:when>--%>
+                                <%--<c:otherwise>--%>
+                                    <%--<c:if test="${varStatus.index le totalPages}">--%>
+                                        <%--<li class="li-form" pageIndex="${varStatus.index}">--%>
+                                            <%--<a href="javascript:void(0) ">${varStatus.index}</a>--%>
 
-                                            <form action="${path}/index/product/search" method="post">
-                                                <input type="hidden" name="keyWord" value="${keyWord}">
-                                                <input type="hidden" name="page" value="${varStatus.index}">
-                                            </form>
-                                        </li>
-                                    </c:if>
-                                </c:otherwise>
-                            </c:choose>
+                                            <%--<form action="${path}/index/product/search" method="post">--%>
+                                                <%--<input type="hidden" name="keyWord" value="${keyWord}">--%>
+                                                <%--<input type="hidden" name="page" value="${varStatus.index}">--%>
+                                            <%--</form>--%>
+                                        <%--</li>--%>
+                                    <%--</c:if>--%>
+                                <%--</c:otherwise>--%>
+                            <%--</c:choose>--%>
 
-                        </c:forEach>
-                        <c:if test="${page+maxShowPage lt totalPages}">
-                            <li>
-                                <a href="javascript:void(0)" class="next-pages">&raquo;
-                                    <form action="${path}/index/product/search" method="post">
-                                        <input type="hidden" name="keyWord" value="${keyWord}">
-                                        <input type="hidden" name="page" value="${page+1}">
-                                    </form>
-                                </a>
+                        <%--</c:forEach>--%>
+                        <%--<c:if test="${page+maxShowPage lt totalPages}">--%>
+                            <%--<li>--%>
+                                <%--<a href="javascript:void(0)" class="next-pages">&raquo;--%>
+                                    <%--<form action="${path}/index/product/search" method="post">--%>
+                                        <%--<input type="hidden" name="keyWord" value="${keyWord}">--%>
+                                        <%--<input type="hidden" name="page" value="${page+1}">--%>
+                                    <%--</form>--%>
+                                <%--</a>--%>
 
-                            </li>
-                        </c:if>
-                    </ul>
+                            <%--</li>--%>
+                        <%--</c:if>--%>
+                    <%--</ul>--%>
                 </div>
             </div>
             <!-- END PAGINATOR -->
         </div>
         <!-- END CONTENT -->
-        <!-- BEGIN SIDEBAR -->
-        <div class="sidebar col-md-3 col-sm-5">
-            <div class="sidebar-products clearfix">
-                <h2>为您推荐</h2>
 
-
-                <c:forEach items="${recommendList}" var="productSeries">
-                    <div class="item">
-                        <a href="item.html"><img src="${path}/statics/assets/temp/products/k1.jpg" alt="腊肉"></a>
-                        <h3><a href="item.html">腊肉的防腐能力强，能延长保存时间</a></h3>
-                        <div class="price">$31.00</div>
-                    </div>
-                </c:forEach>
-            </div>
-        </div>
-        <!-- END SIDEBAR -->
     </div>
     <!-- END SIDEBAR & CONTENT -->
 </div>

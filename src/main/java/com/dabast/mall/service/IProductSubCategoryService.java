@@ -13,4 +13,6 @@ public interface IProductSubCategoryService extends IBaseEntityManager<ProductSu
     List<ProductSubCategory> getProductSubCategoriesByCategoryId(String categoryId);
 
     ProductSubCategory getProductSubCategoriesByProductSeries(ProductSeries productSeries);
+
+    ProductSubCategory findProductSubCategoryById(String id);
 }

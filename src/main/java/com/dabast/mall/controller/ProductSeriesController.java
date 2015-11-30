@@ -5,6 +5,7 @@ import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.Order;
 import com.dabast.entity.ProductCategory;
 import com.dabast.entity.ProductSeries;
+import com.dabast.entity.ProductSubCategory;
 import com.dabast.mall.service.IProductSeriesService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -57,13 +58,9 @@ public class ProductSeriesController extends BaseRestSpringController {
         return "item";
     }
     @RequestMapping(value="/sort/{id}")
-    public String showSort(ModelMap model,@PathVariable String id,String orderId) {
-        ProductSeries productSeries = productSeriesService.findProductSeriesById(id);
-        model.addAttribute("productSeries",productSeries);
-        if (orderId!=null){
-            Order order=ServiceManager.orderService.findOrderById(orderId);
-            model.addAttribute("order",order);
-        }
+    public String showSort(ModelMap model,@PathVariable String id) {
+        ProductSubCategory productSubCategory = ServiceManager.productSubCategoryService.findProductSubCategoryById(id);
+        model.addAttribute("productSubCategory",productSubCategory);
         return "product_sort";
     }
     @RequestMapping(value="/popover/{id}")

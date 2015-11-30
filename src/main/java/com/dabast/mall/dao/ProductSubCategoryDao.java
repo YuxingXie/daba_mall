@@ -1,6 +1,7 @@
 package com.dabast.mall.dao;
 
 import com.dabast.common.base.BaseMongoDao;
+import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.ProductSeries;
 import com.dabast.entity.ProductSubCategory;
 import com.mongodb.BasicDBObject;
@@ -31,5 +32,15 @@ public class ProductSubCategoryDao  extends BaseMongoDao<ProductSubCategory> {
     public ProductSubCategory getProductSubCategoriesByProductSeries(ProductSeries productSeries) {
         //TODO
         return null;
+    }
+
+    public ProductSubCategory findProductSubCategoryById(String id) {
+        ProductSubCategory productSubCategory=findById(id);
+        if (productSubCategory==null) return null;
+        DBRef dbRef=new DBRef("productSubCategory",new ObjectId(id));
+        DBObject dbObject=new BasicDBObject("productSubCategory",dbRef);
+        List<ProductSeries> productSeriesList= ServiceManager.productSeriesService.findAll(dbObject);
+        productSubCategory.setProductSeriesList(productSeriesList);
+        return productSubCategory;
     }
 }

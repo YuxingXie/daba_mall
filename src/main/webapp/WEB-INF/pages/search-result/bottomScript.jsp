@@ -5,7 +5,7 @@
 <![endif]-->
 <script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 
-<script type="text/javascript" src="${path}/statics/assets/plugins/back-to-top.js"></script>
+<%--<script type="text/javascript" src="${path}/statics/assets/plugins/back-to-top.js"></script>--%>
 <script type="text/javascript" src="${path}/statics/assets/plugins/jQuery-slimScroll/jquery.slimscroll.min.js"></script>
 <!-- END CORE PLUGINS -->
 
@@ -20,17 +20,39 @@
 <!-- Quantity -->
 
 <!-- BEGIN LayerSlider -->
-<script src="${path}/statics/assets/plugins/layerslider/jQuery/jquery-easing-1.3.js" type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/layerslider/jQuery/jquery-transit-modified.js"
-        type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/layerslider/js/layerslider.transitions.js" type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js"
-        type="text/javascript"></script>
+<%--<script src="${path}/statics/assets/plugins/layerslider/jQuery/jquery-easing-1.3.js" type="text/javascript"></script>--%>
+<%--<script src="${path}/statics/assets/plugins/layerslider/jQuery/jquery-transit-modified.js" type="text/javascript"></script>--%>
+<%--<script src="${path}/statics/assets/plugins/layerslider/js/layerslider.transitions.js" type="text/javascript"></script>--%>
+<%--<script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>--%>
 
 <script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
 <%--<script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>--%>
+<script type="text/javascript" src="${path}/statics/assets/plugins/jquery-bootpag-master/lib/jquery.bootpag.js"></script>
 <script>
+    $('.demo4_top,.demo4_bottom').bootpag({
+        total: ${_page.totalPages},
+        page: ${page},
+        maxVisible: 3,
+        leaps: false,
+        firstLastUse: true,
+        first: '<span aria-hidden="true">&larr;</span>',
+        last: '<span aria-hidden="true">&rarr;</span>'
+//        wrapClass: 'pagination',
+//        activeClass: 'active',
+//        disabledClass: 'disabled',
+//        nextClass: 'next',
+//        prevClass: 'prev',
+//        lastClass: 'last',
+//        firstClass: 'first'
+    }).on("page", function(event, num){
+//        $(".content4").html("Page " + num); // or some ajax content loading...
+        <c:url var="url" value="/index/product/search">
+        <c:param name="keyWord" value="${keyWord}"/>
+        <%--<c:param name="page" value="${page}"/>--%>
+        </c:url>
+        window.location.href="${url}&page="+num;
+    }).find('.pagination');
     highLighter = function () {
         $(".high-lighter").each(function () {
             var oldText = $(this).text();
@@ -45,15 +67,5 @@
         App.initImageZoom();
         App.initTouchspin();
         highLighter();
-        $(".li-form").on("click", function () {
-            $(this).find("form").submit();
-        });
-        $(".prev-pages").on("click", function () {
-
-            $(this).find("form").submit();
-        });
-        $(".next-pages").on("click", function () {
-            $(this).find("form").submit();
-        });
     });
 </script>

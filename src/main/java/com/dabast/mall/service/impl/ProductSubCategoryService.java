@@ -31,4 +31,9 @@ public class ProductSubCategoryService extends BaseEntityManager<ProductSubCateg
     public ProductSubCategory getProductSubCategoriesByProductSeries(ProductSeries productSeries) {
         return productSubCategoryDao.getProductSubCategoriesByProductSeries(productSeries);
     }
+
+    @Override
+    public ProductSubCategory findProductSubCategoryById(String id) {
+        return productSubCategoryDao.findProductSubCategoryById(id);
+    }
 }

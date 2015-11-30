@@ -3,10 +3,7 @@ package com.dabast.mall.dao;
 import com.dabast.common.base.BaseMongoDao;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.*;
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import com.mongodb.DBRef;
+import com.mongodb.*;
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -55,6 +52,14 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
             getStoreAndPrice(productSeries);
         }
     }
+    public void getStoresAndPricesAndEvaluates(List<ProductSeries> productSeriesList) {
+        for (ProductSeries productSeries:productSeriesList){
+            getStoreAndPrice(productSeries);
+            List<ProductEvaluate> productEvaluateList=ServiceManager.productEvaluateService.findAll(new BasicDBObject("productSeries",productSeries));
+            productSeries.setProductEvaluateList(productEvaluateList);
+        }
+    }
+
 
     public void getStoreAndPrice(ProductSeries productSeries) {
         List<ProductSeriesPrice> productSeriesPrices = getProductSeriesPrices(productSeries);
@@ -105,9 +110,18 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         values.add(new BasicDBObject("name", pattern));
         values.add(new BasicDBObject("description", pattern));
         queryCondition.put("$or", values);
+        DB db = getMongoTemplate().getDb();
+        DBCollection collection = db.getCollection("productSeries");
+        int pageSize = 3;
+        Pageable pageable = new PageRequest(currentPage, pageSize);
+//        query = query.limit(pageSize).skip((currentPage - 1) * pageSize);
+//        List<ProductSeries> list = getMongoTemplate().find(query, ProductSeries.class);
+        Long count = collection.count(queryCondition);
+        List<ProductSeries> list = getMongoTemplate().find(new BasicQuery(queryCondition).limit(pageSize).skip((currentPage - 1) * pageSize), ProductSeries.class);
+        getStoresAndPricesAndEvaluates(list);
+        Page<ProductSeries> page = new PageImpl<ProductSeries>(list, pageable, count);
+        return page;
 
-
-        return findPage(queryCondition,currentPage);
     }
 
     public List<ProductSeries> getLowPrices() {

@@ -20,6 +20,7 @@ public class ProductStore{
 
     public Integer getRemain() {
         if (inAndOutList==null) return 0;
+        if (inAndOutList.size()==0) return 0;
         Integer remain=0;
         for (ProductStoreInAndOut inAndOut :inAndOutList){
             String type=inAndOut.getType();
@@ -29,7 +30,8 @@ public class ProductStore{
             remain+=inAndOut.getAmount();
             else remain-=inAndOut.getAmount();
         }
-        return remain;
+        this.remain=remain;
+        return this.remain;
     }
 
     public Integer getWarningAmount() {
