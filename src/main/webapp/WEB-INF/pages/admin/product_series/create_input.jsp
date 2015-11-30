@@ -17,19 +17,19 @@
                     </div>
                 </div>
                 <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
-                    <div class="col-lg-2 col-sm-2  text-right">price</div>
+                    <div class="col-lg-2 col-sm-2  text-right">价格</div>
                     <div class="col-lg-4 col-sm-4">
                         <input type="text" class="form-control " required="true" name="price" ng-model="price"/>
                     </div>
                 </div>
                 <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
-                    <div class="col-lg-2 col-sm-2  text-right ">description</div>
+                    <div class="col-lg-2 col-sm-2  text-right ">产品描述</div>
                     <div class="col-lg-6 col-sm-6">
                         <input type="text" name="description" class="form-control" required="true" model="description"/>
                     </div>
                 </div>
                 <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
-                    <div class="col-lg-2 col-sm-2  text-right">brand</div>
+                    <div class="col-lg-2 col-sm-2  text-right">品牌</div>
                     <div class="col-lg-6 col-sm-6">
                         <input type="text" name="brand" class="form-control " required="true" ng-model="brand"/>
                     </div>
@@ -47,7 +47,7 @@
                 </div>
             </div>
                 <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
-                    <div class="col-lg-2 col-sm-2  text-right">产品分类{{list.length}}</div>
+                    <div class="col-lg-2 col-sm-2  text-right">产品分类</div>
                     <div class="col-lg-6 col-sm-6 form-inline">
                         <div ng-controller='psiCtrl'>
                             <div ng-if="list.length">

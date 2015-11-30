@@ -24,6 +24,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.support.ServletContextResource;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
@@ -76,7 +77,7 @@ public class OrderController extends BaseRestSpringController {
         return "order_evaluate";
     }
     @RequestMapping(value = "/evaluate/product")
-    public String orderProductEvaluate(@ModelAttribute ProductEvaluate productEvaluate,HttpSession session) {
+    public String orderProductEvaluate(@ModelAttribute ProductEvaluate productEvaluate,@RequestParam("files") MultipartFile[] files,HttpSession session) throws IOException {
         User user=getLoginUser(session);
         Assert.notNull(user);
         Order order=ServiceManager.orderService.findById(productEvaluate.getOrderId());
@@ -87,6 +88,27 @@ public class OrderController extends BaseRestSpringController {
                     productEvaluate.setProductSeries(productSeries);
                     productEvaluate.setOrder(order);
                     productEvaluate.setUser(user);
+                    if(files!=null&&files.length>0){
+                        String dirStr="statics/img/user/evaluate";
+                        ServletContext context= ProjectContext.getServletContext();
+                        ServletContextResource dirResource=new ServletContextResource(context,dirStr);
+                        File dirFile=dirResource.getFile();
+                        if (!dirFile.exists() || !dirFile.isDirectory()){
+                            dirFile.mkdirs();
+                        }
+                        //循环获取file数组中得文件
+                        String[] pictures=new String[files.length];
+                        for(int i = 0;i<files.length;i++){
+                            MultipartFile file = files[i];
+                            //保存文件到数据库
+                            String picture=ServiceManager.productSeriesService.saveFile(file.getOriginalFilename(),file.getBytes());
+                            String originalFilename=file.getOriginalFilename();
+                            String destFileStr=dirStr+"/"+picture+originalFilename.substring(originalFilename.lastIndexOf("."));
+                            file.transferTo(new ServletContextResource(context,destFileStr).getFile());
+                            pictures[i]="pic/user/evaluate/"+picture;
+                        }
+                        productEvaluate.setPictures(pictures);
+                    }
                     ServiceManager.productEvaluateService.insert(productEvaluate);
                     productSelected.setProductEvaluate(productEvaluate);
 //                    ServiceManager.orderService.update(order);

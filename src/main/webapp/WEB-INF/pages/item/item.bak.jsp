@@ -23,7 +23,7 @@
 
                 <li class="list-group-item clearfix dropdown
                 <c:if test="${productSeries.productSubCategory.productCategory.id eq productCategory.id}"> active</c:if>
-                        "><a href="javascript:void(0);" class="collapsed">
+                        "><a href="#" class="collapsed">
                     <i class="fa fa-angle-right"></i>
                     ${productCategory.categoryName}
                     <i class="fa fa-angle-down"></i>
@@ -57,7 +57,7 @@
               <div class="row">
                 <div class="col-md-6 col-sm-6">
                   <div class="product-main-image">
-                    <img data-tag="pic1" src="${path}/${productSeries.pictures[0]}" alt="${productSeries.name}" class="img-responsive" data-BigImgSrc="${path}/${productSeries.pictures[0]}">
+                    <img src="${path}/${productSeries.pictures[0]}" alt="${productSeries.name}" class="img-responsive" data-BigImgSrc="${path}/${productSeries.pictures[0]}">
                   </div>
                   <div class="product-other-images">
                     <c:forEach var="pic" items="${productSeries.pictures}" varStatus="varStatus">
@@ -122,21 +122,18 @@
                       </div>
                       <c:choose><c:when test="${empty productSeries.evaluateCount}">0</c:when><c:otherwise>${ productSeries.evaluateCount}</c:otherwise></c:choose>条评论
                       <c:if test="${not empty requestScope.order}">
-                        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0)" class="tour-step1" data-toggle="modal" data-target="#evaluateModal">发表评论</a>
+                        &nbsp;&nbsp;|&nbsp;&nbsp;<input type="button" class="tour-step1" data-toggle="modal" data-target="#evaluateModal" value="发表评论"/>
                       </c:if>
                     </div>
                     <ul class="social-icons">
-                      <%--<div class="bdsharebuttonbox">--%>
-                        <%--<a href="#" class="bds_more" data-cmd="more"></a>--%>
-                        <%--<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>--%>
-                        <%--<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>--%>
-                        <%--<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>--%>
-                        <%--<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>--%>
-                        <%--<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>--%>
-                      <%--</div>--%>
-                        <div class="bdsharebuttonbox">
-                          <a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
-                        <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"这里的东西太好吃了,都是生态环保的湖南宁乡土特产,你也来看看吧！","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16","tag":"pic1"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+                          <div class="bdsharebuttonbox">
+                                <a href="#" class="bds_more" data-cmd="more"></a>
+                                <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                                <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                                <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+                                <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+                                <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                          </div>
                     </ul>
                   </form>
                 </div>
@@ -212,10 +209,10 @@
                             <div class="rateit" data-rateit-value="${productEvaluate.grade}" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
                           </div>
                           <div class="review-item-content">
-                            <p>${productEvaluate.content}</p>
+                                <p>${productEvaluate.content}</p>
                           </div>
-                          <div class="review-item-image">
-                            <p><img src="${path}/${productEvaluate.pictures[0]}"/> </p>
+                          <div class="review-item-images">
+                               <p><img src="${path}/${productEvaluate.pictures[0]}"/></p>
                           </div>
                         </div>
                       </c:forEach>
@@ -237,58 +234,56 @@
       </div>
     </div>
 <div class="modal fade" id="evaluateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <form name="evaluateForm" id="evaluateForm" action="${path}/order/evaluate/product" novalidate="novalidate" method="POST" enctype="multipart/form-data">
-
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
-        <h2 class="modal-title">评论</h2>
-      </div>
-      <div class="modal-body">
-          <fieldset>
-            <div class="form-group has-feedback">
-              <div class="row">
-                <label class="col-lg-2 control-label">满意度<span class="require">*</span></label>
-
-                <div class="col-lg-8 has-success">
-                  <input type="range" value="3" step="1" id="backing0" name="grade"/>
-                  <div class="rateit" data-rateit-backingfld="#backing0" data-rateit-resetable="false"  data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
-                  </div>
-                </div>
+  <form role="form" name="evaluateForm" id="evaluateForm" action="${path}/order/evaluate/product" novalidate="novalidate" enctype="multipart/form-data" method="post">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+                  <h2 class="modal-title">评论</h2>
               </div>
-            </div>
-            <div class="form-group has-feedback">
-              <div class="row">
-                <label class="col-lg-2 control-label">评价内容 <span class="require">*</span></label>
-                <div class="col-lg-8 has-success">
-                  <textarea name="content" class="form-control text-area" rows="6"  placeholder="请发表您的评价" required="true"></textarea>
-                </div>
+              <div class="modal-body">
+                  <fieldset>
+                      <div class="form-group has-feedback">
+                        <div class="row">
+                            <label class="col-lg-2 control-label">满意度<span class="require">*</span></label>
+                            <div class="col-lg-8 has-success">
+                            <input type="range" value="3" step="1" id="backing0" name="grade"/>
+                            <div class="rateit" data-rateit-backingfld="#backing0" data-rateit-resetable="false"  data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group has-feedback">
+                        <div class="row">
+                            <label class="col-lg-2 control-label">评价内容 <span class="require">*</span></label>
+                            <div class="col-lg-8 has-success">
+                                <textarea name="content" class="form-control text-area" rows="6"  placeholder="请发表您的评价" required="true"></textarea>
+                            </div>
+                        </div>
+                        </div>
+                      <div class="form-group has-feedback">
+                          <div class="row">
+                              <label  class="col-lg-2 control-label">上传图片</label>
+                              <div class="col-lg-8 has-success">
+                              <input name="files" id="file-5" class="file"  data-preview-class="bg-info" type="file"
+                                     data-max-file-count="3"
+                                     multiple data-preview-file-type="any" data-show-upload="false">
+                              <input type="hidden" value="${order.id}" name="orderId"/>
+                              <input type="hidden" value="${productSeries.id}" name="productSeriesId"/>
+                          </div>
+                          </div>
+                      </div>
+                      <div class="form-group has-feedback">
+                          <div class="row">
+                              <label  class="col-lg-2 control-label">匿名评论</label>
+                              <div class="col-lg-8 col-sm-8 form-inline">
+                                  <input type="checkbox" name="anonymous" value="true" />
+                              </div>
+                          </div>
+                    </div>
+                  </fieldset>
               </div>
-              </div>
-            <div class="form-group has-feedback">
-              <div class="row">
-                <label  class="col-lg-2 control-label">上传图片</label>
-                <div class="col-lg-8 has-success">
-                  <input name="files" id="file-5" class="file"  data-preview-class="bg-info" type="file"
-                         data-max-file-size="100"  data-max-file-count="3"
-                         multiple data-preview-file-type="any" data-show-upload="false">
-                  <input type="hidden" value="${order.id}" name="orderId"/>
-                  <input type="hidden" value="${productSeries.id}" name="productSeriesId "/>
-                </div>
-              </div>
-            </div>
-            <div class="form-group has-feedback">
-              <div class="row">
-                <label  class="col-lg-2 control-label">匿名评论</label>
-                <div class="col-lg-8 col-sm-8 form-inline">
-                  <input type="checkbox" name="anonymous" value="true" />
-                </div>
-              </div>
-            </div>
-          </fieldset>
-      </div>
-      <div class="modal-footer">
+              <div class="modal-footer">
         <div class="col-lg-6 col-sm-6"></div>
         <div class="col-lg-4 col-sm-4">
           <button type="submit" class="btn btn-primary" >提交</button>
@@ -303,3 +298,4 @@
 
     <!-- Load javascripts at bottom, this will reduce page load time -->
     <!-- BEGIN CORE PLUGINS(REQUIRED FOR ALL PAGES) -->
+

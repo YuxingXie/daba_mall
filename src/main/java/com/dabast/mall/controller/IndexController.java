@@ -297,9 +297,19 @@ public class IndexController extends BaseRestSpringController {
 
 
 
+    @RequestMapping(value="/pic/user/evaluate/{id}")
+    public void showUserEvaluatePic(@PathVariable String id,HttpServletRequest request,HttpServletResponse response) {
+        String dirStr="statics/img/user/evaluate";
+        requestImage(id, request, response, dirStr);
+    }
+
     @RequestMapping(value="/pic/{id}")
     public void showPic(@PathVariable String id,HttpServletRequest request,HttpServletResponse response) {
         String dirStr="statics/img/product";
+        requestImage(id, request, response, dirStr);
+    }
+
+    private void requestImage(String id, HttpServletRequest request, HttpServletResponse response, String dirStr) {
         ServletContext context= ProjectContext.getServletContext();
         ServletContextResource dirResource=new ServletContextResource(context,dirStr);
 
@@ -318,7 +328,7 @@ public class IndexController extends BaseRestSpringController {
                     }
                 }
             }
-            GridFSDBFile picture =ServiceManager.productSeriesService.findFileById(id);
+            GridFSDBFile picture = ServiceManager.productSeriesService.findFileById(id);
             if (picture==null) {
                 request.getRequestDispatcher("/statics/img/img_not_found.jpg").forward(request,response);
                 return;
