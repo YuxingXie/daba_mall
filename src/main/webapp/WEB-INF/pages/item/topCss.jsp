@@ -21,3 +21,10 @@
 <link href="${path}/statics/assets/css/custom.css" rel="stylesheet" type="text/css">
 <%--<link href="${path}/statics/assets/plugins/bootstro.js-master/bootstro.css" rel="stylesheet" type="text/css">--%>
 <link href="${path}/statics/assets/plugins/bootstrap-tour-0.10.2/css/bootstrap-tour.css" rel="stylesheet">
+<%--<link href="${path}/statics/assets/plugins/multi-file-upload/css/default.css" type="text/css" rel="stylesheet">--%>
+<link href="${path}/statics/assets/plugins/multi-file-upload/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+<style>
+    .inline{
+    display: inline-block;
+    }
+</style>

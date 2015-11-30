@@ -22,7 +22,8 @@
 
 <%--<script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/modal.js"></script>--%>
 <script src="${path}/statics/assets/plugins/bootstrap-tour-0.10.2/js/bootstrap-tour.js"></script>
-
+<script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput.js" type="text/javascript"></script>
+<script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput_locale_zh.js" type="text/javascript"></script>
 
 
 <script type="text/javascript">
@@ -99,25 +100,6 @@
 
                 }
             })
-        });
-        $("#evaluateForm").submit(function () {
-            return false;
-//            var $form=$("#evaluateForm");
-//            var url=$form.attr("action");
-//            var data={};
-//            data.productSeriesId=$form.find("[name='productSeriesId']").val();
-//            data.orderId=$form.find("[name='orderId']").val();
-//            data.grade=$form.find("[name='grade']").val();
-//            data.content=$form.find("[name='content']").val();
-//
-//            $.ajax({
-//                url: url,
-//                contentType: "application/json",
-//                data: JSON.stringify(data),
-//                method: "post"
-//            }).done(function (order) {
-//                $('#evaluateModal').modal('hide');
-//            }).fail(function(){ console.log("error！"); });
         });
     });
 </script>
