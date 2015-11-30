@@ -5,7 +5,6 @@
 <![endif]-->
 <script src="${path}/statics/assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/back-to-top.js" type="text/javascript" ></script>
 <script src="${path}/statics/assets/plugins/jQuery-slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <!-- END CORE PLUGINS -->
@@ -24,6 +23,8 @@
 <script src="${path}/statics/assets/plugins/bootstrap-tour-0.10.2/js/bootstrap-tour.js"></script>
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput_locale_zh.js" type="text/javascript"></script>
+<script src="${path}/statics/assets/plugins/onokumus-metisMenu-aaa0c7c/src/metisMenu.js" type="text/javascript"></script>
+
 
 
 <script type="text/javascript">
@@ -63,6 +64,21 @@
         App.initSliderRange();
         App.initUniform();
         App.initTouchspin();
+        $(function() {
+
+            $('#menu').metisMenu();
+
+            $('#menu2').metisMenu({
+                toggle: false
+            });
+
+            $('#menu3').metisMenu({
+                doubleTapToGo: true
+            });
+
+            $('#menu4').metisMenu();
+
+        });
         $(document).on("click",".product-image",function(){
             var $productMainImage=$(".product-main-image").find("img");
             var imgSrc=$(this).attr("src");

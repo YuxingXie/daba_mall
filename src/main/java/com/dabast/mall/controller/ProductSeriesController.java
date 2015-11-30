@@ -56,6 +56,16 @@ public class ProductSeriesController extends BaseRestSpringController {
         }
         return "item";
     }
+    @RequestMapping(value="/sort/{id}")
+    public String showSort(ModelMap model,@PathVariable String id,String orderId) {
+        ProductSeries productSeries = productSeriesService.findProductSeriesById(id);
+        model.addAttribute("productSeries",productSeries);
+        if (orderId!=null){
+            Order order=ServiceManager.orderService.findOrderById(orderId);
+            model.addAttribute("order",order);
+        }
+        return "product_sort";
+    }
     @RequestMapping(value="/popover/{id}")
     public ResponseEntity<ProductSeries> popover(ModelMap model,@PathVariable java.lang.String id) {
         ProductSeries productSeries=productSeriesService.findProductSeriesById(new ObjectId(id));

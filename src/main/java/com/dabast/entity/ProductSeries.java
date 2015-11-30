@@ -1,6 +1,7 @@
 package com.dabast.entity;
 
 import com.dabast.common.helper.service.ServiceManager;
+import com.dabast.common.util.BigDecimalUtil;
 import com.mongodb.DBObject;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.hibernate.validator.constraints.Length;
@@ -13,6 +14,7 @@ import org.springframework.util.Assert;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Document(collection = "productSeries")
 public class ProductSeries {
@@ -35,6 +37,20 @@ public class ProductSeries {
     private String brand;
     @Field(value = "productStore")
     private ProductStore productStore;
+    @Field
+    private String measurementUnit;
+    /**
+     * 规格参数
+     */
+    @Field
+    private List<InstructionManualItem> instructionManual;
+    /**
+     * 规格参数
+     */
+    @Field
+    private List<PackageItem> packageItems;
+    @Field
+    private ProductBrochures productBrochures;
     @DBRef
     private ProductSubCategory productSubCategory;
     @Transient
@@ -51,10 +67,25 @@ public class ProductSeries {
     private Double commonPrice;
     @Transient
     private ProductSeriesPrice currentPrice;
+    @Transient
+    private List<ProductEvaluate> productEvaluateList;
+    @Transient
+    private Double productSeriesEvaluateGrade;
     public void setNewProduct(boolean newProduct) {
         this.newProduct = newProduct;
     }
 
+    public Double getProductSeriesEvaluateGrade() {
+        if (productEvaluateList==null) return 0d;
+        if (productEvaluateList.size()==0) return 0d;
+        Integer totalGrade=0;
+        for (ProductEvaluate productEvaluate:productEvaluateList){
+            Integer grade=productEvaluate.getGrade();
+            totalGrade+=grade;
+        }
+        this.productSeriesEvaluateGrade=BigDecimalUtil.divide(totalGrade,productEvaluateList.size());
+        return this.productSeriesEvaluateGrade;
+    }
 
     public boolean isNewProduct() {
 //        long now=System.currentTimeMillis();
@@ -80,6 +111,14 @@ public class ProductSeries {
 
     public void setProductSeriesPrices(List<ProductSeriesPrice> productSeriesPrices) {
         this.productSeriesPrices = productSeriesPrices;
+    }
+
+    public ProductBrochures getProductBrochures() {
+        return productBrochures;
+    }
+
+    public void setProductBrochures(ProductBrochures productBrochures) {
+        this.productBrochures = productBrochures;
     }
 
     public List<ProductProperty> getProductProperties() {
@@ -143,8 +182,7 @@ public class ProductSeries {
     }
 
 
-    @Transient
-    private List<ProductEvaluate> productEvaluateList;
+
 
     public void setProductEvaluateList(List<ProductEvaluate> productEvaluateList) {
         this.productEvaluateList = productEvaluateList;
@@ -201,6 +239,22 @@ public class ProductSeries {
 
     public void setProductPropertyValues(List<ProductPropertyValue> productPropertyValues) {
         this.productPropertyValues = productPropertyValues;
+    }
+
+    public String getMeasurementUnit() {
+        return measurementUnit;
+    }
+
+    public void setMeasurementUnit(String measurementUnit) {
+        this.measurementUnit = measurementUnit;
+    }
+
+    public List<InstructionManualItem> getInstructionManual() {
+        return instructionManual;
+    }
+
+    public void setInstructionManual(List<InstructionManualItem> instructionManual) {
+        this.instructionManual = instructionManual;
     }
 
     @Override

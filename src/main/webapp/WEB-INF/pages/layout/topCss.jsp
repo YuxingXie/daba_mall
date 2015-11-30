@@ -10,6 +10,8 @@
 <link href="${path}/statics/assets/plugins/layerslider/css/layerslider.css" rel="stylesheet" type="text/css">
 <%--style-metronic.css，style-responsive.css和顶部弹出的二级菜单有关--%>
 <link href="${path}/statics/assets/css/style-metronic.css" rel="stylesheet" type="text/css">
+<%--uniform.default.css似乎与菜单弹出有关--%>
+<link href="${path}/statics/assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/style-responsive.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/custom.css" rel="stylesheet" type="text/css">
