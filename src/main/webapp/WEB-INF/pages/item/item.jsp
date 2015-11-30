@@ -266,7 +266,7 @@
                 <div class="col-lg-8 has-success">
                   <input type="file" name="files" class="form-control"/>
                   <input type="hidden" value="${order.id}" name="orderId"/>
-                  <input type="hidden" value="${productSeries.id}" name="productSeriesId"/>
+                  <input type="hidden" value="${productSeries.id}" name="productSeriesId "/>
                 </div>
               </div>
 
