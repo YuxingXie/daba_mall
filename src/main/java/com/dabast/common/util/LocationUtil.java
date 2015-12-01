@@ -104,11 +104,11 @@ public class LocationUtil {
         }
         return ip;
     }
-    public static void main(String[] args) throws IOException, JSONException{
-//        getAddressByIP();
-        //这里调用百度的ip定位api服务 详见 http://api.map.baidu.com/lbsapi/cloud/ip-location-api.htm
-        JSONObject json = readJsonFromUrl("http://api.map.baidu.com/location/ip?ak=F454f8a5efe5e577997931cc01de3974&ip=192.168.1.1");
-        System.out.println(json.toString());
-        System.out.println(((JSONObject) json.get("content")).get("address"));
-    }
+//    public static void main(String[] args) throws IOException, JSONException{
+////        getAddressByIP();
+//        //这里调用百度的ip定位api服务 详见 http://api.map.baidu.com/lbsapi/cloud/ip-location-api.htm
+//        JSONObject json = readJsonFromUrl("http://api.map.baidu.com/location/ip?ak=F454f8a5efe5e577997931cc01de3974&ip=192.168.1.1");
+//        System.out.println(json.toString());
+//        System.out.println(((JSONObject) json.get("content")).get("address"));
+//    }
 }

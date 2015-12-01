@@ -102,13 +102,19 @@ public class IndexController extends BaseRestSpringController {
     public String  searchProducts(ModelMap model,String keyWord,Integer page) {
         page=page==null?1:page;
         keyWord=keyWord==null?"":keyWord;
-        Page<ProductSeries> productSeriesList=ServiceManager.productSeriesService.findProductSeriesesByKeyWord(keyWord,page);
-        if (productSeriesList.getContent().size()==1){
-            ProductSeries productSeries=productSeriesList.getContent().get(0);
+        Page<ProductSeries> productSeriesListPage=ServiceManager.productSeriesService.findProductSeriesesByKeyWord(keyWord,page,3);
+        if (productSeriesListPage.getTotalElements()==1l){
+            ProductSeries productSeries=productSeriesListPage==null?null:productSeriesListPage.getContent()==null?null:productSeriesListPage.getContent().size()==0?null:productSeriesListPage.getContent().get(0);
+            if (productSeries==null){
+                model.addAttribute("_page", productSeriesListPage);
+                model.addAttribute("page", page);
+                model.addAttribute("keyWord", keyWord);
+                return "search-result";
+            }
             model.addAttribute("productSeries",productSeries);
             return "item";
         }else{
-            model.addAttribute("_page", productSeriesList);
+            model.addAttribute("_page", productSeriesListPage);
             model.addAttribute("page", page);
             model.addAttribute("keyWord", keyWord);
             return "search-result";
@@ -365,13 +371,13 @@ public class IndexController extends BaseRestSpringController {
         user.setSex("f");
         Map<String,String[]> params=new CustomServletRequestWrapper(request).getParameterMap();
         Map<String,String[]> params2=request.getParameterMap();
-        for (String key:params.keySet()){
-            System.out.println("---------------------");
-            String[] values=params.get(key);
-            for (String value :values){
-                System.out.println("key:"+key+",value:"+value);
-            }
-        }
+//        for (String key:params.keySet()){
+//            System.out.println("---------------------");
+//            String[] values=params.get(key);
+//            for (String value :values){
+//                System.out.println("key:"+key+",value:"+value);
+//            }
+//        }
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 

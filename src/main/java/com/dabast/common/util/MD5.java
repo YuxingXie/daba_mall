@@ -36,8 +36,8 @@ public final class MD5 {
 			return null; 
 		}
 	}
-	public static void main(String[] args) {
-		System.out.println(MD5.convert("123"));
-	}
+//	public static void main(String[] args) {
+//		System.out.println(MD5.convert("123"));
+//	}
 
 }

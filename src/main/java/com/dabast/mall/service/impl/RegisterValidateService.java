@@ -93,9 +93,9 @@ public class RegisterValidateService {
                     //验证激活码是否正确
                     if (validateCode.equals(user.getValidateCode())) {
                         //激活成功， //并更新用户的激活状态，为已激活
-                        System.out.println("==sq===" + user.getStatus());
+//                        System.out.println("==sq===" + user.getStatus());
                         user.setStatus(1);//把状态改为激活
-                        System.out.println("==sh===" + user.getStatus());
+//                        System.out.println("==sh===" + user.getStatus());
                         userDao.update(user);
                     } else {
                         throw new ServiceException("激活码不正确");

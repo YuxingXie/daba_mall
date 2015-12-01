@@ -2,13 +2,11 @@ package com.dabast.mall.controller;
 
 import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.helper.service.ServiceManager;
-import com.dabast.entity.Order;
-import com.dabast.entity.ProductCategory;
-import com.dabast.entity.ProductSeries;
-import com.dabast.entity.ProductSubCategory;
+import com.dabast.entity.*;
 import com.dabast.mall.service.IProductSeriesService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -48,9 +46,18 @@ public class ProductSeriesController extends BaseRestSpringController {
 
 
     @RequestMapping(value="/{id}")
-    public String show(ModelMap model,@PathVariable String id,String orderId) {
+    public String show(ModelMap model,@PathVariable String id,String orderId,Integer page) {
+        if (page==null){
+            model.addAttribute("activeEvaluate",false);
+        }else{
+            model.addAttribute("activeEvaluate",true);
+        }
+        page=page==null?1:page;
         ProductSeries productSeries = productSeriesService.findProductSeriesById(id);
+        Page<ProductEvaluate> productEvaluateListPage=ServiceManager.productEvaluateService.findProductEvaluatesPageByProductSeries(productSeries, page,10);
         model.addAttribute("productSeries",productSeries);
+        model.addAttribute("_page",productEvaluateListPage);
+        model.addAttribute("page",page);
         if (orderId!=null){
             Order order=ServiceManager.orderService.findOrderById(orderId);
             model.addAttribute("order",order);

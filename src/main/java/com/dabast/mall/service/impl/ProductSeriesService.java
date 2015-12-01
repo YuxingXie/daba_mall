@@ -42,8 +42,12 @@ public class ProductSeriesService extends BaseEntityManager<ProductSeries> imple
         return productSeriesDao.findProductSeriesById(id);
     }
     @Override
-    public Page<ProductSeries> findProductSeriesesByKeyWord(String keyWord, int currentPage) {
-        return productSeriesDao.findProductSeriesesByKeyWord(keyWord,currentPage);
+    public ProductSeries findProductSeriesByIdButEvaluate(String id,boolean ignoreEvaluate) {
+        return productSeriesDao.findProductSeriesByIdButEvaluate(new ObjectId(id), ignoreEvaluate);
+    }
+    @Override
+    public Page<ProductSeries> findProductSeriesesByKeyWord(String keyWord, int currentPage,int pageSize) {
+        return productSeriesDao.findProductSeriesesByKeyWord(keyWord,currentPage,pageSize);
     }
 
     @Override

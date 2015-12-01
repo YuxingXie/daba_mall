@@ -164,11 +164,10 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 //        }
 //        return e;
     }
-    public Page<E> findPage(DBObject condition,int currentPage){
+    public Page<E> findPage(DBObject condition,int currentPage,int pageSize){
         DB db = mongoTemplate.getDb();
         DBCollection collection = db.getCollection(getCollectionName());
-        int pageSize = 3;
-        Pageable pageable = new PageRequest(currentPage, pageSize);
+        Pageable pageable = new PageRequest(currentPage-1, pageSize);
 //        query = query.limit(pageSize).skip((currentPage - 1) * pageSize);
 //        List<ProductSeries> list = getMongoTemplate().find(query, ProductSeries.class);
         Long count = collection.count(condition);
@@ -582,19 +581,5 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         Query query=new BasicQuery(dbObject);
         getMongoTemplate().remove(query,collectionClass);
     }
-    public static void main(String[] args){
-        List<User> users=new ArrayList<User>();
-        User john=new User();
-        john.setName("John");
-        users.add(john);
-        Object usersObject=users;
-        Collection usersCollection=(Collection)users;
-        Iterator iterator=usersCollection.iterator();
-        while (iterator.hasNext()){
-            User user=(User)iterator.next();
-            System.out.println(user.getName());
-            System.out.println(user.getClass().getSimpleName());
-            System.out.println(user.getClass().getName());
-        }
-    }
+
 }

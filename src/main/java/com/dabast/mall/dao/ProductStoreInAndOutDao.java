@@ -32,11 +32,11 @@ public class ProductStoreInAndOutDao extends BaseMongoDao<ProductStoreInAndOut> 
         dbObject.put("$or",values);
         dbObject.put("type","out");
         Query query=new BasicQuery(dbObject);
-        System.out.println(query);
+//        System.out.println(query);
         List<ProductStoreInAndOut> inAndOuts=getMongoTemplate().find(query,ProductStoreInAndOut.class);
-        for (ProductStoreInAndOut inAndOut:inAndOuts){
-            if (inAndOut.getProductSeries()!=null) System.out.println(inAndOut.getProductSeries().getName()+":"+inAndOut.getAmount());
-        }
+//        for (ProductStoreInAndOut inAndOut:inAndOuts){
+//            if (inAndOut.getProductSeries()!=null) System.out.println(inAndOut.getProductSeries().getName()+":"+inAndOut.getAmount());
+//        }
 //        getMongoTemplate().remove(new BasicQuery(dbObject));
     }
 }

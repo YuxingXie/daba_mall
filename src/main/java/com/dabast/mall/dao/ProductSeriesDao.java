@@ -76,8 +76,7 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         dbObject.put("productSeries",dbRef);
         return ServiceManager.productSeriesPriceService.findAll(dbObject);
     }
-
-    public ProductSeries findProductSeriesById(ObjectId objectId) {
+    public ProductSeries findProductSeriesByIdButEvaluate(ObjectId objectId,boolean ignoreEvaluate) {
 
         ProductSeries productSeries=findById(objectId);
         DBObject productPropertyDbObject=new BasicDBObject();
@@ -95,14 +94,19 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
             List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
             productSeries.getProductStore().setInAndOutList(inAndOuts);
         }
-        List<ProductEvaluate> productEvaluateList=ServiceManager.productEvaluateService.findAll(new BasicDBObject("productSeries",productSeries));
-        productSeries.setProductEvaluateList(productEvaluateList);
+       if (!ignoreEvaluate){
+           List<ProductEvaluate> productEvaluateList=ServiceManager.productEvaluateService.findAll(new BasicDBObject("productSeries",productSeries));
+           productSeries.setProductEvaluateList(productEvaluateList);
+       }
         return productSeries;
+    }
+    public ProductSeries findProductSeriesById(ObjectId objectId) {
+        return findProductSeriesByIdButEvaluate(objectId,false);
     }
     public ProductSeries findProductSeriesById(String id) {
         return findProductSeriesById(new ObjectId(id));
     }
-    public Page<ProductSeries> findProductSeriesesByKeyWord(String keyWord,int currentPage) {
+    public Page<ProductSeries> findProductSeriesesByKeyWord(String keyWord,int currentPage,int pageSize) {
 //        Criteria criteria = new Criteria().orOperator(Criteria.where("name").regex(".*?" + keyWord + ".*"), Criteria.where("description").regex(".*?" + keyWord + ".*"));
         Pattern pattern = Pattern.compile(".*?" + keyWord + ".*");
         DBObject queryCondition=new BasicDBObject();
@@ -112,11 +116,11 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         queryCondition.put("$or", values);
         DB db = getMongoTemplate().getDb();
         DBCollection collection = db.getCollection("productSeries");
-        int pageSize = 3;
-        Pageable pageable = new PageRequest(currentPage, pageSize);
+        Pageable pageable = new PageRequest(currentPage-1, pageSize);
 //        query = query.limit(pageSize).skip((currentPage - 1) * pageSize);
 //        List<ProductSeries> list = getMongoTemplate().find(query, ProductSeries.class);
         Long count = collection.count(queryCondition);
+//        System.out.println("total count is "+count);
         List<ProductSeries> list = getMongoTemplate().find(new BasicQuery(queryCondition).limit(pageSize).skip((currentPage - 1) * pageSize), ProductSeries.class);
         getStoresAndPricesAndEvaluates(list);
         Page<ProductSeries> page = new PageImpl<ProductSeries>(list, pageable, count);

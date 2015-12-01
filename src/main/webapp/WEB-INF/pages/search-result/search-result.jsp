@@ -23,7 +23,7 @@
         <div class="col-md-12 col-sm-12">
             <div class="content-search margin-bottom-20">
                 <div class="row">
-                    <div class="col-md-6 col-sm-6">
+                    <div class="col-md-3 col-sm-3 text-right">
                         <h1>搜索到以下商品</h1>
                     </div>
                     <div class="col-md-6 col-sm-6">
@@ -32,7 +32,7 @@
                                 <input type="text" placeholder="重新搜索" class="form-control" name="keyWord"
                                        value="${keyWord}">
                       <span class="input-group-btn">
-                        <button class="btn btn-primary" type="submit">搜索</button>
+                        <button class="btn btn-primary pull-left" type="submit">搜索</button>
                       </span>
                             </div>
                         </form>
@@ -53,39 +53,51 @@
                         <c:forEach var="productSeries" items="${_page.content}" varStatus="varStatus">
                             <c:choose>
                                 <c:when test="${varStatus.index mod 2 eq 0}">
-                                    <div class="row bg-info text-center" style="margin-top: 20px;margin-bottom: 10px;">
+                                    <div class="row text-center" style="margin-top: 5px;margin-bottom: 5px;">
                                  </c:when>
                                 <c:otherwise>
-                                    <div class="row text-center" style="margin-top: 20px;margin-bottom: 10px;">
+                                    <div class="row text-center bg-info" style="margin-top: 5px;margin-bottom: 5px;">
                                 </c:otherwise>
                             </c:choose>
 
-                                <div class="col-lg-2 col-sm-2">
+                                <div class="col-lg-1 col-sm-1">
                                     <a href="${path}/product/${productSeries.id}">
                                         <img src="${path}/${productSeries.pictures[0]}" class="pull-left resule-thumb" alt="${productSeries.name}">
                                     </a>
                                 </div>
-                                <div class="col-lg-2 col-sm-2">
+
+                                <div class="col-lg-3 col-sm-3 pull-left">
                                     <div>
-                                    <h5><a href="${path}/product/${productSeries.id}" class="high-lighter">${productSeries.name}</a></h5>
+                                    <a href="${path}/product/${productSeries.id}" class="high-lighter">${productSeries.name}</a>
                                 </div>
                                 </div>
-                                <div class="col-lg-3 col-sm-3">
-                                    <p class="fa fa-file-text-o high-lighter">${productSeries.description}</p>
+                                <div class="col-lg-2 col-sm-2 ">
+                                    <p class="fa">${productSeries.productSubCategory.subCategoryName}</p>
                                 </div>
-                                <div class="col-lg-3 col-sm-3">
-                                    <p class="fa fa-inbox">库存:<a><c:choose><c:when test="${empty productSeries.productStore}">0</c:when><c:otherwise>${productSeries.productStore.remain}</c:otherwise></c:choose></a></p>
-                                    <p class="fa fa-pencil">评论数:<a>${productSeries.evaluateCount}</a></p>
-                                    <p class="fa fa-rmb">价格:<a>${productSeries.commonPrice}</a></p>
+                                <div class="col-lg-4 col-sm-4 ">
+                                    <p class="fa fa-file-text-o high-lighter pull-left">${productSeries.description}</p>
                                 </div>
-                                <div class="col-lg-1 col-sm-1  pull-right">
-                                    <button class="btn btn-primary fa fa-shopping-cart fancybox-fast-view" data-prod="${productSeries.id}">添加到购物车</button>
-                                </div>
+                                <div class="col-lg-2 col-sm-2">
+                                    <ul class="list-group">
+                                        <c:choose>
+                                            <c:when test="${varStatus.index mod 2 eq 0}">
 
-
-
-
+                                                <li class="list-group-item fa fa-inbox ">库存:<a><c:choose><c:when test="${empty productSeries.productStore}">0</c:when><c:otherwise>${productSeries.productStore.remain}</c:otherwise></c:choose></a></li>
+                                                <li class="list-group-item fa fa-pencil">评论数:<a>${productSeries.evaluateCount}</a></li>
+                                                <li class="list-group-item fa fa-rmb">价格:<a>${productSeries.commonPrice}</a></li>
+                                                <li class="list-group-item btn btn-primary fa fa-shopping-cart fancybox-fast-view" data-prod="${productSeries.id}"></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li class="list-group-item list-group-item-info fa fa-inbox ">库存:<a><c:choose><c:when test="${empty productSeries.productStore}">0</c:when><c:otherwise>${productSeries.productStore.remain}</c:otherwise></c:choose></a></li>
+                                                <li class="list-group-item list-group-item-info fa fa-pencil">评论数:<a>${productSeries.evaluateCount}</a></li>
+                                                <li class="list-group-item list-group-item-info fa fa-rmb">价格:<a>${productSeries.commonPrice}</a></li>
+                                                <li class="list-group-item list-group-item-info btn btn-primary fa fa-shopping-cart fancybox-fast-view" data-prod="${productSeries.id}"></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </ul>
+                                </div>
                             </div>
+
                         </c:forEach>
                     </c:otherwise>
                 </c:choose>
@@ -96,56 +108,7 @@
             <!-- END PRODUCT LIST -->
             <!-- BEGIN PAGINATOR -->
             <div class="row" style=" padding-bottom:20px;">
-                <div class="col-md-12 col-sm-12">
-                    <p class="demo demo4_top pull-right"></p>
-                    <%--<ul class="pagination pull-right">--%>
-                        <%--<c:set var="maxShowPage" value="3"/>--%>
-                        <%--<c:set var="totalPages" value="${_page.totalPages}"/>--%>
-                        <%--<c:if test="${page gt 1}">--%>
-                            <%--<li>--%>
-                                <%--<a href="javascript:void(0)" class="prev-pages">&laquo;--%>
-                                    <%--<form action="${path}/index/product/search" method="post">--%>
-                                        <%--<input type="hidden" name="keyWord" value="${keyWord}">--%>
-                                        <%--<input type="hidden" name="page" value="${page-1}">--%>
-                                    <%--</form>--%>
-                                <%--</a>--%>
-                            <%--</li>--%>
-                        <%--</c:if>--%>
-
-                        <%--<c:forEach begin="${page}" end="${page+maxShowPage}" varStatus="varStatus">--%>
-                            <%--<c:choose>--%>
-                                <%--<c:when test="${varStatus.index eq page}">--%>
-                                    <%--<li class="now-page" pageIndex="${varStatus.index}">--%>
-                                        <%--<span>${varStatus.index}</span></li>--%>
-                                <%--</c:when>--%>
-                                <%--<c:otherwise>--%>
-                                    <%--<c:if test="${varStatus.index le totalPages}">--%>
-                                        <%--<li class="li-form" pageIndex="${varStatus.index}">--%>
-                                            <%--<a href="javascript:void(0) ">${varStatus.index}</a>--%>
-
-                                            <%--<form action="${path}/index/product/search" method="post">--%>
-                                                <%--<input type="hidden" name="keyWord" value="${keyWord}">--%>
-                                                <%--<input type="hidden" name="page" value="${varStatus.index}">--%>
-                                            <%--</form>--%>
-                                        <%--</li>--%>
-                                    <%--</c:if>--%>
-                                <%--</c:otherwise>--%>
-                            <%--</c:choose>--%>
-
-                        <%--</c:forEach>--%>
-                        <%--<c:if test="${page+maxShowPage lt totalPages}">--%>
-                            <%--<li>--%>
-                                <%--<a href="javascript:void(0)" class="next-pages">&raquo;--%>
-                                    <%--<form action="${path}/index/product/search" method="post">--%>
-                                        <%--<input type="hidden" name="keyWord" value="${keyWord}">--%>
-                                        <%--<input type="hidden" name="page" value="${page+1}">--%>
-                                    <%--</form>--%>
-                                <%--</a>--%>
-
-                            <%--</li>--%>
-                        <%--</c:if>--%>
-                    <%--</ul>--%>
-                </div>
+                <div id="infoPage"></div>
             </div>
             <!-- END PAGINATOR -->
         </div>

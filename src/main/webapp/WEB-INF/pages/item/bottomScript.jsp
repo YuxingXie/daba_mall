@@ -3,9 +3,7 @@
 <!--[if lt IE 9]>
 <script src="${path}/statics/assets/plugins/respond.min.js"></script>
 <![endif]-->
-<script src="${path}/statics/assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/back-to-top.js" type="text/javascript" ></script>
 <script src="${path}/statics/assets/plugins/jQuery-slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <!-- END CORE PLUGINS -->
 
@@ -15,27 +13,52 @@
 <script src="${path}/statics/assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script><!-- Quantity -->
 <script src="${path}/statics/assets/plugins/rateit/src/jquery.rateit.js" type="text/javascript"></script>
 <script type="text/javascript" src='${path}/statics/assets/plugins/zoom/jquery.zoom.min.js'></script><!-- product zoom -->
-<script src="${path}/statics/assets/plugins/jquery-ui.js" type="text/javascript" ></script>
+
 <script src="${path}/statics/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
-
-<%--<script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/modal.js"></script>--%>
+<script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/tooltip.js"></script>
+<script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/popover.js"></script>
 <script src="${path}/statics/assets/plugins/bootstrap-tour-0.10.2/js/bootstrap-tour.js"></script>
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput_locale_zh.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/onokumus-metisMenu-aaa0c7c/src/metisMenu.js" type="text/javascript"></script>
-
-
+<script src="${path}/statics/assets/plugins/bootstrap-paginator-master/build/bootstrap-paginator.min.js"></script>
+<script src="${path}/statics/assets/plugins/jquery-ui.js" type="text/javascript" ></script>
 
 <script type="text/javascript">
+    <c:if test="${not empty _page and _page.totalPages gt 0}">
+    var options = {
+        currentPage:${page},
+        totalPages: ${_page.totalPages},
+        itemContainerClass: function (type, page, current) {
+            return (page === current) ? "active" : "everyPage";
+        },pageUrl: function(type, page, current){
+            return "${path}/product_series/${productSeries.id}?page="+page;
+        },itemTexts: function (type, page, current) {
+            switch (type) {
+                case "first":
+                    return "<i class='fa fa-fast-backward'></i>";
+                case "prev":
+                    return "<i class='fa fa-backward'></i>";
+                case "next":
+                    return "<i class='fa fa-forward'></i>";
+                case "last":
+                    return "<i class='fa fa-fast-forward'></i>";
+                case "page":
+                    return page;
+            }
+        }
+    };
+    $('#infoPage').bootstrapPaginator(options);
+    </c:if>
     jQuery(document).ready(function() {
         var $tour_step1=$(".tour-step1");
         if($tour_step1.length){
             var tour = new Tour({
                 storage:false,
-                debug:true,
+                debug:false,
                 backdrop:true,
-                template: "<div class='popover tour'><div class='arrow'></div>" +
+                template: "<div class='popover'><div class='arrow'></div>" +
                 "<h3 class='popover-title'></h3>" +
                 "<div class='popover-content'></div>" +
                 "<div class='popover-navigation'>" +
@@ -53,7 +76,8 @@
                         title: "提示",
                         content: "在这里可以查看你发表的评论"
                     }
-                ]});
+                ]
+        });
             tour.init();
             tour.start();
         }
@@ -64,21 +88,7 @@
         App.initSliderRange();
         App.initUniform();
         App.initTouchspin();
-        $(function() {
-
-            $('#menu').metisMenu();
-
-            $('#menu2').metisMenu({
-                toggle: false
-            });
-
-            $('#menu3').metisMenu({
-                doubleTapToGo: true
-            });
-
-            $('#menu4').metisMenu();
-
-        });
+        $(function() {$('#menu').metisMenu();});
         $(document).on("click",".product-image",function(){
             var $productMainImage=$(".product-main-image").find("img");
             var imgSrc=$(this).attr("src");

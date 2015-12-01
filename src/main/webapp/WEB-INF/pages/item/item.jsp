@@ -115,7 +115,8 @@
                       <input type="range" value="${ productSeries.productSeriesEvaluateGrade}" step="0.5" id="backing4" disabled/>
                       <div class="rateit" data-rateit-backingfld="#backing4" data-rateit-resetable="false"  data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
                       </div>
-                      <c:choose><c:when test="${empty productSeries.evaluateCount}">0</c:when><c:otherwise>${ productSeries.evaluateCount}</c:otherwise></c:choose>条评论
+                      <%--<c:choose><c:when test="${empty page.totalElements}">0</c:when><c:otherwise>${ productSeries.evaluateCount}</c:otherwise></c:choose>条评论--%>
+                      ${_page.totalElements}条评论
                       <c:if test="${not empty requestScope.order}">
                         &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0)" class="tour-step1" data-toggle="modal" data-target="#evaluateModal">发表评论</a>
                       </c:if>
@@ -123,7 +124,7 @@
                     <ul class="social-icons">
                         <div class="bdsharebuttonbox">
                           <a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
-                        <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"这里的东西太好吃了,都是生态环保的湖南宁乡土特产,你也来看看吧！","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16","tag":"pic1"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+                        <%--<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"这里的东西太好吃了,都是生态环保的湖南宁乡土特产,你也来看看吧！","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16","tag":"pic1"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>--%>
                     </ul>
                   </form>
                 </div>
@@ -138,12 +139,13 @@
         <div class="row margin-bottom-40">
           <div class="product-page-content">
             <ul id="myTab" class="nav nav-tabs">
-              <li class="active"><a href="#Description" data-toggle="tab">商品介绍</a></li>
+              <li <c:if test="${!activeEvaluate}">class="active"</c:if>><a href="#Description" data-toggle="tab">商品介绍</a></li>
               <li><a href="#Information" data-toggle="tab">规格参数</a></li>
-              <li class="tour-step2"><a href="#Reviews" data-toggle="tab">商品评论(<c:choose><c:when test="${empty productSeries.evaluateCount}">0</c:when><c:otherwise>${ productSeries.evaluateCount}</c:otherwise></c:choose>)</a></li>
+
+              <li class="tour-step2<c:if test="${activeEvaluate}"> active</c:if>"><a href="#Reviews" data-toggle="tab">商品评论(${_page.totalElements})</a></li>
             </ul>
             <div id="myTabContent" class="tab-content">
-                <div class="tab-pane fade in active" id="Description">
+              <div class="tab-pane fade<c:if test="${!activeEvaluate}"> in active</c:if>" id="Description">
                     <c:choose>
                       <c:when test="${empty productSeries.productBrochures}">
                         <tr>
@@ -185,13 +187,13 @@
                   </c:choose>
                 </table>
               </div>
-              <div class="tab-pane fade" id="Reviews">
+              <div class="tab-pane fade<c:if test="${activeEvaluate}"> in active</c:if>" id="Reviews">
                 <!--<p>There are no reviews for this product.</p>-->
 
-                <c:forEach var="productEvaluate" items="${productSeries.productEvaluateList}">
-                  <div class="review-item clearfix">
+                <c:forEach var="productEvaluate" items="${_page.content}" varStatus="varStatus">
+                  <div class="review-item clearfix<c:if test="${varStatus.index mod 2 eq 1}"> bg-info</c:if>">
                     <div class="review-item-submitted">
-                      <strong>
+                      <strong class="fa fa-user">
                         <c:choose>
                           <c:when test="${productEvaluate.anonymous}">匿名用户</c:when>
                           <c:otherwise>${productEvaluate.order.user.name}</c:otherwise>
@@ -201,13 +203,16 @@
                       <div class="rateit" data-rateit-value="${productEvaluate.grade}" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
                     </div>
                     <div class="review-item-content">
-                      <p>${productEvaluate.content}</p>
+                      <p class="fa fa-file-text-o">${productEvaluate.content}</p>
                     </div>
                     <div class="review-item-image">
                       <p><img src="${path}/${productEvaluate.pictures[0]}"/> </p>
                     </div>
                   </div>
                 </c:forEach>
+                <div class="row" style="padding-bottom:20px;">
+                  <div id="infoPage"></div>
+                </div>
               </div>
             </div>
           </div>

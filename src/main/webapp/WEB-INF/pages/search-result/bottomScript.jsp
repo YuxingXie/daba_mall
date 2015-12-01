@@ -28,31 +28,32 @@
 <script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
 <%--<script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>--%>
-<script type="text/javascript" src="${path}/statics/assets/plugins/jquery-bootpag-master/lib/jquery.bootpag.js"></script>
+<%--<script type="text/javascript" src="${path}/statics/assets/plugins/jquery-bootpag-master/lib/jquery.bootpag.js"></script>--%>
+<script src="${path}/statics/assets/plugins/bootstrap-paginator-master/build/bootstrap-paginator.min.js"></script>
 <script>
-    $('.demo4_top,.demo4_bottom').bootpag({
-        total: ${_page.totalPages},
-        page: ${page},
-        maxVisible: 3,
-        leaps: false,
-        firstLastUse: true,
-        first: '<span aria-hidden="true">&larr;</span>',
-        last: '<span aria-hidden="true">&rarr;</span>'
-//        wrapClass: 'pagination',
-//        activeClass: 'active',
-//        disabledClass: 'disabled',
-//        nextClass: 'next',
-//        prevClass: 'prev',
-//        lastClass: 'last',
-//        firstClass: 'first'
-    }).on("page", function(event, num){
-//        $(".content4").html("Page " + num); // or some ajax content loading...
-        <c:url var="url" value="/index/product/search">
-        <c:param name="keyWord" value="${keyWord}"/>
-        <%--<c:param name="page" value="${page}"/>--%>
-        </c:url>
-        window.location.href="${url}&page="+num;
-    }).find('.pagination');
+    var options = {
+        currentPage: ${page},
+        totalPages: ${_page.totalPages},
+        itemContainerClass: function (type, page, current) {
+            return (page === current) ? "active" : "everyPage";
+        },pageUrl: function(type, page, current){
+            return "${path}/index/product/search?page="+page+"&keyWord=${keyWord}";
+        },itemTexts: function (type, page, current) {
+            switch (type) {
+                case "first":
+                    return "<i class='fa fa-fast-backward'></i>";
+                case "prev":
+                    return "<i class='fa fa-backward'></i>";
+                case "next":
+                    return "<i class='fa fa-forward'></i>";
+                case "last":
+                    return "<i class='fa fa-fast-forward'></i>";
+                case "page":
+                    return page;
+            }
+        }
+    }
+    $('#infoPage').bootstrapPaginator(options);
     highLighter = function () {
         $(".high-lighter").each(function () {
             var oldText = $(this).text();
@@ -61,11 +62,11 @@
         });
     }
     $(document).ready(function () {
-        App.init();
-        App.initBxSlider();
-        Index.initLayerSlider();
-        App.initImageZoom();
-        App.initTouchspin();
+//        App.init();
+//        App.initBxSlider();
+//        Index.initLayerSlider();
+//        App.initImageZoom();
+//        App.initTouchspin();
         highLighter();
     });
 </script>

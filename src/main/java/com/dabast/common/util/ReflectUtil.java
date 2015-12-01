@@ -113,15 +113,15 @@ public class ReflectUtil {
      * @param object
      */
     public static <E> void analysisBean(Object object) throws IllegalAccessException {
-        System.out.println("-----begin analysis "+object.getClass().getName()+"--------");
+        //System.out.println("-----begin analysis "+object.getClass().getName()+"--------");
         for (Field field : object.getClass().getDeclaredFields()) {
             String fieldName = field.getName();
-            System.out.println("field name:" + fieldName);
+            //System.out.println("field name:" + fieldName);
             field.setAccessible(true);
             Object fieldValue = field.get(object);
             Type genericType=field.getGenericType();
             if (field.getType().isPrimitive() ||ReflectUtil.isWrapClass(field.getType()) ||field.getType()==String.class){
-                System.out.println("field is a primitive type type");
+                //System.out.println("field is a primitive type type");
             }else if (field.getType().isArray()){
                 if (fieldValue!=null){
                     System.out.print("field is an array,field values are:");
@@ -130,24 +130,24 @@ public class ReflectUtil {
                     for (Object fieldArrayObjectItem:fieldArrayObject){
                         System.out.print(fieldArrayObjectItem + ",class is:" + fieldArrayObjectItem.getClass() + ",");
                     }
-                    System.out.println("");
+                    //System.out.println("");
                 }else{
-                    System.out.println("field is an array,field value is null");
+                    //System.out.println("field is an array,field value is null");
                 }
             }else if (genericType instanceof ParameterizedType){
 
                 ParameterizedType parameterizedType=(ParameterizedType)genericType;
-                System.out.println("field is a parameterized type:"+parameterizedType);
+                //System.out.println("field is a parameterized type:"+parameterizedType);
                 Type[] actualTypes=parameterizedType.getActualTypeArguments();
                 Type rawType=parameterizedType.getRawType();
 
                 if (rawType==List.class){
-                    System.out.println("field is a java.util.List");
+                    //System.out.println("field is a java.util.List");
                 }
 
                 if (actualTypes.length>0){
                     Class class0=(Class<?>)actualTypes[0];
-                    System.out.println("field parameterized type:"+class0);
+                    //System.out.println("field parameterized type:"+class0);
                 }
                 if (fieldValue!=null&&rawType==List.class){
                     List<?> fieldValueList=(ArrayList)fieldValue;
@@ -157,10 +157,10 @@ public class ReflectUtil {
                 }
 
             }else{
-                System.out.println("field is a simple class");
+                //System.out.println("field is a simple class");
             }
 
-            System.out.println("--------------------------------------------------------------");
+            //System.out.println("--------------------------------------------------------------");
         }
     }
 
