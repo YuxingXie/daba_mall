@@ -166,7 +166,8 @@ public class ProductSeries {
             Assert.notNull(productSeriesPrice.getBeginDate());
             if (productSeriesPrice.getEndDate()==null){
                 if (now.after(productSeriesPrice.getBeginDate())){
-                    return productSeriesPrice;
+                    this.currentPrice=productSeriesPrice;
+                    return this.currentPrice;
                 }else{
                     continue;
                 }

@@ -4,6 +4,7 @@
 <%@taglib prefix="p" uri="/pageTag" %>
 <%@taglib prefix="f" uri="/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 
@@ -22,8 +23,13 @@
               <nav class="sidebar-nav">
                 <ul class="metismenu" id="menu">
                   <c:forEach var="productCategory" items="${f:getProductCategories()}">
+                    <c:choose>
+                      <c:when test="${productSeries.productSubCategory.productCategory.id eq productCategory.id}">
+                        <li class="active">
+                      </c:when>
+                      <c:otherwise><li></c:otherwise>
+                    </c:choose>
 
-                    <li class="active" ng-show="data.productSeries.productSubCategory.productCategory.id=='${productCategory.id}'">
                         <a href="#" aria-expanded="true">
                           <span class="sidebar-nav-item-icon fa fa-inbox fa-lg"></span>
                           <span class="sidebar-nav-item">${productCategory.categoryName}</span>
@@ -34,29 +40,13 @@
                             <li class="col-lg-offset-1 col-sm-offset-1">
                               <a href="${path}/product_series/sort/${subCategory.id}">
                                 <span class="sidebar-nav-item-icon fa  fa-long-arrow-right"></span>
-                                  ${subCategory.subCategoryName}<span ng-if="data.productSeries.productSubCategory.id =='${subCategory.id}'" class="sidebar-nav-item-icon fa fa-flag-o pull-right"></span >
+                                  ${subCategory.subCategoryName}
+                                <c:if test="${productSeries.productSubCategory.id eq subCategory.id}"><span class="sidebar-nav-item-icon fa fa-flag-o pull-right"></span ></c:if>
                               </a>
                             </li>
                           </c:forEach>
                         </ul>
                   </li>
-                  <li ng-show="data.productSeries.productSubCategory.productCategory.id!='${productCategory.id}'">
-                      <a href="#" aria-expanded="true">
-                        <span class="sidebar-nav-item-icon fa fa-inbox fa-lg"></span>
-                        <span class="sidebar-nav-item">${productCategory.categoryName}</span>
-                        <span class="fa arrow"></span>
-                      </a>
-                      <ul aria-expanded="true">
-                        <c:forEach var="subCategory" items="${f:getProductSubCategoriesByCategoryId(productCategory.id)}">
-                          <li class="col-lg-offset-1 col-sm-offset-1">
-                            <a href="${path}/product_series/sort/${subCategory.id}">
-                              <span class="sidebar-nav-item-icon fa  fa-long-arrow-right"></span>
-                                ${subCategory.subCategoryName}<span ng-if="data.productSeries.productSubCategory.id =='${subCategory.id}'" class="sidebar-nav-item-icon fa fa-flag-o pull-right"></span >
-                            </a>
-                          </li>
-                        </c:forEach>
-                      </ul>
-                </li>
                   </c:forEach>
                 </ul>
                 </nav>
@@ -69,40 +59,47 @@
               <div class="row">
                 <div class="col-md-6 col-sm-6">
                   <div class="product-main-image">
-                    <img data-tag="pic1" ng-src="${path}/{{data.productSeries.pictures[0]}}" alt="{{data.productSeries.name}}" class="img-responsive" data-BigImgSrc="${path}/{{data.productSeries.pictures[0]}}">
+                    <img data-tag="pic1" ng-src="${path}/${productSeries.pictures[0]}" alt="${productSeries.name}" class="img-responsive" data-BigImgSrc="${path}/${productSeries.pictures[0]}">
                   </div>
                   <div class="product-other-images" >
-                      <a ng-repeat="pic in data.productSeries.pictures" href="#"><img class="product-image" ng-src="${path}/{{pic}}"></a>
+                      <c:forEach var="pic" items="${productSeries.pictures}">
+                        <a href="javascript:void(0)"><img class="product-image" src="${path}/${pic}"></a>
+                      </c:forEach>
                   </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
                   <form name="cartForm">
-                    <input type="hidden" name="productSeriesId" value="{{data.productSeries.id}}">
-                    <h1>{{data.productSeries.name}}</h1>
+                    <input type="hidden" name="productSeriesId" value="${productSeries.id}">
+                    <h1>${productSeries.name}</h1>
                     <div class="price-availability-block clearfix">
                       <div class="price">
-                        <strong><span class="fa fa-rmb fa-5x"></span>{{data.productSeries.commonPrice}}</strong>
+                        <strong><span class="fa fa-rmb fa-5x"></span>${productSeries.commonPrice}</strong>
                         <%--<em><span class="fa fa-rmb fa-5x">62.00</span></em>--%>
+                        <c:if test="${not empty productSeries.currentPrice and not empty productSeries.currentPrice.prevPrice and productSeries.currentPrice.price lt productSeries.currentPrice.prevPrice.price}">
+                          <em><span class="fa fa-rmb fa-5x">${productSeries.currentPrice.prevPrice.price}</span></em>
+                        </c:if>
                       </div>
                       <div class="availability">
                         状态:
-                        <strong ng-if="!data.productSeries.productStore">无库存信息</strong>
-                        <strong ng-if="data.productSeries.productStore &&!data.productSeries.productStore.remain">剩余{{data.productSeries.productStore.remain}件</strong>
-                        <strong ng-if="data.productSeries.productStore &&data.productSeries.productStore.remain"> 无法获取</strong>
-
-                      </strong>
+                        <c:if test="${empty productSeries.productStore}"><strong>无库存信息</strong></c:if>
+                        <c:if test="${not empty productSeries.productStore and not empty productSeries.productStore.remain}"><strong>剩余${productSeries.productStore.remain}件</strong></c:if>
+                        <c:if test="${not empty productSeries.productStore and empty productSeries.productStore.remain}"><strong>无法获取</strong></c:if>
                       </div>
                     </div>
                     <div class="description">
-                      <p>{{data.productSeries.description}}</p>
+                      <p>${productSeries.description}</p>
                     </div>
                     <div class="product-page-options">
-                        <div class="pull-left" ng-repeat="productProperty in data.productSeries.productProperties">
-                          <label class="control-label" style=" direction:ltr;">{{productProperty.propertyName}}&nbsp;:&nbsp;</label>
-                          <select class="form-control input-sm" name="productPropertyId" data-product-property-id="{{productProperty.id}}" >
-                              <option value="{{propertyValue.id}}" ng-repeat="propertyValue in productProperty.propertyValues">{{propertyValue.value}}</option>
+                      <c:forEach var="productProperty" items="${productSeries.productProperties}">
+                        <div class="pull-left">
+                          <label class="control-label" style=" direction:ltr;">${productProperty.propertyName}&nbsp;:&nbsp;</label>
+                          <select class="form-control input-sm" name="productPropertyId" data-product-property-id="${productProperty.id}" >
+                            <c:forEach var="propertyValue" items="${productProperty.propertyValues}">
+                              <option value="${propertyValue.id}">${propertyValue.value}</option>
+                            </c:forEach>
                           </select>
                         </div>
+                      </c:forEach>
                     </div>
                     <div class="product-page-cart">
                       <div class="product-quantity">
@@ -111,20 +108,20 @@
                       <button class="btn btn-primary add2cart fa fa-shopping-cart fa-lg" type="button">添加到购物车</button>
                     </div>
                     <div class="review">
-                      <%--<input type="range" name="productSeriesEvaluateGrade" ng-model="productSeriesEvaluateGrade" step="0.5" id="backing4" disabled/>--%>
-                      <%--<div class="rateit"  data-rateit-resetable="false"  data-rateit-ispreset="false" data-rateit-min="0" data-rateit-max="5" data-rateit-value="{{data.productSeries.productSeriesEvaluateGrade}}">--%>
-                        <input id="input-21d" value="{{data.productSeries.productSeriesEvaluateGrade}}" type="number" class="rating" min=0 max=5 step=0.5 data-size="sm">
+                      <input type="range" name="productSeriesEvaluateGrade" step="0.5" id="backing4" value="${productSeries.productSeriesEvaluateGrade}" disabled/>
+                      <div class="rateit"  data-rateit-resetable="false" data-rateit-backingfld="#backing4" data-rateit-ispreset="false" data-rateit-min="0" data-rateit-max="5">
+                        <%--<input value="${productSeries.productSeriesEvaluateGrade}" type="number" class="rating" min=0 max=5 step=0.5 data-size="sm">--%>
                     </div>
-                      <%--<c:choose><c:when test="${empty page.totalElements}">0</c:when><c:otherwise>${ productSeries.evaluateCount}</c:otherwise></c:choose>条评论--%>
-                      {{data._page.totalElements}}条评论
-                      <%--<c:if test="${not empty requestScope.order}">--%>
-                        &nbsp;&nbsp;|&nbsp;&nbsp;<a ng-if="data.order" href="javascript:void(0)" class="tour-step1" data-toggle="modal" data-target="#evaluateModal">发表评论</a>
-                      <%--</c:if>--%>
+                      <c:choose><c:when test="${empty _page.totalElements}">0</c:when><c:otherwise>${ productSeries.evaluateCount}</c:otherwise></c:choose>条评论
+
+                      <c:if test="${not empty requestScope.order}">
+                        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0)" class="tour-step1" data-toggle="modal" data-target="#evaluateModal">发表评论</a>
+                      </c:if>
                     </div>
                     <ul class="social-icons">
                         <div class="bdsharebuttonbox">
                           <a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
-                        <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"这里的东西太好吃了,都是生态环保的湖南宁乡土特产,你也来看看吧！","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16","tag":"pic1"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+                        <%--<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"这里的东西太好吃了,都是生态环保的湖南宁乡土特产,你也来看看吧！","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16","tag":"pic1"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>--%>
                     </ul>
                   </form>
                 </div>
@@ -211,7 +208,11 @@
                       <div class="row review-item-content">
                         <div class="col-lg-2 col-sm-2">
                           <div class="review-item-image">
-                            <img ng-src="${path}/${productEvaluate.pictures[0]}"/>
+                            <c:if test="${not empty productEvaluate.pictures}">
+                                <c:forEach var="picture" items="${productEvaluate.pictures}">
+                                  <c:if test="${not empty picture}"><img class="img-responsive" src="${path}/${picture}"/></c:if>
+                                </c:forEach>
+                            </c:if>
                           </div>
                         </div>
                         <div class="col-lg-8 col-sm-8">
@@ -221,29 +222,43 @@
                       </div>
                       <div class="row">
                         <div class="col-sm-2 col-lg-2 pull-right">
-                          <a class="fa fa-pencil-square-o" href="javascript:void(0)" data-ng-click="showEvaluate${productEvaluate.id}=!showEvaluate${productEvaluate.id};replies('${productEvaluate.id}')">回复(0)</a>&nbsp;
+                          <a class="fa fa-pencil-square-o" href="javascript:void(0)" data-ng-click="showEvaluate${productEvaluate.id}=!showEvaluate${productEvaluate.id};">
+                            回复(<span ng-if="!evaluate${productEvaluate.id}ReplyCount">${fn:length(productEvaluate.children)}</span>
+                            <span ng-if="evaluate${productEvaluate.id}ReplyCount">{{evaluate${productEvaluate.id}ReplyCount}}</span>)
+                          </a>&nbsp;
                           <a class="fa fa-thumbs-o-up" href="javascript:void(0)">赞(0)</a>
                         </div>
                       </div>
                       <div class="row" ng-show="showEvaluate${productEvaluate.id}">
                         <div class="col-sm-1 col-lg-1"></div>
-                        <form action="/product_series/evaluate/reply" method="post" name="reply${productEvaluate.id}Form">
+                        <form action="${path}/product_series/evaluate/reply" method="post" id="reply${varStatus.index}Form" name="reply${varStatus.index}Form">
                           <div class="col-sm-10 col-lg-10"style="margin-bottom: 8px;">
-                            <textarea ng-model="content" name="content" placeholder="发表评论" rows="1" style="width: 100%;" class="form-control" required="true"></textarea>
+                            <input type="hidden" ng-model="reply${varStatus.index}.parent.id" name="parentId" ng-init="reply${varStatus.index}.parent.id='${productEvaluate.id}'"/>
+                            <textarea ng-model="reply${varStatus.index}.content" name="content" placeholder="发表评论" rows="1" style="width: 100%;" class="form-control" required="true"></textarea>
                           </div>
                           <div class="col-sm-1 col-lg-1">
-                            <input type="button" ng-disabled="reply${productEvaluate.id}Form.$invalid" value="回复" class="btn btn-small"/>
+                            <input type="button" ng-disabled="reply${varStatus.index}Form.$invalid"  value="回复" class="btn btn-small " data-ng-click="toReply${varStatus.index}()"/>
                           </div>
                         </form>
                       </div>
-
-                      <div class="row" ng-show="showEvaluate${productEvaluate.id}" ng-repeat="evaluateReply in evaluateReplies">
-                              <div class="col-sm-1 col-lg-1 text-right"><i class="fa fa-user"></i><strong>{{evaluateReply.replyUser.name}}</strong></div>
-                              <div class="col-sm-10 col-lg-10">
-                                <pre>{{evaluateReply.content}}</pre>
-                              </div>
-                      </div>
-
+                    <span ng-if="!evaluate${productEvaluate.id}Replies">
+                      <c:forEach var="evaluateReply" items="${productEvaluate.children}">
+                        <div class="row" ng-show="showEvaluate${productEvaluate.id}">
+                          <div class="col-sm-1 col-lg-1 text-right"><i class="fa fa-user"></i><strong>${evaluateReply.replyUser.name}</strong></div>
+                          <div class="col-sm-10 col-lg-10">
+                            <pre>${evaluateReply.content}</pre>
+                          </div>
+                        </div>
+                      </c:forEach>
+                      </span>
+                    <span ng-if="evaluate${productEvaluate.id}Replies">
+                        <div class="row" ng-show="showEvaluate${productEvaluate.id}" ng-repeat="evaluateReply in evaluate${productEvaluate.id}Replies">
+                          <div class="col-sm-1 col-lg-1 text-right"><i class="fa fa-user"></i><strong>{{evaluateReply.replyUser.name}}</strong></div>
+                          <div class="col-sm-10 col-lg-10">
+                            <pre>{{evaluateReply.content}}</pre>
+                          </div>
+                        </div>
+                      </span>
 
                   </div>
                 </c:forEach>

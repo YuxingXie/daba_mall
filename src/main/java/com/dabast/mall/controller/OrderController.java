@@ -97,17 +97,18 @@ public class OrderController extends BaseRestSpringController {
                             dirFile.mkdirs();
                         }
                         //循环获取file数组中得文件
-                        String[] pictures=new String[files.length];
+                        List<String> pictures=new ArrayList<String>();
                         for(int i = 0;i<files.length;i++){
                             MultipartFile file = files[i];
+                            if (file.isEmpty()||file.getSize()==0l) continue;
                             //保存文件到数据库
                             String picture=ServiceManager.productSeriesService.saveFile(file.getOriginalFilename(),file.getBytes());
                             String originalFilename=file.getOriginalFilename();
                             String destFileStr=dirStr+"/"+picture+originalFilename.substring(originalFilename.lastIndexOf("."));
                             file.transferTo(new ServletContextResource(context,destFileStr).getFile());
-                            pictures[i]="pic/user/evaluate/"+picture;
+                            pictures.add("pic/user/evaluate/"+picture);
                         }
-                        productEvaluate.setPictures(pictures);
+                        if (pictures.size()>0) productEvaluate.setPictures(pictures);
                     }
                     ServiceManager.productEvaluateService.insert(productEvaluate);
                     productSelected.setProductEvaluate(productEvaluate);
@@ -116,7 +117,7 @@ public class OrderController extends BaseRestSpringController {
                 }
             }
         }
-        return "redirect:/product/"+productEvaluate.getProductSeriesId();
+        return "redirect:/product_series/"+productEvaluate.getProductSeriesId();
     }
     @RequestMapping(value = "/receive_item",method = RequestMethod.GET)
     public String orderReceive(String id,Integer index,ModelMap model,RedirectAttributes redirectAttributes) {

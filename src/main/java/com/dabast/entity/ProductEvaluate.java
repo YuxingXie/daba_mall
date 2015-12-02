@@ -16,12 +16,14 @@ public class ProductEvaluate {
     @Id
     private String id;
     private String content;
-    private String[] pictures;
+    private List<String> pictures;
     private Integer grade;
     private Date date;
     private boolean anonymous;
     @DBRef
     private ProductEvaluate parent;
+    @Transient
+    private List<ProductEvaluate> children;
     @DBRef(db = "productSeries")
     private ProductSeries productSeries;
     @DBRef(db = "order")
@@ -34,6 +36,7 @@ public class ProductEvaluate {
     private User user;
     @DBRef
     private User replyUser;
+
 
     public User getReplyUser() {
         return replyUser;
@@ -67,11 +70,11 @@ public class ProductEvaluate {
         this.anonymous = anonymous;
     }
 
-    public String[] getPictures() {
+    public List<String> getPictures() {
         return pictures;
     }
 
-    public void setPictures(String[] pictures) {
+    public void setPictures(List<String> pictures) {
         this.pictures = pictures;
     }
 
@@ -141,5 +144,13 @@ public class ProductEvaluate {
 
     public void setParent(ProductEvaluate parent) {
         this.parent = parent;
+    }
+
+    public List<ProductEvaluate> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<ProductEvaluate> children) {
+        this.children = children;
     }
 }

@@ -25,7 +25,7 @@
 <%--商品分类菜单--%>
 <link href="${path}/statics/assets/plugins/onokumus-metisMenu-aaa0c7c/src/metisMenu.css" media="all" rel="stylesheet" type="text/css" />
 <link href="${path}/statics/assets/css/metisMenu-default.css" media="all" rel="stylesheet" type="text/css" />
-<link href="${path}/statics/assets/plugins/bootstrap-star-rating-master/css/star-rating.min.css" media="all" rel="stylesheet" type="text/css"/>
+<%--<link href="${path}/statics/assets/plugins/bootstrap-star-rating-master/css/star-rating.min.css" media="all" rel="stylesheet" type="text/css"/>--%>
 <style>
     #infoPage {text-align: center;padding:0px 0 0 0;}
     #infoPage{float:right;width:auto;/*padding-top: 10px;*/}/*expression(doucment.getElementById('infoPage').scrollWidth+'px';);*/

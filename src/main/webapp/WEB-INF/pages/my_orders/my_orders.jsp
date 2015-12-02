@@ -81,8 +81,8 @@
                                                                         <c:choose>
                                                                             <c:when test="${not empty order.receiveStatus}">
                                                                                 <c:choose>
-                                                                                    <c:when test="${order.receiveStatus eq 'none'}"><a href="${path}/order/receive/${order.id}">确认收货</a></c:when>
-                                                                                    <c:when test="${order.receiveStatus eq 'part'}"><a href="${path}/order/receive/${order.id}">确认收货</a><a href="${path}/order/evaluate/${order.id}">去评价</a></c:when>
+                                                                                    <c:when test="${order.receiveStatus eq 'none'}"><a class="fa-sign-in" href="${path}/order/receive/${order.id}">确认收货</a></c:when>
+                                                                                    <c:when test="${order.receiveStatus eq 'part'}"><a class="fa-sign-in" href="${path}/order/receive/${order.id}">确认收货</a><a class="fa-pencil" href="${path}/order/evaluate/${order.id}">去评价</a></c:when>
                                                                                     <c:otherwise>
                                                                                         <c:if test="${order.evaluateStatus eq 'none' or order.evaluateStatus eq 'part'}"><a href="${path}/order/evaluate/${order.id}">去评价</a></c:if>
                                                                                     </c:otherwise>

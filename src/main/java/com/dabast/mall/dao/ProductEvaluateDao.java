@@ -1,6 +1,7 @@
 package com.dabast.mall.dao;
 
 import com.dabast.common.base.BaseMongoDao;
+import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.Order;
 import com.dabast.entity.ProductEvaluate;
 import com.dabast.entity.ProductSeries;
@@ -56,6 +57,13 @@ public class ProductEvaluateDao extends BaseMongoDao<ProductEvaluate> {
         Pageable pageable = new PageRequest(page-1, pageSize);
         Long count = getMongoTemplate().count(new BasicQuery(queryCondition),"productEvaluate");
         List<ProductEvaluate> list = getMongoTemplate().find(new BasicQuery(queryCondition).limit(pageSize).skip((page - 1) * pageSize), ProductEvaluate.class);
+        if (list!=null &&list.size()>0){
+            for (ProductEvaluate productEvaluate:list){
+                DBObject childrenDBObject=new BasicDBObject();
+                childrenDBObject.put("parent",productEvaluate);
+                productEvaluate.setChildren(findAll(new BasicQuery(childrenDBObject)));
+            }
+        }
         Page<ProductEvaluate> _page = new PageImpl<ProductEvaluate>(list, pageable, count);
         return _page;
     }

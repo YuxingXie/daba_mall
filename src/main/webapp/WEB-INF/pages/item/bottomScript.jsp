@@ -12,12 +12,12 @@
 <script src="${path}/statics/assets/plugins/bxslider/jquery.bxslider.min.js" type="text/javascript"></script><!-- slider for products -->
 <script src="${path}/statics/assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script><!-- Quantity -->
 <%--<script src="${path}/statics/assets/plugins/rateit/src/jquery.rateit.loadManual.js" type="text/javascript"></script>--%>
-<%--<script src="${path}/statics/assets/plugins/rateit/src/jquery.rateit.js" type="text/javascript"></script>--%>
+<script src="${path}/statics/assets/plugins/rateit/src/jquery.rateit.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/bootstrap-star-rating-master/js/star-rating.min.js" type="text/javascript"></script>
 <script src='${path}/statics/assets/plugins/zoom/jquery.zoom.min.js' type="text/javascript"></script><!-- product zoom -->
 
 <script src="${path}/statics/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
-<script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
+<script src="${path}/statics/assets/scripts/jQuery-shopping.js" type="text/javascript"></script>
 
 <script src="${path}/statics/assets/plugins/bootstrap-tour-0.10.2/js/bootstrap-tour.js"></script>
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput.js" type="text/javascript"></script>
@@ -29,47 +29,80 @@
 <script type="text/javascript">
     var app = angular.module("productSeriesApp",[]).controller();
     app.controller('productSeriesCtrl', ['$scope', '$http', function ($scope, $http) {
+    <c:forEach var="productEvaluate" items="${_page.content}" varStatus="varStatus">
+        $scope.toReply${varStatus.index}=function(){
+            loginCheckBeforeHandler(function(){
+                var $form=$("#reply${varStatus.index}Form");
+                var url=$form.attr("action");
+                var reply=JSON.stringify($scope.reply${varStatus.index});
+                $.ajax({
+                    url: url,
+                    contentType: "application/json",
+                    data: reply,
+                    method: "post"
+                }).done(function (data) {
+                    $scope.$apply(function () {
+                        if(data && data.length){
+                            $scope.evaluate${productEvaluate.id}ReplyCount=data.length;
+
+                        }else{
+                            $scope.evaluate${productEvaluate.id}ReplyCount=0;
+                        }
+                        console.log( $scope.evaluate${productEvaluate.id}ReplyCount);
+                        $scope.evaluate${productEvaluate.id}Replies=data;
+                    })
+                }).fail(function(){ console.log("error！"); });
+                <%--$scope.replies${varStatus.index}();--%>
+            });
+        }
+        <%--$scope.replies${varStatus.index}= function () {--%>
+            <%--$http.get('${path}//product_series/evaluates/${productEvaluate.id}').success(function (data) {--%>
+                <%--$scope.evaluateReplies${varStatus.index} = data;--%>
+<%--//                console.log(JSON.stringify(data));--%>
+            <%--});--%>
+        <%--}--%>
+    </c:forEach>
 
         $http.get('${path}//product_series/data/${id}?orderId=${requestScope.orderId}').success(function (data) {
             $scope.data = data;
-            $scope.productSeriesEvaluateGrade=data.productSeries.productSeriesEvaluateGrade;
-//            loadRateit();
-
+//            $scope.productSeriesEvaluateGrade=data.productSeries.productSeriesEvaluateGrade;
         });
 
-        $scope.replies= function (evaluateId) {
-            $http.get('${path}//product_series/evaluates/'+evaluateId).success(function (data) {
-                $scope.evaluateReplies = data;
-//                console.log(JSON.stringify(data));
-            });
-        }
+
 
     }]);
     <c:if test="${not empty _page and _page.totalPages gt 0}">
-    var options = {
-        currentPage:${page},
-        totalPages: ${_page.totalPages},
-        itemContainerClass: function (type, page, current) {
-            return (page === current) ? "active" : "everyPage";
-        },pageUrl: function(type, page, current){
-            return "${path}/product_series/${productSeries.id}?page="+page;
-        },itemTexts: function (type, page, current) {
-            switch (type) {
-                case "first":
-                    return "<i class='fa fa-fast-backward'></i>";
-                case "prev":
-                    return "<i class='fa fa-backward'></i>";
-                case "next":
-                    return "<i class='fa fa-forward'></i>";
-                case "last":
-                    return "<i class='fa fa-fast-forward'></i>";
-                case "page":
-                    return page;
+        var options = {
+            currentPage:${page},
+            totalPages: ${_page.totalPages},
+            itemContainerClass: function (type, page, current) {
+                return (page === current) ? "active" : "everyPage";
+            },pageUrl: function(type, page, current){
+                return "${path}/product_series/${productSeries.id}?page="+page;
+            },itemTexts: function (type, page, current) {
+                switch (type) {
+                    case "first":
+                        return "<i class='fa fa-fast-backward'></i>";
+                    case "prev":
+                        return "<i class='fa fa-backward'></i>";
+                    case "next":
+                        return "<i class='fa fa-forward'></i>";
+                    case "last":
+                        return "<i class='fa fa-fast-forward'></i>";
+                    case "page":
+                        return page;
+                }
             }
-        }
-    };
-    $('#infoPage').bootstrapPaginator(options);
+        };
+        $('#infoPage').bootstrapPaginator(options);
     </c:if>
+
+    var sendReply= function (url,reply) {
+
+    }
+
+
+
     jQuery(document).ready(function() {
         $(".rating-kv").rating();
         var $tour_step1=$(".tour-step1");
@@ -117,6 +150,12 @@
             App.initImageZoom();
             $('.add2cart').shoping();
         });
+//        $('.replyForm').ajaxForm(function(){alert("提交成功1");});
+//        $('.replyForm').submit(function(){
+//            $(this).ajaxSubmit({
+//
+//            });
+//        });
         $(document).on("click",".add2cart",function(){
             $('.add2cart').shoping();
             var form=$('[name="cartForm"]');
