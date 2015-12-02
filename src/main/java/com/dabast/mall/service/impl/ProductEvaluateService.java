@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class ProductEvaluateService extends BaseEntityManager<ProductEvaluate> implements IProductEvaluateService {
@@ -27,5 +28,15 @@ public class ProductEvaluateService extends BaseEntityManager<ProductEvaluate> i
     @Override
     public Page<ProductEvaluate> findProductEvaluatesPageByProductSeries(ProductSeries productSeries, Integer page, int pageSize) {
         return productEvaluateDao.findProductEvaluatesPageByProductSeries(productSeries, page, pageSize) ;
+    }
+
+    @Override
+    public Page<ProductEvaluate> findProductEvaluatesPageWithoutParentEvaluateByProductSeries(ProductSeries productSeries, Integer page, int pageSize) {
+        return productEvaluateDao.findProductEvaluatesPageWithoutParentEvaluateByProductSeries(productSeries, page, pageSize);
+    }
+
+    @Override
+    public List<ProductEvaluate> findEvaluatesWithParentId(String evaluateId) {
+        return productEvaluateDao.findEvaluatesWithParentId(evaluateId);
     }
 }

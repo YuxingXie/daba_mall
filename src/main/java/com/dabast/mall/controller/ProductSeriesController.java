@@ -41,12 +41,12 @@ public class ProductSeriesController extends BaseRestSpringController {
 
     @ModelAttribute
     public void init(ModelMap model) {
-        model.put("now", new java.sql.Timestamp(System.currentTimeMillis()));
+//        model.put("now", new java.sql.Timestamp(System.currentTimeMillis()));
     }
 
 
-    @RequestMapping(value="/{id}")
-    public String show(ModelMap model,@PathVariable String id,String orderId,Integer page) {
+    @RequestMapping(value="/data/{id}")
+    public ResponseEntity<ModelMap> show(ModelMap model,@PathVariable String id,String orderId,Integer page) {
         if (page==null){
             model.addAttribute("activeEvaluate",false);
         }else{
@@ -54,14 +54,22 @@ public class ProductSeriesController extends BaseRestSpringController {
         }
         page=page==null?1:page;
         ProductSeries productSeries = productSeriesService.findProductSeriesById(id);
-        Page<ProductEvaluate> productEvaluateListPage=ServiceManager.productEvaluateService.findProductEvaluatesPageByProductSeries(productSeries, page,10);
+        Page<ProductEvaluate> productEvaluateListPage=ServiceManager.productEvaluateService.findProductEvaluatesPageWithoutParentEvaluateByProductSeries(productSeries, page, 6);
         model.addAttribute("productSeries",productSeries);
         model.addAttribute("_page",productEvaluateListPage);
         model.addAttribute("page",page);
-        if (orderId!=null){
+        if (orderId!=null&&!orderId.equals("")){
             Order order=ServiceManager.orderService.findOrderById(orderId);
             model.addAttribute("order",order);
         }
+
+        return new ResponseEntity<ModelMap>(model, HttpStatus.OK);
+    }
+    @RequestMapping(value="/{id}")
+    public String forwardShow(ModelMap model,@PathVariable String id,String orderId,Integer page) {
+        model.addAttribute("id",id);
+        model.addAttribute("orderId",orderId);
+        model.addAttribute("page",page);
         return "item";
     }
     @RequestMapping(value="/sort/{id}")
@@ -77,12 +85,17 @@ public class ProductSeriesController extends BaseRestSpringController {
         return rt;
     }
     @RequestMapping(value="/categories")
-    public ResponseEntity<List<ProductCategory>> popover(ModelMap model) {
+    public ResponseEntity<List<ProductCategory>> categories(ModelMap model) {
         List<ProductCategory> productCategories= ServiceManager.productCategoryService.findAllCategories();
         ResponseEntity<List<ProductCategory>> rt=new ResponseEntity<List<ProductCategory>>(productCategories, HttpStatus.OK);
         return rt;
     }
-
+    @RequestMapping(value="/evaluates/{evaluateId}")
+    public ResponseEntity<List<ProductEvaluate>> evaluates(ModelMap model,@PathVariable String evaluateId) {
+        List<ProductEvaluate> evaluates= ServiceManager.productEvaluateService.findEvaluatesWithParentId(evaluateId);
+        ResponseEntity<List<ProductEvaluate>> rt=new ResponseEntity<List<ProductEvaluate>>(evaluates, HttpStatus.OK);
+        return rt;
+    }
     @RequestMapping("/create_input.do")
     public String createInput(ModelMap model){
         return "admin/product_series/create_input";

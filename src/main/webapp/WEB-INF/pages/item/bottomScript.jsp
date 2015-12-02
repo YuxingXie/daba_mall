@@ -11,13 +11,14 @@
 <script src="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/bxslider/jquery.bxslider.min.js" type="text/javascript"></script><!-- slider for products -->
 <script src="${path}/statics/assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script><!-- Quantity -->
-<script src="${path}/statics/assets/plugins/rateit/src/jquery.rateit.js" type="text/javascript"></script>
-<script type="text/javascript" src='${path}/statics/assets/plugins/zoom/jquery.zoom.min.js'></script><!-- product zoom -->
+<%--<script src="${path}/statics/assets/plugins/rateit/src/jquery.rateit.loadManual.js" type="text/javascript"></script>--%>
+<%--<script src="${path}/statics/assets/plugins/rateit/src/jquery.rateit.js" type="text/javascript"></script>--%>
+<script src="${path}/statics/assets/plugins/bootstrap-star-rating-master/js/star-rating.min.js" type="text/javascript"></script>
+<script src='${path}/statics/assets/plugins/zoom/jquery.zoom.min.js' type="text/javascript"></script><!-- product zoom -->
 
 <script src="${path}/statics/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
-<script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/tooltip.js"></script>
-<script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/popover.js"></script>
+
 <script src="${path}/statics/assets/plugins/bootstrap-tour-0.10.2/js/bootstrap-tour.js"></script>
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput_locale_zh.js" type="text/javascript"></script>
@@ -26,6 +27,24 @@
 <script src="${path}/statics/assets/plugins/jquery-ui.js" type="text/javascript" ></script>
 
 <script type="text/javascript">
+    var app = angular.module("productSeriesApp",[]).controller();
+    app.controller('productSeriesCtrl', ['$scope', '$http', function ($scope, $http) {
+
+        $http.get('${path}//product_series/data/${id}?orderId=${requestScope.orderId}').success(function (data) {
+            $scope.data = data;
+            $scope.productSeriesEvaluateGrade=data.productSeries.productSeriesEvaluateGrade;
+//            loadRateit();
+
+        });
+
+        $scope.replies= function (evaluateId) {
+            $http.get('${path}//product_series/evaluates/'+evaluateId).success(function (data) {
+                $scope.evaluateReplies = data;
+//                console.log(JSON.stringify(data));
+            });
+        }
+
+    }]);
     <c:if test="${not empty _page and _page.totalPages gt 0}">
     var options = {
         currentPage:${page},
@@ -52,6 +71,7 @@
     $('#infoPage').bootstrapPaginator(options);
     </c:if>
     jQuery(document).ready(function() {
+        $(".rating-kv").rating();
         var $tour_step1=$(".tour-step1");
         if($tour_step1.length){
             var tour = new Tour({

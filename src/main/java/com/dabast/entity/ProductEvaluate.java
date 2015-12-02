@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/11/27.
@@ -19,6 +20,8 @@ public class ProductEvaluate {
     private Integer grade;
     private Date date;
     private boolean anonymous;
+    @DBRef
+    private ProductEvaluate parent;
     @DBRef(db = "productSeries")
     private ProductSeries productSeries;
     @DBRef(db = "order")
@@ -29,6 +32,17 @@ public class ProductEvaluate {
     private String productSeriesId;
     @Transient
     private User user;
+    @DBRef
+    private User replyUser;
+
+    public User getReplyUser() {
+        return replyUser;
+    }
+
+    public void setReplyUser(User replyUser) {
+        this.replyUser = replyUser;
+    }
+
     public String getContent() {
         return content;
     }
@@ -115,5 +129,17 @@ public class ProductEvaluate {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public boolean isAnonymous() {
+        return anonymous;
+    }
+
+    public ProductEvaluate getParent() {
+        return parent;
+    }
+
+    public void setParent(ProductEvaluate parent) {
+        this.parent = parent;
     }
 }

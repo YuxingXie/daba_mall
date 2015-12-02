@@ -42,11 +42,30 @@ public class ProductEvaluateDao extends BaseMongoDao<ProductEvaluate> {
     }
 
     public Page<ProductEvaluate> findProductEvaluatesPageByProductSeries(ProductSeries productSeries, Integer page, int pageSize) {
+
+        return findProductEvaluatesPageByProductSeries(productSeries,page,pageSize,true);
+    }
+    public Page<ProductEvaluate> findProductEvaluatesPageByProductSeries(ProductSeries productSeries, Integer page, int pageSize,boolean withParentEvaluate) {
         DBObject queryCondition=new BasicDBObject("productSeries",new DBRef("productSeries",new ObjectId(productSeries.getId())));
+        if (!withParentEvaluate){
+            BasicDBList dbList=new BasicDBList();
+            dbList.add(new BasicDBObject("parent",new BasicDBObject("$exists",false)));
+            dbList.add(new BasicDBObject("parent",new BasicDBObject("$ne",null)));
+            queryCondition.put("$or",dbList);
+        }
         Pageable pageable = new PageRequest(page-1, pageSize);
         Long count = getMongoTemplate().count(new BasicQuery(queryCondition),"productEvaluate");
         List<ProductEvaluate> list = getMongoTemplate().find(new BasicQuery(queryCondition).limit(pageSize).skip((page - 1) * pageSize), ProductEvaluate.class);
         Page<ProductEvaluate> _page = new PageImpl<ProductEvaluate>(list, pageable, count);
         return _page;
+    }
+
+    public Page<ProductEvaluate> findProductEvaluatesPageWithoutParentEvaluateByProductSeries(ProductSeries productSeries, Integer page, int pageSize) {
+       return findProductEvaluatesPageByProductSeries(productSeries,page,pageSize,false);
+    }
+
+    public List<ProductEvaluate> findEvaluatesWithParentId(String evaluateId) {
+        DBObject queryCondition=new BasicDBObject("parent",new DBRef("productEvaluate",new ObjectId(evaluateId)));
+        return getMongoTemplate().find(new BasicQuery(queryCondition),ProductEvaluate.class);
     }
 }
