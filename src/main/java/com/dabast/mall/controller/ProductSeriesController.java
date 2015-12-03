@@ -1,6 +1,7 @@
 package com.dabast.mall.controller;
 
 import com.dabast.common.base.BaseRestSpringController;
+import com.dabast.common.constant.Constant;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.*;
 import com.dabast.mall.service.IProductSeriesService;
@@ -106,9 +107,37 @@ public class ProductSeriesController extends BaseRestSpringController {
         User user=getLoginUser(session);
         Assert.notNull(user);
         reply.setReplyUser(user);
+        reply.setDate(new Date());
+        reply.setType(Constant.EVALUATETYPE.REPLY);
         ServiceManager.productEvaluateService.insert(reply);
         DBObject childrenDBObject=new BasicDBObject();
         childrenDBObject.put("parent",reply.getParent());
+        childrenDBObject.put("type", Constant.EVALUATETYPE.REPLY);
+        List<ProductEvaluate> list=ServiceManager.productEvaluateService.findAll(childrenDBObject);
+        ResponseEntity<List<ProductEvaluate>> rt=new ResponseEntity<List<ProductEvaluate>>(list, HttpStatus.OK);
+        return rt;
+    }
+    @RequestMapping(value="/evaluate/praise/{evaluateId}")
+    public ResponseEntity <List<ProductEvaluate>> evaluateReply(@PathVariable String evaluateId,HttpSession session) {
+        User user=getLoginUser(session);
+        Assert.notNull(user);
+        ProductEvaluate praise=new ProductEvaluate();
+        praise.setReplyUser(user);
+        praise.setDate(new Date());
+        praise.setType(Constant.EVALUATETYPE.PRAISE);
+        ProductEvaluate parent=new ProductEvaluate();
+        parent.setId(evaluateId);
+        praise.setParent(parent);
+        ProductEvaluate praiseInDB=ServiceManager.productEvaluateService.praisedEvaluate(parent,user);
+        if (praiseInDB!=null){
+            ServiceManager.productEvaluateService.removeById(praiseInDB.getId());
+        }else{
+            ServiceManager.productEvaluateService.insert(praise);
+
+        }
+        DBObject childrenDBObject=new BasicDBObject();
+        childrenDBObject.put("parent", parent);
+        childrenDBObject.put("type", Constant.EVALUATETYPE.PRAISE);
         List<ProductEvaluate> list=ServiceManager.productEvaluateService.findAll(childrenDBObject);
         ResponseEntity<List<ProductEvaluate>> rt=new ResponseEntity<List<ProductEvaluate>>(list, HttpStatus.OK);
         return rt;

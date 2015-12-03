@@ -4,15 +4,12 @@ package com.dabast.common.base;
 import com.dabast.entity.Cart;
 import com.dabast.entity.Order;
 import com.dabast.entity.User;
-import com.dabast.mall.Constant;
+import com.dabast.common.constant.Constant;
 import org.springframework.beans.BeanUtils;
-import org.springframework.ui.ModelMap;
 import org.springframework.util.ReflectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 

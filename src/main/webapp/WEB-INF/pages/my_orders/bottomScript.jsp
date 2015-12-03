@@ -27,7 +27,6 @@
         type="text/javascript"></script>
 
 <script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
-<script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/sco.js-master/js/sco.modal.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/sco.js-master/js/sco.confirm.js"></script>
 <script type="text/javascript">

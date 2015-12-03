@@ -121,7 +121,7 @@
                     <ul class="social-icons">
                         <div class="bdsharebuttonbox">
                           <a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
-                        <%--<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"这里的东西太好吃了,都是生态环保的湖南宁乡土特产,你也来看看吧！","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16","tag":"pic1"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>--%>
+                        <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"这里的东西太好吃了,都是生态环保的湖南宁乡土特产,你也来看看吧！","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16","tag":"pic1"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
                     </ul>
                   </form>
                 </div>
@@ -190,7 +190,7 @@
                 <c:forEach var="productEvaluate" items="${_page.content}" varStatus="varStatus">
                   <div style="margin-bottom:10px;" class="container table-bordered<c:if test="${varStatus.index mod 2 eq 1}"> bg-info</c:if>" ng-init="showEvaluate${productEvaluate.id}=false">
                       <div class="row">
-                          <div class="col-sm-2 col-lg-2">
+                          <div class="col-sm-1 col-lg-1">
                             <strong class="fa fa-user">
                               <c:choose>
                                 <c:when test="${productEvaluate.anonymous}">匿名用户</c:when>
@@ -198,51 +198,41 @@
                               </c:choose>
                             </strong>
                           </div>
-                          <div class="col-sm-1 col-lg-1">
-                              <em><fmt:formatDate value="${productEvaluate.date}" type="both" dateStyle="default"/></em>
+                          <div class="col-sm-2 col-lg-2 ">
+                              <em class="fa fa-clock-o text-left"><fmt:formatDate value="${productEvaluate.date}" type="both" dateStyle="default"/></em>
                           </div>
                           <div class="col-sm-2 col-lg-2 pull-right">
                               <div class="rateit" data-rateit-value="${productEvaluate.grade}" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
                           </div>
                       </div>
                       <div class="row review-item-content">
-                        <div class="col-lg-2 col-sm-2">
+                        <div class="col-lg-1 col-sm-1"></div>
+                        <div class="col-lg-7 col-sm-7">
+                          <pre class="fa fa-file-text-o">${productEvaluate.content}</pre>
+                        </div>
+                        <div class="col-lg-3 col-sm-3">
                           <div class="review-item-image">
                             <c:if test="${not empty productEvaluate.pictures}">
-                                <c:forEach var="picture" items="${productEvaluate.pictures}">
-                                  <c:if test="${not empty picture}"><img class="img-responsive" src="${path}/${picture}"/></c:if>
-                                </c:forEach>
+                              <c:forEach var="picture" items="${productEvaluate.pictures}">
+                                <c:if test="${not empty picture}"><img class="img-responsive" src="${path}/${picture}"/></c:if>
+                              </c:forEach>
                             </c:if>
                           </div>
                         </div>
-                        <div class="col-lg-8 col-sm-8">
-                          <pre class="fa fa-file-text-o">${productEvaluate.content}</pre>
-                        </div>
-
                       </div>
                       <div class="row">
                         <div class="col-sm-2 col-lg-2 pull-right">
                           <a class="fa fa-pencil-square-o" href="javascript:void(0)" data-ng-click="showEvaluate${productEvaluate.id}=!showEvaluate${productEvaluate.id};">
-                            回复(<span ng-if="!evaluate${productEvaluate.id}ReplyCount">${fn:length(productEvaluate.children)}</span>
+                            回复(<span ng-if="!evaluate${productEvaluate.id}ReplyCount">${fn:length(productEvaluate.replies)}</span>
                             <span ng-if="evaluate${productEvaluate.id}ReplyCount">{{evaluate${productEvaluate.id}ReplyCount}}</span>)
                           </a>&nbsp;
-                          <a class="fa fa-thumbs-o-up" href="javascript:void(0)">赞(0)</a>
+                          <a class="fa fa-thumbs-o-up" href="javascript:void(0)" data-ng-click="toPraise${varStatus.index}()">赞(<span ng-if="!evaluate${productEvaluate.id}PraiseCount&&evaluate${productEvaluate.id}PraiseCount!=0">${fn:length(productEvaluate.praises)}</span><span ng-if="!evaluate${productEvaluate.id}PraiseCount &&evaluate${productEvaluate.id}PraiseCount==0">0</span><span ng-if="evaluate${productEvaluate.id}PraiseCount">{{evaluate${productEvaluate.id}PraiseCount}}</span>)
+                          </a>
                         </div>
                       </div>
-                      <div class="row" ng-show="showEvaluate${productEvaluate.id}">
-                        <div class="col-sm-1 col-lg-1"></div>
-                        <form action="${path}/product_series/evaluate/reply" method="post" id="reply${varStatus.index}Form" name="reply${varStatus.index}Form">
-                          <div class="col-sm-10 col-lg-10"style="margin-bottom: 8px;">
-                            <input type="hidden" ng-model="reply${varStatus.index}.parent.id" name="parentId" ng-init="reply${varStatus.index}.parent.id='${productEvaluate.id}'"/>
-                            <textarea ng-model="reply${varStatus.index}.content" name="content" placeholder="发表评论" rows="1" style="width: 100%;" class="form-control" required="true"></textarea>
-                          </div>
-                          <div class="col-sm-1 col-lg-1">
-                            <input type="button" ng-disabled="reply${varStatus.index}Form.$invalid"  value="回复" class="btn btn-small " data-ng-click="toReply${varStatus.index}()"/>
-                          </div>
-                        </form>
-                      </div>
-                    <span ng-if="!evaluate${productEvaluate.id}Replies">
-                      <c:forEach var="evaluateReply" items="${productEvaluate.children}">
+
+                    <div class="row" ng-if="!evaluate${productEvaluate.id}Replies">
+                      <c:forEach var="evaluateReply" items="${productEvaluate.replies}">
                         <div class="row" ng-show="showEvaluate${productEvaluate.id}">
                           <div class="col-sm-1 col-lg-1 text-right"><i class="fa fa-user"></i><strong>${evaluateReply.replyUser.name}</strong></div>
                           <div class="col-sm-10 col-lg-10">
@@ -250,16 +240,27 @@
                           </div>
                         </div>
                       </c:forEach>
-                      </span>
-                    <span ng-if="evaluate${productEvaluate.id}Replies">
+                      </div>
+                    <div class="row" ng-if="evaluate${productEvaluate.id}Replies">
                         <div class="row" ng-show="showEvaluate${productEvaluate.id}" ng-repeat="evaluateReply in evaluate${productEvaluate.id}Replies">
                           <div class="col-sm-1 col-lg-1 text-right"><i class="fa fa-user"></i><strong>{{evaluateReply.replyUser.name}}</strong></div>
                           <div class="col-sm-10 col-lg-10">
                             <pre>{{evaluateReply.content}}</pre>
                           </div>
                         </div>
-                      </span>
-
+                    </div>
+                    <div class="row" ng-show="showEvaluate${productEvaluate.id}">
+                      <div class="col-sm-1 col-lg-1"></div>
+                      <form action="${path}/product_series/evaluate/reply" method="post" id="reply${varStatus.index}Form" name="reply${varStatus.index}Form">
+                        <div class="col-sm-10 col-lg-10"style="margin-bottom: 8px;">
+                          <input type="hidden" ng-model="reply${varStatus.index}.parent.id" name="parentId" ng-init="reply${varStatus.index}.parent.id='${productEvaluate.id}'"/>
+                          <textarea ng-model="reply${varStatus.index}.content" name="content" placeholder="回复内容(小于200个字符)" rows="1" style="width: 100%;" class="form-control" required="true" maxlength="200"></textarea>
+                        </div>
+                        <div class="col-sm-1 col-lg-1">
+                          <a type="button" ng-disabled="reply${varStatus.index}Form.$invalid" class="btn btn-small btn-primary" data-ng-click="toReply${varStatus.index}()">回复</a>
+                        </div>
+                      </form>
+                    </div>
                   </div>
                 </c:forEach>
                 <div class="row" style="padding-bottom:20px;">
@@ -299,7 +300,7 @@
               <div class="row">
                 <label class="col-lg-2 control-label">评价内容 <span class="require">*</span></label>
                 <div class="col-lg-8 has-success">
-                  <textarea name="content" class="form-control text-area" rows="6"  placeholder="请发表您的评价" required="true"></textarea>
+                  <textarea name="content" class="form-control text-area" rows="6"  placeholder="请发表您的评价(少于200个字符)" required="true" maxlength="200"></textarea>
                 </div>
               </div>
               </div>

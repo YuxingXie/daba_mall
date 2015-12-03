@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.web.SortDefault;
 
 import java.util.Date;
 import java.util.List;
@@ -19,11 +20,14 @@ public class ProductEvaluate {
     private List<String> pictures;
     private Integer grade;
     private Date date;
+    private String type;//praise赞,evaluate评论,reply评论的回复
     private boolean anonymous;
     @DBRef
     private ProductEvaluate parent;
     @Transient
-    private List<ProductEvaluate> children;
+    private List<ProductEvaluate> replies;
+    @Transient
+    private List<ProductEvaluate> praises;
     @DBRef(db = "productSeries")
     private ProductSeries productSeries;
     @DBRef(db = "order")
@@ -146,11 +150,27 @@ public class ProductEvaluate {
         this.parent = parent;
     }
 
-    public List<ProductEvaluate> getChildren() {
-        return children;
+    public List<ProductEvaluate> getReplies() {
+        return replies;
     }
 
-    public void setChildren(List<ProductEvaluate> children) {
-        this.children = children;
+    public void setReplies(List<ProductEvaluate> replies) {
+        this.replies = replies;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public List<ProductEvaluate> getPraises() {
+        return praises;
+    }
+
+    public void setPraises(List<ProductEvaluate> praises) {
+        this.praises = praises;
     }
 }

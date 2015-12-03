@@ -81,7 +81,7 @@
                                                         </td>
                                                         <td>
                                                             <c:choose>
-                                                                <c:when test="${empty productSelected.receiveStatus or productSelected.receiveStatus eq 'n'}"><a class="fa-sign-in" href="${path}/order/receive_item?id=${order.id}&index=${selectedIndex.index}">确认收货</c:when>
+                                                                <c:when test="${empty productSelected.receiveStatus or productSelected.receiveStatus eq 'n'}"><a class="fa fa-truck" href="${path}/order/receive_item?id=${order.id}&index=${selectedIndex.index}">确认收货</c:when>
                                                                 <c:otherwise>
                                                                     <c:if test="${empty productSelected.productEvaluate}"><a class="fa fa-pencil" href="${path}/product_series/${productSelected.productSeries.id}?orderId=${order.id}">去评价</a></c:if>
                                                                 </c:otherwise>
@@ -118,7 +118,7 @@
                         <div class="row">
                             <div class="col-lg-6"></div>
                             <div class="col-lg-6">
-                                <a class="btn btn-danger" id="ensure-delete">确定</a>
+                                <a class="btn btn-danger fa fa-trash fa-fw" id="ensure-delete">确定</a>
                                 <a class="btn btn-primary" data-dismiss="modal">取消</a>
                             </div>
                         </div>

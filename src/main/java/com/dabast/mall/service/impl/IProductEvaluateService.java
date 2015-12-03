@@ -4,6 +4,7 @@ import com.dabast.common.base.IBaseEntityManager;
 import com.dabast.entity.Order;
 import com.dabast.entity.ProductEvaluate;
 import com.dabast.entity.ProductSeries;
+import com.dabast.entity.User;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -19,4 +20,8 @@ public interface IProductEvaluateService extends IBaseEntityManager<ProductEvalu
     Page<ProductEvaluate> findProductEvaluatesPageWithoutParentEvaluateByProductSeries(ProductSeries productSeries, Integer page, int pageSize);
 
     List<ProductEvaluate> findEvaluatesWithParentId(String evaluateId);
+
+    boolean praised(ProductEvaluate parent, User praiseUser);
+
+    ProductEvaluate praisedEvaluate(ProductEvaluate parent, User praiseUser);
 }

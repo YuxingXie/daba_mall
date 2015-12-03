@@ -6,7 +6,7 @@ import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.common.util.*;
 import com.dabast.common.web.CookieTool;
 import com.dabast.entity.*;
-import com.dabast.mall.Constant;
+import com.dabast.common.constant.Constant;
 import com.dabast.mall.form.UserLoginForm;
 import com.dabast.mall.dao.UserDao;
 import com.dabast.mall.service.impl.CartService;
@@ -36,7 +36,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 

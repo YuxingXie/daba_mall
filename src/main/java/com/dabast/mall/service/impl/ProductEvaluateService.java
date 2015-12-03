@@ -5,6 +5,7 @@ import com.dabast.common.base.EntityDao;
 import com.dabast.entity.Order;
 import com.dabast.entity.ProductEvaluate;
 import com.dabast.entity.ProductSeries;
+import com.dabast.entity.User;
 import com.dabast.mall.dao.ProductEvaluateDao;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,15 @@ public class ProductEvaluateService extends BaseEntityManager<ProductEvaluate> i
     @Override
     public List<ProductEvaluate> findEvaluatesWithParentId(String evaluateId) {
         return productEvaluateDao.findEvaluatesWithParentId(evaluateId);
+    }
+
+    @Override
+    public boolean praised(ProductEvaluate parent, User praiseUser) {
+        return productEvaluateDao.praised(parent, praiseUser);
+    }
+
+    @Override
+    public ProductEvaluate praisedEvaluate(ProductEvaluate parent, User praiseUser) {
+        return productEvaluateDao.praisedEvaluate(parent,praiseUser);
     }
 }

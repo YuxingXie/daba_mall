@@ -7,12 +7,9 @@
 <html>
 <head>
     <title>管理员登录</title>
-    <%--<link href="${path}/statics/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">--%>
-    <%--<link href="${path}/statics/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">--%>
     <link href="${path}/statics/assets/css/style.css" rel="stylesheet" type="text/css">
     <link href="${path}/statics/assets/css/style-responsive.css" rel="stylesheet" type="text/css">
     <script> path="${path}";</script>
-    <%--<script type="text/javascript" src="${path}/statics/assets/plugins/jquery-2.1.1.js"></script>--%>
 </head>
 <body>
 <div class="container">

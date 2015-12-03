@@ -10,6 +10,5 @@
 <script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
 <%--弹出二级菜单相关--%>
-<script type="text/javascript" src="${path}/statics/assets/css/style-metronic.css"></script>
 <script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/tooltip.js"></script>
 <script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/popover.js"></script>

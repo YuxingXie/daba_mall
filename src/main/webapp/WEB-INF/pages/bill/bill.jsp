@@ -78,31 +78,26 @@
                         <input type="hidden" value="${order.id}" name="orderId"/>
                         <div class="modal-body table-bordered">
                             <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
-                                <div class="col-lg-2 col-sm-2 text small">付款银行</div>
+                                <div class="col-lg-2 col-sm-2 text small"><i class="fa fa-bank"></i>付款银行</div>
                                 <div class="col-lg-6 col-sm-6" name="bankName"></div>
 
                             </div>
-                            <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
-                                <div class="col-lg-2 col-sm-2 text small bg-success">卡种</div>
-                                <div class="col-lg-6 col-sm-6 form-inline">
-                                    <div class="radio">
-                                        <label><input type="radio" name="cardSort" value="1" required="true" ng-model="cardSort"/>信用卡</label>
-                                    </div>
-                                    <div class="radio">
-                                        <label><input type="radio" name="cardSort" value="2" checked  required="true" ng-model="cardSort"/>储蓄卡</label>
-                                    </div>
-
+                            <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
+                                <div class="col-lg-2 col-sm-2 text small bg-success"><i class="fa fa-cc-visa"></i>卡种</div>
+                                <div class="col-lg-6 col-sm-6 form-inline bg-success">
+                                    <a href="javascript:void(0)"><label><input type="radio" name="cardSort" value="1" required="true" ng-model="cardSort" class="form-control form-control-inline"/>信用卡</label></a>
+                                    <a href="javascript:void(0)"><label><input type="radio" name="cardSort" value="2" checked  required="true" ng-model="cardSort" class="form-control form-control-inline"/>储蓄卡</label></a>
                                 </div>
                             </div>
                             <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
-                                <div class="col-lg-2 col-sm-2 text small">银行卡号</div>
+                                <div class="col-lg-2 col-sm-2 text small"><i class="fa fa-credit-card"></i>银行卡号</div>
                                 <div class="col-lg-6 col-sm-6">
                                     <input type="text" class="form-control" required="true" name="cardNo"/>
                                 </div>
                             </div>
                             <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
-                                <div class="col-lg-2 col-sm-2 text small bg-success">姓名</div>
-                                <div class="col-lg-4 col-sm-4">
+                                <div class="col-lg-2 col-sm-2 text small bg-success"><i class="fa fa-user fa-fw"></i>姓名</div>
+                                <div class="col-lg-4 col-sm-4 bg-success">
                                     <input type="text" class="form-control " value="${order.user.name}" required="true" name="cardUserName"/>
                                 </div>
                             </div>
@@ -113,8 +108,8 @@
                                 </div>
                             </div>
                             <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
-                                <div class="col-lg-2 col-sm-2 text small bg-success">手机号</div>
-                                <div class="col-lg-6 col-sm-6">
+                                <div class="col-lg-2 col-sm-2 text small bg-success"><i class="fa fa-mobile fa-fw"></i>手机号</div>
+                                <div class="col-lg-6 col-sm-6 bg-success">
                                     <input type="text" name="cardUserPhone" class="form-control " value="${order.user.phone}" required="true"/>
                                 </div>
                             </div>
@@ -123,7 +118,7 @@
                                 <div class="col-lg-8 col-sm-8" name="credit_card_example"><img src="${path}/statics/assets/plugins/bank/credit_card_example.jpg"></div>
                             </div>
                             <div class="form-group row" ng-show="cardSort==1">
-                                <div class="col-lg-2 col-sm-2 text small">有效期</div>
+                                <div class="col-lg-2 col-sm-2 text small"><i class="fa fa-clock-o"></i>有效期</div>
                                 <div class="input-group date form_date col-lg-6 col-sm-6" >
                                     <input class="form-control" size="16" type="text" name="cardValidDate" required="true"/>
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
@@ -131,9 +126,9 @@
                                 </div>
                             </div>
                             <div class="row " style="margin-bottom: 15px;margin-top: 15px;" ng-if="cardSort==1">
-                                <div class="col-lg-2 col-sm-2 text small bg-success">卡验证码</div>
-                                <div class="col-lg-6 col-sm-6">
-                                    <input type="text" name="cardValidateCode" class="form-control " required="true" placeholder="签名栏后3位数"/>
+                                <div class="col-lg-2 col-sm-2 text small bg-success"><i class="fa fa-reorder"></i>卡验证码</div>
+                                <div class="col-lg-6 col-sm-6 bg-success">
+                                    <input type="text" name="cardValidateCode" class="form-control bg-success" required="true" placeholder="签名栏后3位数"/>
 
                                 </div>
                                 <div class="col-lg-2 col-sm-2 checkbox-inline">

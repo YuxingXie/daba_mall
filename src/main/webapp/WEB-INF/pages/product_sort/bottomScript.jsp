@@ -17,9 +17,6 @@
 <script type="text/javascript" src='${path}/statics/assets/plugins/zoom/jquery.zoom.min.js'></script><!-- product zoom -->
 <script src="${path}/statics/assets/plugins/jquery-ui.js" type="text/javascript" ></script>
 <script src="${path}/statics/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
-<script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
-
-<%--<script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/modal.js"></script>--%>
 <script src="${path}/statics/assets/plugins/bootstrap-tour-0.10.2/js/bootstrap-tour.js"></script>
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput_locale_zh.js" type="text/javascript"></script>

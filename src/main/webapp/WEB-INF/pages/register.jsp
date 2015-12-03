@@ -206,7 +206,6 @@
     </div>
 </div>
 <script>var path="${path}"</script>
-<script src="${path}/statics/assets/plugins/jquery.md5.js"></script>
 <script src="${path}/statics/assets/scripts/register.js"></script>
 <%--<script>--%>
     <%--$(document).ready(function(){--%>

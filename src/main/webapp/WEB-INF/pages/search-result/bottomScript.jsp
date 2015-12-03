@@ -26,9 +26,6 @@
 <%--<script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>--%>
 
 <script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
-<script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
-<%--<script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>--%>
-<%--<script type="text/javascript" src="${path}/statics/assets/plugins/jquery-bootpag-master/lib/jquery.bootpag.js"></script>--%>
 <script src="${path}/statics/assets/plugins/bootstrap-paginator-master/build/bootstrap-paginator.min.js"></script>
 <script>
     var options = {

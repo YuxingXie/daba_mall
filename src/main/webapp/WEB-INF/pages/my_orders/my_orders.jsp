@@ -81,8 +81,8 @@
                                                                         <c:choose>
                                                                             <c:when test="${not empty order.receiveStatus}">
                                                                                 <c:choose>
-                                                                                    <c:when test="${order.receiveStatus eq 'none'}"><a class="fa-sign-in" href="${path}/order/receive/${order.id}">确认收货</a></c:when>
-                                                                                    <c:when test="${order.receiveStatus eq 'part'}"><a class="fa-sign-in" href="${path}/order/receive/${order.id}">确认收货</a><a class="fa-pencil" href="${path}/order/evaluate/${order.id}">去评价</a></c:when>
+                                                                                    <c:when test="${order.receiveStatus eq 'none'}"><a class="fa fa-truck" href="${path}/order/receive/${order.id}">确认收货</a></c:when>
+                                                                                    <c:when test="${order.receiveStatus eq 'part'}"><a class="fa fa-truck" href="${path}/order/receive/${order.id}">确认收货</a><a class="fa-pencil" href="${path}/order/evaluate/${order.id}">去评价</a></c:when>
                                                                                     <c:otherwise>
                                                                                         <c:if test="${order.evaluateStatus eq 'none' or order.evaluateStatus eq 'part'}"><a href="${path}/order/evaluate/${order.id}">去评价</a></c:if>
                                                                                     </c:otherwise>
@@ -174,7 +174,7 @@
 
                                                                             <c:if test="${hasEmptyProduct && (empty order.payStatus || order.payStatus eq 'n')}">
                                                                                 <div class="col-lg-2 col-sm-2">
-                                                                                    <input type="button" class="btn btn-primary modal-close" data-dismiss="modal" aria-hidden="true" style=" width:100%;" value="删除订单"/>
+                                                                                    <input type="button" class="btn btn-primary modal-close fa fa-trash" data-dismiss="modal" aria-hidden="true" style=" width:100%;" value="删除订单"/>
                                                                                 </div>
                                                                             </c:if>
                                                                             <c:if test="${hasEmptyProduct &&  order.payStatus eq 'y'}">
@@ -220,7 +220,7 @@
                         <div class="row">
                             <div class="col-lg-6"></div>
                             <div class="col-lg-6">
-                                <a class="btn btn-danger" id="ensure-delete">确定</a>
+                                <a class="btn btn-danger fa fa-trash fa-fw" id="ensure-delete">确定</a>
                                 <a class="btn btn-primary" data-dismiss="modal">取消</a>
                             </div>
                         </div>

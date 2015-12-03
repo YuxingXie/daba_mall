@@ -28,7 +28,7 @@
         </div>
         <div class="row margin-bottom-40">
           <!-- BEGIN SIDEBAR -->
-          <div class="sidebar col-md-3 col-sm-5">
+          <div class="sidebar col-md-3 col-sm-3 mega-menu">
             <aside class="sidebar">
               <nav class="sidebar-nav">
                 <ul class="metismenu" id="menu">
@@ -89,7 +89,35 @@
 
                   </div>
               </div>
-              <div class="row"><p class="demo demo4_top pull-right"></p></div>
+
+              <div class="row">
+                  <div class="col-lg-11">
+                     <c:set var="numberPerLine" value="3"/>
+                     <c:set var="maxNumber" value="13"/>
+                    <c:set var="totalLine" value="${maxNumber/numberPerLine}"/>
+                      ${maxNumber}个数,每行${numberPerLine}个,共${totalLine}行<br/>
+                      <c:forEach begin="0" end="${maxNumber-1}" var="i">
+                          <c:if test="${i mod numberPerLine eq 0}">
+                              begin:
+                          </c:if>
+                          ${i}-
+                          <c:if test="${(i+1) mod numberPerLine eq 0}">
+                              第${i/numberPerLine}行<br/>
+                          </c:if>
+                          <c:if test="${(i+1)/numberPerLine eq totalLine}">
+                              最后一行<br/>
+                          </c:if>
+                      </c:forEach>
+                  </div>
+
+              </div>
+              <div class="row">
+                  <div class="col-lg-3 col-sm-3"> <img class="img-responsive" src="http://localhost:8088/mall/pic/5653fcef35f0d1172892999d"/> </div>
+                  <div class="col-lg-3 col-sm-3"> <img class="img-responsive" src="http://localhost:8088/mall/pic/5653fcef35f0d1172892999d"/> </div>
+                  <div class="col-lg-3 col-sm-3"> <img class="img-responsive" src="http://localhost:8088/mall/pic/5653fcef35f0d1172892999d"/> </div>
+                  <div class="col-lg-3 col-sm-3"> <img class="img-responsive" src="http://localhost:8088/mall/pic/5653fcef35f0d1172892999d"/> </div>
+              </div>
+
           </div>
           <!-- END CONTENT -->
         </div>

@@ -57,7 +57,7 @@
                                                 <span ng-if="interest.productSeries.productStore&&!interest.productSeries.productStore.remain">无法获取</span>
                                             </td>
                                             <td class="shopping-cart-total">
-                                                <a ng-href="${path}/personal/interests/remove/{{interest.id}}">删除</a>&nbsp;&nbsp;
+                                                <a ng-href="${path}/personal/interests/remove/{{interest.id}}" class="fa fa-trash fa-fw">删除</a>&nbsp;&nbsp;
                                                 <a href="#product-pop-up" class="fancybox-fast-view" ng-click="fastView(interest.productSeries)">添加到购物车</a>
                                             </td>
                                     </tr>

@@ -1,16 +1,15 @@
 package com.dabast.mall.dao;
 
 import com.dabast.common.base.BaseMongoDao;
+import com.dabast.common.constant.Constant;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.Order;
 import com.dabast.entity.ProductEvaluate;
 import com.dabast.entity.ProductSeries;
+import com.dabast.entity.User;
 import com.mongodb.*;
 import org.bson.types.ObjectId;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
@@ -56,12 +55,17 @@ public class ProductEvaluateDao extends BaseMongoDao<ProductEvaluate> {
         }
         Pageable pageable = new PageRequest(page-1, pageSize);
         Long count = getMongoTemplate().count(new BasicQuery(queryCondition),"productEvaluate");
-        List<ProductEvaluate> list = getMongoTemplate().find(new BasicQuery(queryCondition).limit(pageSize).skip((page - 1) * pageSize), ProductEvaluate.class);
+        List<ProductEvaluate> list = getMongoTemplate().find(new BasicQuery(queryCondition).with(new Sort(Sort.Direction.DESC, "date")).limit(pageSize).skip((page - 1) * pageSize), ProductEvaluate.class);
         if (list!=null &&list.size()>0){
             for (ProductEvaluate productEvaluate:list){
-                DBObject childrenDBObject=new BasicDBObject();
-                childrenDBObject.put("parent",productEvaluate);
-                productEvaluate.setChildren(findAll(new BasicQuery(childrenDBObject)));
+                DBObject repliesDBObject=new BasicDBObject();
+                repliesDBObject.put("parent", productEvaluate);
+                repliesDBObject.put("type", Constant.EVALUATETYPE.REPLY);
+                productEvaluate.setReplies(findAll(new BasicQuery(repliesDBObject)));
+                DBObject praiseDBObject=new BasicDBObject();
+                praiseDBObject.put("parent", productEvaluate);
+                praiseDBObject.put("type", Constant.EVALUATETYPE.PRAISE);
+                productEvaluate.setPraises(findAll(new BasicQuery(praiseDBObject)));
             }
         }
         Page<ProductEvaluate> _page = new PageImpl<ProductEvaluate>(list, pageable, count);
@@ -74,6 +78,20 @@ public class ProductEvaluateDao extends BaseMongoDao<ProductEvaluate> {
 
     public List<ProductEvaluate> findEvaluatesWithParentId(String evaluateId) {
         DBObject queryCondition=new BasicDBObject("parent",new DBRef("productEvaluate",new ObjectId(evaluateId)));
-        return getMongoTemplate().find(new BasicQuery(queryCondition),ProductEvaluate.class);
+        return getMongoTemplate().find(new BasicQuery(queryCondition).with(new Sort(Sort.Direction.DESC, "date")),ProductEvaluate.class);
+    }
+
+    public boolean praised(ProductEvaluate parent, User praiseUser) {
+        ProductEvaluate praise=praisedEvaluate(parent,praiseUser);
+        if(praise==null) return false;
+        return true;
+    }
+
+    public ProductEvaluate praisedEvaluate(ProductEvaluate parent, User praiseUser) {
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("parent",parent);
+        dbObject.put("type",Constant.EVALUATETYPE.PRAISE);
+        dbObject.put("replyUser",praiseUser);
+        return getMongoTemplate().findOne(new BasicQuery(dbObject), ProductEvaluate.class);
     }
 }

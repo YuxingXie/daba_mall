@@ -17,8 +17,6 @@
 <script src='${path}/statics/assets/plugins/zoom/jquery.zoom.min.js' type="text/javascript"></script><!-- product zoom -->
 
 <script src="${path}/statics/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
-<script src="${path}/statics/assets/scripts/jQuery-shopping.js" type="text/javascript"></script>
-
 <script src="${path}/statics/assets/plugins/bootstrap-tour-0.10.2/js/bootstrap-tour.js"></script>
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput_locale_zh.js" type="text/javascript"></script>
@@ -44,32 +42,43 @@
                     $scope.$apply(function () {
                         if(data && data.length){
                             $scope.evaluate${productEvaluate.id}ReplyCount=data.length;
-
                         }else{
                             $scope.evaluate${productEvaluate.id}ReplyCount=0;
                         }
-                        console.log( $scope.evaluate${productEvaluate.id}ReplyCount);
+                        <%--console.log( $scope.evaluate${productEvaluate.id}ReplyCount);--%>
                         $scope.evaluate${productEvaluate.id}Replies=data;
+                        $scope.reply${varStatus.index}.content="";
+//                        $form[0].reset();
                     })
                 }).fail(function(){ console.log("error！"); });
                 <%--$scope.replies${varStatus.index}();--%>
             });
         }
-        <%--$scope.replies${varStatus.index}= function () {--%>
-            <%--$http.get('${path}//product_series/evaluates/${productEvaluate.id}').success(function (data) {--%>
-                <%--$scope.evaluateReplies${varStatus.index} = data;--%>
-<%--//                console.log(JSON.stringify(data));--%>
-            <%--});--%>
-        <%--}--%>
+        $scope.toPraise${varStatus.index}=function(){
+            loginCheckBeforeHandler(function(){
+                var url="${path}/product_series/evaluate/praise/${productEvaluate.id}";
+                $.ajax({
+                    url: url,
+                    method: "get"
+                }).done(function (data) {
+                    $scope.$apply(function () {
+                        if(data && data.length){
+                            $scope.evaluate${productEvaluate.id}PraiseCount=data.length;
+                        }else{
+                            $scope.evaluate${productEvaluate.id}PraiseCount=0;
+                        }
+                        $scope.evaluate${productEvaluate.id}Praises=data;
+                      <%--console.log($scope.evaluate${productEvaluate.id}PraiseCount);--%>
+                    })
+                }).fail(function(){ console.log("error！"); });
+                <%--$scope.replies${varStatus.index}();--%>
+            });
+        }
     </c:forEach>
 
         $http.get('${path}//product_series/data/${id}?orderId=${requestScope.orderId}').success(function (data) {
             $scope.data = data;
-//            $scope.productSeriesEvaluateGrade=data.productSeries.productSeriesEvaluateGrade;
         });
-
-
-
     }]);
     <c:if test="${not empty _page and _page.totalPages gt 0}">
         var options = {
@@ -96,13 +105,6 @@
         };
         $('#infoPage').bootstrapPaginator(options);
     </c:if>
-
-    var sendReply= function (url,reply) {
-
-    }
-
-
-
     jQuery(document).ready(function() {
         $(".rating-kv").rating();
         var $tour_step1=$(".tour-step1");

@@ -118,7 +118,7 @@
                         <div class="row">
                             <div class="col-lg-6"></div>
                             <div class="col-lg-6">
-                                <a class="btn btn-danger" id="ensure-evalute">确定</a>
+                                <a class="btn btn-danger fa fa-trash fa-fw" id="ensure-evalute">确定</a>
                                 <a class="btn btn-primary" data-dismiss="modal">取消</a>
                             </div>
                         </div>
