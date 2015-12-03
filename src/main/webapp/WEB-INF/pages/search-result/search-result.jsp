@@ -29,8 +29,7 @@
                     <div class="col-md-6 col-sm-6">
                         <form action="${path}/index/product/search" method="post">
                             <div class="input-group">
-                                <input type="text" placeholder="重新搜索" class="form-control" name="keyWord"
-                                       value="${keyWord}">
+                                <input type="text" placeholder="重新搜索" class="form-control" name="keyWord" required="true" value="${keyWord}">
                       <span class="input-group-btn">
                         <button class="btn btn-primary pull-left" type="submit">搜索</button>
                       </span>

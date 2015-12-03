@@ -9,16 +9,16 @@
 <html>
 <head>
     <tiles:insertAttribute name="meta" />
-    <title></title>
+    <title>大坝生态农业</title>
     <tiles:insertAttribute name="topCss"/>
     <tiles:insertAttribute name="pageTopCss"/>
     <tiles:insertAttribute name="topScript" />
     <tiles:insertAttribute name="pageTopScript" />
 </head>
 <body>
-<div class="topscoll">
+<div class="topscoll" ng-app="topApp">
     <div class="pre-header">
-        <div class="container">
+        <div class="container" >
             <div class="row">
                 <div class="col-md-6 col-sm-6 additional-nav">
                     <ul class="list-unstyled list-inline pull-right" style=" float:left !important;">
@@ -56,8 +56,8 @@
     </div>
 
     <!-- BEGIN HEADER -->
-    <div role="navigation" class="navbar header no-margin">
-        <div class="container">
+    <div role="navigation" class="navbar header no-margin" >
+        <div class="container" ng-controller="topController">
             <div class="navbar-header">
                 <!-- BEGIN RESPONSIVE MENU TOGGLER -->
                 <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
@@ -162,7 +162,6 @@
                         </ul>
                         <!-- END DROPDOWN MENU -->
                     </li>
-
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"
                            data-target="#" href="#">
@@ -186,71 +185,36 @@
                         <!-- END DROPDOWN MENU -->
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"
-                           data-target="#" href="#">
-                            网站地图
-                            <i class="fa fa-angle-down"></i>
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="#" href="#" ng-mouseover="initProductMenu()">
+                            网站地图<i class="fa fa-angle-down"></i>
                         </a>
                         <!-- BEGIN DROPDOWN MENU -->
                         <ul class="dropdown-menu" aria-labelledby="mega-menu">
                             <li>
-                                <div class="nav-content">
-                                    <!-- BEGIN DROPDOWN MENU - COLUMN -->
-                                    <div class="nav-content-col">
-                                        <h3>熏腊制品</h3>
+                                <%--<div class="nav-content">--%>
+                                    <div class="nav-content-col dropdown-submenu" ng-repeat="productCategory in productCategories">
+                                        <h3><a href="#">{{productCategory.categoryName}}</a></h3>
                                         <ul>
-                                            <li><a href="#">烟熏腊肉</a></li>
-                                            <li><a href="#">生态干鱼</a></li>
-                                            <li><a href="#">腊肠</a></li>
-                                            <li><a href="#">酱板鸭</a></li>
+                                            <li ng-repeat="productSubCategory in productCategory.productSubCategories"><a href="${path}/product_series/sort/{{productSubCategory.id}}">{{productSubCategory.subCategoryName}}</a></li>
                                         </ul>
                                     </div>
-                                    <!-- END DROPDOWN MENU - COLUMN -->
-                                    <!-- BEGIN DROPDOWN MENU - COLUMN -->
-                                    <div class="nav-content-col">
-                                        <h3>鲜活水产</h3>
-                                        <ul>
-                                            <li><a href="#">黄材中华鲟</a></li>
-                                            <li><a href="#">大龙虾</a></li>
-                                            <li><a href="#">皇帝蟹</a></li>
-                                            <li><a href="#">三文鱼</a></li>
-                                            <li><a href="#">黄鲳</a></li>
-                                            <li><a href="#">甲鱼</a></li>
-                                            <li><a href="#">黄鸭叫</a></li>
-                                            <li><a href="#">泥鳅/黄鳝</a></li>
-                                        </ul>
-                                    </div>
-                                    <!-- END DROPDOWN MENU - COLUMN -->
-                                    <!-- BEGIN DROPDOWN MENU - COLUMN -->
-                                    <div class="nav-content-col">
-                                        <h3>新品上市</h3>
-                                        <ul>
-                                            <li><a href="#">黄材中华鲟</a></li>
-                                            <li><a href="#">生态干鱼</a></li>
-                                            <li><a href="#">烟熏腊肉</a></li>
-                                        </ul>
+                                    <ul class="dropdown-menu">
+                                        <li ng-repeat="productSubCategory in productCategory.productSubCategories"><a href="#">{{productSubCategory.subCategoryName}}</a></li>
+                                    </ul>
 
-                                        <h3>热卖商品</h3>
-                                        <ul>
-                                            <li><a href="#">黄鸭叫</a></li>
-                                            <li><a href="#">泥鳅/黄鳝</a></li>
-                                        </ul>
-                                    </div>
-
-                                </div>
+                                <%--</div>--%>
                             </li>
                         </ul>
                         <!-- END DROPDOWN MENU -->
                     </li>
                     <!-- BEGIN TOP SEARCH -->
-                    <li class="menu-search">
-                        <span class="sep"></span>
+                    <li class="menu-search dropdown">
+                        <%--<span class="sep"></span>--%>
                         <i class="fa fa-search search-btn"></i>
-
-                        <div class="search-box">
+                        <div class="search-box dropdown-menu">
                             <form action="${path}/index/product/search" method="post">
                                 <div class="input-group">
-                                    <input type="text" placeholder="查找" class="form-control" name="keyWord">
+                                    <input type="text" placeholder="查找" class="form-control" required="true" name="keyWord">
                                     <span class="input-group-btn">
                                         <button class="btn btn-primary" type="submit">查找</button>
                                     </span>

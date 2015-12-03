@@ -25,7 +25,7 @@
 <script src="${path}/statics/assets/plugins/jquery-ui.js" type="text/javascript" ></script>
 
 <script type="text/javascript">
-    var app = angular.module("productSeriesApp",[]).controller();
+    var app = angular.module("productSeriesApp",[]);
     app.controller('productSeriesCtrl', ['$scope', '$http', function ($scope, $http) {
     <c:forEach var="productEvaluate" items="${_page.content}" varStatus="varStatus">
         $scope.toReply${varStatus.index}=function(){

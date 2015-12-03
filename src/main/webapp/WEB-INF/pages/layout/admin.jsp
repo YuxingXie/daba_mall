@@ -81,7 +81,6 @@
   </div>
 </div>
 </body>
-<script type="text/javascript" src="${path}/statics/assets/scripts/app.js"></script>
 <!--[if lt IE 9]>
 <script src="${path}/statics/assets/plugins/respond.min.js"></script>
 <![endif]-->

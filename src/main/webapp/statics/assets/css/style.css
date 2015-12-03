@@ -570,12 +570,12 @@ Header and header elements
 }
 .nav-content {
 	width: 100%;
-	overflow: hidden;
+	overflow: scroll;
 	padding: 5px;
 }
 .nav-content-col {
 	float: left;
-	width: 33.3%;
+	/*width: 33.3%;*/
 }
 .nav-content-col:last-child {
 	margin-right: 0;
@@ -670,7 +670,7 @@ Header and header elements
 /* Top Search */
 .header .nav li.menu-search {
 	position: relative;
-	padding-top: 20px;
+	padding-top: 25px;
 }
 .header .nav li.menu-search span.sep {
 	top: 11px;
@@ -3344,7 +3344,9 @@ ul.automatically li a:hover
 .J-L-ico{background-position:-55px -84px;left:0px;}
 .J-R-ico{background-position:-66px -84px;right:0px;}
 .J-shoping-main{position:relative;}
-.J-shoping-title{height:27px;cursor:pointer;line-height:27px;padding:0px 10px 4px 10px;position:relative;z-index:1111;background:url(../images/bg5.png) repeat-x 0px 0px;}
+.J-shoping-title{height:27px;cursor:pointer;line-height:27px;padding:0px 10px 4px 10px;position:relative;z-index:1111;
+	/*background:url(../images/bg5.png) repeat-x 0px 0px;*/
+}
 .J-shoping-title .J-go{color:#fff;display:block;float:left;}
 .J-shoping-title .J-go em{display:inline-block;width:17px;height:14px;vertical-align:middle;margin:-2px 10px 0px 0px;margin-top:0px\9;background-position:-56px -124px;}
 .J-shoping-num{width:21px;height:14px;background-position:-28px -88px;text-align:center;overflow:hidden;line-height:14px;display:block;position:absolute;left:0px;top:-16px;color:#187705;font-size:15px;}

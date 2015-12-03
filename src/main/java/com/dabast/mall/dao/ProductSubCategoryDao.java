@@ -39,7 +39,7 @@ public class ProductSubCategoryDao  extends BaseMongoDao<ProductSubCategory> {
         if (productSubCategory==null) return null;
         DBRef dbRef=new DBRef("productSubCategory",new ObjectId(id));
         DBObject dbObject=new BasicDBObject("productSubCategory",dbRef);
-        List<ProductSeries> productSeriesList= ServiceManager.productSeriesService.findAll(dbObject);
+        List<ProductSeries> productSeriesList= ServiceManager.productSeriesService.findProductSeriesAllRef(dbObject);
         productSubCategory.setProductSeriesList(productSeriesList);
         return productSubCategory;
     }

@@ -2,6 +2,7 @@ package com.dabast.mall.service;
 
 import com.dabast.common.base.IBaseEntityManager;
 import com.dabast.entity.ProductSeries;
+import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import java.util.List;
@@ -22,4 +23,5 @@ public interface IProductSeriesService  extends IBaseEntityManager<ProductSeries
     List<ProductSeries> getNewProducts();
 
     List<ProductSeries> getLowPrices();
+    List<ProductSeries> findProductSeriesAllRef(DBObject dbObject);
 }

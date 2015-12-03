@@ -125,7 +125,12 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         getStoresAndPricesAndEvaluates(list);
         Page<ProductSeries> page = new PageImpl<ProductSeries>(list, pageable, count);
         return page;
+    }
 
+    public List<ProductSeries> findProductSeriesAllRef(DBObject dbObject) {
+            List<ProductSeries> list = getMongoTemplate().find(new BasicQuery(dbObject), ProductSeries.class);
+         getStoresAndPricesAndEvaluates(list);
+        return list;
     }
 
     public List<ProductSeries> getLowPrices() {

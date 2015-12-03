@@ -5,6 +5,7 @@ import com.dabast.common.base.EntityDao;
 import com.dabast.entity.ProductSeries;
 import com.dabast.mall.dao.ProductSeriesDao;
 import com.dabast.mall.service.IProductSeriesService;
+import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -58,5 +59,10 @@ public class ProductSeriesService extends BaseEntityManager<ProductSeries> imple
     @Override
     public List<ProductSeries> getLowPrices() {
         return productSeriesDao.getLowPrices();
+    }
+
+    @Override
+    public List<ProductSeries> findProductSeriesAllRef(DBObject dbObject) {
+        return productSeriesDao.findProductSeriesAllRef(dbObject);
     }
 }

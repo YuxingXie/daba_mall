@@ -21,8 +21,7 @@
 
 <!-- BEGIN LayerSlider -->
 <script src="${path}/statics/assets/plugins/layerslider/jQuery/jquery-easing-1.3.js" type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/layerslider/jQuery/jquery-transit-modified.js"
-        type="text/javascript"></script>
+<script src="${path}/statics/assets/plugins/layerslider/jQuery/jquery-transit-modified.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.transitions.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>
 
