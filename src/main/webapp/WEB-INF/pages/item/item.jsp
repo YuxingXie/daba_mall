@@ -8,7 +8,7 @@
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 
-    <div class="main" ng-app="productSeriesApp">
+    <div class="main" ng-app="productSeriesApp" id="page-main">
       <div class="container" ng-controller="productSeriesCtrl">
         <ul class="breadcrumb">
             <li><a href="${path}">首页</a></li>
@@ -18,40 +18,40 @@
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40">
           <!-- BEGIN SIDEBAR -->
-          <div class="sidebar col-md-3 col-sm-5">
-            <aside class="sidebar">
-              <nav class="sidebar-nav">
-                <ul class="metismenu" id="menu">
-                  <c:forEach var="productCategory" items="${f:getProductCategories()}">
-                    <c:choose>
-                      <c:when test="${productSeries.productSubCategory.productCategory.id eq productCategory.id}">
-                        <li class="active">
-                      </c:when>
-                      <c:otherwise><li></c:otherwise>
-                    </c:choose>
+          <%--<div class="sidebar col-md-3 col-sm-5">--%>
+            <%--<aside class="sidebar">--%>
+              <%--<nav class="sidebar-nav">--%>
+                <%--<ul class="metismenu" id="menu">--%>
+                  <%--<c:forEach var="productCategory" items="${f:getProductCategories()}">--%>
+                    <%--<c:choose>--%>
+                      <%--<c:when test="${productSeries.productSubCategory.productCategory.id eq productCategory.id}">--%>
+                        <%--<li class="active">--%>
+                      <%--</c:when>--%>
+                      <%--<c:otherwise><li></c:otherwise>--%>
+                    <%--</c:choose>--%>
 
-                        <a href="#" aria-expanded="true">
-                          <span class="sidebar-nav-item-icon fa fa-inbox fa-lg"></span>
-                          <span class="sidebar-nav-item">${productCategory.categoryName}</span>
-                          <span class="fa arrow"></span>
-                        </a>
-                        <ul aria-expanded="true">
-                          <c:forEach var="subCategory" items="${f:getProductSubCategoriesByCategoryId(productCategory.id)}">
-                            <li class="col-lg-offset-1 col-sm-offset-1">
-                              <a href="${path}/product_series/sort/${subCategory.id}">
-                                <span class="sidebar-nav-item-icon fa  fa-long-arrow-right"></span>
-                                  ${subCategory.subCategoryName}
-                                <c:if test="${productSeries.productSubCategory.id eq subCategory.id}"><span class="sidebar-nav-item-icon fa fa-flag-o pull-right"></span ></c:if>
-                              </a>
-                            </li>
-                          </c:forEach>
-                        </ul>
-                  </li>
-                  </c:forEach>
-                </ul>
-                </nav>
-            </aside>
-          </div>
+                        <%--<a href="#" aria-expanded="true">--%>
+                          <%--<span class="sidebar-nav-item-icon fa fa-inbox fa-lg"></span>--%>
+                          <%--<span class="sidebar-nav-item">${productCategory.categoryName}</span>--%>
+                          <%--<span class="fa arrow"></span>--%>
+                        <%--</a>--%>
+                        <%--<ul aria-expanded="true">--%>
+                          <%--<c:forEach var="subCategory" items="${f:getProductSubCategoriesByCategoryId(productCategory.id)}">--%>
+                            <%--<li class="col-lg-offset-1 col-sm-offset-1">--%>
+                              <%--<a href="${path}/product_series/sort/${subCategory.id}">--%>
+                                <%--<span class="sidebar-nav-item-icon fa  fa-long-arrow-right"></span>--%>
+                                  <%--${subCategory.subCategoryName}--%>
+                                <%--<c:if test="${productSeries.productSubCategory.id eq subCategory.id}"><span class="sidebar-nav-item-icon fa fa-flag-o pull-right"></span ></c:if>--%>
+                              <%--</a>--%>
+                            <%--</li>--%>
+                          <%--</c:forEach>--%>
+                        <%--</ul>--%>
+                  <%--</li>--%>
+                  <%--</c:forEach>--%>
+                <%--</ul>--%>
+                <%--</nav>--%>
+            <%--</aside>--%>
+          <%--</div>--%>
           <!-- END SIDEBAR -->
           <!-- BEGIN CONTENT -->
           <div class="col-md-9 col-sm-7">
@@ -121,7 +121,7 @@
                     <ul class="social-icons">
                         <div class="bdsharebuttonbox">
                           <a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
-                        <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"这里的东西太好吃了,都是生态环保的湖南宁乡土特产,你也来看看吧！","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16","tag":"pic1"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+                        <%--<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"这里的东西太好吃了,都是生态环保的湖南宁乡土特产,你也来看看吧！","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16","tag":"pic1"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>--%>
                     </ul>
                   </form>
                 </div>

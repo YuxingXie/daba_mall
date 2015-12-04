@@ -117,16 +117,22 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         DB db = getMongoTemplate().getDb();
         DBCollection collection = db.getCollection("productSeries");
         Pageable pageable = new PageRequest(currentPage-1, pageSize);
-//        query = query.limit(pageSize).skip((currentPage - 1) * pageSize);
-//        List<ProductSeries> list = getMongoTemplate().find(query, ProductSeries.class);
         Long count = collection.count(queryCondition);
-//        System.out.println("total count is "+count);
         List<ProductSeries> list = getMongoTemplate().find(new BasicQuery(queryCondition).limit(pageSize).skip((currentPage - 1) * pageSize), ProductSeries.class);
         getStoresAndPricesAndEvaluates(list);
         Page<ProductSeries> page = new PageImpl<ProductSeries>(list, pageable, count);
         return page;
     }
-
+    public Page<ProductSeries> findProductSeriesPageByProductSubCategory(ProductSubCategory productSubCategory,int currentPage,int pageSize) {
+        DBObject queryCondition=new BasicDBObject();
+        queryCondition.put("productSubCategory",productSubCategory);
+        Pageable pageable = new PageRequest(currentPage-1, pageSize);
+        Long count = getMongoTemplate().count(new BasicQuery(queryCondition), ProductSeries.class);
+        List<ProductSeries> list = getMongoTemplate().find(new BasicQuery(queryCondition).limit(pageSize).skip((currentPage - 1) * pageSize), ProductSeries.class);
+        getStoresAndPricesAndEvaluates(list);
+        Page<ProductSeries> page = new PageImpl<ProductSeries>(list, pageable, count);
+        return page;
+    }
     public List<ProductSeries> findProductSeriesAllRef(DBObject dbObject) {
             List<ProductSeries> list = getMongoTemplate().find(new BasicQuery(dbObject), ProductSeries.class);
          getStoresAndPricesAndEvaluates(list);
@@ -175,4 +181,6 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         getStoresAndPrices(productSeriesList);
         return productSeriesList;
     }
+
+
 }

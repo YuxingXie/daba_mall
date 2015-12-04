@@ -13,13 +13,13 @@
 <script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/tooltip.js"></script>
 <script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/popover.js"></script>
 <script>
-    var app=angular.module("topApp",[]);
-    app.controller('topController', ['$scope', '$http', function ($scope, $http) {
+    angular.module("topApp",[])
+    .controller('topController', ['$scope', '$http', function ($scope, $http) {
         $scope.initProductMenu= function () {
             if(!$scope.productCategories){
                 $http.get('${path}//product_series/categories').success(function (data) {
                     $scope.productCategories = data;
-                    console.log(JSON.stringify(data));
+//                    console.log(JSON.stringify(data));
                 });
             }
 

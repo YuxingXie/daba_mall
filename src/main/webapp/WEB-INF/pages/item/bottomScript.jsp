@@ -25,8 +25,8 @@
 <script src="${path}/statics/assets/plugins/jquery-ui.js" type="text/javascript" ></script>
 
 <script type="text/javascript">
-    var app = angular.module("productSeriesApp",[]);
-    app.controller('productSeriesCtrl', ['$scope', '$http', function ($scope, $http) {
+    angular.module("productSeriesApp",[])
+    .controller('productSeriesCtrl', ['$scope', '$http', function ($scope, $http) {
     <c:forEach var="productEvaluate" items="${_page.content}" varStatus="varStatus">
         $scope.toReply${varStatus.index}=function(){
             loginCheckBeforeHandler(function(){
@@ -80,6 +80,7 @@
             $scope.data = data;
         });
     }]);
+    angular.bootstrap(document.getElementById("page-main"), ['productSeriesApp']);
     <c:if test="${not empty _page and _page.totalPages gt 0}">
         var options = {
             currentPage:${page},
@@ -106,7 +107,7 @@
         $('#infoPage').bootstrapPaginator(options);
     </c:if>
     jQuery(document).ready(function() {
-        $(".rating-kv").rating();
+//        $(".rating-kv").rating();
         var $tour_step1=$(".tour-step1");
         if($tour_step1.length){
             var tour = new Tour({

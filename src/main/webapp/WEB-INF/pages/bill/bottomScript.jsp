@@ -55,7 +55,7 @@
                 }
                 return false;
         }
-        angular.module("bank",[])
+        angular.module("bankApp",[])
                 .controller("bankController",["$scope","$http",function($scope,$http){
                         $scope.isShow=false;
                         $http.get(path+"/statics/assets/plugins/bank/bankInfo.json")
@@ -76,7 +76,9 @@
                         $scope.showPic=function(){
                                 $scope.isShow=! $scope.isShow;
                         }
-        }])
+        }]);
+        angular.bootstrap(document.getElementById("bankAppMain"),["bankApp"]);
+
         $(document).ready(function(){
                 $(document).on("click","#shortcuts .bank-ico",function () {
                         var $shortcutsPayModal=$("#shortcutsPayModal");

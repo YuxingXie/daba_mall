@@ -70,7 +70,8 @@
                     }).fail(function(){ console.log("error！"); });
                 });
                 }
-            }])
+            }]);
+    angular.bootstrap(document.getElementById("cartAdjustAppMain"),["bankApp"]);
 
 //    var nonHtml5Post =function(){
 //        return function(){

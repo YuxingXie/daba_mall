@@ -569,13 +569,13 @@ Header and header elements
 	width: 603px;
 }
 .nav-content {
-	width: 100%;
-	overflow: scroll;
+	width: auto;
+	overflow: hidden;
 	padding: 5px;
 }
 .nav-content-col {
 	float: left;
-	/*width: 33.3%;*/
+	width: 25%;
 }
 .nav-content-col:last-child {
 	margin-right: 0;
@@ -1726,30 +1726,30 @@ Steps3 and Steps3 elements
 }
 
 /* paginations */
-.pagination {
-	border-radius: 0;
-	margin: 0;
-}
-.pagination > li {
-	display: inline-block;
-	margin-left: 5px;
-}
-.pagination > li > a, .pagination > li > span,
-.pagination > li:first-child > a, .pagination > li:first-child > span,
-.pagination > li:last-child > a, .pagination > li:last-child > span {
-	border-radius: 25px !important;
-	border: none;
-	color: #868c93;
-}
-.pagination > li > span,
-.pagination > li > span:hover {
-	background:#187705;
-	color: #fff;
-}
-.pagination > li:first-child > a,
-.pagination > li:last-child > a {
-	padding: 4px 12px 8px;
-}
+/*.pagination {*/
+	/*border-radius: 0;*/
+	/*margin: 0;*/
+/*}*/
+/*.pagination > li {*/
+	/*display: inline-block;*/
+	/*margin-left: 5px;*/
+/*}*/
+/*.pagination > li > a, .pagination > li > span,*/
+/*.pagination > li:first-child > a, .pagination > li:first-child > span,*/
+/*.pagination > li:last-child > a, .pagination > li:last-child > span {*/
+	/*border-radius: 25px !important;*/
+	/*border: none;*/
+	/*color: #868c93;*/
+/*}*/
+/*.pagination > li > span,*/
+/*.pagination > li > span:hover {*/
+	/*background:#187705;*/
+	/*color: #fff;*/
+/*}*/
+/*.pagination > li:first-child > a,*/
+/*.pagination > li:last-child > a {*/
+	/*padding: 4px 12px 8px;*/
+/*}*/
 .items-info {
 	padding-top: 7px;
 	color: #868c93;
@@ -3344,16 +3344,16 @@ ul.automatically li a:hover
 .J-L-ico{background-position:-55px -84px;left:0px;}
 .J-R-ico{background-position:-66px -84px;right:0px;}
 .J-shoping-main{position:relative;}
-.J-shoping-title{height:27px;cursor:pointer;line-height:27px;padding:0px 10px 4px 10px;position:relative;z-index:1111;
+/*.J-shoping-title{height:27px;cursor:pointer;line-height:27px;padding:0px 10px 4px 10px;position:relative;z-index:1111;*/
 	/*background:url(../images/bg5.png) repeat-x 0px 0px;*/
-}
+/*}*/
 .J-shoping-title .J-go{color:#fff;display:block;float:left;}
 .J-shoping-title .J-go em{display:inline-block;width:17px;height:14px;vertical-align:middle;margin:-2px 10px 0px 0px;margin-top:0px\9;background-position:-56px -124px;}
 .J-shoping-num{width:21px;height:14px;background-position:-28px -88px;text-align:center;overflow:hidden;line-height:14px;display:block;position:absolute;left:0px;top:-16px;color:#187705;font-size:15px;}
 .J-shoping-body{width:255px;display:none;border:solid 1px #d6d6d6;box-shadow:0px 0px 5px #8b8b8b;behavior: url(js/pie.htc);padding:10px 10px 35px 10px;position:absolute;bottom:5px;left:0px;background:url(../images/p-bg.png) repeat;z-index:1111;}
 .J-shoping-px{width:275px;border:solid 1px #d6d6d6;display:none;box-shadow:0px 0px 5px #8b8b8b;behavior: url(js/pie.htc);height:28px;position:absolute;bottom:5px;left:0px;background:url(../images/p-bg.png) repeat;z-index:1111;}
 .J-shoping-mx{width:113px;position:absolute;left:-3px;top:-3px;height:3px;background-position:-4px -187px;z-index:1121;}
-.J-shoping-small{width:119px;}
+/*.J-shoping-small{width:119px;}*/
 #floatOrder{width:50px;height:50px;padding:2px;background:#fff;border:solid 5px #e54144;overflow:hidden;position:absolute;z-index:1101;}
 .Q-online{width:28px;height:20px;display:block;background-position:-78px -130px;position:fixed;right:10px;bottom:13px;}
 *html .Q-online{position:absolute;top:expression(eval(document.documentElement.scrollTop));margin:500px 0 0 0;}

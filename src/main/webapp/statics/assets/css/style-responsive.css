@@ -158,7 +158,7 @@
 	}
 	.nav-content-col {
 		float: none;
-		/*width: 100%;*/
+		width: 100%;
 	}
 	.nav-content-col > h3 {
 		font-size: 13px;

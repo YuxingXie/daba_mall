@@ -3,6 +3,7 @@ package com.dabast.mall.service.impl;
 import com.dabast.common.base.BaseEntityManager;
 import com.dabast.common.base.EntityDao;
 import com.dabast.entity.ProductSeries;
+import com.dabast.entity.ProductSubCategory;
 import com.dabast.mall.dao.ProductSeriesDao;
 import com.dabast.mall.service.IProductSeriesService;
 import com.mongodb.DBObject;
@@ -49,6 +50,11 @@ public class ProductSeriesService extends BaseEntityManager<ProductSeries> imple
     @Override
     public Page<ProductSeries> findProductSeriesesByKeyWord(String keyWord, int currentPage,int pageSize) {
         return productSeriesDao.findProductSeriesesByKeyWord(keyWord,currentPage,pageSize);
+    }
+
+    @Override
+    public Page<ProductSeries> findProductSeriesPageByProductSubCategory(ProductSubCategory productSubCategory, Integer page, int pageSize) {
+        return productSeriesDao.findProductSeriesPageByProductSubCategory(productSubCategory,page,pageSize);
     }
 
     @Override

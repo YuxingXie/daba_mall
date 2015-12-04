@@ -147,29 +147,8 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false"
                            data-target="#" href="#">
-                            手机大坝
+                            客服服务
                             <i class="fa fa-angle-down"></i>
-                        </a>
-                        <!-- BEGIN DROPDOWN MENU -->
-                        <ul class="dropdown-menu">
-                            <li><a href="#">我们的网站在移动终端</a></li>
-                            <li><a href="#">浏览器中有优异的表现</a></li>
-                            <li><a href="#">您可以直接用手机浏览</a></li>
-                            <li><a href="#">我们正在开通微信公众号</a></li>
-                            <li><a href="#">并努力开发手机应用</a></li>
-                            <li><a href="#">让您有多种方式与我们互动</a></li>
-                            <%--<li class="divider"></li>--%>
-                            <%--<li><a href="#">android客户端下载</a></li>--%>
-                            <%--<li><a href="#"><img src="${path}/statics/images/tuo_ma.png" class="tuo_ma"></a></li>--%>
-                            <%--<li class="divider"></li>--%>
-                            <%--<li><a href="#">ios客户端下载客户端</a></li>--%>
-                            <%--<li><a href="#"><img src="${path}/statics/images/tuo_ma.png" class="tuo_ma"></a></li>--%>
-                        </ul>
-                        <!-- END DROPDOWN MENU -->
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="#" href="#">
-                            客服服务<i class="fa fa-angle-down"></i>
                         </a>
                         <!-- BEGIN DROPDOWN MENU -->
                         <ul class="dropdown-menu">
@@ -189,20 +168,26 @@
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="#" href="#" ng-mouseover="initProductMenu()">
-                            产品地图<i class="fa fa-angle-down"></i>
+                            网站地图<i class="fa fa-angle-down"></i>
                         </a>
-                        <ul class="dropdown-menu glyphicon-resize-full" aria-labelledby="mega-menu">
+                        <!-- BEGIN DROPDOWN MENU -->
+                        <ul class="dropdown-menu" aria-labelledby="mega-menu">
                             <li>
-                                <div class="nav-content">
-                                    <div class="nav-content-col" ng-repeat="productCategory in productCategories">
-                                        <h3>{{productCategory.categoryName}}</h3>
+                                <%--<div class="nav-content">--%>
+                                    <div class="nav-content-col dropdown-submenu" ng-repeat="productCategory in productCategories">
+                                        <h3><a href="#">{{productCategory.categoryName}}</a></h3>
                                         <ul>
                                             <li ng-repeat="productSubCategory in productCategory.productSubCategories"><a href="${path}/product_series/sort/{{productSubCategory.id}}">{{productSubCategory.subCategoryName}}</a></li>
                                         </ul>
                                     </div>
-                                </div>
+                                    <ul class="dropdown-menu">
+                                        <li ng-repeat="productSubCategory in productCategory.productSubCategories"><a href="#">{{productSubCategory.subCategoryName}}</a></li>
+                                    </ul>
+
+                                <%--</div>--%>
                             </li>
                         </ul>
+                        <!-- END DROPDOWN MENU -->
                     </li>
                     <!-- BEGIN TOP SEARCH -->
                     <li class="menu-search dropdown">

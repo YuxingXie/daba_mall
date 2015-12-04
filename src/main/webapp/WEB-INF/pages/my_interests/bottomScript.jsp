@@ -37,7 +37,7 @@
                     $('.add2cart').shoping();
                 };
             }])
-
+    angular.bootstrap(document.getElementById("myInterestsAppMain"),["myInterestsApp"]);
     $(document).ready(function() {
         $(document).on("click","#product-pop-up .add2cart",function(){
             var form=$('[name="popForm"]');

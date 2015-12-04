@@ -35,12 +35,21 @@ public class ProductSubCategoryDao  extends BaseMongoDao<ProductSubCategory> {
     }
 
     public ProductSubCategory findProductSubCategoryById(String id) {
+       return findProductSubCategoryById(id,true);
+    }
+    public ProductSubCategory findProductSubCategoryById(String id,boolean withProductSeries) {
         ProductSubCategory productSubCategory=findById(id);
         if (productSubCategory==null) return null;
         DBRef dbRef=new DBRef("productSubCategory",new ObjectId(id));
         DBObject dbObject=new BasicDBObject("productSubCategory",dbRef);
-        List<ProductSeries> productSeriesList= ServiceManager.productSeriesService.findProductSeriesAllRef(dbObject);
-        productSubCategory.setProductSeriesList(productSeriesList);
+        if (withProductSeries){
+            List<ProductSeries> productSeriesList= ServiceManager.productSeriesService.findProductSeriesAllRef(dbObject);
+            productSubCategory.setProductSeriesList(productSeriesList);
+        }
+
         return productSubCategory;
+    }
+    public ProductSubCategory findProductSubCategoryByIdWithoutProductSeries(String id) {
+        return findProductSubCategoryById(id,false);
     }
 }
