@@ -2,24 +2,16 @@
  * name: tm.pagination
  * Version: 0.0.2
  */
-angular.module('tm.pagination', []).directive('tmPagination',[function(){
+angular.module('tm.pagination', ['ngRoute']).directive('tmPagination',['$http', function($http){
     return {
         restrict: 'EA',
-        template: '<div class="page-list">' +
-            '<ul class="pagination" ng-show="conf.totalItems > 0">' +
-            '<li ng-class="{disabled: conf.currentPage == 1}" ng-click="prevPage()"><span>&laquo;</span></li>' +
-            '<li ng-repeat="item in pageList track by $index" ng-class="{active: item == conf.currentPage, separate: item == \'...\'}" ' +
+        template:'<ul class="pagination" ng-show="conf.totalItems > 0">' +
+            '<li ng-class="{disabled: conf.currentPage == 1,prev:true}" ng-click="prevPage()"><a href="javascript:void(0)" class="fa fa-backward"></a></li>' +
+            '<li ng-repeat="item in pageList track by $index" ng-class="{active: item == conf.currentPage, separate: item == \'...\',page:item != conf.currentPage&&item != \'...\'}" ' +
             'ng-click="changeCurrentPage(item)">' +
-            '<span>{{item}}</span>' +
+            '<a href="javascript:void(0)">{{item}}</a>' +
             '</li>' +
-            '<li ng-class="{disabled: conf.currentPage == conf.numberOfPages}" ng-click="nextPage()"><span>&raquo;</span></li>' +
-            '<li class="page-total" ng-show="conf.totalItems > 0">' +
-            //'第<input type="number" ng-model="jumpPageNum"  ng-change="jumpToPage($event)"/>页 ' +
-                //'每页<select ng-model="conf.itemsPerPage" ng-options="option for option in conf.perPageOptions "></select>' +
-            //' 共<strong>{{ conf.totalItems }}</strong>条' +
-            //'</div>' +
-            '<div class="no-items" ng-show="conf.totalItems <= 0">暂无数据</div>' +
-            '</div></li>'+
+            '<li ng-class="{disabled: conf.currentPage == conf.numberOfPages}" ng-click="nextPage()"><a href="javascript:void(0)" class="fa fa-forward"></a></li>' +
             '</ul>',
 
         replace: true,

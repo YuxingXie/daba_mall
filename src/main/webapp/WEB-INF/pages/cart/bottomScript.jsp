@@ -71,7 +71,7 @@
                 });
                 }
             }]);
-    angular.bootstrap(document.getElementById("cartAdjustAppMain"),["bankApp"]);
+    angular.bootstrap(document.getElementById("cartAdjustAppMain"),["cartAdjustApp"]);
 
 //    var nonHtml5Post =function(){
 //        return function(){

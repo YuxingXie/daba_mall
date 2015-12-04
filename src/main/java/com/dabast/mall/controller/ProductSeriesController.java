@@ -91,7 +91,7 @@ public class ProductSeriesController extends BaseRestSpringController {
     public String showSort(ModelMap model,@PathVariable String id) {
         ProductSubCategory productSubCategory = ServiceManager.productSubCategoryService.findProductSubCategoryByIdWithoutProductSeries(id);
         model.addAttribute("productSubCategory",productSubCategory);
-        Page<ProductSeries> _page=ServiceManager.productSeriesService.findProductSeriesPageByProductSubCategory(productSubCategory,1,20);
+        Page<ProductSeries> _page=ServiceManager.productSeriesService.findProductSeriesPageByProductSubCategory(productSubCategory,1,2);
         model.addAttribute("_page",_page);
         return "product_sort";
     }
@@ -100,7 +100,7 @@ public class ProductSeriesController extends BaseRestSpringController {
         page=page==null?1:page.intValue()==0?1:page;
         ProductSubCategory productSubCategory = new ProductSubCategory();
         productSubCategory.setId(id);
-        Page<ProductSeries> _page=ServiceManager.productSeriesService.findProductSeriesPageByProductSubCategory(productSubCategory,page,20);
+        Page<ProductSeries> _page=ServiceManager.productSeriesService.findProductSeriesPageByProductSubCategory(productSubCategory,page,2);
         return new ResponseEntity<Page<ProductSeries>>(_page,HttpStatus.OK);
     }
     @RequestMapping(value="/popover/{id}")

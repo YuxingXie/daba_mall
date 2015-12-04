@@ -21,17 +21,26 @@
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.transitions.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>
 <%--<script src="${path}/statics/assets/plugins/bootstrap-paginator-master/build/bootstrap-paginator.min.js"></script>--%>
+
+<script src="${path}/statics/assets/plugins/angular-1.2.19/angular-route.min.js"></script>
 <script src="${path}/statics/assets/plugins/angularJs-pagination/src/pagination/tm.pagination.js"></script>
 <script>
     angular.module("productSortApp",['tm.pagination'])
             .controller('productSortCtrl', ['$scope', '$http', function ($scope, $http) {
+                $scope.httpGet=function(){
+
+                }
+
                 $scope.paginationConf = {
                     currentPage: 1,
-                    totalItems: 2,
-                    itemsPerPage: 1,
-                    pagesLength: 3,
+                    totalItems: ${_page.totalElements},
+                    itemsPerPage: ${_page.size},
+                    pagesLength: 9,
                     perPageOptions: [10, 20, 30, 40, 50],
                     onChange: function(){
+                        $http.get(path+'/product_series/sort/json/${productSubCategory.id}?page='+this.currentPage).success(function (data) {
+                            $scope._page = data;
+                        });
                     }
                 };
             }]);
