@@ -100,30 +100,56 @@ public class UserDao extends BaseMongoDao<User>  {
         return findOne(user);
     }
 
-
+    private User findByName(String name) {
+        return findOne(new BasicDBObject("name",name));
+    }
     public User findByEmail(String email) {
-        User user=new User();
-        user.setEmail(email);
-        List<User> users=findEquals(user);
-        return users==null||users.size()==0?null:users.get(0);
+        return findOne(new BasicDBObject("email",email));
     }
     public User findByPhone(String phone) {
-        User user=new User();
-        user.setPhone(phone);
-        List<User> users=findEquals(user);
-        return users==null||users.size()==0?null:users.get(0);
+        return findOne(new BasicDBObject("phone",phone));
     }
-    public boolean isEmailUsed(String email) {
-        User user=findByEmail(email);
+    private User findByName(String name,boolean activated) {
+        DBObject dbObject=new BasicDBObject("name",name);
+        dbObject.put("activated",activated);
+        return findOne(dbObject);
+    }
+    public User findByEmail(String email,boolean activated) {
+        DBObject dbObject=new BasicDBObject("email",email);
+        if (!activated){
+            BasicDBList dbList=new BasicDBList();
+            dbList.add(new BasicDBObject("activated",activated));
+            dbList.add(new BasicDBObject("activated",new BasicDBObject("$exists",false)));
+            dbObject.put("$or",dbList);
+        }else {
+            dbObject.put("activated",activated);
+        }
+        return findOne(dbObject);
+    }
+    public User findByPhone(String phone,boolean activated) {
+        DBObject dbObject=new BasicDBObject("phone",phone);
+        dbObject.put("activated",activated);
+        return findOne(dbObject);
+    }
+    public boolean isNameUsed(String name) {
+        User user=findByName(name,true);
         if (user==null) return false;
-        if (user.getStatus()==0) return false;
+        return true;
+    }
+
+
+
+    public boolean isEmailUsed(String email) {
+        User user=findByEmail(email,true);
+        if (user==null) return false;
+//        if (user.getStatus()!=null && user.getStatus()==0) return false;
         return true;
     }
 
     public boolean isPhoneUsed(String phone) {
-        User user=findByPhone(phone);
+        User user=findByPhone(phone,true);
         if (user==null) return false;
-        if (user.getStatus()==0) return false;
+        if (!user.isActivated()) return false;
         return true;
     }
 
@@ -165,4 +191,6 @@ public class UserDao extends BaseMongoDao<User>  {
         }
         return user;
     }
+
+
 }

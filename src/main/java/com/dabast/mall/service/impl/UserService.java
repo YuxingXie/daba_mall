@@ -16,6 +16,9 @@ import javax.annotation.Resource;
 public class UserService extends BaseEntityManager<User> implements IUserService {
     @Resource
     private UserDao userDao;
+    public User findByEmailOrPhone(String name){
+        return userDao.findByEmailOrPhone(name);
+    }
     protected EntityDao<User> getEntityDao() {
         return this.userDao;
     }

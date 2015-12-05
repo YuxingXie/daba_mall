@@ -119,7 +119,7 @@ public class MongoDbUtil {
         if (clazz == null) return null;
         for (java.lang.reflect.Field classField : clazz.getDeclaredFields()) {
             if (!classField.isAnnotationPresent(Id.class)) continue;
-            Object idValue = ReflectUtil.getValue(t, classField.getName());
+            Object idValue = ReflectUtil.getValue(t, classField.getName(),classField.getType()==boolean.class);
             return idValue == null ? null : idValue.toString();
         }
         return null;

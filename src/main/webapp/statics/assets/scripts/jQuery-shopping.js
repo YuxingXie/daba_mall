@@ -17,8 +17,10 @@
 			var S={
 				init:function(){
 					$title.bind('click',this.clickOnTitle);
-					$close.live('click',this.removeList);
-					$(self).data('click',true).live('click',this.addShoping);
+					//$close.live('click',this.removeList);
+					$(document).on('click',$close,this.removeList);
+					//$(self).data('click',true).live('click',this.addShoping);
+					$(document).on('click',$(self).data('click',true),this.addShoping);
 					$(document).bind('click',S.slideBoxMini);
 					$body.bind('click',this.clickOnBody);
 				},

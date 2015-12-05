@@ -136,7 +136,7 @@ public class OrderController extends BaseRestSpringController {
         if (payWay.equals("1")){
             order.setPayStatus("n");
         }else if (payWay.equals("2")){
-//            String outUrl="http://127.0.0.1:8088/mall/index/user/test";
+//            String outUrl="http://127.0.0.1:8088/mall/xxxxx";
 //            CustomServletRequestWrapper requestWrapper=new CustomServletRequestWrapper(request);
 //            Map<String,String[]> requestParams=requestWrapper.getParameterMap();
 //            String result=OuterRequestUtil.sendPost(outUrl,requestParams);

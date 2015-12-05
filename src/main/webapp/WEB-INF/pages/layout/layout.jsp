@@ -24,7 +24,7 @@
                     <ul class="list-unstyled list-inline pull-right" style=" float:left !important;">
                         <c:choose>
                             <c:when test="${empty sessionScope.loginUser}">
-                                <li><a href="${path}/index/user/register">注册</a></li>
+                                <li><a href="${path}/user/register">注册</a></li>
                                 <li><a href="javascript:void(0)" data-toggle="modal" data-target="#myModal">登录</a></li>
                             </c:when>
                             <c:otherwise>
@@ -137,7 +137,7 @@
                         </a>
                         <!-- BEGIN DROPDOWN MENU -->
                         <ul class="dropdown-menu">
-                            <li><a data-href="${path}/index/my_orders" class="login-need" href="javascript:void(0)">我的订单</a></li>
+                            <li><a data-href="${path}/user/my_orders" class="login-need" href="javascript:void(0)">我的订单</a></li>
                             <li><a data-href="order-form.html" class="login-need" href="javascript:void(0)">待处理订单</a></li>
                             <li><a data-href="${path}/my_interests" class="login-need" href="javascript:void(0)">我的关注</a></li>
                             <li><a data-href="order-form.html" class="login-need" href="javascript:void(0)">退货换货</a></li>

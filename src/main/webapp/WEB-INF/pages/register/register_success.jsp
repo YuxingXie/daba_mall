@@ -11,7 +11,7 @@
             <li class="active">注册</li>
         </ul>
         <div class="row">
-            注册成功，请勿刷新页面，点击<a href="${path}/index/user/login/direct/${form.id}">这里</a>直接登录!
+            注册成功，请勿刷新页面，点击<a href="${path}/user/login/direct/${form.id}">这里</a>直接登录!
             <p>user id:${form.id}</p>
             <p>user name:${form.name}</p>
             <p>user email:${form.email}</p>

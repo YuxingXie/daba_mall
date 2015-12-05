@@ -13,7 +13,7 @@ import java.util.List;
 public interface EntityDao <E>{
     public String saveFile(String fileName,byte[] file);
     public GridFSDBFile findFileById(String id);
-    public int upsert(E queryEntity,E updateEntity);
+//    public int upsert(E queryEntity,E updateEntity);
     void insert(E e);
     List<E> findEquals(E e);
     List<E> findAll();

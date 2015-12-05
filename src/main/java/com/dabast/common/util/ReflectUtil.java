@@ -25,10 +25,14 @@ public class ReflectUtil {
         }
     }
 
-    public static String getGetterMethodName(String fieldName) {
+    public static String getGetterMethodName(String fieldName,boolean is_boolean) {
+        if (!is_boolean)
         return "get" + firstUpperCase(fieldName);
+        return "is"+firstUpperCase(fieldName);
     }
-
+    public static String getGetterMethodName(String fieldName) {
+        return getGetterMethodName(fieldName,false);
+    }
     public static String getSetterMethodName(String fieldName) {
         return "set" + firstUpperCase(fieldName);
     }
@@ -66,11 +70,11 @@ public class ReflectUtil {
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public static <T> Object getValue(T t, String property) {
+    public static <T> Object getValue(T t, String property,boolean property_is_boolean) {
         Class clazz = t.getClass();
         Method method;
         try {
-            method = clazz.getDeclaredMethod(getGetterMethodName(property), null);
+            method = clazz.getDeclaredMethod(getGetterMethodName(property,property_is_boolean), null);
             return method.invoke(t, null);
         } catch (SecurityException e) {
             e.printStackTrace();

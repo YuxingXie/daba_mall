@@ -62,25 +62,27 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         fsInputFile.save();
         return fsInputFile.get("_id") == null ? null : fsInputFile.get("_id").toString();
     }
-
-    public int upsert(E queryEntity, E updateEntity) {
-        Query query = getEqualsQuery(queryEntity);
-//        System.out.println("update:" + getEqualsQuery(updateEntity).toString());
-        List<E> list = mongoTemplate.find(query, collectionClass);
-        Assert.isTrue(list == null || list.size() <= 1);
-        if (list == null || list.size() == 0) {
-            mongoTemplate.insert(updateEntity);
-            return 1;
-        } else {
-            E e = list.get(0);
-            BeanUtils.copyProperties(updateEntity, e);
-            return mongoTemplate.updateFirst(query, getUpdateFromEntity(updateEntity), collectionClass).getN();
-
-        }
-
-//        Update update=getUpdateFromEntity(updateEntity);
-//        return  mongoTemplate.upsert(query,update,collectionClass).getN();
+    public static void main(String[] args){
+        System.out.println(Boolean.class==boolean.class);
     }
+//    public int upsert(E queryEntity, E updateEntity) {
+//        Query query = getEqualsQuery(queryEntity);
+////        System.out.println("update:" + getEqualsQuery(updateEntity).toString());
+//        List<E> list = mongoTemplate.find(query, collectionClass);
+//        Assert.isTrue(list == null || list.size() <= 1);
+//        if (list == null || list.size() == 0) {
+//            mongoTemplate.insert(updateEntity);
+//            return 1;
+//        } else {
+//            E e = list.get(0);
+//            BeanUtils.copyProperties(updateEntity, e);
+//            return mongoTemplate.updateFirst(query, getUpdateFromEntity(updateEntity), collectionClass).getN();
+//
+//        }
+//
+////        Update update=getUpdateFromEntity(updateEntity);
+////        return  mongoTemplate.upsert(query,update,collectionClass).getN();
+//    }
 
     public GridFSDBFile findFileById(String id) {
         GridFS fs = new GridFS(mongoTemplate.getDb());
@@ -317,7 +319,6 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         return page;
     }
 
-    @Deprecated
     public void update(E e) {
         String id = MongoDbUtil.getId(e);
         if (null == id || "".equals(id.trim())) {
@@ -448,7 +449,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
             if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class) && !field.isAnnotationPresent(Id.class))
                 continue;
             String fieldName = field.getName();
-            Object fieldValue = ReflectUtil.getValue(e, fieldName);
+            Object fieldValue = ReflectUtil.getValue(e, fieldName,field.getType()==boolean.class);
             if (fieldValue == null) continue;
             if (fieldValue.toString().trim().equals("")) continue;
             if (field.isAnnotationPresent(Id.class)) {
@@ -482,7 +483,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
             if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)) continue;
             String fieldName = field.getName();
 
-            Object fieldValue = ReflectUtil.getValue(e, fieldName);
+            Object fieldValue = ReflectUtil.getValue(e, fieldName,field.getType()==boolean.class);
             if (fieldValue == null) continue;
             if (fieldValue.toString().trim().equals("")) continue;
             String key = field.getAnnotation(org.springframework.data.mongodb.core.mapping.Field.class).value();

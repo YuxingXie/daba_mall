@@ -50,10 +50,10 @@ public abstract class BaseEntityManager<E> implements IBaseEntityManager<E> {
         return getEntityDao().findAll();
     }
 
-    @Override
-    public int upsert(E queryEntity, E updateEntity) {
-        return getEntityDao().upsert(queryEntity, updateEntity);
-    }
+//    @Override
+//    public int upsert(E queryEntity, E updateEntity) {
+//        return getEntityDao().upsert(queryEntity, updateEntity);
+//    }
 
     @Override
     public E findById(ObjectId id) {

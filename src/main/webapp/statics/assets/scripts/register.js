@@ -4,16 +4,46 @@ angular.module('registerApp', ['ngRoute'])
                 require: 'ngModel',
                 link: function (scope, elem, attrs, ctrl) {
                     var firstPassword =attrs.pwCheck;
-                    elem.add(firstPassword).on('keyup', function () {
+                    elem.add($(firstPassword)).on('keyup', function () {
                         scope.$apply(function () {
-                            var v = elem.val()===$(firstPassword).val();
-                            ctrl.$setValidity('pwmatch', v);
+                            //console.log("scope.password"+scope.password);
+                            //console.log("first:"+firstPassword+"-"+$(firstPassword).val());
+                            //var v = elem.val()===$(firstPassword).val();
+                            //console.log("scope.rePassword:"+scope.rePassword);
+                            ctrl.$setValidity('pwmatch', !scope.password ||!scope.rePassword || scope.rePassword&&scope.password===scope.rePassword);
                         });
                     });
                 }
             }
         }])
-        .directive("ensureUnique", function ($http,$timeout) {
+    .directive("ensureNameUnique", function ($http,$timeout) {
+        return{
+            require:"ngModel",
+            link:function(scope,ele,attrs,c){
+                var timeout;
+                scope.$watch(attrs.ngModel,function(n){
+                    if(!n) return;
+                    if(timeout) $timeout.cancel(timeout);
+                    timeout=$timeout(function(){
+                        var data={}
+                        data[attrs.ngModel]=attrs.ensureNameUnique;
+                        $http({
+                            method:"POST",
+                            url:path+"/user/exist_name",
+                            data:data
+                        }).success(function(data){
+                            c.$setValidity('unique',data.unique);
+                        }).error(function(data){
+                            c.$setValidity('unique',false);
+                        });
+                    },300);
+
+                });
+
+            }
+        }
+    })
+        .directive("ensureEmailUnique", function ($http,$timeout) {
             return{
                 require:"ngModel",
                 link:function(scope,ele,attrs,c){
@@ -24,14 +54,15 @@ angular.module('registerApp', ['ngRoute'])
                         if(timeout) $timeout.cancel(timeout);
                         timeout=$timeout(function(){
                             var data={}
-                            data[attrs.ngModel]=attrs.ensureUnique;
-                            console.log("key:"+attrs.ngModel)
-                            console.log("value:"+attrs.ensureUnique)
+                            data[attrs.ngModel]=attrs.ensureEmailUnique;
+                            //console.log("key:"+attrs.ngModel)
+                            //console.log("value:"+attrs.ensureUnique)
                             $http({
                                 method:"POST",
-                                url:path+"/index/user/exist_email",
+                                url:path+"/user/exist_email",
                                 data:data
                             }).success(function(data){
+                                console.log(JSON.stringify(data));
                                 c.$setValidity('unique',data.unique);
                             }).error(function(data){
                                 c.$setValidity('unique',false);
@@ -43,6 +74,7 @@ angular.module('registerApp', ['ngRoute'])
                 }
             }
         })
+
     .directive("ensurePhoneUnique", function ($http,$timeout) {
         return{
             require:"ngModel",
@@ -59,7 +91,7 @@ angular.module('registerApp', ['ngRoute'])
                         console.log("value:"+attrs.ensurePhoneUnique)
                         $http({
                             method:"POST",
-                            url:path+"//index/user/exist_phone",
+                            url:path+"/user/exist_phone",
                             data:data
                         }).success(function(data){
                             c.$setValidity('unique',data.unique);
@@ -162,11 +194,5 @@ angular.module('registerApp', ['ngRoute'])
             }
 
         }])
-    //.handler("mainController",["$location","$scope",function($location,$scope){
-    //    $scope.goEmail=function(){
-    //        $location.path('/email');
-    //    }
-    //    $scope.goPhone=function(){
-    //        $location.path('/phone');
-    //    }
-    //}])
+        angular.bootstrap(document.getElementById("registerAppMain"),["registerApp"]);
+

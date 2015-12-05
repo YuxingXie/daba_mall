@@ -36,7 +36,7 @@ var loginCheckBeforeHandler=function(handler){
             //    $('#mergeCart').val(true);
             //}
             $.ajax({
-                url: path+"/index/user/login",
+                url: path+"/user/login",
                 contentType: "application/json",
                 data: JSON.stringify($('#loginForm').serializeObject()),
                 method: "post"
@@ -74,7 +74,7 @@ $(document).ready(function () {
     });
 
     $(document).on("click", "#logout", function () {
-        $.ajax(path+"/index/user/logout")
+        $.ajax(path+"/user/logout")
         .done(function(){
             $(".additional-nav>ul>li:eq(0)").remove();
             $(".additional-nav>ul>li:eq(0)").remove();

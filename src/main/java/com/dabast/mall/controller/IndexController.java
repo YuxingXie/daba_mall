@@ -125,41 +125,6 @@ public class IndexController extends BaseRestSpringController {
 
     }
 
-    @RequestMapping(value = "/index/user/register")
-    public String userRegister(ModelMap model) {
-        return "register";
-    }
-
-    @RequestMapping(value = "/index/user/exist_email")
-    public ResponseEntity existEmail(ModelMap model, @RequestBody User user) {
-//        System.out.println("email:"+user.getEmail());
-        ResponseEntity responseEntity = null;
-        boolean used = registerValidateService.isEmailUsed(user.getEmail());
-        if (used) {
-            responseEntity = new ResponseEntity("{\"unique\":false}", HttpStatus.OK);
-        } else {
-            responseEntity = new ResponseEntity("{\"unique\":true}", HttpStatus.OK);
-        }
-
-//        System.out.println("is unique");
-        return responseEntity;
-    }
-
-    @RequestMapping(value = "/index/user/exist_phone")
-    public ResponseEntity existPhone(ModelMap model, @RequestBody User user) {
-//        System.out.println("email:"+user.getEmail());
-        ResponseEntity responseEntity = null;
-        boolean used = registerValidateService.isPhoneUsed(user.getPhone());
-        if (used) {
-            responseEntity = new ResponseEntity("{\"unique\":false}", HttpStatus.OK);
-        } else {
-            responseEntity = new ResponseEntity("{\"unique\":true}", HttpStatus.OK);
-        }
-
-//        System.out.println("is unique");
-        return responseEntity;
-    }
-
     /**
      * 把一件商品添加到购物车
      * @param productSelected
@@ -366,115 +331,12 @@ public class IndexController extends BaseRestSpringController {
         }
     }
 
-    @RequestMapping(value = "/index/user/{id}")
-    public ResponseEntity<User> get(ModelMap model, @PathVariable String id,HttpServletRequest request) {
-        User user = new User();
-        user.setName("Tom" + id);
-        user.setHeight(100);
-        user.setSex("f");
-        Map<String,String[]> params=new CustomServletRequestWrapper(request).getParameterMap();
-        Map<String,String[]> params2=request.getParameterMap();
-//        for (String key:params.keySet()){
-//            System.out.println("---------------------");
-//            String[] values=params.get(key);
-//            for (String value :values){
-//                System.out.println("key:"+key+",value:"+value);
-//            }
-//        }
-        return new ResponseEntity<User>(user, HttpStatus.OK);
-    }
 
-    @RequestMapping(value = "/index/order/delete/{id}", method = RequestMethod.GET)
-    public String orderRemove(@PathVariable String id, ModelMap model, HttpSession session) {
-        Assert.notNull(id);
-        ServiceManager.orderService.removeById(id);
-        return myOrders(model,session);
-    }
-    @RequestMapping(value = "/index/user/login", method = RequestMethod.POST)
-    public ResponseEntity<User> login(@RequestBody UserLoginForm form, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
-        User user = userDao.findByEmailOrPhone(form.getLoginStr());
-        if (user==null){
-            user=new User();
-            user.setLoginStatus("用户不存在");
-            return new ResponseEntity<User>(user,HttpStatus.OK);
-        }
-        //form.password可能是原始密码或者经过一次MD5加密，也可能是两次md5加密
-        if (form.getPassword().equalsIgnoreCase(user.getPassword())
-                ||form.getPassword().equalsIgnoreCase(MD5.convert(user.getPassword()))
-                ||MD5.convert(form.getPassword()).equalsIgnoreCase(user.getPassword())) {
-            session.setAttribute("loginUser", user);
-            int loginMaxAge = 30 * 24 * 60 * 60;   //定义账户密码的生命周期，这里是一个月。单位为秒
-            if (form.isRemember()) {
-                CookieTool.addCookie(request, response, "loginStr", form.getLoginStr(), loginMaxAge);
-                CookieTool.addCookie(request, response, "password", form.getPassword(), loginMaxAge);
-            } else {
-                CookieTool.removeCookie(request, response, "loginStr");
-                CookieTool.removeCookie(request, response, "password");
-            }
-            Cart sessionCart=session.getAttribute(Constant.CART)==null?null:((Cart)(session.getAttribute(Constant.CART)));
-           if (form.isMergeCart()){
-               if (user.getCart()==null){
-                   user.setCart(sessionCart);
-               }else{
-                   Cart userCart=user.getCart();
-                   for (ProductSelected productSelected:userCart.getProductSelectedList()){
-                       ProductSeries productSeries=productSelected.getProductSeries();
-                       if(productSeries.getProductStore()==null) continue;
-                       List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
-                       productSeries.getProductStore().setInAndOutList(inAndOuts);
-                   }
-                   userCart.merge(sessionCart);
-               }
-               if (sessionCart!=null){
-                   ServiceManager.userService.update(user);
-               }
-           }
-            session.setAttribute(Constant.CART,user.getCart());
-            return new ResponseEntity<User>(user, HttpStatus.OK);
-        } else {
-            user=new User();
-            user.setLoginStatus("用户名/密码错误");
-            return new ResponseEntity<User>(user,HttpStatus.OK);
-        }
-    }
 
-    @RequestMapping(value = "/index/user/login/direct/{id}")
-    public String loginDirect(@PathVariable String id, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-        User user = userDao.findById(id);
-        int loginMaxAge = 30 * 24 * 60 * 60;   //定义账户密码的生命周期，这里是一个月。单位为秒
-        CookieTool.addCookie(request, response, "name", user.getName(), loginMaxAge);
-        CookieTool.addCookie(request, response, "password", user.getPassword(), loginMaxAge);
-        return "redirect:/index";
-    }
 
-    @RequestMapping(value = "/index/user/logout")
-    public ResponseEntity logout(ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-        session.setAttribute("loginUser", null);
-        session.removeAttribute("loginUser");
-        session.setAttribute(Constant.CART, null);
-        session.removeAttribute(Constant.CART);
-        CookieTool.removeCookie(request, response, "loginStr");
-//        System.out.println("清除cookie name");
-        CookieTool.removeCookie(request, response, "password");
-//        System.out.println("清除cookie password");
-        return new ResponseEntity("{}", HttpStatus.OK);
-    }
-    @RequestMapping(value = "/index/login_user")
-    public ResponseEntity loginUser(HttpSession session) {
-        User user=getLoginUser(session);
-//        System.out.println(new ResponseEntity<User>(user,HttpStatus.OK));
-//        User test=new User();
-//        test.setName("John");
-//        user.setCart(null);
-        return new ResponseEntity<User>(user,HttpStatus.OK);
-    }
 
-    @RequestMapping(value = "/index/personal_message")
-    public String personalMessage(ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-//        User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
-        return "personal_message";
-    }
+
     @RequestMapping(value = "/cart/adjust")
     public ResponseEntity adjust(@RequestBody Cart cart,ModelMap model, HttpSession session) {
         Assert.notNull(cart);
@@ -514,32 +376,7 @@ public class IndexController extends BaseRestSpringController {
         session.setAttribute("order",order);
         return "redirect:/to_bill";
     }
-    @RequestMapping(value = "/index/my_orders")
-    public String myOrders(ModelMap model, HttpSession session) {
-        User user=getLoginUser(session);
-        Order order=new Order();
-        if (user==null){
-            return null;
-        }
-        order.setUser(user);
-        List<Order> orders=ServiceManager.orderService.findEquals(order);
-        if (orders==null){
-            model.addAttribute("orders",orders);
-            return "my_orders";
-        }
-        for (Order order1:orders){
-            List<ProductSelected> productSelectedList=order1.getProductSelectedList();
-            for (ProductSelected productSelected:productSelectedList){
-                ProductSeries productSeries=productSelected.getProductSeries();
-                if (productSeries!=null){
-                    productSeries.setProductSeriesPrices(ServiceManager.productSeriesPriceService.findByProductSeriesId(productSeries.getId()));
-                }
 
-            }
-        }
-        model.addAttribute("orders",orders);
-        return "my_orders";
-    }
 
     public static void main(String[] args) {
         String jsonStr = "[{id:100,name:'Johnson'},{id:101,name:'Jackson'}]";

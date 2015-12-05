@@ -5,39 +5,8 @@
 <jsp:useBean id="phoneForm" class="com.dabast.mall.form.UserLoginForm" scope="request"></jsp:useBean>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
-<head>
 
-    <style>
-        .error {
-            margin: 0;
-            padding: 0;
-            color: #E94D1C
-        }
-        .info {
-            margin: 0;
-            padding: 0;
-            color: #18e957;
-            margin-left: 80px;
-            margin-top: 10px;
-            width: 100%;
-
-        }
-        .pw_weak{
-            width: 50px;background: red;border-right: 1px #fff solid;display:inline-block;margin: 0px;
-        }
-        .pw_mid{
-            width: 50px;background: orange;border-right: 1px #fff solid;display:inline-block;margin: 0px;
-        }
-        .pw_strong{
-            width: 50px;background: #008000;border-right: 1px #fff solid;display:inline-block;margin: 0px;
-        }
-        .pw_un_reach{
-            width: 50px; background: darkgray;border-right: 1px #fff solid;display:inline-block;margin: 0px;
-        }
-    </style>
-</head>
-<body>
-<div class="main" ng-app="registerApp" ng-init='mailSending=false;mailSent=false;'>
+<div class="main" ng-app="registerApp" id="registerAppMain" ng-init='mailSending=false;mailSent=false;'>
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="${path}/index">首页</a></li>
@@ -61,14 +30,14 @@
                                     <form:form name="signupForm" modelAttribute="form"
                                                 role="form"
                                                action="${path}/user/register/email"
-                                                class="form-horizontal form-without-legend" novalidate="novalidate" _method="POST">
+                                                class="form-horizontal form-without-legend" novalidate="novalidate" _method="POST" autocomplete="false">
                                         <fieldset>
                                             <div class="form-group has-feedback">
                                                 <div class="row">
-                                                    <label class="col-lg-4 control-label">昵称<span class="require">*</span></label>
+                                                    <label class="col-lg-4 control-label">昵称 <span class="require">*</span></label>
 
                                                     <div class="col-lg-8 has-success">
-                                                        <form:input type="text"  path="name" class="form-control" required="true" ng-maxlength="20" ng-init="name='${form.name}'" ng-model="name"/>
+                                                        <form:input type="text"  path="name" class="form-control" ensure_name_unique="{{name}}" required="true" ng-maxlength="20" ng-init="name='${form.name}'" ng-model="name"/>
                                                         <span ng-show="signupForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                                         <form:errors path="name" class="control-label"/>
                                                     </div>
@@ -78,10 +47,9 @@
 
                                                     <div class="col-lg-8 has-error"
                                                          ng-show="signupForm.name.$dirty &&signupForm.name.$invalid">
-                                                        <label class="control-label" ng-show="signupForm.name.$error.required" for="name">
-                                                            用户昵称必填</label>
-                                                        <label class="control-label" ng-show="signupForm.name.$error.maxlength" for="name">
-                                                            昵称不能超过20个字符</label>
+                                                        <label class="control-label" ng-show="signupForm.name.$error.required" for="name">用户昵称必填</label>
+                                                        <label class="control-label" ng-show="signupForm.name.$error.maxlength" for="name">昵称不能超过20个字符</label>
+                                                        <label class="control-label" ng-show="signupForm.name.$error.unique" for="name">该昵称已被使用</label>
 
                                                     </div>
                                                 </div>
@@ -91,7 +59,7 @@
                                                     <label class="col-lg-4 control-label">邮箱地址 <span class="require">*</span></label>
                                                     <div class="col-lg-8 has-success">
                                                         <form:input type="email" class="form-control" path="email" ng-init="email='${form.email}'" ng-model="email" placeholder="请输入您的邮箱地址"
-                                                                    required="true" ensure_unique="{{email}}"/>
+                                                                    required="true" ensure_email_unique="{{email}}" autocomplete="false"/>
                                                         <span ng-show="signupForm.email.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                                         <form:errors path="email" class="control-label"/>
                                                     </div>
@@ -110,8 +78,8 @@
                                                 <div class="row">
                                                     <label for="password" class="col-lg-4 control-label">密码 <span class="require">*</span></label>
                                                     <div class="col-lg-8 has-success">
-                                                        <form:password class="form-control" path="password" ng-init="password='${form.password}'" ng-model="password"
-                                                                       placeholder="请输入密码" required="true" ng-minlength="{{pw_min}}"/>
+                                                        <form:input onfocus="this.type='password'" autocomplete="false" class="form-control" path="password" id="password" ng-init="password='${form.password}'" ng-model="password"
+                                                                    pw_check="#rePassword" placeholder="请输入密码" required="true" ng-minlength="{{pw_min}}"/>
                                                         <span ng-show="signupForm.password.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                                         <form:errors path="password" class="control-label"/>
                                                     </div>
@@ -132,9 +100,9 @@
                                             </div>
                                             <div class="form-group has-feedback">
                                                 <div class="row">
-                                                    <label for="password" class="col-lg-4 control-label">确认密码<span class="require">*</span></label>
+                                                    <label for="password" class="col-lg-4 control-label">确认密码 <span class="require">*</span></label>
                                                     <div class="col-lg-8 has-success">
-                                                        <form:password class="form-control" path="rePassword" ng-init="rePassword='${form.rePassword}'"
+                                                        <form:input onfocus="this.type='password'" autocomplete="false" class="form-control" id="rePassword" path="rePassword" ng-init="rePassword='${form.rePassword}'"
                                                                        ng-model="rePassword" pw_check="#password" placeholder="请再输入一次密码" required="true" ng-minlength="{{pw_min}}"/>
                                                         <span ng-show="signupForm.rePassword.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                                         <form:errors path="rePassword" class="control-label"/>
@@ -144,10 +112,11 @@
                                                     <div class="col-lg-4">&nbsp;</div>
                                                     <div class="has-error col-lg-8" ng-show="signupForm.rePassword.$dirty &&signupForm.rePassword.$invalid">
                                                         <label class="control-label" ng-show="signupForm.rePassword.$error.required"> 必须确认密码</label>
-                                                        <label class="control-label" ng-show="signupForm.rePassword.$error.minlength"> 密码最少需要{{pw_min}}个字符 </label>
-                                                        <label class="control-label" ng-show="signupForm.rePassword.$error.pwmatch"> 两次密码必须相同</label>
+                                                        <%--<label class="control-label" ng-show="signupForm.rePassword.$error.minlength"> 密码最少需要{{pw_min}}个字符 </label>--%>
+                                                        <%--<label class="control-label" ng-show="signupForm.password.$invalid"> 请填写密码再进行确认</label>--%>
+                                                        <label class="control-label" ng-show="signupForm.password.$error.pwmatch &&signupForm.rePassword.$error.pwmatch"> 两次密码必须相同</label>
                                                     </div>
-                                                    <div class="col-lg-8 has-success" ng-show="signupForm.rePassword.$valid">
+                                                    <div class="col-lg-8 has-success" ng-show="signupForm.rePassword.$valid && signupForm.password.$valid">
                                                         <label class="control-label"></label>
                                                     </div>
                                                 </div>
@@ -205,8 +174,6 @@
         <!-- END CONTENT -->
     </div>
 </div>
-<script>var path="${path}"</script>
-<script src="${path}/statics/assets/scripts/register.js"></script>
 <%--<script>--%>
     <%--$(document).ready(function(){--%>
         <%--$("[name='signupForm']").submit(function() {--%>

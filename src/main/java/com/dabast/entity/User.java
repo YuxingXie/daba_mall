@@ -31,8 +31,7 @@ public class User {
 //    @DBRef private Set<Address> address;
     @Field("registerTime")
     private Date registerTime;
-    @Field("status")
-    private Integer status;
+
     @Field("validateCode")
     private String validateCode;
     @Field("lastActivateTime")
@@ -44,9 +43,10 @@ public class User {
     private Cart cart;
     @Field(value = "addresses")
     private String[] addresses;
-
+    @Field private boolean disabled;//禁用
     @Field(value = "idCardNo")
     private String idCardNo;
+    private boolean activated;//激活
     @Transient
     private List<Account> userAccounts;
     public String[] getAddresses() {
@@ -130,14 +130,6 @@ public class User {
         return registerTime;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
     public void setValidateCode(String validateCode) {
         this.validateCode = validateCode;
     }
@@ -184,5 +176,21 @@ public class User {
 
     public void setUserCategory(String userCategory) {
         this.userCategory = userCategory;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
 }
