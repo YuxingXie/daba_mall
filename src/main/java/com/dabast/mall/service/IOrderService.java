@@ -1,7 +1,6 @@
 package com.dabast.mall.service;
 
 import com.dabast.common.base.IBaseEntityManager;
-import com.dabast.entity.Cart;
 import com.dabast.entity.Order;
 import com.dabast.entity.User;
 

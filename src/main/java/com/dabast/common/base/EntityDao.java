@@ -1,6 +1,5 @@
 package com.dabast.common.base;
 
-import com.dabast.entity.User;
 import com.mongodb.CommandResult;
 import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;

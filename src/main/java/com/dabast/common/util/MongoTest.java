@@ -1,6 +1,8 @@
 package com.dabast.common.util;
-import java.util.*;
-import com.mongodb.*; //com.mongodb包类似于java.sql，大多数与数据库相关的类都在这里
+
+import com.mongodb.*;
+
+import java.util.Date;
 
 public class MongoTest {
     public static void out(Object o) {

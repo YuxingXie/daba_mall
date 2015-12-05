@@ -1,8 +1,6 @@
 package com.dabast.entity;
 
-import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.common.util.BigDecimalUtil;
-import com.mongodb.DBObject;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
@@ -14,7 +12,6 @@ import org.springframework.util.Assert;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Document(collection = "productSeries")
 public class ProductSeries {

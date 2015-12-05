@@ -1,14 +1,15 @@
 package com.dabast.mall.controller;
 
 import com.dabast.common.base.BaseRestSpringController;
+import com.dabast.common.constant.Constant;
 import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.common.helper.service.ServiceManager;
-import com.dabast.common.util.*;
+import com.dabast.common.util.CustomServletRequestWrapper;
+import com.dabast.common.util.MD5;
 import com.dabast.common.web.CookieTool;
 import com.dabast.entity.*;
-import com.dabast.common.constant.Constant;
-import com.dabast.mall.form.UserLoginForm;
 import com.dabast.mall.dao.UserDao;
+import com.dabast.mall.form.UserLoginForm;
 import com.dabast.mall.service.impl.CartService;
 import com.dabast.mall.service.impl.RegisterValidateService;
 import com.mongodb.BasicDBObject;
@@ -20,7 +21,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 

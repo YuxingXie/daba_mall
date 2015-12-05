@@ -2,7 +2,6 @@ package com.dabast.common.util;
 
 import com.dabast.entity.User;
 
-import java.util.Collection;
 import java.util.List;
 
 /**

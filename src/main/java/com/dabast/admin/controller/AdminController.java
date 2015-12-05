@@ -5,25 +5,22 @@ import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.*;
 import com.dabast.mall.service.IProductSeriesService;
-import com.mongodb.gridfs.GridFSDBFile;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
@@ -171,22 +168,4 @@ public class AdminController extends BaseRestSpringController {
         }
         return "redirect:/admin/index/index";
     }
-
-
-
-    @RequestMapping(value = "/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response,ModelMap map){
-        Subject currentUser = SecurityUtils.getSubject();
-        currentUser.logout();
-        return "login.jsp";
-    }
-
-    private void setLogin(String userName, String password) {
-        Subject currentUser = SecurityUtils.getSubject();
-        if (!currentUser.isAuthenticated()) {
-            UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
-            token.setRememberMe(false);
-            currentUser.login(token);
-        }
-    }
-} 
+}

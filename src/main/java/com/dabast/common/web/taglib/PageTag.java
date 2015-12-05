@@ -1,7 +1,6 @@
 package com.dabast.common.web.taglib;
 
 import org.apache.commons.lang.StringUtils;
-//import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +14,8 @@ import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+
+//import org.apache.log4j.Logger;
 
 
 /**

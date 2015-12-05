@@ -2,7 +2,6 @@ package com.dabast.mall.service;
 
 import com.dabast.common.base.IBaseEntityManager;
 import com.dabast.entity.ProductSeries;
-import com.dabast.entity.ProductStore;
 import com.dabast.entity.ProductStoreInAndOut;
 
 import java.util.List;

@@ -2,7 +2,6 @@ package com.dabast.mall.dao;
 
 import com.dabast.common.base.BaseMongoDao;
 import com.dabast.entity.ProductSeries;
-import com.dabast.entity.ProductStore;
 import com.dabast.entity.ProductStoreInAndOut;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;

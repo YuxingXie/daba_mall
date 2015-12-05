@@ -2,12 +2,9 @@ package com.dabast.mall.dao;
 
 import com.dabast.common.base.BaseMongoDao;
 import com.dabast.entity.Cart;
-//import com.dabast.entity.ProductPropertySelect;
-import com.dabast.entity.ProductSelected;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
+//import com.dabast.entity.ProductPropertySelect;
 
 /**
  * Created by Administrator on 2015/7/29.
