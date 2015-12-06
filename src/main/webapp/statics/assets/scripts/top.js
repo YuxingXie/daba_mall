@@ -2,7 +2,7 @@ var loginCheckBeforeHandler=function(handler){
     $.ajax({
         //dataType:"json",
         data:{},
-        url: path + "/index/login_user"
+        url: path + "/user/login_user"
     }).done(function (data) {
         if (!data.id) {
             $("#myModal").modal().show();

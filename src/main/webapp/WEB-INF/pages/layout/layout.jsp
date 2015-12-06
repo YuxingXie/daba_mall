@@ -137,10 +137,11 @@
                         </a>
                         <!-- BEGIN DROPDOWN MENU -->
                         <ul class="dropdown-menu">
-                            <li><a data-href="${path}/user/my_orders" class="login-need" href="javascript:void(0)">我的订单</a></li>
-                            <li><a data-href="order-form.html" class="login-need" href="javascript:void(0)">待处理订单</a></li>
-                            <li><a data-href="${path}/my_interests" class="login-need" href="javascript:void(0)">我的关注</a></li>
-                            <li><a data-href="order-form.html" class="login-need" href="javascript:void(0)">退货换货</a></li>
+                            <li><a data-href="${path}/user/my_orders" class="login-need" href="javascript:void(0)"><i class="fa fa-list"></i>我的订单</a></li>
+                            <%--<li><a data-href="order-form.html" class="login-need" href="javascript:void(0)">待处理订单</a></li>--%>
+                            <li><a data-href="${path}/my_interests" class="login-need" href="javascript:void(0)"><i class="fa fa-heart"></i>我的关注</a></li>
+                            <li><a data-href="${path}/user/personal_message" class="login-need" href="javascript:void(0)"><i class="fa fa-user"></i>个人中心</a></li>
+                            <li><a data-href="order-form.html" class="login-need" href="javascript:void(0)"><i class="fa fa-reply"></i>退货换货</a></li>
                         </ul>
                         <!-- END DROPDOWN MENU -->
                     </li>

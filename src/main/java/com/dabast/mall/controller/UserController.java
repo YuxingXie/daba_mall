@@ -11,6 +11,7 @@ import com.dabast.mall.dao.UserDao;
 import com.dabast.mall.service.impl.CartService;
 import com.dabast.mall.service.impl.RegisterValidateService;
 import com.dabast.mall.service.impl.UserService;
+import com.mongodb.BasicDBObject;
 import org.apache.commons.mail.EmailException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -195,7 +196,7 @@ public class UserController extends BaseRestSpringController {
             return null;
         }
         order.setUser(user);
-        List<Order> orders=ServiceManager.orderService.findEquals(order);
+        List<Order> orders=ServiceManager.orderService.findAll(new BasicDBObject("user",user));
         if (orders==null){
             model.addAttribute("orders",orders);
             return "my_orders";

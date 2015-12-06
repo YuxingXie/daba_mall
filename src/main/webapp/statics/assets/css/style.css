@@ -55,10 +55,10 @@ a, a:focus, a:hover, a:active {
 	outline: 0;
 	text-decoration: none;
 }
-a:hover {
-	color: #E02222;
-	text-decoration: underline;
-}
+/*a:hover {*/
+	/*color: #E02222;*/
+	/*text-decoration: underline;*/
+/*}*/
 
 /***
 Misc tools
@@ -182,16 +182,16 @@ Misc tools
 	/*border-radius: 0;*/
 }
 .btn-primary {
-	border: 0;
-	background: #e94d1c;
-	color: #fff;
+	/*border: 0;*/
+	/*background: #e94d1c;*/
+	/*color: #fff;*/
 }
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active {
-	color: #fff;
-	background: #cc3304;
-	border: 0;
+	/*color: #fff;*/
+	/*background: #cc3304;*/
+	/*border: 0;*/
 }
 .btn-default {
 	/*border: 1px solid #EDEDED;*/
@@ -215,7 +215,7 @@ div.radio {
 
 select.form-control {
 	color: #5f6d7b;
-	border-radius: 0;
+	/*border-radius: 0;*/
 	border-color: #e4e6e8;
 	box-shadow: none;
 }
@@ -229,7 +229,7 @@ textarea.form-control {
 	border-color: #dbdbdb;
 	color: #777;
 	font: 14px Microsoft YaHei, sans-serif;
-	border-radius: 0;
+	/*border-radius: 0;*/
 	box-shadow: none;
 }
 input.form-control:focus,
@@ -287,13 +287,13 @@ Custom Scrollbars
 }
 
 ::-webkit-scrollbar-track {
-	border-radius: 0;
+	/*border-radius: 0;*/
 	box-shadow: none;
 	border: 0;
 }
 
 ::-webkit-scrollbar-thumb {
-	border-radius: 0;
+	/*border-radius: 0;*/
 	box-shadow: none;
 	border: 0;
 }
@@ -413,7 +413,7 @@ Header and header elements
 .header {
 	box-shadow: 0 1px 3px #ddd;
 	background: #fff;
-	border-radius: 0;
+	/*border-radius: 0;*/
 	margin-bottom: 23px;
 }
 .ie8 .header {
@@ -478,7 +478,7 @@ Header and header elements
 	text-transform: none;
 	font: 13px 'Microsoft YaHei', sans-serif;
 	letter-spacing: 0;
-	border-radius: 0;
+	/*border-radius: 0;*/
 	z-index: 9999;
 }
 .header li.dropdown > .dropdown-menu:after {
@@ -1309,7 +1309,7 @@ Sidebar
 	margin-bottom: 2px;
 	padding: 8px 10px 6px;
 	position: relative;
-	border-radius: 0;
+	/*border-radius: 0;*/
 }
 .sidebar .list-group-item:last-child {
 	margin: 0;
@@ -1347,7 +1347,7 @@ Sidebar
 	background-clip: padding-box;
 	background: #fff;
 	border: none;
-	border-radius: 0;
+	/*border-radius: 0;*/
 	box-shadow: none;
 	display: none;
 	float: none;
@@ -1666,7 +1666,7 @@ Steps3 and Steps3 elements
 .sidebar-filter .ui-widget-content {
 	border: none;
 	background: #e5e5e5;
-	border-radius: 0;
+	/*border-radius: 0;*/
 	height: 8px !important;
 }
 .sidebar-filter .ui-widget-header {
@@ -1674,7 +1674,7 @@ Steps3 and Steps3 elements
 }
 .ui-state-default,
 .ui-state-default:hover {
-	border-radius: 0;
+	/*border-radius: 0;*/
 	width: 11px !important;
 	height: 24px !important;
 	border-color: #fff !important;
@@ -1884,7 +1884,7 @@ div.content-form-page {
 	border-color: #dbdbdb;
 	color: #aaa;
 	font: 14px Arial, sans-serif;
-	border-radius: 0;
+	/*border-radius: 0;*/
 }
 .content-form-page .form-control:focus {
 	box-shadow: none;
@@ -2131,7 +2131,7 @@ table .product-quantity .input-group {
 .nav-tabs > li > a, .nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
 	background: #edeff1;
 	color: #647484;
-	border-radius: 0;
+	/*border-radius: 0;*/
 	padding: 5px 8px;
 	border: none !important;
 }
@@ -2215,7 +2215,7 @@ table .product-quantity .input-group {
 	color: #187705;
 }
 .content-search input {
-	border-radius: 0;
+	/*border-radius: 0;*/
 	border-color: #dbdbdb;
 	color: #b0b4b7;
 	font: 14px Microsoft YaHei, sans-serif;
@@ -2338,7 +2338,7 @@ Pre-Footer and pre-footer elements
 	width: 330px;
 }
 .pre-footer-subscribe-box input {
-	border-radius: 0;
+	/*border-radius: 0;*/
 	background: #313030;
 	border: solid 1px #313030;
 	color: #909090;
@@ -2721,7 +2721,7 @@ a.social-icon {
 }
 
 .checkout-page .panel {
-	border-radius: 0;
+	/*border-radius: 0;*/
 	border: none;
 	box-shadow: none;
 }
@@ -2937,24 +2937,24 @@ Input icons
 /***
 Font awesome icons styles
 ***/
-.fontawesome-icon-list [class^="fa-"],
-.fontawesome-icon-list [class*=" fa-"],
-li [class^="fa-"],
-li [class*=" fa-"] {
-	display: inline-block;
-	width: 1.25em;
-	text-align: center;
-}
-.fontawesome-icon-list [class^="fa-"].icon-large,
-.fontawesome-icon-list [class*=" fa-"].icon-large,
-li [class^="fa-"].icon-large,
-li [class*=" fa-"].icon-large {
-	width: 1.5625em;
-}
-.fontawesome-icon-list .col-md-3 {
-	height: 32px;
-	line-height: 32px;
-}
+/*.fontawesome-icon-list [class^="fa-"],*/
+/*.fontawesome-icon-list [class*=" fa-"],*/
+/*li [class^="fa-"],*/
+/*li [class*=" fa-"] {*/
+	/*display: inline-block;*/
+	/*width: 1.25em;*/
+	/*text-align: center;*/
+/*}*/
+/*.fontawesome-icon-list [class^="fa-"].icon-large,*/
+/*.fontawesome-icon-list [class*=" fa-"].icon-large,*/
+/*li [class^="fa-"].icon-large,*/
+/*li [class*=" fa-"].icon-large {*/
+	/*width: 1.5625em;*/
+/*}*/
+/*.fontawesome-icon-list .col-md-3 {*/
+	/*height: 32px;*/
+	/*line-height: 32px;*/
+/*}*/
 
 
 /***
