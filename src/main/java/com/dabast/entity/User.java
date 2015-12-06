@@ -4,9 +4,11 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class User {
     private String password;
     @Field("email")
     @Email
+    @Indexed
     private String email;
     @Field(value = "userCategory")
     private String userCategory;//1注册用户 2,。经销商
@@ -192,5 +195,62 @@ public class User {
 
     public void setActivated(boolean activated) {
         this.activated = activated;
+    }
+    private PersonalRealMessage realMessage;
+
+    public PersonalRealMessage getRealMessage() {
+        return realMessage;
+    }
+
+    public void setRealMessage(PersonalRealMessage realMessage) {
+        this.realMessage = realMessage;
+    }
+
+    /**
+     * 这些和登录相关，不保存
+     */
+
+    @Transient
+    private boolean remember;
+    @NotNull
+    @Transient
+    private String rePassword;
+    @Transient
+    private String loginStr;
+    @Transient
+    private boolean mergeCart;
+
+    public boolean isMergeCart() {
+        return mergeCart;
+    }
+
+    public void setMergeCart(boolean mergeCart) {
+        this.mergeCart = mergeCart;
+    }
+
+
+
+    public boolean isRemember() {
+        return remember;
+    }
+
+    public void setRemember(boolean remember) {
+        this.remember = remember;
+    }
+
+    public String getRePassword() {
+        return rePassword;
+    }
+
+    public void setRePassword(String rePassword) {
+        this.rePassword = rePassword;
+    }
+
+    public String getLoginStr() {
+        return loginStr;
+    }
+
+    public void setLoginStr(String loginStr) {
+        this.loginStr = loginStr;
     }
 }

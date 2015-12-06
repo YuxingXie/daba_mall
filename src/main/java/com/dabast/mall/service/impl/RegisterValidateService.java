@@ -3,18 +3,14 @@ package com.dabast.mall.service.impl;
 import com.dabast.common.code.EmailEnum;
 import com.dabast.entity.User;
 import com.dabast.mall.dao.UserDao;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
-import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Administrator on 2015/7/6.
@@ -28,9 +24,9 @@ public class RegisterValidateService {
      * 处理注册
      */
 
-    public String processRegister(String email) throws EmailException {
-        User userToUpdate=userDao.findByEmail(email,false);
-        if (userToUpdate==null) return "该邮箱已被使用";
+    public String sendValidateCodeToMail(String email) throws EmailException {
+        User userToUpdate=userDao.findByEmail(email);
+        if (userToUpdate!=null && userToUpdate.isActivated()) return "该邮箱已被使用";
         ///邮件的内容
         StringBuffer sb = new StringBuffer("<p>您的大坝生态邮箱注册验证码是:");
         int validateCode=(int)(Math.random()*999999-99999);
@@ -51,9 +47,13 @@ public class RegisterValidateService {
             htmlEmail.setMsg(sb.toString());
             htmlEmail.send();
             //保存注册信息,如果发送邮件抛出异常，不会保存
+            if (userToUpdate==null){
+                userToUpdate=new User();
+            }
             userToUpdate.setRegisterTime(new Date());
             userToUpdate.setValidateCode("" + validateCode);
-            userDao.update(userToUpdate);
+            userToUpdate.setEmail(email);
+            userDao.upsert(userToUpdate);
             String code=email.indexOf("@")>=0?email.substring(email.indexOf("@")+1):"";
             String url= EmailEnum.getUrlByCode(code);
             msg="邮件成功发送到您的邮箱";
@@ -90,7 +90,7 @@ public class RegisterValidateService {
 //                        System.out.println("==sq===" + user.getStatus());
                         user.setActivated(true);//把状态改为激活
 //                        System.out.println("==sh===" + user.getStatus());
-                        userDao.update(user);
+                        userDao.upsert(user);
                     } else {
                         throw new ServiceException("激活码不正确");
                     }

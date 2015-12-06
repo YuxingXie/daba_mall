@@ -122,7 +122,7 @@ public class AdminController extends BaseRestSpringController {
         if (prices==null) prices=new ArrayList<ProductSeriesPrice>();
         prices.add(productSeriesPrice);
         productSeries.setProductSeriesPrices(prices);
-//        ServiceManager.productSeriesService.update(productSeries);
+//        ServiceManager.productSeriesService.upsert(productSeries);
 
 
 
@@ -137,7 +137,7 @@ public class AdminController extends BaseRestSpringController {
         inAndOut.setOperator(getLoginUser(session));
         ServiceManager.productStoreInAndOutService.insert(inAndOut);
         productSeries.setProductStore(store);
-//        ServiceManager.productSeriesService.update(productSeries);
+//        ServiceManager.productSeriesService.upsert(productSeries);
         return "redirect:/admin/index/index";
     }
     @RequestMapping(value="/product_category/new")

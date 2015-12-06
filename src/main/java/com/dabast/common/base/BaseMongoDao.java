@@ -8,7 +8,6 @@ import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSInputFile;
 import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Page;
@@ -19,7 +18,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.*;
-import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
@@ -67,7 +65,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     }
 //    public int upsert(E queryEntity, E updateEntity) {
 //        Query query = getEqualsQuery(queryEntity);
-////        System.out.println("update:" + getEqualsQuery(updateEntity).toString());
+////        System.out.println("upsert:" + getEqualsQuery(updateEntity).toString());
 //        List<E> list = mongoTemplate.find(query, collectionClass);
 //        Assert.isTrue(list == null || list.size() <= 1);
 //        if (list == null || list.size() == 0) {
@@ -80,8 +78,8 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 //
 //        }
 //
-////        Update update=getUpdateFromEntity(updateEntity);
-////        return  mongoTemplate.upsert(query,update,collectionClass).getN();
+////        Update upsert=getUpdateFromEntity(updateEntity);
+////        return  mongoTemplate.upsert(query,upsert,collectionClass).getN();
 //    }
 
     public GridFSDBFile findFileById(String id) {
@@ -319,10 +317,11 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         return page;
     }
 
-    public void update(E e) {
+    public void upsert(E e) {
         String id = MongoDbUtil.getId(e);
         if (null == id || "".equals(id.trim())) {
-            //如果主键为空,则不进行修改
+            //如果主键为空,则新增记录
+            mongoTemplate.insert(e);
             return;
         }
         E qe = null;

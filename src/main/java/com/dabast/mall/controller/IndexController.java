@@ -4,12 +4,9 @@ import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.constant.Constant;
 import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.common.helper.service.ServiceManager;
-import com.dabast.common.util.CustomServletRequestWrapper;
-import com.dabast.common.util.MD5;
 import com.dabast.common.web.CookieTool;
 import com.dabast.entity.*;
 import com.dabast.mall.dao.UserDao;
-import com.dabast.mall.form.UserLoginForm;
 import com.dabast.mall.service.impl.CartService;
 import com.dabast.mall.service.impl.RegisterValidateService;
 import com.mongodb.BasicDBObject;
@@ -41,7 +38,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2015/6/11.

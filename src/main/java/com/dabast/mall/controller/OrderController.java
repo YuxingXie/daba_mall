@@ -98,7 +98,7 @@ public class OrderController extends BaseRestSpringController {
                     }
                     ServiceManager.productEvaluateService.insert(productEvaluate);
                     productSelected.setProductEvaluate(productEvaluate);
-//                    ServiceManager.orderService.update(order);
+//                    ServiceManager.orderService.upsert(order);
                     break;
                 }
             }

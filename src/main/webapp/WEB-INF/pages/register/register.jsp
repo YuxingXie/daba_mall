@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<jsp:useBean id="form" class="com.dabast.mall.form.UserLoginForm" scope="request"></jsp:useBean>
-<jsp:useBean id="phoneForm" class="com.dabast.mall.form.UserLoginForm" scope="request"></jsp:useBean>
+<jsp:useBean id="form" class="com.dabast.entity.User" scope="request"></jsp:useBean>
+<jsp:useBean id="phoneForm" class="com.dabast.entity.User" scope="request"></jsp:useBean>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 
@@ -37,7 +37,7 @@
                                                     <label class="col-lg-4 control-label">昵称 <span class="require">*</span></label>
 
                                                     <div class="col-lg-8 has-success">
-                                                        <form:input type="text"  path="name" class="form-control" ensure_name_unique="{{name}}" required="true" ng-maxlength="20" ng-init="name='${form.name}'" ng-model="name"/>
+                                                        <form:input path="name" class="form-control" ensure_name_unique="{{name}}" required="true" ng-maxlength="20" ng-init="name='${form.name}'" ng-model="name"/>
                                                         <span ng-show="signupForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                                         <form:errors path="name" class="control-label"/>
                                                     </div>
@@ -103,7 +103,7 @@
                                                     <label for="password" class="col-lg-4 control-label">确认密码 <span class="require">*</span></label>
                                                     <div class="col-lg-8 has-success">
                                                         <form:input onfocus="this.type='password'" autocomplete="false" class="form-control" id="rePassword" path="rePassword" ng-init="rePassword='${form.rePassword}'"
-                                                                       ng-model="rePassword" pw_check="#password" placeholder="请再输入一次密码" required="true" ng-minlength="{{pw_min}}"/>
+                                                                       ng-model="rePassword" pw_check="#password" placeholder="请再输入一次密码" required="true" ng-disabled="!signupForm.password.$dirty"/>
                                                         <span ng-show="signupForm.rePassword.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                                         <form:errors path="rePassword" class="control-label"/>
                                                     </div>
@@ -125,16 +125,20 @@
                                                 <div class="row">
                                                     <label class="col-lg-4 control-label">邮箱验证码 <span class="require">*</span></label>
                                                     <div class="col-lg-4 has-error">
+                                                        <%--(mailSending||(!mailSent))||--%>
                                                         <form:input type="text" class="form-control" email="{{email}}" path="validateCode"
                                                                     ng-init="validateCode='${form.validateCode}'"
-                                                                    ng-model="validateCode" required="true" ng-disabled="(mailSending||(!mailSent))||!signupForm.validateCode" ensure_validate_code="{{validateCode}}" />
+                                                                    ng-model="validateCode" required="true"
+                                                                    ng-disabled="signupForm.email.$invalid"
+                                                                    ensure_validate_code="{{validateCode}}" />
                                                         <form:errors path="validateCode" class="control-label"/>
 
                                                         <span ng-show="signupForm.validateCode.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                                     </div>
                                                     <div class="col-lg-4">
                                                         <button type="button"  class="btn btn-primary col-lg-12"
-                                                                ng-disabled="signupForm.email.$invalid||(mailSending&&!mailSent)" data-ng-click="getValidCode('email')">获取验证码</button>
+                                                                ng-disabled="signupForm.email.$invalid||(mailSending&&!mailSent)" data-ng-click="getValidCode('email')">
+                                                            获取验证码<i ng-if="mailSending" class="fa fa-spin fa-spinner pull-right"></i></button>
                                                     </div>
                                                 </div>
                                                 <div class="row">

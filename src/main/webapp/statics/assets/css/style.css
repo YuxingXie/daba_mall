@@ -176,10 +176,10 @@ Misc tools
 }
 
 .btn {
-	padding: 7px 14px;
-	font-size: 14px;
-	text-transform: uppercase;
-	border-radius: 0;
+	/*padding: 7px 14px;*/
+	/*font-size: 14px;*/
+	/*text-transform: uppercase;*/
+	/*border-radius: 0;*/
 }
 .btn-primary {
 	border: 0;
@@ -194,9 +194,9 @@ Misc tools
 	border: 0;
 }
 .btn-default {
-	border: 1px solid #EDEDED;
-	color: #A8AEB3;
-	background: transparent;
+	/*border: 1px solid #EDEDED;*/
+	/*color: #A8AEB3;*/
+	/*background: transparent;*/
 	padding: 6px 13px;
 }
 .btn-default:hover,
@@ -1004,14 +1004,14 @@ Catalogue styles
 }
 .product-item .add2cart {
 	float: right;
-	color: #a8aeb3;
-	border: 1px #ededed solid;
+	/*color: #a8aeb3;*/
+	/*border: 1px #ededed solid;*/
 	padding: 3px 6px;
 }
 .product-item .add2cart:hover {
 	color: #fff !important;
-	background: #187705 !important;
-	border-color: #187705;
+	/*background: #187705 !important;*/
+	/*border-color: #187705;*/
 }
 
 /* bx-slider styles */

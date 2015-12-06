@@ -111,7 +111,7 @@ public abstract class BaseEntityManager<E> implements IBaseEntityManager<E> {
 
     @Override
     public void update(E e) {
-        getEntityDao().update(e);
+        getEntityDao().upsert(e);
     }
 
     @Override

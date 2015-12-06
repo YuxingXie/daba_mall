@@ -8,7 +8,6 @@ import com.dabast.common.util.MD5;
 import com.dabast.common.web.CookieTool;
 import com.dabast.entity.*;
 import com.dabast.mall.dao.UserDao;
-import com.dabast.mall.form.UserLoginForm;
 import com.dabast.mall.service.impl.CartService;
 import com.dabast.mall.service.impl.RegisterValidateService;
 import com.dabast.mall.service.impl.UserService;
@@ -99,7 +98,7 @@ public class UserController extends BaseRestSpringController {
         return myOrders(model,session);
     }
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<User> login(@RequestBody UserLoginForm form, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<User> login(@RequestBody User form, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
         User user = userService.findByEmailOrPhone(form.getLoginStr());
         if (user==null){
@@ -110,41 +109,45 @@ public class UserController extends BaseRestSpringController {
         //form.password可能是原始密码或者经过一次MD5加密，也可能是两次md5加密
         if (form.getPassword().equalsIgnoreCase(user.getPassword())
                 ||form.getPassword().equalsIgnoreCase(MD5.convert(user.getPassword()))
-                ||MD5.convert(form.getPassword()).equalsIgnoreCase(user.getPassword())) {
-            session.setAttribute("loginUser", user);
-            int loginMaxAge = 30 * 24 * 60 * 60;   //定义账户密码的生命周期，这里是一个月。单位为秒
-            if (form.isRemember()) {
-                CookieTool.addCookie(request, response, "loginStr", form.getLoginStr(), loginMaxAge);
-                CookieTool.addCookie(request, response, "password", form.getPassword(), loginMaxAge);
-            } else {
-                CookieTool.removeCookie(request, response, "loginStr");
-                CookieTool.removeCookie(request, response, "password");
-            }
-            Cart sessionCart=session.getAttribute(Constant.CART)==null?null:((Cart)(session.getAttribute(Constant.CART)));
-           if (form.isMergeCart()){
-               if (user.getCart()==null){
-                   user.setCart(sessionCart);
-               }else{
-                   Cart userCart=user.getCart();
-                   for (ProductSelected productSelected:userCart.getProductSelectedList()){
-                       ProductSeries productSeries=productSelected.getProductSeries();
-                       if(productSeries.getProductStore()==null) continue;
-                       List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
-                       productSeries.getProductStore().setInAndOutList(inAndOuts);
-                   }
-                   userCart.merge(sessionCart);
-               }
-               if (sessionCart!=null){
-                   ServiceManager.userService.update(user);
-               }
-           }
-            session.setAttribute(Constant.CART,user.getCart());
-            return new ResponseEntity<User>(user, HttpStatus.OK);
-        } else {
+                ||MD5.convert(form.getPassword()).equalsIgnoreCase(user.getPassword()))
+            return doLogin(form, session, request, response, user);
+        else {
             user=new User();
             user.setLoginStatus("用户名/密码错误");
             return new ResponseEntity<User>(user,HttpStatus.OK);
         }
+    }
+
+    private ResponseEntity<User> doLogin(User form, HttpSession session, HttpServletRequest request, HttpServletResponse response, User user) {
+        session.setAttribute("loginUser", user);
+        int loginMaxAge = 30 * 24 * 60 * 60;   //定义账户密码的生命周期，这里是一个月。单位为秒
+        if (form.isRemember()) {
+            CookieTool.addCookie(request, response, "loginStr", form.getLoginStr(), loginMaxAge);
+            CookieTool.addCookie(request, response, "password", form.getPassword(), loginMaxAge);
+        } else {
+            CookieTool.removeCookie(request, response, "loginStr");
+            CookieTool.removeCookie(request, response, "password");
+        }
+        Cart sessionCart=session.getAttribute(Constant.CART)==null?null:((Cart)(session.getAttribute(Constant.CART)));
+        if (form.isMergeCart()){
+            if (user.getCart()==null){
+                user.setCart(sessionCart);
+            }else{
+                Cart userCart=user.getCart();
+                for (ProductSelected productSelected:userCart.getProductSelectedList()){
+                    ProductSeries productSeries=productSelected.getProductSeries();
+                    if(productSeries.getProductStore()==null) continue;
+                    List<ProductStoreInAndOut> inAndOuts= ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
+                    productSeries.getProductStore().setInAndOutList(inAndOuts);
+                }
+                userCart.merge(sessionCart);
+            }
+            if (sessionCart!=null){
+                ServiceManager.userService.update(user);
+            }
+        }
+        session.setAttribute(Constant.CART,user.getCart());
+        return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/login/direct/{id}")
@@ -215,7 +218,7 @@ public class UserController extends BaseRestSpringController {
     @RequestMapping(value = "/register/validate_code/email", method = {RequestMethod.POST})
     public ResponseEntity emailValidateCode(ModelMap map, HttpServletRequest request, String email) throws ParseException, EmailException {
         //注册
-        String msg=registerValidateService.processRegister(email);//发邮箱激活
+        String msg=registerValidateService.sendValidateCodeToMail(email);//发邮箱激活
         String code=email.indexOf("@")>=0?email.substring(email.indexOf("@")+1):"";
         String validUrl= EmailEnum.getUrlByCode(code);
         return new ResponseEntity("{\"message\":\""+msg+"\",\"url\":\""+validUrl+"\"}", HttpStatus.OK);
@@ -223,7 +226,7 @@ public class UserController extends BaseRestSpringController {
     @RequestMapping(value = "/register/validate_code/phone", method = {RequestMethod.POST})
     public ResponseEntity phoneValidateCode(ModelMap map, HttpServletRequest request, String phone) throws ParseException, EmailException {
         //注册
-        String msg=registerValidateService.processRegister(phone);//发邮箱激活
+        String msg=registerValidateService.sendValidateCodeToMail(phone);//发邮箱激活
         String code= phone.indexOf("@")>=0? phone.substring(phone.indexOf("@")+1):"";
         String validUrl= EmailEnum.getUrlByCode(code);
         return new ResponseEntity("{\"message\":\""+msg+"\",\"url\":\""+validUrl+"\"}", HttpStatus.OK);
@@ -233,6 +236,8 @@ public class UserController extends BaseRestSpringController {
 //        System.out.println("phone:"+user.getEmail());
 //        System.out.println("code:"+user.getValidateCode());
         ResponseEntity responseEntity=null;
+        Assert.notNull(user);
+        Assert.notNull(user.getEmail());
         User dbUser=userDao.findByEmail(user.getEmail());
 //        System.out.println("code in request is:" + user.getValidateCode() + ",code in db is:" + dbUser.getValidateCode());
         boolean codeValid=dbUser.getValidateCode().equals(user.getValidateCode());
@@ -245,7 +250,7 @@ public class UserController extends BaseRestSpringController {
     }
 
     @RequestMapping(value = "/register/email",method = RequestMethod.POST)
-    public String emailRegister(@Valid @ModelAttribute UserLoginForm form,BindingResult errors,RedirectAttributesModelMap modelMap) {
+    public String emailRegister(@Valid @ModelAttribute User form,BindingResult errors,RedirectAttributesModelMap modelMap,HttpSession session, HttpServletRequest request,HttpServletResponse response) {
 
         if (errors.hasErrors()){
             modelMap.addFlashAttribute("form", form);
@@ -255,6 +260,7 @@ public class UserController extends BaseRestSpringController {
             return "redirect:/user/register";
         }else{
             User dbUser=userDao.findByEmail(form.getEmail());
+            Assert.isTrue(!dbUser.isActivated());
             if (!dbUser.getValidateCode().equals(form.getValidateCode())){
                 errors.rejectValue("validateCode","user.signup.validateCode.error");
                 if (!form.getPassword().equals(form.getRePassword())){
@@ -276,17 +282,12 @@ public class UserController extends BaseRestSpringController {
                 dbUser.setRegisterTime(now);
                 dbUser.setLastActivateTime(now);
                 dbUser.setPassword(MD5.convert(dbUser.getPassword()));
-                userDao.update(dbUser);
+                userDao.upsert(dbUser);
                 modelMap.addFlashAttribute("form", dbUser);
                 modelMap.addFlashAttribute("message", "注册成功!");
-                return "redirect:/user/register/success";
+                doLogin(form,session,request,response,dbUser);
+                return "redirect:/register_success";
             }
-
         }
-
-    }
-    @RequestMapping("/register/success")
-    public String registerSuccess(){
-        return "register/register_success";
     }
 }
