@@ -92,7 +92,7 @@
 <script type="text/javascript" src="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.pack.js"></script>
 <script src="${path}/statics/assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script><!-- Quantity -->
 <script type="text/javascript" src='${path}/statics/assets/plugins/zoom/jquery.zoom.min.js'></script><!-- product zoom -->
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script><!-- for slider-range -->
+<script src="${path}/statics/assets/plugins/jquery-ui-1.11.4/jquery-ui.js"></script><!-- for slider-range -->
 <script type="text/javascript" src="${path}/statics/assets/scripts/app.js"></script>
 <tiles:insertAttribute name="bottomScript"/>
 <script type="text/javascript">
