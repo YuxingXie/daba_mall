@@ -68,8 +68,7 @@
 </div>
 <!-- END SLIDER -->
 
-<div class="main">
-    <div class="container">
+<div class="container main">
         <!-- BEGIN SALE PRODUCT & 新品上市 -->
         <div class="row margin-bottom-40">
             <!-- BEGIN SALE PRODUCT -->
@@ -145,7 +144,6 @@
             <!-- END SALE PRODUCT -->
         </div>
         <!-- END SALE PRODUCT & NEW ARRIVALS -->
-
         <!-- BEGIN SALE PRODUCT & 热卖商品 -->
         <div class="row margin-bottom-40">
             <!-- BEGIN SALE PRODUCT -->
@@ -181,8 +179,6 @@
             </div>
             <!-- END SALE PRODUCT -->
         </div>
-
-
         <div class="row margin-bottom-40">
             <!-- BEGIN SALE PRODUCT -->
             <div class="col-md-12 sale-product">
@@ -219,7 +215,6 @@
             <!-- END SALE PRODUCT -->
         </div>
         <!-- END SALE PRODUCT & NEW ARRIVALS -->
-
         <!-- BEGIN SALE PRODUCT & 特价优惠 -->
         <div class="row margin-bottom-40">
             <!-- BEGIN SALE PRODUCT -->
@@ -255,8 +250,6 @@
             </div>
             <!-- END SALE PRODUCT -->
         </div>
-
-
         <div class="row margin-bottom-40">
             <!-- BEGIN SALE PRODUCT -->
             <div class="col-md-12 sale-product">
@@ -292,12 +285,12 @@
             <!-- END SALE PRODUCT -->
         </div>
         <!-- END SALE PRODUCT & NEW ARRIVALS -->
-    </div>
+
     <div id="product-pop-up" style="display: none; width: 700px;">
         <div class="product-page product-pop-up">
             <form name="popForm">
                 <div class="row">
-                    <div class="col-md-6 col-sm-6 col-xs-3">
+                    <div class="col-md-6 col-sm-6">
                         <div class="product-main-image">
                             <img src="${path}/statics/assets/temp/products/model7.jpg" class="img-responsive">
                         </div>
@@ -307,7 +300,7 @@
                             <a href="javascript:void(0)"><img src="${path}/statics/assets/temp/products/model5.jpg"></a>
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-6 col-xs-9">
+                    <div class="col-md-6 col-sm-6">
                         <h1 style=" text-align:center;">帝王蟹</h1>
                         <div class="price-availability-block clearfix">
                             <div class="price">

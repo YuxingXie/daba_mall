@@ -16,7 +16,7 @@
   <tiles:insertAttribute name="css"/>
 </head>
 <body>
-<div class="main">
+<div class="container">
   <div class="container">
     <div class="row text-center text-primary" style="margin-top: 30px;margin-bottom:30px;font-size:large">大坝生态农业科技有限公司管理平台</div>
     <div class="row">

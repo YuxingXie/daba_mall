@@ -4,8 +4,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
-<div class="main">
-    <div class="container">
+<div class="container">
         <ul class="breadcrumb">
             <li><a href="${path}">首页</a></li>
             <li><a href="">用户</a></li>
@@ -18,7 +17,7 @@
         </div>
 
 
-    </div>
+
     <div style="margin-top: 20px;"></div>
 </div>
 

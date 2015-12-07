@@ -46,6 +46,9 @@ public class ProductSeries {
      */
     @Field
     private List<PackageItem> packageItems;
+    /**
+     * 产品宣传册
+     */
     @Field
     private ProductBrochures productBrochures;
     @DBRef

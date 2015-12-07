@@ -8,8 +8,7 @@
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <!DOCTYPE html>
 
-<div class="main" data-description="from cart page">
-    <div class="container">
+<div class="container" data-description="from cart page">
         <ul class="breadcrumb">
             <li><a href="${path}">首页</a></li>
             <li><a href="">购物车</a></li>
@@ -174,11 +173,5 @@
                 </form>
             </div>
         </div>
-
-
-
-
-
-    </div>
     <!-- END SIDEBAR & CONTENT -->
 </div>

@@ -10,8 +10,7 @@
 
 <!-- END HEADER -->
 
-<div class="main">
-    <div class="container">
+<div class="container">
         <ul class="breadcrumb">
             <li><a href="${path}">首页</a></li>
             <li><a href="">商店</a></li>
@@ -115,13 +114,13 @@
 
     </div>
     <!-- END SIDEBAR & CONTENT -->
-</div>
+
 </div>
 <div id="product-pop-up" style="display: none; width: 700px;">
     <div class="product-page product-pop-up">
         <form name="popForm">
             <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-3">
+                <div class="col-md-6 col-sm-6 col-sm-3">
                     <div class="product-main-image">
                         <img src="${path}/statics/assets/temp/products/model7.jpg" alt="Cool green dress with red bell"
                              class="img-responsive">
@@ -135,7 +134,7 @@
                                          src="${path}/statics/assets/temp/products/model5.jpg"></a>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-6 col-xs-9">
+                <div class="col-md-6 col-sm-6">
                     <h1 style=" text-align:center;">帝王蟹</h1>
 
                     <div class="price-availability-block clearfix">

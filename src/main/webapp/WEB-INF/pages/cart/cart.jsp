@@ -8,7 +8,7 @@
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <!DOCTYPE html>
 <div class="main"  ng-app="cartAdjustApp" id="cartAdjustAppMain">
-    <div class="container"  ng-controller="cartAdjustController">
+    <div ng-controller="cartAdjustController">
         <ul class="breadcrumb">
             <li><a href="${path}">首页</a></li>
             <li><a href="">购物车</a></li>
@@ -86,7 +86,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="orderModal" tabindex="-1" role="dialog"
+        <div class="modal fade active" id="orderModal" tabindex="-1" role="dialog"
              aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="width: 400px;">
                 <div class="modal-content">

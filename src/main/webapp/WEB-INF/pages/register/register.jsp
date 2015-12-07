@@ -6,8 +6,7 @@
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 
-<div class="main" ng-app="registerApp" id="registerAppMain" ng-init='mailSending=false;mailSent=false;'>
-    <div class="container">
+<div class="container" ng-app="registerApp" id="registerAppMain" ng-init='mailSending=false;mailSent=false;'>
         <ul class="breadcrumb">
             <li><a href="${path}/index">首页</a></li>
             <li><a href="">商店</a></li>
@@ -176,7 +175,7 @@
         </div>
 
         <!-- END CONTENT -->
-    </div>
+
 </div>
 <%--<script>--%>
     <%--$(document).ready(function(){--%>

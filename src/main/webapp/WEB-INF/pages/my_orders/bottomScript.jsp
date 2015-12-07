@@ -30,41 +30,12 @@
 <script type="text/javascript" src="${path}/statics/assets/plugins/sco.js-master/js/sco.modal.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/sco.js-master/js/sco.confirm.js"></script>
 <script type="text/javascript">
-
+    angular.module("myOrdersApp",[])
+            .controller('myOrdersController', ['$scope', '$http', function ($scope, $http) {
+                $scope.order={};
+            }]);
+    angular.bootstrap(document.getElementById("myOrdersAppMain"), ['myOrdersApp']);
     $(document).ready(function () {
-        $("#toBill").click(function () {
-            var supportHtml5=false;
-            if (window.applicationCache) {
-                supportHtml5=true;
-            } else {
-                supportHtml5=false;
-            }
-            var isLogin = false;
-            $.ajax({
-                url: path + "/index/login_user"
-
-            }).done(function (data) {
-                if (!data.id) {
-                    console.log("user not log in");
-                    $("#myModal").modal().show();
-                    return false;
-                }else{
-                   nonHtml5Post();
-                    return false;
-                }
-            }).fail(function(){
-                console.log("error ");
-                return false;
-            });
-
-        });
-        $(".del-order").click(function(){
-            var action=$(this).data("href");
-            $("#ensure-delete").attr("href",action);
-            $(this).scojs_confirm({
-                target:'#confirmDeleteOrderModal'
-            });
-        });
 
     });
 

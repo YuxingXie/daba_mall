@@ -8,8 +8,8 @@
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <!DOCTYPE html>
 
-<div class="main" ng-app="bankApp" ng-init="matchCode=true" id="bankAppMain">
-    <div class="container" ng-controller="bankController">
+<div class="container" ng-app="bankApp" ng-init="matchCode=true" id="bankAppMain">
+    <div ng-controller="bankController">
         <ul class="breadcrumb">
             <%--<li><a href="${path}">首页</a></li>--%>
             <%--<li><a href="">购物车</a></li>--%>
@@ -65,7 +65,7 @@
                 </form>
             </div>
         </div>
-        <div class="modal fade" id="shortcutsPayModal" tabindex="-1" role="dialog" aria-labelledby="shortcutsPayModalLabel" aria-hidden="true">
+        <div class="modal fade active" id="shortcutsPayModal" tabindex="-1" role="dialog" aria-labelledby="shortcutsPayModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">

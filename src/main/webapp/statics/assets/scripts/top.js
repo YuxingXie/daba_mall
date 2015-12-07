@@ -49,7 +49,8 @@ var loginCheckBeforeHandler=function(handler){
                 $(".additional-nav>ul>li:eq(0)").remove();
                 $(".additional-nav>ul>li:eq(0)").remove();
                 var $new_li = $('<li>欢迎您,<a href="#">' + data.name + '</a>! </li><li><a href="#" id="logout">退出</a></li>');
-                $new_li.insertBefore($(".additional-nav>ul>li:eq(0)"));
+                //$new_li.insertBefore($(".additional-nav>ul>li:eq(0)"));
+                $new_li.appendTo($(".additional-nav>ul"));
                 $('#myModal').modal('hide');
                 if(callBack!==undefined){
                     console.log("login,now invoke callback");
@@ -76,10 +77,11 @@ $(document).ready(function () {
     $(document).on("click", "#logout", function () {
         $.ajax(path+"/user/logout")
         .done(function(){
-            $(".additional-nav>ul>li:eq(0)").remove();
-            $(".additional-nav>ul>li:eq(0)").remove();
+            //$(".additional-nav>ul>li:eq(0)").remove();
+            //$(".additional-nav>ul>li:eq(0)").remove();
+            $(".additional-nav>ul").empty();
             var $new_li = $('<li><a href="login-page.html">注册</a></li><li><a href="#" data-toggle="modal" data-target="#myModal">登录</a></li>');
-            $new_li.insertBefore($(".additional-nav>ul>li:eq(0)"));
+            $new_li.appendTo($(".additional-nav>ul"));
         }).fail()
     });
 

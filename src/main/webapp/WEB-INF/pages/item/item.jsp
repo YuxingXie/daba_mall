@@ -8,8 +8,8 @@
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 
-    <div class="main" ng-app="productSeriesApp" id="page-main">
-      <div class="container" ng-controller="productSeriesCtrl">
+    <div class="container" ng-app="productSeriesApp" id="page-main">
+      <div ng-controller="productSeriesCtrl">
         <ul class="breadcrumb">
             <li><a href="${path}">首页</a></li>
             <li><a href="">商店</a></li>
@@ -188,7 +188,7 @@
                 <!--<p>There are no reviews for this product.</p>-->
 
                 <c:forEach var="productEvaluate" items="${_page.content}" varStatus="varStatus">
-                  <div style="margin-bottom:10px;" class="container table-bordered<c:if test="${varStatus.index mod 2 eq 1}"> bg-info</c:if>" ng-init="showEvaluate${productEvaluate.id}=false">
+                  <div style="margin-bottom:10px;" class="table-bordered<c:if test="${varStatus.index mod 2 eq 1}"> bg-info</c:if>" ng-init="showEvaluate${productEvaluate.id}=false">
                       <div class="row">
                           <div class="col-sm-1 col-lg-1">
                             <strong class="fa fa-user">
@@ -274,7 +274,7 @@
         <!-- END SIMILAR PRODUCTS -->
       </div>
     </div>
-<div class="modal fade" id="evaluateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade active" id="evaluateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <form name="evaluateForm" id="evaluateForm" action="${path}/order/evaluate/product" novalidate="novalidate" method="POST" enctype="multipart/form-data">
 
   <div class="modal-dialog">

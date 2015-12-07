@@ -6,12 +6,11 @@
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 
-<div class="main" ng-app="registerApp" id="registerAppMain" ng-init='mailSending=false;mailSent=false;'>
-    <div class="container">
+<div class="container" ng-app="registerApp" id="registerAppMain" ng-init='mailSending=false;mailSent=false;'>
         <ul class="breadcrumb">
             <li><a href="${path}/index">首页</a></li>
-            <li><a href="">用户中心</a></li>
-            <li class="active">完善个人信息</li>
+            <li><a href="">我的账户</a></li>
+            <li class="active">个人信息</li>
         </ul>
 
         <div class="row" data-ng-controller="formController">
@@ -20,8 +19,8 @@
                                    action="${path}/user/register/email"
                                     class="form-horizontal form-without-legend" novalidate="novalidate" _method="POST" autocomplete="false">
                 <fieldset>
-                    <div class="form-group has-feedback">
-                        <div class="row">
+                    <div class="row">
+                        <div class="form-group has-feedback">
                             <label class="col-lg-2 control-label">昵称 <span class="fa fa-user"></span></label>
                             <div class="col-lg-5 has-success">
                                 <form:input path="name" class="form-control" ensure_name_unique="{{name}}" required="true" ng-maxlength="20" ng-init="name='${sessionScope.loginUser.name}'" ng-model="name"/>
@@ -45,8 +44,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group has-feedback">
-                        <div class="row">
+                    <div class="row">
+                        <div class="form-group has-feedback">
                             <label class="col-lg-2 control-label">邮箱地址 <span class="fa fa-envelope-o"></span></label>
                             <div class="col-lg-5 has-success" ng-init="editEmail=false">
                                 <form:input type="email" class="form-control" path="email" ng-init="email='${sessionScope.loginUser.email}'" ng-model="email" placeholder="请输入您的邮箱地址"
@@ -70,8 +69,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group has-feedback">
-                        <div class="row">
+                    <div class="row">
+                        <div class="form-group has-feedback">
                             <label for="password" class="col-lg-2 control-label">密码 <span class="fa fa-key fa-fw"></span></label>
                             <div class="col-lg-5 has-success" ng-init="editPassword=false">
                                 <form:password autocomplete="false" class="form-control" path="password" id="password"
@@ -100,8 +99,8 @@
                         </div>
 
                     </div>
-                    <div class="form-group has-feedback" ng-show="editPassword">
-                        <div class="row">
+                    <div class="row">
+                        <div class="form-group has-feedback" ng-show="editPassword">
                             <label for="password" class="col-lg-2 control-label">确认密码<span class="fa fa-key fa-fw"></span></label>
                             <div class="col-lg-5 has-success">
                                 <form:input onfocus="this.type='password'" autocomplete="false" class="form-control" id="rePassword" path="rePassword" ng-init="rePassword='${form.rePassword}'"
@@ -123,8 +122,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group has-feedback" ng-show="editEmail">
-                        <div class="row">
+                    <div class="row">
+                        <div class="form-group has-feedback" ng-show="editEmail">
                             <label class="col-lg-2 control-label">邮箱验证码 <span class="require">*</span></label>
                             <div class="col-lg-3 has-error">
                                 <%--(mailSending||(!mailSent))||--%>
@@ -194,7 +193,7 @@
         </div>
 
         <!-- END CONTENT -->
-    </div>
+
 </div>
 <%--<script>--%>
     <%--$(document).ready(function(){--%>

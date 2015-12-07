@@ -5,8 +5,7 @@
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 
-<div class="main" ng-app="productSortApp" id="productSortAppMain">
-      <div class="container" ng-controller="productSortCtrl">
+<div class="container" ng-app="productSortApp" id="productSortAppMain">
         <!-- BEGIN SIDEBAR & CONTENT -->
             <div class="row">
               <ul class="breadcrumb col-md-3 col-sm-5">
@@ -79,6 +78,6 @@
           </div>
 
           <!-- END CONTENT -->
-      </div>
+
 </div>
 

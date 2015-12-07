@@ -7,8 +7,8 @@
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <!DOCTYPE html>
-<div class="main"  ng-app="myInterestsApp" id="myInterestsAppMain">
-    <div class="container"  ng-controller="myInterestsController">
+<div class="container"  ng-app="myInterestsApp" id="myInterestsAppMain">
+    <div ng-controller="myInterestsController">
         <ul class="breadcrumb">
             <li><a href="${path}">首页</a></li>
             <li><a href="">我的大坝</a></li>
@@ -72,7 +72,7 @@
             <div class="product-page product-pop-up">
                 <form name="popForm">
                     <div class="row">
-                        <div class="col-md-6 col-sm-6 col-xs-3">
+                        <div class="col-md-6 col-sm-6">
                             <div class="product-main-image">
                                 <img ng-src="${path}/{{productSeries.pictures[0]}}" class="img-responsive">
                             </div>
@@ -81,7 +81,7 @@
                                     <a ng-if="$index!==0" href="javascript:void(0)"><img ng-src="${path}/{{picture}}"></a>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-6 col-xs-9">
+                        <div class="col-md-6 col-sm-6">
                             <h1 style=" text-align:center;">{{productSeries.name}}</h1>
                             <div class="price-availability-block clearfix">
                                 <div class="price">

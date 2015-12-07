@@ -7,8 +7,7 @@
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <!DOCTYPE html>
-<div class="main" ng-app="payResultApp" id="payResultAppMain">
-    <div class="container">
+<div class="container" ng-app="payResultApp" id="payResultAppMain">
         <ul class="breadcrumb">
             <li><a href="${path}">首页</a></li>
             <li><a href="">购物车</a></li>
@@ -18,5 +17,5 @@
             支付成功！您可以在“我的订单”中跟踪物流信息，保持手机通信畅通。<a href="${path}">返回首页继续购物</a>
         </div>
 
-    </div>
+
 </div>
