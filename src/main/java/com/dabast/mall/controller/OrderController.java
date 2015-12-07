@@ -8,7 +8,12 @@ import com.dabast.common.util.ThirdPartPayUtil;
 import com.dabast.entity.*;
 import com.dabast.mall.dao.UserDao;
 import com.dabast.mall.service.impl.CartService;
+import com.dabast.mall.service.impl.OrderService;
 import com.dabast.mall.service.impl.RegisterValidateService;
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
@@ -20,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
@@ -34,14 +40,40 @@ import java.util.List;
 @RequestMapping("/order")
 //@SessionAttributes("loginUser")
 public class OrderController extends BaseRestSpringController {
-    @Resource(name = "userDao")
-    UserDao userDao;
+    @Resource(name = "orderService")
+    OrderService orderService;
     @Resource
     private RegisterValidateService registerValidateService;
     @Resource private CartService cartService;
 
 
+    @RequestMapping(value = "/json/{id}")
+    public ResponseEntity<Order> getOrderJson(@PathVariable String id) {
+       Order order=orderService.findOrderById(id);
+        ResponseEntity<Order> orderEntity=new ResponseEntity<Order>(order, HttpStatus.OK);
+        return orderEntity;
+    }
+    @RequestMapping(value = "/delete/{id}")
+    public String deleteOrder(@PathVariable String id,HttpSession session) {
+        Assert.notNull(getLoginUser(session));
+        orderService.removeById(id);
+        return "redirect:/user/my_orders";
+    }
 
+    /**
+     * 未使用
+     * @param id
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/delete/json/{id}")
+    public ResponseEntity<List<Order>> deleteOrderJson(@PathVariable String id,HttpSession session) {
+        Assert.notNull(getLoginUser(session));
+        orderService.removeById(id);
+        List<Order> orders=orderService.findAll(new BasicDBObject("user",getLoginUser(session)));
+        ResponseEntity<List<Order>> ordersEntity=new ResponseEntity<List<Order>>(orders, HttpStatus.OK);
+        return ordersEntity;
+    }
     @RequestMapping(value = "/submit/{id}")
     public String orderSubmit(@PathVariable String id,HttpSession session,ModelMap model,RedirectAttributes redirectAttributes) {
         Order order = ServiceManager.orderService.findOrderById(id);
@@ -183,5 +215,6 @@ public class OrderController extends BaseRestSpringController {
         model.addAttribute(Constant.CART,cart);
         return "redirect:/cart";
     }
+
 
 }

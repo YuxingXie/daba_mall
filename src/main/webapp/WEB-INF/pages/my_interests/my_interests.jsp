@@ -14,59 +14,44 @@
             <li><a href="">我的大坝</a></li>
             <li class="active">我的关注</li>
         </ul>
-        <div class="col-md-9 col-sm-7"  ng-init="totalPrice=0">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" summary="Shopping cart">
+                <tr>
+                    <th class="shopping-cart-image"></th>
+                    <th class="shopping-cart-description">商品信息</th>
+                    <th class="shopping-cart-price">单价</th>
+                    <th class="shopping-cart-price">库存信息</th>
+                    <th class="shopping-cart-total">操作</th>
+                </tr>
 
-            <div class="row list-view-sorting clearfix">
-                <div class="shopping-cart-page">
-                    <div class="shopping-cart-data clearfix">
-                        <div class="table-wrapper-responsive">
-                            <form action="${path}/cart/adjust" method="post" id="form"  enctype='application/json'>
-                                <table summary="Shopping cart">
-                                    <tr>
-                                        <th class="shopping-cart-image"></th>
-                                        <th class="shopping-cart-description">商品信息</th>
-                                        <th class="shopping-cart-price">单价</th>
-                                        <th class="shopping-cart-price">库存信息</th>
-                                        <th class="shopping-cart-total">操作</th>
-                                    </tr>
+                <tr ng-if="!interests||interests.length==0">
+                    <td colspan="5">您没有关注任何商品!<a href="${path}">返回首页继续购物</a></td>
+                </tr>
 
-                                    <tr ng-if="!interests||interests.length==0">
-                                        <td colspan="5">您没有关注任何商品!<a href="${path}">返回首页继续购物</a></td>
-                                    </tr>
+                <tr name="interest" ng-if="interests&&interests.length>0" ng-repeat="interest in interests" >
+                        <td>
+                            <img class="img-responsive img-ico-sm" ng-src="${path}/{{interest.productSeries.pictures[0]}}">
+                        </td>
+                        <td>
+                            <h3><a ng-href="${path}/product_series/{{interest.productSeries.id}}">{{interest.productSeries.name}}</a></h3>
+                        </td>
+                        <td>
+                        <span>￥{{interest.productSeries.commonPrice | number:2}}</span>
+                        </td>
+                        <td>
+                            <span ng-if="!interest.productSeries.productStore">无库存信息</span>
+                            <span ng-if="interest.productSeries.productStore&&interest.productSeries.productStore.remain">
+                            剩余{{interest.productSeries.productStore.remain}}件
+                            </span>
+                            <span ng-if="interest.productSeries.productStore&&!interest.productSeries.productStore.remain">无法获取</span>
+                        </td>
+                        <td>
+                            <a ng-href="${path}/personal/interests/remove/{{interest.id}}" class="fa fa-trash">删除</a>
+                            <a href="#product-pop-up" class="fa fa-shopping-cart fancybox-fast-view" ng-click="fastView(interest.productSeries)">添加到购物车</a>
+                        </td>
+                </tr>
+            </table>
 
-                                    <tr name="interest" ng-if="interests&&interests.length>0" ng-repeat="interest in interests" >
-                                            <td class="shopping-cart-image">
-                                                <a ng-href="${path}/product/{{interest.productSeries.id}}">
-                                                    <img ng-src="${path}/{{interest.productSeries.pictures[0]}}"></a>
-                                            </td>
-                                            <td class="shopping-cart-description">
-                                                <h3>{{interest.productSeries.name}}</h3>
-                                                    <%--<span name="productPropertyValue" ng-repeat="productPropertyValue in interest.productSelected.productPropertyValueList">--%>
-                                                    <%--{{productPropertyValue.value}}--%>
-                                                    <%--</span>--%>
-                                            </td>
-                                            <td class="shopping-cart-price">
-                                            <span>￥{{interest.productSeries.commonPrice | number:2}}</span>
-                                            </td>
-
-                                            <td>
-                                                <span ng-if="!interest.productSeries.productStore">无库存信息</span>
-                                                <span ng-if="interest.productSeries.productStore&&interest.productSeries.productStore.remain">
-                                                剩余{{interest.productSeries.productStore.remain}}件
-                                                </span>
-                                                <span ng-if="interest.productSeries.productStore&&!interest.productSeries.productStore.remain">无法获取</span>
-                                            </td>
-                                            <td class="shopping-cart-total">
-                                                <a ng-href="${path}/personal/interests/remove/{{interest.id}}" class="fa fa-trash fa-fw">删除</a>&nbsp;&nbsp;
-                                                <a href="#product-pop-up" class="fancybox-fast-view" ng-click="fastView(interest.productSeries)">添加到购物车</a>
-                                            </td>
-                                    </tr>
-                                </table>
-                            </form>
-                            </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div id="product-pop-up" style="display: none; width: 700px;">
             <div class="product-page product-pop-up">

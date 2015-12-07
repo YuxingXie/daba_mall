@@ -71,218 +71,91 @@
 <div class="container main">
         <!-- BEGIN SALE PRODUCT & 新品上市 -->
         <div class="row margin-bottom-40">
-            <!-- BEGIN SALE PRODUCT -->
-            <div class="col-md-12 sale-product">
+            <div class="row">
                 <h2>新品上市</h2>
                 <p>国家专利制作工艺,为您打造健康美味的生态食品</p>
-                <div class="bxslider-wrapper">
-                    <ul class="bxslider" data-slides-phone="1" data-slides-tablet="2" data-slides-desktop="5" data-slide-margin="15">
-                        <c:choose>
-                            <c:when test="${empty newProducts}">对不起，还没有新品上市</c:when>
-                            <c:otherwise>
-                                <c:forEach items="${newProducts}" var="prod">
-                                    <li>
-                                        <div class="product-item">
-                                            <div class="pi-img-wrapper">
-                                                <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
-                                                <div>
-                                                    <%--<a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>--%>
-                                                    <a href="#product-pop-up" data-prod="${prod.id}" class="btn btn-default fancybox-fast-view">详情</a>
-                                                </div>
-                                            </div>
-                                            <h3><a href="${path}/product_series/${prod.id}">${prod.name}</a></h3>
-                                            <div class="pi-price">￥${prod.commonPrice}</div>
-                                            <a href="#product-pop-up"  class="btn btn-default fancybox-fast-view" data-prod="${prod.id}">添加到购物车</a>
-                                                <%--新品--%>
-                                                <%--<div class="sticker sticker-new"></div>--%>
-                                            <c:if test="${prod.evaluateCount ge 1000}"><div class="sticker sticker-sale"></div></c:if>
-                                        </div>
-                                    </li>
-                                </c:forEach>
-                            </c:otherwise>
-                        </c:choose>
-
-                    </ul>
-                </div>
             </div>
-            <!-- END SALE PRODUCT -->
-        </div>
-        <div class="row margin-bottom-40">
-            <!-- BEGIN SALE PRODUCT -->
-            <div class="col-md-12 sale-product">
-                <h2></h2>
-                <p>来自原产地的鲜活农产，感受鲜美跳动</p>
-                <div class="bxslider-wrapper">
-                    <ul class="bxslider" data-slides-phone="1" data-slides-tablet="2" data-slides-desktop="5" data-slide-margin="15">
-                    <c:choose>
-                        <c:when test="${empty newProducts2}">对不起，还没有新品上市</c:when>
-                        <c:otherwise>
-                            <c:forEach items="${newProducts2}" var="prod">
-                            <li>
-                                <div class="product-item">
-                                    <div class="pi-img-wrapper">
-                                        <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
-                                        <div>
-                                            <%--<a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>--%>
-                                            <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-prod="${prod.id}"  data-url="${path}/product_series/popover/${prod.id}">详情</a>
-                                        </div>
-                                    </div>
-                                    <h3><a href="${path}/product_series/${prod.id}">${prod.name}</a></h3>
-                                    <div class="pi-price">￥${prod.commonPrice}</div>
-                                    <a href="javascript:void(0)" data-href="${path}/cart/${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
-                                        <%--新品--%>
-                                        <%--<div class="sticker sticker-new"></div>--%>
-                                    <c:if test="${prod.evaluateCount ge 1000}"><div class="sticker sticker-sale"></div></c:if>
-                                </div>
-                            </li>
+            <div class="row">
+                <c:choose>
+                    <c:when test="${empty newProducts}">敬请期待!</c:when>
+                    <c:otherwise>
+                        <c:forEach items="${newProducts}" var="prod">
+                            <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15">
+                                <a href="${path}/product_series/${prod.id}"><img src="${path}/${prod.pictures[0]}" class="img-responsive img-thumbnail" ></a>
+                                <a href="${path}/product_series/${prod.id}">${prod.name}</a>&nbsp;&nbsp;&nbsp;
+                                <div class="fa fa-rmb">${prod.commonPrice}</div>&nbsp;&nbsp;&nbsp;
+                                <a href="#product-pop-up" data-prod="${prod.id}"
+                                   class="fa fa-shopping-cart btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">添加到购物车</a>
+                                <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
+                            </div>
                         </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
-                    </ul>
-                </div>
+                    </c:otherwise>
+                </c:choose>
             </div>
-            <!-- END SALE PRODUCT -->
         </div>
-        <!-- END SALE PRODUCT & NEW ARRIVALS -->
-        <!-- BEGIN SALE PRODUCT & 热卖商品 -->
-        <div class="row margin-bottom-40">
-            <!-- BEGIN SALE PRODUCT -->
-            <div class="col-md-12 sale-product">
-                <h2>热卖商品</h2>
-                <p>独一无二的制作工艺，让我们的产品成为您的首选</p>
-                <div class="bxslider-wrapper">
-                    <ul class="bxslider" data-slides-phone="1" data-slides-tablet="2" data-slides-desktop="5" data-slide-margin="15">
-                        <c:choose>
-                            <c:when test="${empty hotSells}">敬请期待!</c:when>
-                            <c:otherwise>
-                                <c:forEach items="${hotSells}" var="prod">
-                                    <li>
-                                        <div class="product-item">
-                                            <div class="pi-img-wrapper">
-                                                <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
-                                                <div>
-                                                    <%--<a href="${path}//${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>--%>
-                                                    <a href="#product-pop-up" data-prod="${prod.id}" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
-                                                </div>
-                                            </div>
-                                            <h3><a href="${path}/product_series/${prod.id}">${prod.name}</a></h3>
-                                            <div class="pi-price">￥${prod.commonPrice}</div>
-                                            <a href="javascript:void(0)" data-id="${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
-                                            <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
-                                        </div>
-                                    </li>
-                                </c:forEach>
-                            </c:otherwise>
-                        </c:choose>
-                    </ul>
-                </div>
-            </div>
-            <!-- END SALE PRODUCT -->
-        </div>
-        <div class="row margin-bottom-40">
-            <!-- BEGIN SALE PRODUCT -->
-            <div class="col-md-12 sale-product">
-                <h2></h2>
-                <p>原产地优质的水源孕育的灵动生物，让您每日品尝新鲜</p>
-                <div class="bxslider-wrapper">
-                    <ul class="bxslider" data-slides-phone="1" data-slides-tablet="2" data-slides-desktop="5" data-slide-margin="15">
-                        <c:choose>
-                            <c:when test="${empty hotSells2}">敬请期待!</c:when>
-                            <c:otherwise>
-                                <c:forEach items="${hotSells2}" var="prod">
-                                    <li>
-                                        <div class="product-item">
-                                            <div class="pi-img-wrapper">
-                                                <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
-                                                <div>
-                                                    <%--<a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>--%>
-                                                    <a href="#product-pop-up" data-prod="${prod.id}" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
-                                                </div>
-                                            </div>
-                                            <h3><a href="${path}/product_series/${prod.id}">${prod.name}</a></h3>
-                                            <div class="pi-price">￥${prod.commonPrice}</div>
-                                            <a href="javascript:void(0)" data-id="${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
 
-                                            <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
-                                        </div>
-                                    </li>
-                                </c:forEach>
-                            </c:otherwise>
-                        </c:choose>
-                    </ul>
-                </div>
-            </div>
-            <!-- END SALE PRODUCT -->
-        </div>
-        <!-- END SALE PRODUCT & NEW ARRIVALS -->
-        <!-- BEGIN SALE PRODUCT & 特价优惠 -->
         <div class="row margin-bottom-40">
-            <!-- BEGIN SALE PRODUCT -->
-            <div class="col-md-12 sale-product">
-                <h2>特价优惠</h2>
-                <div class="bxslider-wrapper">
-                    <ul class="bxslider" data-slides-phone="1" data-slides-tablet="2" data-slides-desktop="5" data-slide-margin="15">
-                        <c:choose>
-                            <c:when test="${empty lowPrices}">敬请期待!</c:when>
-                            <c:otherwise>
-                                <c:forEach items="${lowPrices}" var="prod">
-                                    <li>
-                                        <div class="product-item">
-                                            <div class="pi-img-wrapper">
-                                                <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
-                                                <div>
-                                                    <%--<a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>--%>
-                                                    <a href="#product-pop-up" data-prod="${prod.id}" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
-                                                </div>
-                                            </div>
-                                            <h3><a href="${path}/product_series/${prod.id}">${prod.name}</a></h3>
-                                            <div class="pi-price">￥${prod.commonPrice}</div>
-                                            <a href="javascript:void(0)" data-id="${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
-
-                                            <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
-                                        </div>
-                                    </li>
-                                </c:forEach>
-                            </c:otherwise>
-                        </c:choose>
-                    </ul>
-                </div>
+            <div class="row"><h2>热卖商品</h2><p>独一无二的制作工艺，让我们的产品成为您的首选</p></div>
+            <div class="row">
+                <c:choose>
+                    <c:when test="${empty hotSells}">敬请期待!</c:when>
+                    <c:otherwise>
+                        <c:forEach items="${hotSells}" var="prod">
+                            <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15">
+                                <a href="${path}/product_series/${prod.id}"><img src="${path}/${prod.pictures[0]}" class="img-responsive img-thumbnail" ></a>
+                                <a href="${path}/product_series/${prod.id}">${prod.name}</a>&nbsp;&nbsp;&nbsp;
+                                <span class="fa fa-rmb">${prod.commonPrice}</span>&nbsp;&nbsp;&nbsp;
+                                <a href="#product-pop-up" data-prod="${prod.id}"
+                                   class="fa fa-shopping-cart btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">添加到购物车</a>
+                                <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
+                            </div>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
             </div>
-            <!-- END SALE PRODUCT -->
+        </div>
+
+        <div class="row margin-bottom-40">
+            <div class="row"><h2>特价优惠</h2></div>
+            <div class="row">
+                <c:choose>
+                    <c:when test="${empty lowPrices}">敬请期待!</c:when>
+                    <c:otherwise>
+                        <c:forEach items="${lowPrices}" var="prod">
+                            <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15">
+                                <a href="${path}/product_series/${prod.id}"><img src="${path}/${prod.pictures[0]}" class="img-responsive img-thumbnail" ></a>
+
+                                <a href="${path}/product_series/${prod.id}">${prod.name}</a>&nbsp;&nbsp;&nbsp;
+                                <div class="fa fa-rmb">￥${prod.commonPrice}</div>&nbsp;&nbsp;&nbsp;
+                                <a href="#product-pop-up" data-prod="${prod.id}"
+                                   class="fa fa-shopping-cart btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">添加到购物车</a>
+                                <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
+                            </div>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </div>
         <div class="row margin-bottom-40">
-            <!-- BEGIN SALE PRODUCT -->
-            <div class="col-md-12 sale-product">
-                <h2></h2>
-                <div class="bxslider-wrapper">
-                    <ul class="bxslider" data-slides-phone="1" data-slides-tablet="2" data-slides-desktop="5" data-slide-margin="15">
-                    <c:choose>
-                        <c:when test="${empty lowPrices2}">敬请期待!</c:when>
-                        <c:otherwise>
-                            <c:forEach items="${lowPrices2}" var="prod">
-                                <li>
-                                    <div class="product-item">
-                                        <div class="pi-img-wrapper">
-                                            <img src="${path}/${prod.pictures[0]}" class="img-responsive" >
-                                            <div>
-                                                <%--<a href="${path}/${prod.pictures[0]}" class="btn btn-default fancybox-button">大图</a>--%>
-                                                <a href="#product-pop-up" data-prod="${prod.id}" class="btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">详情</a>
-                                            </div>
-                                        </div>
-                                        <h3><a href="${path}/product_series/${prod.id}">${prod.name}</a></h3>
-                                        <div class="pi-price">￥${prod.commonPrice}</div>
-                                        <a href="javascript:void(0)" data-id="${prod.id}" class="btn btn-default add2cart">添加到购物车</a>
 
-                                        <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
-                                    </div>
-                                </li>
-                            </c:forEach>
-                        </c:otherwise>
-                        </c:choose>
-                    </ul>
-                </div>
+            <div class="row"><h2>特价优惠</h2></div>
+            <div class="row">
+                <c:choose>
+                    <c:when test="${empty lowPrices}">敬请期待!</c:when>
+                    <c:otherwise>
+                        <c:forEach items="${lowPrices}" var="prod">
+                            <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15">
+                                <a href="${path}/product_series/${prod.id}"><img src="${path}/${prod.pictures[0]}" class="img-responsive img-thumbnail" ></a>
+                                <a href="${path}/product_series/${prod.id}">${prod.name}</a>&nbsp;&nbsp;&nbsp;
+                                <div class="fa fa-rmb">${prod.commonPrice}</div>&nbsp;&nbsp;&nbsp;
+                                <a href="#product-pop-up" data-prod="${prod.id}"
+                                   class="fa fa-shopping-cart btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">添加到购物车</a>
+                                <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
+                            </div>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
             </div>
-            <!-- END SALE PRODUCT -->
         </div>
         <!-- END SALE PRODUCT & NEW ARRIVALS -->
 

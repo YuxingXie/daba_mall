@@ -37,20 +37,18 @@
               <div class="row"  ng-show="!_page">
                   <c:forEach items="${_page.content}" varStatus="i"  var="productSeries">
                       <div class="col-sm-3 col-lg-3">
-                          <div class="product-item">
-                              <div class="pi-img-wrapper">
-                                  <img class="img-responsive" src="${path}/${productSeries.pictures[0]}"/>
+                                  <img class="img-responsive img-thumbnail" src="${path}/${productSeries.pictures[0]}"/>
                                   <div>
                                       <a href="${path}/${productSeries.pictures[0]}" class="btn btn-default fancybox-button">大图</a>
                                       <a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-prod="${productSeries.id}"  data-url="${path}/product_series/popover/${productSeries.id}">详情</a>
                                   </div>
-                              </div>
+
                               <h3><a href="${path}/product_series/${productSeries.id}">${productSeries.name}</a></h3>
-                              <div class="pi-price fa fa-bank">${productSeries.commonPrice}</div>
-                              <a href="javascript:void(0)" data-href="${path}/cart/${productSeries.id}" class="btn btn-default add2cart">添加到购物车</a>
+                              <div class="fa fa-rmb">${productSeries.commonPrice}</div>
+                              <a href="javascript:void(0)" data-href="${path}/cart/${productSeries.id}" class="fa fa-shopping-cart btn btn-default add2cart">添加到购物车</a>
                                 <c:if test="${productSeries.newProduct}"><div class="sticker sticker-new"></div></c:if>
                               <c:if test="${productSeries.evaluateCount ge 1000}"><div class="sticker sticker-sale"></div></c:if>
-                          </div>
+
                       </div>
                   </c:forEach>
                   </div>

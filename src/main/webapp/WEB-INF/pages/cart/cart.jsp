@@ -7,91 +7,82 @@
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <!DOCTYPE html>
-<div class="main"  ng-app="cartAdjustApp" id="cartAdjustAppMain">
+<div class="container"  ng-app="cartAdjustApp" id="cartAdjustAppMain">
     <div ng-controller="cartAdjustController">
         <ul class="breadcrumb">
             <li><a href="${path}">首页</a></li>
             <li><a href="">购物车</a></li>
             <li class="active">调整购物车</li>
         </ul>
-        <div class="col-md-9 col-sm-7"  ng-init="totalPrice=0">
+        <div class="row"  ng-init="totalPrice=0" data-class="table-responsive">
 
-            <div class="row list-view-sorting clearfix">
-                <div class="shopping-cart-page">
-                    <div class="shopping-cart-data clearfix">
-                        <div class="table-wrapper-responsive">
-                            <form action="${path}/cart/adjust" method="post" id="form"  enctype='application/json'>
-                                <table summary="Shopping cart">
-                                    <tr>
-                                        <th class="shopping-cart-image"></th>
-                                        <th class="shopping-cart-description">商品信息</th>
-                                        <th class="shopping-cart-price">商品单价</th>
-                                        <th class="shopping-cart-ref-no">商品数量</th>
-                                        <th class="shopping-cart-price">商品金额</th>
-                                        <th class="shopping-cart-price">库存信息</th>
-                                        <th class="shopping-cart-total">交易操作</th>
-                                    </tr>
+            <table class="table table-bordered table-striped text-center">
+                <form action="${path}/cart/adjust" method="post" id="form"  enctype='application/json'>
+                <tr>
+                    <th class="text-center"></th>
+                    <th class="text-center">商品信息</th>
+                    <th class="text-center">商品单价</th>
+                    <th class="text-center">商品数量</th>
+                    <th class="text-center">商品金额</th>
+                    <th class="text-center">库存信息</th>
+                    <th class="text-center">交易操作</th>
+                </tr>
+                <tr ng-if="!cart||!cart.productSelectedList||cart.productSelectedList.length==0">
+                    <td colspan="5">您的购物车中空空如也!<a href="${path}">返回首页继续购物</a></td>
+                </tr>
 
-                                    <tr ng-if="!cart||!cart.productSelectedList||cart.productSelectedList.length==0">
-                                        <td colspan="5">您的购物车中空空如也!<a href="${path}">返回首页继续购物</a></td>
-                                    </tr>
+                <tr name="productSelected" ng-if="cart&&cart.productSelectedList&&cart.productSelectedList.length>0" ng-repeat="productSelected in cart.productSelectedList" >
+                        <td>
+                            <a ng-href="${path}/product/{{productSelected.productSeries.id}}">
+                                <img class="img-responsive img-ico-md" ng-src="${path}/{{productSelected.productSeries.pictures[0]}}"></a>
+                        </td>
+                        <td>
+                            <h3>{{productSelected.productSeries.name}}</h3>
+                                <span name="productPropertyValue" ng-repeat="productPropertyValue in productSelected.productPropertyValueList">
+                                {{productPropertyValue.value}}
+                                </span>
+                        </td>
+                        <td>
+                        <span class="fa fa-rmb">￥{{productSelected.productSeries.commonPrice | number:2}}</span>
+                        </td>
+                        <td>
+                        <span style=" font-size:14px;">
+                            <input type="number" name="amount" ng-model="productSelected.amount" class="form-control" min="1" ng-change="change()"/>
+                        </span>
+                        </td>
+                        <td>
+                            <span>{{productSelected.productSeries.commonPrice*productSelected.amount| number:2}}</span>
+                        </td>
+                        <td>
+                            <span ng-if="!productSelected.productSeries.productStore">无库存信息</span>
+                            <span ng-if="productSelected.productSeries.productStore&&productSelected.productSeries.productStore.remain">
+                            剩余{{productSelected.productSeries.productStore.remain}}件
+                            </span>
+                            <span ng-if="productSelected.productSeries.productStore&&!productSelected.productSeries.productStore.remain">无法获取</span>
+                        </td>
+                        <td>
+                            <a href="${path}/cart/remove/{{$index}}" class="fa fa-trash">删除</a>&nbsp;&nbsp;
+                            <a href="${path}/cart/remove_to_interest/{{$index}}" class="fa fa-cut">移到我的关注</a>
+                        </td>
+                </tr>
+                <tr>
+                    <th colspan="7" class="text-right">
+                        总计：{{totalAmount}}件商品,共{{totalPrice | number:2}} 元
+                    </th>
+                </tr>
+                <tr>
+                    <td  colspan="7"><input  class="btn btn-primary" type="button" id="toBill" data-ng-click="toBill()" ng-if="cart&&cart.productSelectedList&&cart.productSelectedList.length>0" value="确认"/></td>
+                </tr>
+                </form>
+            </table>
 
-                                    <tr name="productSelected" ng-if="cart&&cart.productSelectedList&&cart.productSelectedList.length>0" ng-repeat="productSelected in cart.productSelectedList" >
-                                            <td class="shopping-cart-image">
-                                                <a ng-href="${path}/product/{{productSelected.productSeries.id}}">
-                                                    <img ng-src="${path}/{{productSelected.productSeries.pictures[0]}}"></a>
-                                            </td>
-                                            <td class="shopping-cart-description">
-                                                <h3>{{productSelected.productSeries.name}}</h3>
-                                                    <span name="productPropertyValue" ng-repeat="productPropertyValue in productSelected.productPropertyValueList">
-                                                    {{productPropertyValue.value}}
-                                                    </span>
-                                            </td>
-                                            <td class="shopping-cart-price">
-                                            <span>￥{{productSelected.productSeries.commonPrice | number:2}}</span>
-                                            </td>
-                                            <td class="shopping-cart-quantity">
-                                            <span style=" font-size:14px;">
-                                                <input type="number" name="amount" ng-model="productSelected.amount" class="form-control" min="1" ng-change="change()"/>
-                                            </span>
-                                            </td>
-                                            <td class="shopping-cart-price">
-                                                <span>{{productSelected.productSeries.commonPrice*productSelected.amount| number:2}}</span>
-                                            </td>
-                                            <td>
-                                                <span ng-if="!productSelected.productSeries.productStore">无库存信息</span>
-                                                <span ng-if="productSelected.productSeries.productStore&&productSelected.productSeries.productStore.remain">
-                                                剩余{{productSelected.productSeries.productStore.remain}}件
-                                                </span>
-                                                <span ng-if="productSelected.productSeries.productStore&&!productSelected.productSeries.productStore.remain">无法获取</span>
-                                            </td>
-                                            <td class="shopping-cart-total">
-                                                <a href="${path}/cart/remove/{{$index}}">删除</a>&nbsp;&nbsp;
-                                                <a href="${path}/cart/remove_to_interest/{{$index}}">移到我的关注</a>
-                                            </td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="7" class="text-right">
-                                            总计：{{totalAmount}}件商品,共{{totalPrice | number:2}} 元
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <td  colspan="7"><input  class="btn btn-primary" type="button" id="toBill" data-ng-click="toBill()" ng-if="cart&&cart.productSelectedList&&cart.productSelectedList.length>0" value="确认"/></td>
-                                    </tr>
 
-                                </table>
-                            </form>
-                            </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="modal fade active" id="orderModal" tabindex="-1" role="dialog"
              aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="width: 400px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <%--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>--%>
                         <h2 class="modal-title">提示:</h2>
                     </div>
                     <div class="modal-body">
