@@ -216,54 +216,47 @@
         <div id="product-pop-up" style="display: none;">
 
         </div>
-        <div class="modal fade active" id="showProductModal" tabindex="-1" role="dialog" aria-labelledby="shortcutsPayModalLabel" aria-hidden="true">
+        <div class="modal fade active" id="showProductModal" tabindex="-1" role="dialog" aria-labelledby="showProductModal" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;</button>
-                        <h2 class="modal-title" id="shortcutsPayModalLabel">{{productSeries.name}}</h2>
+                        <h2 class="modal-title">{{productSelected.productSeries.name}}</h2>
                     </div>
-                    <div class="product-page product-pop-up">
-                        <form name="popForm">
-                            <div class="row">
-                                <div class="col-md-6 col-sm-6">
-                                    <div class="product-main-image thumbnail">
-                                        <img ng-src="{{productSeries.pictures[0]}}" class="img-responsive">
-                                    </div>
-                                    <div class="thumbnail" ng-repeat="picture in productSeries.pictures">
-                                        <a href="javascript:void(0)"><img ng-class="{active:$index==0,img\-responsive:true, img\-ico\-sm:true}" ng-src="${path}/{{picture}}"></a>
-                                    </div>
+                    <form name="popForm">
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6">
+                                <div class="product-main-image">
+                                    <img ng-src="{{productSelected.productSeries.pictures[0]}}" class="img-responsive">
                                 </div>
-                                <div class="col-md-6 col-sm-6">
-                                    <h1 style=" text-align:center;">{{productSeries.name}}</h1>
-                                    <div class="price-availability-block clearfix">
-                                        <div class="price">
-                                            <strong><i class="fa fa-rmb"></i>{{productSeries.commonPrice}}</strong>
-                                            <em ng-if="productSeries.currentPrice &&productSeries.currentPrice.prevPrice && productSeries.currentPrice<productSeries.currentPrice.prevPrice">
-                                                <i class="fa fa-rmb"></i>{{productSeries.currentPrice.prevPrice.price}}
-                                            </em>
-                                        </div>
-                                        <div class="availability">
-                                            库存: <strong>{{productSeries.productStore.remain}}</strong>
-                                        </div>
-                                    </div>
-                                    <div class="description" style=" direction:ltr;">
-                                        <p></p>
-                                    </div>
-                                    <div class="product-page-options">
-
-                                    </div>
-                                    <div class="product-page-cart">
-                                        <div class="product-quantity">
-                                            <input id="product-quantity" type="text" value="1" name="product-quantity" class="form-control input-sm">
-                                        </div>
-                                        <button class="btn btn-primary add2cart" type="button">添加到购物车</button>
-                                    </div>
+                                <div class="thumbnail img-ico-md" ng-repeat="picture in productSelected.productSeries.pictures">
+                                    <a href="javascript:void(0)"><img ng-class="{active:$index==0,img\-responsive:true, img\-ico\-sm:true}" ng-src="${path}/{{picture}}"></a>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-
+                            <div class="col-lg-6 col-sm-6">
+                                <h1 style=" text-align:center;">{{productSelected.productSeries.name}}</h1>
+                                <div class="price">
+                                    <strong><i class="fa fa-rmb"></i>{{productSelected.productSeries.commonPrice}}</strong>
+                                    <em ng-if="productSelected.productSeries.currentPrice &&productSelected.productSeries.currentPrice.prevPrice && productSelected.productSeries.currentPrice<productSelected.productSeries.currentPrice.prevPrice">
+                                        <i class="fa fa-rmb"></i>{{productSelected.productSeries.currentPrice.prevPrice.price}}
+                                    </em>
+                                </div>
+                                <div class="availability">
+                                    库存: <strong>{{productSelected.productSeries.productStore.remain}}</strong>
+                                </div>
+                                <div>
+                                    <p>{{productSelected.productSeries.description}}</p>
+                                </div>
+                                <span ng-repeat="productProperty in productSelected.productSeries.productProperties">
+                                    {{productProperty.propertyName}}:
+                                    <select  ng-model="$parent.productSelected.productPropertyValueList[$index]"
+                                        ng-options="productPropertyValue.value for productPropertyValue in productProperty.propertyValues"></select>
+                                </span>
+                                <input type="number" ng-init="productSelected.amount=1" min="1" class="form-control btn-lg" ng-modle="productSelected.amount" style="max-width: 100px;">
+                                <button class="btn btn-primary add2cart" type="button">添加到购物车</button>{{productSelected.productPropertyValueList[0].value}}
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -30,10 +30,12 @@
           .controller('indexController', ['$scope', '$http', function ($scope, $http) {
             $scope.popover=function(productSeriesId){
               console.log(productSeriesId);
+              $scope.productSelected={};
               $http.get(path+'/product_series/popover/'+productSeriesId).success(function (data) {
-                $scope.productSeries = data;
+                $scope.productSelected.productSeries = data;
+                $("#showProductModal").modal().show();
               });
-              $("#showProductModal").modal().show();
+
             }
           }]);
   angular.bootstrap(document.getElementById("indexAppMain"),["indexApp"]);
