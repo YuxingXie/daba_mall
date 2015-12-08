@@ -63,31 +63,31 @@
                                 <td>
                                     <a href="javascript:void(0)"
                                        <%--data-toggle="modal" data-target="#orderDetail" --%>
-                                       class="fa fa-search" data-ng-click="orderDetail('${order.id}')">查看详情</a>
+                                       class="fa fa-search btn btn-primary btn-xs" data-ng-click="orderDetail('${order.id}')">查看详情</a>
                                     <c:choose>
                                         <c:when test="${empty order.submitStatus or order.submitStatus eq 'n'}">
-                                            <a href="${path}/cart/to_bill/${order.id}" class="fa fa-check-square-o">提交订单</a>
-                                            <a href="javascript:void(0)" class="fa fa-trash" data-ng-click="deleteOrder('${order.id}')">删除订单</a>
+                                            <a href="${path}/cart/to_bill/${order.id}" class="fa fa-check-square-o btn btn-primary btn-xs">提交订单</a>
+                                            <a href="javascript:void(0)" class="fa fa-trash btn btn-primary btn-xs" data-ng-click="deleteOrder('${order.id}')">删除订单</a>
                                         </c:when>
                                         <c:otherwise>
                                             <c:choose>
                                                 <c:when test="${empty order.payStatus or order.payStatus eq 'n'}">
-                                                    <a href="${path}/order/submit/${order.id}" class="fa  fa-cc-visa">去付款</a>
+                                                    <a href="${path}/order/submit/${order.id}" class="fa  fa-cc-visa btn btn-primary btn-xs">去付款</a>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <c:choose>
                                                         <c:when test="${not empty order.receiveStatus}">
                                                             <c:choose>
                                                                 <c:when test="${order.receiveStatus eq 'none'}">
-                                                                    <a class="fa fa-sign-in" href="${path}/order/receive/${order.id}">确认收货</a>
+                                                                    <a class="fa fa-sign-in btn btn-primary btn-xs" href="${path}/order/receive/${order.id}">确认收货</a>
                                                                 </c:when>
                                                                 <c:when test="${order.receiveStatus eq 'part'}">
-                                                                    <a class="fa fa-sign-in" href="${path}/order/receive/${order.id}">确认收货</a>
-                                                                    <a class="fa fa-pencil" href="${path}/order/evaluate/${order.id}">去评价</a>
+                                                                    <a class="fa fa-sign-in btn btn-primary btn-xs" href="${path}/order/receive/${order.id}">确认收货</a>
+                                                                    <a class="fa fa-pencil btn btn-primary btn-xs" href="${path}/order/evaluate/${order.id}">去评价</a>
                                                                 </c:when>
                                                                 <c:otherwise>
                                                                     <c:if test="${order.evaluateStatus eq 'none' or order.evaluateStatus eq 'part'}">
-                                                                        <a class="fa fa-pencil" href="${path}/order/evaluate/${order.id}">去评价</a>
+                                                                        <a class="fa fa-pencil btn btn-primary btn-xs" href="${path}/order/evaluate/${order.id}">去评价</a>
                                                                     </c:if>
                                                                 </c:otherwise>
                                                             </c:choose>

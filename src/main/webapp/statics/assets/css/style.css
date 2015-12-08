@@ -10,6 +10,7 @@ body {
 	background: #f9f9f9;
 	overflow-x: hidden;
 }
+
 .img-ico-sm{
 	max-width: 33px;
 	max-height:33px;
@@ -26,6 +27,16 @@ body {
 	max-width: 270px;
 	max-height:270px;
 }
+.bg-red { background-color: #e02222;}
+.bg-blue { background-color: #0da3e2;}
+.bg-grey { background-color: #555555;}
+.bg-green { background-color: #35aa47;}
+.bg-yellow { background-color: #ffb848;}
+.bg-purple { background-color: #852b99;}
+.bg-light-red { background-color: #ff5400;}
+.bg-light-blue { background-color: #bfd5fa;}
+.bg-light-grey { background-color: #fafafa;}
+.bg-light-green { background-color: #78df1d;}
 /*********************
  GENERAL UI COLORS 
 *********************/
@@ -661,10 +672,11 @@ Header and header elements
 .nav-content .product-item:hover {
 	box-shadow: 0 0 rgba(234, 234, 234, 0.9);
 }
-.nav-content .product-item img {
-	width: 150px;
-	height: auto;
-}
+/*.nav-content .product-item img {*/
+	/*width: 150px;*/
+	/*height: auto;*/
+/*}*/
+.product-show{margin-bottom: 30px;padding-left: 15px;padding-right: 15px;}
 .nav-content .product-item .pi-img-wrapper a,
 .nav-content .product-item h3 a {
 	padding: 0;
@@ -1013,9 +1025,27 @@ Catalogue styles
 }
 .pi-price {
 	color: #fa0e0e;
-	font: 18px 'Microsoft YaHei', sans-serif;
-	float: left;
-	padding-top: 1px;
+	/*font: 18px 'Microsoft YaHei', sans-serif;*/
+	/*float: left;*/
+	font-size: 22px;
+	/*padding-top: 2px;*/
+	/*display: block;*/
+}
+.pi-description a{
+	color: #000;
+	/*font: 18px 'Microsoft YaHei', sans-serif;*/
+	/*float: left;*/
+	font-size: 14px;
+	/*padding-top: 2px;*/
+	/*display: block;*/
+}
+.pi-description {
+	color: #767f88;
+	/*font: 18px 'Microsoft YaHei', sans-serif;*/
+	/*float: left;*/
+	font-size: 14px;
+	/*padding-top: 2px;*/
+	/*display: block;*/
 }
 .product-item .add2cart {
 	float: right;

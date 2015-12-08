@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 
@@ -69,97 +70,115 @@
 <!-- END SLIDER -->
 
 <div class="container main">
-        <!-- BEGIN SALE PRODUCT & 新品上市 -->
-        <div class="row margin-bottom-40">
+
+        <div class="row margin-bottom-40 bg-primary">
             <div class="row">
-                <h2>新品上市</h2>
-                <p>国家专利制作工艺,为您打造健康美味的生态食品</p>
+                <h2 class="col-lg-10 col-sm-10">新品上市</h2>
+                <p class="col-lg-10 col-sm-10">国家专利制作工艺,为您打造健康美味的生态食品</p>
             </div>
             <div class="row">
                 <c:choose>
-                    <c:when test="${empty newProducts}">敬请期待!</c:when>
+                    <c:when test="${empty newProducts}"><p class="col-lg-10 col-sm-10">敬请期待!</p></c:when>
                     <c:otherwise>
                         <c:forEach items="${newProducts}" var="prod">
                             <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15">
-                                <a href="${path}/product_series/${prod.id}"><img src="${path}/${prod.pictures[0]}" class="img-responsive img-thumbnail" ></a>
-                                <a href="${path}/product_series/${prod.id}">${prod.name}</a>&nbsp;&nbsp;&nbsp;
-                                <div class="fa fa-rmb">${prod.commonPrice}</div>&nbsp;&nbsp;&nbsp;
-                                <a href="#product-pop-up" data-prod="${prod.id}"
-                                   class="fa fa-shopping-cart btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">添加到购物车</a>
-                                <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
+                                <a href="${path}/product_series/${prod.id}"><img src="${path}/${prod.pictures[0]}" class="img-responsive img-thumbnail product-show" ></a>
+                                <div class="row"> <p class="fa fa-rmb pi-price col-lg-8 col-sm-8 text-left">${prod.commonPrice}</p></div>
+                                <div class="row">
+                                    <p class="pi-description col-lg-12 col-sm-12 text-left"> <a href="${path}/product_series/${prod.id}">${prod.name}</a>
+                                        <c:choose>
+                                            <c:when test="${fn:length(prod.description) > 20}">${fn:substring(prod.description, 0, 20)}...</c:when>
+                                            <c:otherwise>${prod.description}</c:otherwise>
+                                        </c:choose>
+                                    </p>
+                                </div>
+                                <div class="row margin-bottom-20">
+                                    <span class="col-lg-6 col-sm-6 col-lg-push-6 col-sm-push-6">
+                                        <a href="#product-pop-up" data-prod="${prod.id}" class="fa fa-shopping-cart btn btn-danger fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">添加到购物车</a>
+                                     </span>
+                                    <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
+                                </div>
                             </div>
                         </c:forEach>
                     </c:otherwise>
                 </c:choose>
             </div>
+            <div class="row pull-right"><input type="button" value="更多新品" class="btn btn-primary fa fa-search"/></div>
         </div>
 
-        <div class="row margin-bottom-40">
-            <div class="row"><h2>热卖商品</h2><p>独一无二的制作工艺，让我们的产品成为您的首选</p></div>
+        <div class="row margin-bottom-40 bg-red">
+            <div class="row">
+                <h2 class="col-lg-10 col-sm-10">热卖商品</h2>
+                <p class="col-lg-10 col-sm-10">独一无二的制作工艺，让我们的产品成为您的首选</p>
+            </div>
             <div class="row">
                 <c:choose>
-                    <c:when test="${empty hotSells}">敬请期待!</c:when>
+                    <c:when test="${empty hotSells}"><p class="col-lg-10 col-sm-10">敬请期待!</p></c:when>
                     <c:otherwise>
                         <c:forEach items="${hotSells}" var="prod">
                             <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15">
-                                <a href="${path}/product_series/${prod.id}"><img src="${path}/${prod.pictures[0]}" class="img-responsive img-thumbnail" ></a>
-                                <a href="${path}/product_series/${prod.id}">${prod.name}</a>&nbsp;&nbsp;&nbsp;
-                                <span class="fa fa-rmb">${prod.commonPrice}</span>&nbsp;&nbsp;&nbsp;
-                                <a href="#product-pop-up" data-prod="${prod.id}"
-                                   class="fa fa-shopping-cart btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">添加到购物车</a>
-                                <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
+                                <a href="${path}/product_series/${prod.id}"><img src="${path}/${prod.pictures[0]}" class="img-responsive img-thumbnail product-show" ></a>
+                                <div class="row"> <p class="fa fa-rmb pi-price col-lg-8 col-sm-8 text-left">${prod.commonPrice}</p></div>
+                                <div class="row">
+                                    <p class="pi-description col-lg-12 col-sm-12 text-left"> <a href="${path}/product_series/${prod.id}">${prod.name}</a>
+                                        <c:choose>
+                                            <c:when test="${fn:length(prod.description) > 20}">${fn:substring(prod.description, 0, 20)}...</c:when>
+                                            <c:otherwise>${prod.description}</c:otherwise>
+                                        </c:choose>
+                                    </p>
+                                </div>
+                                <div class="row margin-bottom-20">
+                                    <span class="col-lg-6 col-sm-6 col-lg-push-6 col-sm-push-6">
+                                        <a href="#product-pop-up" data-prod="${prod.id}" class="fa fa-shopping-cart btn btn-danger fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">添加到购物车</a>
+                                     </span>
+                                    <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
+                                </div>
                             </div>
                         </c:forEach>
                     </c:otherwise>
                 </c:choose>
             </div>
+            <div class="row pull-right"><input type="button" value="更多热卖商品" class="btn btn-primary fa fa-search"/></div>
         </div>
 
-        <div class="row margin-bottom-40">
-            <div class="row"><h2>特价优惠</h2></div>
+        <div class="row margin-bottom-40 bg-light-green">
+            <div class="row">
+                <h2 class="col-lg-10 col-sm-10">特价优惠</h2>
+                <p class="col-lg-10 col-sm-10">活动期间享受优惠，实惠多多！</p>
+            </div>
             <div class="row">
                 <c:choose>
-                    <c:when test="${empty lowPrices}">敬请期待!</c:when>
+                    <c:when test="${empty lowPrices}"><p class="col-lg-10 col-sm-10">敬请期待!</p></c:when>
                     <c:otherwise>
                         <c:forEach items="${lowPrices}" var="prod">
                             <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15">
-                                <a href="${path}/product_series/${prod.id}"><img src="${path}/${prod.pictures[0]}" class="img-responsive img-thumbnail" ></a>
-
-                                <a href="${path}/product_series/${prod.id}">${prod.name}</a>&nbsp;&nbsp;&nbsp;
-                                <div class="fa fa-rmb">￥${prod.commonPrice}</div>&nbsp;&nbsp;&nbsp;
-                                <a href="#product-pop-up" data-prod="${prod.id}"
-                                   class="fa fa-shopping-cart btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">添加到购物车</a>
-                                <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
+                                <a href="${path}/product_series/${prod.id}"><img src="${path}/${prod.pictures[0]}" class="img-responsive img-thumbnail product-show" ></a>
+                                <div class="row"> <p class="fa fa-rmb pi-price col-lg-8 col-sm-8 text-left">${prod.commonPrice}</p></div>
+                                <div class="row">
+                                    <p class="pi-description col-lg-12 col-sm-12 text-left"> <a href="${path}/product_series/${prod.id}">${prod.name}</a>
+                                        <c:choose>
+                                            <c:when test="${fn:length(prod.description) > 20}">${fn:substring(prod.description, 0, 20)}...</c:when>
+                                            <c:otherwise>${prod.description}</c:otherwise>
+                                        </c:choose>
+                                    </p>
+                                </div>
+                                <div class="row margin-bottom-20">
+                                    <span class="col-lg-6 col-sm-6 col-lg-push-6 col-sm-push-6">
+                                        <a href="#product-pop-up" data-prod="${prod.id}" class="fa fa-shopping-cart btn btn-danger fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">添加到购物车</a>
+                                     </span>
+                                    <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
+                                </div>
                             </div>
                         </c:forEach>
                     </c:otherwise>
                 </c:choose>
             </div>
+            <div class="row pull-right"><input type="button" value="更多特价商品" class="btn btn-primary fa fa-search"/></div>
         </div>
-        <div class="row margin-bottom-40">
 
-            <div class="row"><h2>特价优惠</h2></div>
-            <div class="row">
-                <c:choose>
-                    <c:when test="${empty lowPrices}">敬请期待!</c:when>
-                    <c:otherwise>
-                        <c:forEach items="${lowPrices}" var="prod">
-                            <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15">
-                                <a href="${path}/product_series/${prod.id}"><img src="${path}/${prod.pictures[0]}" class="img-responsive img-thumbnail" ></a>
-                                <a href="${path}/product_series/${prod.id}">${prod.name}</a>&nbsp;&nbsp;&nbsp;
-                                <div class="fa fa-rmb">${prod.commonPrice}</div>&nbsp;&nbsp;&nbsp;
-                                <a href="#product-pop-up" data-prod="${prod.id}"
-                                   class="fa fa-shopping-cart btn btn-default fancybox-fast-view" data-url="${path}/product_series/popover/${prod.id}">添加到购物车</a>
-                                <c:if test="${prod.newProduct}"><div class="sticker sticker-new"></div></c:if>
-                            </div>
-                        </c:forEach>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-        </div>
         <!-- END SALE PRODUCT & NEW ARRIVALS -->
 
-    <div id="product-pop-up" style="display: none; width: 700px;">
+    <div id="product-pop-up" style="display: none;">
         <div class="product-page product-pop-up">
             <form name="popForm">
                 <div class="row">
@@ -195,7 +214,6 @@
                                 <input id="product-quantity" type="text" value="1" name="product-quantity" class="form-control input-sm">
                             </div>
                             <button class="btn btn-primary add2cart" type="button">添加到购物车</button>
-                            <button class="btn btn-default" type="button">更多商品</button>
                         </div>
                     </div>
                 </div>
