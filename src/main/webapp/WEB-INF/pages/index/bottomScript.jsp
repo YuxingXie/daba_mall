@@ -26,6 +26,17 @@
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>
 
 <script>
+  angular.module("indexApp",[])
+          .controller('indexController', ['$scope', '$http', function ($scope, $http) {
+            $scope.popover=function(productSeriesId){
+              console.log(productSeriesId);
+              $http.get(path+'/product_series/popover/'+productSeriesId).success(function (data) {
+                $scope.productSeries = data;
+              });
+              $("#showProductModal").modal().show();
+            }
+          }]);
+  angular.bootstrap(document.getElementById("indexAppMain"),["indexApp"]);
   $(document).ready(function(){
     $(document).on("click","#product-pop-up .add2cart",function(){
       var form=$('[name="popForm"]');

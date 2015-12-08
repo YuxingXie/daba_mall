@@ -37,6 +37,7 @@ body {
 .bg-light-blue { background-color: #bfd5fa;}
 .bg-light-grey { background-color: #fafafa;}
 .bg-light-green { background-color: #78df1d;}
+.bg-light-primary { background-color: #4b99ca;}
 /*********************
  GENERAL UI COLORS 
 *********************/
@@ -676,7 +677,7 @@ Header and header elements
 	/*width: 150px;*/
 	/*height: auto;*/
 /*}*/
-.product-show{margin-bottom: 30px;padding-left: 15px;padding-right: 15px;}
+.product-show{padding-left: 10px;padding-right: 10px;}
 .nav-content .product-item .pi-img-wrapper a,
 .nav-content .product-item h3 a {
 	padding: 0;
@@ -1027,8 +1028,9 @@ Catalogue styles
 	color: #fa0e0e;
 	/*font: 18px 'Microsoft YaHei', sans-serif;*/
 	/*float: left;*/
-	font-size: 22px;
-	/*padding-top: 2px;*/
+	padding-left: 10px;
+	font-size: 20px;
+	padding-top: 4px;
 	/*display: block;*/
 }
 .pi-description a{
@@ -1536,7 +1538,8 @@ Steps3 and Steps3 elements
 	background: #a0a3a4;
 }
 .steps3red {
-	background: #187705;
+	/*background: #187705;*/
+	background: #74bd64;
 }
 .steps3-col {
 	overflow: hidden;

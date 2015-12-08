@@ -130,7 +130,7 @@ public class UserController extends BaseRestSpringController {
             CookieTool.removeCookie(request, response, "password");
         }
         Cart sessionCart=session.getAttribute(Constant.CART)==null?null:((Cart)(session.getAttribute(Constant.CART)));
-        if (form.isMergeCart()){
+//        if (form.isMergeCart()){
             if (user.getCart()==null){
                 user.setCart(sessionCart);
             }else{
@@ -146,7 +146,7 @@ public class UserController extends BaseRestSpringController {
             if (sessionCart!=null){
                 ServiceManager.userService.update(user);
             }
-        }
+//        }
         session.setAttribute(Constant.CART,user.getCart());
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
