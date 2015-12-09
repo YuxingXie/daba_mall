@@ -1979,12 +1979,12 @@ div.content-form-page {
 	padding: 22px;
 	position: relative;
 }
-.product-main-image {
-	margin-bottom: 20px;
-}
-.product-main-image img {
-	width: 100%;
-}
+/*.product-main-image {*/
+	/*margin-bottom: 20px;*/
+/*}*/
+/*.product-main-image img {*/
+	/*width: 100%;*/
+/*}*/
 .product-other-images {
 	text-align: left;
 }

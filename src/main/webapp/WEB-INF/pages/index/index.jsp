@@ -222,8 +222,12 @@
                         <h2 class="modal-title">{{productSelected.productSeries.name}}</h2>
                     </div>
                     <form name="popForm">
-                        <div class="row thumbnail">
-                                <img ng-src="${path}/{{currentImg}}" class="img-responsive img-thumbnail">
+                        <div class="row">
+                            <div class="easyzoom easyzoom--overlay" style="margin-left: auto;margin-right: auto;">
+                                <a ng-href="${path}/statics/img/product/5649c4116f70e517dce0b22c.JPG">
+                                    <img ng-src="${path}/{{currentImg}}"/>
+                                </a>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-3 col-sm-3" ng-repeat="picture in productSelected.productSeries.pictures">
@@ -234,11 +238,11 @@
                         </div>
                         <div class="row">
                             <table class="table table-responsive">
-                                    <th>用户评价<i class="fa fa-trophy"></i></th><th>价格:</th><th>库存<i class="fa fa-truck"></i></th>
+                                    <th>用户评价<i class="fa fa-trophy"></i></th><th>价格<i class="fa fa-rmb"></i></th><th>库存<i class="fa fa-truck"></i></th>
                                 </tr>
                                 <tr>
                                     <td>{{productSelected.productSeries.productSeriesEvaluateGrade}}</td>
-                                    <td><i class="fa fa-rmb"></i>{{productSelected.productSeries.commonPrice}}
+                                    <td>{{productSelected.productSeries.commonPrice}}
                                         <em ng-if="productSelected.productSeries.currentPrice &&productSelected.productSeries.currentPrice.prevPrice && productSelected.productSeries.currentPrice<productSelected.productSeries.currentPrice.prevPrice">
                                             <i class="fa fa-rmb"></i>{{productSelected.productSeries.currentPrice.prevPrice.price}}
                                         </em>
@@ -264,7 +268,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="3">
-                                        <button class="btn btn-primary add2cart pull-right" type="button">添加到购物车</button>
+                                        <button class="btn btn-primary add2cart pull-right" type="button" data-ng-click="add2cart()">添加到购物车</button>
                                     </td>
                                 </tr>
                             </table>

@@ -1,0 +1,759 @@
+{
+  "productPropertyValueList": [
+    {
+      "id": "56657b7b6f70e517c81d803a",
+      "value": "公",
+      "productSeries": null,
+      "productProperty": {
+        "id": "56657b7b6f70e517c81d8039",
+        "propertyName": "公母",
+        "productSeries": {
+          "id": "56657b7b6f70e517c81d8038",
+          "name": "麻辣麻雀",
+          "pictures": ["pic/56657b7b6f70e517c81d8036"],
+          "description": "吃鸟不环保，不卫生，你们少买",
+          "shelvesDate": 1449491323325,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 200,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "5649c2606f70e517dce0b22b",
+            "productCategory": {
+              "id": "5649c2446f70e517dce0b229",
+              "categoryName": "干货",
+              "productSubCategories": null
+            },
+            "subCategoryName": "山珍",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "propertyValues": null
+      },
+      "amount": null,
+      "$$hashKey": "object:9"
+    },
+    {
+      "id": "56657b7b6f70e517c81d803e",
+      "value": "内向",
+      "productSeries": null,
+      "productProperty": {
+        "id": "56657b7b6f70e517c81d803c",
+        "propertyName": "性格",
+        "productSeries": {
+          "id": "56657b7b6f70e517c81d8038",
+          "name": "麻辣麻雀",
+          "pictures": ["pic/56657b7b6f70e517c81d8036"],
+          "description": "吃鸟不环保，不卫生，你们少买",
+          "shelvesDate": 1449491323325,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 200,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "5649c2606f70e517dce0b22b",
+            "productCategory": {
+              "id": "5649c2446f70e517dce0b229",
+              "categoryName": "干货",
+              "productSubCategories": null
+            },
+            "subCategoryName": "山珍",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "propertyValues": null
+      },
+      "amount": null,
+      "$$hashKey": "object:13"
+    }
+  ],
+  "productSeries": {
+    "id": "56657b7b6f70e517c81d8038",
+    "name": "麻辣麻雀",
+    "pictures": ["pic/56657b7b6f70e517c81d8036"],
+    "description": "吃鸟不环保，不卫生，你们少买",
+    "shelvesDate": 1449491323325,
+    "brand": "大坝",
+    "productStore": {
+      "remain": 1000,
+      "warningAmount": 200,
+      "inAndOutList": [
+        {
+          "id": "56657b7b6f70e517c81d8040",
+          "type": "in",
+          "amount": 1000,
+          "date": 1449491323520,
+          "productSeries": {
+            "id": "56657b7b6f70e517c81d8038",
+            "name": "麻辣麻雀",
+            "pictures": ["pic/56657b7b6f70e517c81d8036"],
+            "description": "吃鸟不环保，不卫生，你们少买",
+            "shelvesDate": 1449491323325,
+            "brand": "大坝",
+            "productStore": {
+              "remain": 0,
+              "warningAmount": 200,
+              "inAndOutList": null
+            },
+            "measurementUnit": null,
+            "instructionManual": null,
+            "productBrochures": null,
+            "productSubCategory": {
+              "id": "5649c2606f70e517dce0b22b",
+              "productCategory": {
+                "id": "5649c2446f70e517dce0b229",
+                "categoryName": "干货",
+                "productSubCategories": null
+              },
+              "subCategoryName": "山珍",
+              "productSeriesList": null
+            },
+            "evaluateCount": 0,
+            "newProduct": true,
+            "productProperties": null,
+            "productPropertyValues": null,
+            "productSeriesPrices": null,
+            "commonPrice": 0,
+            "currentPrice": null,
+            "productEvaluateList": null,
+            "productSeriesEvaluateGrade": 0
+          },
+          "productPropertyValue": null,
+          "operator": {
+            "id": "55b1e75a845c14e957d5331c",
+            "name": "谢宇星",
+            "sex": null,
+            "height": null,
+            "password": "202cb962ac59075b964b07152d234b70",
+            "email": "xieyuxing@qq.com",
+            "userCategory": null,
+            "registerTime": null,
+            "validateCode": null,
+            "lastActivateTime": null,
+            "phone": "13903064816",
+            "loginStatus": null,
+            "cart": {
+              "productSelectedList": [
+                {
+                  "productSeriesId": null,
+                  "amount": 11,
+                  "productEvaluate": null,
+                  "productPropertyValueIds": null,
+                  "productPropertyValueList": [
+                    {
+                      "id": "56530b656f70e517b40e0ca2",
+                      "value": "保鲜盒",
+                      "productSeries": null,
+                      "productProperty": {
+                        "id": "56530b656f70e517b40e0ca0",
+                        "propertyName": "包装",
+                        "productSeries": {
+                          "id": "56530b656f70e517b40e0c9f",
+                          "name": "辣子鸡",
+                          "pictures": [
+                            "pic/56530b656f70e517b40e0c9b",
+                            "pic/56530b656f70e517b40e0c9d"
+                          ],
+                          "description": "无辣子鸡不快乐",
+                          "shelvesDate": null,
+                          "brand": "大坝",
+                          "productStore": {
+                            "remain": 0,
+                            "warningAmount": 20,
+                            "inAndOutList": null
+                          },
+                          "measurementUnit": null,
+                          "instructionManual": null,
+                          "productBrochures": null,
+                          "productSubCategory": {
+                            "id": "5649c2606f70e517dce0b22b",
+                            "productCategory": {
+                              "id": "5649c2446f70e517dce0b229",
+                              "categoryName": "干货",
+                              "productSubCategories": null
+                            },
+                            "subCategoryName": "山珍",
+                            "productSeriesList": null
+                          },
+                          "evaluateCount": 0,
+                          "newProduct": false,
+                          "productProperties": null,
+                          "productPropertyValues": null,
+                          "productSeriesPrices": null,
+                          "commonPrice": 0,
+                          "currentPrice": null,
+                          "productEvaluateList": null,
+                          "productSeriesEvaluateGrade": 0
+                        },
+                        "propertyValues": null
+                      },
+                      "amount": null
+                    }
+                  ],
+                  "productSeries": {
+                    "id": "56530b656f70e517b40e0c9f",
+                    "name": "辣子鸡",
+                    "pictures": [
+                      "pic/56530b656f70e517b40e0c9b",
+                      "pic/56530b656f70e517b40e0c9d"
+                    ],
+                    "description": "无辣子鸡不快乐",
+                    "shelvesDate": null,
+                    "brand": "大坝",
+                    "productStore": {
+                      "remain": 0,
+                      "warningAmount": 20,
+                      "inAndOutList": null
+                    },
+                    "measurementUnit": null,
+                    "instructionManual": null,
+                    "productBrochures": null,
+                    "productSubCategory": {
+                      "id": "5649c2606f70e517dce0b22b",
+                      "productCategory": {
+                        "id": "5649c2446f70e517dce0b229",
+                        "categoryName": "干货",
+                        "productSubCategories": null
+                      },
+                      "subCategoryName": "山珍",
+                      "productSeriesList": null
+                    },
+                    "evaluateCount": 0,
+                    "newProduct": false,
+                    "productProperties": null,
+                    "productPropertyValues": null,
+                    "productSeriesPrices": null,
+                    "commonPrice": 0,
+                    "currentPrice": null,
+                    "productEvaluateList": null,
+                    "productSeriesEvaluateGrade": 0
+                  },
+                  "receiveStatus": null,
+                  "orderPrice": null
+                },
+                {
+                  "productSeriesId": null,
+                  "amount": 3,
+                  "productEvaluate": null,
+                  "productPropertyValueIds": null,
+                  "productPropertyValueList": [
+                    {
+                      "id": "56530b656f70e517b40e0ca1",
+                      "value": "真空",
+                      "productSeries": null,
+                      "productProperty": {
+                        "id": "56530b656f70e517b40e0ca0",
+                        "propertyName": "包装",
+                        "productSeries": {
+                          "id": "56530b656f70e517b40e0c9f",
+                          "name": "辣子鸡",
+                          "pictures": [
+                            "pic/56530b656f70e517b40e0c9b",
+                            "pic/56530b656f70e517b40e0c9d"
+                          ],
+                          "description": "无辣子鸡不快乐",
+                          "shelvesDate": null,
+                          "brand": "大坝",
+                          "productStore": {
+                            "remain": 0,
+                            "warningAmount": 20,
+                            "inAndOutList": null
+                          },
+                          "measurementUnit": null,
+                          "instructionManual": null,
+                          "productBrochures": null,
+                          "productSubCategory": {
+                            "id": "5649c2606f70e517dce0b22b",
+                            "productCategory": {
+                              "id": "5649c2446f70e517dce0b229",
+                              "categoryName": "干货",
+                              "productSubCategories": null
+                            },
+                            "subCategoryName": "山珍",
+                            "productSeriesList": null
+                          },
+                          "evaluateCount": 0,
+                          "newProduct": false,
+                          "productProperties": null,
+                          "productPropertyValues": null,
+                          "productSeriesPrices": null,
+                          "commonPrice": 0,
+                          "currentPrice": null,
+                          "productEvaluateList": null,
+                          "productSeriesEvaluateGrade": 0
+                        },
+                        "propertyValues": null
+                      },
+                      "amount": null
+                    }
+                  ],
+                  "productSeries": {
+                    "id": "56530b656f70e517b40e0c9f",
+                    "name": "辣子鸡",
+                    "pictures": [
+                      "pic/56530b656f70e517b40e0c9b",
+                      "pic/56530b656f70e517b40e0c9d"
+                    ],
+                    "description": "无辣子鸡不快乐",
+                    "shelvesDate": null,
+                    "brand": "大坝",
+                    "productStore": {
+                      "remain": 0,
+                      "warningAmount": 20,
+                      "inAndOutList": null
+                    },
+                    "measurementUnit": null,
+                    "instructionManual": null,
+                    "productBrochures": null,
+                    "productSubCategory": {
+                      "id": "5649c2606f70e517dce0b22b",
+                      "productCategory": {
+                        "id": "5649c2446f70e517dce0b229",
+                        "categoryName": "干货",
+                        "productSubCategories": null
+                      },
+                      "subCategoryName": "山珍",
+                      "productSeriesList": null
+                    },
+                    "evaluateCount": 0,
+                    "newProduct": false,
+                    "productProperties": null,
+                    "productPropertyValues": null,
+                    "productSeriesPrices": null,
+                    "commonPrice": 0,
+                    "currentPrice": null,
+                    "productEvaluateList": null,
+                    "productSeriesEvaluateGrade": 0
+                  },
+                  "receiveStatus": null,
+                  "orderPrice": null
+                }
+              ]
+            },
+            "addresses": null,
+            "disabled": false,
+            "idCardNo": null,
+            "activated": false,
+            "userAccounts": null,
+            "realMessage": null,
+            "remember": false,
+            "rePassword": null,
+            "loginStr": null,
+            "mergeCart": false
+          }
+        }
+      ]
+    },
+    "measurementUnit": null,
+    "instructionManual": null,
+    "productBrochures": null,
+    "productSubCategory": {
+      "id": "5649c2606f70e517dce0b22b",
+      "productCategory": {
+        "id": "5649c2446f70e517dce0b229",
+        "categoryName": "干货",
+        "productSubCategories": null
+      },
+      "subCategoryName": "山珍",
+      "productSeriesList": null
+    },
+    "evaluateCount": 0,
+    "newProduct": true,
+    "productProperties": [
+      {
+        "id": "56657b7b6f70e517c81d8039",
+        "propertyName": "公母",
+        "productSeries": {
+          "id": "56657b7b6f70e517c81d8038",
+          "name": "麻辣麻雀",
+          "pictures": ["pic/56657b7b6f70e517c81d8036"],
+          "description": "吃鸟不环保，不卫生，你们少买",
+          "shelvesDate": 1449491323325,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 200,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "5649c2606f70e517dce0b22b",
+            "productCategory": {
+              "id": "5649c2446f70e517dce0b229",
+              "categoryName": "干货",
+              "productSubCategories": null
+            },
+            "subCategoryName": "山珍",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "propertyValues": [
+          {
+            "id": "56657b7b6f70e517c81d803a",
+            "value": "公",
+            "productSeries": null,
+            "productProperty": {
+              "id": "56657b7b6f70e517c81d8039",
+              "propertyName": "公母",
+              "productSeries": {
+                "id": "56657b7b6f70e517c81d8038",
+                "name": "麻辣麻雀",
+                "pictures": ["pic/56657b7b6f70e517c81d8036"],
+                "description": "吃鸟不环保，不卫生，你们少买",
+                "shelvesDate": 1449491323325,
+                "brand": "大坝",
+                "productStore": {
+                  "remain": 0,
+                  "warningAmount": 200,
+                  "inAndOutList": null
+                },
+                "measurementUnit": null,
+                "instructionManual": null,
+                "productBrochures": null,
+                "productSubCategory": {
+                  "id": "5649c2606f70e517dce0b22b",
+                  "productCategory": {
+                    "id": "5649c2446f70e517dce0b229",
+                    "categoryName": "干货",
+                    "productSubCategories": null
+                  },
+                  "subCategoryName": "山珍",
+                  "productSeriesList": null
+                },
+                "evaluateCount": 0,
+                "newProduct": true,
+                "productProperties": null,
+                "productPropertyValues": null,
+                "productSeriesPrices": null,
+                "commonPrice": 0,
+                "currentPrice": null,
+                "productEvaluateList": null,
+                "productSeriesEvaluateGrade": 0
+              },
+              "propertyValues": null
+            },
+            "amount": null,
+            "$$hashKey": "object:9"
+          },
+          {
+            "id": "56657b7b6f70e517c81d803b",
+            "value": "母",
+            "productSeries": null,
+            "productProperty": {
+              "id": "56657b7b6f70e517c81d8039",
+              "propertyName": "公母",
+              "productSeries": {
+                "id": "56657b7b6f70e517c81d8038",
+                "name": "麻辣麻雀",
+                "pictures": ["pic/56657b7b6f70e517c81d8036"],
+                "description": "吃鸟不环保，不卫生，你们少买",
+                "shelvesDate": 1449491323325,
+                "brand": "大坝",
+                "productStore": {
+                  "remain": 0,
+                  "warningAmount": 200,
+                  "inAndOutList": null
+                },
+                "measurementUnit": null,
+                "instructionManual": null,
+                "productBrochures": null,
+                "productSubCategory": {
+                  "id": "5649c2606f70e517dce0b22b",
+                  "productCategory": {
+                    "id": "5649c2446f70e517dce0b229",
+                    "categoryName": "干货",
+                    "productSubCategories": null
+                  },
+                  "subCategoryName": "山珍",
+                  "productSeriesList": null
+                },
+                "evaluateCount": 0,
+                "newProduct": true,
+                "productProperties": null,
+                "productPropertyValues": null,
+                "productSeriesPrices": null,
+                "commonPrice": 0,
+                "currentPrice": null,
+                "productEvaluateList": null,
+                "productSeriesEvaluateGrade": 0
+              },
+              "propertyValues": null
+            },
+            "amount": null,
+            "$$hashKey": "object:10"
+          }
+        ],
+        "$$hashKey": "object:6"
+      },
+      {
+        "id": "56657b7b6f70e517c81d803c",
+        "propertyName": "性格",
+        "productSeries": {
+          "id": "56657b7b6f70e517c81d8038",
+          "name": "麻辣麻雀",
+          "pictures": ["pic/56657b7b6f70e517c81d8036"],
+          "description": "吃鸟不环保，不卫生，你们少买",
+          "shelvesDate": 1449491323325,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 200,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "5649c2606f70e517dce0b22b",
+            "productCategory": {
+              "id": "5649c2446f70e517dce0b229",
+              "categoryName": "干货",
+              "productSubCategories": null
+            },
+            "subCategoryName": "山珍",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "propertyValues": [
+          {
+            "id": "56657b7b6f70e517c81d803d",
+            "value": "外向",
+            "productSeries": null,
+            "productProperty": {
+              "id": "56657b7b6f70e517c81d803c",
+              "propertyName": "性格",
+              "productSeries": {
+                "id": "56657b7b6f70e517c81d8038",
+                "name": "麻辣麻雀",
+                "pictures": ["pic/56657b7b6f70e517c81d8036"],
+                "description": "吃鸟不环保，不卫生，你们少买",
+                "shelvesDate": 1449491323325,
+                "brand": "大坝",
+                "productStore": {
+                  "remain": 0,
+                  "warningAmount": 200,
+                  "inAndOutList": null
+                },
+                "measurementUnit": null,
+                "instructionManual": null,
+                "productBrochures": null,
+                "productSubCategory": {
+                  "id": "5649c2606f70e517dce0b22b",
+                  "productCategory": {
+                    "id": "5649c2446f70e517dce0b229",
+                    "categoryName": "干货",
+                    "productSubCategories": null
+                  },
+                  "subCategoryName": "山珍",
+                  "productSeriesList": null
+                },
+                "evaluateCount": 0,
+                "newProduct": true,
+                "productProperties": null,
+                "productPropertyValues": null,
+                "productSeriesPrices": null,
+                "commonPrice": 0,
+                "currentPrice": null,
+                "productEvaluateList": null,
+                "productSeriesEvaluateGrade": 0
+              },
+              "propertyValues": null
+            },
+            "amount": null,
+            "$$hashKey": "object:12"
+          },
+          {
+            "id": "56657b7b6f70e517c81d803e",
+            "value": "内向",
+            "productSeries": null,
+            "productProperty": {
+              "id": "56657b7b6f70e517c81d803c",
+              "propertyName": "性格",
+              "productSeries": {
+                "id": "56657b7b6f70e517c81d8038",
+                "name": "麻辣麻雀",
+                "pictures": ["pic/56657b7b6f70e517c81d8036"],
+                "description": "吃鸟不环保，不卫生，你们少买",
+                "shelvesDate": 1449491323325,
+                "brand": "大坝",
+                "productStore": {
+                  "remain": 0,
+                  "warningAmount": 200,
+                  "inAndOutList": null
+                },
+                "measurementUnit": null,
+                "instructionManual": null,
+                "productBrochures": null,
+                "productSubCategory": {
+                  "id": "5649c2606f70e517dce0b22b",
+                  "productCategory": {
+                    "id": "5649c2446f70e517dce0b229",
+                    "categoryName": "干货",
+                    "productSubCategories": null
+                  },
+                  "subCategoryName": "山珍",
+                  "productSeriesList": null
+                },
+                "evaluateCount": 0,
+                "newProduct": true,
+                "productProperties": null,
+                "productPropertyValues": null,
+                "productSeriesPrices": null,
+                "commonPrice": 0,
+                "currentPrice": null,
+                "productEvaluateList": null,
+                "productSeriesEvaluateGrade": 0
+              },
+              "propertyValues": null
+            },
+            "amount": null,
+            "$$hashKey": "object:13"
+          }
+        ],
+        "$$hashKey": "object:7"
+      }
+    ],
+    "productPropertyValues": null,
+    "productSeriesPrices": [
+      {
+        "id": "56657b7b6f70e517c81d803f",
+        "price": 9.88,
+        "beginDate": 1449491323519,
+        "endDate": null,
+        "adjustDate": 1449491323519,
+        "prevPrice": null,
+        "productSeries": {
+          "id": "56657b7b6f70e517c81d8038",
+          "name": "麻辣麻雀",
+          "pictures": ["pic/56657b7b6f70e517c81d8036"],
+          "description": "吃鸟不环保，不卫生，你们少买",
+          "shelvesDate": 1449491323325,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 200,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "5649c2606f70e517dce0b22b",
+            "productCategory": {
+              "id": "5649c2446f70e517dce0b229",
+              "categoryName": "干货",
+              "productSubCategories": null
+            },
+            "subCategoryName": "山珍",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "comment": null
+      }
+    ],
+    "commonPrice": 9.88,
+    "currentPrice": {
+      "id": "56657b7b6f70e517c81d803f",
+      "price": 9.88,
+      "beginDate": 1449491323519,
+      "endDate": null,
+      "adjustDate": 1449491323519,
+      "prevPrice": null,
+      "productSeries": {
+        "id": "56657b7b6f70e517c81d8038",
+        "name": "麻辣麻雀",
+        "pictures": ["pic/56657b7b6f70e517c81d8036"],
+        "description": "吃鸟不环保，不卫生，你们少买",
+        "shelvesDate": 1449491323325,
+        "brand": "大坝",
+        "productStore": {
+          "remain": 0,
+          "warningAmount": 200,
+          "inAndOutList": null
+        },
+        "measurementUnit": null,
+        "instructionManual": null,
+        "productBrochures": null,
+        "productSubCategory": {
+          "id": "5649c2606f70e517dce0b22b",
+          "productCategory": {
+            "id": "5649c2446f70e517dce0b229",
+            "categoryName": "干货",
+            "productSubCategories": null
+          },
+          "subCategoryName": "山珍",
+          "productSeriesList": null
+        },
+        "evaluateCount": 0,
+        "newProduct": true,
+        "productProperties": null,
+        "productPropertyValues": null,
+        "productSeriesPrices": null,
+        "commonPrice": 0,
+        "currentPrice": null,
+        "productEvaluateList": null,
+        "productSeriesEvaluateGrade": 0
+      },
+      "comment": null
+    },
+    "productEvaluateList": [],
+    "productSeriesEvaluateGrade": 0
+  }
+}

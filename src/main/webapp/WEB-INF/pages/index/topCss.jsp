@@ -3,3 +3,4 @@
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <link href="${path}/statics/assets/css/home-page.css" rel="stylesheet" type="text/css">
+<link href="${path}/statics/assets/plugins/EasyZoom-master/css/easyzoom.css" rel="stylesheet" type="text/css">
