@@ -83,9 +83,9 @@ public class IndexController extends BaseRestSpringController {
 
         List<String[]> top3 = ServiceManager.productSeriesService.getTop3ProductSeries();
         model.addAttribute("top3", top3);
-        List<ProductSeries> hotSells = ServiceManager.productSeriesService.getHotSell();
-        List<ProductSeries> newProducts = ServiceManager.productSeriesService.getNewProducts();
-        List<ProductSeries> lowPrices = ServiceManager.productSeriesService.getLowPrices();
+        List<ProductSeries> hotSells = ServiceManager.productSeriesService.getHotSell(Constant.HOT_SELL_COUNT);
+        List<ProductSeries> newProducts = ServiceManager.productSeriesService.getNewProducts(Constant.NEW_PRODUCTS_COUNT);
+        List<ProductSeries> lowPrices = ServiceManager.productSeriesService.getLowPrices(Constant.LOW_PRICE_COUNT);
         model.addAttribute("newProducts", newProducts);
         model.addAttribute("newProducts2", newProducts);
         model.addAttribute("hotSells", hotSells);

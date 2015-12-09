@@ -10,7 +10,10 @@ body {
 	background: #f9f9f9;
 	overflow-x: hidden;
 }
-
+.modal .row{
+	margin-left: 15px;
+	margin-right: 15px;
+}
 .img-ico-sm{
 	max-width: 33px;
 	max-height:33px;

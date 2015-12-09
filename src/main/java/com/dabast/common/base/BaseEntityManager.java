@@ -49,6 +49,10 @@ public abstract class BaseEntityManager<E> implements IBaseEntityManager<E> {
     public List<E> findAll() {
         return getEntityDao().findAll();
     }
+    @Override
+    public List<E> findAll(Integer limit){
+        return getEntityDao().findAll(limit);
+    }
 
 //    @Override
 //    public int upsert(E queryEntity, E updateEntity) {

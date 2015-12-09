@@ -17,6 +17,7 @@ public interface EntityDao <E>{
     void insert(E e);
     List<E> findEquals(E e);
     List<E> findAll();
+    List<E> findAll(Integer limit);
     List<E> findAll(DBObject condition);
     E findOne(DBObject queryCondition);
     E findOne(E condition);

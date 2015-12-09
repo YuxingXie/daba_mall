@@ -2,6 +2,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
+<!--[if lt IE 9]>
+<script src="${path}/statics/assets/plugins/respond.min.js"></script>
+<![endif]-->
 <script type="text/javascript" src="${path}/statics/assets/plugins/jquery.md5.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/bootstrap/js/bootstrap.js" ></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/app.js"></script>

@@ -194,9 +194,7 @@
         <%--</div>--%>
     <%--</div>--%>
 <%--</div>--%>
-<!--[if lt IE 9]>
-<script src="${path}/statics/assets/plugins/respond.min.js"></script>
-<![endif]-->
+
 <%--<script src="${path}/statics/assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>--%>
 <script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>

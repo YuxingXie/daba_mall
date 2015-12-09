@@ -58,20 +58,20 @@ public class Order {
     private String receiveStatus;//全部未确认收货none,部分确认:part,全部确认:all
     @Transient
     private String evaluateStatus;//全部未评价none,部分:part,全部:all
-    @Transient
-    private List<ProductSeries> selectedProductSeriesList;
-    public List<ProductSeries> getSelectedProductSeriesList() {
-        Assert.notNull(this.productSelectedList);
-        List<ProductSeries> selectedProductSeriesList=new ArrayList<ProductSeries>();
-        for(ProductSelected productSelected:this.productSelectedList){
-            Assert.notNull(productSelected.getProductSeries());
-            if (!selectedProductSeriesList.contains(productSelected)){
-                selectedProductSeriesList.add(productSelected.getProductSeries());
-            }
-        }
-        this.selectedProductSeriesList=selectedProductSeriesList;
-        return this.selectedProductSeriesList;
-    }
+//    @Transient
+//    private List<ProductSeries> selectedProductSeriesList;
+//    public List<ProductSeries> getSelectedProductSeriesList() {
+//        Assert.notNull(this.productSelectedList);
+//        List<ProductSeries> selectedProductSeriesList=new ArrayList<ProductSeries>();
+//        for(ProductSelected productSelected:this.productSelectedList){
+//            Assert.notNull(productSelected.getProductSeries());
+//            if (!selectedProductSeriesList.contains(productSelected)){
+//                selectedProductSeriesList.add(productSelected.getProductSeries());
+//            }
+//        }
+//        this.selectedProductSeriesList=selectedProductSeriesList;
+//        return this.selectedProductSeriesList;
+//    }
 
     public String getReceiveStatus() {
         Assert.notNull(this.productSelectedList);

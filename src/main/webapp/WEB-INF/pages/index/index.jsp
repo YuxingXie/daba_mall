@@ -84,12 +84,12 @@
                                 <a href="${path}/product_series/${productSeries.id}"><img src="${path}/${productSeries.pictures[0]}" class="img-responsive img-thumbnail product-show" ></a>
                                 <div class="row">
                                     <p class="fa fa-rmb pi-price">${productSeries.commonPrice}</p>
-                                    <a href="#product-pop-up" data-prod="${productSeries.id}" class="fa fa-shopping-cart btn btn-danger btn-xs" data-ng-click="popover('${productSeries.id}');">添加到购物车</a>
+                                    <a href="javascript:void(0)" class="fa fa-shopping-cart btn btn-danger btn-xs" data-ng-click="popover('${productSeries.id}');">添加到购物车</a>
                                 </div>
                                 <div class="row">
                                     <p class="pi-description col-lg-12 col-sm-12 text-left"> <a href="${path}/product_series/${productSeries.id}">${productSeries.name}</a>
                                         <c:choose>
-                                            <c:when test="${fn:length(prod.description) > 20}">${fn:substring(prod.description, 0, 20)}...</c:when>
+                                            <c:when test="${fn:length(productSeries.description) > 20}">${fn:substring(productSeries.description, 0, 20)}...</c:when>
                                             <c:otherwise>${productSeries.description}</c:otherwise>
                                         </c:choose>
                                     </p>
@@ -213,9 +213,7 @@
                 <%--</form>--%>
             <%--</div>--%>
         <%--</div>--%>
-        <div id="product-pop-up" style="display: none;">
 
-        </div>
         <div class="modal fade active" id="showProductModal" tabindex="-1" role="dialog" aria-labelledby="showProductModal" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -224,37 +222,55 @@
                         <h2 class="modal-title">{{productSelected.productSeries.name}}</h2>
                     </div>
                     <form name="popForm">
+                        <div class="row thumbnail">
+                                <img ng-src="${path}/{{currentImg}}" class="img-responsive img-thumbnail">
+                        </div>
                         <div class="row">
-                            <div class="col-lg-6 col-sm-6">
-                                <div class="product-main-image">
-                                    <img ng-src="{{productSelected.productSeries.pictures[0]}}" class="img-responsive">
-                                </div>
-                                <div class="thumbnail img-ico-md" ng-repeat="picture in productSelected.productSeries.pictures">
-                                    <a href="javascript:void(0)"><img ng-class="{active:$index==0,img\-responsive:true, img\-ico\-sm:true}" ng-src="${path}/{{picture}}"></a>
+                            <div class="col-lg-3 col-sm-3" ng-repeat="picture in productSelected.productSeries.pictures">
+                                <div class="thumbnail img-ico-lg">
+                                    <a href="javascript:void(0)" data-ng-click="changeImg(picture)"><img class="img-responsive" ng-src="${path}/{{picture}}"></a>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-sm-6">
-                                <h1 style=" text-align:center;">{{productSelected.productSeries.name}}</h1>
-                                <div class="price">
-                                    <strong><i class="fa fa-rmb"></i>{{productSelected.productSeries.commonPrice}}</strong>
-                                    <em ng-if="productSelected.productSeries.currentPrice &&productSelected.productSeries.currentPrice.prevPrice && productSelected.productSeries.currentPrice<productSelected.productSeries.currentPrice.prevPrice">
-                                        <i class="fa fa-rmb"></i>{{productSelected.productSeries.currentPrice.prevPrice.price}}
-                                    </em>
-                                </div>
-                                <div class="availability">
-                                    库存: <strong>{{productSelected.productSeries.productStore.remain}}</strong>
-                                </div>
-                                <div>
-                                    <p>{{productSelected.productSeries.description}}</p>
-                                </div>
-                                <span ng-repeat="productProperty in productSelected.productSeries.productProperties">
-                                    {{productProperty.propertyName}}:
-                                    <select  ng-model="$parent.productSelected.productPropertyValueList[$index]"
-                                        ng-options="productPropertyValue.value for productPropertyValue in productProperty.propertyValues"></select>
-                                </span>
-                                <input type="number" ng-init="productSelected.amount=1" min="1" class="form-control btn-lg" ng-modle="productSelected.amount" style="max-width: 100px;">
-                                <button class="btn btn-primary add2cart" type="button">添加到购物车</button>{{productSelected.productPropertyValueList[0].value}}
-                            </div>
+                        </div>
+                        <div class="row">
+                            <table class="table table-responsive">
+                                    <th>用户评价<i class="fa fa-trophy"></i></th><th>价格:</th><th>库存<i class="fa fa-truck"></i></th>
+                                </tr>
+                                <tr>
+                                    <td>{{productSelected.productSeries.productSeriesEvaluateGrade}}</td>
+                                    <td><i class="fa fa-rmb"></i>{{productSelected.productSeries.commonPrice}}
+                                        <em ng-if="productSelected.productSeries.currentPrice &&productSelected.productSeries.currentPrice.prevPrice && productSelected.productSeries.currentPrice<productSelected.productSeries.currentPrice.prevPrice">
+                                            <i class="fa fa-rmb"></i>{{productSelected.productSeries.currentPrice.prevPrice.price}}
+                                        </em>
+                                    </td>
+                                    <td>{{productSelected.productSeries.productStore.remain}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">{{productSelected.productSeries.description}}</td>
+                                </tr>
+                                <tr>
+                                    <th>选择商品<i class="fa fa-flag"></i></th>
+                                    <th colspan="2"><span ng-repeat="productProperty in productSelected.productSeries.productProperties">
+                                        {{productProperty.propertyName}}:
+                                        <select  ng-model="$parent.productSelected.productPropertyValueList[$index]"
+                                                 ng-options="productPropertyValue.value for productPropertyValue in productProperty.propertyValues"></select>
+                                    </span>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>输入数量<i class="fa fa-cubes"></i></td>
+                                    <td colspan="2"><input type="number" min="1" class="" ng-modle="productSelected.amount" style="max-width: 100px;">
+                                   </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <button class="btn btn-primary add2cart pull-right" type="button">添加到购物车</button>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+
                         </div>
                     </form>
                 </div>

@@ -15,16 +15,16 @@ import java.util.List;
 public interface IProductSeriesService  extends IBaseEntityManager<ProductSeries> {
     List<String[]> getTop3ProductSeries();
 
-    List<ProductSeries> getHotSell();
+    List<ProductSeries> getHotSell(int count);
 
     ProductSeries findProductSeriesById(ObjectId objectId);
     ProductSeries findProductSeriesById(String id);
     ProductSeries findProductSeriesByIdButEvaluate(String id,boolean ignoreEvaluate);
     Page<ProductSeries> findProductSeriesesByKeyWord(String keyWord, int currentPage,int pageSize);
     Page<ProductSeries> findProductSeriesPageByProductSubCategory(ProductSubCategory productSubCategory, Integer page, int pageSize);
-    List<ProductSeries> getNewProducts();
+    List<ProductSeries> getNewProducts(int count);
 
-    List<ProductSeries> getLowPrices();
+    List<ProductSeries> getLowPrices(int count);
     List<ProductSeries> findProductSeriesAllRef(DBObject dbObject);
 
 }

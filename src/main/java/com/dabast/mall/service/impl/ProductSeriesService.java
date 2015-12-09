@@ -30,10 +30,6 @@ public class ProductSeriesService extends BaseEntityManager<ProductSeries> imple
         return productSeriesDao.getTop3ProductSeries();
     }
 
-    @Override
-    public List<ProductSeries> getHotSell() {
-        return productSeriesDao.getHotSell();
-    }
 
     @Override
     public ProductSeries findProductSeriesById(ObjectId objectId) {
@@ -58,13 +54,17 @@ public class ProductSeriesService extends BaseEntityManager<ProductSeries> imple
     }
 
     @Override
-    public List<ProductSeries> getNewProducts() {
-        return productSeriesDao.getNewProducts();
+    public List<ProductSeries> getNewProducts(int count) {
+        return productSeriesDao.getNewProducts(count);
     }
 
     @Override
-    public List<ProductSeries> getLowPrices() {
-        return productSeriesDao.getLowPrices();
+    public List<ProductSeries> getLowPrices(int count) {
+        return productSeriesDao.getLowPrices(count);
+    }
+    @Override
+    public List<ProductSeries> getHotSell(int count) {
+        return productSeriesDao.getHotSell(count);
     }
 
     @Override

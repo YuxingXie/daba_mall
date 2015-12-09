@@ -33,17 +33,15 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         return list;
     }
 
-    public List<ProductSeries> getHotSell() {
-        //可规定热卖商品数量
 
-        return getAll();
-    }
     public List<ProductSeries> getAll() {
-        List<ProductSeries> productSeriesList=findAll();
+        return getAll(null);
+    }
+    public List<ProductSeries> getAll(Integer limit) {
+        List<ProductSeries> productSeriesList=findAll(limit);
         getStoresAndPrices(productSeriesList);
         return productSeriesList;
     }
-
     public void getStoresAndPrices(List<ProductSeries> productSeriesList) {
         for (ProductSeries productSeries:productSeriesList){
             getStoreAndPrice(productSeries);
@@ -136,7 +134,7 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         return list;
     }
 
-    public List<ProductSeries> getLowPrices() {
+    public List<ProductSeries> getLowPrices(int count) {
         DBObject productSeriesPriceDBObject=new BasicDBObject();
         productSeriesPriceDBObject.put("prevPrice",new BasicDBObject("$exists",true));
         BasicDBList dbList=new BasicDBList();
@@ -156,6 +154,7 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
 //        System.out.println(new BasicQuery(productSeriesPriceDBObject));
         List<ProductSeriesPrice> productSeriesPriceList=ServiceManager.productSeriesPriceService.findAll(productSeriesPriceDBObject);
         List<ProductSeries> list=new ArrayList<ProductSeries>();
+        int i=0;
         for (ProductSeriesPrice productSeriesPrice:productSeriesPriceList){
             if (productSeriesPrice==null) continue;
             if (productSeriesPrice.getPrice()==null) continue;
@@ -166,18 +165,24 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
             if (prevPrice.getPrice()==null) continue;
             if (productSeriesPrice.getPrice()<prevPrice.getPrice()){
                 list.add(productSeries);
+                i++;
+                if (i+1>=count) break;
             }
         }
         return list.size()==0?null:list;
     }
 
-    public List<ProductSeries> getNewProducts() {
+    public List<ProductSeries> getNewProducts(int count) {
         DBObject dbObject=new BasicDBObject();
         dbObject.put("newProduct",true);
-        List<ProductSeries> productSeriesList=getMongoTemplate().find(new BasicQuery(dbObject), ProductSeries.class);
+        List<ProductSeries> productSeriesList=getMongoTemplate().find(new BasicQuery(dbObject).limit(count), ProductSeries.class);
         getStoresAndPrices(productSeriesList);
         return productSeriesList;
     }
 
+    public List<ProductSeries> getHotSell(int count) {
+        //可规定热卖商品数量
 
+        return getAll(count);
+    }
 }

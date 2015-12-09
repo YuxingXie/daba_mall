@@ -20,6 +20,7 @@ public interface IBaseEntityManager<E> {
    List<E> findNotEquals(E e);
    List<E> textQuery(String  keyWord);
    List<E> findAll();
+   List<E> findAll(Integer limit);
 //   public int upsert(E queryEntity,E updateEntity);
    E findById(ObjectId id);;
    E findOne(E condition);
