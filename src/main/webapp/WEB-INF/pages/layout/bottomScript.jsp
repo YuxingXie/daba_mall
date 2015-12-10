@@ -15,12 +15,22 @@
 <%--弹出二级菜单相关--%>
 <script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/tooltip.js"></script>
 <script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/popover.js"></script>
+<script src="${path}/statics/assets/plugins/angular-1.2.19/angular-route.min.js"></script>
+<script src="${path}/statics/assets/plugins/angular-1.2.19/ui-bootstrap-tpls.min.js"></script>
+<script src="${path}/statics/assets/plugins/angularJs-pagination/src/pagination/tm.pagination.js"></script>
+<%--<script src="${path}/statics/assets/plugins/cascading-select-address-master/js/selectAddress2.js" type="text/javascript"></script>--%>
 <script>
-    angular.module("topApp",[])
-    .controller('topController', ['$scope', '$http', function ($scope, $http) {
+    var mainApp=angular.module("mainApp",['ui.bootstrap', 'ngRoute','tm.pagination']);
+    mainApp .controller('mainController', ['$scope', '$http', function ($scope, $http) {
+        $http.get('${path}/user/cart').success(function (data) {
+            $scope.cart = data;
+        });
+        $scope.deleteGoods=function(productSelected){
+            console.log(JSON.stringify(productSelected));
+        }
         $scope.initProductMenu= function () {
             if(!$scope.productCategories){
-                $http.get('${path}//product_series/categories').success(function (data) {
+                $http.get('${path}/product_series/categories').success(function (data) {
                     $scope.productCategories = data;
 //                    console.log(JSON.stringify(data));
                 });
@@ -28,4 +38,13 @@
 
         }
     }]);
+    $(function () {
+//        $('.add2CartTooltip').tooltip({
+//            selector: "#ensureAdd"
+//        });
+
+//        $('#ensureAdd').tooltip({
+//            selector: ".add2CartTooltip"
+//        });
+    });
 </script>

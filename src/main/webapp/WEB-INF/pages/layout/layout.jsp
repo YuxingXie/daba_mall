@@ -6,7 +6,7 @@
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <!DOCTYPE html>
-<html>
+<html ng-app="mainApp">
 <head>
     <tiles:insertAttribute name="meta" />
     <title>大坝生态农业</title>
@@ -15,9 +15,8 @@
     <tiles:insertAttribute name="topScript" />
     <tiles:insertAttribute name="pageTopScript" />
 </head>
-<body>
-
-        <div class="topscoll" ng-app="topApp">
+<body  ng-controller="mainController">
+        <div class="topscoll">
             <div class="pre-header">
                     <div class="row">
                         <div class="col-md-6 col-sm-6 additional-nav">
@@ -56,7 +55,7 @@
 
             <!-- BEGIN HEADER -->
             <div role="navigation" class="navbar header no-margin" >
-                <div ng-controller="topController">
+                <div>
                     <div class="navbar-header">
                         <!-- BEGIN RESPONSIVE MENU TOGGLER -->
                         <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
@@ -70,54 +69,36 @@
                                                                        alt="大坝生态农业"></a><!-- LOGO -->
                     </div>
                     <!-- BEGIN CART -->
-                    <div class="cart-block">
-                        <div class="cart-info">
-                            <%--<a href="javascript:void(0);" class="cart-info-value">11</a>--%>
-                            <div class="J-shoping J-shoping-small">
-                                <div class="J-shoping-title">
-                                    <span class="baseBg J-shoping-num"><c:choose>
-                                        <c:when test="${empty sessionScope.cart ||empty sessionScope.cart.productSelectedList}">0</c:when>
-                                        <c:otherwise>${fn:length(sessionScope.cart.productSelectedList)}</c:otherwise>
-                                    </c:choose>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+
+                    <div class="cart-block" id="cart-block">
                         <a href="#"><i class="fa fa-shopping-cart"></i></a>
                         <!-- BEGIN CART CONTENT -->
                         <div class="cart-content-wrapper">
                             <div class="cart-content">
+
                                 <ul class="scroller" style="height:250px;" id="cart_list">
-                                    <c:choose>
-                                        <c:when test="${empty sessionScope.cart ||empty sessionScope.cart.productSelectedList}">
-                                            <li>您的购物车中还没有商品</li>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <c:set var="totalPrice" value="0"/>
-                                            <c:forEach var="productSelected" items="${sessionScope.cart.productSelectedList}" varStatus="selectedIndex">
-                                                <c:set var="totalPrice" value="${totalPrice+productSelected.amount*productSelected.productSeries.commonPrice}"/>
-                                                <li class="j-shoping-item" data-selected-index="${selectedIndex.index}">
-                                                    <a href="${path}/product/${productSelected.productSeriesId}"><img src="${path}/${productSelected.productSeries.pictures[0]}" width="37" height="34"></a>
-                                                    <span class="cart-content-count">x ${productSelected.amount}</span>
-                                                    <strong>
-                                                        <a href="${path}/product/${productSelected.productSeriesId}"> ${productSelected.productSeries.name}</a>
-                                                        <c:forEach var="productPropertyValue" items="${productSelected.productPropertyValueList}">
-                                                        ${productPropertyValue.value}
-                                                        </c:forEach>
-                                                    </strong>
-                                                    <em>￥${productSelected.productSeries.commonPrice*productSelected.amount}</em>
-                                                    <a href="javascript:void(0);" class="del-goods"><i class="fa fa-times"></i></a>
-                                                </li>
-                                            </c:forEach>
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <li ng-show="!cart||!cart.productSelectedList||!cart.productSelectedList.length">您的购物车中还没有商品</li>
+                                    <li class="j-shoping-item" ng-repeat="productSelected in cart.productSelectedList" ng-init="totalPrice=0"  data-selected-index="{{$index}}">
+                                        <a ng-href="${path}/product_series/{{productSelected.productSeriesId}}">
+                                            <img ng-src="${path}/{{productSelected.productSeries.pictures[0]}}" width="37" height="34">
+                                        </a>
+                                        <span class="cart-content-count fa fa-times"> {{productSelected.amount}}</span>
+                                        <strong>
+                                            <a ng-href="${path}/product_series/{{productSelected.productSeriesId}}"> {{productSelected.productSeries.name}}</a>
+                                               <i ng-repeat="productPropertyValue in productSelected.productPropertyValueList"> {{productPropertyValue.value}}</i>
+                                        </strong>
+                                        <em class="fa fa-rmb" ng-init="totalPrice=totalPrice+(productSelected.productSeries.commonPrice*productSelected.amount)">
+                                            {{productSelected.productSeries.commonPrice*productSelected.amount | number:2}}
+                                        </em>
+                                        <a href="javascript:void(0);" class="del-goods" data-ng-click="deleteGoods(productSelected)"><i class="fa fa-trash"></i></a>
+                                    </li>
 
                                 </ul>
-                                <div class="text-right">
-                                    <p id="total-price">总计：￥<fmt:formatNumber value="${totalPrice}" pattern="##.##" minFractionDigits="2" ></fmt:formatNumber></p>
-                                    <a href="shopping-cart.html" class="btn btn-default">查看购物车</a>
-                                    <a href="${path}/cart" class="btn btn-primary">结账付款</a>
-                                </div>
+                                        <div class="text-right">
+                                            <p>总计：<i class="fa fa-rmb"></i>{{totalPrice | number:2}}</p>
+                                            <a href="shopping-cart.html" class="btn btn-default">查看购物车</a>
+                                            <a href="${path}/cart" class="btn btn-primary">结账付款</a>
+                                        </div>
                             </div>
                         </div>
                         <!-- END CART CONTENT -->

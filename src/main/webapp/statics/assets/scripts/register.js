@@ -1,5 +1,4 @@
-angular.module('registerApp', ['ngRoute'])
-        .directive('pwCheck', [function () {
+       mainApp.directive('pwCheck', [function () {
             return {
                 require: 'ngModel',
                 link: function (scope, elem, attrs, ctrl) {
@@ -194,5 +193,4 @@ angular.module('registerApp', ['ngRoute'])
             }
 
         }])
-        angular.bootstrap(document.getElementById("registerAppMain"),["registerApp"]);
 

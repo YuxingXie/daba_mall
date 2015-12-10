@@ -67,15 +67,7 @@ public class IndexController extends BaseRestSpringController {
                 User user = userDao.findByEmailOrPhone(name);
                 if (user.getPassword().equalsIgnoreCase(password)) {
                     session.setAttribute(Constant.LOGIN_USER, user);
-                    Cart cart=user.getCart();
-                    if (cart!=null && cart.getProductSelectedList()!=null){
-                        for (ProductSelected productSelected:cart.getProductSelectedList()){
-                            ProductSeries productSeries=productSelected.getProductSeries();
-                            List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
-                            if (productSeries.getProductStore()!=null) productSeries.getProductStore().setInAndOutList(inAndOuts);
-                        }
-                    }
-                    session.setAttribute(Constant.CART,cart);
+
 
                 }
             }
@@ -120,7 +112,21 @@ public class IndexController extends BaseRestSpringController {
         }
 
     }
-
+    @RequestMapping(value = "/user/cart")
+    public ResponseEntity<Cart> cart(HttpSession session) {
+        User user=getLoginUser(session);
+//        Cart cart=user==null?getCart(session)user.getCart()==null?getCart(session):user.getCart();
+        Cart cart=user==null?(getCart(session)==null?null:getCart(session)):(user.getCart()==null?getCart(session):(user.getCart()));
+        if (cart!=null && cart.getProductSelectedList()!=null){
+            for (ProductSelected productSelected:cart.getProductSelectedList()){
+                ProductSeries productSeries=productSelected.getProductSeries();
+                List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
+                if (productSeries.getProductStore()!=null) productSeries.getProductStore().setInAndOutList(inAndOuts);
+            }
+        }
+        session.setAttribute(Constant.CART,cart);
+        return new ResponseEntity<Cart>(cart,HttpStatus.OK);
+    }
     /**
      * 把一件商品添加到购物车
      * @param productSelected
@@ -135,19 +141,6 @@ public class IndexController extends BaseRestSpringController {
        }else{
            cart=(Cart)session.getAttribute(Constant.CART);
        }
-        ProductSeries productSeries=ServiceManager.productSeriesService.findProductSeriesById(productSelected.getProductSeriesId());
-        productSelected.setProductSeries(productSeries);
-        List<ProductPropertyValue> productPropertyValueList=new ArrayList<ProductPropertyValue>();
-       for(String productPropertyValueId : productSelected.getProductPropertyValueIds()){
-           DBObject ppCon=new BasicDBObject();
-           ProductPropertyValue value=ServiceManager.productPropertyValueService.findById(productPropertyValueId);
-           ppCon.put("_id",value.getProductProperty().getId());
-           ProductProperty productProperty=ServiceManager.productPropertyService.findOne(ppCon);
-           value.setProductProperty(productProperty);
-           productPropertyValueList.add(value);
-       }
-//        productSelected.((ProductPropertySelect[])ProductPropertyValueList.toArray(new ProductPropertySelect[ProductPropertyValueList.size()]));
-        productSelected.setProductPropertyValueList(productPropertyValueList);
         cart.merge(productSelected);
         if (session.getAttribute(Constant.LOGIN_USER)!=null){
             User user=getLoginUser(session);

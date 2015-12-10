@@ -23,7 +23,8 @@ public class Cart {
         }
         for (ProductSelected thisProductSelected : this.getProductSelectedList()){
             if (thisProductSelected.equals(anotherProductSelected)){
-                thisProductSelected.setAmount(thisProductSelected.getAmount()+anotherProductSelected.getAmount());
+                int amount=thisProductSelected.getAmount()==null?0:thisProductSelected.getAmount();
+                thisProductSelected.setAmount(amount+anotherProductSelected.getAmount());
                 return;
             }
         }

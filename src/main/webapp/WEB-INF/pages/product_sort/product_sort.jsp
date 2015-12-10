@@ -5,7 +5,7 @@
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 
-<div class="container" ng-app="productSortApp" id="productSortAppMain" ng-controller="productSortCtrl">
+<div class="container" id="productSortAppMain" ng-controller="productSortCtrl">
         <!-- BEGIN SIDEBAR & CONTENT -->
             <div class="row">
               <ul class="breadcrumb col-md-3 col-sm-5">

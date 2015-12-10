@@ -6,7 +6,7 @@
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 
-<div class="container" ng-app="myAccountApp" id="myAccountAppMain">
+<div class="container" id="myAccountAppMain">
         <ul class="breadcrumb">
             <li><a href="${path}/index">首页</a></li>
             <li><a href="">用户中心</a></li>

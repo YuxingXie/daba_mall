@@ -1,7 +1,7 @@
 'use strict';
-var app=angular.module('myAccountApp',['ui.bootstrap', 'ngRoute']);
+//var app=angular.module('myAccountApp',['ui.bootstrap', 'ngRoute']);
 //          app.controller("myAccountAppController",["$http",function($http){}]);
-app.config(['$routeProvider', '$locationProvider', '$sceProvider', function ($routeProvider, $locationProvider, $sceProvider) {
+    mainApp.config(['$routeProvider', '$locationProvider', '$sceProvider', function ($routeProvider, $locationProvider, $sceProvider) {
     $routeProvider
         .when('/', {controller: 'DemoCtrl'})
         .when('/abc', {controller: 'DemoCtrl'})
@@ -10,7 +10,7 @@ app.config(['$routeProvider', '$locationProvider', '$sceProvider', function ($ro
     $locationProvider.html5Mode(true);
 }]);
 
-app.controller('myAccountAppController', function ($scope, $location) {
+mainApp.controller('myAccountAppController', function ($scope, $location) {
     $scope.isActive = function (route) {
         if ($location.path().indexOf('/dropdown') == 0) {
             return  route === '/dropdown';
@@ -19,7 +19,7 @@ app.controller('myAccountAppController', function ($scope, $location) {
     }
 });
 
-app.controller('DemoCtrl', function () {
+mainApp.controller('DemoCtrl', function () {
     // nothing
 });
-angular.bootstrap(document.getElementById("myAccountAppMain"),"myAccountApp");
+//angular.bootstrap(document.getElementById("myAccountAppMain"),"myAccountApp");

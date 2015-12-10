@@ -26,8 +26,8 @@
 <script type="text/javascript" src="${path}/statics/assets/plugins/sco.js-master/js/sco.modal.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/sco.js-master/js/sco.confirm.js"></script>
 <script type="text/javascript">
-    angular.module("cartAdjustApp",[])
-            .controller("cartAdjustController",["$scope","$http",function($scope,$http){
+//    angular.module("cartAdjustApp",[])
+            mainApp.controller("cartAdjustController",["$scope","$http",function($scope,$http){
                 $http.get(path+"/personal/cart/text").then(function(cart){
                     $scope.cart=cart.data;
                     $scope.getTotalAmountAndPrice();
@@ -68,7 +68,7 @@
                 });
                 }
             }]);
-    angular.bootstrap(document.getElementById("cartAdjustAppMain"),["cartAdjustApp"]);
+//    angular.bootstrap(document.getElementById("cartAdjustAppMain"),["cartAdjustApp"]);
 
 //    var nonHtml5Post =function(){
 //        return function(){

@@ -24,13 +24,14 @@
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/EasyZoom-master/dist/easyzoom.js" type="text/javascript"></script>
 <script>
-  angular.module("indexApp",[])
-          .controller('indexController', ['$scope', '$http', function ($scope, $http) {
+//  angular.module("indexApp",[])
+            mainApp .controller('indexController', ['$scope', '$http', function ($scope, $http) {
             $scope.popover=function(productSeriesId){
                 $scope.productSelected={};
                 $scope.productSelected.productPropertyValueList=[];
                 $http.get(path+'/product_series/popover/'+productSeriesId).success(function (data) {
                 $scope.productSelected.productSeries = data;
+                $scope.productSelected.amount = 1;
                 $scope.currentImg=$scope.productSelected.productSeries.pictures[0];
                 // Instantiate EasyZoom plugin
                 var $easyzoom = $('.easyzoom').easyZoom();
@@ -40,20 +41,34 @@
               });
             }
             $scope.changeImg=function(currentImg){
-              console.log(currentImg);
+//              console.log(currentImg);
               $scope.currentImg=currentImg;
             }
             $scope.add2cart=function(){
 //                console.log(JSON.stringify($scope.productSelected));
+                $http.post('${path}/index/cart', $scope.productSelected).success(function(data){
+//                    renderCart(data);
+                    $scope.$parent.cart=data;
+//                    $scope.$emit('summon');
+//                    $scope.$on('executeSummon', function() {
+//                        $scope.cart=data;
+//                    });
+
+                }).error(function(data) {
+                    alert("对不起，服务器出现了点异常!");
+                });
                 $("#showProductModal").modal('hide');
+
             }
+
           }]);
-  angular.bootstrap(document.getElementById("indexAppMain"),["indexApp"]);
+//  angular.bootstrap(document.getElementById("indexAppMain"),["indexApp"]);
   $(document).ready(function(){
     App.init();
     App.initBxSlider();
     Index.initLayerSlider();
     App.initTouchspin();
+      $('[data-toggle=tooltip]').tooltip();
 
   });
 </script>

@@ -22,8 +22,8 @@
 <script src="${path}/statics/assets/plugins/jquery-ui.js" type="text/javascript" ></script>
 
 <script type="text/javascript">
-    angular.module("productSeriesApp",[])
-    .controller('productSeriesCtrl', ['$scope', '$http', function ($scope, $http) {
+//    angular.module("productSeriesApp",[])
+    mainApp.controller('productSeriesCtrl', ['$scope', '$http', function ($scope, $http) {
     <c:forEach var="productEvaluate" items="${_page.content}" varStatus="varStatus">
         $scope.toReply${varStatus.index}=function(){
             loginCheckBeforeHandler(function(){
@@ -77,7 +77,7 @@
             $scope.data = data;
         });
     }]);
-    angular.bootstrap(document.getElementById("page-main"), ['productSeriesApp']);
+//    angular.bootstrap(document.getElementById("page-main"), ['productSeriesApp']);
     <c:if test="${not empty _page and _page.totalPages gt 0}">
         var options = {
             currentPage:${page},

@@ -22,11 +22,11 @@
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>
 <%--<script src="${path}/statics/assets/plugins/bootstrap-paginator-master/build/bootstrap-paginator.min.js"></script>--%>
 
-<script src="${path}/statics/assets/plugins/angular-1.2.19/angular-route.min.js"></script>
-<script src="${path}/statics/assets/plugins/angularJs-pagination/src/pagination/tm.pagination.js"></script>
+<%--<script src="${path}/statics/assets/plugins/angular-1.2.19/angular-route.min.js"></script>--%>
+
 <script>
-    angular.module("productSortApp",['tm.pagination'])
-            .controller('productSortCtrl', ['$scope', '$http', function ($scope, $http) {
+//    mainApp.module("productSortApp",['tm.pagination'])
+    mainApp.controller('productSortCtrl', ['$scope', '$http', function ($scope, $http) {
                 $scope.httpGet=function(){
 
                 }
@@ -62,7 +62,6 @@
                     return value + (tail || ' …');
                 };
             });
-    angular.bootstrap(document.getElementById("productSortAppMain"), ['productSortApp']);
     $(document).ready(function(){
         $(document).on("click","#product-pop-up .add2cart",function(){
             var form=$('[name="popForm"]');

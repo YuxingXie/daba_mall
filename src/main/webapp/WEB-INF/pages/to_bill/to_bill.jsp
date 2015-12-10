@@ -15,7 +15,7 @@
             <li class="active">填写订单</li>
         </ul>
         <div class="shopping-cart-data clearfix">
-            <div class="table-wrapper-responsive" ng-app="toBillApp">
+            <div class="table-wrapper-responsive">
                 <form class="form-horizontal form-without-legend" novalidate="novalidate" action="${path}/index/order/submit" id="form" autocomplete="off" method="post">
                     <table summary="Shopping cart">
                         <tr>
@@ -39,17 +39,17 @@
                                             <div class="col-lg-5 has-success">
                                                 <input type="text"  name="acceptPersonName" value="${order.user.name}"
                                                                                 placeholder="请填写收件人姓名" class="form-control"/>
-                                                <span ng-show="signupForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                                <%--<span ng-show="signupForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>--%>
                                             </div>
                                     </div><br/>
-                                    <div class="row" ng-controller="toBillAppCtrl">
+                                    <div class="row">
                                         <div class="col-lg-2">
                                             <label class="control-label">收件地址<span class="require">*</span></label>
                                         </div>
                                         <div class="col-lg-8 has-success">
-                                            <input name="acceptAddress" select-address p="p" c="c" a="a" d="d" ng-model="xxx"
+                                            <input name="acceptAddress" select-address p="p" c="c" a="a" d="d"
                                                    placeholder="请选择收件地址" type="text" class="form-control"/>
-                                            <span ng-show="signupForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                            <span class="glyphicon glyphicon-ok form-control-feedback"></span>
                                         </div>
                                     </div><br/>
                                     <div class="row">
@@ -58,7 +58,7 @@
                                         </div>
                                             <div class="col-lg-8 has-success">
                                                 <input name="contactPhone" placeholder="请填写联系电话" type="tel" class="form-control" value="${order.user.phone}"/>
-                                                <span ng-show="signupForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                                <%--<span ng-show="signupForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>--%>
                                             </div>
                                      </div><br/>
                                     <div class="row">

@@ -23,5 +23,6 @@
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js"
         type="text/javascript"></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
-<script src="${path}/statics/assets/plugins/cascading-select-address-master/js/selectAddress2.js" type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/cascading-select-address-master/js/index.js"></script>
+<%--<script src="${path}/statics/assets/plugins/cascading-select-address-master/js/index.js"></script>--%>
+
+

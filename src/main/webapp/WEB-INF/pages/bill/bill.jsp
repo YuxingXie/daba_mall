@@ -8,7 +8,7 @@
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <!DOCTYPE html>
 
-<div class="container" ng-app="bankApp" ng-init="matchCode=true" id="bankAppMain">
+<div class="container" ng-init="matchCode=true" id="bankAppMain">
     <div ng-controller="bankController">
         <ul class="breadcrumb">
             <%--<li><a href="${path}">首页</a></li>--%>

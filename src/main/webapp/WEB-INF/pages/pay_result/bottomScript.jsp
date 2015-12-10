@@ -3,8 +3,6 @@
 <c:set var="path" value="<%=request.getContextPath() %>"/><c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 
 <script type="text/javascript">
-    angular.module("payResultApp",[]);
-    angular.bootstrap(document.getElementById("cartAdjustAppMain"),["cartAdjustApp"]);
 
     $(document).ready(function () {
 

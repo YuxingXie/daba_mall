@@ -22,8 +22,8 @@
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.transitions.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>
 <script>
-    angular.module("myInterestsApp",[])
-            .controller("myInterestsController",["$scope","$http",function($scope,$http){
+//    angular.module("myInterestsApp",[])
+           mainApp.controller("myInterestsController",["$scope","$http",function($scope,$http){
                 $http.get(path+"/personal/interests/json").then(function(interests){
                     $scope.interests=interests.data;
                 });
@@ -33,7 +33,7 @@
                     $('.add2cart').shoping();
                 };
             }])
-    angular.bootstrap(document.getElementById("myInterestsAppMain"),["myInterestsApp"]);
+//    angular.bootstrap(document.getElementById("myInterestsAppMain"),["myInterestsApp"]);
     $(document).ready(function() {
         $(document).on("click","#product-pop-up .add2cart",function(){
             var form=$('[name="popForm"]');

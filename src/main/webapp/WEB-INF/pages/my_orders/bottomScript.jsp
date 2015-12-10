@@ -6,8 +6,8 @@
 <script type="text/javascript" src="${path}/statics/assets/plugins/sco.js-master/js/sco.modal.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/sco.js-master/js/sco.confirm.js"></script>
 <script type="text/javascript">
-    angular.module("myOrdersApp",[])
-            .controller('myOrdersController', ['$scope', '$http', function ($scope, $http) {
+//    angular.module("myOrdersApp",[])
+            mainApp.controller('myOrdersController', ['$scope', '$http', function ($scope, $http) {
                 $scope.order={};
                 $scope.orderDetail= function (orderId) {
                     $http.get("${path}/order/json/"+orderId).success(function (data) {
@@ -28,7 +28,7 @@
                     <%--});--%>
                 }
             }]);
-    angular.bootstrap(document.getElementById("myOrdersAppMain"), ['myOrdersApp']);
+//    angular.bootstrap(document.getElementById("myOrdersAppMain"), ['myOrdersApp']);
     $(document).ready(function () {
         $("#toBill").click(function () {
             $.ajax({

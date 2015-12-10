@@ -890,27 +890,34 @@ Header and header elements
 	text-align: right;
 }
 .del-goods {
-	background: #d7dde3;
+	/*background: #d7dde3;*/
 	width: 17px;
 	height: 17px;
-	color: #fff !important;
-	border-radius: 22px !important;
+	/*color: #fff !important;*/
+	/*border-radius: 22px !important;*/
 	padding: 0 0 0 6px;
 	float: right;
 	margin: 10px 0 0 5px;
 }
-.del-goods:hover {
-	background: #E94D1C;
-}
+/*.del-goods:hover {*/
+	/*background: #E94D1C;*/
+/*}*/
 .del-goods i {
-	background: url(../img/icons/del-goods.png) no-repeat;
+	/*background: url(../img/icons/del-goods.png) no-repeat;*/
 	width: 5px;
 	height: 5px;
 	position: relative;
 	top: -3px;
 }
-.del-goods i.fa:before {
-	content: none;
+/*.del-goods i.fa:before {*/
+	/*content: none;*/
+/*}*/
+.shopping-cart-data .del-goods {
+	margin-top: 4px;
+}
+.del-goods:hover
+{
+	/*background:#187705 none repeat scroll 0 0*/
 }
 .cart-content .text-right {
 	margin-right: 8px;
@@ -2658,9 +2665,6 @@ a.social-icon {
 	float: right;
 }
 
-.shopping-cart-data .del-goods {
-	margin-top: 4px;
-}
 
 .shopping-total,
 .checkout-total-block {
@@ -3213,10 +3217,7 @@ div.checker {
 {
 	background:#407436 none repeat scroll 0 0
 }
-.del-goods:hover
-{
-	background:#187705 none repeat scroll 0 0
-}
+
 .pre-footer a
 {
 	color:#65934a;

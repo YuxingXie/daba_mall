@@ -52,8 +52,8 @@
                 }
                 return false;
         }
-        angular.module("bankApp",[])
-                .controller("bankController",["$scope","$http",function($scope,$http){
+//        angular.module("bankApp",[])
+                mainApp.controller("bankController",["$scope","$http",function($scope,$http){
                         $scope.isShow=false;
                         $http.get(path+"/statics/assets/plugins/bank/bankInfo.json")
                                 .then(function(response){
@@ -74,7 +74,7 @@
                                 $scope.isShow=! $scope.isShow;
                         }
         }]);
-        angular.bootstrap(document.getElementById("bankAppMain"),["bankApp"]);
+//        angular.bootstrap(document.getElementById("bankAppMain"),["bankApp"]);
 
         $(document).ready(function(){
                 $(document).on("click","#shortcuts .bank-ico",function () {

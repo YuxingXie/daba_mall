@@ -8,7 +8,7 @@
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <!DOCTYPE html>
 
-<div class="container" ng-app="myOrdersApp" id="myOrdersAppMain">
+<div class="container" id="myOrdersAppMain">
         <ul class="breadcrumb">
             <li><a href="${path}">首页</a></li>
             <li><a href="">我的大坝</a></li>

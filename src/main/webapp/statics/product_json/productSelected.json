@@ -1,35 +1,39 @@
 {
   "productPropertyValueList": [
     {
-      "id": "56657b7b6f70e517c81d803a",
-      "value": "公",
+      "id": "5653fcef35f0d117289299a5",
+      "value": "微辣",
       "productSeries": null,
       "productProperty": {
-        "id": "56657b7b6f70e517c81d8039",
-        "propertyName": "公母",
+        "id": "5653fcef35f0d117289299a4",
+        "propertyName": "辣度",
         "productSeries": {
-          "id": "56657b7b6f70e517c81d8038",
-          "name": "麻辣麻雀",
-          "pictures": ["pic/56657b7b6f70e517c81d8036"],
-          "description": "吃鸟不环保，不卫生，你们少买",
-          "shelvesDate": 1449491323325,
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
           "brand": "大坝",
           "productStore": {
             "remain": 0,
-            "warningAmount": 200,
+            "warningAmount": 30,
             "inAndOutList": null
           },
           "measurementUnit": null,
           "instructionManual": null,
           "productBrochures": null,
           "productSubCategory": {
-            "id": "5649c2606f70e517dce0b22b",
+            "id": "56494922ad1ab21220ebd822",
             "productCategory": {
-              "id": "5649c2446f70e517dce0b229",
-              "categoryName": "干货",
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
               "productSubCategories": null
             },
-            "subCategoryName": "山珍",
+            "subCategoryName": "豆制品",
             "productSeriesList": null
           },
           "evaluateCount": 0,
@@ -45,95 +49,56 @@
         "propertyValues": null
       },
       "amount": null,
-      "$$hashKey": "object:9"
-    },
-    {
-      "id": "56657b7b6f70e517c81d803e",
-      "value": "内向",
-      "productSeries": null,
-      "productProperty": {
-        "id": "56657b7b6f70e517c81d803c",
-        "propertyName": "性格",
-        "productSeries": {
-          "id": "56657b7b6f70e517c81d8038",
-          "name": "麻辣麻雀",
-          "pictures": ["pic/56657b7b6f70e517c81d8036"],
-          "description": "吃鸟不环保，不卫生，你们少买",
-          "shelvesDate": 1449491323325,
-          "brand": "大坝",
-          "productStore": {
-            "remain": 0,
-            "warningAmount": 200,
-            "inAndOutList": null
-          },
-          "measurementUnit": null,
-          "instructionManual": null,
-          "productBrochures": null,
-          "productSubCategory": {
-            "id": "5649c2606f70e517dce0b22b",
-            "productCategory": {
-              "id": "5649c2446f70e517dce0b229",
-              "categoryName": "干货",
-              "productSubCategories": null
-            },
-            "subCategoryName": "山珍",
-            "productSeriesList": null
-          },
-          "evaluateCount": 0,
-          "newProduct": true,
-          "productProperties": null,
-          "productPropertyValues": null,
-          "productSeriesPrices": null,
-          "commonPrice": 0,
-          "currentPrice": null,
-          "productEvaluateList": null,
-          "productSeriesEvaluateGrade": 0
-        },
-        "propertyValues": null
-      },
-      "amount": null,
-      "$$hashKey": "object:13"
+      "$$hashKey": "object:85"
     }
   ],
   "productSeries": {
-    "id": "56657b7b6f70e517c81d8038",
-    "name": "麻辣麻雀",
-    "pictures": ["pic/56657b7b6f70e517c81d8036"],
-    "description": "吃鸟不环保，不卫生，你们少买",
-    "shelvesDate": 1449491323325,
+    "id": "5653fcef35f0d117289299a3",
+    "name": "王五麻子臭豆腐",
+    "pictures": [
+      "pic/5653fcef35f0d1172892999d",
+      "pic/5653fcef35f0d1172892999f",
+      "pic/5653fcef35f0d117289299a1"
+    ],
+    "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+    "shelvesDate": null,
     "brand": "大坝",
     "productStore": {
-      "remain": 1000,
-      "warningAmount": 200,
+      "remain": 40,
+      "warningAmount": 30,
       "inAndOutList": [
         {
-          "id": "56657b7b6f70e517c81d8040",
+          "id": "5653fcef35f0d117289299aa",
           "type": "in",
-          "amount": 1000,
-          "date": 1449491323520,
+          "amount": 40,
+          "date": 1448344815977,
           "productSeries": {
-            "id": "56657b7b6f70e517c81d8038",
-            "name": "麻辣麻雀",
-            "pictures": ["pic/56657b7b6f70e517c81d8036"],
-            "description": "吃鸟不环保，不卫生，你们少买",
-            "shelvesDate": 1449491323325,
+            "id": "5653fcef35f0d117289299a3",
+            "name": "王五麻子臭豆腐",
+            "pictures": [
+              "pic/5653fcef35f0d1172892999d",
+              "pic/5653fcef35f0d1172892999f",
+              "pic/5653fcef35f0d117289299a1"
+            ],
+            "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+            "shelvesDate": null,
             "brand": "大坝",
             "productStore": {
               "remain": 0,
-              "warningAmount": 200,
+              "warningAmount": 30,
               "inAndOutList": null
             },
             "measurementUnit": null,
             "instructionManual": null,
             "productBrochures": null,
             "productSubCategory": {
-              "id": "5649c2606f70e517dce0b22b",
+              "id": "56494922ad1ab21220ebd822",
               "productCategory": {
-                "id": "5649c2446f70e517dce0b229",
-                "categoryName": "干货",
+                "id": "564948d1ad1ab21220ebd821",
+                "categoryName": "发酵制品",
                 "productSubCategories": null
               },
-              "subCategoryName": "山珍",
+              "subCategoryName": "豆制品",
               "productSeriesList": null
             },
             "evaluateCount": 0,
@@ -160,204 +125,7 @@
             "lastActivateTime": null,
             "phone": "13903064816",
             "loginStatus": null,
-            "cart": {
-              "productSelectedList": [
-                {
-                  "productSeriesId": null,
-                  "amount": 11,
-                  "productEvaluate": null,
-                  "productPropertyValueIds": null,
-                  "productPropertyValueList": [
-                    {
-                      "id": "56530b656f70e517b40e0ca2",
-                      "value": "保鲜盒",
-                      "productSeries": null,
-                      "productProperty": {
-                        "id": "56530b656f70e517b40e0ca0",
-                        "propertyName": "包装",
-                        "productSeries": {
-                          "id": "56530b656f70e517b40e0c9f",
-                          "name": "辣子鸡",
-                          "pictures": [
-                            "pic/56530b656f70e517b40e0c9b",
-                            "pic/56530b656f70e517b40e0c9d"
-                          ],
-                          "description": "无辣子鸡不快乐",
-                          "shelvesDate": null,
-                          "brand": "大坝",
-                          "productStore": {
-                            "remain": 0,
-                            "warningAmount": 20,
-                            "inAndOutList": null
-                          },
-                          "measurementUnit": null,
-                          "instructionManual": null,
-                          "productBrochures": null,
-                          "productSubCategory": {
-                            "id": "5649c2606f70e517dce0b22b",
-                            "productCategory": {
-                              "id": "5649c2446f70e517dce0b229",
-                              "categoryName": "干货",
-                              "productSubCategories": null
-                            },
-                            "subCategoryName": "山珍",
-                            "productSeriesList": null
-                          },
-                          "evaluateCount": 0,
-                          "newProduct": false,
-                          "productProperties": null,
-                          "productPropertyValues": null,
-                          "productSeriesPrices": null,
-                          "commonPrice": 0,
-                          "currentPrice": null,
-                          "productEvaluateList": null,
-                          "productSeriesEvaluateGrade": 0
-                        },
-                        "propertyValues": null
-                      },
-                      "amount": null
-                    }
-                  ],
-                  "productSeries": {
-                    "id": "56530b656f70e517b40e0c9f",
-                    "name": "辣子鸡",
-                    "pictures": [
-                      "pic/56530b656f70e517b40e0c9b",
-                      "pic/56530b656f70e517b40e0c9d"
-                    ],
-                    "description": "无辣子鸡不快乐",
-                    "shelvesDate": null,
-                    "brand": "大坝",
-                    "productStore": {
-                      "remain": 0,
-                      "warningAmount": 20,
-                      "inAndOutList": null
-                    },
-                    "measurementUnit": null,
-                    "instructionManual": null,
-                    "productBrochures": null,
-                    "productSubCategory": {
-                      "id": "5649c2606f70e517dce0b22b",
-                      "productCategory": {
-                        "id": "5649c2446f70e517dce0b229",
-                        "categoryName": "干货",
-                        "productSubCategories": null
-                      },
-                      "subCategoryName": "山珍",
-                      "productSeriesList": null
-                    },
-                    "evaluateCount": 0,
-                    "newProduct": false,
-                    "productProperties": null,
-                    "productPropertyValues": null,
-                    "productSeriesPrices": null,
-                    "commonPrice": 0,
-                    "currentPrice": null,
-                    "productEvaluateList": null,
-                    "productSeriesEvaluateGrade": 0
-                  },
-                  "receiveStatus": null,
-                  "orderPrice": null
-                },
-                {
-                  "productSeriesId": null,
-                  "amount": 3,
-                  "productEvaluate": null,
-                  "productPropertyValueIds": null,
-                  "productPropertyValueList": [
-                    {
-                      "id": "56530b656f70e517b40e0ca1",
-                      "value": "真空",
-                      "productSeries": null,
-                      "productProperty": {
-                        "id": "56530b656f70e517b40e0ca0",
-                        "propertyName": "包装",
-                        "productSeries": {
-                          "id": "56530b656f70e517b40e0c9f",
-                          "name": "辣子鸡",
-                          "pictures": [
-                            "pic/56530b656f70e517b40e0c9b",
-                            "pic/56530b656f70e517b40e0c9d"
-                          ],
-                          "description": "无辣子鸡不快乐",
-                          "shelvesDate": null,
-                          "brand": "大坝",
-                          "productStore": {
-                            "remain": 0,
-                            "warningAmount": 20,
-                            "inAndOutList": null
-                          },
-                          "measurementUnit": null,
-                          "instructionManual": null,
-                          "productBrochures": null,
-                          "productSubCategory": {
-                            "id": "5649c2606f70e517dce0b22b",
-                            "productCategory": {
-                              "id": "5649c2446f70e517dce0b229",
-                              "categoryName": "干货",
-                              "productSubCategories": null
-                            },
-                            "subCategoryName": "山珍",
-                            "productSeriesList": null
-                          },
-                          "evaluateCount": 0,
-                          "newProduct": false,
-                          "productProperties": null,
-                          "productPropertyValues": null,
-                          "productSeriesPrices": null,
-                          "commonPrice": 0,
-                          "currentPrice": null,
-                          "productEvaluateList": null,
-                          "productSeriesEvaluateGrade": 0
-                        },
-                        "propertyValues": null
-                      },
-                      "amount": null
-                    }
-                  ],
-                  "productSeries": {
-                    "id": "56530b656f70e517b40e0c9f",
-                    "name": "辣子鸡",
-                    "pictures": [
-                      "pic/56530b656f70e517b40e0c9b",
-                      "pic/56530b656f70e517b40e0c9d"
-                    ],
-                    "description": "无辣子鸡不快乐",
-                    "shelvesDate": null,
-                    "brand": "大坝",
-                    "productStore": {
-                      "remain": 0,
-                      "warningAmount": 20,
-                      "inAndOutList": null
-                    },
-                    "measurementUnit": null,
-                    "instructionManual": null,
-                    "productBrochures": null,
-                    "productSubCategory": {
-                      "id": "5649c2606f70e517dce0b22b",
-                      "productCategory": {
-                        "id": "5649c2446f70e517dce0b229",
-                        "categoryName": "干货",
-                        "productSubCategories": null
-                      },
-                      "subCategoryName": "山珍",
-                      "productSeriesList": null
-                    },
-                    "evaluateCount": 0,
-                    "newProduct": false,
-                    "productProperties": null,
-                    "productPropertyValues": null,
-                    "productSeriesPrices": null,
-                    "commonPrice": 0,
-                    "currentPrice": null,
-                    "productEvaluateList": null,
-                    "productSeriesEvaluateGrade": 0
-                  },
-                  "receiveStatus": null,
-                  "orderPrice": null
-                }
-              ]
-            },
+            "cart": {"productSelectedList": []},
             "addresses": null,
             "disabled": false,
             "idCardNo": null,
@@ -376,44 +144,48 @@
     "instructionManual": null,
     "productBrochures": null,
     "productSubCategory": {
-      "id": "5649c2606f70e517dce0b22b",
+      "id": "56494922ad1ab21220ebd822",
       "productCategory": {
-        "id": "5649c2446f70e517dce0b229",
-        "categoryName": "干货",
+        "id": "564948d1ad1ab21220ebd821",
+        "categoryName": "发酵制品",
         "productSubCategories": null
       },
-      "subCategoryName": "山珍",
+      "subCategoryName": "豆制品",
       "productSeriesList": null
     },
-    "evaluateCount": 0,
+    "evaluateCount": 20,
     "newProduct": true,
     "productProperties": [
       {
-        "id": "56657b7b6f70e517c81d8039",
-        "propertyName": "公母",
+        "id": "5653fcef35f0d117289299a4",
+        "propertyName": "辣度",
         "productSeries": {
-          "id": "56657b7b6f70e517c81d8038",
-          "name": "麻辣麻雀",
-          "pictures": ["pic/56657b7b6f70e517c81d8036"],
-          "description": "吃鸟不环保，不卫生，你们少买",
-          "shelvesDate": 1449491323325,
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
           "brand": "大坝",
           "productStore": {
             "remain": 0,
-            "warningAmount": 200,
+            "warningAmount": 30,
             "inAndOutList": null
           },
           "measurementUnit": null,
           "instructionManual": null,
           "productBrochures": null,
           "productSubCategory": {
-            "id": "5649c2606f70e517dce0b22b",
+            "id": "56494922ad1ab21220ebd822",
             "productCategory": {
-              "id": "5649c2446f70e517dce0b229",
-              "categoryName": "干货",
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
               "productSubCategories": null
             },
-            "subCategoryName": "山珍",
+            "subCategoryName": "豆制品",
             "productSeriesList": null
           },
           "evaluateCount": 0,
@@ -428,35 +200,39 @@
         },
         "propertyValues": [
           {
-            "id": "56657b7b6f70e517c81d803a",
-            "value": "公",
+            "id": "5653fcef35f0d117289299a5",
+            "value": "微辣",
             "productSeries": null,
             "productProperty": {
-              "id": "56657b7b6f70e517c81d8039",
-              "propertyName": "公母",
+              "id": "5653fcef35f0d117289299a4",
+              "propertyName": "辣度",
               "productSeries": {
-                "id": "56657b7b6f70e517c81d8038",
-                "name": "麻辣麻雀",
-                "pictures": ["pic/56657b7b6f70e517c81d8036"],
-                "description": "吃鸟不环保，不卫生，你们少买",
-                "shelvesDate": 1449491323325,
+                "id": "5653fcef35f0d117289299a3",
+                "name": "王五麻子臭豆腐",
+                "pictures": [
+                  "pic/5653fcef35f0d1172892999d",
+                  "pic/5653fcef35f0d1172892999f",
+                  "pic/5653fcef35f0d117289299a1"
+                ],
+                "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+                "shelvesDate": null,
                 "brand": "大坝",
                 "productStore": {
                   "remain": 0,
-                  "warningAmount": 200,
+                  "warningAmount": 30,
                   "inAndOutList": null
                 },
                 "measurementUnit": null,
                 "instructionManual": null,
                 "productBrochures": null,
                 "productSubCategory": {
-                  "id": "5649c2606f70e517dce0b22b",
+                  "id": "56494922ad1ab21220ebd822",
                   "productCategory": {
-                    "id": "5649c2446f70e517dce0b229",
-                    "categoryName": "干货",
+                    "id": "564948d1ad1ab21220ebd821",
+                    "categoryName": "发酵制品",
                     "productSubCategories": null
                   },
-                  "subCategoryName": "山珍",
+                  "subCategoryName": "豆制品",
                   "productSeriesList": null
                 },
                 "evaluateCount": 0,
@@ -472,38 +248,42 @@
               "propertyValues": null
             },
             "amount": null,
-            "$$hashKey": "object:9"
+            "$$hashKey": "object:85"
           },
           {
-            "id": "56657b7b6f70e517c81d803b",
-            "value": "母",
+            "id": "5653fcef35f0d117289299a6",
+            "value": "中辣",
             "productSeries": null,
             "productProperty": {
-              "id": "56657b7b6f70e517c81d8039",
-              "propertyName": "公母",
+              "id": "5653fcef35f0d117289299a4",
+              "propertyName": "辣度",
               "productSeries": {
-                "id": "56657b7b6f70e517c81d8038",
-                "name": "麻辣麻雀",
-                "pictures": ["pic/56657b7b6f70e517c81d8036"],
-                "description": "吃鸟不环保，不卫生，你们少买",
-                "shelvesDate": 1449491323325,
+                "id": "5653fcef35f0d117289299a3",
+                "name": "王五麻子臭豆腐",
+                "pictures": [
+                  "pic/5653fcef35f0d1172892999d",
+                  "pic/5653fcef35f0d1172892999f",
+                  "pic/5653fcef35f0d117289299a1"
+                ],
+                "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+                "shelvesDate": null,
                 "brand": "大坝",
                 "productStore": {
                   "remain": 0,
-                  "warningAmount": 200,
+                  "warningAmount": 30,
                   "inAndOutList": null
                 },
                 "measurementUnit": null,
                 "instructionManual": null,
                 "productBrochures": null,
                 "productSubCategory": {
-                  "id": "5649c2606f70e517dce0b22b",
+                  "id": "56494922ad1ab21220ebd822",
                   "productCategory": {
-                    "id": "5649c2446f70e517dce0b229",
-                    "categoryName": "干货",
+                    "id": "564948d1ad1ab21220ebd821",
+                    "categoryName": "发酵制品",
                     "productSubCategories": null
                   },
-                  "subCategoryName": "山珍",
+                  "subCategoryName": "豆制品",
                   "productSeriesList": null
                 },
                 "evaluateCount": 0,
@@ -519,180 +299,150 @@
               "propertyValues": null
             },
             "amount": null,
-            "$$hashKey": "object:10"
+            "$$hashKey": "object:86"
+          },
+          {
+            "id": "5653fcef35f0d117289299a7",
+            "value": "辣",
+            "productSeries": null,
+            "productProperty": {
+              "id": "5653fcef35f0d117289299a4",
+              "propertyName": "辣度",
+              "productSeries": {
+                "id": "5653fcef35f0d117289299a3",
+                "name": "王五麻子臭豆腐",
+                "pictures": [
+                  "pic/5653fcef35f0d1172892999d",
+                  "pic/5653fcef35f0d1172892999f",
+                  "pic/5653fcef35f0d117289299a1"
+                ],
+                "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+                "shelvesDate": null,
+                "brand": "大坝",
+                "productStore": {
+                  "remain": 0,
+                  "warningAmount": 30,
+                  "inAndOutList": null
+                },
+                "measurementUnit": null,
+                "instructionManual": null,
+                "productBrochures": null,
+                "productSubCategory": {
+                  "id": "56494922ad1ab21220ebd822",
+                  "productCategory": {
+                    "id": "564948d1ad1ab21220ebd821",
+                    "categoryName": "发酵制品",
+                    "productSubCategories": null
+                  },
+                  "subCategoryName": "豆制品",
+                  "productSeriesList": null
+                },
+                "evaluateCount": 0,
+                "newProduct": true,
+                "productProperties": null,
+                "productPropertyValues": null,
+                "productSeriesPrices": null,
+                "commonPrice": 0,
+                "currentPrice": null,
+                "productEvaluateList": null,
+                "productSeriesEvaluateGrade": 0
+              },
+              "propertyValues": null
+            },
+            "amount": null,
+            "$$hashKey": "object:87"
+          },
+          {
+            "id": "5653fcef35f0d117289299a8",
+            "value": "麻辣",
+            "productSeries": null,
+            "productProperty": {
+              "id": "5653fcef35f0d117289299a4",
+              "propertyName": "辣度",
+              "productSeries": {
+                "id": "5653fcef35f0d117289299a3",
+                "name": "王五麻子臭豆腐",
+                "pictures": [
+                  "pic/5653fcef35f0d1172892999d",
+                  "pic/5653fcef35f0d1172892999f",
+                  "pic/5653fcef35f0d117289299a1"
+                ],
+                "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+                "shelvesDate": null,
+                "brand": "大坝",
+                "productStore": {
+                  "remain": 0,
+                  "warningAmount": 30,
+                  "inAndOutList": null
+                },
+                "measurementUnit": null,
+                "instructionManual": null,
+                "productBrochures": null,
+                "productSubCategory": {
+                  "id": "56494922ad1ab21220ebd822",
+                  "productCategory": {
+                    "id": "564948d1ad1ab21220ebd821",
+                    "categoryName": "发酵制品",
+                    "productSubCategories": null
+                  },
+                  "subCategoryName": "豆制品",
+                  "productSeriesList": null
+                },
+                "evaluateCount": 0,
+                "newProduct": true,
+                "productProperties": null,
+                "productPropertyValues": null,
+                "productSeriesPrices": null,
+                "commonPrice": 0,
+                "currentPrice": null,
+                "productEvaluateList": null,
+                "productSeriesEvaluateGrade": 0
+              },
+              "propertyValues": null
+            },
+            "amount": null,
+            "$$hashKey": "object:88"
           }
         ],
-        "$$hashKey": "object:6"
-      },
-      {
-        "id": "56657b7b6f70e517c81d803c",
-        "propertyName": "性格",
-        "productSeries": {
-          "id": "56657b7b6f70e517c81d8038",
-          "name": "麻辣麻雀",
-          "pictures": ["pic/56657b7b6f70e517c81d8036"],
-          "description": "吃鸟不环保，不卫生，你们少买",
-          "shelvesDate": 1449491323325,
-          "brand": "大坝",
-          "productStore": {
-            "remain": 0,
-            "warningAmount": 200,
-            "inAndOutList": null
-          },
-          "measurementUnit": null,
-          "instructionManual": null,
-          "productBrochures": null,
-          "productSubCategory": {
-            "id": "5649c2606f70e517dce0b22b",
-            "productCategory": {
-              "id": "5649c2446f70e517dce0b229",
-              "categoryName": "干货",
-              "productSubCategories": null
-            },
-            "subCategoryName": "山珍",
-            "productSeriesList": null
-          },
-          "evaluateCount": 0,
-          "newProduct": true,
-          "productProperties": null,
-          "productPropertyValues": null,
-          "productSeriesPrices": null,
-          "commonPrice": 0,
-          "currentPrice": null,
-          "productEvaluateList": null,
-          "productSeriesEvaluateGrade": 0
-        },
-        "propertyValues": [
-          {
-            "id": "56657b7b6f70e517c81d803d",
-            "value": "外向",
-            "productSeries": null,
-            "productProperty": {
-              "id": "56657b7b6f70e517c81d803c",
-              "propertyName": "性格",
-              "productSeries": {
-                "id": "56657b7b6f70e517c81d8038",
-                "name": "麻辣麻雀",
-                "pictures": ["pic/56657b7b6f70e517c81d8036"],
-                "description": "吃鸟不环保，不卫生，你们少买",
-                "shelvesDate": 1449491323325,
-                "brand": "大坝",
-                "productStore": {
-                  "remain": 0,
-                  "warningAmount": 200,
-                  "inAndOutList": null
-                },
-                "measurementUnit": null,
-                "instructionManual": null,
-                "productBrochures": null,
-                "productSubCategory": {
-                  "id": "5649c2606f70e517dce0b22b",
-                  "productCategory": {
-                    "id": "5649c2446f70e517dce0b229",
-                    "categoryName": "干货",
-                    "productSubCategories": null
-                  },
-                  "subCategoryName": "山珍",
-                  "productSeriesList": null
-                },
-                "evaluateCount": 0,
-                "newProduct": true,
-                "productProperties": null,
-                "productPropertyValues": null,
-                "productSeriesPrices": null,
-                "commonPrice": 0,
-                "currentPrice": null,
-                "productEvaluateList": null,
-                "productSeriesEvaluateGrade": 0
-              },
-              "propertyValues": null
-            },
-            "amount": null,
-            "$$hashKey": "object:12"
-          },
-          {
-            "id": "56657b7b6f70e517c81d803e",
-            "value": "内向",
-            "productSeries": null,
-            "productProperty": {
-              "id": "56657b7b6f70e517c81d803c",
-              "propertyName": "性格",
-              "productSeries": {
-                "id": "56657b7b6f70e517c81d8038",
-                "name": "麻辣麻雀",
-                "pictures": ["pic/56657b7b6f70e517c81d8036"],
-                "description": "吃鸟不环保，不卫生，你们少买",
-                "shelvesDate": 1449491323325,
-                "brand": "大坝",
-                "productStore": {
-                  "remain": 0,
-                  "warningAmount": 200,
-                  "inAndOutList": null
-                },
-                "measurementUnit": null,
-                "instructionManual": null,
-                "productBrochures": null,
-                "productSubCategory": {
-                  "id": "5649c2606f70e517dce0b22b",
-                  "productCategory": {
-                    "id": "5649c2446f70e517dce0b229",
-                    "categoryName": "干货",
-                    "productSubCategories": null
-                  },
-                  "subCategoryName": "山珍",
-                  "productSeriesList": null
-                },
-                "evaluateCount": 0,
-                "newProduct": true,
-                "productProperties": null,
-                "productPropertyValues": null,
-                "productSeriesPrices": null,
-                "commonPrice": 0,
-                "currentPrice": null,
-                "productEvaluateList": null,
-                "productSeriesEvaluateGrade": 0
-              },
-              "propertyValues": null
-            },
-            "amount": null,
-            "$$hashKey": "object:13"
-          }
-        ],
-        "$$hashKey": "object:7"
+        "$$hashKey": "object:83"
       }
     ],
     "productPropertyValues": null,
     "productSeriesPrices": [
       {
-        "id": "56657b7b6f70e517c81d803f",
-        "price": 9.88,
-        "beginDate": 1449491323519,
+        "id": "5653fcef35f0d117289299a9",
+        "price": 18.88,
+        "beginDate": 1448344815975,
         "endDate": null,
-        "adjustDate": 1449491323519,
+        "adjustDate": 1448344815975,
         "prevPrice": null,
         "productSeries": {
-          "id": "56657b7b6f70e517c81d8038",
-          "name": "麻辣麻雀",
-          "pictures": ["pic/56657b7b6f70e517c81d8036"],
-          "description": "吃鸟不环保，不卫生，你们少买",
-          "shelvesDate": 1449491323325,
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
           "brand": "大坝",
           "productStore": {
             "remain": 0,
-            "warningAmount": 200,
+            "warningAmount": 30,
             "inAndOutList": null
           },
           "measurementUnit": null,
           "instructionManual": null,
           "productBrochures": null,
           "productSubCategory": {
-            "id": "5649c2606f70e517dce0b22b",
+            "id": "56494922ad1ab21220ebd822",
             "productCategory": {
-              "id": "5649c2446f70e517dce0b229",
-              "categoryName": "干货",
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
               "productSubCategories": null
             },
-            "subCategoryName": "山珍",
+            "subCategoryName": "豆制品",
             "productSeriesList": null
           },
           "evaluateCount": 0,
@@ -708,37 +458,41 @@
         "comment": null
       }
     ],
-    "commonPrice": 9.88,
+    "commonPrice": 18.88,
     "currentPrice": {
-      "id": "56657b7b6f70e517c81d803f",
-      "price": 9.88,
-      "beginDate": 1449491323519,
+      "id": "5653fcef35f0d117289299a9",
+      "price": 18.88,
+      "beginDate": 1448344815975,
       "endDate": null,
-      "adjustDate": 1449491323519,
+      "adjustDate": 1448344815975,
       "prevPrice": null,
       "productSeries": {
-        "id": "56657b7b6f70e517c81d8038",
-        "name": "麻辣麻雀",
-        "pictures": ["pic/56657b7b6f70e517c81d8036"],
-        "description": "吃鸟不环保，不卫生，你们少买",
-        "shelvesDate": 1449491323325,
+        "id": "5653fcef35f0d117289299a3",
+        "name": "王五麻子臭豆腐",
+        "pictures": [
+          "pic/5653fcef35f0d1172892999d",
+          "pic/5653fcef35f0d1172892999f",
+          "pic/5653fcef35f0d117289299a1"
+        ],
+        "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+        "shelvesDate": null,
         "brand": "大坝",
         "productStore": {
           "remain": 0,
-          "warningAmount": 200,
+          "warningAmount": 30,
           "inAndOutList": null
         },
         "measurementUnit": null,
         "instructionManual": null,
         "productBrochures": null,
         "productSubCategory": {
-          "id": "5649c2606f70e517dce0b22b",
+          "id": "56494922ad1ab21220ebd822",
           "productCategory": {
-            "id": "5649c2446f70e517dce0b229",
-            "categoryName": "干货",
+            "id": "564948d1ad1ab21220ebd821",
+            "categoryName": "发酵制品",
             "productSubCategories": null
           },
-          "subCategoryName": "山珍",
+          "subCategoryName": "豆制品",
           "productSeriesList": null
         },
         "evaluateCount": 0,
@@ -753,7 +507,1684 @@
       },
       "comment": null
     },
-    "productEvaluateList": [],
-    "productSeriesEvaluateGrade": 0
+    "productEvaluateList": [
+      {
+        "id": "565d4361cc3091d30b40b3f7",
+        "content": "可以！！！！！！",
+        "pictures": null,
+        "grade": 4,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": null,
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "565d4372cc3091d30b40b3f8",
+        "content": "不错啊！！！！！！",
+        "pictures": null,
+        "grade": 4,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": null,
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "565d4388cc3091d30b40b3f9",
+        "content": "it's very ok！！！！！！",
+        "pictures": null,
+        "grade": 4,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": null,
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "565d43a3cc3091d30b40b3fa",
+        "content": "i believe i can fly！！！！！！",
+        "pictures": null,
+        "grade": 4,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": null,
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "565d43d5cc3091d30b40b3fb",
+        "content": "Oh baby!i can't stop eating！！！！！！",
+        "pictures": null,
+        "grade": 3,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": null,
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "565d44cecc3091d30b40b3fc",
+        "content": "无法自拔！！！！！！",
+        "pictures": null,
+        "grade": 3,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": null,
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "565d44eccc3091d30b40b3fd",
+        "content": "如果我以后吃不到这么好吃的东西，我该怎么办！！！！！！",
+        "pictures": null,
+        "grade": 3,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": null,
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "565d4954cc3091d30b40b3fe",
+        "content": "如果我以后吃不到这么好吃的东西，我该怎么办！！！！！！",
+        "pictures": null,
+        "grade": 3,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": null,
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "565d4956cc3091d30b40b3ff",
+        "content": "如果我以后吃不到这么好吃的东西，我该怎么办！！！！！！",
+        "pictures": null,
+        "grade": 3,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": null,
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "565d4958cc3091d30b40b400",
+        "content": "如果我以后吃不到这么好吃的东西，我该怎么办！！！！！！",
+        "pictures": null,
+        "grade": 3,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": null,
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "565d495acc3091d30b40b401",
+        "content": "如果我以后吃不到这么好吃的东西，我该怎么办！！！！！！",
+        "pictures": null,
+        "grade": 3,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": null,
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "565d495dcc3091d30b40b402",
+        "content": "如果我以后吃不到这么好吃的东西，我该怎么办！！！！！！",
+        "pictures": null,
+        "grade": 3,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": null,
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "565d495fcc3091d30b40b403",
+        "content": "如果我以后吃不到这么好吃的东西，我该怎么办！！！！！！",
+        "pictures": null,
+        "grade": 3,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": null,
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "565d4962cc3091d30b40b404",
+        "content": "如果我以后吃不到这么好吃的东西，我该怎么办！！！！！！",
+        "pictures": null,
+        "grade": 3,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": null,
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "565d4964cc3091d30b40b405",
+        "content": "如果我以后吃不到这么好吃的东西，我该怎么办！！！！！！",
+        "pictures": null,
+        "grade": 3,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": null,
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "565d4966cc3091d30b40b406",
+        "content": "如果我以后吃不到这么好吃的东西，我该怎么办！！！！！！",
+        "pictures": null,
+        "grade": 3,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": null,
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "565d4968cc3091d30b40b407",
+        "content": "如果我以后吃不到这么好吃的东西，我该怎么办！！！！！！",
+        "pictures": null,
+        "grade": 3,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": null,
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "565d496acc3091d30b40b408",
+        "content": "如果我以后吃不到这么好吃的东西，我该怎么办！！！！！！",
+        "pictures": null,
+        "grade": 3,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": null,
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "565f9d6d35f0d10a745a0856",
+        "content": "物流速度快，包装好，全家人一起吃了都说好。",
+        "pictures": ["pic/user/evaluate/565f9d6d35f0d10a745a0854"],
+        "grade": 5,
+        "date": 1449106797197,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": {
+          "id": "565f9bcc35f0d10a745a0852",
+          "productSelectedList": [
+            {
+              "productSeriesId": null,
+              "amount": 21,
+              "productEvaluate": null,
+              "productPropertyValueIds": null,
+              "productPropertyValueList": [
+                {
+                  "id": "5653fcef35f0d117289299a5",
+                  "value": "微辣",
+                  "productSeries": null,
+                  "productProperty": {
+                    "id": "5653fcef35f0d117289299a4",
+                    "propertyName": "辣度",
+                    "productSeries": {
+                      "id": "5653fcef35f0d117289299a3",
+                      "name": "王五麻子臭豆腐",
+                      "pictures": [
+                        "pic/5653fcef35f0d1172892999d",
+                        "pic/5653fcef35f0d1172892999f",
+                        "pic/5653fcef35f0d117289299a1"
+                      ],
+                      "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+                      "shelvesDate": null,
+                      "brand": "大坝",
+                      "productStore": {
+                        "remain": 0,
+                        "warningAmount": 30,
+                        "inAndOutList": null
+                      },
+                      "measurementUnit": null,
+                      "instructionManual": null,
+                      "productBrochures": null,
+                      "productSubCategory": {
+                        "id": "56494922ad1ab21220ebd822",
+                        "productCategory": {
+                          "id": "564948d1ad1ab21220ebd821",
+                          "categoryName": "发酵制品",
+                          "productSubCategories": null
+                        },
+                        "subCategoryName": "豆制品",
+                        "productSeriesList": null
+                      },
+                      "evaluateCount": 0,
+                      "newProduct": true,
+                      "productProperties": null,
+                      "productPropertyValues": null,
+                      "productSeriesPrices": null,
+                      "commonPrice": 0,
+                      "currentPrice": null,
+                      "productEvaluateList": null,
+                      "productSeriesEvaluateGrade": 0
+                    },
+                    "propertyValues": null
+                  },
+                  "amount": null
+                }
+              ],
+              "productSeries": {
+                "id": "5653fcef35f0d117289299a3",
+                "name": "王五麻子臭豆腐",
+                "pictures": [
+                  "pic/5653fcef35f0d1172892999d",
+                  "pic/5653fcef35f0d1172892999f",
+                  "pic/5653fcef35f0d117289299a1"
+                ],
+                "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+                "shelvesDate": null,
+                "brand": "大坝",
+                "productStore": {
+                  "remain": 0,
+                  "warningAmount": 30,
+                  "inAndOutList": null
+                },
+                "measurementUnit": null,
+                "instructionManual": null,
+                "productBrochures": null,
+                "productSubCategory": {
+                  "id": "56494922ad1ab21220ebd822",
+                  "productCategory": {
+                    "id": "564948d1ad1ab21220ebd821",
+                    "categoryName": "发酵制品",
+                    "productSubCategories": null
+                  },
+                  "subCategoryName": "豆制品",
+                  "productSeriesList": null
+                },
+                "evaluateCount": 0,
+                "newProduct": true,
+                "productProperties": null,
+                "productPropertyValues": null,
+                "productSeriesPrices": null,
+                "commonPrice": 0,
+                "currentPrice": null,
+                "productEvaluateList": null,
+                "productSeriesEvaluateGrade": 0
+              },
+              "receiveStatus": "y",
+              "orderPrice": null
+            },
+            {
+              "productSeriesId": null,
+              "amount": 3,
+              "productEvaluate": null,
+              "productPropertyValueIds": null,
+              "productPropertyValueList": [
+                {
+                  "id": "5653fcef35f0d117289299a8",
+                  "value": "麻辣",
+                  "productSeries": null,
+                  "productProperty": {
+                    "id": "5653fcef35f0d117289299a4",
+                    "propertyName": "辣度",
+                    "productSeries": {
+                      "id": "5653fcef35f0d117289299a3",
+                      "name": "王五麻子臭豆腐",
+                      "pictures": [
+                        "pic/5653fcef35f0d1172892999d",
+                        "pic/5653fcef35f0d1172892999f",
+                        "pic/5653fcef35f0d117289299a1"
+                      ],
+                      "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+                      "shelvesDate": null,
+                      "brand": "大坝",
+                      "productStore": {
+                        "remain": 0,
+                        "warningAmount": 30,
+                        "inAndOutList": null
+                      },
+                      "measurementUnit": null,
+                      "instructionManual": null,
+                      "productBrochures": null,
+                      "productSubCategory": {
+                        "id": "56494922ad1ab21220ebd822",
+                        "productCategory": {
+                          "id": "564948d1ad1ab21220ebd821",
+                          "categoryName": "发酵制品",
+                          "productSubCategories": null
+                        },
+                        "subCategoryName": "豆制品",
+                        "productSeriesList": null
+                      },
+                      "evaluateCount": 0,
+                      "newProduct": true,
+                      "productProperties": null,
+                      "productPropertyValues": null,
+                      "productSeriesPrices": null,
+                      "commonPrice": 0,
+                      "currentPrice": null,
+                      "productEvaluateList": null,
+                      "productSeriesEvaluateGrade": 0
+                    },
+                    "propertyValues": null
+                  },
+                  "amount": null
+                }
+              ],
+              "productSeries": {
+                "id": "5653fcef35f0d117289299a3",
+                "name": "王五麻子臭豆腐",
+                "pictures": [
+                  "pic/5653fcef35f0d1172892999d",
+                  "pic/5653fcef35f0d1172892999f",
+                  "pic/5653fcef35f0d117289299a1"
+                ],
+                "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+                "shelvesDate": null,
+                "brand": "大坝",
+                "productStore": {
+                  "remain": 0,
+                  "warningAmount": 30,
+                  "inAndOutList": null
+                },
+                "measurementUnit": null,
+                "instructionManual": null,
+                "productBrochures": null,
+                "productSubCategory": {
+                  "id": "56494922ad1ab21220ebd822",
+                  "productCategory": {
+                    "id": "564948d1ad1ab21220ebd821",
+                    "categoryName": "发酵制品",
+                    "productSubCategories": null
+                  },
+                  "subCategoryName": "豆制品",
+                  "productSeriesList": null
+                },
+                "evaluateCount": 0,
+                "newProduct": true,
+                "productProperties": null,
+                "productPropertyValues": null,
+                "productSeriesPrices": null,
+                "commonPrice": 0,
+                "currentPrice": null,
+                "productEvaluateList": null,
+                "productSeriesEvaluateGrade": 0
+              },
+              "receiveStatus": "y",
+              "orderPrice": null
+            }
+          ],
+          "payStatus": "y",
+          "payWay": "2",
+          "payWayString": null,
+          "orderDate": 1449106380151,
+          "acceptAddress": "",
+          "submitStatus": "y",
+          "acceptPersonName": "谢宇星",
+          "contactPhone": "13903064816",
+          "payAccountId": "565f9c5d35f0d10a745a0853",
+          "totalPrice": 0,
+          "totalAmount": 24,
+          "user": {
+            "id": "55b1e75a845c14e957d5331c",
+            "name": "谢宇星",
+            "sex": null,
+            "height": null,
+            "password": "202cb962ac59075b964b07152d234b70",
+            "email": "xieyuxing@qq.com",
+            "userCategory": null,
+            "registerTime": null,
+            "validateCode": null,
+            "lastActivateTime": null,
+            "phone": "13903064816",
+            "loginStatus": null,
+            "cart": {"productSelectedList": []},
+            "addresses": null,
+            "disabled": false,
+            "idCardNo": null,
+            "activated": false,
+            "userAccounts": null,
+            "realMessage": null,
+            "remember": false,
+            "rePassword": null,
+            "loginStr": null,
+            "mergeCart": false
+          },
+          "payAccount": {
+            "id": "565f9c5d35f0d10a745a0853",
+            "cardUserIdCardNo": "44444",
+            "cardNo": "878787",
+            "cardSort": "1",
+            "cardUserPhone": "13903064816",
+            "cardUserName": "谢宇星",
+            "user": {
+              "id": "55b1e75a845c14e957d5331c",
+              "name": "谢宇星",
+              "sex": null,
+              "height": null,
+              "password": "202cb962ac59075b964b07152d234b70",
+              "email": "xieyuxing@qq.com",
+              "userCategory": null,
+              "registerTime": null,
+              "validateCode": null,
+              "lastActivateTime": null,
+              "phone": "13903064816",
+              "loginStatus": null,
+              "cart": {"productSelectedList": []},
+              "addresses": null,
+              "disabled": false,
+              "idCardNo": null,
+              "activated": false,
+              "userAccounts": null,
+              "realMessage": null,
+              "remember": false,
+              "rePassword": null,
+              "loginStr": null,
+              "mergeCart": false
+            }
+          },
+          "receiveStatus": "all",
+          "evaluateStatus": "none"
+        },
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      },
+      {
+        "id": "56593aaa35f0d110f856aed7",
+        "content": "太好吃了！！！！！！",
+        "pictures": null,
+        "grade": 5,
+        "date": null,
+        "type": "evaluate",
+        "anonymous": false,
+        "parent": null,
+        "replies": null,
+        "praises": null,
+        "productSeries": {
+          "id": "5653fcef35f0d117289299a3",
+          "name": "王五麻子臭豆腐",
+          "pictures": [
+            "pic/5653fcef35f0d1172892999d",
+            "pic/5653fcef35f0d1172892999f",
+            "pic/5653fcef35f0d117289299a1"
+          ],
+          "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+          "shelvesDate": null,
+          "brand": "大坝",
+          "productStore": {
+            "remain": 0,
+            "warningAmount": 30,
+            "inAndOutList": null
+          },
+          "measurementUnit": null,
+          "instructionManual": null,
+          "productBrochures": null,
+          "productSubCategory": {
+            "id": "56494922ad1ab21220ebd822",
+            "productCategory": {
+              "id": "564948d1ad1ab21220ebd821",
+              "categoryName": "发酵制品",
+              "productSubCategories": null
+            },
+            "subCategoryName": "豆制品",
+            "productSeriesList": null
+          },
+          "evaluateCount": 0,
+          "newProduct": true,
+          "productProperties": null,
+          "productPropertyValues": null,
+          "productSeriesPrices": null,
+          "commonPrice": 0,
+          "currentPrice": null,
+          "productEvaluateList": null,
+          "productSeriesEvaluateGrade": 0
+        },
+        "order": {
+          "id": "56556dc235f0d11a6cb2af61",
+          "productSelectedList": [
+            {
+              "productSeriesId": null,
+              "amount": 3,
+              "productEvaluate": null,
+              "productPropertyValueIds": null,
+              "productPropertyValueList": [
+                {
+                  "id": "5653fcef35f0d117289299a5",
+                  "value": "微辣",
+                  "productSeries": null,
+                  "productProperty": {
+                    "id": "5653fcef35f0d117289299a4",
+                    "propertyName": "辣度",
+                    "productSeries": {
+                      "id": "5653fcef35f0d117289299a3",
+                      "name": "王五麻子臭豆腐",
+                      "pictures": [
+                        "pic/5653fcef35f0d1172892999d",
+                        "pic/5653fcef35f0d1172892999f",
+                        "pic/5653fcef35f0d117289299a1"
+                      ],
+                      "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+                      "shelvesDate": null,
+                      "brand": "大坝",
+                      "productStore": {
+                        "remain": 0,
+                        "warningAmount": 30,
+                        "inAndOutList": null
+                      },
+                      "measurementUnit": null,
+                      "instructionManual": null,
+                      "productBrochures": null,
+                      "productSubCategory": {
+                        "id": "56494922ad1ab21220ebd822",
+                        "productCategory": {
+                          "id": "564948d1ad1ab21220ebd821",
+                          "categoryName": "发酵制品",
+                          "productSubCategories": null
+                        },
+                        "subCategoryName": "豆制品",
+                        "productSeriesList": null
+                      },
+                      "evaluateCount": 0,
+                      "newProduct": true,
+                      "productProperties": null,
+                      "productPropertyValues": null,
+                      "productSeriesPrices": null,
+                      "commonPrice": 0,
+                      "currentPrice": null,
+                      "productEvaluateList": null,
+                      "productSeriesEvaluateGrade": 0
+                    },
+                    "propertyValues": null
+                  },
+                  "amount": null
+                }
+              ],
+              "productSeries": {
+                "id": "5653fcef35f0d117289299a3",
+                "name": "王五麻子臭豆腐",
+                "pictures": [
+                  "pic/5653fcef35f0d1172892999d",
+                  "pic/5653fcef35f0d1172892999f",
+                  "pic/5653fcef35f0d117289299a1"
+                ],
+                "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+                "shelvesDate": null,
+                "brand": "大坝",
+                "productStore": {
+                  "remain": 0,
+                  "warningAmount": 30,
+                  "inAndOutList": null
+                },
+                "measurementUnit": null,
+                "instructionManual": null,
+                "productBrochures": null,
+                "productSubCategory": {
+                  "id": "56494922ad1ab21220ebd822",
+                  "productCategory": {
+                    "id": "564948d1ad1ab21220ebd821",
+                    "categoryName": "发酵制品",
+                    "productSubCategories": null
+                  },
+                  "subCategoryName": "豆制品",
+                  "productSeriesList": null
+                },
+                "evaluateCount": 0,
+                "newProduct": true,
+                "productProperties": null,
+                "productPropertyValues": null,
+                "productSeriesPrices": null,
+                "commonPrice": 0,
+                "currentPrice": null,
+                "productEvaluateList": null,
+                "productSeriesEvaluateGrade": 0
+              },
+              "receiveStatus": "y",
+              "orderPrice": null
+            },
+            {
+              "productSeriesId": null,
+              "amount": 3,
+              "productEvaluate": null,
+              "productPropertyValueIds": null,
+              "productPropertyValueList": [],
+              "productSeries": null,
+              "receiveStatus": "y",
+              "orderPrice": null
+            },
+            {
+              "productSeriesId": null,
+              "amount": 3,
+              "productEvaluate": null,
+              "productPropertyValueIds": null,
+              "productPropertyValueList": [
+                {
+                  "id": "5653fcef35f0d117289299a7",
+                  "value": "辣",
+                  "productSeries": null,
+                  "productProperty": {
+                    "id": "5653fcef35f0d117289299a4",
+                    "propertyName": "辣度",
+                    "productSeries": {
+                      "id": "5653fcef35f0d117289299a3",
+                      "name": "王五麻子臭豆腐",
+                      "pictures": [
+                        "pic/5653fcef35f0d1172892999d",
+                        "pic/5653fcef35f0d1172892999f",
+                        "pic/5653fcef35f0d117289299a1"
+                      ],
+                      "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+                      "shelvesDate": null,
+                      "brand": "大坝",
+                      "productStore": {
+                        "remain": 0,
+                        "warningAmount": 30,
+                        "inAndOutList": null
+                      },
+                      "measurementUnit": null,
+                      "instructionManual": null,
+                      "productBrochures": null,
+                      "productSubCategory": {
+                        "id": "56494922ad1ab21220ebd822",
+                        "productCategory": {
+                          "id": "564948d1ad1ab21220ebd821",
+                          "categoryName": "发酵制品",
+                          "productSubCategories": null
+                        },
+                        "subCategoryName": "豆制品",
+                        "productSeriesList": null
+                      },
+                      "evaluateCount": 0,
+                      "newProduct": true,
+                      "productProperties": null,
+                      "productPropertyValues": null,
+                      "productSeriesPrices": null,
+                      "commonPrice": 0,
+                      "currentPrice": null,
+                      "productEvaluateList": null,
+                      "productSeriesEvaluateGrade": 0
+                    },
+                    "propertyValues": null
+                  },
+                  "amount": null
+                }
+              ],
+              "productSeries": {
+                "id": "5653fcef35f0d117289299a3",
+                "name": "王五麻子臭豆腐",
+                "pictures": [
+                  "pic/5653fcef35f0d1172892999d",
+                  "pic/5653fcef35f0d1172892999f",
+                  "pic/5653fcef35f0d117289299a1"
+                ],
+                "description": "王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃王五麻子臭豆腐很好吃sssss很好吃哈哈哈哈哈哈呵呵哈哈哈哈哈咯咯咯咯咯急急急急急急",
+                "shelvesDate": null,
+                "brand": "大坝",
+                "productStore": {
+                  "remain": 0,
+                  "warningAmount": 30,
+                  "inAndOutList": null
+                },
+                "measurementUnit": null,
+                "instructionManual": null,
+                "productBrochures": null,
+                "productSubCategory": {
+                  "id": "56494922ad1ab21220ebd822",
+                  "productCategory": {
+                    "id": "564948d1ad1ab21220ebd821",
+                    "categoryName": "发酵制品",
+                    "productSubCategories": null
+                  },
+                  "subCategoryName": "豆制品",
+                  "productSeriesList": null
+                },
+                "evaluateCount": 0,
+                "newProduct": true,
+                "productProperties": null,
+                "productPropertyValues": null,
+                "productSeriesPrices": null,
+                "commonPrice": 0,
+                "currentPrice": null,
+                "productEvaluateList": null,
+                "productSeriesEvaluateGrade": 0
+              },
+              "receiveStatus": "y",
+              "orderPrice": null
+            }
+          ],
+          "payStatus": "y",
+          "payWay": "2",
+          "payWayString": null,
+          "orderDate": 1448439234706,
+          "acceptAddress": "台湾 台东县 东方大厦",
+          "submitStatus": "y",
+          "acceptPersonName": "王佩玲",
+          "contactPhone": "13309090909",
+          "payAccountId": "5655803f35f0d10a18a74db6",
+          "totalPrice": 0,
+          "totalAmount": 9,
+          "user": {
+            "id": "55b1e75a845c14e957d5331c",
+            "name": "谢宇星",
+            "sex": null,
+            "height": null,
+            "password": "202cb962ac59075b964b07152d234b70",
+            "email": "xieyuxing@qq.com",
+            "userCategory": null,
+            "registerTime": null,
+            "validateCode": null,
+            "lastActivateTime": null,
+            "phone": "13903064816",
+            "loginStatus": null,
+            "cart": {"productSelectedList": []},
+            "addresses": null,
+            "disabled": false,
+            "idCardNo": null,
+            "activated": false,
+            "userAccounts": null,
+            "realMessage": null,
+            "remember": false,
+            "rePassword": null,
+            "loginStr": null,
+            "mergeCart": false
+          },
+          "payAccount": {
+            "id": "5655803f35f0d10a18a74db6",
+            "cardUserIdCardNo": "ddfsfdsfsdfdsds",
+            "cardNo": "dsdssddsfdsdf",
+            "cardSort": "1",
+            "cardUserPhone": "13903064816",
+            "cardUserName": "谢宇星",
+            "user": {
+              "id": "55b1e75a845c14e957d5331c",
+              "name": "谢宇星",
+              "sex": null,
+              "height": null,
+              "password": "202cb962ac59075b964b07152d234b70",
+              "email": "xieyuxing@qq.com",
+              "userCategory": null,
+              "registerTime": null,
+              "validateCode": null,
+              "lastActivateTime": null,
+              "phone": "13903064816",
+              "loginStatus": null,
+              "cart": {"productSelectedList": []},
+              "addresses": null,
+              "disabled": false,
+              "idCardNo": null,
+              "activated": false,
+              "userAccounts": null,
+              "realMessage": null,
+              "remember": false,
+              "rePassword": null,
+              "loginStr": null,
+              "mergeCart": false
+            }
+          },
+          "receiveStatus": "all",
+          "evaluateStatus": "none"
+        },
+        "orderId": null,
+        "productSeriesId": null,
+        "user": null,
+        "replyUser": null
+      }
+    ],
+    "productSeriesEvaluateGrade": 3.4
   }
 }
