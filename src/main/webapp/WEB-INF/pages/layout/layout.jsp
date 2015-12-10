@@ -37,19 +37,19 @@
                                 <%--<li><a href="#">我的收藏</a></li>--%>
                             </ul>
                         </div>
-                        <div class="col-md-6 col-sm-6 additional-shop-info">
-                            <ul class="list-unstyled list-inline" style=" float:right !important;">
-                                <li><i class="fa fa-phone"></i><span>87654321</span></li>
-                                <li class="langs-block">
-                                    <a href="javascript:void(0);" class="current">中文 <i class="fa fa-angle-down"></i></a>
-                                    <div class="langs-block-others-wrapper">
-                                        <div class="langs-block-others">
-                                            <a href="javascript:void(0);">英语</a>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                        <%--<div class="col-md-6 col-sm-6 additional-shop-info">--%>
+                            <%--<ul class="list-unstyled list-inline" style=" float:right !important;">--%>
+                                <%--<li><i class="fa fa-phone"></i><span>87654321</span></li>--%>
+                                <%--<li class="langs-block">--%>
+                                    <%--<a href="javascript:void(0);" class="current">中文 <i class="fa fa-angle-down"></i></a>--%>
+                                    <%--<div class="langs-block-others-wrapper">--%>
+                                        <%--<div class="langs-block-others">--%>
+                                            <%--<a href="javascript:void(0);">英语</a>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</li>--%>
+                            <%--</ul>--%>
+                        <%--</div>--%>
                     </div>
             </div>
 
@@ -75,30 +75,24 @@
                         <!-- BEGIN CART CONTENT -->
                         <div class="cart-content-wrapper">
                             <div class="cart-content">
-
-                                <ul class="scroller" style="height:250px;" id="cart_list">
+                                <ul class="scroller" style="height:250px;" id="cart_list" ng-init="totalPrice=0">
                                     <li ng-show="!cart||!cart.productSelectedList||!cart.productSelectedList.length">您的购物车中还没有商品</li>
-                                    <li class="j-shoping-item" ng-repeat="productSelected in cart.productSelectedList" ng-init="totalPrice=0"  data-selected-index="{{$index}}">
-                                        <a ng-href="${path}/product_series/{{productSelected.productSeriesId}}">
-                                            <img ng-src="${path}/{{productSelected.productSeries.pictures[0]}}" width="37" height="34">
-                                        </a>
-                                        <span class="cart-content-count fa fa-times"> {{productSelected.amount}}</span>
-                                        <strong>
-                                            <a ng-href="${path}/product_series/{{productSelected.productSeriesId}}"> {{productSelected.productSeries.name}}</a>
-                                               <i ng-repeat="productPropertyValue in productSelected.productPropertyValueList"> {{productPropertyValue.value}}</i>
-                                        </strong>
-                                        <em class="fa fa-rmb" ng-init="totalPrice=totalPrice+(productSelected.productSeries.commonPrice*productSelected.amount)">
-                                            {{productSelected.productSeries.commonPrice*productSelected.amount | number:2}}
-                                        </em>
+                                    <li ng-class="{'text-left':true,'bg-success':$index%2==0}" ng-repeat="productSelected in cart.productSelectedList"   data-selected-index="{{$index}}">
+                                        <img ng-src="${path}/{{productSelected.productSeries.pictures[0]}}" width="37" height="34">
+                                        <i class="fa fa-times"> {{productSelected.amount}}</i>
+                                        <a ng-href="${path}/product_series/{{productSelected.productSeries.id}}"> {{productSelected.productSeries.name}}</a>
+                                        <i ng-repeat="productPropertyValue in productSelected.productPropertyValueList"> {{productPropertyValue.value}}</i>
+                                        <i class="fa fa-rmb text-danger" ng-init="$parent.totalPrice=$parent.totalPrice+(productSelected.productSeries.commonPrice*productSelected.amount)">
+                                            {{productSelected.productSeries.commonPrice*productSelected.amount|number:2}}
+                                        </i>
                                         <a href="javascript:void(0);" class="del-goods" data-ng-click="deleteGoods(productSelected)"><i class="fa fa-trash"></i></a>
                                     </li>
 
                                 </ul>
-                                        <div class="text-right">
-                                            <p>总计：<i class="fa fa-rmb"></i>{{totalPrice | number:2}}</p>
-                                            <a href="shopping-cart.html" class="btn btn-default">查看购物车</a>
-                                            <a href="${path}/cart" class="btn btn-primary">结账付款</a>
-                                        </div>
+                                <div class="text-right">
+                                    总计：<i class="fa fa-rmb text-danger">{{totalPrice | number:2}}</i>
+                                    <a href="${path}/cart" class="btn btn-primary fa fa-credit-card"> 结账付款</a>
+                                </div>
                             </div>
                         </div>
                         <!-- END CART CONTENT -->
@@ -206,90 +200,88 @@
         </div>
         <!-- END HEADER -->
         <!-- END BEGIN STYLE CUSTOMIZER -->
+
+        <tiles:insertAttribute name="body" />
         <div class="modal fade active" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="width: 400px;">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close"
-                                    data-dismiss="modal" aria-hidden="true">
-                                &times;
-                            </button>
-                            <h2 class="modal-title" id="myModalLabel">
-                                登录&nbsp;&nbsp;
-                                <small style=" color:#187705;">支持以下登录方式登录</small>
-                            </h2>
-                            <br/>
-                            <ul class="social-icons">
-                                <li><a href="#" data-original-title="txqq" class="txqq" title="腾讯QQ"></a></li>
-                                <li><a href="#" data-original-title="xlwb" class="xlwb" title="新浪微博"></a></li>
-                                <li><a href="#" data-original-title="rrw" class="rrw" title="人人网"></a></li>
-                                <li><a href="#" data-original-title="wx" class="wx" title="微信"></a></li>
-                                <li><a href="#" data-original-title="zfb" class="zfb" title="支付宝"></a></li>
-                                <li><a href="#" data-original-title="wy" class="wy" title="网易"></a></li>
-                                <li><a href="#" data-original-title="txwb" class="txwb" title="腾讯微博"></a></li>
-                            </ul>
-                        </div>
-                        <form id="loginForm" name="loginForm" class="form-horizontal form-without-legend" role="form">
-                            <div class="modal-body">
-                                <div class="row"><div class="col-lg-1"></div>
-                                    <div class="col-lg-10"><span id="error-msg" class="text-danger"></span></div>
-                                    <div class="col-lg-1"></div></div>
-
-                                <fieldset>
-
-                                    <div class="form-group has-feedback">
-                                        <div class="row">
-                                            <div class="col-lg-1"></div>
-                                            <div class="col-lg-10 has-error">
-                                                <input type="text" class="form-control" id="loginStr" name="loginStr" placeholder="邮箱/用户名/已验证手机"  required="true"/>
-                                                <input type="hidden" name="mergeCart" id="mergeCart"/>
-                                                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-                                            </div>
-                                            <div class="col-lg-1"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group has-feedback">
-                                        <div class="row">
-                                            <div class="col-lg-1"></div>
-                                            <div class="col-lg-10 has-error">
-                                                <input type="password" class="form-control" id="password" name="password" placeholder="密码" required="true" ng-minlength="{{pw_min}}" />
-                                                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-                                            </div>
-                                            <div class="col-lg-1"></div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-
-
-
-                            </div>
-
-                            <div class="modal-footer">
-                                <div class="col-lg-12">
-                                    <button type="button" class="btn btn-primary" id="login" style=" width:100%;">
-                                        登录
-                                    </button>
-                                    <ul class="automatically">
-                                        <li class="first">
-                                            <input type="checkbox" value="true" class="common_chk" checked="checked"
-                                                   name="remember">自动登录
-                                        </li>
-                                        <li><a href="#">忘记密码</a></li>
-                                        <li style=" border-right:0;"><a href="#">免费注册</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </form>
-
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h2 class="modal-title" id="myModalLabel">
+                            登录&nbsp;&nbsp;
+                            <small style=" color:#187705;">支持以下登录方式登录</small>
+                        </h2>
+                        <br/>
+                        <ul class="social-icons">
+                            <li><a href="#" data-original-title="txqq" class="txqq" title="腾讯QQ"></a></li>
+                            <li><a href="#" data-original-title="xlwb" class="xlwb" title="新浪微博"></a></li>
+                            <li><a href="#" data-original-title="rrw" class="rrw" title="人人网"></a></li>
+                            <li><a href="#" data-original-title="wx" class="wx" title="微信"></a></li>
+                            <li><a href="#" data-original-title="zfb" class="zfb" title="支付宝"></a></li>
+                            <li><a href="#" data-original-title="wy" class="wy" title="网易"></a></li>
+                            <li><a href="#" data-original-title="txwb" class="txwb" title="腾讯微博"></a></li>
+                        </ul>
                     </div>
-                    <!-- /.modal-content -->
+                    <form id="loginForm" name="loginForm" class="form-horizontal form-without-legend" role="form">
+                        <div class="modal-body">
+                            <div class="row"><div class="col-lg-1"></div>
+                                <div class="col-lg-10"><span id="error-msg" class="text-danger"></span></div>
+                                <div class="col-lg-1"></div></div>
+
+                            <fieldset>
+
+                                <div class="form-group has-feedback">
+                                    <div class="row">
+                                        <div class="col-lg-1"></div>
+                                        <div class="col-lg-10 has-error">
+                                            <input type="text" class="form-control" id="loginStr" name="loginStr" placeholder="邮箱/用户名/已验证手机"  required="true"/>
+                                            <input type="hidden" name="mergeCart" id="mergeCart"/>
+                                            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                        </div>
+                                        <div class="col-lg-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <div class="row">
+                                        <div class="col-lg-1"></div>
+                                        <div class="col-lg-10 has-error">
+                                            <input type="password" class="form-control" id="password" name="password" placeholder="密码" required="true" ng-minlength="{{pw_min}}" />
+                                            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                        </div>
+                                        <div class="col-lg-1"></div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <div class="modal-footer">
+                            <div class="col-lg-12">
+                                <button type="button" class="btn btn-primary" id="login" style=" width:100%;">
+                                    登录
+                                </button>
+                                <ul class="automatically">
+                                    <li class="first">
+                                        <input type="checkbox" value="true" class="common_chk" checked="checked"
+                                               name="remember">自动登录
+                                    </li>
+                                    <li><a href="#">忘记密码</a></li>
+                                    <li style=" border-right:0;"><a href="#">免费注册</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <!-- /.modal-content -->
 
             </div>
             <!-- /.modal -->
             <!-- BEGIN fast view of a product -->
 
         </div>
-        <tiles:insertAttribute name="body" />
     <footer>
         <tiles:insertAttribute name="footer"/>
     </footer>

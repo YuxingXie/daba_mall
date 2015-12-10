@@ -1,0 +1,195 @@
+
+/* BEDIN LAYER SLIDER */
+.page-slider {
+    margin-top: 87px;
+}
+.ls-ct-half, .ls-ct-center {
+    border-radius: 100px !important;
+}
+.ls-fullwidth .ls-nav-prev,
+.ls-fullwidth .ls-nav-next {
+    width: 49px;
+    height: 59px;
+    z-index: 100;
+    top: 50%;
+    margin-top: -30px;
+    position: absolute;
+    opacity: 0.7;
+}
+.ls-fullwidth .ls-nav-prev:hover,
+.ls-fullwidth .ls-nav-next:hover {
+    opacity: 1;
+}
+.ls-fullwidth .ls-nav-prev {
+    left: 26px;
+    background: url(../img/layerslider-arrows.png) no-repeat;
+}
+
+.ls-fullwidth .ls-nav-next {
+    right: 26px;
+    background: url(../img/layerslider-arrows.png) no-repeat -51px 0;
+}
+
+/* layer 1 */
+.ls-layer1 .title {
+    font: 60px/66px 'Microsoft YaHei', Arial, sans-serif;
+    color: #fff;
+    border-bottom: solid 1px rgba(255,255,255,0.5) !important;
+    text-transform: uppercase;
+    text-align: center;
+    padding-bottom: 19px;
+}
+.ls-layer1 .title strong {
+    color: #187705;
+    display: block;
+    font-weight: 600;
+}
+.ls-layer1 .mini-text {
+    font: 400 23px 'Microsoft YaHei', Arial, sans-serif;
+    color: #fff;
+    text-align: center;
+}
+
+/* layer 2 */
+.ls-layer2 .ls-title {
+    font: 25px 'Microsoft YaHei', Arial, sans-serif;
+    color: #fff;
+    text-align: center;
+    line-height: 1.2 !important;
+}
+.ls-layer2 .ls-title strong,
+.ls-layer2 .ls-title em {
+    display: block;
+    font-weight: 300;
+    padding-top: 9px;
+}
+.ls-layer2 .ls-title strong {
+    font-size: 360%;
+}
+.ls-layer2 .ls-title em {
+    font-size: 200%;
+    font-style: normal;
+    padding-top: 5px;
+}
+.ls-layer2 .ls-price {
+    font: 300 20px 'Microsoft YaHei', sans-serif;
+    color: #fff;
+    text-align: center;
+    background: #187705;
+    border-radius: 190px !important;
+    overflow: hidden;
+    width: 177px;
+    height: 177px;
+    display: table-cell;
+    vertical-align: middle;
+}
+.ls-layer2 .ls-price b {
+    display: block;
+    font-weight: normal;
+    padding-top: 15%;
+}
+.ls-layer2 .ls-price strong {
+    font: 300 425%/1 'Microsoft YaHei', Arial, sans-serif;
+    font-weight: 300;
+}
+.ls-layer2 .ls-price strong span {
+    font-size: 30px;
+}
+.ls-layer2 .ls-more {
+    color: #fff;
+    display: inline-block;
+    border: solid 1px #fff;
+    font: 300 18px 'Microsoft YaHei', sans-serif;
+    padding: 7px 20px 8px;
+}
+.ls-layer2 .ls-more:hover {
+    text-decoration: none;
+    color: #fff;
+    background: #187705;
+    border-color: #187705;
+}
+
+/* layer 3 */
+.ls-layer3 .ls-title {
+    font: 300 46px/59px 'Microsoft YaHei', Arial, sans-serif;
+    color: #fff;
+    border-bottom: solid 1px #b90010 !important;
+    text-align: center;
+    padding-bottom: 27px;
+}
+.ls-layer3 .ls-title strong {
+    display: block;
+    font-weight: 600;
+}
+.ls-layer3 .ls-buy {
+    color: #fff;
+    border: solid 5px rgba(55,0,5,0.6);
+    padding: 12px 20px 8px;
+    background: #d11018;
+    float: left;
+    margin-right: 20px;
+}
+.ls-layer3 .ls-buy:hover {
+    text-decoration: none;
+    color: #fff;
+    border-color: rgba(255,255,255,0.6);
+}
+.ls-layer3 .ls-price {
+    font: 400 75%/1 'Microsoft YaHei', Arial, sans-serif;
+    color: #fff;
+    float: left;
+}
+.ls-layer3 .ls-price span {
+    float: left;
+    padding-top: 18px;
+    margin-right: 17px;
+}
+.ls-layer3 .ls-price strong {
+    font-weight: 200;
+    font-size: 567%;
+    top: -20px;
+    position: relative;
+    line-height: 1;
+}
+.ls-layer3 .ls-price strong sup {
+    font-size: 49%;
+    position: relative;
+    top: -16px;
+    line-height: 1;
+}
+
+/* layer 5 */
+.ls-layer5 .title {
+    font: 300 68px/81px 'Microsoft YaHei', Arial, sans-serif;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    border-bottom: solid 1px rgba(255,255,255,0.6);
+    padding-bottom: 27px;
+}
+.ls-layer5 .mini-text {
+    font-size: 100px;
+    height: 43px;
+}
+.ls-layer5 .mini-text span {
+    float: left;
+    margin-right: 13px;
+    font: 400 17% 'Microsoft YaHei', sans-serif;
+    color: #fff;
+}
+.ls-layer5 .mini-text a {
+    color: #fff;
+    font: 300 20% 'Microsoft YaHei', sans-serif;
+    padding: 7px 20px 8px;
+    background: #000;
+    top: -20%;
+    position: relative;
+    float: left;
+}
+.ls-layer5 .mini-text a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: #187705;
+}
+
+/*  */

@@ -1,0 +1,20 @@
+
+/* info at the right of the forms */
+.form-info {
+    padding: 0 10px 0 30px;
+    border-left: solid 1px #e4e6e8;
+    margin: 25px 0;
+}
+.form-info h2 {
+    font-size: 18px;
+    position: relative;
+    top: -5px;
+    margin-bottom: 5px;
+}
+.form-info h2 em {
+    font-style: normal;
+    color: #187705;
+}
+.form-info p {
+    margin: 0 0 8px;
+}

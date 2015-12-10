@@ -1,0 +1,31 @@
+
+.price-availability-block {
+    border-bottom: 1px solid #f4f4f4;
+    padding-bottom: 12px;
+    margin-bottom: 17px;
+}
+.price-availability-block .price {
+    float: left;
+    font-family: 'Microsoft YaHei', sans-serif;
+}
+.price-availability-block .price strong {
+    color: #fa0e0e;
+    font-size: 35px;
+    font-weight: normal;
+}
+.price-availability-block .price strong span {
+    font-size: 25px;
+}
+.price-availability-block .price em {
+    font-style: normal;
+    color: #bbb;
+    font-size: 17px;
+}
+.price-availability-block .price em span {
+    font-size: 23px;
+    text-decoration: line-through;
+}
+.price-availability-block .availability {
+    float: right;
+    color: #7b8a99;
+}

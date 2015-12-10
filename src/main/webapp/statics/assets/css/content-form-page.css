@@ -1,0 +1,55 @@
+
+/* content form page */
+div.content-form-page {
+    background: #fff;
+    padding: 5px 20px 30px;
+}
+.content-form-page a {
+    color: #767F88;
+}
+.content-form-page a:hover {
+    color: #E02222;
+}
+.form-without-legend {
+    padding-top: 25px;
+}
+.content-form-page legend {
+    border: none;
+    font: 18px 'Microsoft YaHei', sans-serif;
+    text-transform: uppercase;
+    padding-top: 20px;
+    margin-bottom: 14px;
+}
+.content-form-page .control-label {
+    font-weight: normal;
+    padding-right: 5px;
+    margin-left: -15px;
+}
+.default-form label,
+.checkout-page label {
+    font-weight: normal;
+}
+.require {
+    color: #e94d1c;
+}
+.content-form-page input.form-control {
+    border-color: #dbdbdb;
+    color: #aaa;
+    font: 14px Arial, sans-serif;
+    /*border-radius: 0;*/
+}
+.content-form-page .form-control:focus {
+    box-shadow: none;
+    border: solid 1px #e94d1c;
+}
+.content-form-page .checkbox .col-lg-4 {
+    padding-right: 0;
+    margin-left: -15px;
+}
+.content-form-page .checker {
+    margin-left: -15px;
+}
+.content-form-page .btn {
+    margin-right: 10px;
+    padding: 7px 12px 6px;
+}

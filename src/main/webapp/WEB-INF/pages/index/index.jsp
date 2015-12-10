@@ -119,7 +119,9 @@
                                 <a href="${path}/product_series/${productSeries.id}"><img src="${path}/${productSeries.pictures[0]}" class="img-responsive img-thumbnail product-show" ></a>
                                 <div class="row">
                                     <p class="fa fa-rmb pi-price">${productSeries.commonPrice}</p>
-                                    <a href="javascript:void(0)" class="fa fa-shopping-cart btn btn-danger btn-xs" data-ng-click="popover('${productSeries.id}');">添加到购物车</a>
+                                    <a href="javascript:void(0)"
+
+                                       class="fa fa-shopping-cart btn btn-danger btn-xs" data-ng-click="popover('${productSeries.id}');">添加到购物车</a>
                                 </div>
                                 <div class="row">
                                     <p class="pi-description col-lg-12 col-sm-12 text-left"> <a href="${path}/product_series/${productSeries.id}">${productSeries.name}</a>
@@ -152,7 +154,9 @@
                                 <a href="${path}/product_series/${productSeries.id}"><img src="${path}/${productSeries.pictures[0]}" class="img-responsive img-thumbnail product-show" ></a>
                                 <div class="row">
                                     <p class="fa fa-rmb pi-price">${productSeries.commonPrice}</p>
-                                    <a href="javascript:void(0)" class="fa fa-shopping-cart btn btn-danger btn-xs" data-ng-click="popover('${productSeries.id}');">添加到购物车</a>
+                                    <a href="javascript:void(0)"
+
+                                       class="fa fa-shopping-cart btn btn-danger btn-xs" data-ng-click="popover('${productSeries.id}');">添加到购物车</a>
                                 </div>
                                 <div class="row">
                                     <p class="pi-description col-lg-12 col-sm-12 text-left"> <a href="${path}/product_series/${productSeries.id}">${productSeries.name}</a>
@@ -176,9 +180,18 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;</button>
-                        <h2 class="modal-title">{{productSelected.productSeries.name}}</h2>
+                        <table>
+                            <tr>
+                                <td>
+                                <h2 class="modal-title" >{{productSelected.productSeries.name}}{{productSelected.productSeries.productSeriesEvaluateGrade}}</h2></td>
+                                <td class="center-block">
+                                    <div class="center-block" star rating-value="ratingVal" max="max" on-hover="onHover" on-leave="onLeave" readonly="true"></div>
+                                </td>
+                            </tr>
+                        </table>
+
                     </div>
-                    <form name="popForm">
+                    <form name="popForm" class="bg-success">
                         <div class="row">
                             <div class="easyzoom easyzoom--overlay" style="margin-left: 10px;margin-right: 1px;">
                                 <a ng-href="${path}/statics/img/product/5649c4116f70e517dce0b22c.JPG">
@@ -198,7 +211,10 @@
                                     <th>用户评价<i class="fa fa-trophy"></i></th><th>价格<i class="fa fa-rmb"></i></th><th>库存<i class="fa fa-cubes"></i></th>
                                 </tr>
                                 <tr>
-                                    <td>{{productSelected.productSeries.productSeriesEvaluateGrade}}</td>
+                                    <td>
+
+                                    </td>
+
                                     <td>{{productSelected.productSeries.commonPrice}}
                                         <em ng-if="productSelected.productSeries.currentPrice &&productSelected.productSeries.currentPrice.prevPrice && productSelected.productSeries.currentPrice<productSelected.productSeries.currentPrice.prevPrice">
                                             <i class="fa fa-rmb"></i>{{productSelected.productSeries.currentPrice.prevPrice.price}}
@@ -211,21 +227,23 @@
                                 </tr>
                                 <tr>
                                     <th>选择商品<i class="fa fa-flag"></i></th>
-                                    <th colspan="2"><span ng-repeat="productProperty in productSelected.productSeries.productProperties">
-                                        {{productProperty.propertyName}}:
+                                    <th colspan="2">
+                                        <span ng-repeat="productProperty in productSelected.productSeries.productProperties">
+                                        <i class="fa fa-spin fa-sun-o"></i>{{productProperty.propertyName}}:
                                         <select  ng-model="$parent.productSelected.productPropertyValueList[$index]"
+                                                 required="true"
                                                  ng-options="productPropertyValue.value for productPropertyValue in productProperty.propertyValues"></select>
-                                    </span>
+
+                                        </span>
+
                                     </th>
                                 </tr>
                                 <tr>
                                     <td>输入数量<i class="fa fa-cube"></i></td>
-                                    <td colspan="2"><input type="number" min="1" class="" ng-model="productSelected.amount" style="max-width: 100px;">
-                                   </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">
-                                        <button data-toggle="tooltip" data-original-title="xxx" data-placement="left" data-trigger="click" data-selector="#cart-block" class="btn btn-primary add2cart pull-right" type="button" data-ng-click="add2cart()">添加到购物车</button>
+                                    <td><input type="number" min="1" class="" ng-model="productSelected.amount" style="max-width: 100px;"></td>
+                                    <td>
+                                        <button data-toggle="tooltip" data-original-title="xxx" data-placement="left" data-trigger="click" data-selector="#cart-block"
+                                                class="btn btn-primary add2cart pull-right fa fa-shopping-cart" type="button" data-ng-click="add2cart()">添加到购物车</button>
                                     </td>
                                 </tr>
                             </table>

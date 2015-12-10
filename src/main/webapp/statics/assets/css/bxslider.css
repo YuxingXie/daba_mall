@@ -1,0 +1,59 @@
+/* bx-slider styles */
+.bxslider li {
+    list-style: none;
+    display: inline-block;
+}
+.bxslider-wrapper {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+.bxslider-wrapper-similar-products {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.bxslider-wrapper .bx-wrapper {
+    padding-left: 0;
+    padding-right: 0;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+.bxslider-wrapper-similar-products .bx-wrapper {
+    position: relative;
+}
+.bxslider-wrapper .bx-controls-direction {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.bxslider-wrapper .bx-controls-direction {
+    top: -40px;
+}
+.bx-viewport {
+    padding-right: 5px !important;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+.bx-viewport li {
+    padding-bottom: 5px;
+}
+.bx-wrapper .bx-controls-direction a {
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    margin-left: 5px;
+    position: static;
+    border-radius: 26px !important;
+}
+.bx-wrapper .bx-controls-direction a.bx-prev {
+    background: #187705  url(../img/bx-fa-angles.png) no-repeat 8px 8px;
+}
+.bx-wrapper .bx-controls-direction a.bx-next {
+    background: #187705  url(../img/bx-fa-angles.png) no-repeat -33px 8px;
+}
+.bx-wrapper .bx-controls-direction a.bx-prev:hover {
+    background: #407436 url(../img/bx-fa-angles.png) no-repeat 8px -31px;
+}
+.bx-wrapper .bx-controls-direction a.bx-next:hover {
+    background: #407436 url(../img/bx-fa-angles.png) no-repeat -33px -31px;
+}

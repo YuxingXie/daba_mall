@@ -22,6 +22,7 @@
 <script>
     var mainApp=angular.module("mainApp",['ui.bootstrap', 'ngRoute','tm.pagination']);
     mainApp .controller('mainController', ['$scope', '$http', function ($scope, $http) {
+
         $http.get('${path}/user/cart').success(function (data) {
             $scope.cart = data;
         });
@@ -38,13 +39,5 @@
 
         }
     }]);
-    $(function () {
-//        $('.add2CartTooltip').tooltip({
-//            selector: "#ensureAdd"
-//        });
 
-//        $('#ensureAdd').tooltip({
-//            selector: ".add2CartTooltip"
-//        });
-    });
 </script>

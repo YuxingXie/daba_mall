@@ -1,0 +1,39 @@
+
+/* reviews tab */
+.reviews-form {
+    padding-top: 20px;
+}
+.reviews-form label {
+    font-weight: normal;
+}
+.reviews-form input.form-control {
+    color: #aaa;
+}
+.review-item {
+    width: 100%;
+    overflow: hidden;
+    border-bottom: solid 1px #eee;
+    padding: 0 5px 5px;
+    margin: 0 -5px 20px;
+}
+.review-item-submitted {
+    margin-bottom: 5px;
+    position: relative;
+}
+/*.review-item-submitted strong,*/
+/*.review-item-submitted em {*/
+/*display: block;*/
+/*}*/
+/*.review-item-submitted strong {*/
+/*margin-bottom: 3px;*/
+/*}*/
+.review-item-submitted em {
+    font-style: normal;
+    color: #bbb;
+    font-size: 12px;
+}
+.review-item-submitted .rateit {
+    position: absolute;
+    top: 3px;
+    right: 0;
+}

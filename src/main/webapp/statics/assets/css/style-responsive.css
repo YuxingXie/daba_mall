@@ -466,7 +466,7 @@
 		right: 60px;
 	}
 	.cart-content-wrapper {
-		left: -158px;
+		left: -238px;
 		right: -2px;
 	}
 	.cart-content {
@@ -477,7 +477,7 @@
 	}
 	.cart-block img,
 	.cart-block .cart-content-count {
-		display: none;
+		/*display: none;*/
 	}
 	.ls-fullwidth .ls-nav-prev, .ls-fullwidth .ls-nav-next {
 		display: none;

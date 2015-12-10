@@ -1,0 +1,194 @@
+
+/***
+Footer and footer elements
+***/
+.footer {
+    background: #272626;
+    color: #fff;
+    font-size: 12px;
+}
+.footer-light {
+    background: #F9F9F9;
+    color: #3e4d5c;
+}
+.footer .padding-top-10 {
+    opacity: 0.5;
+}
+.footer .list-inline > li:last-child {
+    padding-right: 0;
+}
+/***
+Pre-Footer and pre-footer elements
+***/
+.pre-footer {
+    background: #313030;
+    color: #b0b0b0;
+    font-family: 'Microsoft YaHei', sans-serif;
+    font-weight: 400;
+}
+.pre-footer .container {
+    padding-top: 45px;
+}
+.pre-footer a {
+    color: #65934a;
+}
+.pre-footer h2 {
+    font-size: 21px;
+    color: #c2c1c1;
+}
+.pre-footer p {
+    margin-bottom: 20px;
+}
+.pre-footer li {
+    margin-bottom: 6px;
+}
+
+/* pre-footer twitter block */
+.pre-footer dl.f-twitter {
+    overflow: hidden;
+    margin-bottom: 7px;
+}
+.pre-footer dl.f-twitter dt {
+    width: 30px;
+    float: left;
+    text-align: left;
+    padding-top: 2px;
+}
+.pre-footer dl.f-twitter dt i {
+    color: #57c8eb;
+    font-size: 20px;
+}
+.pre-footer dl.f-twitter dd {
+    color: #eee;
+    margin-left: 30px;
+}
+.pre-footer dl.f-twitter dd span {
+    color: #6b9cab;
+    font-size: 12px;
+    margin: 0 5px;
+}
+.pre-footer address {
+    line-height: 1.7;
+}
+.pre-footer-col {
+    padding-bottom: 22px;
+}
+.pre-footer .top-line {
+    border-top: solid 1px #535353;
+    padding-top: 24px;
+    padding-bottom: 17px;
+}
+.pre-footer .social-icons {
+    padding-top: 5px;
+}
+.pre-footer .social-icons li a,
+.pre-footer a.social-icon {
+    transition: all 0.1s ease-in-out !important;
+    -o-transition: all 0.1s ease-in-out !important;
+    -ms-transition: all 0.1s ease-in-out !important;
+    -moz-transition: all 0.1s ease-in-out !important;
+    -webkit-transition: all 0.1s ease-in-out !important;
+}
+.pre-footer .social-icons li a:hover {
+    opacity: 1;
+}
+
+.pre-footer hr {
+    margin-top: 0;
+    border-color: #404040;
+}
+.pre-footer .form-control,
+.pre-footer .form-control:focus {
+    border: none;
+}
+
+/* subscribe */
+.pre-footer .pre-footer-subscribe-box {
+    padding-bottom: 14px;
+}
+.pre-footer-subscribe-box .input-group {
+    border: solid 1px #545454;
+    padding: 1px 1px 0 0;
+}
+.pre-footer-light .pre-footer-subscribe-box .input-group {
+    border: solid 1px #DBDBDB;
+}
+.pre-footer-subscribe-box h2 {
+    float: left;
+    margin-right: 20px;
+    padding-top: 7px;
+}
+.pre-footer-subscribe-box form {
+    float: left;
+    width: 330px;
+}
+.pre-footer-subscribe-box input {
+    /*border-radius: 0;*/
+    background: #313030;
+    border: solid 1px #313030;
+    color: #909090;
+    font: 13px Microsoft YaHei, sans-serif;
+}
+.pre-footer-subscribe-box input:focus {
+    box-shadow: none;
+    border: solid 1px #313030;
+}
+.pre-footer-subscribe-box .btn-primary {
+    margin-left: -1px;
+    border-bottom: none;
+    margin-bottom: 1px;
+}
+
+/* light pre-footer */
+.pre-footer-light {
+    background: #F9F9F9;
+    color: #3E4D5C;
+    margin-top: 20px;
+}
+.pre-footer-light .container {
+    background: #fff;
+    padding-top: 25px;
+}
+.pre-footer-light h2 {
+    color: #3E4D5C;
+}
+.pre-footer-light a {
+    color: #3E4D5C;
+}
+.pre-footer-light dl.f-twitter dd {
+    color: #3E4D5C;
+}
+.pre-footer-light dl.f-twitter dd span {
+    color: #99a5b1;
+}
+.pre-footer-light dl.f-twitter dd a {
+    color: #187705;
+}
+
+.pre-footer-light address a {
+    color: #187705;
+}
+
+.pre-footer-light hr {
+    border-color: #e6e6e6;
+}
+
+.pre-footer-light .social-icons li a {
+    opacity: 1;
+}
+.pre-footer-light .social-icons li a:hover {
+    opacity: 0.7;
+}
+
+.pre-footer-light .input-group {
+    border: none;
+    padding: 1px 1px 0 0;
+}
+.pre-footer-light .pre-footer-subscribe-box input {
+    background: #fff;
+    border: none;
+    color: #909090;
+}
+.pre-footer-light .pre-footer-subscribe-box button:hover {
+    color: #fff;
+}

@@ -1,0 +1,31 @@
+
+/* content search */
+.content-search {
+    background: #fff;
+    padding: 10px 15px 9px;
+}
+.content-search h1 {
+    padding-top: 2px;
+    margin: 0;
+}
+.content-search h1 em {
+    font-style: normal;
+    color: #187705;
+}
+.content-search input {
+    /*border-radius: 0;*/
+    border-color: #dbdbdb;
+    color: #b0b4b7;
+    font: 14px Microsoft YaHei, sans-serif;
+    height: 35px;
+}
+.content-search input:focus {
+    box-shadow: none;
+    border: solid 1px #407436 ;
+}
+.content-search button {
+    margin-left: -1px;
+    font-size: 14px;
+    padding: 7px 12px 5px;
+    height: 35px;
+}
