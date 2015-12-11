@@ -9,14 +9,14 @@
         <ul class="breadcrumb">
             <li><a href="${path}/index">首页</a></li>
             <li><a href="">用户中心</a></li>
-            <li class="active">注册</li>
+            <li class="active">用户注册</li>
         </ul>
 
         <div class="row ">
             <div class="col-md-7 col-sm-7" >
                 <div class="btn-group">
-                    <a class="btn btn-primary active" href="${path}/register_email">邮箱注册</a>
-                    <a class="btn btn-primary disabled" href="#">手机注册</a>
+                    <a class="btn btn-primary  fa fa-envelope" href="${path}/register_email" style="width: 100px;">邮箱注册</a>
+                    <a class="btn btn-primary disabled fa fa-mobile" href="#" style="width: 100px;">手机注册</a>
                 </div>
                 <div class="content-form-page" data-ng-controller="formController">
                     <form:form name="signupForm" modelAttribute="phoneForm"
@@ -28,7 +28,9 @@
                                     <label class="col-lg-4 control-label">昵称 <span class="require">*</span></label>
 
                                     <div class="col-lg-8 has-success">
-                                        <form:input path="name" class="form-control" ensure_name_unique="{{name}}" required="true" ng-maxlength="20" ng-init="name='${phoneForm.name}'" ng-model="name"/>
+                                        <form:hidden path="id" class="form-control" ng-model="user.id" ng-init="user.id='${phoneForm.id}'"/>
+                                        <form:input path="name" class="form-control" ensure_name_unique="{{user.name}}" required="true"
+                                                    ng-maxlength="20" ng-init="user.name='${phoneForm.name}'" ng-model="user.name"/>
                                         <span ng-show="signupForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                         <form:errors path="name" class="control-label"/>
                                     </div>
@@ -40,7 +42,7 @@
                                          ng-show="signupForm.name.$dirty &&signupForm.name.$invalid">
                                         <label class="control-label" ng-show="signupForm.name.$error.required" for="name">用户昵称必填</label>
                                         <label class="control-label" ng-show="signupForm.name.$error.maxlength" for="name">昵称不能超过20个字符</label>
-                                        <label class="control-label" ng-show="signupForm.name.$error.unique" for="name">该昵称已被使用</label>
+                                        <label class="control-label" ng-show="signupForm.name.$error.unique" for="name">该昵称已被使用,或者输入太快</label>
 
                                     </div>
                                 </div>
@@ -49,19 +51,18 @@
                                 <div class="row">
                                     <label class="col-lg-4 control-label">手机号码 <span class="require">*</span></label>
                                     <div class="col-lg-8 has-success">
-                                        <form:input type="tel" class="form-control" path="phone" ng-init="phone='${phoneForm.phone}'" ng-model="phone" placeholder="请输入您的手机号"
-                                                    required="true" ensure_phone_unique="{{phone}}" autocomplete="false"/>
+                                        <form:input type="tel" class="form-control" path="phone" ng-init="user.phone='${phoneForm.phone}'" ng-model="user.phone" placeholder="请输入11位手机号"
+                                                    required="true" phone_number_valid="{{user.phone}}"  ensure_phone_unique="{{user.phone}}" autocomplete="false"/>
                                         <span ng-show="signupForm.phone.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                         <form:errors path="phone" class="control-label"/>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-4">&nbsp;</div>
-                                    <div class="col-lg-8 has-error"
-                                         ng-show="signupForm.phone.$dirty &&signupForm.phone.$invalid">
+                                    <div class="col-lg-8 has-error" ng-show="signupForm.phone.$dirty &&signupForm.phone.$invalid">
                                         <label class="control-label" ng-show="signupForm.phone.$error.required">手机必填</label>
-                                        <label class="control-label" ng-show="signupForm.phone.$error.phone"> 请输入一个有效的手机号</label>
-                                        <label class="control-label" ng-show="signupForm.phone.$error.unique"> 该手机已被使用</label>
+                                        <label class="control-label margin-left-20" ng-show="signupForm.phone.$error.validPhoneNumber"> 请输入一个有效的手机号</label>
+                                        <label class="control-label margin-left-20" ng-show="signupForm.phone.$error.unique"> 该手机已被使用</label>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +70,8 @@
                                 <div class="row">
                                     <label for="password" class="col-lg-4 control-label">密码 <span class="require">*</span></label>
                                     <div class="col-lg-8 has-success">
-                                        <form:input onfocus="this.type='password'" autocomplete="false" class="form-control" path="password" id="password" ng-init="password='${phoneForm.password}'" ng-model="password"
+                                        <form:input onfocus="this.type='password'" autocomplete="false" class="form-control" path="password" id="password"
+                                                    ng-init="user.password='${phoneForm.password}'" ng-model="user.password"
                                                     pw_check="#rePassword" placeholder="请输入密码" required="true" ng-minlength="{{pw_min}}"/>
                                         <span ng-show="signupForm.password.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                         <form:errors path="password" class="control-label"/>
@@ -93,8 +95,9 @@
                                 <div class="row">
                                     <label for="password" class="col-lg-4 control-label">确认密码 <span class="require">*</span></label>
                                     <div class="col-lg-8 has-success">
-                                        <form:input onfocus="this.type='password'" autocomplete="false" class="form-control" id="rePassword" path="rePassword" ng-init="rePassword='${phoneForm.rePassword}'"
-                                                    ng-model="rePassword" pw_check="#password" placeholder="请再输入一次密码" required="true" ng-disabled="!signupForm.password.$dirty"/>
+                                        <form:input onfocus="this.type='password'" autocomplete="false" class="form-control" id="rePassword" path="rePassword"
+                                                    ng-init="user.rePassword='${phoneForm.rePassword}'"
+                                                    ng-model="user.rePassword" pw_check="#password" placeholder="请再输入一次密码" required="true" ng-disabled="!signupForm.password.$dirty"/>
                                         <span ng-show="signupForm.rePassword.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                         <form:errors path="rePassword" class="control-label"/>
                                     </div>
@@ -118,10 +121,11 @@
                                     <div class="col-lg-4 has-error">
                                             <%--(sending||(!sent))||--%>
                                         <form:input type="text" class="form-control" phone="{{phone}}" path="validateCode"
-                                                    ng-init="validateCode='${phoneForm.validateCode}'"
-                                                    ng-model="validateCode" required="true"
+                                                    ng-init="user.validateCode='${phoneForm.validateCode}'"
+                                                    ng-model="user.validateCode" required="true"
                                                     ng-disabled="signupForm.phone.$invalid"
-                                                    ensure_phone_validate_code="{{validateCode}}" />
+                                                    ensure_phone_validate_code="{{user.validateCode}}" />
+
                                         <form:errors path="validateCode" class="control-label"/>
 
                                         <span ng-show="signupForm.validateCode.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>

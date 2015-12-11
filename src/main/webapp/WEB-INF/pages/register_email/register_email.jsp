@@ -8,15 +8,15 @@
 <div class="container" id="registerAppMain" ng-init='sending=false;sent=false;'>
         <ul class="breadcrumb">
             <li><a href="${path}/index">首页</a></li>
-            <li><a href="">商店</a></li>
-            <li class="active">注册</li>
+            <li><a href="">用户中心</a></li>
+            <li class="active">用户注册</li>
         </ul>
 
         <div class="row ">
             <div class="col-md-7 col-sm-7" >
                 <div class="btn-group">
-                    <a class="btn btn-primary disabled" href="#" >邮箱注册</a>
-                    <a class="btn btn-primary active" href="${path}/register_phone">手机注册</a>
+                    <a class="btn btn-primary disabled fa fa-envelope" style="width: 100px;" href="#" >邮箱注册</a>
+                    <a class="btn btn-primary  fa fa-mobile" href="${path}/register_phone" style="width: 100px;">手机注册</a>
                 </div>
                 <div class="content-form-page" data-ng-controller="formController">
                     <form:form name="signupForm" modelAttribute="form"
@@ -29,7 +29,8 @@
                                     <label class="col-lg-4 control-label">昵称 <span class="require">*</span></label>
 
                                     <div class="col-lg-8 has-success">
-                                        <form:input path="name" class="form-control" ensure_name_unique="{{name}}" required="true" ng-maxlength="20" ng-init="name='${form.name}'" ng-model="name"/>
+                                        <form:hidden path="id" ng-init="user.id='${form.name}'" ng-model="user.id"/>
+                                        <form:input path="name" class="form-control" ensure_name_unique="{{user.name}}" required="true" ng-maxlength="20" ng-init="user.name='${form.name}'" ng-model="user.name"/>
                                         <span ng-show="signupForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                         <form:errors path="name" class="control-label"/>
                                     </div>
@@ -41,7 +42,7 @@
                                          ng-show="signupForm.name.$dirty &&signupForm.name.$invalid">
                                         <label class="control-label" ng-show="signupForm.name.$error.required" for="name">用户昵称必填</label>
                                         <label class="control-label" ng-show="signupForm.name.$error.maxlength" for="name">昵称不能超过20个字符</label>
-                                        <label class="control-label" ng-show="signupForm.name.$error.unique" for="name">该昵称已被使用</label>
+                                        <label class="control-label" ng-show="signupForm.name.$error.unique" for="name">该昵称已被使用,或者输入太快</label>
 
                                     </div>
                                 </div>
@@ -50,8 +51,8 @@
                                 <div class="row">
                                     <label class="col-lg-4 control-label">邮箱地址 <span class="require">*</span></label>
                                     <div class="col-lg-8 has-success">
-                                        <form:input type="email" class="form-control" path="email" ng-init="email='${form.email}'" ng-model="email" placeholder="请输入您的邮箱地址"
-                                                    required="true" ensure_email_unique="{{email}}" autocomplete="false"/>
+                                        <form:input type="email" class="form-control" path="email" ng-init="user.email='${form.email}'" ng-model="user.email" placeholder="请输入您的邮箱地址"
+                                                    required="true" ensure_email_unique="{{user.email}}" autocomplete="false"/>
                                         <span ng-show="signupForm.email.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                         <form:errors path="email" class="control-label"/>
                                     </div>
@@ -70,7 +71,8 @@
                                 <div class="row">
                                     <label for="password" class="col-lg-4 control-label">密码 <span class="require">*</span></label>
                                     <div class="col-lg-8 has-success">
-                                        <form:input onfocus="this.type='password'" autocomplete="false" class="form-control" path="password" id="password" ng-init="password='${form.password}'" ng-model="password"
+                                        <form:input onfocus="this.type='password'" autocomplete="false" class="form-control" path="password" id="password"
+                                                    ng-init="user.password='${form.password}'" ng-model="user.password"
                                                     pw_check="#rePassword" placeholder="请输入密码" required="true" ng-minlength="{{pw_min}}"/>
                                         <span ng-show="signupForm.password.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                         <form:errors path="password" class="control-label"/>
@@ -94,8 +96,8 @@
                                 <div class="row">
                                     <label for="password" class="col-lg-4 control-label">确认密码 <span class="require">*</span></label>
                                     <div class="col-lg-8 has-success">
-                                        <form:input onfocus="this.type='password'" autocomplete="false" class="form-control" id="rePassword" path="rePassword" ng-init="rePassword='${form.rePassword}'"
-                                                       ng-model="rePassword" pw_check="#password" placeholder="请再输入一次密码" required="true" ng-disabled="!signupForm.password.$dirty"/>
+                                        <form:input onfocus="this.type='password'" autocomplete="false" class="form-control" id="rePassword" path="rePassword" ng-init="user.rePassword='${form.rePassword}'"
+                                                       ng-model="user.rePassword" pw_check="#password" placeholder="请再输入一次密码" required="true" ng-disabled="!signupForm.password.$dirty"/>
                                         <span ng-show="signupForm.rePassword.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                         <form:errors path="rePassword" class="control-label"/>
                                     </div>
@@ -118,11 +120,11 @@
                                     <label class="col-lg-4 control-label">邮箱验证码 <span class="require">*</span></label>
                                     <div class="col-lg-4 has-error">
                                         <%--(sending||(!sent))||--%>
-                                        <form:input type="text" class="form-control" email="{{email}}" path="validateCode"
-                                                    ng-init="validateCode='${form.validateCode}'"
-                                                    ng-model="validateCode" required="true"
+                                        <form:input type="text" class="form-control" email="{{user.email}}" path="validateCode"
+                                                    ng-init="user.validateCode='${form.validateCode}'"
+                                                    ng-model="user.validateCode" required="true"
                                                     ng-disabled="signupForm.email.$invalid"
-                                                    ensure_validate_code="{{validateCode}}" />
+                                                    ensure_validate_code="{{user.validateCode}}" />
                                         <form:errors path="validateCode" class="control-label"/>
 
                                         <span ng-show="signupForm.validateCode.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
@@ -144,7 +146,7 @@
                                     <div class="col-lg-4" ng-show="!sending&&sent&&signupForm.email.$valid">&nbsp;</div>
                                         <%--前后这两个div一定要ng-show相同哦--%>
                                     <div class="col-lg-8 has-success" ng-show="!sending&&sent&&signupForm.email.$valid">
-                                        <label class="control-label" >邮件发送成功，点击<a href="{{url}}" class="btn-primary btn-xs" target="_blank">这里</a>进入邮箱</label>
+                                        <label class="control-label" >邮件发送成功！</label>
                                     </div>
                                 </div>
                             </div>

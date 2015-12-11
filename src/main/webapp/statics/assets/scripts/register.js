@@ -1,35 +1,51 @@
-       mainApp.directive('pwCheck', [function () {
-            return {
-                require: 'ngModel',
-                link: function (scope, elem, attrs, ctrl) {
-                    var firstPassword =attrs.pwCheck;
-                    elem.add($(firstPassword)).on('keyup', function () {
-                        scope.$apply(function () {
-                            //console.log("scope.password"+scope.password);
-                            //console.log("first:"+firstPassword+"-"+$(firstPassword).val());
-                            //var v = elem.val()===$(firstPassword).val();
-                            //console.log("scope.rePassword:"+scope.rePassword);
-                            ctrl.$setValidity('pwmatch', !scope.password ||!scope.rePassword || scope.rePassword&&scope.password===scope.rePassword);
-                        });
+    mainApp.directive('pwCheck', [function () {
+        return {
+            require: 'ngModel',
+            link: function (scope, elem, attrs, ctrl) {
+                var firstPassword =attrs.pwCheck;
+                elem.add($(firstPassword)).on('keyup', function () {
+                    scope.$apply(function () {
+                        //console.log("scope.password"+scope.password);
+                        //console.log("first:"+firstPassword+"-"+$(firstPassword).val());
+                        //var v = elem.val()===$(firstPassword).val();
+                        //console.log("scope.rePassword:"+scope.rePassword);
+                        ctrl.$setValidity('pwmatch', !scope.user.password ||!scope.user.rePassword || scope.user.rePassword&&scope.user.password===scope.user.rePassword);
                     });
-                }
+                });
             }
-        }])
+        }
+    }])
+    .directive("phoneNumberValid", function ($http,$timeout) {
+       return{
+           require:"ngModel",
+           link:function(scope,ele,attrs,c){
+               scope.$watch(attrs.ngModel,function(n){
+                   if(!n) return;
+                   if(!/^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i.test(scope.user.phone))
+                   {
+                       c.$setValidity('validPhoneNumber',false);
+                   }else{
+                       c.$setValidity('validPhoneNumber',true);
+                   }
+               });
+
+           }
+       }
+   })
     .directive("ensureNameUnique", function ($http,$timeout) {
         return{
             require:"ngModel",
             link:function(scope,ele,attrs,c){
                 var timeout;
                 scope.$watch(attrs.ngModel,function(n){
+
                     if(!n) return;
-                    if(timeout) $timeout.cancel(timeout);
+                    if(timeout) {$timeout.cancel(timeout);}
                     timeout=$timeout(function(){
-                        var data={}
-                        data[attrs.ngModel]=attrs.ensureNameUnique;
                         $http({
                             method:"POST",
                             url:path+"/user/exist_name",
-                            data:data
+                            data:scope.user
                         }).success(function(data){
                             c.$setValidity('unique',data.unique);
                         }).error(function(data){
@@ -52,14 +68,14 @@
                     if(!n) return;
                     if(timeout) $timeout.cancel(timeout);
                     timeout=$timeout(function(){
-                        var data={}
-                        data[attrs.ngModel]=attrs.ensureEmailUnique;
+                        //var data={}
+                        //data[attrs.ngModel]=attrs.ensureEmailUnique;
                         //console.log("key:"+attrs.ngModel)
                         //console.log("value:"+attrs.ensureUnique)
                         $http({
                             method:"POST",
                             url:path+"/user/exist_email",
-                            data:data
+                            data:scope.user
                         }).success(function(data){
                             console.log(JSON.stringify(data));
                             c.$setValidity('unique',data.unique);
@@ -77,20 +93,18 @@
         return{
             require:"ngModel",
             link:function(scope,ele,attrs,c){
+
+
                 var timeout;
-                scope.$watch(attrs.ngModel,function(n){
-//                         console.log(scope.ngModel);
+                scope.$watch("user.phone",function(n){
                     if(!n) return;
+                    if(n.length!==11) {c.$setValidity('unique',true);return;}
                     if(timeout) $timeout.cancel(timeout);
                     timeout=$timeout(function(){
-                        var data={}
-                        data[attrs.ngModel]=attrs.ensurePhoneUnique;
-                        console.log("key:"+attrs.ngModel)
-                        console.log("value:"+attrs.ensurePhoneUnique)
                         $http({
                             method:"POST",
                             url:path+"/user/exist_phone",
-                            data:data
+                            data:scope.user
                         }).success(function(data){
                             c.$setValidity('unique',data.unique);
                         }).error(function(data){
@@ -145,14 +159,14 @@
                    c.$setValidity('finishValid',false);
                    if(timeout) $timeout.cancel(timeout);
                    timeout=$timeout(function(){
-                       var data={};
-                       data["phone"]=scope.phone;
-                       data["validateCode"]=attrs.ensurePhoneValidateCode;
+                       //var data={};
+                       //data["phone"]=scope.phone;
+                       //data["validateCode"]=attrs.ensurePhoneValidateCode;
 //                        data["validateCode"]=scope.validateCode;
                        $http({
                            method:"POST",
                            url:path+"/user/phone/validate",
-                           data:data
+                           data:scope.user
                        }).success(function(data){
                            c.$setValidity('codeValid',data.codeValid);
                            c.$setValidity('finishValid',true);
@@ -169,9 +183,9 @@
    })
     .constant('pw_min',6)
     .controller("formController", ["$scope","$http","$timeout","pw_min","$location",function ($scope,$http,$timeout,pw_min) {
+        $scope.user={};
         $scope.pw_min=pw_min;
-        $scope.$watch('email', function (newVal, oldVal, scope) {if(newVal !== oldVal)$scope.email=newVal})
-        $scope.$watch('password', function (newVal, oldVal, scope) {
+        $scope.$watch('user.password', function (newVal, oldVal, scope) {
             if (newVal && newVal !== oldVal && newVal.length >= pw_min) {
                 $scope.password=newVal;
                 if (newVal.length >=pw_min && newVal.length < (pw_min+3)) {
@@ -200,23 +214,24 @@
             $scope.sending=true;
             var requestUrl;
             if(type==="email"){
-                requestUrl=path+"/user/register/validate_code/email?email="+$scope.email
+                requestUrl=path+"/user/validate_code/email?email="+$scope.user.email
             }else{
-                requestUrl=path+"/user/register/validate_code/phone?phone="+$scope.phone
+                requestUrl=path+"/user/validate_code/phone?phone="+$scope.user.phone
             }
             $http({
                 method:"POST",
                 url:requestUrl
             }).success(function(data){
-
+                $scope.user.id=data.id;
                 if(type==="email"){
-                    $scope.url=data.url;
                     $scope.sending=false;
                     $scope.sent=true;
                 }
                 if(type==="phone"){
-                    var seconds=8;
-                    if(data.message!=="100"){
+                    var seconds=25;
+                    var test=true;
+                    console.log(data.message);
+                    if(data.message!=="100"&&!test){
                         $scope.sending=true;
                         $scope.sent=false;
                     }else{
@@ -226,14 +241,12 @@
                             $timeout(function(){
                                 seconds--;
                                 $scope.seconds=seconds;
-                                console.log($scope.seconds);
                                 if(seconds==0) $timeout.cancel();
                                 else countDown();
                             },1000);
                         };
                         countDown();
                     }
-
                 }
                 $scope.validateCode=""
             }).error(function(data){
@@ -242,6 +255,5 @@
                 //$scope.message="服务器的错误导致邮件发送失败";
             });
         }
-
     }])
 

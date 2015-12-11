@@ -64,7 +64,7 @@ div.content-form-page {
 .content-form-page .control-label {
     font-weight: normal;
     padding-right: 5px;
-    margin-left: -15px;
+    margin-left: 0px;
 }
 .default-form label,
 .checkout-page label {

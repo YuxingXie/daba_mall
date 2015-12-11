@@ -80,7 +80,7 @@ $(document).ready(function () {
             //$(".additional-nav>ul>li:eq(0)").remove();
             //$(".additional-nav>ul>li:eq(0)").remove();
             $(".additional-nav>ul").empty();
-            var $new_li = $('<li><a href="'+path+'/user/register">注册</a></li><li><a href="#" data-toggle="modal" data-target="#myModal">登录</a></li>');
+            var $new_li = $('<li><a href="'+path+'/register_phone">注册</a></li><li><a href="#" data-toggle="modal" data-target="#myModal">登录</a></li>');
             $new_li.appendTo($(".additional-nav>ul"));
         }).fail()
     });

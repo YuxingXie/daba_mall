@@ -2,6 +2,7 @@ package com.dabast.mall.service.impl;
 
 import com.dabast.common.code.EmailEnum;
 import com.dabast.common.sms.SMSTest;
+import com.dabast.common.util.BusinessException;
 import com.dabast.entity.User;
 import com.dabast.mall.dao.UserDao;
 import org.apache.avalon.framework.service.ServiceException;
@@ -25,9 +26,9 @@ public class RegisterValidateService {
      * 注册时发送验证码到邮箱
      */
 
-    public String sendValidateCodeToMail(String email) throws EmailException {
+    public User sendValidateCodeToMailAndUpsertUser(String email) throws EmailException {
         User userToUpdate=userDao.findByEmail(email);
-        if (userToUpdate!=null && userToUpdate.isActivated()) return "该邮箱已被使用";
+        if (userToUpdate!=null && userToUpdate.isActivated()) return null;
         ///邮件的内容
         StringBuffer sb = new StringBuffer("<p>您的大坝生态邮箱注册验证码是:");
         int validateCode=(int)(Math.random()*999999-99999);
@@ -41,7 +42,6 @@ public class RegisterValidateService {
         htmlEmail.setCharset("UTF-8");
         htmlEmail.setSubject("大坝生态账号激活");
         htmlEmail.getBounceAddress();
-        String msg=null;
 //        try {
             htmlEmail.addTo(email);
             htmlEmail.setFrom("185246042@qq.com");
@@ -57,28 +57,29 @@ public class RegisterValidateService {
             userDao.upsert(userToUpdate);
             String code=email.indexOf("@")>=0?email.substring(email.indexOf("@")+1):"";
             String url= EmailEnum.getUrlByCode(code);
-            msg="邮件成功发送到您的邮箱";
-            if (url!=null) msg+=",<a href='"+url+"' target='_blank'>进入邮箱</a>";
 //        }
 //        catch (EmailException ex) {
 //            ex.printStackTrace();
 //            msg="对不起，服务器发送邮件时出现异常，请稍后再试!";
 //        }
-        return msg;
+        return userToUpdate;
     }
     /**
      * 注册时发送验证码到手机
      */
 
-    public String sendValidateCodeToPhone(String phone) throws Exception {
-        User userToUpdate=userDao.findByEmail(phone);
-        if (userToUpdate!=null && userToUpdate.isActivated()) return "该手机已被使用";
+    public User sendValidateCodeToPhoneAndUpsertUser(String phone) throws Exception {
+        User userToUpdate=userDao.findByPhone(phone);
+        if (userToUpdate!=null && userToUpdate.isActivated()) return null;
         ///邮件的内容
         StringBuffer sb = new StringBuffer("您的大坝生态手机注册验证码是: ");
         int validateCode=(int)(Math.random()*999999-99999);
         sb.append(validateCode)
         .append(" 验证码有效时间为30分钟。");
         String msg=SMSTest.send(sb.toString(),phone);
+        if (!msg.equals("100")){
+            throw new BusinessException("发送短信时出现了问题，问题代码："+msg);
+        }
         //保存注册信息
         if (userToUpdate==null){
             userToUpdate=new User();
@@ -87,7 +88,7 @@ public class RegisterValidateService {
         userToUpdate.setValidateCode("" + validateCode);
         userToUpdate.setPhone(phone);
         userDao.upsert(userToUpdate);
-        return msg;
+        return userToUpdate;
     }
     /**
      * 处理激活
