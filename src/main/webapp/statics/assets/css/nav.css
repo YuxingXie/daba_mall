@@ -1,0 +1,79 @@
+
+/* nav brands */
+.nav-brands {
+    clear: both;
+    margin: -5px;
+    padding: 10px 0 0;
+}
+.nav-brands ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: #fff;
+    width: 100%;
+    overflow: hidden;
+    border-top: solid 1px #f0f0f0;
+}
+.nav-brands li {
+    float: none;
+    margin-right: 0 !important;
+    border: none !important;
+    display: inline-block;
+}
+.nav-brands img {
+    width: auto;
+    height: 70px;
+}
+.nav-brands a {
+    padding: 0 !important;
+}
+.nav-brands a:hover {
+    background: #fff;
+    color: #fff;
+}
+
+/* nav products */
+.nav-content .product-item {
+    width: 175px;
+    display: inline-block;
+    margin: 10px;
+}
+.nav-content .product-item:hover {
+    box-shadow: 0 0 rgba(234, 234, 234, 0.9);
+}
+/*.nav-content .product-item img {*/
+/*width: 150px;*/
+/*height: auto;*/
+/*}*/
+.product-show{padding-left: 10px;padding-right: 10px;}
+.nav-content .product-item .pi-img-wrapper a,
+.nav-content .product-item h3 a {
+    padding: 0;
+}
+.nav-content .pi-price {
+    padding-top: 1px;
+}
+
+.nav-content .product-item .add2cart:hover {
+    color: #fff !important;
+    background: #187705 !important;
+    border-color: #187705;
+}
+
+.nav-tabs {
+    border-color: #187705;
+    text-transform: uppercase;
+    font: 16px/1 "Microsoft YaHei", sans-serif;
+    padding-bottom: 1px;
+}
+.nav-tabs > li > a, .nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
+    background: #edeff1;
+    color: #647484;
+    /*border-radius: 0;*/
+    padding: 5px 8px;
+    border: none !important;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    background: #187705;
+    color: #fff;
+}

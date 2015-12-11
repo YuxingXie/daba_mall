@@ -1,0 +1,27 @@
+
+/* breadcrumb */
+.breadcrumb {
+    background: none;
+    padding: 0;
+    text-transform: uppercase;
+    font-family: "Microsoft YaHei", sans-serif;
+    font-size: 13px;
+    color: #5f6d7b;
+    margin-top:145px;
+}
+.breadcrumb > li + li:before {
+    content: "\f105 ";
+    -moz-osx-font-smoothing: grayscale;
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    color: #5f6d7b;
+}
+.breadcrumb a {
+    color: #5f6d7b;
+}
+.breadcrumb > .active {
+    color: #187705;
+}

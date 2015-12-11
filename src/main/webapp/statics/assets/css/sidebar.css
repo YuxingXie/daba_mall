@@ -131,3 +131,73 @@ Sidebar
 .sidebar .dropdown-menu > li > a:hover .fa-circle {
     color: #949fae;
 }
+
+/* sidebar products */
+.sidebar-products {
+    background: #fff;
+    padding: 15px 15px 20px;
+}
+.sidebar-products .item {
+    width: 100%;
+    overflow: hidden;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: solid 1px #eee;
+}
+.sidebar-products .item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border: none;
+}
+.sidebar-products h2 {
+    font-size: 18px;
+    margin-bottom: 14px;
+}
+.sidebar-products img {
+    width: 65px;
+    height: auto;
+    float: left;
+}
+.sidebar-products h3 {
+    font: 300 13px 'Microsoft YaHei', sans-serif;
+    text-transform: none;
+    margin-left: 80px;
+    margin-bottom: 2px;
+}
+.sidebar-products .price {
+    margin-left: 80px;
+    color: #fa0e0e;
+    font: 16px 'Microsoft YaHei', sans-serif;
+}
+
+/* sidebar filter */
+.sidebar-filter {
+    background: #fff;
+    padding: 15px 15px 20px;
+}
+.sidebar-filter h2 {
+    font-size: 18px;
+    margin: 0;
+}
+.sidebar-filter h3 {
+    font: 600 14px 'Microsoft YaHei', sans-serif;
+    text-transform: none;
+    padding-top: 10px;
+}
+.sidebar-filter label {
+    text-transform: none;
+    font: 400 13px 'Microsoft YaHei', sans-serif;
+}
+.sidebar-filter #amount {
+    font-weight: normal !important;
+    color: #767F88 !important;
+}
+.sidebar-filter .ui-widget-content {
+    border: none;
+    background: #e5e5e5;
+    /*border-radius: 0;*/
+    height: 8px !important;
+}
+.sidebar-filter .ui-widget-header {
+    background: #ffb848;
+}

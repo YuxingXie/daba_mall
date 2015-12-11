@@ -1,0 +1,35 @@
+
+/* title wrapper */
+.title-wrapper {
+    margin: -23px 0 23px;
+    position: relative;
+    overflow: hidden;
+    background: #72c2ff url(../temp/title-bg/man.jpg) no-repeat 100% 100%;
+    min-height: 280px;
+    padding-top: 79px;
+    width: 100%;
+    overflow: hidden;
+}
+.title-wrapper .container-inner {
+    float: left;
+}
+.title-wrapper h1, .title-wrapper em {
+    font-family: 'Microsoft YaHei', sans-serif;
+    color: #fff;
+    font-weight: 400;
+}
+.title-wrapper h1 {
+    font-size: 45px;
+    padding: 0 9px 13px;
+    border-bottom: solid 1px rgba(255,255,255,0.6);
+    margin: 0 -9px 17px;
+}
+.title-wrapper h1 span {
+    color: #187705;
+}
+.title-wrapper em {
+    font-size: 20px;
+    font-style: normal;
+    display: block;
+    text-align: center;
+}

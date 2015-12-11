@@ -182,11 +182,10 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;</button>
                         <table>
                             <tr>
-                                <td>
-                                <h2 class="modal-title" >{{productSelected.productSeries.name}}{{productSelected.productSeries.productSeriesEvaluateGrade}}</h2></td>
-                                <td class="center-block">
+                                <th class="modal-title" >{{productSelected.productSeries.name}}</th>
+                                <th class="center-block">
                                     <div class="center-block" star rating-value="ratingVal" max="max" on-hover="onHover" on-leave="onLeave" readonly="true"></div>
-                                </td>
+                                </th>
                             </tr>
                         </table>
 
@@ -206,28 +205,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <table class="table table-responsive">
-                                    <th>用户评价<i class="fa fa-trophy"></i></th><th>价格<i class="fa fa-rmb"></i></th><th>库存<i class="fa fa-cubes"></i></th>
+                        <div class="row table-responsive">
+                            <table class="table table-condensed">
+                                <th>价格<i class="fa fa-rmb"></i></th>
+                                <td class="text-left">{{productSelected.productSeries.commonPrice}}
+                                    <em ng-if="productSelected.productSeries.currentPrice &&productSelected.productSeries.currentPrice.prevPrice && productSelected.productSeries.currentPrice<productSelected.productSeries.currentPrice.prevPrice">
+                                        <i class="fa fa-rmb"></i>{{productSelected.productSeries.currentPrice.prevPrice.price}}
+                                    </em>
+                                </td>
+                                <th>库存<i class="fa fa-cubes"></i></th>
+                                <td class="text-left">{{productSelected.productSeries.productStore.remain}}</td>
                                 </tr>
                                 <tr>
-                                    <td>
-
-                                    </td>
-
-                                    <td>{{productSelected.productSeries.commonPrice}}
-                                        <em ng-if="productSelected.productSeries.currentPrice &&productSelected.productSeries.currentPrice.prevPrice && productSelected.productSeries.currentPrice<productSelected.productSeries.currentPrice.prevPrice">
-                                            <i class="fa fa-rmb"></i>{{productSelected.productSeries.currentPrice.prevPrice.price}}
-                                        </em>
-                                    </td>
-                                    <td>{{productSelected.productSeries.productStore.remain}}</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">{{productSelected.productSeries.description}}</td>
+                                    <td colspan="4"><i>{{productSelected.productSeries.description}}</i></td>
                                 </tr>
                                 <tr>
                                     <th>选择商品<i class="fa fa-flag"></i></th>
-                                    <th colspan="2">
+                                    <th colspan="3">
                                         <span ng-repeat="productProperty in productSelected.productSeries.productProperties">
                                         <i class="fa fa-spin fa-sun-o"></i>{{productProperty.propertyName}}:
                                         <select  ng-model="$parent.productSelected.productPropertyValueList[$index]"
@@ -239,11 +233,13 @@
                                     </th>
                                 </tr>
                                 <tr>
-                                    <td>输入数量<i class="fa fa-cube"></i></td>
+                                    <th>输入数量<i class="fa fa-cube"></i></th>
                                     <td><input type="number" min="1" class="" ng-model="productSelected.amount" style="max-width: 100px;"></td>
+                                    <td> <button data-toggle="tooltip" data-original-title="xxx" data-placement="left" data-trigger="click" data-selector="#cart-block"
+                                                 class="btn btn-primary add2cart pull-right fa fa-shopping-cart" type="button" data-ng-click="add2cart()">添加到购物车</button></td>
                                     <td>
-                                        <button data-toggle="tooltip" data-original-title="xxx" data-placement="left" data-trigger="click" data-selector="#cart-block"
-                                                class="btn btn-primary add2cart pull-right fa fa-shopping-cart" type="button" data-ng-click="add2cart()">添加到购物车</button>
+
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">关闭</button>
                                     </td>
                                 </tr>
                             </table>

@@ -1,0 +1,52 @@
+
+/***
+Brands
+***/
+.brands .bx-viewport {
+    height: 92px !important;
+}
+.brands .bx-viewport li {
+    height: 92px !important;
+    background: #fff;
+}
+.brands .bx-viewport li a {
+    display: table-cell;
+    vertical-align: middle;
+    height: 92px;
+}
+.brands .bxslider-wrapper {
+    position: relative;
+    margin: 0 15px 41px;
+    padding: 0 75px;
+    background: #fff;
+}
+.brands .bx-wrapper .bx-controls-direction {
+    width: 100%;
+    height: 99px;
+    top: 0;
+}
+.brands .bx-wrapper .bx-controls-direction a {
+    position: absolute;
+    top: 0;
+    width: 70px;
+    height: 92px;
+    text-indent: -10000px;
+    border-radius: 0 !important;
+    display: block;
+}
+.brands .bx-wrapper .bx-controls-direction .bx-prev {
+    left: 0;
+    background: #fff url(../img/fa-angle-brands.png) no-repeat 18px 15px;
+    margin-left: -75px;
+}
+.brands .bx-wrapper .bx-controls-direction .bx-prev:hover {
+    background: #fff url(../img/fa-angle-brands.png) no-repeat 18px -220px;
+}
+.brands .bx-wrapper .bx-controls-direction .bx-next {
+    left: 100%;
+    background: #fff url(../img/fa-angle-brands.png) no-repeat -249px 15px;
+    margin-right: -40px;
+}
+.brands .bx-wrapper .bx-controls-direction .bx-next:hover {
+    background: #fff url(../img/fa-angle-brands.png) no-repeat -249px -220px;
+}

@@ -17,3 +17,6 @@
 <%--<link href="${path}/statics/assets/css/sidebar.css" rel="stylesheet" type="text/css">--%>
 <link href="${path}/statics/assets/css/layer-slider.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/cart.css" rel="stylesheet" type="text/css">
+<link href="${path}/statics/assets/css/header.css" rel="stylesheet" type="text/css">
+<link href="${path}/statics/assets/css/top.css" rel="stylesheet" type="text/css">
+<link href="${path}/statics/assets/css/social-icons.css" rel="stylesheet" type="text/css">

@@ -268,7 +268,7 @@
                                                name="remember">自动登录
                                     </li>
                                     <li><a href="#">忘记密码</a></li>
-                                    <li style=" border-right:0;"><a href="#">免费注册</a></li>
+                                    <li style=" border-right:0;"><a href="${path}/user/register">免费注册</a></li>
                                 </ul>
                             </div>
                         </div>

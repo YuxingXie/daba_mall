@@ -119,14 +119,7 @@ div.checker {
 {
     color:#65934a;
 }
-.topscoll
-{
-    left:0px;
-    top:0px;
-    position:fixed;
-    right:0px;
-    z-index:1030;
-}
+
 .pi-img-wrapper a
 {
     padding-left:20px;
