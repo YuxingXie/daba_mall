@@ -23,7 +23,7 @@
                             <ul class="list-unstyled list-inline pull-right" style=" float:left !important;">
                                 <c:choose>
                                     <c:when test="${empty sessionScope.loginUser}">
-                                        <li><a href="${path}/user/register">注册</a></li>
+                                        <li><a href="${path}/register_phone">注册</a></li>
                                         <li><a href="javascript:void(0)" data-toggle="modal" data-target="#myModal">登录</a></li>
                                     </c:when>
                                     <c:otherwise>
@@ -268,7 +268,7 @@
                                                name="remember">自动登录
                                     </li>
                                     <li><a href="#">忘记密码</a></li>
-                                    <li style=" border-right:0;"><a href="${path}/user/register">免费注册</a></li>
+                                    <li style=" border-right:0;"><a href="${path}/user/register_phone">免费注册</a></li>
                                 </ul>
                             </div>
                         </div>

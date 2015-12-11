@@ -18,5 +18,8 @@
 <link href="${path}/statics/assets/css/layer-slider.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/cart.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/header.css" rel="stylesheet" type="text/css">
+<link href="${path}/statics/assets/css/footer.css" rel="stylesheet" type="text/css">
+
 <link href="${path}/statics/assets/css/top.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/social-icons.css" rel="stylesheet" type="text/css">
+<link href="${path}/statics/assets/css/color-bg-color.css" rel="stylesheet" type="text/css">

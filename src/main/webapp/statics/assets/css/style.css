@@ -30,35 +30,7 @@ Template Name: Metronic - Responsive Website Template build with Twitter Bootstr
 	max-width: 270px;
 	max-height:270px;
 }
-.bg-red { background-color: #e02222;}
-.bg-blue { background-color: #0da3e2;}
-.bg-grey { background-color: #555555;}
-.bg-green { background-color: #35aa47;}
-.bg-yellow { background-color: #ffb848;}
-.bg-light-yellow { background-color: #f2ff09;}
-.bg-purple { background-color: #852b99;}
-.bg-light-red { background-color: #ff5400;}
-.bg-light-blue { background-color: #bfd5fa;}
-.bg-light-grey { background-color: #fafafa;}
-.bg-light-green { background-color: #78df1d;}
-.bg-light-primary { background-color: #4b99ca;}
-/*********************
- GENERAL UI COLORS 
-*********************/
 
-/***
-Colors
-***/
-.color-red { color: #e02222;}
-.color-blue { color: #0da3e2;}
-.color-grey { color: #555555;}
-.color-green { color: #35aa47;}
-.color-yellow { color: #ffb848;}
-.color-purple { color: #852b99;}
-.color-light-red { color: #ff5400;}
-.color-light-blue { color: #bfd5fa;}
-.color-light-grey { color: #fafafa;}
-.color-light-green { color: #78df1d;}
 
 /*********************
  GENERAL RESET & SETUP 
@@ -86,10 +58,10 @@ a, a:focus, a:hover, a:active {
 	outline: 0;
 	text-decoration: none;
 }
-/*a:hover {*/
+a:hover {
 	/*color: #E02222;*/
-	/*text-decoration: underline;*/
-/*}*/
+	text-decoration: underline;
+}
 
 /***
 Misc tools
@@ -206,84 +178,84 @@ Misc tools
 	padding-right: 30px;
 }
 
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active {
-	/*color: #fff;*/
+/*.btn-primary:hover,*/
+/*.btn-primary:focus,*/
+/*.btn-primary:active {*/
+	/*color: #2520ff;*/
 	/*background: #cc3304;*/
 	/*border: 0;*/
-}
-.btn-default {
+/*}*/
+/*.btn-default {*/
 	/*border: 1px solid #EDEDED;*/
 	/*color: #A8AEB3;*/
 	/*background: transparent;*/
-	padding: 6px 13px;
-}
-.btn-default:hover,
-.btn-default:focus,
-.btn-default:active {
+	/*padding: 6px 13px;*/
+/*}*/
+/*.btn-default:hover,*/
+/*.btn-default:focus,*/
+/*.btn-default:active {*/
 	/*border: 1px solid #187705;*/
 	/*color: #fff;*/
 	/*background: #187705;*/
-	padding: 6px 13px;
-}
+	/*padding: 6px 13px;*/
+/*}*/
 
 /*div.checker,*/
 /*div.radio {*/
 	/*top: -1px;*/
 /*}*/
 
-select.form-control {
-	color: #5f6d7b;
+/*select.form-control {*/
+	/*color: #5f6d7b;*/
 	/*border-radius: 0;*/
-	border-color: #e4e6e8;
+	/*border-color: #e4e6e8;*/
 	/*box-shadow: none;*/
-}
-select.form-control:focus {
+/*}*/
+/*select.form-control:focus {*/
 	/*box-shadow: none;*/
-	border-color: #999;
-}
+	/*border-color: #999;*/
+/*}*/
 
-input.form-control,
-textarea.form-control {
-	border-color: #dbdbdb;
+/*input.form-control,*/
+/*textarea.form-control {*/
+	/*border-color: #dbdbdb;*/
 	/*color: #777;*/
 	/*font: 14px Microsoft YaHei, sans-serif;*/
 	/*border-radius: 0;*/
 	/*box-shadow: none;*/
-}
-input.form-control:focus,
-textarea.form-control:focus {
+/*}*/
+/*input.form-control:focus,*/
+/*textarea.form-control:focus {*/
 	/*box-shadow: none;*/
-	border: solid 1px #dbdbdb;
-}
+	/*border: solid 1px #dbdbdb;*/
+/*}*/
 
-.clearfix:after {
-	content: ".";
-	display: block;
-	height: 0;
-	clear: both;
-	visibility: hidden;
-	font-size: 0;
-	line-height: 0;
-}
-*html .clearfix {
-	zoom: 1;
-}
-*+html .clearfix {
-	zoom: 1;
-}
-.clear {
-	clear: both;
-	height: 0;
-	font-size: 0;
-	line-height: 0;
-	overflow: hidden;
-}
+/*.clearfix:after {*/
+	/*content: ".";*/
+	/*display: block;*/
+	/*height: 0;*/
+	/*clear: both;*/
+	/*visibility: hidden;*/
+	/*font-size: 0;*/
+	/*line-height: 0;*/
+/*}*/
+/**html .clearfix {*/
+	/*zoom: 1;*/
+/*}*/
+/**+html .clearfix {*/
+	/*zoom: 1;*/
+/*}*/
+/*.clear {*/
+	/*clear: both;*/
+	/*height: 0;*/
+	/*font-size: 0;*/
+	/*line-height: 0;*/
+	/*overflow: hidden;*/
+/*}*/
 
-.lead {
-	font-size: 16px;
-}
+/*.lead {*/
+	/*font-size: 16px;*/
+/*}*/
 
 /***
 Custom Scrollbars

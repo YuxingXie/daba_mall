@@ -4,6 +4,7 @@ import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.code.EmailEnum;
 import com.dabast.common.constant.Constant;
 import com.dabast.common.helper.service.ServiceManager;
+import com.dabast.common.sms.SMSTest;
 import com.dabast.common.util.MD5;
 import com.dabast.common.web.CookieTool;
 import com.dabast.entity.*;
@@ -46,10 +47,7 @@ public class UserController extends BaseRestSpringController {
     @Resource
     private UserDao userDao;
 
-    @RequestMapping(value = "/register")
-    public String userRegister(ModelMap model) {
-        return "register";
-    }
+
     @RequestMapping(value = "/exist_name")
     public ResponseEntity existName(ModelMap model, @RequestBody User user) {
 //        System.out.println("email:"+user.getEmail());
@@ -215,23 +213,35 @@ public class UserController extends BaseRestSpringController {
         return "my_orders";
     }
 
-
+    /**
+     * 发送邮件验证码
+     * @param map
+     * @param request
+     * @param email
+     * @return
+     * @throws ParseException
+     * @throws EmailException
+     */
     @RequestMapping(value = "/register/validate_code/email", method = {RequestMethod.POST})
     public ResponseEntity emailValidateCode(ModelMap map, HttpServletRequest request, String email) throws ParseException, EmailException {
-        //注册
         String msg=registerValidateService.sendValidateCodeToMail(email);//发邮箱激活
         String code=email.indexOf("@")>=0?email.substring(email.indexOf("@")+1):"";
         String validUrl= EmailEnum.getUrlByCode(code);
         return new ResponseEntity("{\"message\":\""+msg+"\",\"url\":\""+validUrl+"\"}", HttpStatus.OK);
     }
     @RequestMapping(value = "/register/validate_code/phone", method = {RequestMethod.POST})
-    public ResponseEntity phoneValidateCode(ModelMap map, HttpServletRequest request, String phone) throws ParseException, EmailException {
-        //注册
-        String msg=registerValidateService.sendValidateCodeToMail(phone);//发邮箱激活
-        String code= phone.indexOf("@")>=0? phone.substring(phone.indexOf("@")+1):"";
-        String validUrl= EmailEnum.getUrlByCode(code);
-        return new ResponseEntity("{\"message\":\""+msg+"\",\"url\":\""+validUrl+"\"}", HttpStatus.OK);
+    public ResponseEntity phoneValidateCode(ModelMap map, HttpServletRequest request, String phone) throws Exception {
+        String msg=registerValidateService.sendValidateCodeToPhone(phone);
+//        String code= phone.indexOf("@")>=0? phone.substring(phone.indexOf("@")+1):"";
+        return new ResponseEntity("{\"message\":\""+msg+"\"}", HttpStatus.OK);
     }
+
+    /**
+     * 验证邮箱验证码是否有效
+     * @param model
+     * @param user
+     * @return
+     */
     @RequestMapping(value = "/email/validate")
     public ResponseEntity checkValidateCode(ModelMap model,@RequestBody User user) {
 //        System.out.println("phone:"+user.getEmail());
@@ -240,6 +250,28 @@ public class UserController extends BaseRestSpringController {
         Assert.notNull(user);
         Assert.notNull(user.getEmail());
         User dbUser=userDao.findByEmail(user.getEmail());
+//        System.out.println("code in request is:" + user.getValidateCode() + ",code in db is:" + dbUser.getValidateCode());
+        boolean codeValid=dbUser.getValidateCode().equals(user.getValidateCode());
+//        System.out.println("code valid:"+codeValid);
+        if (codeValid){
+            return new ResponseEntity("{\"codeValid\":true}",HttpStatus.OK);
+        }
+        return new ResponseEntity("{\"codeValid\":false}",HttpStatus.OK);
+
+    }
+    /**
+     * 验证手机验证码是否有效
+     * @param model
+     * @param user
+     * @return
+     */
+    @RequestMapping(value = "/phone/validate")
+    public ResponseEntity checkPhoneValidateCode(ModelMap model,@RequestBody User user) {
+
+        ResponseEntity responseEntity=null;
+        Assert.notNull(user);
+        Assert.notNull(user.getPhone());
+        User dbUser=userDao.findByPhone(user.getPhone());
 //        System.out.println("code in request is:" + user.getValidateCode() + ",code in db is:" + dbUser.getValidateCode());
         boolean codeValid=dbUser.getValidateCode().equals(user.getValidateCode());
 //        System.out.println("code valid:"+codeValid);
@@ -285,6 +317,47 @@ public class UserController extends BaseRestSpringController {
                 dbUser.setPassword(MD5.convert(dbUser.getPassword()));
                 userDao.upsert(dbUser);
                 modelMap.addFlashAttribute("form", dbUser);
+                modelMap.addFlashAttribute("message", "注册成功!");
+                doLogin(form,session,request,response,dbUser);
+                return "redirect:/register_success";
+            }
+        }
+    }
+    @RequestMapping(value = "/register/phone",method = RequestMethod.POST)
+    public String phoneRegister(@Valid @ModelAttribute User form,BindingResult errors,RedirectAttributesModelMap modelMap,HttpSession session, HttpServletRequest request,HttpServletResponse response) {
+
+        if (errors.hasErrors()){
+            modelMap.addFlashAttribute("phoneForm", form);
+            modelMap.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
+//            modelMap.addAttribute("modelMap", modelMap);
+//            modelMap.addAttribute("BindingResult", errors);
+            return "redirect:/user/register";
+        }else{
+            User dbUser=userDao.findByPhone(form.getPhone());
+            Assert.isTrue(!dbUser.isActivated());
+            if (!dbUser.getValidateCode().equals(form.getValidateCode())){
+                errors.rejectValue("validateCode","user.signup.validateCode.error");
+                if (!form.getPassword().equals(form.getRePassword())){
+                    errors.rejectValue("rePassword","user.signup.rePassword.error");
+                }
+                modelMap.addFlashAttribute("phoneForm", form);
+                modelMap.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
+                return "redirect:/user/register";
+            }else{
+                if (!form.getPassword().equals(form.getRePassword())){
+                    errors.rejectValue("rePassword","user.signup.rePassword.error");
+                    modelMap.addFlashAttribute("form", form);
+                    modelMap.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
+                    return "redirect:/user/register";
+                }
+                BeanUtils.copyProperties(form, dbUser, new String[]{"id"});
+                dbUser.setActivated(true);
+                Date now = new Date();
+                dbUser.setRegisterTime(now);
+                dbUser.setLastActivateTime(now);
+                dbUser.setPassword(MD5.convert(dbUser.getPassword()));
+                userDao.upsert(dbUser);
+                modelMap.addFlashAttribute("phoneForm", dbUser);
                 modelMap.addFlashAttribute("message", "注册成功!");
                 doLogin(form,session,request,response,dbUser);
                 return "redirect:/register_success";

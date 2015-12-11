@@ -1114,32 +1114,32 @@ wells
 
 /* Bootstrap Tabs */
 
-.dropup.open > .dropdown-toggle,
-.dropdown.open > .dropdown-toggle {
-  border-color: #ddd !important;
-}
+/*.dropup.open > .dropdown-toggle,*/
+/*.dropdown.open > .dropdown-toggle {*/
+  /*border-color: #ddd !important;*/
+/*}*/
 
-.nav-tabs > li > .dropdown-menu:after,
-.nav-pills > li > .dropdown-menu:after,
-.navbar-nav > li > .dropdown-menu:after,
+/*.nav-tabs > li > .dropdown-menu:after,*/
+/*.nav-pills > li > .dropdown-menu:after,*/
+/*.navbar-nav > li > .dropdown-menu:after,*/
 
-.nav-tabs > li > .dropdown-menu:before,
-.nav-pills > li > .dropdown-menu:before,
-.navbar-nav > li > .dropdown-menu:before {
-  display: none !important;
-}
+/*.nav-tabs > li > .dropdown-menu:before,*/
+/*.nav-pills > li > .dropdown-menu:before,*/
+/*.navbar-nav > li > .dropdown-menu:before {*/
+  /*display: none !important;*/
+/*}*/
 
-.nav-tabs > .dropdown.open > .dropdown-toggle,
-.nav-pills > .dropdown.open > .dropdown-toggle {
-  background: #eee !important;
-  color: #0d638f !important;
-}
+/*.nav-tabs > .dropdown.open > .dropdown-toggle,*/
+/*.nav-pills > .dropdown.open > .dropdown-toggle {*/
+  /*background: #eee !important;*/
+  /*color: #0d638f !important;*/
+/*}*/
 
 
-.nav-tabs,
-.nav-pills {
-  margin-bottom: 10px;
-}
+/*.nav-tabs,*/
+/*.nav-pills {*/
+  /*margin-bottom: 10px;*/
+/*}*/
 
 .tabs-right > .nav-tabs,
 .tabs-left > .nav-tabs {

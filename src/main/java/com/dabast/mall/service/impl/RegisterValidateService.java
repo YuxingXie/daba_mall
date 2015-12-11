@@ -1,6 +1,7 @@
 package com.dabast.mall.service.impl;
 
 import com.dabast.common.code.EmailEnum;
+import com.dabast.common.sms.SMSTest;
 import com.dabast.entity.User;
 import com.dabast.mall.dao.UserDao;
 import org.apache.avalon.framework.service.ServiceException;
@@ -21,7 +22,7 @@ public class RegisterValidateService {
     private UserDao userDao;
 
     /**
-     * 处理注册
+     * 注册时发送验证码到邮箱
      */
 
     public String sendValidateCodeToMail(String email) throws EmailException {
@@ -65,7 +66,29 @@ public class RegisterValidateService {
 //        }
         return msg;
     }
+    /**
+     * 注册时发送验证码到手机
+     */
 
+    public String sendValidateCodeToPhone(String phone) throws Exception {
+        User userToUpdate=userDao.findByEmail(phone);
+        if (userToUpdate!=null && userToUpdate.isActivated()) return "该手机已被使用";
+        ///邮件的内容
+        StringBuffer sb = new StringBuffer("您的大坝生态手机注册验证码是: ");
+        int validateCode=(int)(Math.random()*999999-99999);
+        sb.append(validateCode)
+        .append(" 验证码有效时间为30分钟。");
+        String msg=SMSTest.send(sb.toString(),phone);
+        //保存注册信息
+        if (userToUpdate==null){
+            userToUpdate=new User();
+        }
+        userToUpdate.setRegisterTime(new Date());
+        userToUpdate.setValidateCode("" + validateCode);
+        userToUpdate.setPhone(phone);
+        userDao.upsert(userToUpdate);
+        return msg;
+    }
     /**
      * 处理激活
      *
