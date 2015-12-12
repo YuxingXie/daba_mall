@@ -15,40 +15,38 @@
             <li class="active">我的关注</li>
         </ul>
         <div class="table-responsive">
-            <table class="table table-bordered table-striped" summary="Shopping cart">
+            <table class="table table-bordered table-striped text-center" summary="Shopping cart">
                 <tr>
-                    <th class="shopping-cart-image"></th>
-                    <th class="shopping-cart-description">商品信息</th>
-                    <th class="shopping-cart-price">单价</th>
-                    <th class="shopping-cart-price">库存信息</th>
-                    <th class="shopping-cart-total">操作</th>
+                    <th colspan="2" class="text-center">商品信息</th>
+                    <th class="text-center">单价</th>
+                    <th class="text-center">库存信息</th>
+                    <th class="text-center">操作</th>
                 </tr>
-
                 <tr ng-if="!interests||interests.length==0">
                     <td colspan="5">您没有关注任何商品!<a href="${path}">返回首页继续购物</a></td>
                 </tr>
 
                 <tr name="interest" ng-if="interests&&interests.length>0" ng-repeat="interest in interests" >
-                        <td>
-                            <img class="img-responsive img-ico-sm" ng-src="${path}/{{interest.productSeries.pictures[0]}}">
-                        </td>
-                        <td>
-                            <h3><a ng-href="${path}/product_series/{{interest.productSeries.id}}">{{interest.productSeries.name}}</a></h3>
-                        </td>
-                        <td>
-                        <span>￥{{interest.productSeries.commonPrice | number:2}}</span>
-                        </td>
-                        <td>
-                            <span ng-if="!interest.productSeries.productStore">无库存信息</span>
-                            <span ng-if="interest.productSeries.productStore&&interest.productSeries.productStore.remain">
-                            剩余{{interest.productSeries.productStore.remain}}件
-                            </span>
-                            <span ng-if="interest.productSeries.productStore&&!interest.productSeries.productStore.remain">无法获取</span>
-                        </td>
-                        <td>
-                            <a ng-href="${path}/personal/interests/remove/{{interest.id}}" class="fa fa-trash">删除</a>
-                            <a href="#product-pop-up" class="fa fa-shopping-cart fancybox-fast-view" ng-click="fastView(interest.productSeries)">添加到购物车</a>
-                        </td>
+                    <td>
+                        <img class="img-responsive img-ico-sm text-right" ng-src="${path}/{{interest.productSeries.pictures[0]}}">
+                    </td>
+                    <td class="text-left">
+                        <a ng-href="${path}/product_series/{{interest.productSeries.id}}">{{interest.productSeries.name}}</a>
+                    </td>
+                    <td>
+                    <span class="fa fa-rmb">{{interest.productSeries.commonPrice | number:2}}</span>
+                    </td>
+                    <td>
+                        <span ng-if="!interest.productSeries.productStore">无库存信息</span>
+                        <span ng-if="interest.productSeries.productStore&&interest.productSeries.productStore.remain">
+                        剩余{{interest.productSeries.productStore.remain}}件
+                        </span>
+                        <span ng-if="interest.productSeries.productStore&&!interest.productSeries.productStore.remain">无法获取</span>
+                    </td>
+                    <td>
+                        <a ng-href="${path}/personal/interests/remove/{{interest.id}}" class="fa fa-trash">删除</a>
+                        <a href="javascript:void(0)" class="fa fa-shopping-cart" ng-click="popover(interest.productSeries.id)">添加到购物车</a>
+                    </td>
                 </tr>
             </table>
 

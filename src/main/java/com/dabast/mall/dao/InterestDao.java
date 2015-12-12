@@ -41,7 +41,7 @@ public class InterestDao  extends BaseMongoDao<Interest> {
 
     public boolean alreadyInterested(User user,ProductSeries productSeries) {
         DBObject dbObject=new BasicDBObject();
-        dbObject.put("productSelected.productSeries",productSeries);
+        dbObject.put("productSeries",productSeries);
         dbObject.put("user",user);
         List<Interest> interests=findAll(dbObject);
         if (interests==null) return false;

@@ -85,14 +85,14 @@
     </div>
 
     <div class="select-address-footer">
-        <form name="jjbb">
+        <form>
             <span class="pull-right">
             <button ng-click="clear()" class="btn btn-sm btn-link">清空</button>
-            <button ng-click="submit()" class="btn btn-sm btn-success" type="submit" ng-disabled="jjbb.jutijiedao.$invalid">确定</button>
+            <button ng-click="submit()" class="btn btn-sm btn-success" type="submit">确定</button>
         </span>
 
         <strong class="text-danger">{{ p }} {{ c }} {{ a }}　</strong>
-        <input ng-show="p" ng-model="d" class="form-control input-sm" type="text" placeholder="具体街道" name="jutijiedao" required/>
+        <input ng-show="p" ng-model="d" class="form-control input-sm" type="text" placeholder="具体街道" required/>
         </form>
     </div>
 </div>

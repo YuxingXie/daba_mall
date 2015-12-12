@@ -15,9 +15,8 @@
             <li class="active">调整购物车</li>
         </ul>
         <div class="row"  ng-init="totalPrice=0" data-class="table-responsive">
-
-            <table class="table table-bordered table-striped text-center">
-                <form action="${path}/cart/adjust" method="post" id="form"  enctype='application/json'>
+        <form action="${path}/cart/adjust" method="post" id="form"  enctype='application/json'>
+            <table class="table table-bordered table-striped table-condensed text-center">
                 <tr>
                     <th class="text-center"></th>
                     <th class="text-center">商品信息</th>
@@ -34,20 +33,20 @@
                 <tr name="productSelected" ng-if="cart&&cart.productSelectedList&&cart.productSelectedList.length>0" ng-repeat="productSelected in cart.productSelectedList" >
                         <td>
                             <a ng-href="${path}/product/{{productSelected.productSeries.id}}">
-                                <img class="img-responsive img-ico-md" ng-src="${path}/{{productSelected.productSeries.pictures[0]}}"></a>
+                                <img class="img-responsive img-ico-sm center-block" ng-src="${path}/{{productSelected.productSeries.pictures[0]}}"></a>
                         </td>
                         <td>
-                            <h3>{{productSelected.productSeries.name}}</h3>
-                                <span name="productPropertyValue" ng-repeat="productPropertyValue in productSelected.productPropertyValueList">
+                            <b>{{productSelected.productSeries.name}}</b>
+                                <em name="productPropertyValue" ng-repeat="productPropertyValue in productSelected.productPropertyValueList">
                                 {{productPropertyValue.value}}
-                                </span>
+                                </em>
                         </td>
                         <td>
-                        <span class="fa fa-rmb">￥{{productSelected.productSeries.commonPrice | number:2}}</span>
+                        <span class="fa fa-rmb">{{productSelected.productSeries.commonPrice | number:2}}</span>
                         </td>
                         <td>
                         <span style=" font-size:14px;">
-                            <input type="number" name="amount" ng-model="productSelected.amount" class="form-control" min="1" ng-change="change()"/>
+                            <input type="number" name="amount" style="width: 100px;" ng-model="productSelected.amount" class="form-control center-block" min="1" ng-change="change()"/>
                         </span>
                         </td>
                         <td>
@@ -62,20 +61,18 @@
                         </td>
                         <td>
                             <a href="${path}/cart/remove/{{$index}}" class="fa fa-trash">删除</a>&nbsp;&nbsp;
-                            <a href="${path}/cart/remove_to_interest/{{$index}}" class="fa fa-cut">移到我的关注</a>
+                            <a href="${path}/cart/add_to_interest/{{$index}}" class="fa fa-heart-o">添加到我的关注</a>
                         </td>
                 </tr>
                 <tr>
-                    <th colspan="7" class="text-right">
-                        总计：{{totalAmount}}件商品,共{{totalPrice | number:2}} 元
-                    </th>
+                    <td colspan="6" class="text-right">
+                        总计：<b>{{totalAmount}}</b>件商品,共<b>{{totalPrice | number:2}}</b> 元
+                    </td>
+                    <td><input  class="btn btn-primary btn-sm" type="button" id="toBill" data-ng-click="toBill()" ng-if="cart&&cart.productSelectedList&&cart.productSelectedList.length>0" value="确认"/></td>
                 </tr>
-                <tr>
-                    <td  colspan="7"><input  class="btn btn-primary" type="button" id="toBill" data-ng-click="toBill()" ng-if="cart&&cart.productSelectedList&&cart.productSelectedList.length>0" value="确认"/></td>
-                </tr>
-                </form>
-            </table>
 
+            </table>
+        </form>
 
         </div>
         <div class="modal fade active" id="orderModal" tabindex="-1" role="dialog"

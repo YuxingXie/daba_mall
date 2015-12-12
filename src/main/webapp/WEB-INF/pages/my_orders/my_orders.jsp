@@ -139,12 +139,11 @@
                                 <div class="col-lg-3 col-sm-3 text-center">
                                 </div>
                             </div>
-
-
                         </div>
 
                         <div class="modal-footer">
                             <div class="row">
+                                <div class="col-lg-6 col-sm-6"></div>
                                 <div class="col-lg-2 col-sm-2" ng-if="hasEmptyProduct||!order.payStatus||order.payStatus==='n'">
                                     <button type="button" class="btn btn-primary" aria-hidden="true" data-ng-click="deleteOrder(order.id)">删除订单</button>
                                 </div>

@@ -182,19 +182,18 @@ public class IndexController extends BaseRestSpringController {
         ResponseEntity<Cart> cartResponseEntity=new ResponseEntity<Cart>(cart, HttpStatus.OK);
         return cartResponseEntity;
     }
-    @RequestMapping(value = "/index/cart/remove", method = {RequestMethod.POST})
-    public ResponseEntity<Cart> cartRemove(Integer selectedIndex, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-        Cart cart=null;
-        if (session.getAttribute(Constant.CART)==null){
-            cart=new Cart();
-        }else{
-            cart=(Cart)session.getAttribute(Constant.CART);
-        }
-        if (cart.getProductSelectedList()!=null &&cart.getProductSelectedList().size()>selectedIndex){
-            ProductSelected productSelected=cart.getProductSelectedList().get(selectedIndex.intValue());
 
-            cart.getProductSelectedList().remove(selectedIndex.intValue());
-        }
+    /**
+     * 更新购物车，暂用于顶部购物车点击删除按钮事件
+     * @param cart
+     * @param model
+     * @param session
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/cart/update", method = {RequestMethod.POST})
+    public ResponseEntity<Cart> cartRemove(@RequestBody Cart cart, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         if (session.getAttribute(Constant.LOGIN_USER)!=null){
             User user=getLoginUser(session);
             user.setCart(cart);
@@ -202,7 +201,6 @@ public class IndexController extends BaseRestSpringController {
         }
         session.setAttribute(Constant.CART, cart);
         ResponseEntity<Cart> cartResponseEntity=new ResponseEntity<Cart>(cart, HttpStatus.OK);
-
         return cartResponseEntity;
     }
     @RequestMapping(value = "/cart/remove/{selectedIndex}", method = RequestMethod.GET)
@@ -222,7 +220,7 @@ public class IndexController extends BaseRestSpringController {
         session.setAttribute(Constant.CART, cart);
         return "redirect:/cart";
     }
-    @RequestMapping(value = "/cart/remove_to_interest/{selectedIndex}", method = RequestMethod.GET)
+    @RequestMapping(value = "/cart/add_to_interest/{selectedIndex}", method = RequestMethod.GET)
     public String removeToInterest(@PathVariable Integer selectedIndex, ModelMap model, HttpSession session) {
         User user= getLoginUser(session);
         Assert.notNull(user);
@@ -241,10 +239,10 @@ public class IndexController extends BaseRestSpringController {
                 ServiceManager.interestService.insert(interest);
             }
 
-            cart.getProductSelectedList().remove(selectedIndex.intValue());
+//            cart.getProductSelectedList().remove(selectedIndex.intValue());
         }
-        user.setCart(cart);
-        ServiceManager.userService.update(user);
+//        user.setCart(cart);
+//        ServiceManager.userService.update(user);
         session.setAttribute(Constant.CART, cart);
         return "redirect:/cart";
     }

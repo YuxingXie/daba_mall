@@ -24,3 +24,5 @@
 <link href="${path}/statics/assets/css/social-icons.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/color-bg-color.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/uniform.css" rel="stylesheet" type="text/css">
+<link href="${path}/statics/assets/plugins/EasyZoom-master/css/easyzoom.css" rel="stylesheet" type="text/css">
+<link href="${path}/statics/assets/css/rating.css" rel="stylesheet" type="text/css">
