@@ -52,6 +52,8 @@ public class User {
     private boolean activated;//激活
     @Transient
     private List<Account> userAccounts;
+    @Transient
+    private List<Interest> interests;
     public String[] getAddresses() {
         return addresses;
     }
@@ -204,6 +206,14 @@ public class User {
 
     public void setRealMessage(PersonalRealMessage realMessage) {
         this.realMessage = realMessage;
+    }
+
+    public List<Interest> getInterests() {
+        return interests;
+    }
+
+    public void setInterests(List<Interest> interests) {
+        this.interests = interests;
     }
 
     /**

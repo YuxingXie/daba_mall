@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +28,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,6 +62,43 @@ public class OrderController extends BaseRestSpringController {
         return "redirect:/user/my_orders";
     }
 
+    /**
+     * 提交订单(实际为更新订单)
+     * @param id
+     * @param acceptAddress
+     * @param payWay
+     * @param acceptPersonName
+     * @param contactPhone
+     * @param model
+     * @param redirectAttributes
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/submit", method = RequestMethod.POST)
+    public String orderSubmit(@Valid @ModelAttribute Order order,BindingResult errors,RedirectAttributes redirectAttributes,ModelMap model,HttpSession session) {
+        Assert.notNull(getLoginUser(session));
+        if (errors.hasErrors()){
+            redirectAttributes.addFlashAttribute("order", order);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.order", errors);
+            return toBill(null,order,errors,redirectAttributes,model,session);
+        }
+        order.setSubmitStatus("y");
+        ServiceManager.orderService.update(order);
+        redirectAttributes.addFlashAttribute("order", order);
+        return "redirect:/bill";
+    }
+    @RequestMapping(value = "/to_submit/{orderId}")
+    public String toBill(@PathVariable String orderId, Order order,BindingResult errors,RedirectAttributes redirectAttributes,ModelMap model, HttpSession session) {
+        if (orderId==null){
+            return "redirect:/to_submit";
+        }
+        User user=getLoginUser(session);
+        Assert.notNull(user);
+        order = ServiceManager.orderService.findOrderById(orderId);
+        Assert.isTrue(user.getId().equals(order.getUser().getId()));
+        model.addAttribute("order",order);
+        return "to_submit";
+    }
     /**
      * 未使用
      * @param id

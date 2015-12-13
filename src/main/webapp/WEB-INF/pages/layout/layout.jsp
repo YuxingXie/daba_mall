@@ -65,8 +65,9 @@
                             <span class="icon-bar"></span>
                         </button>
                         <!-- END RESPONSIVE MENU TOGGLER -->
-                        <a href="${path}" class="navbar-brand"><img src="${path}/statics/assets/img/logo_red.png"
-                                                                       alt="大坝生态农业"></a><!-- LOGO -->
+                        <a href="${path}" class="navbar-brand">
+                            <img src="${path}/statics/assets/img/logo_red.png" alt="大坝生态农业">
+                        </a>
                     </div>
                     <!-- BEGIN CART -->
 
@@ -238,8 +239,8 @@
                                         <div class="col-lg-1"></div>
                                         <div class="col-lg-10 has-error">
                                             <input type="text" class="form-control" id="loginStr" name="loginStr" placeholder="邮箱/用户名/已验证手机"  required="true"/>
-                                            <input type="hidden" name="mergeCart" id="mergeCart"/>
                                             <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                            <input type="hidden" name="mergeCart" id="mergeCart"/>
                                         </div>
                                         <div class="col-lg-1"></div>
                                     </div>

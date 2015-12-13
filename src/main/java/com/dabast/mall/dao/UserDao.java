@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -187,10 +188,15 @@ public class UserDao extends BaseMongoDao<User>  {
                     }
                 }
             }
-
         }
         return user;
     }
 
 
+    public void clearCart(User user) {
+        Assert.notNull(user.getId());
+        Update update=new Update();
+        update.set("cart", null);
+        mongoTemplate.updateFirst(new BasicQuery(new BasicDBObject("_id",user.getId())), update, User.class);
+    }
 }

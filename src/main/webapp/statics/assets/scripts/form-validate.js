@@ -15,23 +15,57 @@
             }
         }
     }])
-    .directive("phoneNumberValid", function ($http,$timeout) {
+   .directive("acceptAddressValid", function () {
        return{
            require:"ngModel",
            link:function(scope,ele,attrs,c){
                scope.$watch(attrs.ngModel,function(n){
                    if(!n) return;
-                   if(!/^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i.test(scope.user.phone))
+                   if(!scope.d)
                    {
-                       c.$setValidity('validPhoneNumber',false);
+                       c.$setValidity('validAcceptAddress',false);
                    }else{
-                       c.$setValidity('validPhoneNumber',true);
+                       c.$setValidity('validAcceptAddress',true);
                    }
                });
 
            }
        }
    })
+    .directive("telephoneNumberValid", function () {//手机和座机
+        return{
+            require:"ngModel",
+            link:function(scope,ele,attrs,c){
+                scope.$watch(attrs.ngModel,function(n){
+                    if(!n) return;
+                    if(!/(^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$|(^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$))/i.test(n))
+                    {
+                        c.$setValidity('validTelephoneNumber',false);
+                    }else{
+                        c.$setValidity('validTelephoneNumber',true);
+                    }
+                });
+
+            }
+        }
+    })
+        .directive("telephoneNumberValid", function () {//手机和座机
+            return{
+                require:"ngModel",
+                link:function(scope,ele,attrs,c){
+                    scope.$watch(attrs.ngModel,function(n){
+                        if(!n) return;
+                        if(!/(^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$|(^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$))/i.test(n))
+                        {
+                            c.$setValidity('validTelephoneNumber',false);
+                        }else{
+                            c.$setValidity('validTelephoneNumber',true);
+                        }
+                    });
+
+                }
+            }
+        })
     .directive("ensureNameUnique", function ($http,$timeout) {
         return{
             require:"ngModel",

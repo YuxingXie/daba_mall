@@ -11,7 +11,7 @@
 <script type="text/javascript" src="${path}/statics/assets/scripts/top.js"></script>
 <%--<script type="text/javascript" src="${path}/statics/assets/scripts/cart.js"></script>--%>
 <script type="text/javascript" src="${path}/statics/assets/scripts/index.js"></script>
-<script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>
+<%--<script type="text/javascript" src="${path}/statics/assets/scripts/jQuery-shopping.js"></script>--%>
 <%--弹出二级菜单相关--%>
 <script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/tooltip.js"></script>
 <script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/popover.js"></script>
@@ -20,11 +20,10 @@
 <script src="${path}/statics/assets/plugins/angularJs-pagination/src/pagination/tm.pagination.js"></script>
 <script src="${path}/statics/assets/plugins/EasyZoom-master/dist/easyzoom.js" type="text/javascript"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/back-to-top.js"></script>
-
-<%--<script src="${path}/statics/assets/plugins/cascading-select-address-master/js/selectAddress2.js" type="text/javascript"></script>--%>
 <script>
     var mainApp=angular.module("mainApp",['ui.bootstrap', 'ngRoute','tm.pagination']);
     mainApp .controller('mainController', ['$scope', '$http', function ($scope, $http) {
+
         $scope.popover=function(productSeriesId){
             $scope.productSelected={};
             $scope.productSelected.productPropertyValueList=[];
@@ -56,18 +55,11 @@
         $scope.ratingVal =3;
         $scope.readonly = true;
         $scope.changeImg=function(currentImg){
-//              console.log(currentImg);
             $scope.currentImg=currentImg;
         }
         $scope.add2cart=function(){
-//                console.log(JSON.stringify($scope.productSelected));
             $http.post('${path}/index/cart', $scope.productSelected).success(function(data){
-//                    renderCart(data);
                 $scope.cart=data;
-//                    $scope.$emit('summon');
-//                    $scope.$on('executeSummon', function() {
-//                        $scope.cart=data;
-//                    });
 
             }).error(function(data) {
                 alert("对不起，服务器出现了点异常!");
@@ -170,3 +162,4 @@
             });;
 
 </script>
+<script src="${path}/statics/assets/scripts/form-validate.js"></script>

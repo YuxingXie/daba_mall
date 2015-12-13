@@ -23,9 +23,9 @@ div.selector, div.checker, div.button, div.radio, div.uploader {
   /* Keeping this as :focus to remove browser styles */ }
   div.selector:focus, div.checker:focus, div.button:focus, div.radio:focus, div.uploader:focus {
     outline: 0; }
-div.selector, div.selector *, div.radio, div.radio *, div.checker, div.checker *, div.uploader, div.uploader *, div.button, div.button * {
-  margin: 0;
-  padding: 0; }
+/*div.selector, div.selector *, div.radio, div.radio *, div.checker, div.checker *, div.uploader, div.uploader *, div.button, div.button * {*/
+  /*margin: 0;*/
+  /*padding: 0; }*/
 
 .highContrastDetect {
   background: url("../images/bg-input.png") repeat-x 0 0;
@@ -147,47 +147,48 @@ div.checker {
       background-position: -171px -260px; }
 
 /* Radio */
-div.radio {
-  position: relative; }
-  div.radio, div.radio span, div.radio input {
-    width: 18px;
-    height: 18px; }
-  div.radio span {
-    display: -moz-inline-box;
-    display: inline-block;
-    *display: inline;
-    zoom: 1;
-    text-align: center;
-    background-position: 0 -279px; }
-    div.radio span.checked {
-      background-position: -72px -279px; }
-  div.radio input {
-    opacity: 0;
-    filter: alpha(opacity=0);
-    -moz-opacity: 0;
-    border: none;
-    background: none;
-    display: -moz-inline-box;
-    display: inline-block;
-    *display: inline;
-    zoom: 1;
-    text-align: center; }
-  div.radio.active span {
-    background-position: -18px -18px -279px; }
-    div.radio.active span.checked {
-      background-position: -90px -279px; }
-  div.radio.hover span, div.radio.focus span {
-    background-position: -36px -36px -279px; }
-    div.radio.hover span.checked, div.radio.focus span.checked {
-      background-position: -108px -279px; }
-  div.radio.hover.active span, div.radio.focus.active span {
-    background-position: -54px -279px; }
-    div.radio.hover.active span.checked, div.radio.focus.active span.checked {
-      background-position: -126px -279px; }
-  div.radio.disabled span, div.radio.disabled.active span {
-    background-position: -144px -279px; }
-    div.radio.disabled span.checked, div.radio.disabled.active span.checked {
-      background-position: -162px -279px; }
+/*div.radio {*/
+  /*position: relative; }*/
+  /*div.radio, div.radio span, div.radio input {*/
+    /*width: 18px;*/
+    /*height: 18px;*/
+  /*}*/
+  /*div.radio span {*/
+    /*display: -moz-inline-box;*/
+    /*display: inline-block;*/
+    /**display: inline;*/
+    /*zoom: 1;*/
+    /*text-align: center;*/
+    /*background-position: 0 -279px; }*/
+    /*div.radio span.checked {*/
+      /*background-position: -72px -279px; }*/
+  /*div.radio input {*/
+    /*opacity: 0;*/
+    /*filter: alpha(opacity=0);*/
+    /*-moz-opacity: 0;*/
+    /*border: none;*/
+    /*background: none;*/
+    /*display: -moz-inline-box;*/
+    /*display: inline-block;*/
+    /**display: inline;*/
+    /*zoom: 1;*/
+    /*text-align: center; }*/
+  /*div.radio.active span {*/
+    /*background-position: -18px -18px -279px; }*/
+    /*div.radio.active span.checked {*/
+      /*background-position: -90px -279px; }*/
+  /*div.radio.hover span, div.radio.focus span {*/
+    /*background-position: -36px -36px -279px; }*/
+    /*div.radio.hover span.checked, div.radio.focus span.checked {*/
+      /*background-position: -108px -279px; }*/
+  /*div.radio.hover.active span, div.radio.focus.active span {*/
+    /*background-position: -54px -279px; }*/
+    /*div.radio.hover.active span.checked, div.radio.focus.active span.checked {*/
+      /*background-position: -126px -279px; }*/
+  /*div.radio.disabled span, div.radio.disabled.active span {*/
+    /*background-position: -144px -279px; }*/
+    /*div.radio.disabled span.checked, div.radio.disabled.active span.checked {*/
+      /*background-position: -162px -279px; }*/
 
 /* Uploader */
 div.uploader {

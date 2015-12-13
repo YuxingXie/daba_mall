@@ -30,7 +30,7 @@
                     <td colspan="5">您的购物车中空空如也!<a href="${path}">返回首页继续购物</a></td>
                 </tr>
 
-                <tr name="productSelected" ng-if="cart&&cart.productSelectedList&&cart.productSelectedList.length>0" ng-repeat="productSelected in cart.productSelectedList" >
+                <tr ng-if="cart&&cart.productSelectedList&&cart.productSelectedList.length>0" ng-repeat="productSelected in cart.productSelectedList" >
                         <td>
                             <a ng-href="${path}/product/{{productSelected.productSeries.id}}">
                                 <img class="img-responsive img-ico-sm center-block" ng-src="${path}/{{productSelected.productSeries.pictures[0]}}"></a>
@@ -46,7 +46,7 @@
                         </td>
                         <td>
                         <span style=" font-size:14px;">
-                            <input type="number" name="amount" style="width: 100px;" ng-model="productSelected.amount" class="form-control center-block" min="1" ng-change="change()"/>
+                            <input type="number" name="amount" style="width: 100px;" ng-model="cart.productSelectedList[$index].amount" class="form-control center-block" min="1" ng-change="change()"/>
                         </span>
                         </td>
                         <td>
@@ -83,14 +83,14 @@
                         <h2 class="modal-title">提示:</h2>
                     </div>
                     <div class="modal-body">
-                        <p>您的订单已经生产，订单号为<span class="text-info text-order-id"></span>，
-                            总计<span class="text-info text-total-amount"></span>件商品，
-                            总价为<span class="text-info text-total-price"></span>元。</p>
+                        <p>您的订单已经生产，订单号为<span class="text-info text-order-id">{{order.id}}</span>，
+                            总计<span class="text-info text-total-amount">{{order.totalAmount}}</span>件商品，
+                            总价为<span class="text-info text-total-price">{{order.totalPrice}}</span>元。</p>
                         <p>点击“下一步”按钮您可以完善订单信息。</p>
                     </div>
                     <div class="modal-footer">
                         <div class="row">
-                            <div class="col-lg-7"><a class="btn btn-danger" id="ensure-to-bill" href="${path}/cart/to_bill">下一步</a></div>
+                            <div class="col-lg-7"><a class="btn btn-danger" id="ensure-to-bill" ng-href="${path}/order/to_submit/{{order.id}}">下一步</a></div>
                             <div class="col-lg-5">
                                 <a class="btn btn-primary" href="${path}/order/cancel">继续逛逛</a>
                             </div>

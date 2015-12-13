@@ -21,7 +21,7 @@
     }
 
     .select-address-container ul li {
-        width: 240px;
+        width: 160px;
         padding: 10px;
         display: table-cell;
         vertical-align: middle;
@@ -92,7 +92,7 @@
         </span>
 
         <strong class="text-danger">{{ p }} {{ c }} {{ a }}　</strong>
-        <input ng-show="p" ng-model="d" class="form-control input-sm" type="text" placeholder="具体街道" required/>
+        <input ng-show="p" ng-model="$parent.d" class="form-control input-sm" type="text" placeholder="具体街道" required/>
         </form>
     </div>
 </div>

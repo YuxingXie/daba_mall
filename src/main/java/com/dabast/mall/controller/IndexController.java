@@ -18,10 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -32,11 +30,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -112,21 +112,7 @@ public class IndexController extends BaseRestSpringController {
         }
 
     }
-    @RequestMapping(value = "/user/cart")
-    public ResponseEntity<Cart> cart(HttpSession session) {
-        User user=getLoginUser(session);
-//        Cart cart=user==null?getCart(session)user.getCart()==null?getCart(session):user.getCart();
-        Cart cart=user==null?(getCart(session)==null?null:getCart(session)):(user.getCart()==null?getCart(session):(user.getCart()));
-        if (cart!=null && cart.getProductSelectedList()!=null){
-            for (ProductSelected productSelected:cart.getProductSelectedList()){
-                ProductSeries productSeries=productSelected.getProductSeries();
-                List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
-                if (productSeries.getProductStore()!=null) productSeries.getProductStore().setInAndOutList(inAndOuts);
-            }
-        }
-        session.setAttribute(Constant.CART,cart);
-        return new ResponseEntity<Cart>(cart,HttpStatus.OK);
-    }
+
     /**
      * 把一件商品添加到购物车
      * @param productSelected
@@ -248,20 +234,7 @@ public class IndexController extends BaseRestSpringController {
     }
 
 
-    @RequestMapping(value = "/index/order/submit", method = RequestMethod.POST)
-    public String orderSubmit( String  id,String acceptAddress,String payWay,String acceptPersonName, String contactPhone,
-                              ModelMap model,RedirectAttributes redirectAttributes,HttpSession session) {
-        Order order=getOrder(session);
-        if (order==null) order=ServiceManager.orderService.findById(id);
-        if (acceptAddress!=null)order.setAcceptAddress(acceptAddress);
-        if (payWay!=null)order.setPayWay(payWay);
-        if (acceptPersonName!=null)order.setAcceptPersonName(acceptPersonName);
-        if (contactPhone!=null)order.setContactPhone(contactPhone);
-        order.setSubmitStatus("y");
-        ServiceManager.orderService.update(order);
-        session.setAttribute("order",order);
-        return "redirect:/bill";
-    }
+
 
 
 
@@ -328,41 +301,40 @@ public class IndexController extends BaseRestSpringController {
     public ResponseEntity adjust(@RequestBody Cart cart,ModelMap model, HttpSession session) {
         Assert.notNull(cart);
         User user=getLoginUser(session);
-
-        user.setCart(cart);
-        Order order=ServiceManager.orderService.insertOrder(user);
+        Assert.notNull(user);
+        /*********** save order ************/
+        Order order=new Order();
+        order.setUser(user);
+        order.setOrderDate(new Date());
+        order.setPayStatus("n");
+        order.setProductSelectedList(cart.getProductSelectedList());
+        ServiceManager.orderService.insert(order);
+        /*********** update user ************/
+        ServiceManager.userService.clearCart(user);
+//        session.setAttribute(Constant.CART, null);
+//        session.removeAttribute(Constant.CART);
         user.setCart(null);
-        ServiceManager.userService.update(user);
-        session.setAttribute(Constant.CART, null);
-        session.removeAttribute(Constant.CART);
         session.setAttribute(Constant.LOGIN_USER,user);
         model.addAttribute("order", order);
         session.setAttribute("order", order);
         return new ResponseEntity<Order>(order,HttpStatus.OK);
     }
-    @RequestMapping(value = "/cart/to_bill")
+
+    /**
+     * 废弃
+     * @param model
+     * @param session
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/cart/to_submit")
     public String toBill(ModelMap model, HttpSession session,HttpServletRequest request) {
-        Order order=session.getAttribute("order")==null?null:(Order)session.getAttribute("order");
-//        Order order=ServiceManager.orderService.findLastOrderByUserId(orderId);
-        return "redirect:/to_bill";
+//        Order order=session.getAttribute("order")==null?null:(Order)session.getAttribute("order");
+////        Order order=ServiceManager.orderService.findLastOrderByUserId(orderId);
+        return "redirect:/to_submit";
     }
-    @RequestMapping(value = "/cart/to_bill/{orderId}")
-    public String toBill(@PathVariable String orderId,ModelMap model, HttpSession session,HttpServletRequest request) {
-//        User user=getLoginUser(session);
-        Order order = ServiceManager.orderService.findOrderById(orderId);
-        Assert.notNull(order);
-        if (order.getProductSelectedList()!=null ){
-            for (ProductSelected productSelected:order.getProductSelectedList()){
-                ProductSeries productSeries=productSelected.getProductSeries();
-                if (productSeries.getProductStore()!=null){
-                    List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
-                    productSeries.getProductStore().setInAndOutList(inAndOuts);
-                }
-            }
-        }
-        session.setAttribute("order",order);
-        return "redirect:/to_bill";
-    }
+
+
 
 
     public static void main(String[] args) {

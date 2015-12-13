@@ -5,6 +5,7 @@ import com.dabast.common.base.EntityDao;
 import com.dabast.entity.User;
 import com.dabast.mall.dao.UserDao;
 import com.dabast.mall.service.IUserService;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,6 +20,12 @@ public class UserService extends BaseEntityManager<User> implements IUserService
     public User findByEmailOrPhone(String name){
         return userDao.findByEmailOrPhone(name);
     }
+
+    @Override
+    public void clearCart(User user) {
+        userDao.clearCart(user);
+    }
+
     protected EntityDao<User> getEntityDao() {
         return this.userDao;
     }

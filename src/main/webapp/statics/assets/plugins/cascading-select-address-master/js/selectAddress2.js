@@ -36,12 +36,17 @@
               $('[ng-model="d"]').focus();
               return false;
             },
+            blur: function() {
+              this.element.removeClass('active');
+              return false;
+            },
             init: function() {
               element.on('click keydown', function() {
                 popup.show();
                 event.stopPropagation();
                 return false;
               });
+
               //$(window).on('click', (function(_this) {
               //  return function() {
               //    return _this.hide();

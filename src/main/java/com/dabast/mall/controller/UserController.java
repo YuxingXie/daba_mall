@@ -279,14 +279,10 @@ public class UserController extends BaseRestSpringController {
      */
     @RequestMapping(value = "/phone/validate")
     public ResponseEntity checkPhoneValidateCode(ModelMap model,@RequestBody User user) {
-
-        ResponseEntity responseEntity=null;
         Assert.notNull(user);
         Assert.notNull(user.getPhone());
         User dbUser=userDao.findByPhone(user.getPhone());
-//        System.out.println("code in request is:" + user.getValidateCode() + ",code in db is:" + dbUser.getValidateCode());
         boolean codeValid=dbUser.getValidateCode().equals(user.getValidateCode());
-//        System.out.println("code valid:"+codeValid);
         if (codeValid){
             return new ResponseEntity("{\"codeValid\":true}",HttpStatus.OK);
         }
@@ -294,52 +290,78 @@ public class UserController extends BaseRestSpringController {
 
     }
 
+    /**
+     * 邮箱注册账号
+     * @param form
+     * @param errors
+     * @param modelMap
+     * @param session
+     * @param request
+     * @param response
+     * @return
+     */
+
     @RequestMapping(value = "/register/email",method = RequestMethod.POST)
     public String emailRegister(@Valid @ModelAttribute User form,BindingResult errors,RedirectAttributesModelMap modelMap,HttpSession session, HttpServletRequest request,HttpServletResponse response) {
-
+        Assert.notNull(form);
+        Assert.notNull(form.getId());
         if (errors.hasErrors()){
             modelMap.addFlashAttribute("form", form);
             modelMap.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
 //            modelMap.addAttribute("modelMap", modelMap);
 //            modelMap.addAttribute("BindingResult", errors);
             return "redirect:/user/register";
+        }
+
+        User dbUser=userDao.findByEmail(form.getEmail());
+        Assert.isTrue(!dbUser.isActivated());
+        if (!dbUser.getValidateCode().equals(form.getValidateCode())){
+            errors.rejectValue("validateCode","user.signup.validateCode.error");
+            if (!form.getPassword().equals(form.getRePassword())){
+                errors.rejectValue("rePassword","user.signup.rePassword.error");
+            }
+            modelMap.addFlashAttribute("form", form);
+            modelMap.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
+            return "redirect:/user/register";
         }else{
-            User dbUser=userDao.findByEmail(form.getEmail());
-            Assert.isTrue(!dbUser.isActivated());
-            if (!dbUser.getValidateCode().equals(form.getValidateCode())){
-                errors.rejectValue("validateCode","user.signup.validateCode.error");
-                if (!form.getPassword().equals(form.getRePassword())){
-                    errors.rejectValue("rePassword","user.signup.rePassword.error");
-                }
+            if (!form.getPassword().equals(form.getRePassword())){
+                errors.rejectValue("rePassword","user.signup.rePassword.error");
                 modelMap.addFlashAttribute("form", form);
                 modelMap.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
                 return "redirect:/user/register";
-            }else{
-                if (!form.getPassword().equals(form.getRePassword())){
-                    errors.rejectValue("rePassword","user.signup.rePassword.error");
-                    modelMap.addFlashAttribute("form", form);
-                    modelMap.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
-                    return "redirect:/user/register";
-                }
-                BeanUtils.copyProperties(form, dbUser, new String[]{"id"});
-                dbUser.setActivated(true);
-                Date now = new Date();
-                dbUser.setRegisterTime(now);
-                dbUser.setLastActivateTime(now);
-                dbUser.setPassword(MD5.convert(dbUser.getPassword()));
-                userDao.upsert(dbUser);
-                modelMap.addFlashAttribute("form", dbUser);
-                modelMap.addFlashAttribute("message", "注册成功!");
-                doLogin(form,session,request,response,dbUser);
-                return "redirect:/register_success";
             }
+            BeanUtils.copyProperties(form, dbUser, new String[]{"id"});
+            dbUser.setActivated(true);
+            Date now = new Date();
+            dbUser.setRegisterTime(now);
+            dbUser.setLastActivateTime(now);
+            dbUser.setPassword(MD5.convert(dbUser.getPassword()));
+            userDao.upsert(dbUser);
+            modelMap.addFlashAttribute("form", dbUser);
+            modelMap.addFlashAttribute("message", "注册成功!");
+            doLogin(form,session,request,response,dbUser);
+            return "redirect:/register_success";
         }
+
     }
+
+    /**
+     * 手机注册账号
+     * @param form
+     * @param errors
+     * @param modelMap
+     * @param session
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping(value = "/register/phone",method = RequestMethod.POST)
     public String phoneRegister(@Valid @ModelAttribute User form,BindingResult errors,RedirectAttributesModelMap modelMap,HttpSession session, HttpServletRequest request,HttpServletResponse response) {
+        Assert.notNull(form);
+        Assert.notNull(form.getId());
         if (errors.hasErrors()){
             modelMap.addFlashAttribute("phoneForm", form);
-            modelMap.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
+            modelMap.addFlashAttribute("org.springframework.validation.BindingResult.phoneForm", errors);
             return "redirect:/register_phone";
         }else{
             if (!form.getPassword().equals(form.getRePassword())){
@@ -359,5 +381,20 @@ public class UserController extends BaseRestSpringController {
             doLogin(form,session,request,response,form);
             return "redirect:/register_success";
         }
+    }
+    @RequestMapping(value = "/cart")
+    public ResponseEntity<Cart> cart(HttpSession session) {
+        User user=getLoginUser(session);
+//        Cart cart=user==null?getCart(session)user.getCart()==null?getCart(session):user.getCart();
+        Cart cart=user==null?(getCart(session)==null?null:getCart(session)):user.getCart();
+        if (cart!=null && cart.getProductSelectedList()!=null){
+            for (ProductSelected productSelected:cart.getProductSelectedList()){
+                ProductSeries productSeries=productSelected.getProductSeries();
+                List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
+                if (productSeries.getProductStore()!=null) productSeries.getProductStore().setInAndOutList(inAndOuts);
+            }
+        }
+        session.setAttribute(Constant.CART,cart);
+        return new ResponseEntity<Cart>(cart,HttpStatus.OK);
     }
 }

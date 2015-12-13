@@ -52,22 +52,20 @@ public class OrderDao extends BaseMongoDao<Order> {
                     }
                     productSelected.setProductPropertyValueList(productPropertyValueList);
                 }
+                if (productSeries.getProductStore()!=null){
+                    List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
+                    productSeries.getProductStore().setInAndOutList(inAndOuts);
+                }
             }
         }
     }
 
-    public Order insertOrder(User user) {
-        {
-            Assert.notNull(user.getCart());
-            Order order=new Order();
-            order.setUser(user);
-            order.setOrderDate(new Date());
-            order.setPayStatus("n");
-            List<ProductSelected> productSelectedList=user.getCart().getProductSelectedList();
-            Assert.notNull(productSelectedList);
-            order.setProductSelectedList(productSelectedList);
-            getMongoTemplate().insert(order);
-            return order;
-        }
-    }
+//    public void insertOrder(User user) {
+//
+//        Assert.notNull(user.getCart());
+//
+//        getMongoTemplate().insert(order);
+////        return order;
+//
+//    }
 }

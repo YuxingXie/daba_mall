@@ -516,8 +516,10 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
                 String fieldName=field.getName();
                 Object fieldValue = field.get(e);
                 if (fieldValue == null){
-                    update.set(fieldName, null);
-                }else if (field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)) {
+//                    update.set(fieldName, null);
+                    continue;
+                }
+                if (field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)) {
                     org.springframework.data.mongodb.core.mapping.Field docField = field.getAnnotation(org.springframework.data.mongodb.core.mapping.Field.class);
                     fieldName = docField.value() == null || docField.value().equals("") ? field.getName() : docField.value();
                     update.set(fieldName, fieldValue);

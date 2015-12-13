@@ -66,7 +66,7 @@
                                        class="fa fa-search btn btn-primary btn-xs" data-ng-click="orderDetail('${order.id}')">查看详情</a>
                                     <c:choose>
                                         <c:when test="${empty order.submitStatus or order.submitStatus eq 'n'}">
-                                            <a href="${path}/cart/to_bill/${order.id}" class="fa fa-check-square-o btn btn-primary btn-xs">提交订单</a>
+                                            <a href="${path}/order/to_submit/${order.id}" class="fa fa-check-square-o btn btn-primary btn-xs">提交订单</a>
                                             <a href="javascript:void(0)" class="fa fa-trash btn btn-primary btn-xs" data-ng-click="deleteOrder('${order.id}')">删除订单</a>
                                         </c:when>
                                         <c:otherwise>

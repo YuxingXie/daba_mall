@@ -1,5 +1,6 @@
 package com.dabast.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -7,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.util.Assert;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +20,8 @@ import java.util.List;
 public class Order {
     @Id
     private String id;
-    @Field(value = "productSelectedList")
+//    @Field(value = "productSelectedList")
+    @Field
     private List<ProductSelected> productSelectedList;
     @Field(value = "payStatus")
     /**
@@ -26,6 +29,7 @@ public class Order {
      */
     private String payStatus;
     @Field(value = "payWay")
+    @NotEmpty
     /**
      * 支付方式，货到付款1，在线支付2，公司转账3，邮局汇款4
      */
@@ -35,11 +39,12 @@ public class Order {
     @Field(value = "orderDate")
     private Date orderDate;
     @Field(value = "acceptAddress")
+    @NotEmpty
     private String acceptAddress;
 
     @Field(value = "submitStatus")
     private String submitStatus;
-
+    @NotEmpty
     @Field(value = "acceptPersonName")
     private String acceptPersonName;
     @Field(value = "contactPhone")
@@ -168,15 +173,15 @@ public class Order {
 
     public void setProductSelectedList(List<ProductSelected> productSelectedList) {
 
-        for (ProductSelected productSelected:productSelectedList){
-            List<String> productPropertyValueIds=new ArrayList<String>();
-            List<ProductPropertyValue> productPropertyValueList=productSelected.getProductPropertyValueList();
-            if (productPropertyValueList==null) continue;
-            for (ProductPropertyValue productPropertyValue:productPropertyValueList){
-                productPropertyValueIds.add(productPropertyValue.getId());
-            }
-            productSelected.setProductPropertyValueIds(productPropertyValueIds);
-        }
+//        for (ProductSelected productSelected:productSelectedList){
+//            List<String> productPropertyValueIds=new ArrayList<String>();
+//            List<ProductPropertyValue> productPropertyValueList=productSelected.getProductPropertyValueList();
+//            if (productPropertyValueList==null) continue;
+//            for (ProductPropertyValue productPropertyValue:productPropertyValueList){
+//                productPropertyValueIds.add(productPropertyValue.getId());
+//            }
+//            productSelected.setProductPropertyValueIds(productPropertyValueIds);
+//        }
         this.productSelectedList = productSelectedList;
     }
 

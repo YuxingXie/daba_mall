@@ -8,4 +8,6 @@ import com.dabast.entity.User;
  */
 public interface IUserService extends IBaseEntityManager<User> {
     User findByEmailOrPhone(String name);
+
+    void clearCart(User user);
 }
