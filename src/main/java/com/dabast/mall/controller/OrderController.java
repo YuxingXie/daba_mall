@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
@@ -64,39 +65,35 @@ public class OrderController extends BaseRestSpringController {
 
     /**
      * 提交订单(实际为更新订单)
-     * @param id
-     * @param acceptAddress
-     * @param payWay
-     * @param acceptPersonName
-     * @param contactPhone
-     * @param model
+     * @param form
+     * @param errors
      * @param redirectAttributes
      * @param session
      * @return
      */
-    @RequestMapping(value = "/submit", method = RequestMethod.POST)
-    public String orderSubmit(@Valid @ModelAttribute Order order,BindingResult errors,RedirectAttributes redirectAttributes,ModelMap model,HttpSession session) {
+    @RequestMapping(value = "/to_bill", method = RequestMethod.POST)
+    public String orderSubmit(@Valid @ModelAttribute Order form,BindingResult errors,ModelMap model,RedirectAttributesModelMap redirectAttributes,HttpSession session) {
         Assert.notNull(getLoginUser(session));
         if (errors.hasErrors()){
-            redirectAttributes.addFlashAttribute("order", order);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.order", errors);
-            return toBill(null,order,errors,redirectAttributes,model,session);
+            Order dbForm=orderService.findOrderById(form.getId());
+            form.setProductSelectedList(dbForm.getProductSelectedList());
+            model.addAttribute("form", form);
+            model.addAttribute("org.springframework.validation.BindingResult.form", errors);
+            return "to_submit";
         }
-        order.setSubmitStatus("y");
-        ServiceManager.orderService.update(order);
-        redirectAttributes.addFlashAttribute("order", order);
-        return "redirect:/bill";
+        form.setSubmitStatus("y");
+        ServiceManager.orderService.update(form);
+//        redirectAttributes.addFlashAttribute("form", form);
+        return "redirect:/order/to_bill/"+form.getId();
     }
     @RequestMapping(value = "/to_submit/{orderId}")
-    public String toBill(@PathVariable String orderId, Order order,BindingResult errors,RedirectAttributes redirectAttributes,ModelMap model, HttpSession session) {
-        if (orderId==null){
-            return "redirect:/to_submit";
-        }
+    public String toBill(@PathVariable String orderId,ModelMap model, HttpSession session) {
+
         User user=getLoginUser(session);
         Assert.notNull(user);
-        order = ServiceManager.orderService.findOrderById(orderId);
-        Assert.isTrue(user.getId().equals(order.getUser().getId()));
-        model.addAttribute("order",order);
+        Order form=orderService.findOrderById(orderId);
+        Assert.isTrue(user.getId().equals(form.getUser().getId()));
+        model.addAttribute("form",form);
         return "to_submit";
     }
     /**
@@ -113,11 +110,12 @@ public class OrderController extends BaseRestSpringController {
         ResponseEntity<List<Order>> ordersEntity=new ResponseEntity<List<Order>>(orders, HttpStatus.OK);
         return ordersEntity;
     }
-    @RequestMapping(value = "/submit/{id}")
+    @RequestMapping(value = "/to_bill/{id}")
     public String orderSubmit(@PathVariable String id,HttpSession session,ModelMap model,RedirectAttributes redirectAttributes) {
         Order order = ServiceManager.orderService.findOrderById(id);
-        session.setAttribute("order",order);
-        return "redirect:/bill";
+//        session.setAttribute("order",order);
+        model.addAttribute("form",order);
+        return "to_bill";
     }
 
     @RequestMapping(value = "/receive/{id}")

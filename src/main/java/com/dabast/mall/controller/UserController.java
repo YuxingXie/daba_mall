@@ -306,8 +306,8 @@ public class UserController extends BaseRestSpringController {
         Assert.notNull(form);
         Assert.notNull(form.getId());
         if (errors.hasErrors()){
-            modelMap.addFlashAttribute("form", form);
-            modelMap.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
+            modelMap.addAttribute("form", form);
+            modelMap.addAttribute("org.springframework.validation.BindingResult.form", errors);
 //            modelMap.addAttribute("modelMap", modelMap);
 //            modelMap.addAttribute("BindingResult", errors);
             return "redirect:/user/register";

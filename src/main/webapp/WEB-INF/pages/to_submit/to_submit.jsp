@@ -4,11 +4,9 @@
 <%@taglib prefix="p" uri="/pageTag" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:useBean id="order" class="com.dabast.entity.Order" scope="request"></jsp:useBean>
+<jsp:useBean id="form" class="com.dabast.entity.Order" scope="request"></jsp:useBean>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
-<!DOCTYPE html>
-
 <div class="container" ng-app="toBillApp">
         <ul class="breadcrumb">
             <li><a href="${path}">首页</a></li>
@@ -21,7 +19,7 @@
                             <th class="bg-info text-center" colspan="6">送货清单</th>
                         </tr>
                         <c:choose>
-                            <c:when test="${empty requestScope.order ||empty requestScope.order.productSelectedList}">
+                            <c:when test="${empty form ||empty form.productSelectedList}">
                                 <tr>
                                     <th colspan="5">不知道什么原因，您订单中没有商品。</th>
                                 </tr>
@@ -36,13 +34,11 @@
                                     <th class="text-center">总价</th>
                                     <th class="text-center">库存</th>
                                 </tr>
-                                <c:forEach var="productSelected" items="${order.productSelectedList}" varStatus="selectedIndex">
+                                <c:forEach var="productSelected" items="${form.productSelectedList}" varStatus="selectedIndex">
                                     <c:set var="totalPrice" value="${totalPrice+productSelected.amount*productSelected.productSeries.commonPrice}"/>
                                     <tr>
                                         <td>
-
                                             <img class="img-responsive img-ico-sm" src="${path}/${productSelected.productSeries.pictures[0]}">
-
                                         </td>
                                         <td class="shopping-cart-description">
                                             <b><a href="${path}/product/${productSelected.productSeriesId}">${productSelected.productSeries.name} </a></b>
@@ -87,15 +83,15 @@
                             </c:otherwise>
                         </c:choose>
                     </table>
-                <form:form class="form-horizontal form-without-legend" novalidate="novalidate" action="${path}/order/submit"
-                      id="form" name="form" autocomplete="off" _method="post" modelAttribute="order">
+                <form:form class="form-horizontal form-without-legend" novalidate="novalidate" action="${path}/order/to_bill"
+                      id="form" name="form" autocomplete="off" _method="post" modelAttribute="form">
                     <table class="table table-striped content-form-page">
                         <tr>
                             <th class="bg-info text-center" colspan="3">填写并核对订单</th>
                         </tr>
                         <tr>
                             <td class="control-label " width="10%"><label class="padding-top-10">订单号</label></td>
-                            <td colspan="2">${order.id}<input type="hidden" name="id" value="${order.id}"/></td>
+                            <td colspan="2">${form.id}<input type="hidden" name="id" value="${form.id}"/></td>
                         </tr>
                         <tr>
                             <td class="control-label">
@@ -103,7 +99,7 @@
                             </td>
                             <td ng-class="{'has-success':form.acceptPersonName.$valid}" width="50%">
                                 <form:input ng-model="order.acceptPersonName" required="true"  path="acceptPersonName"
-                                       ng-init="order.acceptPersonName='${order.user.name}'" placeholder="请填写收件人姓名" class="form-control"/>
+                                       ng-init="order.acceptPersonName='${form.acceptPersonName}'" placeholder="请填写收件人姓名" class="form-control"/>
                                 <span ng-show="form.acceptPersonName.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                             </td>
                             <td class="has-error">
@@ -117,11 +113,11 @@
                             </td>
                             <td ng-class="{'has-success':form.acceptAddress.$valid}">
                                 <form:input path="acceptAddress" ng-model="order.acceptAddress" required="true" accept_address_valid="{{order.acceptAddress}}"
-                                       placeholder="请选择收件地址" type="text" class="form-control" select-address="sb" p="p" c="c" a="a" d="d"/>
+                                       placeholder="请选择收件地址" type="text" class="form-control" select-address="sb" p="p" c="c" a="a" d="d" ng-init="${form.acceptAddress}"/>
                                 <span class="glyphicon glyphicon-ok form-control-feedback" ng-show="form.acceptAddress.$valid"></span>
                             </td>
                             <td class="has-error">
-                                <form:errors path="acceptPersonName" class="control-label" />
+                                <form:errors path="acceptAddress" class="control-label" />
                                 <label class="control-label" ng-show="form.acceptAddress.$error.required" for="acceptAddress">请选择收件地址</label>
                                 <label class="control-label" ng-show="form.acceptAddress.$error.validAcceptAddress" for="acceptAddress">请填写具体街道</label>
                             </td>
@@ -132,7 +128,7 @@
                             </td>
                             <td ng-class="{'has-success':form.contactPhone.$valid}">
                                 <form:input path="contactPhone" required="true" ng-model="order.contactPhone" placeholder="请填写联系电话" type="tel"
-                                       class="form-control" ng-init="order.contactPhone='${order.user.phone}'" telephone_number_valid="{{order.contactPhone}}"/>
+                                       class="form-control" ng-init="order.contactPhone='${form.contactPhone}'" telephone_number_valid="{{order.contactPhone}}"/>
                                 <span class="glyphicon glyphicon-ok form-control-feedback" ng-show="form.contactPhone.$valid"></span>
                             </td>
                             <td class="has-error">
@@ -145,7 +141,7 @@
                             <td class="control-label">
                                 <label class="padding-top-10">付款方式<span class="require">*</span></label>
                             </td>
-                            <td ng-class="{'has-success':form.payWay.$valid}" ng-init="order.payWay='${order.payWay}'">
+                            <td ng-class="{'has-success':form.payWay.$valid}" ng-init="order.payWay='${form.payWay}'">
                                 <div class="radio">
                                     <label class="radio-inline"><form:radiobutton ng-model="order.payWay" value="1" path="payWay"/>货到付款</label>
                                     <label class="radio-inline"><form:radiobutton ng-model="order.payWay" value="2" path="payWay"/>在线支付</label>

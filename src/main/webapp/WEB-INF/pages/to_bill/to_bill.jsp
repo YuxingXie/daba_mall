@@ -4,6 +4,7 @@
 <%@taglib prefix="p" uri="/pageTag" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="form" class="com.dabast.entity.Order" scope="session"></jsp:useBean>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <!DOCTYPE html>
@@ -11,17 +12,16 @@
 <div class="container" ng-init="matchCode=true" id="bankAppMain">
     <div ng-controller="bankController">
         <ul class="breadcrumb">
-            <%--<li><a href="${path}">首页</a></li>--%>
-            <%--<li><a href="">购物车</a></li>--%>
-            <%--<li class="active">填写订单</li>--%>
-            <li>大坝收银台</li>
+            <li><a href="${path}">首页</a></li>
+            <li><a href="">购物车</a></li>
+            <li class="active">大坝收银台</li>
         </ul>
         <div class="shopping-cart-data clearfix">
             <div>
-                <form class="form-without-legend" novalidate="novalidate" action="${path}/order/pay" id="form" autocomplete="off">
+                <form class="form-without-legend" novalidate="novalidate" action="${path}/order/pay" id="form" autocomplete="off" modelAttribute="form">
 
                     <div class="row">
-                        <p class="bg-info col-lg-8 text-left ">订单提交成功，请您尽快付款！ 订单号：${sessionScope.order.id},应付金额<fmt:formatNumber value="${order.totalPrice}" pattern="##.##" minFractionDigits="2"></fmt:formatNumber>元</p>
+                        <p class="bg-info col-lg-8 text-left ">订单提交成功，请您尽快付款！ 订单号：${form.id},应付金额<fmt:formatNumber value="${form.totalPrice}" pattern="##.##" minFractionDigits="2"></fmt:formatNumber>元</p>
                         <p class="bg-danger text-left col-lg-8" >公告： 请您在6小时内完成支付，否则订单会被自动取消。</p>
                     </div>
                     <div class="row"><br/><br/></div>

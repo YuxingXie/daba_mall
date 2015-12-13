@@ -72,7 +72,7 @@
                                         <c:otherwise>
                                             <c:choose>
                                                 <c:when test="${empty order.payStatus or order.payStatus eq 'n'}">
-                                                    <a href="${path}/order/submit/${order.id}" class="fa  fa-cc-visa btn btn-primary btn-xs">去付款</a>
+                                                    <a href="${path}/order/to_bill/${order.id}" class="fa  fa-cc-visa btn btn-primary btn-xs">去付款</a>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <c:choose>
