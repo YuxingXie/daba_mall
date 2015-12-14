@@ -10,13 +10,18 @@
         $scope.showSort=function(){
 //            $scope.noSortFit=!$scope.noSortFit;
         }
-        $http.get('${path}/product_series//categories').success(function (data) {
+        $http.get('${path}/product_series/categories').success(function (data) {
             $scope.list = data;
-//            $scope.list = [];
         });
-        $scope.$watch('categoryType', function(newVal,oldVal,scope) {
+        $scope.$watch('categoryType', function(newVal,oldVal) {
             if(newVal!==oldVal) {
                 $scope.productCategory =undefined;
+                <%--if(newVal==='2'){--%>
+                    <%--$http.get('${path}/product_series/categories').success(function (data) {--%>
+                        <%--$scope.list = data;--%>
+<%--//                        $scope.$apply();--%>
+                    <%--});--%>
+                <%--}--%>
             }
         });
     }]);

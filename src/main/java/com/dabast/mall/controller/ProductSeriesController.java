@@ -154,15 +154,13 @@ public class ProductSeriesController extends BaseRestSpringController {
     @RequestMapping(value="/categories")
     public ResponseEntity<List<ProductCategory>> categories(ModelMap model,HttpSession session) {
        List<ProductCategory> categories=null;
-
-
-        if(session.getAttribute("productCategories")!=null){
-            categories=(List<ProductCategory>)(session.getAttribute("productCategories"));
-            return new ResponseEntity<List<ProductCategory>>(categories,HttpStatus.OK);
-        }
+//        if(session.getAttribute("productCategories")!=null){
+//            categories=(List<ProductCategory>)(session.getAttribute("productCategories"));
+//            return new ResponseEntity<List<ProductCategory>>(categories,HttpStatus.OK);
+//        }
         categories= ServiceManager.productCategoryService.findAllCategories();
         ResponseEntity<List<ProductCategory>> rt=new ResponseEntity<List<ProductCategory>>(categories, HttpStatus.OK);
-        session.setAttribute("productCategories",categories);
+//        session.setAttribute("productCategories",categories);
         return rt;
     }
     @RequestMapping(value="/evaluates/{evaluateId}")

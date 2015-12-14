@@ -7,8 +7,8 @@
 
 
 <div  ng-app="productSeriesInputApp">
-    <div class="container table-bordered bg-success">
-        <div class="row table-bordered bg-success">
+    <div class="table-bordered">
+        <div class="row table-bordered">
             <form role="form"  action="${path}/admin/product_series/new" name="productSeries" id="form" enctype="multipart/form-data" method="post">
                 <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
                     <div class="col-lg-2 col-sm-2  text-right">产品名称</div>

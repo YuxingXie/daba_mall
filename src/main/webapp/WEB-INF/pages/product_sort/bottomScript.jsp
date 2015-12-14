@@ -4,25 +4,14 @@
 <script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 <%--<script type="text/javascript" src="${path}/statics/assets/plugins/back-to-top.js"></script>--%>
 <script type="text/javascript" src="${path}/statics/assets/plugins/jQuery-slimScroll/jquery.slimscroll.min.js"></script>
-<!-- END CORE PLUGINS -->
-<!-- BEGIN PAGE LEVEL JAVASCRIPTS (REQUIRED ONLY FOR CURRENT PAGE) -->
 <script type="text/javascript" src="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.js"></script>
-<!-- pop up -->
 <script type="text/javascript" src="${path}/statics/assets/plugins/bxslider/jquery.bxslider.min.js"></script>
-<!-- slider for products -->
 <script type="text/javascript" src='${path}/statics/assets/plugins/zoom/jquery.zoom.min.js'></script>
-<!-- product zoom -->
 <script src="${path}/statics/assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script>
-<!-- Quantity -->
-<!-- BEGIN LayerSlider -->
 <script src="${path}/statics/assets/plugins/layerslider/jQuery/jquery-easing-1.3.js" type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/layerslider/jQuery/jquery-transit-modified.js"
-        type="text/javascript"></script>
+<script src="${path}/statics/assets/plugins/layerslider/jQuery/jquery-transit-modified.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.transitions.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>
-<%--<script src="${path}/statics/assets/plugins/bootstrap-paginator-master/build/bootstrap-paginator.min.js"></script>--%>
-
-<%--<script src="${path}/statics/assets/plugins/angular-1.2.19/angular-route.min.js"></script>--%>
 
 <script>
 //    mainApp.module("productSortApp",['tm.pagination'])

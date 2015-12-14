@@ -7,8 +7,6 @@
 <jsp:useBean id="form" class="com.dabast.entity.Order" scope="session"></jsp:useBean>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
-<!DOCTYPE html>
-
 <div class="container" ng-init="matchCode=true" id="bankAppMain">
     <div ng-controller="bankController" ng-init="useAccountPay=true">
         <ul class="breadcrumb">
@@ -26,11 +24,15 @@
                     </div>
                     <div ng-show="useAccountPay">
                         <div class="form-group form-inline">
-                            <label class="control-label">银行卡:</label><select class="form-control" ng-model="account" ng-options="account as account.bank+' '+account.cardNo+' '+account.cardSortString for account in accounts"></select>
+                            <div ng-show="account &&account.length">
+                                <label class="control-label">银行卡:</label>
+                                <select class="form-control" ng-model="useAccount" ng-options="useAccount as useAccount.bank+' '+useAccount.cardNo+' '+useAccount.cardSortString for useAccount in accounts"></select>
+                            </div>
+                            <label class="control-label" ng-show="!accounts||!accounts.length">您没有在本站使用过银行卡 </label>
                             <label class="control-label"><a class="btn btn-sm btn-primary fa fa-credit-card" ng-click="useAccountPay=!useAccountPay">使用新银行卡</a></label>
                             <label class="control-label">支付<fmt:formatNumber value="${form.totalPrice}" pattern="##.##" minFractionDigits="2"></fmt:formatNumber>元</label>
                         </div>
-                        <div class="form-group form-inline">
+                        <div ng-show="account &&account.length" class="form-group form-inline">
                             <div class="center-block"><a type="button" class="fa fa-credit-card fa-lg btn btn-danger btn-lg">立即支付</a> </div>
                         </div>
                     </div>
@@ -84,59 +86,62 @@
                             快捷付款
                         </h2>
                     </div>
-                    <form method="post" name="billForm" action="${path}/order/pay">
+                    <form method="post" name="billForm" id="billForm" ng-submit="submit()"
+                          <%--action="${path}/order/pay"--%>
+                            >
                         <div class="modal-body table-responsive">
                             <table class="table table-striped">
-                                <tr >
-                                    <td width="30%" class="text-left"><i class="fa fa-bank padding-top-15"></i>付款银行</td>
-                                    <td name="bankName" class="text-left"><input type="hidden" value="${order.id}" name="orderId"/></td>
+                                <tr>
+                                    <td width="20%" class="text-left"><i class="fa fa-bank padding-top-15">付款银行</i></td>
+                                    <td class="text-left"><input type="hidden" value="${order.id}" name="orderId"/></td>
 
                                 </tr>
                                 <tr>
-                                    <td class="text-left"><i class="fa fa-adjust padding-top-10"></i>卡种</td>
+                                    <td class="text-left"><i class="fa fa-adjust padding-top-10">卡种</i></td>
                                     <td class="text-left form-inline">
-                                        <label><input type="radio" name="cardSort" value="1" required="true" ng-model="cardSort" class="radio form-control"/>信用卡</label>&nbsp;&nbsp;&nbsp;
-                                        <label><input type="radio" name="cardSort" value="2" required="true" ng-model="cardSort" class="radio form-control"/>储蓄卡</label>
+                                        <label><input type="radio" card_type_valid name="cardSort" value="1" required="true" ng-model="account.cardSort" class="radio form-control"/>信用卡</label>&nbsp;&nbsp;&nbsp;
+                                        <label><input type="radio" card_type_valid name="cardSort" value="2" required="true" ng-model="account.cardSort" class="radio form-control"/>储蓄卡</label>
+                                        <label class="control-label" ng-show="billForm.cardSort.$error.validCardType">信用卡必须输入有效期和卡验证码</label>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="text-left"><i class="fa fa-cc-visa padding-top-10"></i>银行卡号</td>
+                                    <td class="text-left"><i class="fa fa-cc-visa padding-top-10">银行卡号</i></td>
                                     <td class="text-left">
-                                        <input type="text" class="form-control" required="true" name="cardNo" ng-model="cardNo"/>
+                                        <input type="text" class="form-control" required="true" name="cardNo" ng-model="account.cardNo"/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="text-left"><i class="fa fa-user padding-top-10"></i>姓名</td>
+                                    <td class="text-left"><i class="fa fa-user padding-top-10">姓名</i></td>
                                     <td class="text-left">
-                                        <input type="text" class="form-control " value="${order.user.name}" required="true" name="cardUserName" ng-model="cardUserName"/>
+                                        <input type="text" class="form-control " ng-init="account.cardUserName='${order.user.name}'" required="true" name="cardUserName" ng-model="account.cardUserName"/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="text-left"><i class="fa fa-credit-card padding-top-10"></i> 身份证</td>
+                                    <td class="text-left"><i class="fa fa-credit-card padding-top-10">身份证</i> </td>
                                     <td class="text-left">
-                                        <input type="text" name="cardUserIdCardNo" class="form-control" value="${order.user.idCardNo}" required="true"  ng-model="cardUserIdCardNo"/>
+                                        <input type="text" name="cardUserIdCardNo" class="form-control" ng-init="account.cardUserIdCardNo='${order.user.idCardNo}'" required="true"  ng-model="account.cardUserIdCardNo"/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="text-left"><i class="fa fa-mobile fa-lg padding-top-10"></i>手机号</td>
+                                    <td class="text-left"><i class="glyphicon glyphicon-phone padding-top-10">手机号</i></td>
                                     <td class="text-left">
-                                        <input type="text" name="cardUserPhone" class="form-control " value="${order.user.phone}" required="true" ng-model="cardUserPhone"/>
+                                        <input type="text" name="cardUserPhone" class="form-control " value="${order.user.phone}" required="true" ng-model="account.cardUserPhone"/>
                                     </td>
                                 </tr>
 
 
-                                <tr ng-show="cardSort==1" class="text-left">
-                                    <td class="text-left"><i class="fa fa-clock-o"></i>有效期</td>
+                                <tr ng-show="account.cardSort==1" class="text-left">
+                                    <td class="text-left"><i class="fa fa-clock-o">有效期</i></td>
                                     <td class="input-group date form_date text-left">
-                                        <input class="form-control" style="width: 150px;" size="16" type="text" name="cardValidDate" required="true" ng-model="$parent.cardValidDate"/>
+                                        <input class="form-control" style="width: 150px;" size="16" type="text" name="cardValidDate" ng-model="$parent.account.cardValidDate"/>
                                         <span class="input-group-addon pull-left"><span class="glyphicon glyphicon-remove"></span></span>
                                         <span class="input-group-addon pull-left"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </td>
                                 </tr>
-                                <tr ng-show="cardSort==1">
-                                    <td class="text-left"><i class="fa fa-reorder"></i>卡验证码</td>
+                                <tr ng-show="account.cardSort==1">
+                                    <td class="text-left"><i class="fa fa-reorder">卡验证码</i></td>
                                     <td class="text-left form-inline">
-                                        <input type="text" style="width: 150px;" name="cardValidateCode" ng-model="$parent.cardValidateCode" class="form-control bg-success" required="true" placeholder="签名栏后3位数"/>
+                                        <input type="text" style="width: 150px;" name="cardValidateCode" ng-model="$parent.account.cardValidateCode" class="form-control bg-success" placeholder="签名栏后3位数"/>
                                         <label class="control-label"><input type="checkbox" data-ng-click="showPic()" class="form-control checkbox"/>看示例</label>
                                     </td>
                                 </tr>
@@ -146,7 +151,8 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="text-left form-inline" colspan="2">
+                                    <td></td>
+                                    <td class="text-left form-inline">
                                         <div class="center-block">
                                             <label class="control-label">
                                                 <input type="checkbox" value="${order.user.phone}" required="true" class="checkbox form-control" ng-model="xy"/>《大坝快捷支付用户协议》

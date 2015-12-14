@@ -80,21 +80,21 @@
                     <c:when test="${empty newProducts}"><p class="col-lg-10 col-sm-10">敬请期待!</p></c:when>
                     <c:otherwise>
                         <c:forEach items="${newProducts}" var="productSeries">
-                            <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15">
+                            <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15 height-260">
                                 <a href="${path}/product_series/${productSeries.id}"><img src="${path}/${productSeries.pictures[0]}" class="img-responsive img-thumbnail product-show" ></a>
-                                <div class="row">
-                                    <p class="fa fa-rmb pi-price">${productSeries.commonPrice}</p>
+                                <div class="row margin-left-15">
+                                    <a href="${path}/product_series/${productSeries.id}" class="pull-left">${productSeries.name}</a>
+                                    <i class="fa fa-rmb pi-price"></i>${productSeries.commonPrice}&nbsp;&nbsp;
                                     <a href="javascript:void(0)"
-
                                        class="fa fa-shopping-cart btn btn-danger btn-xs" data-ng-click="popover('${productSeries.id}');">添加到购物车</a>
                                 </div>
-                                <div class="row">
-                                    <p class="pi-description col-lg-12 col-sm-12 text-left"> <a href="${path}/product_series/${productSeries.id}">${productSeries.name}</a>
-                                        <c:choose>
-                                            <c:when test="${fn:length(productSeries.description) > 20}">${fn:substring(productSeries.description, 0, 20)}...</c:when>
+                                <div class="row  margin-left-15 margin-right-0 text-left">
+                                        <em>
+                                            <c:choose>
+                                            <c:when test="${fn:length(productSeries.description) > 30}">${fn:substring(productSeries.description, 0, 30)}...</c:when>
                                             <c:otherwise>${productSeries.description}</c:otherwise>
-                                        </c:choose>
-                                    </p>
+                                            </c:choose>
+                                        </em>
                                 </div>
                                 <c:if test="${productSeries.newProduct}"><div class="sticker sticker-new"></div></c:if>
                             </div>
@@ -115,7 +115,7 @@
                     <c:when test="${empty hotSells}"><p class="col-lg-10 col-sm-10">敬请期待!</p></c:when>
                     <c:otherwise>
                         <c:forEach items="${hotSells}" var="productSeries">
-                            <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15">
+                            <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15 height-260">
                                 <a href="${path}/product_series/${productSeries.id}"><img src="${path}/${productSeries.pictures[0]}" class="img-responsive img-thumbnail product-show" ></a>
                                 <div class="row">
                                     <p class="fa fa-rmb pi-price">${productSeries.commonPrice}</p>
@@ -150,7 +150,7 @@
                     <c:when test="${empty lowPrices}"><p class="col-lg-10 col-sm-10">敬请期待!</p></c:when>
                     <c:otherwise>
                         <c:forEach items="${lowPrices}" var="productSeries">
-                            <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15">
+                            <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15 height-260">
                                 <a href="${path}/product_series/${productSeries.id}"><img src="${path}/${productSeries.pictures[0]}" class="img-responsive img-thumbnail product-show" ></a>
                                 <div class="row">
                                     <p class="fa fa-rmb pi-price">${productSeries.commonPrice}</p>

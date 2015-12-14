@@ -32,6 +32,7 @@
            }
        }
    })
+
     .directive("telephoneNumberValid", function () {//手机和座机
         return{
             require:"ngModel",

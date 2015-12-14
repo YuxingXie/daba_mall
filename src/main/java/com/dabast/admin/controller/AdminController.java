@@ -166,6 +166,6 @@ public class AdminController extends BaseRestSpringController {
             productSubCategory.setProductCategory(productCategory);
             ServiceManager.productSubCategoryService.insert(productSubCategory);
         }
-        return "redirect:/admin/index/index";
+        return "redirect:/admin/product_category/create_input";
     }
 }

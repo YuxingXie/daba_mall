@@ -49,8 +49,8 @@ public class Order {
     private String acceptPersonName;
     @Field(value = "contactPhone")
     private String contactPhone;
-    @Field(value = "payAccountId")
-    private String payAccountId;
+//    @Field(value = "payAccountId")
+//    private String payAccountId;
     @Transient
     private Double totalPrice;
     @Transient
@@ -234,13 +234,13 @@ public class Order {
     }
 
 
-    public String getPayAccountId() {
-        return payAccountId;
-    }
-
-    public void setPayAccountId(String payAccountId) {
-        this.payAccountId = payAccountId;
-    }
+//    public String getPayAccountId() {
+//        return payAccountId;
+//    }
+//
+//    public void setPayAccountId(String payAccountId) {
+//        this.payAccountId = payAccountId;
+//    }
 
     public Account getPayAccount() {
         return payAccount;

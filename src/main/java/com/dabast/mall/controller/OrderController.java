@@ -215,10 +215,10 @@ public class OrderController extends BaseRestSpringController {
                 if (account0==null){
                     account.setUser(order.getUser());
                     ServiceManager.accountService.insert(account);
-                    order.setPayAccountId(account.getId());
+//                    order.setPayAccountId(account.getId());
                     order.setPayAccount(account);
                 }else {
-                    order.setPayAccountId(account0.getId());
+//                    order.setPayAccountId(account0.getId());
                     order.setPayAccount(account0);
                 }
 

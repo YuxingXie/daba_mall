@@ -52,36 +52,55 @@
                 }
                 return false;
         }
-                mainApp.controller("bankController",["$scope","$http",function($scope,$http){
-                        $scope.isShow=false;
-                        $http.get(path+"/statics/assets/plugins/bank/bankInfo.json")
-                        .then(function(response){
-                                $scope.banks=response.data;
-                        });
-                        $scope.isShow=false;
-                        $http.get(path+"/user/accounts")
-                        .success(function(data){
-                                $scope.accounts=data;
-                                $scope.account=$scope.accounts[0];
-                        }).error(function(data){
+        mainApp.controller("bankController",["$scope","$http",function($scope,$http){
+                $scope.isShow=false;
+                $http.get(path+"/statics/assets/plugins/bank/bankInfo.json")
+                .then(function(response){
+                        $scope.banks=response.data;
+                });
+                $scope.isShow=false;
+                $http.get(path+"/user/accounts")
+                .success(function(data){
+                        $scope.accounts=data;
+                        $scope.useAccount=$scope.accounts[0];
+                }).error(function(data){
 //                                $("#error-area").text("对不起，服务器出了点错");
 //                                $("#showErrorModal").modal().show();
-                        });
-                        $scope.matches=function(bank){
-                                var code=bank.code;
-                                var cardSorts=bank.cardSorts;
-                                if(!$scope.cardNoOrCode){
-                                        return true;
-                                }
-                                if(matchCode(code,$scope.cardNoOrCode)||matchNo(cardSorts,$scope.cardNoOrCode)){
-                                        return true;
-                                }
-                                return false;
-                        };
-                        $scope.showPic=function(){
-                                $scope.isShow=! $scope.isShow;
+                });
+                $scope.matches=function(bank){
+                        var code=bank.code;
+                        var cardSorts=bank.cardSorts;
+                        if(!$scope.cardNoOrCode){
+                                return true;
                         }
-        }]);
+                        if(matchCode(code,$scope.cardNoOrCode)||matchNo(cardSorts,$scope.cardNoOrCode)){
+                                return true;
+                        }
+                        return false;
+                };
+                $scope.showPic=function(){
+                        $scope.isShow=! $scope.isShow;
+                }
+                $scope.submit=function(){
+                        var action="${path}/order/pay";
+                        $scope.billForm.submit();
+                        return false;
+                }
+        }])
+//        .directive("cardTypeValid", function () {
+//                return{
+//                        //require:"ngModel",
+//                        link:function(scope,ele,attrs,c){
+//                                if(scope.cardSort==='2') c.$setValidity('validCardType',true);
+//                                else{
+//                                        if(scope.cardValidDate &&scope.cardValidateCode){
+//                                                c.$setValidity('validCardType',true);
+//                                        }else c.$setValidity('validCardType',false);
+//                                }
+//
+//                        }
+//                }
+//        });
 //        angular.bootstrap(document.getElementById("bankAppMain"),["bankApp"]);
 
         $(document).ready(function(){
@@ -93,5 +112,12 @@
                         $bankName.append($img);
                         $bankName=$shortcutsPayModal.modal().show();
                 });
+//                $("#billForm").submit(function(){
+//                        var appElement = document.querySelector('[ng-controller=bankController]');
+//                        var $scope = angular.element(appElement).scope();
+//                        alert(JSON.stringify($scope.account));
+////                        $scope.$apply();
+//                        return false;
+//                });
         });
 </script>
