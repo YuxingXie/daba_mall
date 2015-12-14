@@ -106,14 +106,14 @@ div.checker {
 {
     background:#407436 none repeat scroll 0 0;
 }
-.btn-primary
-{
-    background:#187705 none repeat scroll 0 0;
-}
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active
-{
-    background:#407436 none repeat scroll 0 0
-}
+/*.btn-primary*/
+/*{*/
+    /*background:#187705 none repeat scroll 0 0;*/
+/*}*/
+/*.btn-primary:hover, .btn-primary:focus, .btn-primary:active*/
+/*{*/
+    /*background:#407436 none repeat scroll 0 0*/
+/*}*/
 
 .pre-footer a
 {

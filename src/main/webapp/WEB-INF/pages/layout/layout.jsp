@@ -353,6 +353,17 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade active" id="showErrorModal" tabindex="-1" role="dialog" aria-labelledby="showErrorModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;</button>
+                        <div class="modal-title" >抱歉，我们出了点错</div>
+                    </div>
+                    <div id="error-area"></div>
+                </div>
+            </div>
+        </div>
         <footer>
         <tiles:insertAttribute name="footer"/>
     </footer>

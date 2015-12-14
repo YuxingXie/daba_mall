@@ -52,13 +52,21 @@
                 }
                 return false;
         }
-//        angular.module("bankApp",[])
                 mainApp.controller("bankController",["$scope","$http",function($scope,$http){
                         $scope.isShow=false;
                         $http.get(path+"/statics/assets/plugins/bank/bankInfo.json")
-                                .then(function(response){
-                                        $scope.banks=response.data;
-                                });
+                        .then(function(response){
+                                $scope.banks=response.data;
+                        });
+                        $scope.isShow=false;
+                        $http.get(path+"/user/accounts")
+                        .success(function(data){
+                                $scope.accounts=data;
+                                $scope.account=$scope.accounts[0];
+                        }).error(function(data){
+//                                $("#error-area").text("对不起，服务器出了点错");
+//                                $("#showErrorModal").modal().show();
+                        });
                         $scope.matches=function(bank){
                                 var code=bank.code;
                                 var cardSorts=bank.cardSorts;

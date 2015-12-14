@@ -148,14 +148,17 @@ Misc tools
 .margin-bottom-40 {
 	margin-bottom: 40px;
 }
+
+.margin-top-10 {
+	margin-top: 10px;
+}
+.margin-top-20 {
+	margin-top: 10px;
+}
 .margin-top-112
 {
 	margin-top:112px;
 }
-.margin-top-10 {
-	margin-top: 10px;
-}
-
 .margin-left-0 {
 	margin-left: 0;
 }
@@ -172,6 +175,9 @@ Misc tools
 
 .padding-left-0 {
 	padding-left: 0;
+}
+.padding-left-30 {
+	padding-left: 30px;
 }
 .padding-right-0 {
 	padding-right: 0;

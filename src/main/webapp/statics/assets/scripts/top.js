@@ -70,7 +70,6 @@ $(document).ready(function () {
         loginCheckBeforeHandler(new toUrl(url));
     });
     $(document).on("click",".glyphicon-remove",function(){
-        alert("clear")
         $(this).prev().val("").focus();
     });
 

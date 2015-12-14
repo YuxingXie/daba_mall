@@ -687,51 +687,51 @@ code {
   -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
-label {
-  font-weight: 400;
-  font-size: 14px;
-}
+/*label {*/
+  /*font-weight: 400;*/
+  /*font-size: 14px;*/
+/*}*/
 
-.form-control:-moz-placeholder {
-  color: #999999;
-}
-.form-control::-moz-placeholder {
-  color: #999999;
-}
-.form-control:-ms-input-placeholder {
-  color: #999999;
-}
-.form-control::-webkit-input-placeholder {
-  color: #999999;
-}
-.form-control {
-  font-size: 14px;
-  font-weight: normal;
-  color: #333333;
-  background-color: #ffffff;
-  border: 1px solid #e5e5e5;
-  border-radius: 0;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-}
-.form-control:focus {
-  border-color: #999999;
-  outline: 0;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
-}
-.form-control[disabled],
-.form-control[readonly],
-fieldset[disabled] .form-control {
-  cursor: not-allowed;
-  background-color: #eeeeee;
-}
+/*.form-control:-moz-placeholder {*/
+  /*color: #999999;*/
+/*}*/
+/*.form-control::-moz-placeholder {*/
+  /*color: #999999;*/
+/*}*/
+/*.form-control:-ms-input-placeholder {*/
+  /*color: #999999;*/
+/*}*/
+/*.form-control::-webkit-input-placeholder {*/
+  /*color: #999999;*/
+/*}*/
+/*.form-control {*/
+  /*font-size: 14px;*/
+  /*font-weight: normal;*/
+  /*color: #333333;*/
+  /*background-color: #ffffff;*/
+  /*border: 1px solid #e5e5e5;*/
+  /*border-radius: 0;*/
+  /*-webkit-box-shadow: none;*/
+  /*box-shadow: none;*/
+  /*-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;*/
+  /*transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;*/
+/*}*/
+/*.form-control:focus {*/
+  /*border-color: #999999;*/
+  /*outline: 0;*/
+  /*-webkit-box-shadow: none !important;*/
+  /*box-shadow: none !important;*/
+/*}*/
+/*.form-control[disabled],*/
+/*.form-control[readonly],*/
+/*fieldset[disabled] .form-control {*/
+  /*cursor: not-allowed;*/
+  /*background-color: #eeeeee;*/
+/*}*/
 
-.form-control.height-auto {
-  height: auto;
-}
+/*.form-control.height-auto {*/
+  /*height: auto;*/
+/*}*/
 
 .uneditable-input {
   padding: 6px 12px;
@@ -754,12 +754,12 @@ label.form-control {
   margin-bottom: 5px;
 }
 
-input[disabled],
-select[disabled],
-textarea[disabled] {
-  cursor: not-allowed;
-  background-color: #F4F4F4 !important;
-}
+/*input[disabled],*/
+/*select[disabled],*/
+/*textarea[disabled] {*/
+  /*cursor: not-allowed;*/
+  /*background-color: #F4F4F4 !important;*/
+/*}*/
 
 input[readonly],
 select[readonly],
@@ -1492,9 +1492,9 @@ Bootstrap Panel
 /***
 Responsive Image
 ***/
-.table td .img-responsive{
-  width:100%;
-}
+/*.table td .img-responsive{*/
+  /*width:100%;*/
+/*}*/
 
 /***
 Unstyled List

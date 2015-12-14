@@ -397,4 +397,11 @@ public class UserController extends BaseRestSpringController {
         session.setAttribute(Constant.CART,cart);
         return new ResponseEntity<Cart>(cart,HttpStatus.OK);
     }
+    @RequestMapping(value = "/accounts")
+    public ResponseEntity<List<Account>> accounts(HttpSession session) {
+        User user=getLoginUser(session);
+        Assert.notNull(user);
+        List<Account> accounts=ServiceManager.accountService.findAll(new BasicDBObject("user",user));
+        return new ResponseEntity<List<Account>>(accounts,HttpStatus.OK);
+    }
 }
