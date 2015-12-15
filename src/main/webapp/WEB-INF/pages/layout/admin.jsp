@@ -238,6 +238,7 @@
                 </a>
                 <ul id="dicSetting" class="nav nav-list secondmenu collapse">
                   <li><a href="#"><i class="glyphicon glyphicon-text-width"></i>&nbsp;银行配置</a></li>
+                  <li><a href="#"><i class="glyphicon glyphicon-text-width"></i>&nbsp;官方邮箱配置</a></li>
                 </ul>
               </li>
               <li>
