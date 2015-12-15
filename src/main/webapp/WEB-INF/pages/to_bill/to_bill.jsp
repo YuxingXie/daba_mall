@@ -26,16 +26,18 @@
                         <div class="form-group form-inline">
                             <span ng-show="accounts &&accounts.length">
                                 <label class="control-label">银行卡</label>
-                                                                <label class="control-label">
-                                                                    <img class="img-ico-md" ng-src="${path}/statics/assets/plugins/bank/ico/{{useAccount.bank.ico}}" alt="{{useAccount.bank.name}}"/>
-                                                                </label>
-
+                                <label class="control-label">
+                                    <img class="img-ico-md" ng-src="${path}/statics/assets/plugins/bank/ico/{{useAccount.bank.ico}}" alt="{{useAccount.bank.name}}"/>
+                                </label>
+                                <label class="control-label">
+                                    {{useAccount.bankCardSort.cardName}}
+                                </label>
                                 <select class="form-control" ng-model="useAccount"
                                         ng-options="useAccount as useAccount.bank.name+' '+useAccount.cardNo+' '+useAccount.cardSortString for useAccount in accounts">
                                 </select>
                             </span>
                             <label class="control-label" ng-show="!accounts||!accounts.length">您没有在本站使用过银行卡 </label>
-                            <label class="control-label"><a class="btn btn-sm btn-primary fa fa-credit-card" ng-click="useAccountPay=!useAccountPay">使用新银行卡</a></label>
+                            <label class="control-label"><a class="btn btn-sm btn-primary fa fa-credit-card" ng-click="useAccountPay=!useAccountPay;getBanks();">使用新银行卡</a></label>
                             <label class="control-label">支付<fmt:formatNumber value="${form.totalPrice}" pattern="##.##" minFractionDigits="2"></fmt:formatNumber>元</label>
                         </div>
                         <div ng-show="accounts &&accounts.length" class="form-group form-inline">
@@ -127,18 +129,18 @@
                                 </tr>
 
 
-                                <tr ng-show="account.cardSort==1" class="text-left">
+                                <tr ng-show="order.payAccount.cardSort==1" class="text-left">
                                     <td class="text-left"><i class="fa fa-clock-o">有效期</i></td>
                                     <td class="input-group date form_date text-left">
-                                        <input class="form-control" style="width: 150px;" size="16" type="text" name="cardValidDate" ng-model="$parent.order.payAccount.cardValidDate"/>
+                                        <input class="form-control" style="width: 150px;" size="16" type="text" name="cardValidDate" ng-model="order.payAccount.cardValidDate"/>
                                         <span class="input-group-addon pull-left"><span class="glyphicon glyphicon-remove"></span></span>
                                         <span class="input-group-addon pull-left"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </td>
                                 </tr>
-                                <tr ng-show="account.cardSort==1">
+                                <tr ng-show="order.payAccount.cardSort==1">
                                     <td class="text-left"><i class="fa fa-reorder">卡验证码</i></td>
                                     <td class="text-left form-inline">
-                                        <input type="text" style="width: 150px;" name="cardValidateCode" ng-model="$parent.order.payAccount.cardValidateCode" class="form-control bg-success" placeholder="签名栏后3位数"/>
+                                        <input type="text" style="width: 150px;" name="cardValidateCode" ng-model="order.payAccount.cardValidateCode" class="form-control bg-success" placeholder="签名栏后3位数"/>
                                         <label class="control-label"><input type="checkbox" data-ng-click="showPic()" class="form-control checkbox"/>看示例</label>
                                     </td>
                                 </tr>

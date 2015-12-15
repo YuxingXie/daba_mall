@@ -11,6 +11,7 @@
   <link href="${path}/statics/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="${path}/statics/assets/css/style.css" rel="stylesheet" type="text/css">
   <link href="${path}/statics/assets/css/style-responsive.css" rel="stylesheet" type="text/css">
+  <link href="${path}/statics/assets/css/color-bg-color.css" rel="stylesheet" type="text/css">
   <script> path="${path}";</script>
   <script type="text/javascript" src="${path}/statics/assets/plugins/jquery-2.1.1.js"></script>
   <tiles:insertAttribute name="css"/>

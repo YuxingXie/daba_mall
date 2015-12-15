@@ -12,6 +12,7 @@ import com.dabast.mall.service.impl.CartService;
 import com.dabast.mall.service.impl.RegisterValidateService;
 import com.dabast.mall.service.impl.UserService;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBRef;
 import org.apache.commons.mail.EmailException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -397,11 +398,20 @@ public class UserController extends BaseRestSpringController {
         session.setAttribute(Constant.CART,cart);
         return new ResponseEntity<Cart>(cart,HttpStatus.OK);
     }
-    @RequestMapping(value = "/accounts")
+    @RequestMapping(value = "/accounts/{userId}")
+    public ResponseEntity<List<Account>> accounts(@PathVariable String userId,HttpSession session) {
+//        User user=getLoginUser(session);
+//        Assert.notNull(user);
+        User user=new User();
+        user.setId(userId);
+        List<Account> accounts=ServiceManager.accountService.findAll(new BasicDBObject("user",user));
+        return new ResponseEntity<List<Account>>(accounts,HttpStatus.OK);
+    }
+    @RequestMapping(value = "/accs")
     public ResponseEntity<List<Account>> accounts(HttpSession session) {
         User user=getLoginUser(session);
-        Assert.notNull(user);
-        List<Account> accounts=ServiceManager.accountService.findAll(new BasicDBObject("user",user));
+//        Assert.notNull(user);
+        List<Account> accounts=ServiceManager.accountService.findAll(new BasicDBObject("user",new DBRef("users",user.getId())));
         return new ResponseEntity<List<Account>>(accounts,HttpStatus.OK);
     }
 }

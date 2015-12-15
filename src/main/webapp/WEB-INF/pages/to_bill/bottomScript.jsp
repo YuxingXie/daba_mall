@@ -55,21 +55,23 @@
         mainApp.controller("bankController",["$scope","$http",function($scope,$http){
                 $scope.isShow=false;
                 $scope.order={};
+                $scope.order.payWay='2'
                 $scope.order.payAccount={};
                 $scope.order.payAccount.bank={};
                 $scope.bank={};
-                $http.get(path+"/bank/json")
-                .then(function(response){
-                        $scope.banks=response.data;
-                });
+                $scope.getBanks=function(){
+                        if($scope.banks) return;
+                        $http.get(path+"/bank/json")
+                        .success(function(response){
+                                $scope.banks=response;
+                        });
+                }
+
                 $scope.isShow=false;
-                $http.get(path+"/user/accounts")
+                $http.get(path+"/user/accs")
                 .success(function(data){
                         $scope.accounts=data;
                         $scope.useAccount=$scope.accounts[0];
-                }).error(function(data){
-//                                $("#error-area").text("对不起，服务器出了点错");
-//                                $("#showErrorModal").modal().show();
                 });
                 $scope.matches=function(bank){
                         var code=bank.code;
@@ -89,7 +91,7 @@
                         var url="${path}/order/pay";
 //                        console.log(JSON.stringify($scope.bank));
                         $scope.order.payAccount.bank.id=$scope.bank.id;
-                        console.log(JSON.stringify($scope.order));
+//                        console.log(JSON.stringify($scope.order));
                         $http.post( url,$scope.order).success(function (order) {
                                 $scope.order=order;
                         }).error(function(){ console.log("error！"); });

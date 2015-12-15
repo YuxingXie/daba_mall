@@ -187,7 +187,7 @@ public class OrderController extends BaseRestSpringController {
         return "redirect:/order/receive/"+id;
     }
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
-    public String orderPay( @ModelAttribute Account account,String orderId, ModelMap model,HttpServletRequest request,RedirectAttributes redirectAttributes) throws IOException {
+    public ResponseEntity<Order> orderPay( @RequestBody Order order, ModelMap model,HttpSession session,RedirectAttributes redirectAttributes) throws IOException {
         /**
          * 付款成功系统需要做的事
          * 1.发送请求至外部接口，接收返回数据
@@ -195,10 +195,12 @@ public class OrderController extends BaseRestSpringController {
          * 3.保存用户的账户信息（银行卡号）
          * 4.通知用户等待收货
          */
-        Assert.notNull(orderId);
-        Order order=ServiceManager.orderService.findById(orderId);
+        User user=getLoginUser(session);
+        Assert.notNull(user);
         Assert.notNull(order);
-        Assert.notNull(order.getUser());
+        Assert.notNull(order.getId());
+//        Order order=ServiceManager.orderService.findById(orderId);
+//        Assert.notNull(order.getUser());
         String payWay=order.getPayWay();
         Assert.notNull(payWay);
         //货到付款1，在线支付2，公司转账3，邮局汇款4
@@ -211,14 +213,13 @@ public class OrderController extends BaseRestSpringController {
 //            String result=OuterRequestUtil.sendPost(outUrl,requestParams);
             if (ThirdPartPayUtil.isPaySuccess()){
                 order.setPayStatus("y");
-                Account account0 = ServiceManager.accountService.findAccountsByUserIdAndCardNo(order.getUser().getId(),account.getCardNo());
+                Account account0 = ServiceManager.accountService.findAccountsByUserIdAndCardNo(user.getId(),order.getPayAccount().getCardNo());
                 if (account0==null){
-                    account.setUser(order.getUser());
+                    Account account=order.getPayAccount();
+                    account.setUser(user);
                     ServiceManager.accountService.insert(account);
-//                    order.setPayAccountId(account.getId());
                     order.setPayAccount(account);
                 }else {
-//                    order.setPayAccountId(account0.getId());
                     order.setPayAccount(account0);
                 }
 
@@ -233,7 +234,8 @@ public class OrderController extends BaseRestSpringController {
         }
         ServiceManager.orderService.update(order);
         redirectAttributes.addFlashAttribute("order",order);
-        return "redirect:/pay_result";
+//        return "redirect:/pay_result";
+        return new ResponseEntity<Order>(order,HttpStatus.OK);
     }
     @RequestMapping(value = "/cancel")
     public String orderCancel(ModelMap model,HttpSession session) {

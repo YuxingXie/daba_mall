@@ -119,8 +119,29 @@ public class Account {
         if (cardSort.equals("2")) return "储蓄卡";
         return cardSort;
     }
+    @Transient
+    private CardSort bankCardSort;
 
-    public void setCardSortString(String cardSortString) {
-        this.cardSortString = cardSortString;
+    /**
+     * 最长匹配
+     * @return
+     */
+    public CardSort getBankCardSort(){
+        if (this.cardNo==null) return null;
+        if (this.bank==null) return null;
+        CardSort maybe=null;
+        for (CardSort bankCardSort:bank.getCardSorts()){
+            if (bankCardSort.getNoStart()==null ||bankCardSort.getNoStart().length()==0) continue;
+            if (!cardNo.startsWith(bankCardSort.getNoStart())) continue;
+            if (maybe==null){
+                maybe=bankCardSort;
+                continue;
+            }
+            if (bankCardSort.getNoStart().length()<maybe.getNoStart().length()) continue;
+            maybe=bankCardSort;
+        }
+        this.bankCardSort=maybe;
+        return maybe;
     }
+
 }
