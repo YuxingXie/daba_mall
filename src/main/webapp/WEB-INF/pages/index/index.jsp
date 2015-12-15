@@ -80,24 +80,29 @@
                     <c:when test="${empty newProducts}"><p class="col-lg-10 col-sm-10">敬请期待!</p></c:when>
                     <c:otherwise>
                         <c:forEach items="${newProducts}" var="productSeries">
-                            <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15 height-260">
-                                <a href="${path}/product_series/${productSeries.id}"><img src="${path}/${productSeries.pictures[0]}" class="img-responsive img-thumbnail product-show" ></a>
-                                <div class="row margin-left-15">
-                                    <a href="${path}/product_series/${productSeries.id}" class="pull-left">${productSeries.name}</a>
-                                    <i class="fa fa-rmb pi-price"></i>${productSeries.commonPrice}&nbsp;&nbsp;
-                                    <a href="javascript:void(0)"
-                                       class="fa fa-shopping-cart btn btn-danger btn-xs" data-ng-click="popover('${productSeries.id}');">添加到购物车</a>
-                                </div>
-                                <div class="row  margin-left-15 margin-right-0 text-left">
+                            <div class="col-lg-3 col-sm-3 padding-left-5 padding-right-0">
+                                <div class="thumbnail">
+                                    <a href="${path}/product_series/${productSeries.id}"><img src="${path}/${productSeries.pictures[0]}" class="img-responsive img-thumbnail" ></a>
+                                    <c:if test="${productSeries.newProduct}"><div class="sticker sticker-new"></div></c:if>
+                                    <div class="row margin-left-0">
+                                        <a href="${path}/product_series/${productSeries.id}" class="pull-left">${productSeries.name}</a>
+                                        <i class="fa fa-rmb pi-price"></i>${productSeries.commonPrice}&nbsp;&nbsp;
+                                        <a href="javascript:void(0)"
+                                           class="fa fa-shopping-cart btn btn-danger btn-xs pull-right margin-right-20" data-ng-click="popover('${productSeries.id}');">添加到购物车</a>
+
+                                    </div>
+                                    <div class="row  margin-left-0 margin-right-0 text-left bg-info">
                                         <em>
                                             <c:choose>
-                                            <c:when test="${fn:length(productSeries.description) > 30}">${fn:substring(productSeries.description, 0, 30)}...</c:when>
-                                            <c:otherwise>${productSeries.description}</c:otherwise>
+                                                <c:when test="${fn:length(productSeries.description) > 30}">${fn:substring(productSeries.description, 0, 30)}...</c:when>
+                                                <c:otherwise>${productSeries.description}</c:otherwise>
                                             </c:choose>
                                         </em>
+                                    </div>
+
                                 </div>
-                                <c:if test="${productSeries.newProduct}"><div class="sticker sticker-new"></div></c:if>
                             </div>
+
                         </c:forEach>
                     </c:otherwise>
                 </c:choose>

@@ -3,14 +3,14 @@
     "code": "BOC",
     "name": "中国银行",
     "ico":"20060713191624438.gif",
-    "cards":[{"noStart":"622760","cardSort":"","cardName":"中国银行中银都市卡"},{"noStart":"409666","cardSort":"","cardName":"中国银行BOC系列VISA标准卡普通卡/VISA高校认同卡"},
+    "cardSorts":[{"noStart":"622760","cardSort":"","cardName":"中国银行中银都市卡"},{"noStart":"409666","cardSort":"","cardName":"中国银行BOC系列VISA标准卡普通卡/VISA高校认同卡"},
       {"noStart":"438088","cardSort":"","cardName":"中国银行国航知音信用卡"},{"noStart":"622752","cardSort":"","cardName":"中国银行上海市分行长城人民币贷记卡普通卡"}]
   },
   {
     "code": "ICBC",
     "name": "中国工商银行",
     "ico":"20060713191624443.gif",
-    "cards":[{"noStart":"427020","cardSort":"","cardName":"中国工商银行VISA学生国际信用卡"},{"noStart":"427030","cardSort":"","cardName":"中国工商银行VISA国际信用卡金卡"},
+    "cardSorts":[{"noStart":"427020","cardSort":"","cardName":"中国工商银行VISA学生国际信用卡"},{"noStart":"427030","cardSort":"","cardName":"中国工商银行VISA国际信用卡金卡"},
       {"noStart":"530990","cardSort":"","cardName":"中国工商银行MC国际信用卡普通卡"}
     ,{"noStart":"622230","cardSort":"","cardName":"中国工商银行新版人民币贷记卡普卡"},{"noStart":"622235","cardSort":"","cardName":"中国工商银行新版人民币贷记卡金卡"},
       {"noStart":"622210","cardSort":"","cardName":"中国工商银行新版信用卡(准贷)普卡"}

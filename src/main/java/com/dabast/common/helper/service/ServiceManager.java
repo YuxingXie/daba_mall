@@ -13,7 +13,7 @@ public class ServiceManager implements InitializingBean{
     public static IProductSubCategoryService productSubCategoryService;
     public static IProductPropertyValueService productPropertyValueService;
     public static IOrderService orderService;
-
+    public static IBankService bankService;
 
     public static IUserService userService;
     public static IAccountService accountService;
@@ -24,6 +24,10 @@ public class ServiceManager implements InitializingBean{
     public static IProductStoreInAndOutService productStoreInAndOutService;
     public static IInterestService interestService;
     public static IProductEvaluateService productEvaluateService;
+
+    public void setBankService(IBankService bankService) {
+        ServiceManager.bankService = bankService;
+    }
 
     public void setProductEvaluateService(IProductEvaluateService productEvaluateService) {
         ServiceManager.productEvaluateService = productEvaluateService;

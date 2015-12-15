@@ -170,6 +170,15 @@ Misc tools
 .margin-left-0 {
 	margin-left: 0;
 }
+.margin-left-2 {
+	margin-left:2px;
+}
+.margin-left-5 {
+	margin-left:5px;
+}
+.margin-left-10 {
+	margin-left: 10px;
+}
 .margin-left-15 {
 	margin-left: 15px;
 }
@@ -179,6 +188,12 @@ Misc tools
 
 .padding-left-0 {
 	padding-left: 0;
+}
+.padding-left-5 {
+	padding-left: 5px;
+}
+.padding-left-10 {
+	padding-left: 10px;
 }
 .padding-left-30 {
 	padding-left: 30px;
@@ -366,7 +381,7 @@ Catalogue styles
 .sticker-new {
 	background: url(../img/new.png) no-repeat;
 	left: auto;
-	right: 0;
+	right:0px;
 }
 
 

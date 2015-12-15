@@ -21,7 +21,11 @@ public class Account {
     @Field(value = "cardUserName")
     private String cardUserName;
     @Field
-    private String bank;
+    private String cardValidateCode;
+    @Field
+    private String cardValidDate;
+    @DBRef
+    private Bank bank;
     @DBRef(db = "users")
     private User user;
     @Transient
@@ -85,11 +89,27 @@ public class Account {
         this.user = user;
     }
 
-    public String getBank() {
+    public String getCardValidateCode() {
+        return cardValidateCode;
+    }
+
+    public void setCardValidateCode(String cardValidateCode) {
+        this.cardValidateCode = cardValidateCode;
+    }
+
+    public String getCardValidDate() {
+        return cardValidDate;
+    }
+
+    public void setCardValidDate(String cardValidDate) {
+        this.cardValidDate = cardValidDate;
+    }
+
+    public Bank getBank() {
         return bank;
     }
 
-    public void setBank(String bank) {
+    public void setBank(Bank bank) {
         this.bank = bank;
     }
 

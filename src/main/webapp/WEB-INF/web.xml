@@ -133,6 +133,7 @@
             <!--<url-pattern>/user/register</url-pattern>-->
             <!--<url-pattern>/user/login</url-pattern>-->
             <!--<url-pattern>/user/login/direct/*</url-pattern>-->
+            <!--<url-pattern>/order/to_bill/*</url-pattern>-->
         <!--</web-resource-collection>-->
         <!--<user-data-constraint>-->
             <!--<transport-guarantee>CONFIDENTIAL</transport-guarantee>-->

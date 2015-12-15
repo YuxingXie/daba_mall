@@ -24,15 +24,21 @@
                     </div>
                     <div ng-show="useAccountPay">
                         <div class="form-group form-inline">
-                            <div ng-show="account &&account.length">
-                                <label class="control-label">银行卡:</label>
-                                <select class="form-control" ng-model="useAccount" ng-options="useAccount as useAccount.bank+' '+useAccount.cardNo+' '+useAccount.cardSortString for useAccount in accounts"></select>
-                            </div>
+                            <span ng-show="accounts &&accounts.length">
+                                <label class="control-label">银行卡</label>
+                                                                <label class="control-label">
+                                                                    <img class="img-ico-md" ng-src="${path}/statics/assets/plugins/bank/ico/{{useAccount.bank.ico}}" alt="{{useAccount.bank.name}}"/>
+                                                                </label>
+
+                                <select class="form-control" ng-model="useAccount"
+                                        ng-options="useAccount as useAccount.bank.name+' '+useAccount.cardNo+' '+useAccount.cardSortString for useAccount in accounts">
+                                </select>
+                            </span>
                             <label class="control-label" ng-show="!accounts||!accounts.length">您没有在本站使用过银行卡 </label>
                             <label class="control-label"><a class="btn btn-sm btn-primary fa fa-credit-card" ng-click="useAccountPay=!useAccountPay">使用新银行卡</a></label>
                             <label class="control-label">支付<fmt:formatNumber value="${form.totalPrice}" pattern="##.##" minFractionDigits="2"></fmt:formatNumber>元</label>
                         </div>
-                        <div ng-show="account &&account.length" class="form-group form-inline">
+                        <div ng-show="accounts &&accounts.length" class="form-group form-inline">
                             <div class="center-block"><a type="button" class="fa fa-credit-card fa-lg btn btn-danger btn-lg">立即支付</a> </div>
                         </div>
                     </div>
@@ -41,33 +47,21 @@
                             <li class="active"><a href="#netBank" data-toggle="tab">网银支付</a></li>
                             <li><a href="#shortcuts" data-toggle="tab">快捷支付</a></li>
                         </ul>
+                        <div class="form-inline">
+                            <input type="text" class="bank-code form-control" placeholder="输入银行卡号或简码识别" ng-model="cardNoOrCode"/>
+                            <a class="fa fa-history btn btn-xs btn-primary" ng-click="useAccountPay=!useAccountPay">返回我的银行卡</a>
+                        </div>
                         <div class="tab-content">
                             <div class="tab-pane fade in active" id="netBank">
-                                <div class="form-inline">
 
-                                    <input type="text" class="bank-code form-control" placeholder="输入银行卡号或简码识别" ng-model="cardNoOrCode"/>
-                                    <a  class="fa fa-history btn btn-xs btn-primary" ng-click="useAccountPay=!useAccountPay">返回我的银行卡</a>
-                                </div>
-                                <div >
-                                    <div ng-repeat="bank in banks">
-                                        <div class="col-lg-3 col-sm-3" style="margin-top: 5px;margin-bottom: 5px;">
-                                            <a href="#" class="bank-ico" data-code="{{bank.code}}" data-bank-name="{{bank.name}}">
-                                            <img src="${path}/statics/assets/plugins/bank/ico/{{bank.ico}}" alt="{{bank.name}}"/></a></div>
-                                    </div>
-                                </div>
                             </div>
                             <div class="tab-pane" id="shortcuts">
-
-                                <div class="form-inline">
-                                    <input type="text" class="bank-code form-control" placeholder="输入银行卡号或简码识别" ng-model="cardNoOrCode"/>
-                                    <a  class="fa fa-history btn btn-xs btn-primary" ng-click="useAccountPay=!useAccountPay">返回我的银行卡</a>
-                                </div>
                                 <div>
                                     <div ng-repeat="bank in banks">
                                             <div class="col-lg-3 col-sm-3 bank-shortcuts" style="margin-top: 5px;margin-bottom: 5px;"
                                                  data-code="{{bank.code}}"  data-bank-name="{{bank.name}}" data-ico="{{bank.ico}}" ng-if="matches(bank)">
-                                                <a href="#" class="bank-ico" data-code="{{bank.code}}"  data-bank-name="{{bank.name}}" data-ico="{{bank.ico}}">
-                                                    <img src="${path}/statics/assets/plugins/bank/ico/{{bank.ico}}" alt="{{bank.name}}"/></a>
+                                                <a href="#" class="bank-ico" ng-click="shortcutsPay(bank)">
+                                                    <img ng-src="${path}/statics/assets/plugins/bank/ico/{{bank.ico}}" alt="{{bank.name}}"/></a>
                                             </div>
                                     </div>
                                 </div>
@@ -93,39 +87,42 @@
                             <table class="table table-striped">
                                 <tr>
                                     <td width="20%" class="text-left"><i class="fa fa-bank padding-top-15">付款银行</i></td>
-                                    <td class="text-left"><input type="hidden" value="${order.id}" name="orderId"/></td>
-
+                                    <td class="text-left">
+                                        <img src="${path}/statics/assets/plugins/bank/ico/{{bank.ico}}"/>
+                                        <input type="hidden" ng-init="order.id='${form.id}'" name="orderId" ng-model="order.id"/>
+                                        <%--<input type="hidden" ng-init="order.payAccount.bank.id=bank.id" name="bankId" ng-model="order.payAccount.bank.id"/>--%>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="text-left"><i class="fa fa-adjust padding-top-10">卡种</i></td>
                                     <td class="text-left form-inline">
-                                        <label><input type="radio" card_type_valid name="cardSort" value="1" required="true" ng-model="account.cardSort" class="radio form-control"/>信用卡</label>&nbsp;&nbsp;&nbsp;
-                                        <label><input type="radio" card_type_valid name="cardSort" value="2" required="true" ng-model="account.cardSort" class="radio form-control"/>储蓄卡</label>
+                                        <label><input type="radio" card_type_valid name="cardSort" value="1" required="true" ng-model="order.payAccount.cardSort" class="radio form-control"/>信用卡</label>&nbsp;&nbsp;&nbsp;
+                                        <label><input type="radio" card_type_valid name="cardSort" value="2" required="true" ng-model="order.payAccount.cardSort" class="radio form-control"/>储蓄卡</label>
                                         <label class="control-label" ng-show="billForm.cardSort.$error.validCardType">信用卡必须输入有效期和卡验证码</label>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="text-left"><i class="fa fa-cc-visa padding-top-10">银行卡号</i></td>
                                     <td class="text-left">
-                                        <input type="text" class="form-control" required="true" name="cardNo" ng-model="account.cardNo"/>
+                                        <input type="text" class="form-control" required="true" name="cardNo" ng-model="order.payAccount.cardNo"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="text-left"><i class="fa fa-user padding-top-10">姓名</i></td>
                                     <td class="text-left">
-                                        <input type="text" class="form-control " ng-init="account.cardUserName='${order.user.name}'" required="true" name="cardUserName" ng-model="account.cardUserName"/>
+                                        <input type="text" class="form-control " ng-init="order.payAccount.cardUserName='${order.user.name}'" required="true" name="cardUserName" ng-model="order.payAccount.cardUserName"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="text-left"><i class="fa fa-credit-card padding-top-10">身份证</i> </td>
                                     <td class="text-left">
-                                        <input type="text" name="cardUserIdCardNo" class="form-control" ng-init="account.cardUserIdCardNo='${order.user.idCardNo}'" required="true"  ng-model="account.cardUserIdCardNo"/>
+                                        <input type="text" name="cardUserIdCardNo" class="form-control" ng-init="order.payAccount.cardUserIdCardNo='${order.user.idCardNo}'" required="true"  ng-model="order.payAccount.cardUserIdCardNo"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="text-left"><i class="glyphicon glyphicon-phone padding-top-10">手机号</i></td>
                                     <td class="text-left">
-                                        <input type="text" name="cardUserPhone" class="form-control " value="${order.user.phone}" required="true" ng-model="account.cardUserPhone"/>
+                                        <input type="text" name="cardUserPhone" class="form-control " ng-init="order.payAccount.cardUserPhone='${order.user.phone}'" required="true" ng-model="order.payAccount.cardUserPhone"/>
                                     </td>
                                 </tr>
 
@@ -133,7 +130,7 @@
                                 <tr ng-show="account.cardSort==1" class="text-left">
                                     <td class="text-left"><i class="fa fa-clock-o">有效期</i></td>
                                     <td class="input-group date form_date text-left">
-                                        <input class="form-control" style="width: 150px;" size="16" type="text" name="cardValidDate" ng-model="$parent.account.cardValidDate"/>
+                                        <input class="form-control" style="width: 150px;" size="16" type="text" name="cardValidDate" ng-model="$parent.order.payAccount.cardValidDate"/>
                                         <span class="input-group-addon pull-left"><span class="glyphicon glyphicon-remove"></span></span>
                                         <span class="input-group-addon pull-left"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </td>
@@ -141,7 +138,7 @@
                                 <tr ng-show="account.cardSort==1">
                                     <td class="text-left"><i class="fa fa-reorder">卡验证码</i></td>
                                     <td class="text-left form-inline">
-                                        <input type="text" style="width: 150px;" name="cardValidateCode" ng-model="$parent.account.cardValidateCode" class="form-control bg-success" placeholder="签名栏后3位数"/>
+                                        <input type="text" style="width: 150px;" name="cardValidateCode" ng-model="$parent.order.payAccount.cardValidateCode" class="form-control bg-success" placeholder="签名栏后3位数"/>
                                         <label class="control-label"><input type="checkbox" data-ng-click="showPic()" class="form-control checkbox"/>看示例</label>
                                     </td>
                                 </tr>

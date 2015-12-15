@@ -54,7 +54,11 @@
         }
         mainApp.controller("bankController",["$scope","$http",function($scope,$http){
                 $scope.isShow=false;
-                $http.get(path+"/statics/assets/plugins/bank/bankInfo.json")
+                $scope.order={};
+                $scope.order.payAccount={};
+                $scope.order.payAccount.bank={};
+                $scope.bank={};
+                $http.get(path+"/bank/json")
                 .then(function(response){
                         $scope.banks=response.data;
                 });
@@ -82,42 +86,21 @@
                         $scope.isShow=! $scope.isShow;
                 }
                 $scope.submit=function(){
-                        var action="${path}/order/pay";
-                        $scope.billForm.submit();
+                        var url="${path}/order/pay";
+//                        console.log(JSON.stringify($scope.bank));
+                        $scope.order.payAccount.bank.id=$scope.bank.id;
+                        console.log(JSON.stringify($scope.order));
+                        $http.post( url,$scope.order).success(function (order) {
+                                $scope.order=order;
+                        }).error(function(){ console.log("error！"); });
                         return false;
                 }
-        }])
-//        .directive("cardTypeValid", function () {
-//                return{
-//                        //require:"ngModel",
-//                        link:function(scope,ele,attrs,c){
-//                                if(scope.cardSort==='2') c.$setValidity('validCardType',true);
-//                                else{
-//                                        if(scope.cardValidDate &&scope.cardValidateCode){
-//                                                c.$setValidity('validCardType',true);
-//                                        }else c.$setValidity('validCardType',false);
-//                                }
-//
-//                        }
-//                }
-//        });
-//        angular.bootstrap(document.getElementById("bankAppMain"),["bankApp"]);
-
-        $(document).ready(function(){
-                $(document).on("click","#shortcuts .bank-ico",function () {
+                $scope.shortcutsPay=function(bank){
+                        $scope.bank=bank;
                         var $shortcutsPayModal=$("#shortcutsPayModal");
-                        var $img=$('<img src="'+path+'/statics/assets/plugins/bank/ico/'+$(this).data("ico")+'"/>');
-                        var $bankName=$shortcutsPayModal.find('[name="bankName"]');
-                        $bankName.empty();
-                        $bankName.append($img);
-                        $bankName=$shortcutsPayModal.modal().show();
-                });
-//                $("#billForm").submit(function(){
-//                        var appElement = document.querySelector('[ng-controller=bankController]');
-//                        var $scope = angular.element(appElement).scope();
-//                        alert(JSON.stringify($scope.account));
-////                        $scope.$apply();
-//                        return false;
-//                });
-        });
+                        $shortcutsPayModal.modal().show();
+                }
+        }])
+
+        $(document).ready(function(){});
 </script>
