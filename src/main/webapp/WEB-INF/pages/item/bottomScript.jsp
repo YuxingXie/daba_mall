@@ -13,13 +13,64 @@
 <script type="text/javascript">
 //    angular.module("productSeriesApp",[])
     mainApp.controller('productSeriesCtrl', ['$scope', '$http', function ($scope, $http) {
+        $scope.productSelected={};
+        $scope.productSelected.productPropertyValueList=[];
+        $scope.productSelected.amount = 1;
         $http.get("${path}//product_series/data/${id}").success(function(data){
             $scope.productSeries=data.productSeries;
+            $scope.productSelected.productSeries= $scope.productSeries;
             $scope._page=data._page;
             $scope.page=data.page;
             $scope.order=data.order;
             $scope.ratingVal = $scope.productSeries.productSeriesEvaluateGrade?$scope.productSeries.productSeriesEvaluateGrade:0;
+
+            if($scope.productSeries && $scope.productSeries.productProperties &&$scope.productSeries.productProperties.length){
+                for(var i=0;i<$scope.productSeries.productProperties.length;i++){
+                    var productProperty=$scope.productSeries.productProperties[i];
+                    var propertyValues=productProperty.propertyValues;
+                    if(propertyValues&&propertyValues.length){
+                        $scope.productSelected.productPropertyValueList[i]=propertyValues[0];//默认选中第一个属性值
+                    }
+                }
+            }
         });
+        $scope.max = 5;
+        $scope.ratingVal =3;
+        $scope.readonly = true;
+        $scope.changeImg=function(currentImg){
+            $scope.currentImg=currentImg;
+        }
+        $scope.add2cart=function(){
+            $http.post('${path}/index/cart', $scope.productSelected).success(function(data){
+                $scope.$parent.cart=data;
+            }).error(function(data) {
+                alert("对不起，服务器出现了点异常!");
+            });
+        }
+        $scope.onHover = function(val){
+            $scope.hoverVal = val;
+        };
+        $scope.onLeave = function(){
+            $scope.hoverVal = null;
+        }
+        $scope.onChange = function(val){
+            $scope.ratingVal = val;
+        }
+//        $scope.deleteGoods=function(index){
+////            alert(JSON.stringify(index));
+//            if($scope.$parent.cart.productSelectedList&&$scope.$parent.cart.productSelectedList.length){
+//                $scope.$parent.cart.productSelectedList.splice(index,1);
+//                $http({
+//                    method:"POST",
+//                    url:path+"/cart/update",
+//                    data:$scope.$parent.cart
+//                }).success(function(cart){
+//                    $scope.$parent.cart=cart;
+//                }).error(function(){
+//
+//                });
+//            }
+//        }
         // Instantiate EasyZoom plugin
         var $easyzoom = $('.easyzoom').easyZoom();
         // Get the instance API
@@ -142,50 +193,50 @@
 //        App.initUniform();
 //        App.initTouchspin();
 //        $(function() {$('#menu').metisMenu();});
-        $(document).on("click",".product-image",function(){
-            var $productMainImage=$(".product-main-image").find("img");
-            var imgSrc=$(this).attr("src");
-            $productMainImage.attr("src",imgSrc);
-            $productMainImage.attr("data-BigImgSrc",imgSrc);
-            App.initImageZoom();
-            $('.add2cart').shoping();
-        });
+//        $(document).on("click",".product-image",function(){
+//            var $productMainImage=$(".product-main-image").find("img");
+//            var imgSrc=$(this).attr("src");
+//            $productMainImage.attr("src",imgSrc);
+//            $productMainImage.attr("data-BigImgSrc",imgSrc);
+//            App.initImageZoom();
+//            $('.add2cart').shoping();
+//        });
 //        $('.replyForm').ajaxForm(function(){alert("提交成功1");});
 //        $('.replyForm').submit(function(){
 //            $(this).ajaxSubmit({
 //
 //            });
 //        });
-        $(document).on("click",".add2cart",function(){
-            $('.add2cart').shoping();
-            var form=$('[name="cartForm"]');
-            var amount=$("#product-quantity").val();
-            var productSelected={};
-            productSelected.amount=amount;
-            productSelected.productSeriesId=form.find("[name='productSeriesId']").val();
-            var productPropertyValueIds=[];
-            form.find("select").each(function(){
-                var productPropertyValueId=$(this).val();
-//                console.log(productPropertyValueId);
-                productPropertyValueIds.push(productPropertyValueId);
-            });
-            productSelected.productPropertyValueIds=productPropertyValueIds;
-            console.log(JSON.stringify(productSelected));
-            $.ajax({
-                url: path+"/index/cart",
-                contentType: "application/json",
-                data: JSON.stringify(productSelected),
-                method: "post",
-                success: function (data) {
-//                    console.log("add to cart success");
-                    renderCart(data);
-                    $('.add2cart').shoping();
-                },
-                error:function(data){
-
-                }
-            })
-        });
+//        $(document).on("click",".add2cart",function(){
+//            $('.add2cart').shoping();
+//            var form=$('[name="cartForm"]');
+//            var amount=$("#product-quantity").val();
+//            var productSelected={};
+//            productSelected.amount=amount;
+//            productSelected.productSeriesId=form.find("[name='productSeriesId']").val();
+//            var productPropertyValueIds=[];
+//            form.find("select").each(function(){
+//                var productPropertyValueId=$(this).val();
+////                console.log(productPropertyValueId);
+//                productPropertyValueIds.push(productPropertyValueId);
+//            });
+//            productSelected.productPropertyValueIds=productPropertyValueIds;
+//            console.log(JSON.stringify(productSelected));
+//            $.ajax({
+//                url: path+"/index/cart",
+//                contentType: "application/json",
+//                data: JSON.stringify(productSelected),
+//                method: "post",
+//                success: function (data) {
+////                    console.log("add to cart success");
+//                    renderCart(data);
+//                    $('.add2cart').shoping();
+//                },
+//                error:function(data){
+//
+//                }
+//            })
+//        });
     });
 </script>
 <%--<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>--%>

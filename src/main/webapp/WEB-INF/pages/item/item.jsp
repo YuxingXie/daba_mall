@@ -15,80 +15,91 @@
             <li><a href="">商店</a></li>
             <li class="active">物品详情</li>
         </ul>
-        <!-- BEGIN SIDEBAR & CONTENT -->
-        <%--<div class="row margin-bottom-40">  </div>--%>
-          <!-- BEGIN CONTENT -->
-          <%--<div class="col-md-9 col-sm-7"> </div>--%>
-            <%--<div class="product-page">  </div>--%>
-        <div class="row">
-          <div class="col-lg-6 col-sm-6">
+        <div class="row bg-info margin-bottom-40">
+          <div class="col-lg-5 col-sm-5">
               <form name="form">
                 <div class="row">
-                  <div class="easyzoom easyzoom--adjacent" style="width:400px;height:300px;" ng-init="img=0;">
+                  <div class="easyzoom easyzoom--adjacent" ng-init="img=0;">
                     <a ng-href="${path}/statics/img/product/5649c4116f70e517dce0b22c.JPG">
                       <img ng-src="${path}/{{productSeries.pictures[img]}}" class="img-responsive"/>
                     </a>
                   </div>
                 </div>
                 <div class="row">
-                  <span class="thumbnail img-ico-lg col-lg-1 col-sm-1" ng-repeat="picture in productSeries.pictures">
+                  <span class="thumbnail img-ico-lg col-lg-2 col-sm-2" ng-repeat="picture in productSeries.pictures">
                     <a class="control-label" href="javascript:void(0)" data-ng-click="$parent.img=$index;"><img class="img-thumbnail" ng-src="${path}/{{picture}}"/></a>
                   </span>
                 </div>
-
+                <div class="row">
+                  <div><i>{{productSeries.description}}</i></div>
+                </div>
 
               </form>
           </div>
-          <div class="col-lg-6 col-sm-6">
-            <h1>{{productSeries.name}}</h1>
-            <em ng-if="productSeries.currentPrice &&productSeries.currentPrice.prevPrice &&productSeries.currentPrice.price < productSeries.currentPrice.prevPrice.price">
-              <span class="fa fa-rmb fa-5x">${productSeries.currentPrice.prevPrice.price}</span>
-            </em>
-            <%--<input type="range" name="productSeriesEvaluateGrade" step="0.5" id="backing4" value="{{productSeries.productSeriesEvaluateGrade}}" disabled/>--%>
-            <div class="center-block" star rating-value="ratingVal" max="max" on-hover="onHover" on-leave="onLeave" readonly="true"></div>
-            <ul class="social-icons">
-              <div class="bdsharebuttonbox">
-                <a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
-              <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"这里的东西太好吃了,都是生态环保的湖南宁乡土特产,你也来看看吧！","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16","tag":"pic1"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
-            </ul>
-            {{productSeries.evaluateCount}}条评论
-            <a ng-if="order && order.id" href="javascript:void(0)" class="tour-step1" data-toggle="modal" data-target="#evaluateModal">|发表评论</a>
+          <div class="col-lg-4 col-sm-4">
+              <div class="row padding-bottom-20"><h1 class="center-block">{{productSeries.name}}</h1></div>
+              <div class="row padding-bottom-20">
+                <div class="col-sm-3 col-lg-3 padding-left-0 margin-left-0 text-left"><h3 class="fa fa-rmb fa-2x">{{productSeries.commonPrice}}</h3>
+                  <em ng-if="productSeries.currentPrice &&productSeries.currentPrice.prevPrice && productSeries.currentPrice<productSeries.currentPrice.prevPrice">
+                    <i class="fa fa-rmb"></i>{{productSeries.currentPrice.prevPrice.price}}
+                  </em>
+                </div>
+              </div>
+              <div class="row padding-bottom-20">
+                <div class="col-lg-3 col-sm-3 padding-left-0 margin-left-0" star rating-value="ratingVal" max="max" on-hover="onHover" on-leave="onLeave" readonly="true"></div>
+              </div>
+
+              <div class="row padding-bottom-20">
+                <div class="col-sm-3 col-lg-3 text-left padding-left-0 margin-left-0">库存 {{productSeries.productStore.remain}}</div>
+              </div>
+              <div class="row padding-bottom-20">
+                <div class="col-sm-3 col-lg-3 text-left padding-left-0 margin-left-0">{{productSeries.evaluateCount}}条评论</div>
+                <div class="col-sm-3 col-lg-3 text-left padding-left-0 margin-left-0">
+                  <a ng-if="order && order.id" href="javascript:void(0)" class="tour-step1" data-toggle="modal" data-target="#evaluateModal">发表评论</a>
+                </div>
+              </div>
+            <div class="row padding-bottom-20 form-group">
+                <div ng-repeat="productProperty in productSeries.productProperties">
+                  <label class="control-label pull-left margin-top-10">{{productProperty.propertyName}}:</label>
+                  <div class="col-lg-4 col-sm-4">
+                    <select  ng-model="productSelected.productPropertyValueList[$index]" required="true" class="form-control"
+                        ng-options="productPropertyValue.value for productPropertyValue in productProperty.propertyValues"></select>
+                  </div>
+                </div>
+
+
+
+            </div>
+            <div class="row padding-bottom-20">
+                <div class="col-lg-4 col-sm-4"><input type="number" min="1" class="form-control" ng-model="productSelected.amount" placeholder="购买数量"/></div>
+                <div class="col-lg-4 col-sm-4">
+                  <button class="btn btn-primary add2cart fa fa-shopping-cart margin-left-20" type="button" data-ng-click="add2cart()">添加到购物车</button>
+                </div>
+            </div>
+            <div class="row padding-bottom-20">
+              <ul class="social-icons">
+                <div class="bdsharebuttonbox">
+                  <%--<a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>--%>
+                <%--<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"这里的东西太好吃了,都是生态环保的湖南宁乡土特产,你也来看看吧！","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16","tag":"pic1"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>--%>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-3">
+            <div class="row margin-top-112" ng-init="interested=true">
+              <div class="col-sm-5 col-lg-5" ng-if="!interested">
+                <i class="fa fa-heart-o fa-2x">未关注</i>
+              </div>
+              <div class="col-sm-5 col-lg-5" ng-if="interested">
+                <i class="fa fa-heart fa-2x">已关注</i>
+              </div>
+              <div class="col-sm-2 col-lg-2"><a href="javascript:void(0)" ng-class="{'fa':true,'fa-toggle-off':!interested,'fa-toggle-on':interested,'fa-2x':true}"  ng-click="interested=!interested"></a></div>
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-sm-1 col-lg-1">价格<i class="fa fa-rmb"></i></div>
-          <div class="col-sm-1 col-lg-1text-left">{{productSeries.commonPrice}}
-            <em ng-if="productSeries.currentPrice &&productSeries.currentPrice.prevPrice && productSeries.currentPrice<productSeries.currentPrice.prevPrice">
-              <i class="fa fa-rmb"></i>{{productSeries.currentPrice.prevPrice.price}}
-            </em>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-1 col-lg-1">库存<i class="fa fa-cubes"></i></div>
-          <div class="col-sm-1 col-lg-1 text-left">{{productSeries.productStore.remain}}</div>
-        </div>
-        <div class="row">
-          <td colspan="4"><i>{{productSeries.description}}</i></td>
-        </div>
-        <div class="row">
-          <th>选择商品<i class="fa fa-flag"></i></th>
-          <th colspan="3">
-                            <span ng-repeat="productProperty in productSeries.productProperties">
-                            <i class="fa fa-spin fa-sun-o"></i>{{productProperty.propertyName}}:
-                            <select  ng-model="$parent.productPropertyValueList[$index]"
-                                     required="true"
-                                     ng-options="productPropertyValue.value for productPropertyValue in productProperty.propertyValues"></select>
 
-                            </span>
 
-          </th>
-        </div>
-        <div class="row">
-          <th>输入数量<i class="fa fa-cube"></i></th>
-          <td><input type="number" min="1" class="" ng-model="amount" style="max-width: 100px;"></td>
-          <td> <button data-toggle="tooltip" data-original-title="xxx" data-placement="left" data-trigger="click" data-selector="#cart-block"
-                       class="btn btn-primary add2cart pull-right fa fa-shopping-cart" type="button" data-ng-click="add2cart()">添加到购物车</button></td>
-        </div>
+
+
 
         <div class="row margin-bottom-40">
           <div class="product-page-content">

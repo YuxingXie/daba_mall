@@ -59,10 +59,7 @@ a, a:focus, a:hover, a:active {
 	outline: 0;
 	text-decoration: none;
 }
-a:hover {
-	/*color: #E02222;*/
-	text-decoration: underline;
-}
+
 
 /***
 Misc tools
