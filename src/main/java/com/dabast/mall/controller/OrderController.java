@@ -4,6 +4,7 @@ import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.constant.Constant;
 import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.common.helper.service.ServiceManager;
+import com.dabast.common.util.BigDecimalUtil;
 import com.dabast.common.util.ThirdPartPayUtil;
 import com.dabast.entity.*;
 import com.dabast.mall.dao.UserDao;
@@ -12,6 +13,10 @@ import com.dabast.mall.service.impl.OrderService;
 import com.dabast.mall.service.impl.RegisterValidateService;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
+import com.pingplusplus.Pingpp;
+import com.pingplusplus.exception.PingppException;
+import com.pingplusplus.model.Charge;
+import example.ChargeExample;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -32,9 +37,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Administrator on 2015/6/11.
@@ -187,7 +190,7 @@ public class OrderController extends BaseRestSpringController {
         return "redirect:/order/receive/"+id;
     }
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
-    public ResponseEntity<Order> orderPay( @RequestBody Order order, ModelMap model,HttpSession session,RedirectAttributes redirectAttributes) throws IOException {
+    public ResponseEntity<Charge> orderPay( @RequestBody Order order, ModelMap model,HttpSession session,RedirectAttributes redirectAttributes) throws IOException {
         /**
          * 付款成功系统需要做的事
          * 1.发送请求至外部接口，接收返回数据
@@ -211,7 +214,32 @@ public class OrderController extends BaseRestSpringController {
 //            CustomServletRequestWrapper requestWrapper=new CustomServletRequestWrapper(request);
 //            Map<String,String[]> requestParams=requestWrapper.getParameterMap();
 //            String result=OuterRequestUtil.sendPost(outUrl,requestParams);
-            if (ThirdPartPayUtil.isPaySuccess()){
+
+            Pingpp.apiKey = ChargeExample.apiKey;
+            ChargeExample ce = new ChargeExample();
+            System.out.println("---------创建 charge");
+//                Charge charge = ce.charge();
+            Charge charge = null;
+            Map<String, Object> chargeMap = new HashMap<String, Object>();
+            chargeMap.put("amount", 10);
+            chargeMap.put("currency", "cny");
+            chargeMap.put("subject", "Your Subject");
+            chargeMap.put("body", "Your Body");
+            chargeMap.put("order_no", order.getId());
+            chargeMap.put("channel", "alipay");
+            chargeMap.put("channel", "alipay_pc_direct");
+            chargeMap.put("client_ip", "127.0.0.1");
+            Map extra=new HashMap<String,String>();
+            extra.put("success_url","http://www.dabast.com/order/to_bill/565bc67335f0d102e85d21d9");
+            chargeMap.put("extra", extra);
+//        chargeMap.put("success_url", "http://localhost:8088/mall/order/to_bill/565bc67335f0d102e85d21d9");
+            Map<String, String> app = new HashMap<String, String>();
+            app.put("id",ChargeExample.appId);
+            chargeMap.put("app", app);
+            try {
+                //发起交易请求
+                charge = Charge.create(chargeMap);
+                System.out.println(charge);
                 order.setPayStatus("y");
                 Account account0 = ServiceManager.accountService.findAccountsByUserIdAndCardNo(user.getId(),order.getPayAccount().getCardNo());
                 if (account0==null){
@@ -222,20 +250,18 @@ public class OrderController extends BaseRestSpringController {
                 }else {
                     order.setPayAccount(account0);
                 }
-
-            }else{
-                order.setPayStatus("n");
+                ServiceManager.orderService.update(order);
+                redirectAttributes.addFlashAttribute("order",order);
+                return new ResponseEntity<Charge>(charge,HttpStatus.OK);
+            } catch (PingppException e) {
+                e.printStackTrace();
             }
-
         }else if (payWay.equals("3")){
             order.setPayStatus("n");
         }else if (payWay.equals("4")){
             order.setPayStatus("n");
         }
-        ServiceManager.orderService.update(order);
-        redirectAttributes.addFlashAttribute("order",order);
-//        return "redirect:/pay_result";
-        return new ResponseEntity<Order>(order,HttpStatus.OK);
+        return null;
     }
     @RequestMapping(value = "/cancel")
     public String orderCancel(ModelMap model,HttpSession session) {

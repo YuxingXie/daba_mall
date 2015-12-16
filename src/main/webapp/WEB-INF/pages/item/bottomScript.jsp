@@ -1,29 +1,29 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><c:set var="path" value="<%=request.getContextPath() %>"/><c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
-<script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/jQuery-slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-<!-- END CORE PLUGINS -->
 
-<!-- BEGIN PAGE LEVEL JAVASCRIPTS(REQUIRED ONLY FOR CURRENT PAGE) -->
-<script src="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/bxslider/jquery.bxslider.min.js" type="text/javascript"></script><!-- slider for products -->
-<script src="${path}/statics/assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script><!-- Quantity -->
-<%--<script src="${path}/statics/assets/plugins/rateit/src/jquery.rateit.loadManual.js" type="text/javascript"></script>--%>
 <script src="${path}/statics/assets/plugins/rateit/src/jquery.rateit.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/bootstrap-star-rating-master/js/star-rating.min.js" type="text/javascript"></script>
-<script src='${path}/statics/assets/plugins/zoom/jquery.zoom.min.js' type="text/javascript"></script><!-- product zoom -->
 
-<script src="${path}/statics/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
 <script src="${path}/statics/assets/plugins/bootstrap-tour-0.10.2/js/bootstrap-tour.js"></script>
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput_locale_zh.js" type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/onokumus-metisMenu-aaa0c7c/src/metisMenu.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/bootstrap-paginator-master/build/bootstrap-paginator.min.js"></script>
-<script src="${path}/statics/assets/plugins/jquery-ui.js" type="text/javascript" ></script>
+
 
 <script type="text/javascript">
 //    angular.module("productSeriesApp",[])
     mainApp.controller('productSeriesCtrl', ['$scope', '$http', function ($scope, $http) {
+        $http.get("${path}//product_series/data/${id}").success(function(data){
+            $scope.productSeries=data.productSeries;
+            $scope._page=data._page;
+            $scope.page=data.page;
+            $scope.order=data.order;
+            $scope.ratingVal = $scope.productSeries.productSeriesEvaluateGrade?$scope.productSeries.productSeriesEvaluateGrade:0;
+        });
+        // Instantiate EasyZoom plugin
+        var $easyzoom = $('.easyzoom').easyZoom();
+        // Get the instance API
+        var api = $easyzoom.data('easyZoom');
     <c:forEach var="productEvaluate" items="${_page.content}" varStatus="varStatus">
         $scope.toReply${varStatus.index}=function(){
             loginCheckBeforeHandler(function(){
@@ -135,13 +135,13 @@
             tour.start();
         }
 
-        App.init();
-        App.initBxSlider();
-        App.initImageZoom();
-        App.initSliderRange();
-        App.initUniform();
-        App.initTouchspin();
-        $(function() {$('#menu').metisMenu();});
+//        App.init();
+//        App.initBxSlider();
+//        App.initImageZoom();
+//        App.initSliderRange();
+//        App.initUniform();
+//        App.initTouchspin();
+//        $(function() {$('#menu').metisMenu();});
         $(document).on("click",".product-image",function(){
             var $productMainImage=$(".product-main-image").find("img");
             var imgSrc=$(this).attr("src");

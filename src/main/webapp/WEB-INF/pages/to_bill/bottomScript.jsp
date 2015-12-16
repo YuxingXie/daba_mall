@@ -92,8 +92,14 @@
 //                        console.log(JSON.stringify($scope.bank));
                         $scope.order.payAccount.bank.id=$scope.bank.id;
 //                        console.log(JSON.stringify($scope.order));
-                        $http.post( url,$scope.order).success(function (order) {
-                                $scope.order=order;
+                        $http.post( url,$scope.order).success(function (charge) {
+                                console.log(JSON.stringify(charge));
+                                console.log(JSON.stringify(pingppPc))
+                                window.pingppPc.payment(charge, function(result, err){
+                                // 处理错误信息
+                                alert(err);
+                                });
+
                         }).error(function(){ console.log("error！"); });
                         return false;
                 }
@@ -103,6 +109,23 @@
                         $shortcutsPayModal.modal().show();
                 }
         }])
+        .directive("cardValidDateValid", function () {//
+                return{
+                        require:"ngModel",
+                        link:function(scope,ele,attrs,c){
+                                scope.$watch(attrs.ngModel,function(n){
+                                        if(!n) return;
+                                        if(scope.order.payAccount.cardSort==='2')
+                                        {
+                                                c.$setValidity('validCardValidDate',true);
+                                        }else{
+                                                c.$setValidity('validCardValidDate',true);
+                                        }
+                                });
+
+                        }
+                }
+        })
 
         $(document).ready(function(){});
 </script>

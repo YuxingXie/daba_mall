@@ -16,4 +16,3 @@
     #infoPage .separate a{cursor: default; border: none;}
     #infoPage .separate a:hover {background: none;}
 </style>
-<link href="${path}/statics/assets/css/breadcrumb.css" rel="stylesheet" type="text/css">

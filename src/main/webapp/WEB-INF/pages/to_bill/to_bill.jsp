@@ -7,6 +7,7 @@
 <jsp:useBean id="form" class="com.dabast.entity.Order" scope="session"></jsp:useBean>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
+<script src="${path}/statics/assets/plugins/pingpp-html5-master/src/pingpp.js"></script>
 <div class="container" ng-init="matchCode=true" id="bankAppMain">
     <div ng-controller="bankController" ng-init="useAccountPay=true">
         <ul class="breadcrumb">
@@ -41,7 +42,7 @@
                             <label class="control-label">支付<fmt:formatNumber value="${form.totalPrice}" pattern="##.##" minFractionDigits="2"></fmt:formatNumber>元</label>
                         </div>
                         <div ng-show="accounts &&accounts.length" class="form-group form-inline">
-                            <div class="center-block"><a type="button" class="fa fa-credit-card fa-lg btn btn-danger btn-lg">立即支付</a> </div>
+                            <div class="center-block"><a type="button" id="pay" class="fa fa-credit-card fa-lg btn btn-danger btn-lg">立即支付</a> </div>
                         </div>
                     </div>
                     <div class="row form-horizontal" ng-show="!useAccountPay">
@@ -82,7 +83,7 @@
                             快捷付款
                         </h2>
                     </div>
-                    <form method="post" name="billForm" id="billForm" ng-submit="submit()"
+                    <form method="post" name="billForm" id="billForm" ng-submit="submit()" autocomplete="off"
                           <%--action="${path}/order/pay"--%>
                             >
                         <div class="modal-body table-responsive">
@@ -98,9 +99,9 @@
                                 <tr>
                                     <td class="text-left"><i class="fa fa-adjust padding-top-10">卡种</i></td>
                                     <td class="text-left form-inline">
-                                        <label><input type="radio" card_type_valid name="cardSort" value="1" required="true" ng-model="order.payAccount.cardSort" class="radio form-control"/>信用卡</label>&nbsp;&nbsp;&nbsp;
+                                        <label>
+                                            <input type="radio" card_type_valid name="cardSort" value="1" required="true" ng-model="order.payAccount.cardSort" class="radio form-control"/>信用卡</label>&nbsp;&nbsp;&nbsp;
                                         <label><input type="radio" card_type_valid name="cardSort" value="2" required="true" ng-model="order.payAccount.cardSort" class="radio form-control"/>储蓄卡</label>
-                                        <label class="control-label" ng-show="billForm.cardSort.$error.validCardType">信用卡必须输入有效期和卡验证码</label>
                                     </td>
                                 </tr>
                                 <tr>
@@ -112,19 +113,23 @@
                                 <tr>
                                     <td class="text-left"><i class="fa fa-user padding-top-10">姓名</i></td>
                                     <td class="text-left">
-                                        <input type="text" class="form-control " ng-init="order.payAccount.cardUserName='${order.user.name}'" required="true" name="cardUserName" ng-model="order.payAccount.cardUserName"/>
+                                        <input style="width: 200px;" type="text" class="form-control " ng-init="order.payAccount.cardUserName='${order.user.name}'" required="true" name="cardUserName" ng-model="order.payAccount.cardUserName"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="text-left"><i class="fa fa-credit-card padding-top-10">身份证</i> </td>
                                     <td class="text-left">
-                                        <input type="text" name="cardUserIdCardNo" class="form-control" ng-init="order.payAccount.cardUserIdCardNo='${order.user.idCardNo}'" required="true"  ng-model="order.payAccount.cardUserIdCardNo"/>
+                                        <input type="text" name="cardUserIdCardNo" class="form-control" ng-init="order.payAccount.cardUserIdCardNo='${order.user.idCardNo}'" required="true"
+                                               ng-model="order.payAccount.cardUserIdCardNo" id_card_valid="true" maxlength="18"/>
+                                    <label class="has-error" ng-if="billForm.cardUserIdCardNo.$error.validIdCard">请输入有效身份证号码</label>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="text-left"><i class="glyphicon glyphicon-phone padding-top-10">手机号</i></td>
                                     <td class="text-left">
-                                        <input type="text" name="cardUserPhone" class="form-control " ng-init="order.payAccount.cardUserPhone='${order.user.phone}'" required="true" ng-model="order.payAccount.cardUserPhone"/>
+                                        <input type="text" name="cardUserPhone" class="form-control " ng-init="order.payAccount.cardUserPhone='${order.user.phone}'" required="true"
+                                               phone_number_valid="true" ng-model="order.payAccount.cardUserPhone"/>
+                                        <label class="control-label margin-left-20" ng-show="billForm.cardUserPhone.$error.validPhoneNumber"> 请输入一个有效的手机号</label>
                                     </td>
                                 </tr>
 
@@ -132,7 +137,7 @@
                                 <tr ng-show="order.payAccount.cardSort==1" class="text-left">
                                     <td class="text-left"><i class="fa fa-clock-o">有效期</i></td>
                                     <td class="input-group date form_date text-left">
-                                        <input class="form-control" style="width: 150px;" size="16" type="text" name="cardValidDate" ng-model="order.payAccount.cardValidDate"/>
+                                        <input class="form-control" style="width: 150px;" size="16" type="text" name="cardValidDate" ng-model="order.payAccount.cardValidDate" readonly ng-required="order.payAccount.cardSort==1"/>
                                         <span class="input-group-addon pull-left"><span class="glyphicon glyphicon-remove"></span></span>
                                         <span class="input-group-addon pull-left"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </td>
@@ -140,7 +145,8 @@
                                 <tr ng-show="order.payAccount.cardSort==1">
                                     <td class="text-left"><i class="fa fa-reorder">卡验证码</i></td>
                                     <td class="text-left form-inline">
-                                        <input type="text" style="width: 150px;" name="cardValidateCode" ng-model="order.payAccount.cardValidateCode" class="form-control bg-success" placeholder="签名栏后3位数"/>
+                                        <input type="text" style="width: 150px;" name="cardValidateCode" ng-model="order.payAccount.cardValidateCode" class="form-control bg-success"
+                                               placeholder="签名栏后3位数" ng-required="order.payAccount.cardSort==1" maxlength="3" />
                                         <label class="control-label"><input type="checkbox" data-ng-click="showPic()" class="form-control checkbox"/>看示例</label>
                                     </td>
                                 </tr>
@@ -170,9 +176,6 @@
                                 </tr>
                             </table>
                         </div>
-                        <%--<div class="modal-footer">--%>
-
-                        <%--</div>--%>
                     </form>
 
                 </div>

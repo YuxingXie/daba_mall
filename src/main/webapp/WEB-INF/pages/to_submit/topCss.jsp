@@ -2,6 +2,4 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
-<link href="${path}/statics/assets/css/breadcrumb.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/plugins/rateit/src/rateit.css" rel="stylesheet" type="text/css">
-<%--<link href="${path}/statics/assets/css/content-form-page.css" rel="stylesheet" type="text/css">--%>

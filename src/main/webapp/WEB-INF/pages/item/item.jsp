@@ -16,123 +16,80 @@
             <li class="active">物品详情</li>
         </ul>
         <!-- BEGIN SIDEBAR & CONTENT -->
-        <div class="row margin-bottom-40">
-          <!-- BEGIN SIDEBAR -->
-          <%--<div class="sidebar col-md-3 col-sm-5">--%>
-            <%--<aside class="sidebar">--%>
-              <%--<nav class="sidebar-nav">--%>
-                <%--<ul class="metismenu" id="menu">--%>
-                  <%--<c:forEach var="productCategory" items="${f:getProductCategories()}">--%>
-                    <%--<c:choose>--%>
-                      <%--<c:when test="${productSeries.productSubCategory.productCategory.id eq productCategory.id}">--%>
-                        <%--<li class="active">--%>
-                      <%--</c:when>--%>
-                      <%--<c:otherwise><li></c:otherwise>--%>
-                    <%--</c:choose>--%>
-
-                        <%--<a href="#" aria-expanded="true">--%>
-                          <%--<span class="sidebar-nav-item-icon fa fa-inbox fa-lg"></span>--%>
-                          <%--<span class="sidebar-nav-item">${productCategory.categoryName}</span>--%>
-                          <%--<span class="fa arrow"></span>--%>
-                        <%--</a>--%>
-                        <%--<ul aria-expanded="true">--%>
-                          <%--<c:forEach var="subCategory" items="${f:getProductSubCategoriesByCategoryId(productCategory.id)}">--%>
-                            <%--<li class="col-lg-offset-1 col-sm-offset-1">--%>
-                              <%--<a href="${path}/product_series/sort/${subCategory.id}">--%>
-                                <%--<span class="sidebar-nav-item-icon fa  fa-long-arrow-right"></span>--%>
-                                  <%--${subCategory.subCategoryName}--%>
-                                <%--<c:if test="${productSeries.productSubCategory.id eq subCategory.id}"><span class="sidebar-nav-item-icon fa fa-flag-o pull-right"></span ></c:if>--%>
-                              <%--</a>--%>
-                            <%--</li>--%>
-                          <%--</c:forEach>--%>
-                        <%--</ul>--%>
-                  <%--</li>--%>
-                  <%--</c:forEach>--%>
-                <%--</ul>--%>
-                <%--</nav>--%>
-            <%--</aside>--%>
-          <%--</div>--%>
-          <!-- END SIDEBAR -->
+        <%--<div class="row margin-bottom-40">  </div>--%>
           <!-- BEGIN CONTENT -->
-          <div class="col-md-9 col-sm-7">
-            <div class="product-page">
-              <div class="row">
-                <div class="col-md-6 col-sm-6">
-                  <div class="product-main-image">
-                    <img data-tag="pic1" ng-src="${path}/${productSeries.pictures[0]}" alt="${productSeries.name}" class="img-responsive" data-BigImgSrc="${path}/${productSeries.pictures[0]}">
-                  </div>
-                  <div class="product-other-images" >
-                      <c:forEach var="pic" items="${productSeries.pictures}">
-                        <a href="javascript:void(0)"><img class="product-image" src="${path}/${pic}"></a>
-                      </c:forEach>
+          <%--<div class="col-md-9 col-sm-7"> </div>--%>
+            <%--<div class="product-page">  </div>--%>
+        <div class="row">
+          <div class="col-lg-6 col-sm-6">
+              <form name="form">
+                <div class="row">
+                  <div class="easyzoom easyzoom--adjacent" style="width:400px;height:300px;" ng-init="img=0;">
+                    <a ng-href="${path}/statics/img/product/5649c4116f70e517dce0b22c.JPG">
+                      <img ng-src="${path}/{{productSeries.pictures[img]}}" class="img-responsive"/>
+                    </a>
                   </div>
                 </div>
-                <div class="col-md-6 col-sm-6">
-                  <form name="cartForm">
-                    <input type="hidden" name="productSeriesId" value="${productSeries.id}">
-                    <h1>${productSeries.name}</h1>
-                    <div class="price-availability-block clearfix">
-                      <div class="price">
-                        <strong><span class="fa fa-rmb fa-5x"></span>${productSeries.commonPrice}</strong>
-                        <%--<em><span class="fa fa-rmb fa-5x">62.00</span></em>--%>
-                        <c:if test="${not empty productSeries.currentPrice and not empty productSeries.currentPrice.prevPrice and productSeries.currentPrice.price lt productSeries.currentPrice.prevPrice.price}">
-                          <em><span class="fa fa-rmb fa-5x">${productSeries.currentPrice.prevPrice.price}</span></em>
-                        </c:if>
-                      </div>
-                      <div class="availability">
-                        状态:
-                        <c:if test="${empty productSeries.productStore}"><strong>无库存信息</strong></c:if>
-                        <c:if test="${not empty productSeries.productStore and not empty productSeries.productStore.remain}"><strong>剩余${productSeries.productStore.remain}件</strong></c:if>
-                        <c:if test="${not empty productSeries.productStore and empty productSeries.productStore.remain}"><strong>无法获取</strong></c:if>
-                      </div>
-                    </div>
-                    <div class="description">
-                      <p>${productSeries.description}</p>
-                    </div>
-                    <div class="product-page-options">
-                      <c:forEach var="productProperty" items="${productSeries.productProperties}">
-                        <div class="pull-left">
-                          <label class="control-label" style=" direction:ltr;">${productProperty.propertyName}&nbsp;:&nbsp;</label>
-                          <select class="form-control input-sm" name="productPropertyId" data-product-property-id="${productProperty.id}" >
-                            <c:forEach var="propertyValue" items="${productProperty.propertyValues}">
-                              <option value="${propertyValue.id}">${propertyValue.value}</option>
-                            </c:forEach>
-                          </select>
-                        </div>
-                      </c:forEach>
-                    </div>
-                    <div class="product-page-cart">
-                      <div class="product-quantity">
-                        <input type="text" value="1" readonly class="form-control input-sm" id="product-quantity">
-                      </div>
-                      <button class="btn btn-primary add2cart fa fa-shopping-cart fa-lg" type="button">添加到购物车</button>
-                    </div>
-                    <div class="review">
-                      <input type="range" name="productSeriesEvaluateGrade" step="0.5" id="backing4" value="${productSeries.productSeriesEvaluateGrade}" disabled/>
-                      <div class="rateit"  data-rateit-resetable="false" data-rateit-backingfld="#backing4" data-rateit-ispreset="false" data-rateit-min="0" data-rateit-max="5">
-                        <%--<input value="${productSeries.productSeriesEvaluateGrade}" type="number" class="rating" min=0 max=5 step=0.5 data-size="sm">--%>
-                    </div>
-                      <c:choose><c:when test="${empty _page.totalElements}">0</c:when><c:otherwise>${ productSeries.evaluateCount}</c:otherwise></c:choose>条评论
+                <div class="row">
+                  <span class="thumbnail img-ico-lg col-lg-1 col-sm-1" ng-repeat="picture in productSeries.pictures">
+                    <a class="control-label" href="javascript:void(0)" data-ng-click="$parent.img=$index;"><img class="img-thumbnail" ng-src="${path}/{{picture}}"/></a>
+                  </span>
+                </div>
 
-                      <c:if test="${not empty requestScope.order}">
-                        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0)" class="tour-step1" data-toggle="modal" data-target="#evaluateModal">发表评论</a>
-                      </c:if>
-                    </div>
-                    <ul class="social-icons">
-                        <div class="bdsharebuttonbox">
-                          <a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
-                        <%--<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"这里的东西太好吃了,都是生态环保的湖南宁乡土特产,你也来看看吧！","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16","tag":"pic1"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>--%>
-                    </ul>
-                  </form>
-                </div>
-              </div>
-            </div>
+
+              </form>
           </div>
-          <!-- END CONTENT -->
+          <div class="col-lg-6 col-sm-6">
+            <h1>{{productSeries.name}}</h1>
+            <em ng-if="productSeries.currentPrice &&productSeries.currentPrice.prevPrice &&productSeries.currentPrice.price < productSeries.currentPrice.prevPrice.price">
+              <span class="fa fa-rmb fa-5x">${productSeries.currentPrice.prevPrice.price}</span>
+            </em>
+            <%--<input type="range" name="productSeriesEvaluateGrade" step="0.5" id="backing4" value="{{productSeries.productSeriesEvaluateGrade}}" disabled/>--%>
+            <div class="center-block" star rating-value="ratingVal" max="max" on-hover="onHover" on-leave="onLeave" readonly="true"></div>
+            <ul class="social-icons">
+              <div class="bdsharebuttonbox">
+                <a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+              <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"这里的东西太好吃了,都是生态环保的湖南宁乡土特产,你也来看看吧！","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16","tag":"pic1"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+            </ul>
+            {{productSeries.evaluateCount}}条评论
+            <a ng-if="order && order.id" href="javascript:void(0)" class="tour-step1" data-toggle="modal" data-target="#evaluateModal">|发表评论</a>
+          </div>
         </div>
-        <!-- END SIDEBAR & CONTENT -->
+        <div class="row">
+          <div class="col-sm-1 col-lg-1">价格<i class="fa fa-rmb"></i></div>
+          <div class="col-sm-1 col-lg-1text-left">{{productSeries.commonPrice}}
+            <em ng-if="productSeries.currentPrice &&productSeries.currentPrice.prevPrice && productSeries.currentPrice<productSeries.currentPrice.prevPrice">
+              <i class="fa fa-rmb"></i>{{productSeries.currentPrice.prevPrice.price}}
+            </em>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-1 col-lg-1">库存<i class="fa fa-cubes"></i></div>
+          <div class="col-sm-1 col-lg-1 text-left">{{productSeries.productStore.remain}}</div>
+        </div>
+        <div class="row">
+          <td colspan="4"><i>{{productSeries.description}}</i></td>
+        </div>
+        <div class="row">
+          <th>选择商品<i class="fa fa-flag"></i></th>
+          <th colspan="3">
+                            <span ng-repeat="productProperty in productSeries.productProperties">
+                            <i class="fa fa-spin fa-sun-o"></i>{{productProperty.propertyName}}:
+                            <select  ng-model="$parent.productPropertyValueList[$index]"
+                                     required="true"
+                                     ng-options="productPropertyValue.value for productPropertyValue in productProperty.propertyValues"></select>
 
-        <!-- BEGIN SIMILAR PRODUCTS -->
+                            </span>
+
+          </th>
+        </div>
+        <div class="row">
+          <th>输入数量<i class="fa fa-cube"></i></th>
+          <td><input type="number" min="1" class="" ng-model="amount" style="max-width: 100px;"></td>
+          <td> <button data-toggle="tooltip" data-original-title="xxx" data-placement="left" data-trigger="click" data-selector="#cart-block"
+                       class="btn btn-primary add2cart pull-right fa fa-shopping-cart" type="button" data-ng-click="add2cart()">添加到购物车</button></td>
+        </div>
+
         <div class="row margin-bottom-40">
           <div class="product-page-content">
             <ul id="myTab" class="nav nav-tabs">

@@ -64,26 +64,26 @@ public class ProductSeriesController extends BaseRestSpringController {
             Order order=ServiceManager.orderService.findOrderById(orderId);
             model.addAttribute("order",order);
         }
-
         return new ResponseEntity<ModelMap>(model, HttpStatus.OK);
     }
     @RequestMapping(value="/{id}")
     public String forwardShow(ModelMap model,@PathVariable String id,String orderId,Integer page) {
-        if (page==null){
-            model.addAttribute("activeEvaluate",false);
-        }else{
-            model.addAttribute("activeEvaluate",true);
-        }
-        page=page==null?1:page;
-        ProductSeries productSeries = productSeriesService.findProductSeriesById(id);
-        Page<ProductEvaluate> productEvaluateListPage=ServiceManager.productEvaluateService.findProductEvaluatesPageWithoutParentEvaluateByProductSeries(productSeries, page, 6);
-        model.addAttribute("productSeries",productSeries);
-        model.addAttribute("_page",productEvaluateListPage);
-        model.addAttribute("page",page);
-        if (orderId!=null&&!orderId.equals("")){
-            Order order=ServiceManager.orderService.findOrderById(orderId);
-            model.addAttribute("order",order);
-        }
+//        if (page==null){
+//            model.addAttribute("activeEvaluate",false);
+//        }else{
+//            model.addAttribute("activeEvaluate",true);
+//        }
+//        page=page==null?1:page;
+//        ProductSeries productSeries = productSeriesService.findProductSeriesById(id);
+//        Page<ProductEvaluate> productEvaluateListPage=ServiceManager.productEvaluateService.findProductEvaluatesPageWithoutParentEvaluateByProductSeries(productSeries, page, 6);
+//        model.addAttribute("productSeries",productSeries);
+//        model.addAttribute("_page",productEvaluateListPage);
+//        model.addAttribute("page",page);
+//        if (orderId!=null&&!orderId.equals("")){
+//            Order order=ServiceManager.orderService.findOrderById(orderId);
+//            model.addAttribute("order",order);
+//        }
+        model.addAttribute("id",id);
         return "item";
     }
     @RequestMapping(value="/sort/{id}")

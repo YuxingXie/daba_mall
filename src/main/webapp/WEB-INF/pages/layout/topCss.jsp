@@ -12,7 +12,6 @@
 <link href="${path}/statics/assets/css/style-metronic.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/style-responsive.css" rel="stylesheet" type="text/css">
-<%--<link href="${path}/statics/assets/css/sidebar.css" rel="stylesheet" type="text/css">--%>
 <link href="${path}/statics/assets/css/layer-slider.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/cart.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/header.css" rel="stylesheet" type="text/css">
@@ -26,3 +25,4 @@
 <link href="${path}/statics/assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/plugins/EasyZoom-master/css/easyzoom.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/rating.css" rel="stylesheet" type="text/css">
+<link href="${path}/statics/assets/css/breadcrumb.css" media="all" rel="stylesheet" type="text/css" />
