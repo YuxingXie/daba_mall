@@ -7,7 +7,7 @@
 <script src="${path}/statics/assets/plugins/bootstrap-tour-0.10.2/js/bootstrap-tour.js"></script>
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput_locale_zh.js" type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/bootstrap-paginator-master/build/bootstrap-paginator.min.js"></script>
+<%--<script src="${path}/statics/assets/plugins/bootstrap-paginator-master/build/bootstrap-paginator.min.js"></script>--%>
 
 
 <script type="text/javascript">
@@ -16,7 +16,13 @@
         $scope.productSelected={};
         $scope.productSelected.productPropertyValueList=[];
         $scope.productSelected.amount = 1;
-        $http.get("${path}//product_series/data/${id}").success(function(data){
+        $scope.paginationConf = {
+            currentPage: 1,
+            totalItems: 20,
+            itemsPerPage: 6,
+            pagesLength:9,
+            perPageOptions: [10, 20, 30, 40, 50]}
+        $http.get("${path}/product_series/data/${id}").success(function(data){
             $scope.productSeries=data.productSeries;
             $scope.productSelected.productSeries= $scope.productSeries;
             $scope._page=data._page;
@@ -33,6 +39,45 @@
                     }
                 }
             }
+            $scope.paginationConf = {
+                currentPage: $scope.page,
+                totalItems: $scope._page.totalElements,
+                itemsPerPage: $scope._page.size,
+                pagesLength:9,
+                perPageOptions: [10, 20, 30, 40, 50],
+                onChange: function(){
+                    $http.get(path+'/product_series/data/${id}?page='+this.currentPage).success(function (data) {
+                        $scope._page = data;
+                    });
+                }
+            };
+            <%--if($scope._page &&$scope._page.totalPages>0){--%>
+                <%--var options = {--%>
+                    <%--currentPage:$scope.page,--%>
+                    <%--totalPages: $scope._page.totalPages,--%>
+                    <%--itemContainerClass: function (type, page, current) {--%>
+                        <%--return (page === current) ? "active" : "everyPage";--%>
+                    <%--},pageUrl: function(type, page, current){--%>
+                        <%--return "${path}/product_series/"+$scope.productSeries.id+"?page="+page;--%>
+                    <%--},itemTexts: function (type, page, current) {--%>
+                        <%--switch (type) {--%>
+                            <%--case "first":--%>
+                                <%--return "<i class='fa fa-fast-backward'></i>";--%>
+                            <%--case "prev":--%>
+                                <%--return "<i class='fa fa-backward'></i>";--%>
+                            <%--case "next":--%>
+                                <%--return "<i class='fa fa-forward'></i>";--%>
+                            <%--case "last":--%>
+                                <%--return "<i class='fa fa-fast-forward'></i>";--%>
+                            <%--case "page":--%>
+                                <%--return page;--%>
+                        <%--}--%>
+                    <%--}--%>
+                <%--};--%>
+                <%--$('#infoPage').bootstrapPaginator(options);--%>
+            <%--}--%>
+
+
         });
         $scope.max = 5;
         $scope.ratingVal =3;
@@ -56,55 +101,26 @@
         $scope.onChange = function(val){
             $scope.ratingVal = val;
         }
-//        $scope.deleteGoods=function(index){
-////            alert(JSON.stringify(index));
-//            if($scope.$parent.cart.productSelectedList&&$scope.$parent.cart.productSelectedList.length){
-//                $scope.$parent.cart.productSelectedList.splice(index,1);
-//                $http({
-//                    method:"POST",
-//                    url:path+"/cart/update",
-//                    data:$scope.$parent.cart
-//                }).success(function(cart){
-//                    $scope.$parent.cart=cart;
-//                }).error(function(){
-//
-//                });
-//            }
-//        }
-        // Instantiate EasyZoom plugin
-        var $easyzoom = $('.easyzoom').easyZoom();
-        // Get the instance API
-        var api = $easyzoom.data('easyZoom');
-    <c:forEach var="productEvaluate" items="${_page.content}" varStatus="varStatus">
-        $scope.toReply${varStatus.index}=function(){
+        $scope.toReply=function(productEvaluate,reply){
             loginCheckBeforeHandler(function(){
-                var $form=$("#reply${varStatus.index}Form");
-                var url=$form.attr("action");
-                var reply=JSON.stringify($scope.reply${varStatus.index});
-                $.ajax({
-                    url: url,
-                    contentType: "application/json",
-                    data: reply,
-                    method: "post"
-                }).done(function (data) {
-                    $scope.$apply(function () {
-                        if(data && data.length){
-                            $scope.evaluate${productEvaluate.id}ReplyCount=data.length;
-                        }else{
-                            $scope.evaluate${productEvaluate.id}ReplyCount=0;
+                var url="${path}/product_series/evaluate/reply";
+                reply.parent=productEvaluate;
+//                reply.parent.id=productEvaluate.id;
+                $http.post(url,reply).success(function(data){
+                    for(var i=0;i<$scope._page.content.length;i++){
+                        var productEvaluateInPage=$scope._page.content[i];
+                        if(productEvaluateInPage.id===productEvaluate.id){
+                            $scope._page.content[i].replies=data;
+                            break;
                         }
-                        <%--console.log( $scope.evaluate${productEvaluate.id}ReplyCount);--%>
-                        $scope.evaluate${productEvaluate.id}Replies=data;
-                        $scope.reply${varStatus.index}.content="";
-//                        $form[0].reset();
-                    })
-                }).fail(function(){ console.log("error！"); });
-                <%--$scope.replies${varStatus.index}();--%>
+                    }
+                });
+
             });
         }
-        $scope.toPraise${varStatus.index}=function(){
+        $scope.toPraise=function(productEvaluate){
             loginCheckBeforeHandler(function(){
-                var url="${path}/product_series/evaluate/praise/${productEvaluate.id}";
+                var url="${path}/product_series/evaluate/praise/"+productEvaluate.id;
                 $.ajax({
                     url: url,
                     method: "get"
@@ -122,40 +138,19 @@
                 <%--$scope.replies${varStatus.index}();--%>
             });
         }
-    </c:forEach>
+
 
         $http.get('${path}//product_series/data/${id}?orderId=${requestScope.orderId}').success(function (data) {
             $scope.data = data;
         });
+
     }]);
 //    angular.bootstrap(document.getElementById("page-main"), ['productSeriesApp']);
-    <c:if test="${not empty _page and _page.totalPages gt 0}">
-        var options = {
-            currentPage:${page},
-            totalPages: ${_page.totalPages},
-            itemContainerClass: function (type, page, current) {
-                return (page === current) ? "active" : "everyPage";
-            },pageUrl: function(type, page, current){
-                return "${path}/product_series/${productSeries.id}?page="+page;
-            },itemTexts: function (type, page, current) {
-                switch (type) {
-                    case "first":
-                        return "<i class='fa fa-fast-backward'></i>";
-                    case "prev":
-                        return "<i class='fa fa-backward'></i>";
-                    case "next":
-                        return "<i class='fa fa-forward'></i>";
-                    case "last":
-                        return "<i class='fa fa-fast-forward'></i>";
-                    case "page":
-                        return page;
-                }
-            }
-        };
-        $('#infoPage').bootstrapPaginator(options);
-    </c:if>
+
     jQuery(document).ready(function() {
 //        $(".rating-kv").rating();
+        var $easyzoom = $('.easyzoom').easyZoom();
+        var api = $easyzoom.data('easyZoom');
         var $tour_step1=$(".tour-step1");
         if($tour_step1.length){
             var tour = new Tour({

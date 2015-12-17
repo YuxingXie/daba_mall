@@ -57,7 +57,7 @@ public class ProductEvaluateDao extends BaseMongoDao<ProductEvaluate> {
         }
         Pageable pageable = new PageRequest(page-1, pageSize);
         Long count = getMongoTemplate().count(new BasicQuery(queryCondition),"productEvaluate");
-        List<ProductEvaluate> list = getMongoTemplate().find(new BasicQuery(queryCondition).with(new Sort(Sort.Direction.DESC, "date")).limit(pageSize).skip((page - 1) * pageSize), ProductEvaluate.class);
+        List<ProductEvaluate> list = getMongoTemplate().find(new BasicQuery(queryCondition).with(new Sort(Sort.Direction.ASC, "date")).limit(pageSize).skip((page - 1) * pageSize), ProductEvaluate.class);
         if (list!=null &&list.size()>0){
             for (ProductEvaluate productEvaluate:list){
                 DBObject repliesDBObject=new BasicDBObject();

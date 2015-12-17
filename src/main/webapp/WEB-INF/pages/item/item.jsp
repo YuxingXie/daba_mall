@@ -31,7 +31,7 @@
                   </span>
                 </div>
                 <div class="row">
-                  <div><i>{{productSeries.description}}</i></div>
+                  <div class="padding-left-10 padding-right-30"><i>{{productSeries.description}}</i></div>
                 </div>
 
               </form>
@@ -86,10 +86,10 @@
           </div>
           <div class="col-lg-3 col-sm-3">
             <div class="row margin-top-112" ng-init="interested=true">
-              <div class="col-sm-5 col-lg-5" ng-if="!interested">
+              <div class="col-sm-6 col-lg-6" ng-if="!interested">
                 <i class="fa fa-heart-o fa-2x">未关注</i>
               </div>
-              <div class="col-sm-5 col-lg-5" ng-if="interested">
+              <div class="col-sm-6 col-lg-6" ng-if="interested">
                 <i class="fa fa-heart fa-2x">已关注</i>
               </div>
               <div class="col-sm-2 col-lg-2"><a href="javascript:void(0)" ng-class="{'fa':true,'fa-toggle-off':!interested,'fa-toggle-on':interested,'fa-2x':true}"  ng-click="interested=!interested"></a></div>
@@ -104,136 +104,103 @@
         <div class="row margin-bottom-40">
           <div class="product-page-content">
             <ul id="myTab" class="nav nav-tabs">
-              <li <c:if test="${!activeEvaluate}">class="active"</c:if>><a href="#Description" data-toggle="tab">商品介绍</a></li>
+              <li ng-class="{'active':!activeEvaluate}"><a href="#Description" data-toggle="tab">商品介绍</a></li>
               <li><a href="#Information" data-toggle="tab">规格参数</a></li>
 
-              <li class="tour-step2<c:if test="${activeEvaluate}"> active</c:if>"><a href="#Reviews" data-toggle="tab">商品评论(${_page.totalElements})</a></li>
+              <li ng-class="{'tour-step2':true,'active':activeEvaluate}"><a href="#Reviews" data-toggle="tab">商品评论({{_page.totalElements}})</a></li>
             </ul>
             <div id="myTabContent" class="tab-content">
-              <div class="tab-pane fade<c:if test="${!activeEvaluate}"> in active</c:if>" id="Description">
-                    <c:choose>
-                      <c:when test="${empty productSeries.productBrochures}">
-                        <tr>
-                          <td class="datasheet-features-type" colspan="2">抱歉，暂无商品介绍宣传册。</td>
-                        </tr>
-                      </c:when>
-                      <c:otherwise>
-                        <c:choose>
-                          <c:when test="${productSeries.productBrochures eq 'img'}">
-                              <img src="${path}/${productSeries.productBrochures.url}"/>
-                          </c:when>
-                          <c:when test="${productSeries.productBrochures eq 'page'}">
-                              <iframe src="${productSeries.productBrochures.url}"  scroling="no"  width="100%" height="2600px;" name="float" frameborder="0"></iframe>
-                          </c:when>
-                          <c:otherwise></c:otherwise>
-                        </c:choose>
-                      </c:otherwise>
-                    </c:choose>
+            <div ng-class="{'tab-pane fade':true,'in active':!activeEvaluate}" id="Description">
+                <div ng-if="!productSeries.productBrochures">
+                  <div class="datasheet-features-type">抱歉，暂无商品介绍宣传册。</div>
                 </div>
+                <img ng-if="productSeries.productBrochures &&productSeries.productBrochures === 'img' " ng-src="${path}/{{productSeries.productBrochures.url}}"/>
+                <iframe ng-if="productSeries.productBrochures &&productSeries.productBrochures === 'page'" src="${productSeries.productBrochures.url}"  scroling="no"  width="100%" height="2600px;" name="float" frameborder="0"></iframe>
+              </div>
               <div class="tab-pane fade" id="Information">
                 <table class="datasheet">
                   <tr>
                     <th colspan="2">规格参数</th>
-                  </tr>
-                  <c:choose>
-                    <c:when test="${empty productSeries.instructionManual}">
-                      <tr>
+                      <tr ng-if="!productSeries.instructionManual">
                         <td class="datasheet-features-type" colspan="2">抱歉，暂无规格参数说明。</td>
-                      </tr>
-                    </c:when>
-                    <c:otherwise>
-                      <c:forEach items="${productSeries.instructionManual}" var="instructionManualItem">
-                        <tr>
-                          <td class="datasheet-features-type">${instructionManualItem.key}：</td>
-                          <td>${instructionManualItem.value}</td>
-                        </tr>
-                      </c:forEach>
-                    </c:otherwise>
-                  </c:choose>
+                  </tr>
+                  <tr ng-if="productSeries.instructionManual" ng-repeat="instructionManualItem in productSeries.instructionManual">
+                    <td class="datasheet-features-type">${instructionManualItem.key}：</td>
+                    <td>${instructionManualItem.value}</td>
+                  </tr>
                 </table>
               </div>
-              <div class="tab-pane fade<c:if test="${activeEvaluate}"> in active</c:if>" id="Reviews">
-                <!--<p>There are no reviews for this product.</p>-->
+              <div ng-class="{'tab-pane fade':true,'in active':activeEvaluate,'table-responsive':true}" id="Reviews">
+                <table ng-repeat="productEvaluate in _page.content" ng-class="{'table':true,'bg-info':true}">
+                    <tr ng-init="showEvaluate=false">
+                      <td width="16%">
+                        <strong class="fa fa-user">
+                          <span ng-if="productEvaluate.anonymous">匿名用户</span>
+                          <span ng-if="!productEvaluate.anonymous">{{productEvaluate.order.user.name}}</span>
+                        </strong>
+                      </td>
+                      <td>
+                        <em class="fa fa-clock-o">发表于{{productEvaluate.date | date:'yyyy-MM-dd hh:mm'}}</em>
+                      </td>
+                      <td ng-init="ratingVal=productEvaluate.grade">
+                        <div star rating-value="ratingVal" max="max" on-hover="onHover" on-leave="onLeave" readonly="true"></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>
+                        <b class="fa fa-file-text-o">{{productEvaluate.content}}</b>
+                      </td>
+                      <td>
+                        <div class="review-item-image" ng-if="productEvaluate.pictures">
+                          <img ng-repeat="picture in productEvaluate.pictures" class="img-responsive img-ico-md" ng-src="${path}/{{picture}}"/>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td><td></td>
+                      <td>
+                        <a class="fa fa-thumbs-o-up pull-right" href="javascript:void(0)" data-ng-click="toPraise()">
+                          赞
+                          <span ng-if="!productEvaluate.praises &&productEvaluate.praises.length==0">(0)</span>
+                          <span ng-if="productEvaluate.praises">({{productEvaluate.praises.length}})</span>
+                        </a>
+                        &nbsp;
+                        <a class="fa fa-reply pull-right" href="javascript:void(0)" data-ng-click="showEvaluate=!showEvaluate;$parent.currentEvaluate=productEvaluate;">
+                          回复<span ng-if="!productEvaluate.replies.length">(0)</span>
+                          <span ng-if="productEvaluate.replies.length">({{productEvaluate.replies.length}})</span>
+                        </a>
+                      </td>
+                    </tr>
+                  <tr ng-show="showEvaluate">
+                    <td colspan="2">
+                      <textarea ng-model="reply.content" name="content" placeholder="回复内容(小于200个字符)" rows="1" style="width: 100%;" class="form-control" required="true" maxlength="200"></textarea>
+                    </td>
+                    <td>
+                      <input type="button" ng-disabled="!reply.content ||reply.content.length==0"  ng-click="toReply(productEvaluate,reply)"
+                             ng-class="{'btn btn-small btn-primary pull-right':true,'fa fa-ban':(!reply.content||reply.content.length==0)}" value="回复">
+                    </td>
+                  </tr>
+                    <tr ng-show="showEvaluate">
+                      <td colspan="3" class="table-responsive">
+                        <table class="table table-striped table-hover">
+                          <tr ng-repeat="evaluateReply in productEvaluate.replies">
+                            <td width="16%" class="text-right">回复:</td>
+                            <td>
+                              <p class="font-size-12">{{evaluateReply.content}}</p>
+                            </td>
+                            <td width="25%" class="text-right" style="vertical-align: bottom">
+                              <small>by:<i class="fa fa-user"></i><strong></strong>{{evaluateReply.replyUser.name}} {{evaluateReply.date | date:'yyyy-MM-dd hh:mm'}}</small>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
 
-                <c:forEach var="productEvaluate" items="${_page.content}" varStatus="varStatus">
-                  <div style="margin-bottom:10px;" class="table-bordered<c:if test="${varStatus.index mod 2 eq 1}"> bg-info</c:if>" ng-init="showEvaluate${productEvaluate.id}=false">
-                      <div class="row">
-                          <div class="col-sm-1 col-lg-1">
-                            <strong class="fa fa-user">
-                              <c:choose>
-                                <c:when test="${productEvaluate.anonymous}">匿名用户</c:when>
-                                <c:otherwise>${productEvaluate.order.user.name}</c:otherwise>
-                              </c:choose>
-                            </strong>
-                          </div>
-                          <div class="col-sm-2 col-lg-2 ">
-                              <em class="fa fa-clock-o text-left"><fmt:formatDate value="${productEvaluate.date}" type="both" dateStyle="default"/></em>
-                          </div>
-                          <div class="col-sm-2 col-lg-2 pull-right">
-                              <div class="rateit" data-rateit-value="${productEvaluate.grade}" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
-                          </div>
-                      </div>
-                      <div class="row review-item-content">
-                        <div class="col-lg-1 col-sm-1"></div>
-                        <div class="col-lg-7 col-sm-7">
-                          <pre class="fa fa-file-text-o">${productEvaluate.content}</pre>
-                        </div>
-                        <div class="col-lg-3 col-sm-3">
-                          <div class="review-item-image">
-                            <c:if test="${not empty productEvaluate.pictures}">
-                              <c:forEach var="picture" items="${productEvaluate.pictures}">
-                                <c:if test="${not empty picture}"><img class="img-responsive" src="${path}/${picture}"/></c:if>
-                              </c:forEach>
-                            </c:if>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-sm-2 col-lg-2 pull-right">
-                          <a class="fa fa-pencil-square-o" href="javascript:void(0)" data-ng-click="showEvaluate${productEvaluate.id}=!showEvaluate${productEvaluate.id};">
-                            回复(<span ng-if="!evaluate${productEvaluate.id}ReplyCount">${fn:length(productEvaluate.replies)}</span>
-                            <span ng-if="evaluate${productEvaluate.id}ReplyCount">{{evaluate${productEvaluate.id}ReplyCount}}</span>)
-                          </a>&nbsp;
-                          <a class="fa fa-thumbs-o-up" href="javascript:void(0)" data-ng-click="toPraise${varStatus.index}()">赞(<span ng-if="!evaluate${productEvaluate.id}PraiseCount&&evaluate${productEvaluate.id}PraiseCount!=0">${fn:length(productEvaluate.praises)}</span><span ng-if="!evaluate${productEvaluate.id}PraiseCount &&evaluate${productEvaluate.id}PraiseCount==0">0</span><span ng-if="evaluate${productEvaluate.id}PraiseCount">{{evaluate${productEvaluate.id}PraiseCount}}</span>)
-                          </a>
-                        </div>
-                      </div>
-
-                    <div class="row" ng-if="!evaluate${productEvaluate.id}Replies">
-                      <c:forEach var="evaluateReply" items="${productEvaluate.replies}">
-                        <div class="row" ng-show="showEvaluate${productEvaluate.id}">
-                          <div class="col-sm-1 col-lg-1 text-right"><i class="fa fa-user"></i><strong>${evaluateReply.replyUser.name}</strong></div>
-                          <div class="col-sm-10 col-lg-10">
-                            <pre>${evaluateReply.content}</pre>
-                          </div>
-                        </div>
-                      </c:forEach>
-                      </div>
-                    <div class="row" ng-if="evaluate${productEvaluate.id}Replies">
-                        <div class="row" ng-show="showEvaluate${productEvaluate.id}" ng-repeat="evaluateReply in evaluate${productEvaluate.id}Replies">
-                          <div class="col-sm-1 col-lg-1 text-right"><i class="fa fa-user"></i><strong>{{evaluateReply.replyUser.name}}</strong></div>
-                          <div class="col-sm-10 col-lg-10">
-                            <pre>{{evaluateReply.content}}</pre>
-                          </div>
-                        </div>
-                    </div>
-                    <div class="row" ng-show="showEvaluate${productEvaluate.id}">
-                      <div class="col-sm-1 col-lg-1"></div>
-                      <form action="${path}/product_series/evaluate/reply" method="post" id="reply${varStatus.index}Form" name="reply${varStatus.index}Form">
-                        <div class="col-sm-10 col-lg-10"style="margin-bottom: 8px;">
-                          <input type="hidden" ng-model="reply${varStatus.index}.parent.id" name="parentId" ng-init="reply${varStatus.index}.parent.id='${productEvaluate.id}'"/>
-                          <textarea ng-model="reply${varStatus.index}.content" name="content" placeholder="回复内容(小于200个字符)" rows="1" style="width: 100%;" class="form-control" required="true" maxlength="200"></textarea>
-                        </div>
-                        <div class="col-sm-1 col-lg-1">
-                          <a type="button" ng-disabled="reply${varStatus.index}Form.$invalid" class="btn btn-small btn-primary" data-ng-click="toReply${varStatus.index}()">回复</a>
-                        </div>
-                      </form>
-                    </div>
+                </table>
+                  <div class="row" style="padding-bottom:20px;">
+                    <tm-pagination conf="paginationConf"></tm-pagination>
                   </div>
-                </c:forEach>
-                <div class="row" style="padding-bottom:20px;">
-                  <div id="infoPage"></div>
-                </div>
               </div>
             </div>
           </div>

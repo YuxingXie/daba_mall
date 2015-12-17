@@ -27,7 +27,6 @@
 //  angular.module("indexApp",[])
             mainApp .controller('indexController', ['$scope', '$http', function ($scope, $http) {
                 $scope.popover=function(productSeriesId){
-                    alert(productSeriesId);
                     $scope.productSelected={};
                     $scope.productSelected.productPropertyValueList=[];
                     $http.get(path+'/product_series/popover/'+productSeriesId).success(function (data) {

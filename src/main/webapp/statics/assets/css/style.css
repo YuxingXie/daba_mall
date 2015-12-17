@@ -31,8 +31,9 @@ body {
 	max-width: 270px;
 	max-height:270px;
 }
-
-
+.font-size-17-5{font-size: 17.5px;}
+.font-size-13-5{font-size: 13.5px;}
+.font-size-12{font-size: 12px;}
 /*********************
  GENERAL RESET & SETUP 
 *********************/

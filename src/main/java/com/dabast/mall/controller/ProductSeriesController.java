@@ -111,8 +111,8 @@ public class ProductSeriesController extends BaseRestSpringController {
     @RequestMapping(value="/evaluate/reply")
     public ResponseEntity <List<ProductEvaluate>> evaluateReply(@RequestBody ProductEvaluate reply,HttpSession session) {
         Assert.notNull(reply);
-        Assert.notNull(reply.getParent());
-        Assert.notNull(reply.getParent().getId());
+//        Assert.notNull(reply.getParent());
+//        Assert.notNull(reply.getParent().getId());
         User user=getLoginUser(session);
         Assert.notNull(user);
         reply.setReplyUser(user);
@@ -122,8 +122,8 @@ public class ProductSeriesController extends BaseRestSpringController {
         DBObject childrenDBObject=new BasicDBObject();
         childrenDBObject.put("parent",reply.getParent());
         childrenDBObject.put("type", Constant.EVALUATETYPE.REPLY);
-        List<ProductEvaluate> list=ServiceManager.productEvaluateService.findAll(childrenDBObject);
-        ResponseEntity<List<ProductEvaluate>> rt=new ResponseEntity<List<ProductEvaluate>>(list, HttpStatus.OK);
+        List<ProductEvaluate> replies=ServiceManager.productEvaluateService.findAll(childrenDBObject);
+        ResponseEntity<List<ProductEvaluate>> rt=new ResponseEntity<List<ProductEvaluate>>(replies, HttpStatus.OK);
         return rt;
     }
     @RequestMapping(value="/evaluate/praise/{evaluateId}")
