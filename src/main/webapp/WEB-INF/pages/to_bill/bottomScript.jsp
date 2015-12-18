@@ -94,11 +94,14 @@
 //                        console.log(JSON.stringify($scope.order));
                         $http.post( url,$scope.order).success(function (charge) {
                                 console.log(JSON.stringify(charge));
-                                console.log(JSON.stringify(pingppPc))
-                                window.pingppPc.payment(charge, function(result, err){
-                                // 处理错误信息
-                                alert(err);
-                                });
+//                                console.log(JSON.stringify(pingppPc))
+//                                window.pingppPc.payment(charge, function(result, err){
+//                                // 处理错误信息
+//                                alert(err);
+//                                });
+                                var $shortcutsPayModal=$("#shortcutsPayModal");
+                                $shortcutsPayModal.modal("hide");
+                                $("#msg").show().animate({width: '250px'}, 200).fadeOut(2500);
 
                         }).error(function(){ console.log("error！"); });
                         return false;

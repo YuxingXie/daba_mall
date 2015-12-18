@@ -18,6 +18,8 @@ public class User {
     @Field(value = "name")
     @Length(min=2,max=12)
     private String name;
+    @Field
+    private String realName;
     @Field(value = "sex")
     private String sex;
     @Field(value = "height")
@@ -108,6 +110,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public String getSex() {

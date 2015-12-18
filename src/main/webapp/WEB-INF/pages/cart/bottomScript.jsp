@@ -29,19 +29,18 @@
 //    angular.module("cartAdjustApp",[])
             mainApp.controller("cartAdjustController",["$scope","$http",function($scope,$http){
                 $scope.getTotalAmountAndPrice=function(){
-                    var totalPrice=0;
-                    var totalAmount=0;
                     if($scope.cart&&$scope.cart.productSelectedList&&$scope.cart.productSelectedList.length){
-                            for(var i=0;i<$scope.cart.productSelectedList.length;i++){
-                                var productSelected=$scope.cart.productSelectedList[i];
-                                totalAmount+=productSelected.amount;
-                                totalPrice+=productSelected.productSeries.commonPrice*productSelected.amount;
-                            }
+                        var totalPrice= 0,totalAmount=0;
+                        for(var i=0;i<$scope.cart.productSelectedList.length;i++){
+                            var productSelected=$scope.cart.productSelectedList[i];
+                            totalPrice+=productSelected.productSeries.commonPrice*productSelected.amount;
+                            totalAmount+=productSelected.amount;
                         }
-                        $scope.totalAmount=totalAmount;
                         $scope.totalPrice=totalPrice;
+                        $scope.totalAmount=totalAmount;
+                        }
                     }
-//                $scope.getTotalAmountAndPrice();
+                $scope.getTotalAmountAndPrice();
                 $scope.change=function(){
                     $scope.getTotalAmountAndPrice();
                 }

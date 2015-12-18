@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><c:set var="path" value="<%=request.getContextPath() %>"/><c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <link href="${path}/statics/assets/plugins/rateit/src/rateit.css" rel="stylesheet" type="text/css">
@@ -5,6 +6,7 @@
 
 <link href="${path}/statics/assets/plugins/bootstrap-tour-0.10.2/css/bootstrap-tour.css" rel="stylesheet">
 <link href="${path}/statics/assets/plugins/multi-file-upload/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+<link href="${path}/statics/assets/plugins/shopping-cart-fly/shopping-cart-fly.css" media="all" rel="stylesheet" type="text/css" />
 <%--商品分类菜单--%>
 
 <style>

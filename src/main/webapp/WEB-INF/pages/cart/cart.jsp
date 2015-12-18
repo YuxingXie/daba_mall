@@ -14,7 +14,7 @@
             <li><a href="">购物车</a></li>
             <li class="active">调整购物车</li>
         </ul>
-        <div class="row"  ng-init="totalPrice=0" data-class="table-responsive">
+        <div class="row" data-class="table-responsive">
         <form action="${path}/cart/adjust" method="post" id="form"  enctype='application/json'>
             <table class="table table-bordered table-striped table-condensed text-center">
                 <tr>

@@ -22,6 +22,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -69,7 +70,7 @@ public class ProductSeriesController extends BaseRestSpringController {
         return new ResponseEntity<ModelMap>(model, HttpStatus.OK);
     }
     @RequestMapping(value="/{id}")
-    public String forwardShow(ModelMap model,@PathVariable String id,String orderId,Integer page) {
+    public String forwardShow(ModelMap model,@PathVariable String id,String orderId,Integer page,HttpServletResponse response) {
 //        if (page==null){
 //            model.addAttribute("activeEvaluate",false);
 //        }else{
@@ -86,6 +87,14 @@ public class ProductSeriesController extends BaseRestSpringController {
 //            model.addAttribute("order",order);
 //        }
         model.addAttribute("id",id);
+        if(orderId!=null){
+//            response.setHeader("progma","no-cache");
+            response.setHeader("Cache-Control", "no-store");
+            response.setHeader("Cache-Control","no-cache");
+            response.setDateHeader("Expires",0);
+            model.addAttribute("orderId",orderId);
+        }
+
         return "item";
     }
     @RequestMapping(value="/sort/{id}")

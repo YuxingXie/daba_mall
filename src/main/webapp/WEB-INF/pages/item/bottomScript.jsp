@@ -8,6 +8,8 @@
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput_locale_zh.js" type="text/javascript"></script>
 <%--<script src="${path}/statics/assets/plugins/bootstrap-paginator-master/build/bootstrap-paginator.min.js"></script>--%>
+<script src="${path}/statics/assets/plugins/shopping-cart-fly/jquery.fly.min.js"></script>
+<script src="${path}/statics/assets/plugins/shopping-cart-fly/requestAnimationFrame.js"></script>
 
 
 <script type="text/javascript">
@@ -23,12 +25,43 @@
 //            pagesLength:9,
 //            perPageOptions: [10, 20, 30, 40, 50]
         }
-        $http.get("${path}/product_series/data/${id}").success(function(data){
+        var url="${path}/product_series/data/${id}";
+        <c:if test="${not empty orderId}">url+="?orderId=${orderId}";</c:if>
+        $http.get(url).success(function(data){
             $scope.productSeries=data.productSeries;
             $scope.productSelected.productSeries= $scope.productSeries;
             $scope._page=data._page;
             $scope.page=data.page;
             $scope.order=data.order;
+            if($scope.order){
+                var $tour_step1=$(".tour-step1");
+                var tour = new Tour({
+                    storage:false,
+                    debug:false,
+                    backdrop:true,
+                    template: "<div class='popover'><div class='arrow'></div>" +
+                    "<h3 class='popover-title'></h3>" +
+                    "<div class='popover-content'></div>" +
+                    "<div class='popover-navigation'>" +
+                    " <button class='btn btn-default' data-role='prev'>« 前一步</button>" +
+                    " <span data-role='separator'>|</span> " +
+                    "<button class='btn btn-default' data-role='next'>下一步 »</button> " +
+                    "</div><a class='btn btn-primary pull-right' data-role='end'>我知道了!</a></nav></div>",
+                    steps: [
+                        {
+                            element: ".tour-step1",
+                            title: "提示",
+                            content: "点击这个按钮可以发表评论"
+                        },{
+                            element: ".tour-step2",
+                            title: "提示",
+                            content: "在这里可以查看你发表的评论"
+                        }
+                    ]
+                });
+                tour.init();
+                tour.start();
+            }
             $scope.ratingVal = $scope.productSeries.productSeriesEvaluateGrade?$scope.productSeries.productSeriesEvaluateGrade:0;
 
             if($scope.productSeries && $scope.productSeries.productProperties &&$scope.productSeries.productProperties.length){
@@ -144,40 +177,98 @@
 
     }]);
 //    angular.bootstrap(document.getElementById("page-main"), ['productSeriesApp']);
+var easyzoom=function(){
+    // Instantiate EasyZoom instances
+
+    var $easyzoom = $('.easyzoom').easyZoom();
+
+    // Setup thumbnails example
+    var api1 = $easyzoom.filter('.easyzoom--with-thumbnails').data('easyZoom');
+
+    $('.thumbnails').on('click', 'a', function(e) {
+        var $this = $(this);
+
+        e.preventDefault();
+
+        // Use EasyZoom's `swap` method
+        api1.swap($this.data('standard'), $this.attr('href'));
+    });
+    // Setup toggles example
+    var api2 = $easyzoom.filter('.easyzoom--with-toggle').data('easyZoom');
+
+    $('.toggle').on('click', function() {
+        var $this = $(this);
+
+        if ($this.data("active") === true) {
+            $this.text("Switch on").data("active", false);
+            api2.teardown();
+        } else {
+            $this.text("Switch off").data("active", true);
+            api2._init();
+        }
+    });
+}
+var shoppingCartFly=function(start,end){
+    var offset = end.offset();
+    start.click(function(event){
+        var addcar = $(this);
+        var img = addcar.parent().find('img').attr('src');
+        var flyer = $('<img class="u-flyer" src="'+img+'">');
+        flyer.fly({
+            start: {
+                left: event.pageX,
+                top: event.pageY
+            },
+            end: {
+                left: offset.left+10,
+                top: offset.top+10,
+                width: 0,
+                height: 0
+            },
+            onEnd: function(){
+                $("#msg").show().animate({width: '250px'}, 200).fadeOut(1000);
+//                addcar.css("cursor","default").removeClass('orange').unbind('click');
+                this.destory();
+            }
+        });
+    });
+}
 
     jQuery(document).ready(function() {
+        easyzoom();
+        shoppingCartFly($(".add2cart"),$("#cart-block"));
 //        $(".rating-kv").rating();
-        var $easyzoom = $('.easyzoom').easyZoom();
-        var api = $easyzoom.data('easyZoom');
-        var $tour_step1=$(".tour-step1");
-        if($tour_step1.length){
-            var tour = new Tour({
-                storage:false,
-                debug:false,
-                backdrop:true,
-                template: "<div class='popover'><div class='arrow'></div>" +
-                "<h3 class='popover-title'></h3>" +
-                "<div class='popover-content'></div>" +
-                "<div class='popover-navigation'>" +
-                " <button class='btn btn-default' data-role='prev'>« 前一步</button>" +
-                " <span data-role='separator'>|</span> " +
-                "<button class='btn btn-default' data-role='next'>下一步 »</button> " +
-                "</div><a class='btn btn-primary pull-right' data-role='end'>我知道了!</a></nav></div>",
-                steps: [
-                    {
-                        element: ".tour-step1",
-                        title: "提示",
-                        content: "点击这个按钮可以发表评论"
-                    },{
-                        element: ".tour-step2",
-                        title: "提示",
-                        content: "在这里可以查看你发表的评论"
-                    }
-                ]
-        });
-            tour.init();
-            tour.start();
-        }
+//        var $easyzoom = $('.easyzoom').easyZoom();
+//        var api = $easyzoom.data('easyZoom');
+//        var $tour_step1=$(".tour-step1");
+//        if($tour_step1.length){
+//            var tour = new Tour({
+//                storage:false,
+//                debug:false,
+//                backdrop:true,
+//                template: "<div class='popover'><div class='arrow'></div>" +
+//                "<h3 class='popover-title'></h3>" +
+//                "<div class='popover-content'></div>" +
+//                "<div class='popover-navigation'>" +
+//                " <button class='btn btn-default' data-role='prev'>« 前一步</button>" +
+//                " <span data-role='separator'>|</span> " +
+//                "<button class='btn btn-default' data-role='next'>下一步 »</button> " +
+//                "</div><a class='btn btn-primary pull-right' data-role='end'>我知道了!</a></nav></div>",
+//                steps: [
+//                    {
+//                        element: ".tour-step1",
+//                        title: "提示",
+//                        content: "点击这个按钮可以发表评论"
+//                    },{
+//                        element: ".tour-step2",
+//                        title: "提示",
+//                        content: "在这里可以查看你发表的评论"
+//                    }
+//                ]
+//        });
+//            tour.init();
+//            tour.start();
+//        }
 
 //        App.init();
 //        App.initBxSlider();
