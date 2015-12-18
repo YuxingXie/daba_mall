@@ -80,7 +80,7 @@
         $(".fancybox-fast-view").click(function(){
             var prod=$(this).data("prod");
             $.ajax(path+"/product_series/popover/"+prod).done(function(productSeries){
-                $("#product-pop-up .product-main-image>img").attr("src",path+"/"+productSeries.pictures[0]);
+                $("#product-pop-up .product-main-image>img").attr("src",path+"/"+productSeries.pictures[0].picture);
                 $("#product-pop-up h1").text(productSeries.name);
                 //
                 if(productSeries.currentPrice && productSeries.currentPrice.prevPrice){

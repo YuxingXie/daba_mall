@@ -38,7 +38,7 @@
                                     <c:set var="totalPrice" value="${totalPrice+productSelected.amount*productSelected.productSeries.commonPrice}"/>
                                     <tr>
                                         <td>
-                                            <img class="img-responsive img-ico-sm" src="${path}/${productSelected.productSeries.pictures[0]}">
+                                            <img class="img-responsive img-ico-sm" src="${path}/${productSelected.productSeries.pictures[0].picture}">
                                         </td>
                                         <td class="shopping-cart-description">
                                             <b><a href="${path}/product/${productSelected.productSeriesId}">${productSelected.productSeries.name} </a></b>

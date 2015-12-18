@@ -25,9 +25,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -61,22 +59,9 @@ public class AdminController extends BaseRestSpringController {
             String dirStr="statics/img/product";
             ServletContext context= ProjectContext.getServletContext();
             ServletContextResource dirResource=new ServletContextResource(context,dirStr);
-            File dirFile=dirResource.getFile();
-            if (!dirFile.exists() || !dirFile.isDirectory()){
-                dirFile.mkdirs();
-            }
-            //循环获取file数组中得文件
-            String[] pictures=new String[files.length];
-            for(int i = 0;i<files.length;i++){
-                MultipartFile file = files[i];
-                //保存文件到数据库
-                String picture=productSeriesService.saveFile(file.getOriginalFilename(),file.getBytes());
-                String originalFilename=file.getOriginalFilename();
-                String destFileStr=dirStr+"/"+picture+originalFilename.substring(originalFilename.lastIndexOf("."));
-                file.transferTo(new ServletContextResource(context,destFileStr).getFile());
-                pictures[i]="pic/"+picture;
-            }
-            productSeries.setPictures(pictures);
+            mkDirs(dirResource);
+            List<ProductSeriesPicture> productSeriesPictures = getProductSeriesPicturesAndSaveFiles(files, dirStr, context);
+            productSeries.setPictures(productSeriesPictures);
 
         }
         productSeries.setNewProduct(true);
@@ -123,11 +108,6 @@ public class AdminController extends BaseRestSpringController {
         prices.add(productSeriesPrice);
         productSeries.setProductSeriesPrices(prices);
 //        ServiceManager.productSeriesService.upsert(productSeries);
-
-
-
-
-
 //        ServiceManager.productStoreService.insert(store);
         ProductStoreInAndOut inAndOut=new ProductStoreInAndOut();
         inAndOut.setAmount(storeAmount);
@@ -139,6 +119,69 @@ public class AdminController extends BaseRestSpringController {
         productSeries.setProductStore(store);
 //        ServiceManager.productSeriesService.upsert(productSeries);
         return "redirect:/admin/index/index";
+    }
+
+    private List<ProductSeriesPicture> getProductSeriesPicturesAndSaveFiles(MultipartFile[] files, String dirStr, ServletContext context) throws IOException {
+        //循环获取file数组中得文件
+        Map<String,ProductSeriesPicture> originalPrefixesMap= new HashMap<String, ProductSeriesPicture>();
+        for(int i = 0;i<files.length;i++){
+            MultipartFile file = files[i];
+            //保存文件到数据库
+            String picture=productSeriesService.saveFile(file.getOriginalFilename(), file.getBytes());
+            String originalFilename=file.getOriginalFilename();
+            String prefix=originalFilename.substring(0,originalFilename.lastIndexOf("."));//如xxx.zom,xxx.ico,xxx
+            String suffix=originalFilename.substring(originalFilename.lastIndexOf("."));//后缀名如.jpg
+            String originalPrefix=new String();//原始前缀，xxx.zom.jpg,xxx.ico.jpg,xxx.jpg的原始前缀都是xxx
+            if (prefix.indexOf(".")>0){
+                originalPrefix=prefix.substring(0,prefix.lastIndexOf("."));
+            }else{
+                originalPrefix=prefix;
+            }
+            ProductSeriesPicture pictureOfOriginalPrefix=null;
+            if (!originalPrefixesMap.containsKey(originalPrefix)){
+                pictureOfOriginalPrefix=new ProductSeriesPicture();
+                originalPrefixesMap.put(originalPrefix,pictureOfOriginalPrefix);
+            }else{
+                pictureOfOriginalPrefix=originalPrefixesMap.get(originalPrefix);
+            }
+            if (prefix.endsWith(".zoom")){//大图
+                pictureOfOriginalPrefix.setBigPicture("pic/"+picture);
+            }else if(prefix.endsWith(".ico")){//小图
+                pictureOfOriginalPrefix.setIconPicture("pic/" + picture);
+            }else{//原图
+                pictureOfOriginalPrefix.setPicture("pic/"+picture);
+            }
+            String destFileStr=dirStr+"/"+picture+suffix;
+            file.transferTo(new ServletContextResource(context,destFileStr).getFile());
+        }
+        List<ProductSeriesPicture> productSeriesPictures=new ArrayList<ProductSeriesPicture>();
+        for (String key:originalPrefixesMap.keySet()){
+            productSeriesPictures.add(originalPrefixesMap.get(key));
+        }
+        return productSeriesPictures;
+    }
+
+    private void mkDirs(ServletContextResource dirResource) throws IOException {
+        File dirFile=dirResource.getFile();
+        if (!dirFile.exists() || !dirFile.isDirectory()){
+            dirFile.mkdirs();
+        }
+    }
+    public static void main(String args[]){
+        Map<String,ProductSeriesPicture> pictureMap=new HashMap<String, ProductSeriesPicture>();
+        ProductSeriesPicture productSeriesPicture001=new ProductSeriesPicture();
+        productSeriesPicture001.setPicture("001.jpg");
+        productSeriesPicture001.setBigPicture("001.zoom.jpg");
+        productSeriesPicture001.setIconPicture("001.ico.jpg");
+        pictureMap.put("001",productSeriesPicture001);
+
+        ProductSeriesPicture productSeriesPicture002=new ProductSeriesPicture();
+        productSeriesPicture002.setPicture("002.jpg");
+        productSeriesPicture002.setBigPicture("002.zoom.jpg");
+        productSeriesPicture002.setIconPicture("002.ico.jpg");
+        pictureMap.put("002",productSeriesPicture002);
+        pictureMap.get("002").setBigPicture("002.big.jpg");
+        System.out.println(pictureMap.get("002").getBigPicture());
     }
     @RequestMapping(value="/product_category/new")
     public String createProductCategory(ModelMap model, HttpServletRequest request,String categoryType,String categoryName,String subCategoryName,String productCategoryId){

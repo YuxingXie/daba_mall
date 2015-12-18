@@ -17,11 +17,12 @@
         $scope.productSelected.productPropertyValueList=[];
         $scope.productSelected.amount = 1;
         $scope.paginationConf = {
-            currentPage: 1,
-            totalItems: 20,
-            itemsPerPage: 6,
-            pagesLength:9,
-            perPageOptions: [10, 20, 30, 40, 50]}
+//            currentPage: 1,
+//            totalItems: 20,
+//            itemsPerPage: 6,
+//            pagesLength:9,
+//            perPageOptions: [10, 20, 30, 40, 50]
+        }
         $http.get("${path}/product_series/data/${id}").success(function(data){
             $scope.productSeries=data.productSeries;
             $scope.productSelected.productSeries= $scope.productSeries;
@@ -47,7 +48,8 @@
                 perPageOptions: [10, 20, 30, 40, 50],
                 onChange: function(){
                     $http.get(path+'/product_series/data/${id}?page='+this.currentPage).success(function (data) {
-                        $scope._page = data;
+                        $scope._page = data._page;
+                        $scope.page=data.page;
                     });
                 }
             };
@@ -107,6 +109,7 @@
                 reply.parent=productEvaluate;
 //                reply.parent.id=productEvaluate.id;
                 $http.post(url,reply).success(function(data){
+//                    $scope.reply.content=undefined;
                     for(var i=0;i<$scope._page.content.length;i++){
                         var productEvaluateInPage=$scope._page.content[i];
                         if(productEvaluateInPage.id===productEvaluate.id){
@@ -121,21 +124,16 @@
         $scope.toPraise=function(productEvaluate){
             loginCheckBeforeHandler(function(){
                 var url="${path}/product_series/evaluate/praise/"+productEvaluate.id;
-                $.ajax({
-                    url: url,
-                    method: "get"
-                }).done(function (data) {
-                    $scope.$apply(function () {
-                        if(data && data.length){
-                            $scope.evaluate${productEvaluate.id}PraiseCount=data.length;
-                        }else{
-                            $scope.evaluate${productEvaluate.id}PraiseCount=0;
+                $http.get(url).success(function(data){
+                    for(var i=0;i<$scope._page.content.length;i++){
+                        var productEvaluateInPage=$scope._page.content[i];
+                        if(productEvaluateInPage.id===productEvaluate.id){
+                            $scope._page.content[i].praises=data;
+                            break;
                         }
-                        $scope.evaluate${productEvaluate.id}Praises=data;
-                      <%--console.log($scope.evaluate${productEvaluate.id}PraiseCount);--%>
-                    })
-                }).fail(function(){ console.log("error！"); });
-                <%--$scope.replies${varStatus.index}();--%>
+                    }
+                });
+
             });
         }
 

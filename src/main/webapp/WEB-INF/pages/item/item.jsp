@@ -20,14 +20,14 @@
               <form name="form">
                 <div class="row">
                   <div class="easyzoom easyzoom--adjacent" ng-init="img=0;">
-                    <a ng-href="${path}/statics/img/product/5649c4116f70e517dce0b22c.JPG">
-                      <img ng-src="${path}/{{productSeries.pictures[img]}}" class="img-responsive"/>
+                    <a ng-href="${path}/{{productSeries.pictures[img].bigPicture}}">
+                      <img ng-src="${path}/{{productSeries.pictures[img].picture}}" class="img-responsive"/>
                     </a>
                   </div>
                 </div>
                 <div class="row">
                   <span class="thumbnail img-ico-lg col-lg-2 col-sm-2" ng-repeat="picture in productSeries.pictures">
-                    <a class="control-label" href="javascript:void(0)" data-ng-click="$parent.img=$index;"><img class="img-thumbnail" ng-src="${path}/{{picture}}"/></a>
+                    <a class="control-label" href="javascript:void(0)" data-ng-click="$parent.img=$index;"><img class="img-thumbnail" ng-src="${path}/{{picture.picture}}"/></a>
                   </span>
                 </div>
                 <div class="row">
@@ -66,9 +66,6 @@
                         ng-options="productPropertyValue.value for productPropertyValue in productProperty.propertyValues"></select>
                   </div>
                 </div>
-
-
-
             </div>
             <div class="row padding-bottom-20">
                 <div class="col-lg-4 col-sm-4"><input type="number" min="1" class="form-control" ng-model="productSelected.amount" placeholder="购买数量"/></div>
@@ -79,8 +76,8 @@
             <div class="row padding-bottom-20">
               <ul class="social-icons">
                 <div class="bdsharebuttonbox">
-                  <%--<a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>--%>
-                <%--<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"这里的东西太好吃了,都是生态环保的湖南宁乡土特产,你也来看看吧！","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16","tag":"pic1"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>--%>
+                  <a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"这里的东西太好吃了,都是生态环保的湖南宁乡土特产,你也来看看吧！","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16","tag":"pic1"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
               </ul>
             </div>
           </div>
@@ -96,10 +93,6 @@
             </div>
           </div>
         </div>
-
-
-
-
 
         <div class="row margin-bottom-40">
           <div class="product-page-content">
@@ -153,20 +146,20 @@
                       </td>
                       <td>
                         <div class="review-item-image" ng-if="productEvaluate.pictures">
-                          <img ng-repeat="picture in productEvaluate.pictures" class="img-responsive img-ico-md" ng-src="${path}/{{picture}}"/>
+                          <img ng-repeat="picture in productEvaluate.pictures" class="img-responsive img-ico-md" ng-src="${path}/{{picture.picture}}"/>
                         </div>
                       </td>
                     </tr>
                     <tr>
                       <td></td><td></td>
                       <td>
-                        <a class="fa fa-thumbs-o-up pull-right" href="javascript:void(0)" data-ng-click="toPraise()">
+                        <a class="fa fa-thumbs-o-up pull-right" href="javascript:void(0)" data-ng-click="toPraise(productEvaluate)">
                           赞
                           <span ng-if="!productEvaluate.praises &&productEvaluate.praises.length==0">(0)</span>
                           <span ng-if="productEvaluate.praises">({{productEvaluate.praises.length}})</span>
                         </a>
                         &nbsp;
-                        <a class="fa fa-reply pull-right" href="javascript:void(0)" data-ng-click="showEvaluate=!showEvaluate;$parent.currentEvaluate=productEvaluate;">
+                        <a class="fa fa-reply pull-right" href="javascript:void(0)" data-ng-click="showEvaluate=!showEvaluate;">
                           回复<span ng-if="!productEvaluate.replies.length">(0)</span>
                           <span ng-if="productEvaluate.replies.length">({{productEvaluate.replies.length}})</span>
                         </a>

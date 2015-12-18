@@ -36,25 +36,10 @@
               </div>
           </div>
           <div class="row"  ng-show="!_page">
-              <%--<c:forEach items="${_page.content}" varStatus="i"  var="productSeries">--%>
-                  <%--<div class="col-sm-3 col-lg-3">--%>
-                              <%--<img class="img-responsive img-thumbnail" src="${path}/${productSeries.pictures[0]}"/>--%>
-                              <%--<div>--%>
-                                  <%--<a href="${path}/${productSeries.pictures[0]}" class="btn btn-default fancybox-button">大图</a>--%>
-                                  <%--<a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-prod="${productSeries.id}"  data-url="${path}/product_series/popover/${productSeries.id}">详情</a>--%>
-                              <%--</div>--%>
 
-                          <%--<h3><a href="${path}/product_series/${productSeries.id}">${productSeries.name}</a></h3>--%>
-                          <%--<div class="fa fa-rmb">${productSeries.commonPrice}</div>--%>
-                          <%--<a href="javascript:void(0)" data-href="${path}/cart/${productSeries.id}" class="fa fa-shopping-cart btn btn-default add2cart">添加到购物车</a>--%>
-                            <%--<c:if test="${productSeries.newProduct}"><div class="sticker sticker-new"></div></c:if>--%>
-                          <%--<c:if test="${productSeries.evaluateCount ge 1000}"><div class="sticker sticker-sale"></div></c:if>--%>
-
-                  <%--</div>--%>
-              <%--</c:forEach>--%>
                   <c:forEach items="${_page.content}" var="prod">
                       <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15">
-                          <a href="${path}/product_series/${prod.id}"><img src="${path}/${prod.pictures[0]}" class="img-responsive img-thumbnail product-show" ></a>
+                          <a href="${path}/product_series/${prod.id}"><img src="${path}/${prod.pictures[0].picture}" class="img-responsive img-thumbnail product-show" ></a>
                           <div class="row"> <p class="fa fa-rmb pi-price col-lg-8 col-sm-8 text-left">${prod.commonPrice}</p></div>
                           <div class="row">
                               <p class="pi-description col-lg-12 col-sm-12 text-left"> <a href="${path}/product_series/${prod.id}">${prod.name}</a>
@@ -74,30 +59,14 @@
                   </c:forEach>
               </div>
           <div class="row"  ng-show="_page">
-              <!--不需要-->
-              <%--<div class="col-sm-3 col-lg-3" ng-repeat="productSeries in _page.content">--%>
-                  <%--<div class="product-item">--%>
-                      <%--<div class="pi-img-wrapper">--%>
-                          <%--<img class="img-responsive" ng-src="${path}/{{productSeries.pictures[0]}}"/>--%>
-                          <%--<div>--%>
-                              <%--<a ng-href="${path}/{{productSeries.pictures[0]}}" class="btn btn-default fancybox-button">大图</a>--%>
-                              <%--<a href="#product-pop-up" class="btn btn-default fancybox-fast-view" data-prod="{{productSeries.id}}"  data-url="${path}/product_series/popover/{{productSeries.id}}">详情</a>--%>
-                          <%--</div>--%>
-                      <%--</div>--%>
-                      <%--<h3><a ng-href="${path}/product_series/{{productSeries.id}}">{{productSeries.name}}</a></h3>--%>
-                      <%--<i class="fa fa-jpy">{{productSeries.commonPrice}}</i>--%>
-                      <%--<a href="javascript:void(0)" data-href="${path}/cart/{{productSeries.id}}" class="btn btn-default add2cart">添加到购物车</a>--%>
-                          <%--<div class="sticker sticker-new" ng-show="productSeries.newProduct"></div>--%>
-                      <%--<div class="sticker sticker-sale" ng-show="productSeries.evaluateCount>=1000"></div>--%>
-                  <%--</div>--%>
-              <%--</div>--%>
+
 
 
 
                   <!--需要-->
                   <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15" ng-repeat="productSeries in _page.content">
                       <a ng-href="${path}/product_series/{{productSeries.id}}">
-                          <img ng-src="${path}/{{productSeries.pictures[0]}}" class="img-responsive img-thumbnail product-show" >
+                          <img ng-src="${path}/{{productSeries.pictures[0].picture}}" class="img-responsive img-thumbnail product-show" >
                       </a>
                       <div class="row"> <p class="fa fa-rmb pi-price col-lg-8 col-sm-8 text-left">{{productSeries.commonPrice}}</p></div>
                       <div class="row">

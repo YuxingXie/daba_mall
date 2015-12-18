@@ -21,7 +21,7 @@ public class ProductSeries {
     @Field(value = "name")
     private String name;
     @Field(value = "pictures")
-    private String[] pictures;
+    private List<ProductSeriesPicture> pictures;
 //    @Field(value = "commonPrice")
 
     @Field(value = "description")
@@ -145,11 +145,11 @@ public class ProductSeries {
         this.name = name;
     }
 
-    public String[] getPictures() {
+    public List<ProductSeriesPicture> getPictures() {
         return pictures;
     }
 
-    public void setPictures(String[] pictures) {
+    public void setPictures(List<ProductSeriesPicture> pictures) {
         this.pictures = pictures;
     }
 

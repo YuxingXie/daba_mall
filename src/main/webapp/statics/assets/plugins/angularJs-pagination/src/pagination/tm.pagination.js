@@ -2,7 +2,8 @@
  * name: tm.pagination
  * Version: 0.0.2
  */
-angular.module('tm.pagination', ['ngRoute']).directive('tmPagination',['$http', function($http){
+angular.module('tm.pagination', ['ngRoute'])
+   .directive('tmPagination',['$http', function($http){
     return {
         restrict: 'EA',
         template:'<ul class="pagination" ng-show="conf.totalItems > 0">' +
@@ -140,7 +141,6 @@ angular.module('tm.pagination', ['ngRoute']).directive('tmPagination',['$http', 
                     }
                     
                 }
-                scope.$parent.conf = scope.conf;
             }
 
             // prevPage

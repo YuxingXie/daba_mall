@@ -24,7 +24,38 @@
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>
 
 <script>
-//  angular.module("indexApp",[])
+    var easyzoom=function(){
+        // Instantiate EasyZoom instances
+
+        var $easyzoom = $('.easyzoom').easyZoom();
+
+        // Setup thumbnails example
+        var api1 = $easyzoom.filter('.easyzoom--with-thumbnails').data('easyZoom');
+
+        $('.thumbnails').on('click', 'a', function(e) {
+            var $this = $(this);
+
+            e.preventDefault();
+
+            // Use EasyZoom's `swap` method
+            api1.swap($this.data('standard'), $this.attr('href'));
+        });
+        // Setup toggles example
+        var api2 = $easyzoom.filter('.easyzoom--with-toggle').data('easyZoom');
+
+        $('.toggle').on('click', function() {
+            var $this = $(this);
+
+            if ($this.data("active") === true) {
+                $this.text("Switch on").data("active", false);
+                api2.teardown();
+            } else {
+                $this.text("Switch off").data("active", true);
+                api2._init();
+            }
+        });
+    }
+    //  angular.module("indexApp",[])
             mainApp .controller('indexController', ['$scope', '$http', function ($scope, $http) {
                 $scope.popover=function(productSeriesId){
                     $scope.productSelected={};
@@ -32,9 +63,15 @@
                     $http.get(path+'/product_series/popover/'+productSeriesId).success(function (data) {
                         $scope.productSelected.productSeries = data;
                         $scope.productSelected.amount = 1;
-                        $scope.currentImg=$scope.productSelected.productSeries.pictures[0];
+                        if(!$scope.productSelected.productSeries.pictures){
+                            $scope.productSelected.productSeries.pictures=[];
+                            var picture={};
+                            picture.picture= "statics/img/img_not_found.jpg";
+                            picture.bigPicture= "statics/img/img_not_found.jpg";
+                            $scope.productSelected.productSeries.pictures.push(picture);
+                        }
+                        $scope.currentPicture=$scope.productSelected.productSeries.pictures[0];
                         $scope.ratingVal = $scope.productSelected.productSeries.productSeriesEvaluateGrade?$scope.productSelected.productSeries.productSeriesEvaluateGrade:0;
-//                ng-init="$parent.productSelected.productPropertyValueList[0]=productProperty.propertyValues[0]"
                         var productProperties= $scope.productSelected.productSeries.productProperties;
                         if(productProperties&&productProperties.length){
                             for(var i=0;i<productProperties.length;i++){
@@ -45,23 +82,16 @@
                                 }
                             }
                         }
-
-                        // Instantiate EasyZoom plugin
-                        var $easyzoom = $('.easyzoom').easyZoom();
-                        // Get the instance API
-                        var api = $easyzoom.data('easyZoom');
+                        easyzoom();
                         $("#showProductModal").modal().show();
                     });
                 }
                 $scope.max = 5;
                 $scope.ratingVal =3;
                 $scope.readonly = true;
-                $scope.changeImg=function(currentImg){
-                    $scope.currentImg=currentImg;
-                }
-                $scope.add2cart=function(){
+               $scope.add2cart=function(){
                     $http.post('${path}/index/cart', $scope.productSelected).success(function(data){
-                        $scope.cart=data;
+                        $scope.$parent.cart=data;
 
                     }).error(function(data) {
                         alert("对不起，服务器出现了点异常!");
@@ -137,11 +167,11 @@
         })
 //  angular.bootstrap(document.getElementById("indexAppMain"),["indexApp"]);
   $(document).ready(function(){
-    App.init();
-    App.initBxSlider();
+//    App.init();
+//    App.initBxSlider();
     Index.initLayerSlider();
-    App.initTouchspin();
-      $('[data-toggle=tooltip]').tooltip();
+//    App.initTouchspin();
+
 
   });
 </script>

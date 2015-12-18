@@ -28,7 +28,7 @@
 
                 <tr name="interest" ng-if="interests&&interests.length>0" ng-repeat="interest in interests" >
                     <td>
-                        <img class="img-responsive img-ico-sm text-right" ng-src="${path}/{{interest.productSeries.pictures[0]}}">
+                        <img class="img-responsive img-ico-sm text-right" ng-src="${path}/{{interest.productSeries.pictures[0].picture}}">
                     </td>
                     <td class="text-left">
                         <a ng-href="${path}/product_series/{{interest.productSeries.id}}">{{interest.productSeries.name}}</a>
@@ -57,7 +57,7 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="product-main-image">
-                                <img ng-src="${path}/{{productSeries.pictures[0]}}" class="img-responsive">
+                                <img ng-src="${path}/{{productSeries.pictures[0].picture}}" class="img-responsive">
                             </div>
                             <div class="product-other-images" ng-repeat="picture in productSeries.pictures" style="display: inline-block" >
                                     <a ng-if="$index===0" href="javascript:void(0)" class="active"><img ng-src="${path}/{{picture}}"></a>

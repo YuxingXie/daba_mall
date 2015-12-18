@@ -392,7 +392,11 @@ public class UserController extends BaseRestSpringController {
             for (ProductSelected productSelected:cart.getProductSelectedList()){
                 ProductSeries productSeries=productSelected.getProductSeries();
                 List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
-                if (productSeries.getProductStore()!=null) productSeries.getProductStore().setInAndOutList(inAndOuts);
+                if (productSeries.getProductStore()!=null) {
+                    productSeries.getProductStore().setInAndOutList(inAndOuts);
+                }else{
+
+                }
             }
         }
         session.setAttribute(Constant.CART,cart);

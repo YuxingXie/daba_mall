@@ -124,7 +124,7 @@
                                     <span ng-init="hasEmptyProduct=true">没有找到您当时选择的商品，商品可能已被移除或下架,如果您已经付款请联系客服，如果没有付款，您可以删除该订单。</span>
                                 </div>
                                 <div class="col-lg-3 col-sm-3 text-center">
-                                    <img class="thumbnail img-ico-md pull-left" ng-src="${path}/{{productSelected.productSeries.pictures[0]}}">
+                                    <img class="thumbnail img-ico-md pull-left" ng-src="${path}/{{productSelected.productSeries.pictures[0].picture}}">
                                     <a ng-href="${path}/product_series/{{productSelected.productSeries.id}}">{{productSelected.productSeries.name}}</a>
                                     <span ng-repeat="productPropertyValue in productSelected.productPropertyValueList"> {{productPropertyValue.value}}</span>
                                 </div>

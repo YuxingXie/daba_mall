@@ -60,7 +60,7 @@
 
                                 <div class="col-lg-1 col-sm-1">
                                     <a href="${path}/product/${productSeries.id}">
-                                        <img src="${path}/${productSeries.pictures[0]}" class="pull-left resule-thumb" alt="${productSeries.name}">
+                                        <img src="${path}/${productSeries.pictures[0].picture}" class="pull-left resule-thumb" alt="${productSeries.name}">
                                     </a>
                                 </div>
 

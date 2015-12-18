@@ -432,7 +432,24 @@ Catalogue styles
 	padding-top: 7px;
 	color: #868c93;
 }
+.easyzoom-thumbnails {
+	overflow: hidden;
+	margin: 1em 0;
+	padding: 0;
+	text-align: center;
+}
 
+.easyzoom-thumbnails li {
+	display: inline-block;
+	/*width: 140px;*/
+	margin: 0 5px;
+}
+
+.easyzoom-thumbnails img {
+	display: block;
+	/*min-width: 100%;*/
+	/*max-width: 100%;*/
+}
 
 
 

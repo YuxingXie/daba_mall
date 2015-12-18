@@ -82,7 +82,18 @@
                         <c:forEach items="${newProducts}" var="productSeries">
                             <div class="col-lg-3 col-sm-3 padding-left-5 padding-right-0">
                                 <div class="thumbnail">
-                                    <a href="${path}/product_series/${productSeries.id}"><img src="${path}/${productSeries.pictures[0]}" class="img-responsive img-thumbnail" ></a>
+                                    <a href="${path}/product_series/${productSeries.id}">
+                                        <c:choose>
+                                            <c:when test="${empty productSeries.pictures}">
+
+                                                <img src="${path}/statics/img/img_not_found.jpg" class="img-responsive img-thumbnail" >
+                                            </c:when>
+                                            <c:otherwise>
+                                                <img src="${path}/${productSeries.pictures[0].picture}" class="img-responsive img-thumbnail" >
+
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </a>
                                     <c:if test="${productSeries.newProduct}"><div class="sticker sticker-new"></div></c:if>
                                     <div class="row margin-left-0">
                                         <a href="${path}/product_series/${productSeries.id}" class="pull-left">${productSeries.name}</a>
@@ -121,7 +132,7 @@
                     <c:otherwise>
                         <c:forEach items="${hotSells}" var="productSeries">
                             <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15 height-260">
-                                <a href="${path}/product_series/${productSeries.id}"><img src="${path}/${productSeries.pictures[0]}" class="img-responsive img-thumbnail product-show" ></a>
+                                <a href="${path}/product_series/${productSeries.id}"><img src="${path}/${productSeries.pictures[0].picture}" class="img-responsive img-thumbnail product-show" ></a>
                                 <div class="row">
                                     <p class="fa fa-rmb pi-price">${productSeries.commonPrice}</p>
                                     <a href="javascript:void(0)"
@@ -156,7 +167,7 @@
                     <c:otherwise>
                         <c:forEach items="${lowPrices}" var="productSeries">
                             <div class="col-lg-3 col-sm-3 thumbnail text-center margin-bottom-15 height-260">
-                                <a href="${path}/product_series/${productSeries.id}"><img src="${path}/${productSeries.pictures[0]}" class="img-responsive img-thumbnail product-show" ></a>
+                                <a href="${path}/product_series/${productSeries.id}"><img src="${path}/${productSeries.pictures[0].picture}" class="img-responsive img-thumbnail product-show" ></a>
                                 <div class="row">
                                     <p class="fa fa-rmb pi-price">${productSeries.commonPrice}</p>
                                     <a href="javascript:void(0)"
@@ -197,19 +208,32 @@
                     </div>
                     <form name="popForm" class="bg-success">
                         <div class="row">
-                            <div class="easyzoom easyzoom--overlay" style="margin-left: 10px;margin-right: 1px;">
-                                <a ng-href="${path}/statics/img/product/5649c4116f70e517dce0b22c.JPG">
-                                    <img ng-src="${path}/{{currentImg}}"/>
+                            <%--<div class="easyzoom easyzoom--overlay easyzoom--with-thumbnails" style="margin-left: 10px;margin-right: 1px;">--%>
+                                <%--&lt;%&ndash;<a ng-href="${path}/statics/img/product/5649c4116f70e517dce0b22c.JPG">&ndash;%&gt;--%>
+                                <%--<a href="${path}/{{productSelected.productSeries.pictures[0].bigPicture}}">--%>
+                                    <%--<img ng-src="${path}/{{productSelected.productSeries.pictures[0].picture}}"/>--%>
+                                <%--</a>--%>
+                            <%--</div>--%>
+                            <div class="easyzoom easyzoom--overlay easyzoom--with-thumbnails">
+                                <a ng-href="${path}/{{productSelected.productSeries.pictures[0].bigPicture}}">
+                                    <img ng-src="${path}/{{productSelected.productSeries.pictures[0].picture}}" alt="" width="320" height="180" />
                                 </a>
                             </div>
+                            <ul class="thumbnails easyzoom-thumbnails">
+                                <li ng-repeat="picture in productSelected.productSeries.pictures">
+                                    <a ng-href="${path}/{{picture.bigPicture}}" data-standard="${path}/{{picture.picture}}">
+                                        <img ng-src="${path}/{{picture.picture}}" alt="" class="img-ico-md" />
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-3 col-sm-3" ng-repeat="picture in productSelected.productSeries.pictures">
-                                <div class="thumbnail img-ico-lg">
-                                    <a href="javascript:void(0)" data-ng-click="changeImg(picture)"><img class="img-responsive" ng-src="${path}/{{picture}}"></a>
-                                </div>
-                            </div>
-                        </div>
+                        <%--<div class="row">--%>
+                            <%--<div class="col-lg-3 col-sm-3">--%>
+                                <%--<div class="thumbnail img-ico-lg">--%>
+                                    <%--<a href="javascript:void(0)" data-ng-click="changePicture(picture)"><img class="img-responsive" ng-src="${path}/{{picture.picture}}"></a>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
                         <div class="row table-responsive">
                             <table class="table table-condensed">
                                 <th>价格<i class="fa fa-rmb"></i></th>

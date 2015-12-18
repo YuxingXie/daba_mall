@@ -15,11 +15,13 @@
 <%--弹出二级菜单相关--%>
 <script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/tooltip.js"></script>
 <script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/popover.js"></script>
-<script src="${path}/statics/assets/plugins/angular-1.2.19/angular-route.min.js"></script>
+
 <script src="${path}/statics/assets/plugins/angular-1.2.19/ui-bootstrap-tpls.min.js"></script>
 <script src="${path}/statics/assets/plugins/angularJs-pagination/src/pagination/tm.pagination.js"></script>
-<script src="${path}/statics/assets/plugins/EasyZoom-master/dist/easyzoom.js" type="text/javascript"></script>
+<%--<script src="${path}/statics/assets/plugins/EasyZoom-master/dist/easyzoom.js" type="text/javascript"></script>--%>
+<script src="${path}/statics/assets/plugins/EasyZoom-master/dist/easyzoom.test.js" type="text/javascript"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/back-to-top.js"></script>
+
 <script>
     var mainApp=angular.module("mainApp",['ui.bootstrap', 'ngRoute','tm.pagination']);
     mainApp .controller('mainController', ['$scope', '$http', function ($scope, $http) {

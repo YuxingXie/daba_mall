@@ -54,7 +54,7 @@
                                                 <c:otherwise>
                                                     <tr name="productSelected">
                                                         <td class="shopping-cart-image">
-                                                            <a href="${path}/product/${productSelected.productSeries.id}"><img src="${path}/${productSelected.productSeries.pictures[0]}"></a>
+                                                            <a href="${path}/product/${productSelected.productSeries.id}"><img src="${path}/${productSelected.productSeries.pictures[0].picture}"></a>
                                                         </td>
                                                         <td >
                                                             ${productSelected.productSeries.name}

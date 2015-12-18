@@ -10,6 +10,8 @@ import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -56,7 +58,7 @@ public class ProductSeriesController extends BaseRestSpringController {
         }
         page=page==null?1:page;
         ProductSeries productSeries = productSeriesService.findProductSeriesById(id);
-        Page<ProductEvaluate> productEvaluateListPage=ServiceManager.productEvaluateService.findProductEvaluatesPageWithoutParentEvaluateByProductSeries(productSeries, page, 6);
+        Page<ProductEvaluate> productEvaluateListPage=ServiceManager.productEvaluateService.findProductEvaluatesPageWithoutParentEvaluateByProductSeries(productSeries, page, 5);
         model.addAttribute("productSeries",productSeries);
         model.addAttribute("_page",productEvaluateListPage);
         model.addAttribute("page",page);
@@ -122,7 +124,7 @@ public class ProductSeriesController extends BaseRestSpringController {
         DBObject childrenDBObject=new BasicDBObject();
         childrenDBObject.put("parent",reply.getParent());
         childrenDBObject.put("type", Constant.EVALUATETYPE.REPLY);
-        List<ProductEvaluate> replies=ServiceManager.productEvaluateService.findAll(childrenDBObject);
+        List<ProductEvaluate> replies=ServiceManager.productEvaluateService.findAll(new BasicQuery(childrenDBObject).with(new Sort(Sort.Direction.DESC, "date")));
         ResponseEntity<List<ProductEvaluate>> rt=new ResponseEntity<List<ProductEvaluate>>(replies, HttpStatus.OK);
         return rt;
     }
