@@ -143,7 +143,7 @@
                                         <span class="input-group-addon pull-left"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </td>
                                 </tr>
-                                <tr ng-show="order.payAccount.cardSort==1">
+                                <tr ng-if="order.payAccount.cardSort==1">
                                     <td class="text-left"><i class="fa fa-reorder">卡验证码</i></td>
                                     <td class="text-left form-inline">
                                         <input type="text" style="width: 150px;" name="cardValidateCode" ng-model="order.payAccount.cardValidateCode" class="form-control bg-success"
@@ -151,7 +151,7 @@
                                         <label class="control-label"><input type="checkbox" data-ng-click="showPic()" class="form-control checkbox"/>看示例</label>
                                     </td>
                                 </tr>
-                                <tr ng-if="cardSort==1&&isShow">
+                                <tr ng-if="order.payAccount.cardSort==1&&isShow">
                                     <td name="credit_card_example" class="text-left" colspan="2">
                                         <img src="${path}/statics/assets/plugins/bank/credit_card_example.jpg" class="img-responsive">
                                     </td>

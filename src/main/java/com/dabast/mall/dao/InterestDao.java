@@ -40,12 +40,19 @@ public class InterestDao  extends BaseMongoDao<Interest> {
     }
 
     public boolean alreadyInterested(User user,ProductSeries productSeries) {
-        DBObject dbObject=new BasicDBObject();
-        dbObject.put("productSeries",productSeries);
-        dbObject.put("user",user);
-        List<Interest> interests=findAll(dbObject);
+        if (user==null) return false;
+        List<Interest> interests = findByUserAndProductSeries(user, productSeries);
         if (interests==null) return false;
         if (interests.size()==0) return false;
         return true;
+    }
+
+    public List<Interest> findByUserAndProductSeries(User user, ProductSeries productSeries) {
+        if (user==null) return null;
+        if (productSeries==null) return null;
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("productSeries",productSeries);
+        dbObject.put("user",user);
+        return findAll(dbObject);
     }
 }

@@ -139,4 +139,7 @@ public abstract class BaseEntityManager<E> implements IBaseEntityManager<E> {
     public List<E> findAll(Query query){
         return getEntityDao().findAll(query);
     }
+    public void removeAll(List<E> list){
+        getEntityDao().removeAll(list);
+    }
 }

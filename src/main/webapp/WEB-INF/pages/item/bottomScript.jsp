@@ -18,6 +18,8 @@
         $scope.productSelected={};
         $scope.productSelected.productPropertyValueList=[];
         $scope.productSelected.amount = 1;
+        $scope.interested=false;
+
         $scope.paginationConf = {
 //            currentPage: 1,
 //            totalItems: 20,
@@ -32,6 +34,7 @@
             $scope.productSelected.productSeries= $scope.productSeries;
             $scope._page=data._page;
             $scope.page=data.page;
+            $scope.interested=data.interested;
             $scope.order=data.order;
             if($scope.order){
                 var $tour_step1=$(".tour-step1");
@@ -86,33 +89,6 @@
                     });
                 }
             };
-            <%--if($scope._page &&$scope._page.totalPages>0){--%>
-                <%--var options = {--%>
-                    <%--currentPage:$scope.page,--%>
-                    <%--totalPages: $scope._page.totalPages,--%>
-                    <%--itemContainerClass: function (type, page, current) {--%>
-                        <%--return (page === current) ? "active" : "everyPage";--%>
-                    <%--},pageUrl: function(type, page, current){--%>
-                        <%--return "${path}/product_series/"+$scope.productSeries.id+"?page="+page;--%>
-                    <%--},itemTexts: function (type, page, current) {--%>
-                        <%--switch (type) {--%>
-                            <%--case "first":--%>
-                                <%--return "<i class='fa fa-fast-backward'></i>";--%>
-                            <%--case "prev":--%>
-                                <%--return "<i class='fa fa-backward'></i>";--%>
-                            <%--case "next":--%>
-                                <%--return "<i class='fa fa-forward'></i>";--%>
-                            <%--case "last":--%>
-                                <%--return "<i class='fa fa-fast-forward'></i>";--%>
-                            <%--case "page":--%>
-                                <%--return page;--%>
-                        <%--}--%>
-                    <%--}--%>
-                <%--};--%>
-                <%--$('#infoPage').bootstrapPaginator(options);--%>
-            <%--}--%>
-
-
         });
         $scope.max = 5;
         $scope.ratingVal =3;
@@ -169,13 +145,84 @@
 
             });
         }
-
-
-        $http.get('${path}//product_series/data/${id}?orderId=${requestScope.orderId}').success(function (data) {
+        $scope.isEvaluated=function(orderId,productSeriesId){
+            var url="${path}/order/evaluated?orderId="+orderId+"&productSeriesId="+productSeriesId;
+            $http.get(url).success(function (data) {
+                var isEvaluated = data.isEvaluated;
+                if(isEvaluated){
+                    alert("您已经评价过了")
+                }else{
+                    $("#evaluateModal").modal().show();
+                }
+            });
+        }
+        $scope.toggleInterest=function(){
+            var url="${path}/product_series/toggle_interest";
+            url+="?productSeriesId="+$scope.productSeries.id;
+            $http.get(url).success(function (data) {
+                $scope.interested = data.interested;
+            });
+        }
+        $http.get('${path}/product_series/data/${id}?orderId=${requestScope.orderId}').success(function (data) {
             $scope.data = data;
         });
 
-    }]);
+    }])
+    .directive('star', function () {
+        return {
+            template: '<ul class="rating" ng-mouseleave="leave()">' +
+            '<li ng-repeat="star in stars" ng-class="star" ng-click="click($index + 1)" ng-mouseover="over($index + 1)">' +
+            '\u2605' +
+            '</li>' +
+            '</ul>',
+            scope: {
+                ratingValue: '=',
+                max: '=',
+                readonly: '@',
+                onHover: '=',
+                onLeave: '='
+            },
+            controller: function($scope){
+                $scope.ratingValue = $scope.ratingValue || 0;
+                $scope.max = $scope.max || 5;
+                $scope.click = function(val){
+                    if ($scope.readonly && $scope.readonly === 'true') {
+                        return;
+                    }
+                    $scope.ratingValue = val;
+                };
+                $scope.over = function(val){
+                    $scope.onHover(val);
+                };
+                $scope.leave = function(){
+                    $scope.onLeave();
+                }
+            },
+            link: function (scope, elem, attrs) {
+                elem.css("text-align", "center");
+                var updateStars = function () {
+                    scope.stars = [];
+                    for (var i = 0; i < scope.max; i++) {
+                        scope.stars.push({
+                            filled: i < scope.ratingValue
+                        });
+                    }
+                };
+                updateStars();
+
+                scope.$watch('ratingValue', function (oldVal, newVal) {
+                    if (newVal) {
+                        updateStars();
+                    }
+                });
+                scope.$watch('max', function (oldVal, newVal) {
+                    if (newVal) {
+                        updateStars();
+                    }
+                });
+            }
+        };
+    });
 //    angular.bootstrap(document.getElementById("page-main"), ['productSeriesApp']);
 var easyzoom=function(){
     // Instantiate EasyZoom instances

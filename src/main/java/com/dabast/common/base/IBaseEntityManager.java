@@ -1,5 +1,6 @@
 package com.dabast.common.base;
 
+import com.dabast.entity.Interest;
 import com.mongodb.CommandResult;
 import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
@@ -50,4 +51,6 @@ public interface IBaseEntityManager<E> {
    void removeById(String id);
 
    List<E> findAll(Query query);
+
+   void removeAll(List<E> list);
 }

@@ -50,4 +50,6 @@ public interface EntityDao <E>{
     void removeById(String id);
 
     List<E> findAll(Query query);
+
+    void removeAll(List<E> list);
 }

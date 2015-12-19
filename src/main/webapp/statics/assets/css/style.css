@@ -450,6 +450,8 @@ Catalogue styles
 	/*min-width: 100%;*/
 	/*max-width: 100%;*/
 }
-
+.inline-block{
+	display:inline-block;
+}
 
 

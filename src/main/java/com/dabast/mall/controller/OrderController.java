@@ -13,6 +13,7 @@ import com.dabast.mall.service.impl.OrderService;
 import com.dabast.mall.service.impl.RegisterValidateService;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.pingplusplus.Pingpp;
 import com.pingplusplus.exception.PingppException;
 import com.pingplusplus.model.Charge;
@@ -112,6 +113,34 @@ public class OrderController extends BaseRestSpringController {
         List<Order> orders=orderService.findAll(new BasicDBObject("user",getLoginUser(session)));
         ResponseEntity<List<Order>> ordersEntity=new ResponseEntity<List<Order>>(orders, HttpStatus.OK);
         return ordersEntity;
+    }
+
+    @RequestMapping(value = "/evaluated")
+    public ResponseEntity<ModelMap> isEvaluated( String orderId,String productSeriesId,ModelMap map) {
+//        Order order=orderService.findById(orderId);
+//        List<ProductSelected> productSelectedList=order.getProductSelectedList();
+        boolean evaluated=false;
+//        for (ProductSelected productSelected:productSelectedList){
+//            ProductSeries productSeries=productSelected.getProductSeries();
+//            if (productSeriesId.equals(productSeries.getId())){
+//                evaluated=true;
+//                break;
+//            }
+//        }
+        Assert.notNull(orderId);
+        Assert.notNull(productSeriesId);
+        Order order=new Order();
+        order.setId(orderId);
+        ProductSeries productSeries=new ProductSeries();
+        productSeries.setId(productSeriesId);
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("order",order);
+        dbObject.put("productSeries",productSeries);
+        List<ProductEvaluate> evaluates=ServiceManager.productEvaluateService.findAll(dbObject);
+//        if (evaluates!=null &&evaluates.size()>0) evaluated=true;
+        map.addAttribute("isEvaluated",evaluated);
+        ResponseEntity<ModelMap> entity=new ResponseEntity<ModelMap>(map, HttpStatus.OK);
+        return entity;
     }
     @RequestMapping(value = "/to_bill/{id}")
     public String orderSubmit(@PathVariable String id,HttpSession session,ModelMap model,RedirectAttributes redirectAttributes) {

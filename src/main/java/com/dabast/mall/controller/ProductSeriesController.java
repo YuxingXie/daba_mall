@@ -51,7 +51,7 @@ public class ProductSeriesController extends BaseRestSpringController {
 
 
     @RequestMapping(value="/data/{id}")
-    public ResponseEntity<ModelMap> show(ModelMap model,@PathVariable String id,String orderId,Integer page) {
+    public ResponseEntity<ModelMap> show(ModelMap model,@PathVariable String id,String orderId,Integer page,HttpSession session) {
         if (page==null){
             model.addAttribute("activeEvaluate",false);
         }else{
@@ -60,9 +60,11 @@ public class ProductSeriesController extends BaseRestSpringController {
         page=page==null?1:page;
         ProductSeries productSeries = productSeriesService.findProductSeriesById(id);
         Page<ProductEvaluate> productEvaluateListPage=ServiceManager.productEvaluateService.findProductEvaluatesPageWithoutParentEvaluateByProductSeries(productSeries, page, 5);
+        boolean interested=ServiceManager.interestService.alreadyInterested(getLoginUser(session),productSeries);
         model.addAttribute("productSeries",productSeries);
         model.addAttribute("_page",productEvaluateListPage);
         model.addAttribute("page",page);
+        model.addAttribute("interested",interested);
         if (orderId!=null&&!orderId.equals("")){
             Order order=ServiceManager.orderService.findOrderById(orderId);
             model.addAttribute("order",order);
@@ -71,21 +73,6 @@ public class ProductSeriesController extends BaseRestSpringController {
     }
     @RequestMapping(value="/{id}")
     public String forwardShow(ModelMap model,@PathVariable String id,String orderId,Integer page,HttpServletResponse response) {
-//        if (page==null){
-//            model.addAttribute("activeEvaluate",false);
-//        }else{
-//            model.addAttribute("activeEvaluate",true);
-//        }
-//        page=page==null?1:page;
-//        ProductSeries productSeries = productSeriesService.findProductSeriesById(id);
-//        Page<ProductEvaluate> productEvaluateListPage=ServiceManager.productEvaluateService.findProductEvaluatesPageWithoutParentEvaluateByProductSeries(productSeries, page, 6);
-//        model.addAttribute("productSeries",productSeries);
-//        model.addAttribute("_page",productEvaluateListPage);
-//        model.addAttribute("page",page);
-//        if (orderId!=null&&!orderId.equals("")){
-//            Order order=ServiceManager.orderService.findOrderById(orderId);
-//            model.addAttribute("order",order);
-//        }
         model.addAttribute("id",id);
         if(orderId!=null){
 //            response.setHeader("progma","no-cache");
@@ -180,8 +167,28 @@ public class ProductSeriesController extends BaseRestSpringController {
         ResponseEntity<List<ProductEvaluate>> rt=new ResponseEntity<List<ProductEvaluate>>(evaluates, HttpStatus.OK);
         return rt;
     }
+    @RequestMapping(value = "/toggle_interest", method = RequestMethod.GET)
+    public ResponseEntity<ModelMap> removeToInterest(String productSeriesId, ModelMap model, HttpSession session) {
+        User user= getLoginUser(session);
+        Assert.notNull(user);
+        ProductSeries productSeries=new ProductSeries();
+        productSeries.setId(productSeriesId);
+        if (!ServiceManager.interestService.alreadyInterested(user,productSeries)){
+            Interest interest=new Interest();
+            interest.setProductSeries(productSeries);
+            interest.setUser(user);
+            ServiceManager.interestService.insert(interest);
+            model.addAttribute("interested",true);
+        }else{
+            List<Interest> interests=ServiceManager.interestService.findByUserAndProductSeries(user,productSeries);
+            ServiceManager.interestService.removeAll(interests);
+            model.addAttribute("interested",false);
+        }
+
+        return new ResponseEntity<ModelMap>(model,HttpStatus.OK);
+    }
     @RequestMapping("/create_input.do")
     public String createInput(ModelMap model){
         return "admin/product_series/create_input";
     }
-} 
+}

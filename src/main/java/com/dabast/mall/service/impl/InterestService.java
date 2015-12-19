@@ -32,4 +32,9 @@ public class InterestService  extends BaseEntityManager<Interest> implements IIn
     public boolean alreadyInterested(User user, ProductSeries productSeries) {
         return interestDao.alreadyInterested(user,productSeries);
     }
+
+    @Override
+    public List<Interest> findByUserAndProductSeries(User user, ProductSeries productSeries) {
+        return interestDao.findByUserAndProductSeries(user, productSeries);
+    }
 }

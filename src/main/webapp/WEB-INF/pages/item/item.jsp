@@ -68,7 +68,11 @@
             <div class="row padding-bottom-20">
               <div class="col-sm-3 col-lg-3 text-left padding-left-0 margin-left-0">{{productSeries.evaluateCount}}条评论</div>
               <div class="col-sm-3 col-lg-3 text-left padding-left-0 margin-left-0">
-                  <c:if test="${not empty orderId}"><a href="javascript:void(0)" class="tour-step1" data-toggle="modal" data-target="#evaluateModal">发表评论</a></c:if>
+                  <c:if test="${not empty orderId}">
+                    <a ng-click="isEvaluated('${orderId}',productSeries.id)" href="javascript:void(0)" class="tour-step1"
+                       <%--data-toggle="modal" data-target="#evaluateModal"--%>
+                            >发表评论</a>
+                  </c:if>
               </div>
             </div>
           <div class="row padding-bottom-20 form-group">
@@ -96,14 +100,14 @@
           </div>
         </div>
         <div class="col-lg-3 col-sm-3">
-          <div class="row margin-top-112" ng-init="interested=true">
+          <div class="row margin-top-112">
             <div class="col-sm-6 col-lg-6" ng-if="!interested">
               <i class="fa fa-heart-o fa-2x">未关注</i>
             </div>
             <div class="col-sm-6 col-lg-6" ng-if="interested">
               <i class="fa fa-heart fa-2x">已关注</i>
             </div>
-            <div class="col-sm-2 col-lg-2"><a href="javascript:void(0)" ng-class="{'fa':true,'fa-toggle-off':!interested,'fa-toggle-on':interested,'fa-2x':true}"  ng-click="interested=!interested"></a></div>
+            <div class="col-sm-2 col-lg-2"><a href="javascript:void(0)" ng-class="{'fa':true,'fa-toggle-off':!interested,'fa-toggle-on':interested,'fa-2x':true}"  ng-click="toggleInterest()"></a></div>
           </div>
         </div>
       </div>
@@ -124,7 +128,7 @@
               <img ng-if="productSeries.productBrochures &&productSeries.productBrochures === 'img' " ng-src="${path}/{{productSeries.productBrochures.url}}"/>
               <iframe ng-if="productSeries.productBrochures &&productSeries.productBrochures === 'page'" src="${productSeries.productBrochures.url}"  scroling="no"  width="100%" height="2600px;" name="float" frameborder="0"></iframe>
             </div>
-            <div class="tab-pane fade" id="Information">
+            <div class="tab-pane fade table-responsive" id="Information">
               <table class="datasheet">
                 <tr>
                   <th colspan="2">规格参数</th>
@@ -141,16 +145,16 @@
               <table ng-repeat="productEvaluate in _page.content" ng-class="{'table':true,'bg-info':true}">
                   <tr ng-init="showEvaluate=false">
                     <td width="16%">
-                      <strong class="fa fa-user">
+                      <strong ng-class="{'fa fa-user':!productEvaluate.anonymous,'fa fa-user-secret':productEvaluate.anonymous}">
                         <span ng-if="productEvaluate.anonymous">匿名用户</span>
                         <span ng-if="!productEvaluate.anonymous">{{productEvaluate.order.user.name}}</span>
                       </strong>
                     </td>
                     <td>
-                      <em class="fa fa-clock-o">发表于{{productEvaluate.date | date:'yyyy-MM-dd hh:mm'}}</em>
+                      发表于<i class="fa fa-clock-o"></i>{{productEvaluate.date | date:'yyyy-MM-dd hh:mm'}}
                     </td>
-                    <td ng-init="ratingVal=productEvaluate.grade">
-                      <div star rating-value="ratingVal" max="max" on-hover="onHover" on-leave="onLeave" readonly="true"></div>
+                    <td ng-init="$parent.ratingVal=productEvaluate.grade">
+                      <div star rating-value="$parent.ratingVal" max="$parent.max" on-hover="$parent.onHover" on-leave="$parent.onLeave" readonly="true"></div>
                     </td>
                   </tr>
                   <tr>
@@ -159,9 +163,17 @@
                       <b class="fa fa-file-text-o">{{productEvaluate.content}}</b>
                     </td>
                     <td>
-                      <div class="review-item-image" ng-if="productEvaluate.pictures">
-                        <img ng-repeat="picture in productEvaluate.pictures" class="img-responsive img-ico-md" ng-src="${path}/{{picture.picture}}"/>
-                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                        <a ng-repeat="picture in productEvaluate.pictures" href="javascript:void(0)"
+                           <%--data-toggle="modal" data-target="#imageZoomModal" --%>
+                          ><img class="img-responsive img-ico-md inline-block" ng-src="${path}/{{picture}}" onClick="$('#imageZoom').attr('src', $(this).attr('src')); $('#imageZoomModal').modal('show');"/></a>
+                    </td>
+                    <td>
+
                     </td>
                   </tr>
                   <tr>
@@ -173,19 +185,21 @@
                         <span ng-if="productEvaluate.praises">({{productEvaluate.praises.length}})</span>
                       </a>
                       &nbsp;
-                      <a class="fa fa-reply pull-right" href="javascript:void(0)" data-ng-click="showEvaluate=!showEvaluate;">
+                      <a ng-class="{'pull-right':true,'fa fa-plus-circle':!showEvaluate,'fa fa-minus-circle':showEvaluate} " href="javascript:void(0)" data-ng-click="showEvaluate=!showEvaluate;">
                         回复<span ng-if="!productEvaluate.replies.length">(0)</span>
                         <span ng-if="productEvaluate.replies.length">({{productEvaluate.replies.length}})</span>
                       </a>
                     </td>
                   </tr>
                 <tr ng-show="showEvaluate">
-                  <td colspan="2">
-                    <textarea ng-model="reply.content" name="content" placeholder="回复内容(小于200个字符)" rows="1" style="width: 100%;" class="form-control" required="true" maxlength="200"></textarea>
+                  <td class="text-right"></td>
+                  <td>
+                    <textarea ng-model="reply.content" name="content" placeholder="回复内容(小于200个字符)" rows="2" style="width: 100%;" class="form-control" required="true" maxlength="200"></textarea>
                   </td>
                   <td>
-                    <input type="button" ng-disabled="!reply.content ||reply.content.length==0"  ng-click="toReply(productEvaluate,reply)"
-                           ng-class="{'btn btn-small btn-primary pull-right':true,'fa fa-ban':(!reply.content||reply.content.length==0)}" value="回复">
+                    <button type="button" ng-disabled="!reply.content ||reply.content.length==0"  ng-click="toReply(productEvaluate,reply)"
+                           ng-class="{'btn btn-primary fa fa-reply':true}"
+                           >回复</button>
                   </td>
                 </tr>
                   <tr ng-show="showEvaluate">
@@ -250,7 +264,7 @@
                     <label  class="col-lg-2 control-label">上传图片</label>
                     <div class="col-lg-8 has-success">
                       <input name="files" id="file-5" class="file"  data-preview-class="bg-info" type="file"
-                             data-max-file-size="100"  data-max-file-count="3"
+                             data-max-file-size="3000"  data-max-file-count="3"
                              multiple data-preview-file-type="any" data-show-upload="false">
                       <input type="hidden" value="${orderId}" name="orderId"/>
                       <input type="hidden" value="{{productSeries.id}}" name="productSeriesId "/>{{productSeries.id}}
@@ -277,6 +291,22 @@
           </div>
         </div>
       </form>
+
+    </div>
+    <div class="modal fade active" id="imageZoomModal" tabindex="-1" role="dialog" aria-labelledby="imageZoomModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <%--<div class="modal-content">--%>
+            <%--<div class="modal-header">--%>
+              <%--<button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>--%>
+            <%--</div>--%>
+            <%--<div class="modal-body">--%>
+              <img src="" id="imageZoom">
+            <%--</div>--%>
+            <%--<div class="modal-footer">--%>
+            <%--</div>--%>
+            <%--</div>--%>
+        </div>
+    </div>
 
     </div>
   </div>

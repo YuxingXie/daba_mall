@@ -226,6 +226,11 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     public List<E> findAll(Query query) {
         return mongoTemplate.find(query,collectionClass);
     }
+    public void removeAll(List<E> list){
+        for(E e:list){
+            removeById(MongoDbUtil.getId(e));
+        }
+    }
     public E findById(ObjectId id) {
 //        DBObject condition=new BasicDBObject();
 //        condition.put("_id",id);
@@ -587,5 +592,4 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         Query query=new BasicQuery(dbObject);
         getMongoTemplate().remove(query,collectionClass);
     }
-
-}
+  }
