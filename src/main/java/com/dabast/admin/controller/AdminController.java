@@ -44,7 +44,11 @@ public class AdminController extends BaseRestSpringController {
     public String index() {
          return "redirect:/admin/index/index";
     }
-
+    @RequestMapping(value="/test")
+    public String xx() {
+        ServiceManager.orderService.removeOrderInterval(1000*60*60*24*2);
+        return "redirect:/admin/index/index";
+    }
     @RequestMapping(value="/product_series/new")
     public String createProductSeries(ProductSeries productSeries,
                                       Double price,Integer storeAmount,

@@ -98,6 +98,7 @@
                                     <a href="${path}/cart" class="btn btn-primary fa fa-credit-card"> 结账付款</a>
                                 </div>
                             </div>
+                            <div id="msg" style="display:none;margin-right: 35px;">已成功加入购物车！</div>
                         </div>
                         <!-- END CART CONTENT -->
                     </div>
@@ -200,6 +201,7 @@
                         </ul>
                     </div>
                     <!-- END NAVIGATION -->
+
                 </div>
             </div>
         </div>

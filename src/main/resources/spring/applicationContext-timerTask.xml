@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+    <!-- 注册定时器 -->
+    <bean id="timer"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="timerTaskTrigger" />
+            </list>
+        </property>
+    </bean>
+    <!-- 指定何时触发定时任务 -->
+    <bean id="timerTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="timerTaskJobDetail" />
+        </property>
+        <property name="cronExpression">
+            <!-- 每3秒钟触发一次 -->
+            <value>0/10 * * * * ?</value>
+            <!--一天一次-->
+            <!--<value>0 36 21 * * ?</value>-->
+        </property>
+    </bean>
+    <!-- 指定定时任务细节 调用哪个类 哪个方法 -->
+    <bean id="timerTaskJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="timerTaskInstance" />
+        </property>
+        <property name="targetMethod">
+            <value>doTask</value>
+        </property>
+        <property name="concurrent" value="false" />
+    </bean>
+    <!-- 实例化定时任务类 -->
+    <bean id="timerTaskInstance" class="com.dabast.task.TimerTask" />
+</beans>

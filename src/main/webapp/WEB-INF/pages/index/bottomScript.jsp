@@ -22,155 +22,177 @@
 <script src="${path}/statics/assets/plugins/layerslider/jQuery/jquery-transit-modified.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.transitions.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>
-
+<script src="${path}/statics/assets/plugins/shopping-cart-fly/jquery.fly.min.js"></script>
+<script src="${path}/statics/assets/plugins/shopping-cart-fly/requestAnimationFrame.js"></script>
 <script>
-    var easyzoom=function(){
-        // Instantiate EasyZoom instances
+var easyzoom=function(){
+    // Instantiate EasyZoom instances
 
-        var $easyzoom = $('.easyzoom').easyZoom();
+    var $easyzoom = $('.easyzoom').easyZoom();
 
-        // Setup thumbnails example
-        var api1 = $easyzoom.filter('.easyzoom--with-thumbnails').data('easyZoom');
+    // Setup thumbnails example
+    var api1 = $easyzoom.filter('.easyzoom--with-thumbnails').data('easyZoom');
 
-        $('.thumbnails').on('click', 'a', function(e) {
-            var $this = $(this);
+    $('.thumbnails').on('click', 'a', function(e) {
+        var $this = $(this);
 
-            e.preventDefault();
+        e.preventDefault();
 
-            // Use EasyZoom's `swap` method
-            api1.swap($this.data('standard'), $this.attr('href'));
-        });
-        // Setup toggles example
-        var api2 = $easyzoom.filter('.easyzoom--with-toggle').data('easyZoom');
+        // Use EasyZoom's `swap` method
+        api1.swap($this.data('standard'), $this.attr('href'));
+    });
+    // Setup toggles example
+    var api2 = $easyzoom.filter('.easyzoom--with-toggle').data('easyZoom');
 
-        $('.toggle').on('click', function() {
-            var $this = $(this);
+    $('.toggle').on('click', function() {
+        var $this = $(this);
 
-            if ($this.data("active") === true) {
-                $this.text("Switch on").data("active", false);
-                api2.teardown();
-            } else {
-                $this.text("Switch off").data("active", true);
-                api2._init();
+        if ($this.data("active") === true) {
+            $this.text("Switch on").data("active", false);
+            api2.teardown();
+        } else {
+            $this.text("Switch off").data("active", true);
+            api2._init();
+        }
+    });
+}
+mainApp .controller('indexController', ['$scope', '$http','$element', function ($scope, $http,$element) {
+    $scope.popover=function(productSeriesId){
+        $scope.productSelected={};
+        $scope.productSelected.productPropertyValueList=[];
+        $http.get(path+'/product_series/popover/'+productSeriesId).success(function (data) {
+            $scope.productSelected.productSeries = data;
+            $scope.productSelected.amount = 1;
+            if(!$scope.productSelected.productSeries.pictures){
+                $scope.productSelected.productSeries.pictures=[];
+                var picture={};
+                picture.picture= "statics/img/img_not_found.jpg";
+                picture.bigPicture= "statics/img/img_not_found.jpg";
+                $scope.productSelected.productSeries.pictures.push(picture);
             }
+            $scope.currentPicture=$scope.productSelected.productSeries.pictures[0];
+            $scope.ratingVal = $scope.productSelected.productSeries.productSeriesEvaluateGrade?$scope.productSelected.productSeries.productSeriesEvaluateGrade:0;
+            var productProperties= $scope.productSelected.productSeries.productProperties;
+            if(productProperties&&productProperties.length){
+                for(var i=0;i<productProperties.length;i++){
+                    var productProperty=productProperties[i];
+                    var propertyValues=productProperty.propertyValues;
+                    if(propertyValues&&propertyValues.length){
+                        $scope.productSelected.productPropertyValueList.push(propertyValues[0]);
+                    }
+                }
+            }
+            easyzoom();
+            var shoppingCartFly=function(start,end){
+                var offset = end.offset();
+                $(document).on("click",$element,function(event){
+//                    var addcar = $(this);
+                    var flyer = $('<img class="u-flyer" src="'+$scope.productSelected.productSeries.pictures[0].picture+'">');
+                    flyer.fly({
+                        start: {
+                            left: event.pageX,
+                            top: event.pageY
+                        },
+                        end: {
+                            left: offset.left+10,
+                            top: offset.top+10,
+                            width: 0,
+                            height: 0
+                        },
+                        onEnd: function(){
+                            $("#msg").show().animate({width: '250px'}, 600).fadeOut(1800);
+                            this.destory();
+                        }
+                    });
+                });
+            }
+            shoppingCartFly($(".add2cart"),$("#cart-block"));
+            $("#showProductModal").modal().show();
         });
     }
-    //  angular.module("indexApp",[])
-            mainApp .controller('indexController', ['$scope', '$http', function ($scope, $http) {
-                $scope.popover=function(productSeriesId){
-                    $scope.productSelected={};
-                    $scope.productSelected.productPropertyValueList=[];
-                    $http.get(path+'/product_series/popover/'+productSeriesId).success(function (data) {
-                        $scope.productSelected.productSeries = data;
-                        $scope.productSelected.amount = 1;
-                        if(!$scope.productSelected.productSeries.pictures){
-                            $scope.productSelected.productSeries.pictures=[];
-                            var picture={};
-                            picture.picture= "statics/img/img_not_found.jpg";
-                            picture.bigPicture= "statics/img/img_not_found.jpg";
-                            $scope.productSelected.productSeries.pictures.push(picture);
-                        }
-                        $scope.currentPicture=$scope.productSelected.productSeries.pictures[0];
-                        $scope.ratingVal = $scope.productSelected.productSeries.productSeriesEvaluateGrade?$scope.productSelected.productSeries.productSeriesEvaluateGrade:0;
-                        var productProperties= $scope.productSelected.productSeries.productProperties;
-                        if(productProperties&&productProperties.length){
-                            for(var i=0;i<productProperties.length;i++){
-                                var productProperty=productProperties[i];
-                                var propertyValues=productProperty.propertyValues;
-                                if(propertyValues&&propertyValues.length){
-                                    $scope.productSelected.productPropertyValueList.push(propertyValues[0]);
-                                }
-                            }
-                        }
-                        easyzoom();
-                        $("#showProductModal").modal().show();
-                    });
-                }
-                $scope.max = 5;
-                $scope.ratingVal =3;
-                $scope.readonly = true;
-               $scope.add2cart=function(){
-                    $http.post('${path}/index/cart', $scope.productSelected).success(function(data){
-                        $scope.$parent.cart=data;
+    $scope.max = 5;
+    $scope.ratingVal =3;
+    $scope.readonly = true;
+   $scope.add2cart=function(){
+        $http.post('${path}/index/cart', $scope.productSelected).success(function(data){
 
-                    }).error(function(data) {
-                        alert("对不起，服务器出现了点异常!");
-                    });
-                    $("#showProductModal").modal('hide');
+            $scope.$parent.cart=data;
 
-                }
-                $scope.onHover = function(val){
-                    $scope.hoverVal = val;
-                };
-                $scope.onLeave = function(){
-                    $scope.hoverVal = null;
-                }
-                $scope.onChange = function(val){
-                    $scope.ratingVal = val;
-                }
+        }).error(function(data) {
+            alert("对不起，服务器出现了点异常!");
+        });
+        $("#showProductModal").modal('hide');
 
-          }])
-        .directive('star', function () {
-            return {
-                template: '<ul class="rating" ng-mouseleave="leave()">' +
-                '<li ng-repeat="star in stars" ng-class="star" ng-click="click($index + 1)" ng-mouseover="over($index + 1)">' +
-                '\u2605' +
-                '</li>' +
-                '</ul>',
-                scope: {
-                    ratingValue: '=',
-                    max: '=',
-                    readonly: '@',
-                    onHover: '=',
-                    onLeave: '='
-                },
-                controller: function($scope){
-                    $scope.ratingValue = $scope.ratingValue || 0;
-                    $scope.max = $scope.max || 5;
-                    $scope.click = function(val){
-                        if ($scope.readonly && $scope.readonly === 'true') {
-                            return;
-                        }
-                        $scope.ratingValue = val;
-                    };
-                    $scope.over = function(val){
-                        $scope.onHover(val);
-                    };
-                    $scope.leave = function(){
-                        $scope.onLeave();
-                    }
-                },
-                link: function (scope, elem, attrs) {
-                    elem.css("text-align", "center");
-                    var updateStars = function () {
-                        scope.stars = [];
-                        for (var i = 0; i < scope.max; i++) {
-                            scope.stars.push({
-                                filled: i < scope.ratingValue
-                            });
-                        }
-                    };
-                    updateStars();
+    }
+    $scope.onHover = function(val){
+        $scope.hoverVal = val;
+    };
+    $scope.onLeave = function(){
+        $scope.hoverVal = null;
+    }
+    $scope.onChange = function(val){
+        $scope.ratingVal = val;
+    }
 
-                    scope.$watch('ratingValue', function (oldVal, newVal) {
-                        if (newVal) {
-                            updateStars();
-                        }
-                    });
-                    scope.$watch('max', function (oldVal, newVal) {
-                        if (newVal) {
-                            updateStars();
-                        }
+}])
+.directive('star', function () {
+    return {
+        template: '<ul class="rating" ng-mouseleave="leave()">' +
+        '<li ng-repeat="star in stars" ng-class="star" ng-click="click($index + 1)" ng-mouseover="over($index + 1)">' +
+        '\u2605' +
+        '</li>' +
+        '</ul>',
+        scope: {
+            ratingValue: '=',
+            max: '=',
+            readonly: '@',
+            onHover: '=',
+            onLeave: '='
+        },
+        controller: function($scope){
+            $scope.ratingValue = $scope.ratingValue || 0;
+            $scope.max = $scope.max || 5;
+            $scope.click = function(val){
+                if ($scope.readonly && $scope.readonly === 'true') {
+                    return;
+                }
+                $scope.ratingValue = val;
+            };
+            $scope.over = function(val){
+                $scope.onHover(val);
+            };
+            $scope.leave = function(){
+                $scope.onLeave();
+            }
+        },
+        link: function (scope, elem, attrs) {
+            elem.css("text-align", "center");
+            var updateStars = function () {
+                scope.stars = [];
+                for (var i = 0; i < scope.max; i++) {
+                    scope.stars.push({
+                        filled: i < scope.ratingValue
                     });
                 }
             };
-        })
+            updateStars();
+
+            scope.$watch('ratingValue', function (oldVal, newVal) {
+                if (newVal) {
+                    updateStars();
+                }
+            });
+            scope.$watch('max', function (oldVal, newVal) {
+                if (newVal) {
+                    updateStars();
+                }
+            });
+        }
+    };
+})
 //  angular.bootstrap(document.getElementById("indexAppMain"),["indexApp"]);
   $(document).ready(function(){
-//    App.init();
-//    App.initBxSlider();
     Index.initLayerSlider();
-//    App.initTouchspin();
 
 
   });

@@ -118,7 +118,7 @@
                     </c:otherwise>
                 </c:choose>
             </div>
-            <div class="row pull-right"><input type="button" value="更多新品" class="btn btn-primary fa fa-search"/></div>
+            <%--<div class="row pull-right"><input type="button" value="更多新品" class="btn btn-primary fa fa-search"/></div>--%>
         </div>
 
         <div class="row margin-bottom-40">
@@ -172,7 +172,7 @@
                                     <p class="fa fa-rmb pi-price">${productSeries.commonPrice}</p>
                                     <a href="javascript:void(0)"
 
-                                       class="fa fa-shopping-cart btn btn-danger btn-xs" data-ng-click="popover('${productSeries.id}');">添加到购物车</a>
+                                       class="fa fa-shopping-cart btn btn-danger btn-xs " data-ng-click="popover('${productSeries.id}');">添加到购物车</a>
                                 </div>
                                 <div class="row">
                                     <p class="pi-description col-lg-12 col-sm-12 text-left"> <a href="${path}/product_series/${productSeries.id}">${productSeries.name}</a>
@@ -264,10 +264,8 @@
                                 <tr>
                                     <th>输入数量<i class="fa fa-cube"></i></th>
                                     <td><input type="number" min="1" class="" ng-model="productSelected.amount" style="max-width: 100px;"></td>
-                                    <td> <button data-toggle="tooltip" data-original-title="xxx" data-placement="left" data-trigger="click" data-selector="#cart-block"
-                                                 class="btn btn-primary add2cart pull-right fa fa-shopping-cart" type="button" data-ng-click="add2cart()">添加到购物车</button></td>
+                                    <td> <button class="btn btn-primary add2cart pull-right fa fa-shopping-cart" type="button" data-ng-click="add2cart()">添加到购物车</button></td>
                                     <td>
-
                                         <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">关闭</button>
                                     </td>
                                 </tr>

@@ -142,4 +142,5 @@ public abstract class BaseEntityManager<E> implements IBaseEntityManager<E> {
     public void removeAll(List<E> list){
         getEntityDao().removeAll(list);
     }
+
 }

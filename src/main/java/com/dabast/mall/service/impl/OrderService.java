@@ -31,6 +31,11 @@ public class OrderService extends BaseEntityManager<Order> implements IOrderServ
         return orderDao.findOrderById(orderId) ;
     }
 
+    @Override
+    public void removeOrderInterval(long ago) {
+        orderDao.removeOrderInterval(ago);
+    }
+
 //    @Override
 //    public void insertOrder(User user) {
 //        orderDao.insertOrder(user);
