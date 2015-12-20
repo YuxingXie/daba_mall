@@ -197,6 +197,7 @@
                                     </form>
                                 </div>
                             </li>
+                            <li><a href="${path}"><small style="color: red;font-size: 13px;" class="fa fa-envelope-o">(8)</small></a></li>
                             <!-- END TOP SEARCH -->
                         </ul>
                     </div>
