@@ -35,39 +35,39 @@
     if (document.f1.key.value.length > 0) {
       var urls = {
         "news" : {
-          url:"http://www.pc6.com/",
+          url:"http://http://www.dabast.com/mall/",
           word : "ns?tn=news&cl=2&rn=20&ct=1&ie=utf-8&word="
         },
         "www" : {
-          url : "http://www.pc6.com/",
+          url : "http://http://www.dabast.com/mall/",
           word : "s?cl=3&wd="
         },
         "tieba" : {
-          url : "http://www.pc6.com/",
+          url : "http://http://www.dabast.com/mall/",
           word : "f?ie=utf-8&kw="
         },
         "zhidao" : {
-          url : "http://www.pc6.com/",
+          url : "http://http://www.dabast.com/mall/",
           word : "search?pn=0&rn=10&lm=0&word="
         },
         "image" : {
-          url : "http://www.pc6.com/",
+          url : "http://http://www.dabast.com/mall/",
           word : "i?ct=201326592&cl=2&nc=1&lm=-1&st=-1&tn=baiduimage&istype=2&fm=&pv=&z=0&ie=utf-8&word="
         },
         "v" : {
-          url : "http://www.pc6.com/",
+          url : "http://http://www.dabast.com/mall/",
           word : "v?ct=301989888&s=25&ie=utf-8&word="
         },
         "map" : {
-          url : "http://www.pc6.com/",
+          url : "http://http://www.dabast.com/mall/",
           word : "?newmap=1&ie=utf-8&s=s%26wd%3D"
         },
         "baike" : {
-          url: "http://www.pc6.com/",
+          url: "http://http://www.dabast.com/mall/",
           word : "search/word?enc=utf8&word="
         },
         "wenku" : {
-          url : "http://www.pc6.com/",
+          url : "http://http://www.dabast.com/mall/",
           word : "search?ie=utf-8&word="
         }
       };
@@ -95,8 +95,8 @@
       "sTemplate": "guest",
       "sUserName": '',
       "sSpaceLink": '',
-      "sProfileURL": 'http://www.pc6.com/',
-      "sHomeURL": "http://www.pc6.com/",
+      "sProfileURL": 'http://http://www.dabast.com/mall/',
+      "sHomeURL": "http://http://www.dabast.com/mall/",
       "sBaiduURL": 'http://www.baidu.com',
       "sLoginURL": 'javascript:;',
       "sRegURL": 'http://passport.baidu.com/v2/?reg&regType=1&tpl=music&u=' + sLocation,
@@ -286,7 +286,7 @@
         sUserName = data.bdName ? data.bdName : (data.bdEmail ? data.bdEmail : (data.bdMobile ? data.bdMobile : passInfo.displayname));
         oRtUserInfo.sUserName = sUserName;
         oRtUserInfo.sTemplate =  'user';
-        oRtUserInfo.sHomeURL = data.bdName ? ['http://www.pc6.com/p/', data.bdName, '?from=music'].join("") : 'http://passport.baidu.com/v2/?ucenteradduname&u=' + encodeURIComponent('http://music.baidu.com');
+        oRtUserInfo.sHomeURL = data.bdName ? ['http://http://www.dabast.com/mall/p/', data.bdName, '?from=music'].join("") : 'http://passport.baidu.com/v2/?ucenteradduname&u=' + encodeURIComponent('http://music.baidu.com');
         oRtUserInfo.enable_fee = !!data.enable_fee;
         if(data.vip ){
           oRtUserInfo.vipIcon = icon[data.vip.cloud.service_level];
@@ -342,7 +342,7 @@
     <div class="music-main-body">
       <div class="music-body clearfix">
         
-	<div class="state-404 c9"><strong id="countDown">10</strong> 秒后返回 <a href="http://www.pc6.com/">首页</a> 	 ...</div>
+	<div class="state-404 c9"><strong id="countDown">10</strong> 秒后返回 <a href="http://http://www.dabast.com/mall/">首页</a> 	 ...</div>
 
       </div>
     </div>
@@ -359,7 +359,7 @@
 				setTimeout(function () {
                     countDown.innerHTML = --t;
                     if (t == 0) {
-                        window.location.href = "http://www.pc6.com/"; 
+                        window.location.href = "http://http://www.dabast.com/mall/";
                     }
                 }, 1000 * i);
 			};
