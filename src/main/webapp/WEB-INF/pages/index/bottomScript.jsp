@@ -83,30 +83,30 @@ mainApp .controller('indexController', ['$scope', '$http','$element', function (
                 }
             }
             easyzoom();
-            var shoppingCartFly=function(start,end){
-                var offset = end.offset();
-                $(document).on("click",$element,function(event){
-//                    var addcar = $(this);
-                    var flyer = $('<img class="u-flyer" src="'+$scope.productSelected.productSeries.pictures[0].picture+'">');
-                    flyer.fly({
-                        start: {
-                            left: event.pageX,
-                            top: event.pageY
-                        },
-                        end: {
-                            left: offset.left+10,
-                            top: offset.top+10,
-                            width: 0,
-                            height: 0
-                        },
-                        onEnd: function(){
-                            $("#msg").show().animate({width: '250px'}, 600).fadeOut(1800);
-                            this.destory();
-                        }
-                    });
-                });
-            }
-            shoppingCartFly($(".add2cart"),$("#cart-block"));
+//            var shoppingCartFly=function(start,end){
+//                var offset = end.offset();
+//                $(document).on("click",$element,function(event){
+////                    var addcar = $(this);
+//                    var flyer = $('<img class="u-flyer" src="'+$scope.productSelected.productSeries.pictures[0].picture+'">');
+//                    flyer.fly({
+//                        start: {
+//                            left: event.pageX,
+//                            top: event.pageY
+//                        },
+//                        end: {
+//                            left: offset.left+10,
+//                            top: offset.top+10,
+//                            width: 0,
+//                            height: 0
+//                        },
+//                        onEnd: function(){
+//                            $("#msg").show().animate({width: '250px'}, 600).fadeOut(1800);
+//                            this.destory();
+//                        }
+//                    });
+//                });
+//            }
+//            shoppingCartFly($(".add2cart"),$("#cart-block"));
             $("#showProductModal").modal().show();
         });
     }
@@ -117,7 +117,7 @@ mainApp .controller('indexController', ['$scope', '$http','$element', function (
         $http.post('${path}/index/cart', $scope.productSelected).success(function(data){
 
             $scope.$parent.cart=data;
-
+            $("#msg").show().animate({width: '250px'}, 600).fadeOut(1800);
         }).error(function(data) {
             alert("对不起，服务器出现了点异常!");
         });

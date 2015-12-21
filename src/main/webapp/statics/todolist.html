@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul>
+    <li>500,404页面</li>
+    <li>josn返回modelMap改为返回LinkedHashMap</li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<div>一些有用的mongodb operations</div>
+<pre>
+     {
+		"prevPrice":{"$exists":true},
+		"prevPrice.price":{"$lt":price},
+		"$or":[
+				{
+					"endDate" : null ,
+					"beginDate":{"$lt": new Date()}
+				},
+				{
+					"endDate": {"$gt" : new Date()},
+					"beginDate":{"$lt": new Date()}
+				}
+		]
+ }
+ db.productSeriesPriceHistory.insert({"price":98.98,"productSeriesId":"5595f39fe7c7fa5690325b11"})
+db.productSeries.update({"name":"豆腐乳"},{"priceHistoryId":"564598ef6f87bce59c62a7ab"})
+
+
+db.productSeries.update({"priceHistoryId":"564598ef6f87bce59c62a7ab"},{"priceHistoryId" : "564598ef6f87bce59c62a7ab", "name" : "豆腐乳", "pictures" :[ "statics/assets/temp/products/model2.jpg", "statics/assets/temp/products/model3.jpg", "statics/assets/temp/products/model4.jpg" ], "commonPrice" : 100.36, "evaluateCount" : 101, "description" : "豆腐乳真的很好吃哦~~~", "shelvesDate" : 1435888658381, "brand" : "大坝", "id" : "1111", "productProperties" : [ { "id" : "prop-00002", "propertyName" : "辣度", "productSeries" : null, "propertyValues" :{ "id" : null, "values" : [ "微辣", "中辣", "辣", "麻辣" ], "valueIndex" : null} }, { "id" : "prop-00001", "propertyName" : "包装", "productSeries" : null, "propertyValues" : { "id" : null, "values" : [ "袋装", "散装" ], "valueIndex" : null } } ], "newProduct" : true, "subCategoryId" : "561c648f26dadd00060f4313" })
+
+db.testAuthors.insert({"name" : "chenzhou","email" : "chenzhou1025@126.com"})
+author=db.testAuthors.find({name:"chenzhou"})[0]
+db.testPosts.insert({"title":"Hello Mongodb DBRef1","authors":[new DBRef('testAuthors',author._id)]})
+
+db.testPosts.insert({"title":"Hello Mongodb DBRef2","authors":[new DBRef('testAuthors',author._id)]})
+
+db.testAuthors.insert({"name" : "xieyuxing","email" : "xieyuxing@126.com"})
+author2=db.testAuthors.find({name:"xieyuxing"})[0]
+db.testPosts.insert({"title":"Hello Mongodb DBRef3","authors":[new DBRef('testAuthors',author._id),new DBRef('testAuthors',author2._id)]})
+   db.productSeriesPrice.find({"prevPrice":{"$exists":true},
+   $where":function(){this.prevPrice.price>this.price},
+   "$or":[{"endDate" : null,"beginDate":{"$lt": new Date()}},{"endDate": {"$gt" : new Date()},"beginDate":{"$lt": new Date()}}]})
+
+
+   db.productSeriesPrice.find({"prevPrice":{"$exists":true},"$or":[{"endDate" : null,"beginDate":{"$lt": new Date()}},{"endDate": {"$gt" : new Date()},"beginDate":{"$lt": new Date()}}]})
+db.order.find({"_id":ObjectId("56556dc235f0d11a6cb2af61")})
+  var category={"categoryName":"鲜活水产"}
+db.productCategory.insert({"categoryName":"腌泡食品"})
+db.productSubCategory.insert({"categoryId":"561c63c326dadd00060f4312","subCategoryName":"豆制品"})
+db.productSeries.update({},{"$set":{"subCategoryId":"561c648f26dadd00060f4313"}})
+db.productPropertyValue.insert({"productPropertyId":"5595f892e7c7fa5690325b12","value":"微辣"})
+db.productPropertyValue.insert({"productPropertyId":"5595f892e7c7fa5690325b12","value":"中辣"})
+db.productPropertyValue.insert({"productPropertyId":"5595f892e7c7fa5690325b12","value":"超辣"})
+db.productProperty.insert({"propertyName":"包装","productSeries":"5595f39fe7c7fa5690325b11"})
+db.productPropertyValue.insert({"productPropertyId":"562aff8b34e9daf0f8a7aeea","value":"散装"})
+db.productPropertyValue.insert({"productPropertyId":"562aff8b34e9daf0f8a7aeea","value":"袋装"})
+
+
+  db.users.find({"$or":[{ "phone":"13903064816"},{"email":"13903064816"}]})
+ db.users.insert({name:"谢宇星",email:"xieyuxing@qq.com",phone:"13903064816",password:"202cb962ac59075b964b07152d234b70"})
+
+
+db.order.update({"_id":ObjectId("56556dc235f0d11a6cb2af61")},{"$set":{"productSelectedList[0].receiveStatus":"n"}})
+db.order.update({"_id":ObjectId("56556dc235f0d11a6cb2af61")},{"$set":{"productSelectedList.$.receiveStatus":"n"}})
+db.productEvaluate.find({ "order" : { $java : { "$ref" : "order", "$id" : "com.dabast.entity.Order@14d04ae" } }, "productSeries" : { $java : { "$ref" : "productSeries", "$id" : "com.dabast.entity.ProductSeries@3463f994" } } })
+db.productEvaluate.find({ "order" : { "$ref" : "order" , "$id" : "56556dc235f0d11a6cb2af61"} , "productSeries" : { "$ref" : "productSeries" , "$id" : "5653fcef35f0d117289299a3"}})
+db.productEvaluate.find({ "order" : { "$id" :  ObjectId("56556dc235f0d11a6cb2af61") , "$ref" : "order"} , "productSeries" : { "$id" :  ObjectId("5653fcef35f0d117289299a3"), "$ref" : "productSeries"}})
+db.productEvaluate.find({ "order" : { "$id" :  ObjectId("56556dc235f0d11a6cb2af61") , "$ref" : "order"} })
+db.productEvaluate.insert({"content" : "如果我以后吃不到这么好吃的东西，我该怎么办！！！！！！","grade" : 3,"productSeries" : {"$ref" : "productSeries","$id" : ObjectId("5653fcef35f0d117289299a3")}})
+db.productEvaluate.insert({"content" : "要不要这么夸张？","parent":{"$ref" : "productEvaluate","$id" : ObjectId("56593aaa35f0d110f856aed7")}})
+db.productEvaluate.update({"parent":{"$eq":null}},{"$set":{"type":"evaluate"}},false,true)
+db.productEvaluate.update({"parent":{"$ne":null},"content":{"$ne":null}},{"$set":{"type":"reply"}},false,true)
+db.productCategory.insert({"categoryName" : "好吃1"})
+db.productSubCategory.insert({"subCategoryName" : "乌拉拉","productCategory" : {"$ref" : "productCategory","$id" : ObjectId("564a7f38ad1ab203300d040f")}})
+db.productSeries.insert({"name":"卤香干子","pictures":["pic/5653fcef35f0d1172892999d","pic/5653fcef35f0d1172892999f","pic/5653fcef35f0d117289299a1"],"productStore":{"warningAmount" : 30},"newProduct":true,"productSubCategory" :{"$ref":"productSubCategory","$id" : ObjectId("56494922ad1ab21220ebd822")}})
+db.productSeriesPrice.remove({"name":{"$ne":null}})
+db.productSeries.update({"description":{"$exists":false}},{"$set":{"description":"红烧翅膀我喜欢吃，红烧翅膀我喜欢吃，红烧翅膀我喜欢吃，红烧翅膀我喜欢吃，红烧翅膀我喜欢吃，红烧翅膀我喜欢吃"}})
+db.productSeries.remove({"description":{"$exists":false}})
+db.order.remove({"_id":ObjectId("56556dc235f0d11a6cb2af61")})
+db.account.update({},{"$set":{"bank":"招商银行"}},false,true)
+db.account.update({},{"$set":{"bank":new DBRef("bank",ObjectId("566fbb241314abc734cae5ba"))}},false,true)
+db.account.update({"_id":ObjectId("565f9c5d35f0d10a745a0853")},{"$set":{"bank":new DBRef("bank",ObjectId("566fbb061314abc734cae5b9"))}},false,true)
+db.bank.remove({"_id":ObjectId("566fbaa51314abc734cae5b6")})
+db.bank.insert({
+    "code": "ICBC",
+    "name": "中国工商银行",
+    "ico":"20060713191624443.gif",
+    "cardSorts":[{"noStart":"427020","cardSort":"","cardName":"中国工商银行VISA学生国际信用卡"},{"noStart":"427030","cardSort":"","cardName":"中国工商银行VISA国际信用卡金卡"},
+      {"noStart":"530990","cardSort":"","cardName":"中国工商银行MC国际信用卡普通卡"}
+    ,{"noStart":"622230","cardSort":"","cardName":"中国工商银行新版人民币贷记卡普卡"},{"noStart":"622235","cardSort":"","cardName":"中国工商银行新版人民币贷记卡金卡"},
+      {"noStart":"622210","cardSort":"","cardName":"中国工商银行新版信用卡(准贷)普卡"}
+    ,{"noStart":"622215","cardSort":"","cardName":"中国工商银行新版信用卡(准贷)金卡"},{"noStart":"622200","cardSort":"",
+        "cardName":"中国工商银行牡丹灵通卡借记卡"},{"noStart":"955880","cardSort":"","cardName":"中国工商银行原牡丹灵通卡借记卡"}]
+  })
+  db.order.insert({"orderDate":new Date("2015-09-12"),"user":new DBRef("users",ObjectId("55b1e75a845c14e957d5331c"))})
+  db.notify.insert({
+  "content" : "您的订单 5677769eb88c13fe66b79389 因超过7天未使用，系统已自动删除。",
+  "date" : ISODate("2015-12-21T03:48:50.097Z"),
+  "read" : false,
+  "title" : "系统通知",
+  "toUser" : new DBRef("users",ObjectId("55b1e75a845c14e957d5331c"))
+})
+</pre>
+</body>
+</html>

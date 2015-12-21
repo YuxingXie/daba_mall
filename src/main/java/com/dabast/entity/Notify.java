@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2015/12/20.
@@ -18,6 +19,8 @@ public class Notify {
     private String content;
     private Date date;
     private boolean read;
+    private String title;
+    private Map<String,Object> importantStuffs;
     public String getId() {
         return id;
     }
@@ -50,11 +53,27 @@ public class Notify {
         this.date = date;
     }
 
-    public boolean isRead() {
+    public boolean getRead() {
         return read;
     }
 
     public void setRead(boolean read) {
         this.read = read;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Map<String, Object> getImportantStuffs() {
+        return importantStuffs;
+    }
+
+    public void setImportantStuffs(Map<String, Object> importantStuffs) {
+        this.importantStuffs = importantStuffs;
     }
 }

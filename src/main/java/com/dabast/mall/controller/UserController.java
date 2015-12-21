@@ -12,9 +12,11 @@ import com.dabast.mall.service.impl.CartService;
 import com.dabast.mall.service.impl.RegisterValidateService;
 import com.dabast.mall.service.impl.UserService;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.DBRef;
 import org.apache.commons.mail.EmailException;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -30,8 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.text.ParseException;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Administrator on 2015/6/11.
@@ -190,6 +191,74 @@ public class UserController extends BaseRestSpringController {
         return new ResponseEntity<User>(user,HttpStatus.OK);
     }
 
+    /**
+     * 用户未读信息数
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/unread_notifies_count")
+    public ResponseEntity<Long> notifies(HttpSession session) {
+        User user=getLoginUser(session);
+        if (user==null) return null;
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("toUser",user);
+        dbObject.put("read",false);
+        long notifyCount=ServiceManager.notifyService.count(dbObject);
+        return new ResponseEntity<Long>(notifyCount,HttpStatus.OK);
+    }
+    /**
+     * 用户信息
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/notifies")
+    public ResponseEntity<Map> notifies(Integer page,HttpSession session) {
+        User user=getLoginUser(session);
+        if (user==null) return null;
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("toUser",new DBRef("users",user.getId()));
+//        dbObject.put("read",false);
+        page=page==null?1:page;
+        Page<Notify> notifyPage=ServiceManager.notifyService.findPage(dbObject,page,4);
+        Map<String,Object> map=new LinkedHashMap<String,Object>();
+        map.put("notifyPage", notifyPage);
+        map.put("page", page);
+        return new ResponseEntity<Map>(map,HttpStatus.OK);
+    }
+    /**
+     * 用户信息
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/notify/read")
+    public ResponseEntity<Map> read(@RequestBody Notify notify,Integer page,HttpSession session) {
+
+        User user=getLoginUser(session);
+        if (user==null) return null;
+        ServiceManager.notifyService.update(notify);
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("toUser",new DBRef("users",user.getId()));
+        page=page==null?1:page;
+        Page<Notify> notifyPage=ServiceManager.notifyService.findPage(dbObject,page,4);
+        Map<String,Object> map=new LinkedHashMap<String,Object>();
+        map.put("notifyPage", notifyPage);
+        map.put("page", page);
+        return new ResponseEntity<Map>(map,HttpStatus.OK);
+    }
+    @RequestMapping(value = "/notify/remove")
+    public ResponseEntity<Map> remove(@RequestBody Notify notify,Integer page,HttpSession session) {
+        User user=getLoginUser(session);
+        if (user==null) return null;
+        ServiceManager.notifyService.removeById(notify.getId());
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("toUser",new DBRef("users",user.getId()));
+        page=page==null?1:page;
+        Page<Notify> notifyPage=ServiceManager.notifyService.findPage(dbObject,page,4);
+        Map<String,Object> map=new LinkedHashMap<String,Object>();
+        map.put("notifyPage", notifyPage);
+        map.put("page", page);
+        return new ResponseEntity<Map>(map,HttpStatus.OK);
+    }
     @RequestMapping(value = "/personal_message")
     public String personalMessage(ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 //        User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");

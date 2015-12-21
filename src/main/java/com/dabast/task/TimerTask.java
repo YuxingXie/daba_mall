@@ -23,10 +23,10 @@ public class TimerTask {
         System.out.println("计划任务被初始化了");
     }
     public void doTask(){
-        this.printTimeStamp();
-        System.out.print("计划任务被执行,线程id:");
-        System.out.println(Thread.currentThread().getId());
-        long ago=1000*60*60*24*2;
+//        this.printTimeStamp();
+//        System.out.print("计划任务被执行,线程id:");
+//        System.out.println(Thread.currentThread().getId());
+        long ago=1000*60*60*24*7;
         orderService.removeOrderInterval(ago);
     }
 }

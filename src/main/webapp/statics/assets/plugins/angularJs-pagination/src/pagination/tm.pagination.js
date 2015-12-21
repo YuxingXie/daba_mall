@@ -6,7 +6,9 @@ angular.module('tm.pagination', ['ngRoute'])
    .directive('tmPagination',['$http', function($http){
     return {
         restrict: 'EA',
-        template:'<ul class="pagination" ng-show="conf.totalItems > 0">' +
+        template:
+        //'<div>{{conf}}</div>'+
+        '<ul class="pagination" ng-show="conf.totalItems > 0">' +
             '<li ng-class="{disabled: conf.currentPage == 1,prev:true}" ng-click="prevPage()"><a href="javascript:void(0)" class="fa fa-backward"></a></li>' +
             '<li ng-repeat="item in pageList track by $index" ng-class="{active: item == conf.currentPage, separate: item == \'...\',page:item != conf.currentPage&&item != \'...\'}" ' +
             'ng-click="changeCurrentPage(item)">' +

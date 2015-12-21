@@ -18,10 +18,10 @@
             <ref bean="timerTaskJobDetail" />
         </property>
         <property name="cronExpression">
-            <!-- 每3秒钟触发一次 -->
-            <value>0/10 * * * * ?</value>
+            <!-- 每10秒钟触发一次 -->
+            <!--<value>0/10 * * * * ?</value>-->
             <!--一天一次-->
-            <!--<value>0 36 21 * * ?</value>-->
+            <value>0 36 4 * * ?</value>
         </property>
     </bean>
     <!-- 指定定时任务细节 调用哪个类 哪个方法 -->

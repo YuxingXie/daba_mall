@@ -66,19 +66,24 @@ public class OrderDao extends BaseMongoDao<Order> {
         Calendar agoC=new GregorianCalendar();
         agoC.setTimeInMillis(System.currentTimeMillis() - ago);
         SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS ", Locale.CHINA);
-        System.out.print(sdf.format(agoC.getTime()));
+        dbObject.put("orderDate", new BasicDBObject("$lt", agoC.getTime()));
         dbObject.put("orderDate",new BasicDBObject("$lt",agoC.getTime()));
-        dbObject.put("orderDate",new BasicDBObject("$lt",agoC.getTime()));
+        dbObject.put("payStatus",new BasicDBObject("$exists",false));
         Query query=new BasicQuery(dbObject);
-        System.out.println(query);
         List<Order> orders=getMongoTemplate().findAllAndRemove(query, Order.class);
         for (Order order:orders){
-            System.out.println(order.getId());
             if (order.getUser()==null) continue;
-
-
+            Notify notify=new Notify();
+            notify.setContent("您的订单 "+order.getId()+" 因超过7天未使用，系统已自动删除。");
+            Map<String,Object> importantStuff=new HashMap<String, Object>();
+            importantStuff.put("订单商品",order.getProductSelectedList());
+            notify.setTitle("系统通知");
+            notify.setImportantStuffs(importantStuff);
+            notify.setDate(new Date());
+            notify.setToUser(order.getUser());
+            ServiceManager.notifyService.insert(notify);
         }
-        System.out.println("清除了" + orders.size() + "条订单");
+//        System.out.println("清除了" + orders.size() + "条订单");
     }
 
 }

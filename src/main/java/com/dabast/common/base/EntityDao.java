@@ -52,4 +52,9 @@ public interface EntityDao <E>{
     List<E> findAll(Query query);
 
     void removeAll(List<E> list);
+
+    long count(DBObject dbObject);
+
+    Page<E> findPage(DBObject dbObject, Integer page);
+    Page<E> findPage(DBObject condition,int currentPage,int pageSize);
 }

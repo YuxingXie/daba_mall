@@ -142,5 +142,16 @@ public abstract class BaseEntityManager<E> implements IBaseEntityManager<E> {
     public void removeAll(List<E> list){
         getEntityDao().removeAll(list);
     }
+    public long count(DBObject dbObject){
+        return getEntityDao().count(dbObject);
+    }
 
+    @Override
+    public Page<E> findPage(DBObject dbObject, Integer page) {
+        return getEntityDao().findPage(dbObject, page);
+    }
+    @Override
+    public Page<E> findPage(DBObject condition,int currentPage,int pageSize){
+        return getEntityDao().findPage(condition,currentPage,pageSize);
+    }
 }

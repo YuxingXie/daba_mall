@@ -1,6 +1,7 @@
 package com.dabast.common.base;
 
 import com.dabast.entity.Interest;
+import com.dabast.entity.Notify;
 import com.mongodb.CommandResult;
 import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
@@ -53,4 +54,9 @@ public interface IBaseEntityManager<E> {
    List<E> findAll(Query query);
 
    void removeAll(List<E> list);
+
+   long count(DBObject dbObject);
+
+   Page<E> findPage(DBObject dbObject, Integer page);
+   Page<E> findPage(DBObject condition,int currentPage,int pageSize);
 }

@@ -6,7 +6,7 @@
 /*.cart span{display:block;width:20px;margin:0 auto;}*/
 /*.cart i{width:35px;height:35px;display:block; background:url(car.png) no-repeat;}*/
 /*#msg{position:fixed; top:180px; right:35px; z-index:10000; width:1px; height:52px; line-height:52px; font-size:20px; text-align:center; color:#fff; background:#360; display:none}*/
-#msg{font-size:17px; text-align:center; color:#fff; background:#360; display:none}
+#msg{font-size:17px; text-align:center; color:#000; background:#dff0d8; display:none}
 
 /*.box{float:left; width:198px; height:320px; margin-left:5px; border:1px solid #e0e0e0; text-align:center}*/
 /*.box p{line-height:20px; padding:4px 4px 10px 4px; text-align:left}*/

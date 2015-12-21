@@ -52,6 +52,11 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         return mongoTemplate;
     }
 
+    @Override
+    public long count(DBObject dbObject) {
+        return getMongoTemplate().count(new BasicQuery(dbObject),collectionClass);
+    }
+
     public String saveFile(String fileName, byte[] file) {
         GridFS fs = new GridFS(mongoTemplate.getDb());
         GridFSInputFile fsInputFile = fs.createFile(file);
@@ -166,18 +171,20 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 //        return e;
     }
     public Page<E> findPage(DBObject condition,int currentPage,int pageSize){
-        DB db = mongoTemplate.getDb();
-        DBCollection collection = db.getCollection(getCollectionName());
+//        DB db = mongoTemplate.getDb();
+//        DBCollection collection = db.getCollection(getCollectionName());
         Pageable pageable = new PageRequest(currentPage-1, pageSize);
-//        query = query.limit(pageSize).skip((currentPage - 1) * pageSize);
-//        List<ProductSeries> list = getMongoTemplate().find(query, ProductSeries.class);
-        Long count = collection.count(condition);
-//        System.out.println(condition.toString());
-//        List<E> list = dbCursor2List(collection.find(condition).limit(pageSize).skip((currentPage - 1) * pageSize));
+        Long count = mongoTemplate.count(new BasicQuery(condition),collectionClass);
         List<E> list = mongoTemplate.find(new BasicQuery(condition).limit(pageSize).skip((currentPage - 1) * pageSize),collectionClass);
         Page<E> page = new PageImpl<E>(list, pageable, count);
         return page;
     }
+
+    @Override
+    public Page<E> findPage(DBObject dbObject, Integer page) {
+        return findPage(dbObject,page,6);
+    }
+
     public List<E> findAll(DBObject condition){
         return mongoTemplate.find(new BasicQuery(condition),collectionClass);
 //        DB db = mongoTemplate.getDb();

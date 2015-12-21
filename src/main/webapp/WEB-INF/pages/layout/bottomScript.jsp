@@ -53,6 +53,9 @@
         $http.get('${path}/user/cart').success(function (data) {
             $scope.cart = data;
         });
+        $http.get('${path}/user/unread_notifies_count').success(function (data) {
+            $scope.unreadNotifiesCount = data;
+        });
     }])
 
 
