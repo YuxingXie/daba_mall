@@ -1,0 +1,21 @@
+#popupcontent {
+    width: 600px;
+    height: 200px;
+    border: #83b3d9 1px solid;
+    background: #f2f7fb;
+    display:none;
+    margin-left: 200px;;
+}
+
+#shut {
+    width: 45px;
+    height: 18px;
+    float: right;
+    margin-right: 0px;
+    background: url(/commons/images/sh.png) no-repeat 0px 0px;
+}
+
+#shut:hover{
+    /*background: url(/commons/images/sh.png) no-repeat 0px -25px;*/
+    background: url(/commons/images/nav_block.jpg) no-repeat
+}

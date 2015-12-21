@@ -1,11 +1,9 @@
-@charset "gb2312";
 /* CSS Document */
-
 body{ margin:0; padding:0; background:#f9feff url(bg.jpg) repeat-x; line-height:18px;}
 
 
 ul,li,dl,dd,dt,ol,p{list-style:none;padding:0px;margin:0px;}
-h1,h2,h3,h4,h5,h6{font:11pt/20px Arial,"ËÎÌå";font-weight:bold;padding:0px;margin:0px;}
+h1,h2,h3,h4,h5,h6{font:11pt/20px Arial,"ï¿½ï¿½ï¿½ï¿½";font-weight:bold;padding:0px;margin:0px;}
 ins{display:none;}
 img{border:none;padding:0px;margin:0px;}
 .clear{font-size:0px;line-height:0px;clear:both;}
@@ -58,7 +56,6 @@ img{border:none;padding:0px;margin:0px;}
 #zhuanti a{ text-decoration:none; color:#ee6a00; margin:0 6px 0 5px;*margin:0 6px;_margin:0 6px;}
 #zhuanti a:hover{ text-decoration:underline;}
 
-/*ÄÚÈÝÇøÓò*/
 #neirong_w{ width:970px; margin:0 auto;}
 #neirong_w_left{ float:left; width:760px;}
 
@@ -69,7 +66,6 @@ img{border:none;padding:0px;margin:0px;}
 #kashi li a{ text-decoration:none; background:url(menu_link.jpg) no-repeat;width:100px; height:27px; display:block;color:#436f79; margin:0 1px 0 0; padding-top:3px; line-height:27px;}
 
 
-/*---°æÈ¨---*/
 #Copyright{ margin:20px auto 30px auto; width:970px; height:75px; font-size:12px; border-top:1px solid #a6cbe4;}
         #Copyright ul{ display:block; width:550px; margin:0 auto;color:#003e65; padding-top:7px; font-size:12px;}
         #Copyright ul li{ float:left; margin:3px;}
@@ -77,3 +73,47 @@ img{border:none;padding:0px;margin:0px;}
 		#Copyright ul li a:hover{ text-decoration:underline;}
 		#Copyright p{ text-align:center; line-height:19px; margin-top:3px; color:#494949;}
 		#Copyright p strong{ font-weight:bold; color:#00b9e7;}
+.img404 {
+	background: url(p1.jpg) center center no-repeat;
+	width: 745px;
+	height: 258px;
+	margin: 50px auto;
+	position: relative;
+}
+
+.back {
+	position: absolute;
+	bottom: 0px;
+	right: 180px;
+}
+
+.imgCenter {
+	margin: 0 auto;
+	width: 970px;
+	text-align: center;
+}
+
+.imgCenterborder {
+	border: 1px #eeeeee solid;
+	padding: 6px;
+}
+
+a:link {
+	text-decoration: none;
+	color: #000;
+}
+
+a:visited {
+	text-decoration: none;
+	color: #000;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #F90;
+}
+
+a:active {
+	text-decoration: none;
+	color: #000;
+}

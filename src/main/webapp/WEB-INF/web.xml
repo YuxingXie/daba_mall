@@ -111,12 +111,12 @@
     <!-- 404 页面不存在错误 -->
     <error-page>
         <error-code>404</error-code>
-        <location>/statics/error/404/1/404.htm</location>
+        <location>/statics/error/404.jsp</location>
     </error-page>
     <!--500 服务器内部错误 -->
     <error-page>
         <error-code>500</error-code>
-        <location>/statics/error/404/2/404.htm</location>
+        <location>/statics/error/error.jsp</location>
     </error-page>
     <taglib>
         <taglib-uri>/pageTag</taglib-uri>
