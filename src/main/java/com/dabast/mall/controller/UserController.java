@@ -11,6 +11,7 @@ import com.dabast.mall.dao.UserDao;
 import com.dabast.mall.service.impl.CartService;
 import com.dabast.mall.service.impl.RegisterValidateService;
 import com.dabast.mall.service.impl.UserService;
+import com.dabast.support.vo.PairUsers;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.DBRef;
@@ -63,10 +64,98 @@ public class UserController extends BaseRestSpringController {
         }
         return responseEntity;
     }
+
+    /**
+     * 用户修改昵称判断新名字是否被使用
+     * @param model
+     * @param user 新的用户
+     * @return
+     */
+    @RequestMapping(value = "/exist_name2")
+    public ResponseEntity existName2(ModelMap model,@RequestBody User user) {
+        Assert.notNull(user);
+        String userName=user.getName();
+        String userId=user.getId();
+        Assert.notNull(userName);
+        Assert.notNull(userId);
+        ResponseEntity responseEntity = null;
+        boolean used = registerValidateService.isNameUsed(userName,userId);
+        if (used) {
+            responseEntity = new ResponseEntity("{\"unique\":false}", HttpStatus.OK);
+        } else {
+            responseEntity = new ResponseEntity("{\"unique\":true}", HttpStatus.OK);
+        }
+        return responseEntity;
+    }
+    @RequestMapping(value = "/update/name")
+    public ResponseEntity<User> updateName(ModelMap model,@RequestBody User user,HttpSession session) {
+        Assert.notNull(user);
+        String userName=user.getName();
+        String userId=user.getId();
+        Assert.notNull(userName);
+        Assert.notNull(userId);
+        ResponseEntity responseEntity = null;
+        User updateUser=new User();
+        updateUser.setId(userId);
+        updateUser.setName(userName);
+        userService.update(updateUser);
+        user=userService.findById(userId);
+        session.setAttribute(Constant.LOGIN_USER,user);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+
+    /**
+     * 发送验证码时可能会创建一个新临时用户保存email和验证码，也可能使用用户本身的这条记录，如果创建了临时用户则需要删除
+     * @param model
+     * @param users
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/update/email")
+    public ResponseEntity<User> updateEmail(ModelMap model,@RequestBody PairUsers users,HttpSession session) {
+        User user=users.getFirstUser();
+        User emailUser=users.getSecondUser();
+        Assert.notNull(user);
+        Assert.notNull(emailUser);
+        Assert.notNull(emailUser.getId());
+        String email=emailUser.getEmail();
+        String userId=user.getId();
+        Assert.notNull(email);
+        Assert.notNull(userId);
+        if (user.getEmail().equals(emailUser.getEmail())) return new ResponseEntity<User>(user, HttpStatus.OK);
+        User updateUser=new User();
+        updateUser.setId(userId);
+        updateUser.setEmail(email);
+        userService.update(updateUser);
+        if(!user.getId().equalsIgnoreCase(emailUser.getId())){
+            userService.removeById(emailUser.getId());
+        }
+        user=userService.findById(userId);
+        session.setAttribute(Constant.LOGIN_USER,user);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
     @RequestMapping(value = "/exist_email")
     public ResponseEntity existEmail(ModelMap model, @RequestBody User user) {
         ResponseEntity responseEntity = null;
         boolean used = registerValidateService.isEmailUsed(user.getEmail());
+        if (used) {
+            responseEntity = new ResponseEntity("{\"unique\":false}", HttpStatus.OK);
+        } else {
+            responseEntity = new ResponseEntity("{\"unique\":true}", HttpStatus.OK);
+        }
+        return responseEntity;
+    }
+
+    /**
+     * 用户修改邮箱时验证邮箱是否可用
+     * @param model
+     * @param user
+     * @return
+     */
+    @RequestMapping(value = "/exist_email2")
+    public ResponseEntity existEmail2(ModelMap model, @RequestBody User user) {
+        ResponseEntity responseEntity = null;
+        boolean used = registerValidateService.isEmailUsed(user.getEmail(),user.getId());
         if (used) {
             responseEntity = new ResponseEntity("{\"unique\":false}", HttpStatus.OK);
         } else {
@@ -341,6 +430,8 @@ public class UserController extends BaseRestSpringController {
         return new ResponseEntity("{\"codeValid\":false}",HttpStatus.OK);
 
     }
+
+
     /**
      * 验证手机验证码是否有效
      * @param model

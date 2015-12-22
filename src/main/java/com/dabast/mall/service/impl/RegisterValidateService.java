@@ -141,4 +141,11 @@ public class RegisterValidateService {
     public boolean isNameUsed(String name) {
         return userDao.isNameUsed(name);
     }
+    public boolean isNameUsed(String name,String userId) {
+        return userDao.isNameUsed(name,userId);
+    }
+
+    public boolean isEmailUsed(String email, String userId) {
+        return userDao.isEmailUsed(email,userId);
+    }
 }

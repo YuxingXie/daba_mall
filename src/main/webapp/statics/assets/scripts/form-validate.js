@@ -109,6 +109,31 @@
             }
         }
     })
+    .directive("ensureNameUnique2", function ($http,$timeout) {
+        return{
+            require:"ngModel",
+            link:function(scope,ele,attrs,c){
+                var timeout;
+                scope.$watch(attrs.ngModel,function(n){
+                    if(!n) return;
+                    if(timeout) {$timeout.cancel(timeout);}
+                    timeout=$timeout(function(){
+                        $http({
+                            method:"POST",
+                            url:path+"/user/exist_name2",
+                            data:scope.user
+                        }).success(function(data){
+                            c.$setValidity('unique',data.unique);
+                        }).error(function(data){
+                            c.$setValidity('unique',false);
+                        });
+                    },300);
+
+                });
+
+            }
+        }
+    })
     .directive("ensureEmailUnique", function ($http,$timeout) {
         return{
             require:"ngModel",
@@ -134,6 +159,38 @@
                             c.$setValidity('unique',false);
                         });
                     },300);
+
+                });
+
+            }
+        }
+    })
+    .directive("ensureEmailUnique2", function ($http,$timeout) {
+        return{
+            require:"ngModel",
+            link:function(scope,ele,attrs,c){
+                //var timeout;
+                scope.$watch(attrs.ngModel,function(n){
+//                         console.log(scope.ngModel);
+                    if(!n) return;
+
+                    //if(timeout) $timeout.cancel(timeout);
+                    //timeout=$timeout(function(){
+                        //var data={}
+                        //data[attrs.ngModel]=attrs.ensureEmailUnique;
+                        //console.log("key:"+attrs.ngModel)
+                        //console.log("value:"+attrs.ensureUnique)
+                        $http({
+                            method:"POST",
+                            url:path+"/user/exist_email2",
+                            data:scope.user
+                        }).success(function(data){
+                            //alert("ensureEmailUnique2:"+data.unique);
+                            c.$setValidity('unique',data.unique);
+                        }).error(function(data){
+                            c.$setValidity('unique',false);
+                        });
+                    //},300);
 
                 });
 
@@ -200,6 +257,21 @@
             }
         }
     })
+    .directive("ensureValidateCode2", function ($http) {
+        return{
+            require:"ngModel",
+            link:function(scope,ele,attrs,c){
+                scope.$watch(attrs.ngModel,function(newVal){
+                    if(!newVal) return;
+                    if(scope.user.validateCode===scope.emailUser.validateCode){
+                        c.$setValidity('codeValid',true);
+                    }else{
+                        c.$setValidity('codeValid',false);
+                    }
+                });
+            }
+        }
+    })
    .directive("ensurePhoneValidateCode", function ($http,$timeout) {
        return{
            require:"ngModel",
@@ -260,7 +332,7 @@
             }
         });
         $scope.getValidCode = function (type){
-
+            alert("get code");
             $scope.sent=false;
             $scope.sending=true;
             var requestUrl;

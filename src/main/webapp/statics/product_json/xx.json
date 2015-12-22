@@ -1,0 +1,376 @@
+{
+  "user": {
+    "id": "55b1e75a845c14e957d5331c",
+    "name": "谢宇星78gfgfddfdgfdfdgf",
+    "realName": null,
+    "sex": null,
+    "height": null,
+    "password": "202cb962ac59075b964b07152d234b70",
+    "email": "185246042@qq.com",
+    "userCategory": null,
+    "registerTime": null,
+    "validateCode": "1",
+    "lastActivateTime": null,
+    "phone": "13903064816",
+    "loginStatus": null,
+    "cart": {
+      "productSelectedList": [
+        {
+          "productSeriesId": null,
+          "amount": 9,
+          "productEvaluate": null,
+          "productPropertyValueIds": null,
+          "productPropertyValueList": [
+            {
+              "id": "56739f5535f0d11750c691e0",
+              "value": "日用",
+              "productSeries": null,
+              "productProperty": {
+                "id": "56739f5535f0d11750c691df",
+                "propertyName": "型号",
+                "productSeries": {
+                  "id": "56739f5435f0d11750c691de",
+                  "name": "含笑半步癫",
+                  "pictures": [
+                    {
+                      "picture": "pic/56739f0635f0d11750c691d7",
+                      "bigPicture": "pic/56739f0635f0d11750c691d9",
+                      "iconPicture": null
+                    }
+                  ],
+                  "description": "我们含笑半步癫是用蜂蜜、川贝、桔梗、加上天山雪莲配制而成，不需冷藏，也没有防腐剂，除了毒性猛烈之外，味道还很好吃！吃了含笑半步癫的朋友，顾名思义绝对不能走半步路或是面露笑容，否则也会全身爆炸而死。 ",
+                  "shelvesDate": 1450418004937,
+                  "brand": "大坝",
+                  "productStore": {
+                    "remain": 0,
+                    "warningAmount": 30,
+                    "inAndOutList": null
+                  },
+                  "measurementUnit": null,
+                  "instructionManual": null,
+                  "productBrochures": null,
+                  "productSubCategory": {
+                    "id": "5653fa9435f0d1172892999a",
+                    "productCategory": {
+                      "id": "564948d1ad1ab21220ebd821",
+                      "categoryName": "发酵制品",
+                      "productSubCategories": null
+                    },
+                    "subCategoryName": "饮品",
+                    "productSeriesList": null
+                  },
+                  "evaluateCount": 0,
+                  "newProduct": true,
+                  "productProperties": null,
+                  "productPropertyValues": null,
+                  "productSeriesPrices": null,
+                  "commonPrice": 0,
+                  "currentPrice": null,
+                  "productEvaluateList": null,
+                  "productSeriesEvaluateGrade": 0
+                },
+                "propertyValues": null
+              },
+              "amount": null
+            }
+          ],
+          "productSeries": {
+            "id": "56739f5435f0d11750c691de",
+            "name": "含笑半步癫",
+            "pictures": [
+              {
+                "picture": "pic/56739f0635f0d11750c691d7",
+                "bigPicture": "pic/56739f0635f0d11750c691d9",
+                "iconPicture": null
+              }
+            ],
+            "description": "我们含笑半步癫是用蜂蜜、川贝、桔梗、加上天山雪莲配制而成，不需冷藏，也没有防腐剂，除了毒性猛烈之外，味道还很好吃！吃了含笑半步癫的朋友，顾名思义绝对不能走半步路或是面露笑容，否则也会全身爆炸而死。 ",
+            "shelvesDate": 1450418004937,
+            "brand": "大坝",
+            "productStore": {
+              "remain": 0,
+              "warningAmount": 30,
+              "inAndOutList": null
+            },
+            "measurementUnit": null,
+            "instructionManual": null,
+            "productBrochures": null,
+            "productSubCategory": {
+              "id": "5653fa9435f0d1172892999a",
+              "productCategory": {
+                "id": "564948d1ad1ab21220ebd821",
+                "categoryName": "发酵制品",
+                "productSubCategories": null
+              },
+              "subCategoryName": "饮品",
+              "productSeriesList": null
+            },
+            "evaluateCount": 0,
+            "newProduct": true,
+            "productProperties": null,
+            "productPropertyValues": null,
+            "productSeriesPrices": null,
+            "commonPrice": 0,
+            "currentPrice": null,
+            "productEvaluateList": null,
+            "productSeriesEvaluateGrade": 0
+          },
+          "receiveStatus": null,
+          "orderPrice": null
+        },
+        {
+          "productSeriesId": null,
+          "amount": 5,
+          "productEvaluate": null,
+          "productPropertyValueIds": null,
+          "productPropertyValueList": [
+            {
+              "id": "5673b60435f0d11750c691ef",
+              "value": "浓香",
+              "productSeries": null,
+              "productProperty": {
+                "id": "5673b60435f0d11750c691ee",
+                "propertyName": "口感",
+                "productSeries": {
+                  "id": "5673b60435f0d11750c691ed",
+                  "name": "一日丧命散",
+                  "pictures": [
+                    {
+                      "picture": "pic/5673b5e935f0d11750c691e8",
+                      "bigPicture": "pic/5673b5e935f0d11750c691ea",
+                      "iconPicture": null
+                    },
+                    {
+                      "picture": "pic/5673b5e935f0d11750c691e4",
+                      "bigPicture": "pic/5673b5e935f0d11750c691e6",
+                      "iconPicture": null
+                    }
+                  ],
+                  "description": "我们“一日丧命散”是用七种不同的毒虫，再加上鹤顶红，提炼七七四十九日而成的，无色无味，杀人于无影无踪。 ",
+                  "shelvesDate": 1450423812829,
+                  "brand": "大坝",
+                  "productStore": {
+                    "remain": 0,
+                    "warningAmount": 20,
+                    "inAndOutList": null
+                  },
+                  "measurementUnit": null,
+                  "instructionManual": null,
+                  "productBrochures": null,
+                  "productSubCategory": {
+                    "id": "56494922ad1ab21220ebd822",
+                    "productCategory": {
+                      "id": "564948d1ad1ab21220ebd821",
+                      "categoryName": "发酵制品",
+                      "productSubCategories": null
+                    },
+                    "subCategoryName": "豆制品",
+                    "productSeriesList": null
+                  },
+                  "evaluateCount": 0,
+                  "newProduct": true,
+                  "productProperties": null,
+                  "productPropertyValues": null,
+                  "productSeriesPrices": null,
+                  "commonPrice": 0,
+                  "currentPrice": null,
+                  "productEvaluateList": null,
+                  "productSeriesEvaluateGrade": 0
+                },
+                "propertyValues": null
+              },
+              "amount": null
+            },
+            {
+              "id": "5673b60435f0d11750c691f2",
+              "value": "猛烈",
+              "productSeries": null,
+              "productProperty": {
+                "id": "5673b60435f0d11750c691f1",
+                "propertyName": "毒性",
+                "productSeries": {
+                  "id": "5673b60435f0d11750c691ed",
+                  "name": "一日丧命散",
+                  "pictures": [
+                    {
+                      "picture": "pic/5673b5e935f0d11750c691e8",
+                      "bigPicture": "pic/5673b5e935f0d11750c691ea",
+                      "iconPicture": null
+                    },
+                    {
+                      "picture": "pic/5673b5e935f0d11750c691e4",
+                      "bigPicture": "pic/5673b5e935f0d11750c691e6",
+                      "iconPicture": null
+                    }
+                  ],
+                  "description": "我们“一日丧命散”是用七种不同的毒虫，再加上鹤顶红，提炼七七四十九日而成的，无色无味，杀人于无影无踪。 ",
+                  "shelvesDate": 1450423812829,
+                  "brand": "大坝",
+                  "productStore": {
+                    "remain": 0,
+                    "warningAmount": 20,
+                    "inAndOutList": null
+                  },
+                  "measurementUnit": null,
+                  "instructionManual": null,
+                  "productBrochures": null,
+                  "productSubCategory": {
+                    "id": "56494922ad1ab21220ebd822",
+                    "productCategory": {
+                      "id": "564948d1ad1ab21220ebd821",
+                      "categoryName": "发酵制品",
+                      "productSubCategories": null
+                    },
+                    "subCategoryName": "豆制品",
+                    "productSeriesList": null
+                  },
+                  "evaluateCount": 0,
+                  "newProduct": true,
+                  "productProperties": null,
+                  "productPropertyValues": null,
+                  "productSeriesPrices": null,
+                  "commonPrice": 0,
+                  "currentPrice": null,
+                  "productEvaluateList": null,
+                  "productSeriesEvaluateGrade": 0
+                },
+                "propertyValues": null
+              },
+              "amount": null
+            }
+          ],
+          "productSeries": {
+            "id": "5673b60435f0d11750c691ed",
+            "name": "一日丧命散",
+            "pictures": [
+              {
+                "picture": "pic/5673b5e935f0d11750c691e8",
+                "bigPicture": "pic/5673b5e935f0d11750c691ea",
+                "iconPicture": null
+              },
+              {
+                "picture": "pic/5673b5e935f0d11750c691e4",
+                "bigPicture": "pic/5673b5e935f0d11750c691e6",
+                "iconPicture": null
+              }
+            ],
+            "description": "我们“一日丧命散”是用七种不同的毒虫，再加上鹤顶红，提炼七七四十九日而成的，无色无味，杀人于无影无踪。 ",
+            "shelvesDate": 1450423812829,
+            "brand": "大坝",
+            "productStore": {
+              "remain": 0,
+              "warningAmount": 20,
+              "inAndOutList": null
+            },
+            "measurementUnit": null,
+            "instructionManual": null,
+            "productBrochures": null,
+            "productSubCategory": {
+              "id": "56494922ad1ab21220ebd822",
+              "productCategory": {
+                "id": "564948d1ad1ab21220ebd821",
+                "categoryName": "发酵制品",
+                "productSubCategories": null
+              },
+              "subCategoryName": "豆制品",
+              "productSeriesList": null
+            },
+            "evaluateCount": 0,
+            "newProduct": true,
+            "productProperties": null,
+            "productPropertyValues": null,
+            "productSeriesPrices": null,
+            "commonPrice": 0,
+            "currentPrice": null,
+            "productEvaluateList": null,
+            "productSeriesEvaluateGrade": 0
+          },
+          "receiveStatus": null,
+          "orderPrice": null
+        },
+        {
+          "productSeriesId": null,
+          "amount": 5,
+          "productEvaluate": null,
+          "productPropertyValueIds": null,
+          "productPropertyValueList": [],
+          "productSeries": {
+            "id": "56739c8935f0d1141c4b2419",
+            "name": "沩山香干",
+            "pictures": null,
+            "description": "我们含笑半步癫是用蜂蜜、川贝、桔梗、加上天山雪莲配制而成，不需冷藏，也没有防腐剂，除了毒性猛烈之外，味道还很好吃！吃了含笑半步癫的朋友，顾名思义绝对不能走半步路或是面露笑容，否则也会全身爆炸而死。 ",
+            "shelvesDate": 1450417289808,
+            "brand": "大坝",
+            "productStore": {
+              "remain": 0,
+              "warningAmount": 100,
+              "inAndOutList": null
+            },
+            "measurementUnit": null,
+            "instructionManual": null,
+            "productBrochures": null,
+            "productSubCategory": {
+              "id": "56494922ad1ab21220ebd822",
+              "productCategory": {
+                "id": "564948d1ad1ab21220ebd821",
+                "categoryName": "发酵制品",
+                "productSubCategories": null
+              },
+              "subCategoryName": "豆制品",
+              "productSeriesList": null
+            },
+            "evaluateCount": 0,
+            "newProduct": true,
+            "productProperties": null,
+            "productPropertyValues": null,
+            "productSeriesPrices": null,
+            "commonPrice": 0,
+            "currentPrice": null,
+            "productEvaluateList": null,
+            "productSeriesEvaluateGrade": 0
+          },
+          "receiveStatus": null,
+          "orderPrice": null
+        }
+      ]
+    },
+    "addresses": null,
+    "disabled": false,
+    "idCardNo": null,
+    "activated": false,
+    "userAccounts": null,
+    "interests": null,
+    "realMessage": null,
+    "remember": false,
+    "rePassword": null,
+    "loginStr": null,
+    "mergeCart": false
+  },
+  "emailUser": {
+    "id": "5678f78635f0d111b88fd52a",
+    "name": null,
+    "realName": null,
+    "sex": null,
+    "height": null,
+    "password": null,
+    "email": "185246042@qq.com",
+    "userCategory": null,
+    "registerTime": 1450770392989,
+    "validateCode": "34689",
+    "lastActivateTime": null,
+    "phone": null,
+    "loginStatus": null,
+    "cart": null,
+    "addresses": null,
+    "disabled": false,
+    "idCardNo": null,
+    "activated": false,
+    "userAccounts": null,
+    "interests": null,
+    "realMessage": null,
+    "remember": false,
+    "rePassword": null,
+    "loginStr": null,
+    "mergeCart": false
+  }
+}

@@ -3,10 +3,7 @@ package com.dabast.mall.dao;
 import com.dabast.common.base.BaseMongoDao;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.*;
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import com.mongodb.WriteResult;
+import com.mongodb.*;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -138,7 +135,35 @@ public class UserDao extends BaseMongoDao<User>  {
         return true;
     }
 
+    /**
+     * 用户改昵称时判断昵称是否可用
+     * @param name 新昵称
+     * @param userId 用户Id
+     * @return
+     */
+    public boolean isNameUsed(String name, String userId) {
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("_id", new BasicDBObject("$ne",userId));
+        dbObject.put("activated", true);
+        dbObject.put("name", name);
+        List<User> users=mongoTemplate.find(new BasicQuery(dbObject),User.class);
+        return users!=null&&users.size()>0;
+    }
 
+    /**
+     * 用户邮箱称时判断邮箱是否可用
+     * @param email
+     * @param userId
+     * @return
+     */
+    public boolean isEmailUsed(String email, String userId) {
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("_id", new BasicDBObject("$ne",userId));
+        dbObject.put("activated", true);
+        dbObject.put("email", email);
+        List<User> users=mongoTemplate.find(new BasicQuery(dbObject),User.class);
+        return users!=null&&users.size()>0;
+    }
 
     public boolean isEmailUsed(String email) {
         User user=findByEmail(email,true);
@@ -199,4 +224,7 @@ public class UserDao extends BaseMongoDao<User>  {
         update.set("cart", null);
         mongoTemplate.updateFirst(new BasicQuery(new BasicDBObject("_id",user.getId())), update, User.class);
     }
+
+
+
 }

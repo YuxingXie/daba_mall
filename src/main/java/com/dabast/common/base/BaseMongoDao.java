@@ -350,6 +350,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         }
         Update update = getUpdateFromEntity(e);
         mongoTemplate.updateFirst(getEqualsQuery(qe), update, collectionClass);
+
     }
 
     public CommandResult runCommand(String command) {
