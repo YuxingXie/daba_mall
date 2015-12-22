@@ -32,23 +32,23 @@
            }
        }
    })
-        .directive("idCardValid", function () {
-            return{
-                require:"ngModel",
-                link:function(scope,ele,attrs,c){
-                    scope.$watch(attrs.ngModel,function(n){
-                        if(!n) return;
-                        if(/^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/i.test(n))
-                        {
-                            c.$setValidity('validIdCard',true);
-                        }else{
-                            c.$setValidity('validIdCard',false);
-                        }
-                    });
+    .directive("idCardValid", function () {
+        return{
+            require:"ngModel",
+            link:function(scope,ele,attrs,c){
+                scope.$watch(attrs.ngModel,function(n){
+                    if(!n) return;
+                    if(/^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/i.test(n))
+                    {
+                        c.$setValidity('validIdCard',true);
+                    }else{
+                        c.$setValidity('validIdCard',false);
+                    }
+                });
 
-                }
             }
-        })
+        }
+    })
     .directive("telephoneNumberValid", function () {//手机和座机
         return{
             require:"ngModel",
@@ -75,6 +75,7 @@
                     if(!/(^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$)/i.test(n))
                     {
                         c.$setValidity('validPhoneNumber',false);
+
                     }else{
                         c.$setValidity('validPhoneNumber',true);
                     }

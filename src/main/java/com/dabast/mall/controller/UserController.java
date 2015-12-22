@@ -273,10 +273,6 @@ public class UserController extends BaseRestSpringController {
     @RequestMapping(value = "/login_user")
     public ResponseEntity loginUser(HttpSession session) {
         User user=getLoginUser(session);
-//        System.out.println(new ResponseEntity<User>(user,HttpStatus.OK));
-//        User test=new User();
-//        test.setName("John");
-//        user.setCart(null);
         return new ResponseEntity<User>(user,HttpStatus.OK);
     }
 

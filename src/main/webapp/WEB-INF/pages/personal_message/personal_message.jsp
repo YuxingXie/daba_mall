@@ -86,7 +86,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <!-- 测试免费短信太少，上线后完善
+                      <div class="row">
                         <div class="form-group has-feedback">
                             <label class="col-lg-1 control-label glyphicon glyphicon-phone">手机号码</label>
                             <div class="col-lg-3 has-success" ng-init="editPhone=false">
@@ -110,15 +111,17 @@
 
                                     </div>
                                     <div class="col-lg-4">
-                                        <button type="button"  class="btn btn-primary col-lg-12"
-                                                ng-disabled="signupForm.email.$invalid||!signupForm.email.$dirty||(sending&&!mailSent)" data-ng-click="getValidCode('email')">
-                                            获取验证码<i ng-if="sending" class="fa fa-spin fa-spinner pull-right"></i></button>
+
+                                        <button type="button"  class="btn btn-primary"
+                                                ng-disabled="signupForm.phone.$invalid||(sending&&!sent)||seconds>0" data-ng-click="getValidCode('phone')">
+                                            获取验证码<span ng-if="seconds && seconds>0">,{{seconds}}秒后可重新获取</span><i ng-if="sending" class="fa fa-spin fa-spinner pull-right"></i>
+                                        </button><span class="fa fa-warning" ng-if="sending">(如果一直处于发送中，可能是短信系统故障)</span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-5">
                                         <span class="has-error"><label ng-show="(signupForm.validateCode.$dirty&&signupForm.validateCode.$error.codeValid)" class="control-label " >验证码错误</label></span>
-                                        <span class="has-success"><label ng-show="!sending&&sent&&signupForm.email.$valid&&signupForm.validateCode.$invalid&&editPhone" class="control-label" >邮件成功发送到新邮箱</label></span>
+                                        <span class="has-success"><label ng-show="!sending&&sent&&signupForm.phone.$valid&&signupForm.validateCode.$invalid&&editPhone" class="control-label" >短信发送成功</label></span>
                                     </div>
                                 </div>
                             </div>
@@ -126,17 +129,19 @@
                         <div class="row">
                             <div class="col-lg-2">&nbsp;</div>
                             <div class="col-lg-5 has-error"
-                                 ng-show="signupForm.email.$dirty &&signupForm.email.$invalid">
-                                <label class="control-label" ng-show="signupForm.email.$error.required">邮箱必填</label>
-                                <label class="control-label" ng-show="signupForm.email.$error.email"> 请输入一个有效的邮箱</label>
-                                <label class="control-label" ng-show="signupForm.email.$error.unique"> 该邮箱已被使用</label>
+                                 ng-show="signupForm.phone.$dirty &&signupForm.phone.$invalid">
+                                <label class="control-label" ng-show="signupForm.phone.$error.required">手机必填</label>
+                                <label class="control-label" ng-show="signupForm.phone.$error.validPhoneNumber"> 请输入一个有效的手机号码</label>
+                                <label class="control-label" ng-show="signupForm.phone.$error.unique"> 该手机已被使用</label>
                             </div>
                         </div>
                     </div>
+                    -->
+
                     <div class="row">
                         <div class="form-group has-feedback">
-                            <label for="password" class="col-lg-2 control-label">密码 <span class="fa fa-key fa-fw"></span></label>
-                            <div class="col-lg-5 has-success" ng-init="editPassword=false">
+                            <label for="password" class="col-lg-1 control-label">密码 <span class="fa fa-key fa-fw"></span></label>
+                            <div class="col-lg-3 has-success" ng-init="editPassword=false">
                                 <input type="password" autocomplete="false" class="form-control" path="password" id="password"
                                             ng-init="password='${sessionScope.loginUser.password}'" ng-model="password"
                                             pw_check="#rePassword" placeholder="请输入密码" required="true" ng-minlength="{{pw_min}}"/>
@@ -165,8 +170,8 @@
                     </div>
                     <div class="row">
                         <div class="form-group has-feedback" ng-show="editPassword">
-                            <label for="password" class="col-lg-2 control-label">确认密码<span class="fa fa-key fa-fw"></span></label>
-                            <div class="col-lg-5 has-success">
+                            <label for="password" class="col-lg-1 control-label">确认密码<span class="fa fa-key fa-fw"></span></label>
+                            <div class="col-lg-3 has-success">
                                 <input onfocus="this.type='password'" autocomplete="false" class="form-control" id="rePassword" path="rePassword" ng-init="rePassword='${form.rePassword}'"
                                                ng-model="rePassword" pw_check="#password" placeholder="请再输入一次密码" required="true" ng-disabled="!signupForm.password.$dirty"/>
                                 <span ng-show="signupForm.rePassword.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
@@ -174,8 +179,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-2">&nbsp;</div>
-                            <div class="has-error col-lg-5" ng-show="signupForm.rePassword.$dirty &&signupForm.rePassword.$invalid">
+                            <div class="col-lg-1">&nbsp;</div>
+                            <div class="has-error col-lg-3" ng-show="signupForm.rePassword.$dirty &&signupForm.rePassword.$invalid">
                                 <label class="control-label" ng-show="signupForm.rePassword.$error.required"> 必须确认密码</label>
                                 <label class="control-label" ng-show="signupForm.rePassword.$error.minlength"> 密码最少需要{{pw_min}}个字符 </label>
                                 <label class="control-label" ng-show="signupForm.password.$invalid"> 请填写密码再进行确认</label>
@@ -187,35 +192,35 @@
                         </div>
                     </div>
 
-                    <div class="row table-bordered">
-                        <div class="col-lg-1 col-sm-1"></div>
-                        <div class="col-lg-6 col-sm-6">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-4 col-sm-4">
-                                        <span class="btn btn-primary fa fa-user-secret disabled" style="margin: 0px;">个人真实信息</span>
-                                    </div>
-                                </div>
-                                <div class="row table-bordered bg-success" style="margin-bottom:10px;">
-                                    <label class="col-lg-2 control-label">姓名 <span class="fa fa-user"></span></label>
-                                    <div class="col-lg-5 has-success">
-                                        <input type="text" class="form-control"
-                                               ng-init="realMessage.firstName='${sessionScope.loginUser.realMessage.firstName}'" ng-model="realMessage.firstName"/>
-                                    </div>
+                    <%--<div class="row table-bordered">--%>
+                        <%--<div class="col-lg-1 col-sm-1"></div>--%>
+                        <%--<div class="col-lg-6 col-sm-6">--%>
+                            <%--<div class="form-group">--%>
+                                <%--<div class="row">--%>
+                                    <%--<div class="col-lg-4 col-sm-4">--%>
+                                        <%--<span class="btn btn-primary fa fa-user-secret disabled" style="margin: 0px;">个人真实信息</span>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                                <%--<div class="row table-bordered bg-success" style="margin-bottom:10px;">--%>
+                                    <%--<label class="col-lg-2 control-label">姓名 <span class="fa fa-user"></span></label>--%>
+                                    <%--<div class="col-lg-5 has-success">--%>
+                                        <%--<input type="text" class="form-control"--%>
+                                               <%--ng-init="realMessage.firstName='${sessionScope.loginUser.realMessage.firstName}'" ng-model="realMessage.firstName"/>--%>
+                                    <%--</div>--%>
 
-                                </div>
-                                <div class="row table-bordered bg-success" style="margin-bottom:10px;">
-                                    <label class="col-lg-2 control-label">身份证 <span class="fa fa-user"></span></label>
-                                    <div class="col-lg-5 has-success">
-                                        <input class="form-control" type="text"
-                                               ng-init="realMessage.idCardNo='${sessionScope.loginUser.realMessage.idCardNo}'" ng-model="realMessage.idCardNo"/>
+                                <%--</div>--%>
+                                <%--<div class="row table-bordered bg-success" style="margin-bottom:10px;">--%>
+                                    <%--<label class="col-lg-2 control-label">身份证 <span class="fa fa-user"></span></label>--%>
+                                    <%--<div class="col-lg-5 has-success">--%>
+                                        <%--<input class="form-control" type="text"--%>
+                                               <%--ng-init="realMessage.idCardNo='${sessionScope.loginUser.realMessage.idCardNo}'" ng-model="realMessage.idCardNo"/>--%>
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
 
-                    </div>
+                    <%--</div>--%>
 
 
                 </fieldset>

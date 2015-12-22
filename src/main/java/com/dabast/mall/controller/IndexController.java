@@ -43,15 +43,13 @@ import java.util.List;
  * Created by Administrator on 2015/6/11.
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/index")
 //@SessionAttributes("loginUser")
 public class IndexController extends BaseRestSpringController {
     @Resource(name = "userDao")
-    UserDao userDao;
-    @Resource
-    private RegisterValidateService registerValidateService;
-    @Resource private CartService cartService;
-    @RequestMapping(value = "/index")
+    private UserDao userDao;
+
+    @RequestMapping(value = "")
     public String index(HttpServletRequest request, ModelMap model, HttpSession session) {
         if (session.getAttribute(Constant.LOGIN_USER)==null){
             Cookie nameCookie = CookieTool.getCookieByName(request, "loginStr");
@@ -89,7 +87,7 @@ public class IndexController extends BaseRestSpringController {
     }
 
 
-    @RequestMapping(value = "/index/product/search")
+    @RequestMapping(value = "/product/search")
     public String  searchProducts(ModelMap model,String keyWord,Integer page) {
         page=page==null?1:page;
         keyWord=keyWord==null?"":keyWord;
@@ -119,7 +117,7 @@ public class IndexController extends BaseRestSpringController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "/index/cart", method = RequestMethod.POST)
+    @RequestMapping(value = "/cart", method = RequestMethod.POST)
     public ResponseEntity<Cart> cart(@RequestBody ProductSelected productSelected,HttpSession session) {
         Cart cart=null;
        if (session.getAttribute(Constant.CART)==null){
@@ -137,7 +135,7 @@ public class IndexController extends BaseRestSpringController {
         ResponseEntity<Cart> cartResponseEntity=new ResponseEntity<Cart>(cart, HttpStatus.OK);
         return cartResponseEntity;
     }
-    @RequestMapping(value = "/index/cart2", method = RequestMethod.POST)
+    @RequestMapping(value = "/cart2", method = RequestMethod.POST)
     public ResponseEntity<Cart> cart2(@RequestBody ProductSelected productSelected,HttpSession session) {
         Cart cart=null;
         if (session.getAttribute(Constant.CART)==null){
@@ -233,72 +231,8 @@ public class IndexController extends BaseRestSpringController {
         return "redirect:/cart";
     }
 
-
-
-
-
-
-    @RequestMapping(value="/pic/user/evaluate/{id}")
-    public void showUserEvaluatePic(@PathVariable String id,HttpServletRequest request,HttpServletResponse response) {
-        String dirStr="statics/img/user/evaluate";
-        requestImage(id, request, response, dirStr);
-    }
-
-    @RequestMapping(value="/pic/{id}")
-    public void showPic(@PathVariable String id,HttpServletRequest request,HttpServletResponse response) {
-        String dirStr="statics/img/product";
-        requestImage(id, request, response, dirStr);
-    }
-
-    private void requestImage(String id, HttpServletRequest request, HttpServletResponse response, String dirStr) {
-        ServletContext context= ProjectContext.getServletContext();
-        ServletContextResource dirResource=new ServletContextResource(context,dirStr);
-
-        try {
-            File dirFile=dirResource.getFile();
-            if (!dirFile.exists() || !dirFile.isDirectory()){
-                dirFile.mkdirs();
-            }
-            String[] files=dirFile.list();
-            if (files!=null){
-                for (String fileInDir:files){
-                    if (fileInDir.indexOf(id)>=0){
-                        String path=new ServletContextResource(context,dirStr+"/"+fileInDir).getPath();
-                        request.getRequestDispatcher(path+"?"+Math.random()).forward(request,response);
-                        return;
-                    }
-                }
-            }
-            GridFSDBFile picture = ServiceManager.productSeriesService.findFileById(id);
-            if (picture==null) {
-                request.getRequestDispatcher("/statics/img/img_not_found.jpg").forward(request,response);
-                return;
-            }
-            String suffix=picture.getFilename().substring(picture.getFilename().lastIndexOf("."));
-            ServletContextResource resource=new ServletContextResource(context,dirStr+"/"+id+suffix);
-            File file=resource.getFile();
-            if (!file.exists()){
-                file.createNewFile();
-                picture.writeTo(resource.getFile());
-            }
-            String path=resource.getPath();
-            request.getRequestDispatcher(path+"?"+Math.random()).forward(request,response);
-            return;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ServletException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
-
-
-
     @RequestMapping(value = "/cart/adjust")
-    public ResponseEntity adjust(@RequestBody Cart cart,ModelMap model, HttpSession session) {
+    public ResponseEntity<Order> adjust(@RequestBody Cart cart,ModelMap model, HttpSession session) {
         Assert.notNull(cart);
         User user=getLoginUser(session);
         Assert.notNull(user);
@@ -319,23 +253,6 @@ public class IndexController extends BaseRestSpringController {
         session.setAttribute("order", order);
         return new ResponseEntity<Order>(order,HttpStatus.OK);
     }
-
-//    /**
-//     * 废弃
-//     * @param model
-//     * @param session
-//     * @param request
-//     * @return
-//     */
-//    @RequestMapping(value = "/cart/to_submit")
-//    public String toBill(ModelMap model, HttpSession session,HttpServletRequest request) {
-////        Order order=session.getAttribute("order")==null?null:(Order)session.getAttribute("order");
-//////        Order order=ServiceManager.orderService.findLastOrderByUserId(orderId);
-//        return "redirect:/to_submit";
-//    }
-
-
-
 
     public static void main(String[] args) {
         String jsonStr = "[{id:100,name:'Johnson'},{id:101,name:'Jackson'}]";

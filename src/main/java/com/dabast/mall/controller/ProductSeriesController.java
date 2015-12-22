@@ -26,7 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/product_series")
@@ -51,25 +53,26 @@ public class ProductSeriesController extends BaseRestSpringController {
 
 
     @RequestMapping(value="/data/{id}")
-    public ResponseEntity<ModelMap> show(ModelMap model,@PathVariable String id,String orderId,Integer page,HttpSession session) {
+    public ResponseEntity<Map> show(@PathVariable String id,String orderId,Integer page,HttpSession session) {
+        Map<String,Object> model=new LinkedHashMap<String, Object>();
         if (page==null){
-            model.addAttribute("activeEvaluate",false);
+            model.put("activeEvaluate", false);
         }else{
-            model.addAttribute("activeEvaluate",true);
+            model.put("activeEvaluate", true);
         }
         page=page==null?1:page;
         ProductSeries productSeries = productSeriesService.findProductSeriesById(id);
         Page<ProductEvaluate> productEvaluateListPage=ServiceManager.productEvaluateService.findProductEvaluatesPageWithoutParentEvaluateByProductSeries(productSeries, page, 5);
         boolean interested=ServiceManager.interestService.alreadyInterested(getLoginUser(session),productSeries);
-        model.addAttribute("productSeries",productSeries);
-        model.addAttribute("_page",productEvaluateListPage);
-        model.addAttribute("page",page);
-        model.addAttribute("interested",interested);
+        model.put("productSeries", productSeries);
+        model.put("_page", productEvaluateListPage);
+        model.put("page", page);
+        model.put("interested", interested);
         if (orderId!=null&&!orderId.equals("")){
             Order order=ServiceManager.orderService.findOrderById(orderId);
-            model.addAttribute("order",order);
+            model.put("order",order);
         }
-        return new ResponseEntity<ModelMap>(model, HttpStatus.OK);
+        return new ResponseEntity<Map>(model, HttpStatus.OK);
     }
     @RequestMapping(value="/{id}")
     public String forwardShow(ModelMap model,@PathVariable String id,String orderId,Integer page,HttpServletResponse response) {
@@ -107,7 +110,7 @@ public class ProductSeriesController extends BaseRestSpringController {
         return rt;
     }
     @RequestMapping(value="/evaluate/reply")
-    public ResponseEntity <List<ProductEvaluate>> evaluateReply(@RequestBody ProductEvaluate reply,HttpSession session) {
+    public ResponseEntity<List<ProductEvaluate>> evaluateReply(@RequestBody ProductEvaluate reply,HttpSession session) {
         Assert.notNull(reply);
 //        Assert.notNull(reply.getParent());
 //        Assert.notNull(reply.getParent().getId());
@@ -125,7 +128,7 @@ public class ProductSeriesController extends BaseRestSpringController {
         return rt;
     }
     @RequestMapping(value="/evaluate/praise/{evaluateId}")
-    public ResponseEntity <List<ProductEvaluate>> evaluateReply(@PathVariable String evaluateId,HttpSession session) {
+    public ResponseEntity<List<ProductEvaluate>> evaluateReply(@PathVariable String evaluateId,HttpSession session) {
         User user=getLoginUser(session);
         Assert.notNull(user);
         ProductEvaluate praise=new ProductEvaluate();
@@ -154,7 +157,6 @@ public class ProductSeriesController extends BaseRestSpringController {
        List<ProductCategory> categories=null;
 //        if(session.getAttribute("productCategories")!=null){
 //            categories=(List<ProductCategory>)(session.getAttribute("productCategories"));
-//            return new ResponseEntity<List<ProductCategory>>(categories,HttpStatus.OK);
 //        }
         categories= ServiceManager.productCategoryService.findAllCategories();
         ResponseEntity<List<ProductCategory>> rt=new ResponseEntity<List<ProductCategory>>(categories, HttpStatus.OK);
@@ -168,7 +170,8 @@ public class ProductSeriesController extends BaseRestSpringController {
         return rt;
     }
     @RequestMapping(value = "/toggle_interest", method = RequestMethod.GET)
-    public ResponseEntity<ModelMap> removeToInterest(String productSeriesId, ModelMap model, HttpSession session) {
+    public ResponseEntity<Map> removeToInterest(String productSeriesId, HttpSession session) {
+        Map<String,Object> model=new LinkedHashMap<String, Object>();
         User user= getLoginUser(session);
         Assert.notNull(user);
         ProductSeries productSeries=new ProductSeries();
@@ -178,14 +181,14 @@ public class ProductSeriesController extends BaseRestSpringController {
             interest.setProductSeries(productSeries);
             interest.setUser(user);
             ServiceManager.interestService.insert(interest);
-            model.addAttribute("interested",true);
+            model.put("interested", true);
         }else{
             List<Interest> interests=ServiceManager.interestService.findByUserAndProductSeries(user,productSeries);
             ServiceManager.interestService.removeAll(interests);
-            model.addAttribute("interested",false);
+            model.put("interested", false);
         }
 
-        return new ResponseEntity<ModelMap>(model,HttpStatus.OK);
+        return new ResponseEntity<Map>(model,HttpStatus.OK);
     }
     @RequestMapping("/create_input.do")
     public String createInput(ModelMap model){

@@ -116,9 +116,10 @@ public class OrderController extends BaseRestSpringController {
     }
 
     @RequestMapping(value = "/evaluated")
-    public ResponseEntity<ModelMap> isEvaluated( String orderId,String productSeriesId,ModelMap map) {
+    public ResponseEntity<Map> isEvaluated( String orderId,String productSeriesId) {
 //        Order order=orderService.findById(orderId);
 //        List<ProductSelected> productSelectedList=order.getProductSelectedList();
+        Map<String,Object> map=new LinkedHashMap<String, Object>();
         boolean evaluated=false;
 //        for (ProductSelected productSelected:productSelectedList){
 //            ProductSeries productSeries=productSelected.getProductSeries();
@@ -138,8 +139,8 @@ public class OrderController extends BaseRestSpringController {
         dbObject.put("productSeries",productSeries);
         List<ProductEvaluate> evaluates=ServiceManager.productEvaluateService.findAll(dbObject);
 //        if (evaluates!=null &&evaluates.size()>0) evaluated=true;
-        map.addAttribute("isEvaluated",evaluated);
-        ResponseEntity<ModelMap> entity=new ResponseEntity<ModelMap>(map, HttpStatus.OK);
+        map.put("isEvaluated",evaluated);
+        ResponseEntity<Map> entity=new ResponseEntity<Map>(map, HttpStatus.OK);
         return entity;
     }
     @RequestMapping(value = "/to_bill/{id}")
