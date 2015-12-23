@@ -1,14 +1,21 @@
 package com.dabast.mall.dao;
 
 import com.dabast.common.base.BaseMongoDao;
+import com.dabast.entity.ProductSeries;
 import com.dabast.entity.ProductSeriesPrice;
+import com.dabast.entity.ProductSubCategory;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.DBRef;
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.*;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,10 +23,37 @@ import java.util.List;
  */
 @Repository
 public class ProductSeriesPriceDao  extends BaseMongoDao<ProductSeriesPrice> {
+    private DBObject getCurrentPriceDBObject(){
+        DBObject dbObject=new BasicDBObject();
+        Date now=new Date();
+        dbObject.put("beginDate",new BasicDBObject("$exists",true));
+        dbObject.put("beginDate",new BasicDBObject("$lt",now));
+        BasicDBList endDateDbList=new BasicDBList();
+        endDateDbList.add(new BasicDBObject("endDate",new BasicDBObject("$gt",now)));
+        endDateDbList.add(new BasicDBObject("endDate", new BasicDBObject("$exists", false)));
+        dbObject.put("$or",endDateDbList);
+        return dbObject;
+    }
     public List<ProductSeriesPrice> findByProductSeriesId(String id) {
         DBRef dbRef=new DBRef("productSeries",new ObjectId(id));
         Query query=new BasicQuery(new BasicDBObject("productSeries",dbRef));
         return getMongoTemplate().find(query,ProductSeriesPrice.class);
 
+    }
+    public Page<ProductSeries> getProductSeriesOrderByPriceInProductSubCategory(ProductSubCategory productSubCategory,Integer currentPage,Integer pageSize,boolean asc){
+        Sort.Direction direction=asc?Sort.Direction.ASC:Sort.Direction.DESC;
+        DBObject queryCondition=getCurrentPriceDBObject();
+//        queryCondition.put("productSeries.productSubCategory",new DBRef("productSubCategory",productSubCategory.getId()));
+        Pageable pageable = new PageRequest(currentPage-1, pageSize);
+        Long count = getMongoTemplate().count(new BasicQuery(queryCondition), ProductSeriesPrice.class);
+        Query q=new BasicQuery(queryCondition).with(new Sort(direction, "price")).limit(pageSize).skip((currentPage - 1) * pageSize);
+        System.out.println(q);
+        List<ProductSeriesPrice> productSeriesPriceList = getMongoTemplate().find(q, ProductSeriesPrice.class);
+        List<ProductSeries> list=new ArrayList<ProductSeries>();
+        for (ProductSeriesPrice productSeriesPrice:productSeriesPriceList){
+            list.add(productSeriesPrice.getProductSeries());
+        }
+        Page<ProductSeries> page = new PageImpl<ProductSeries>(list, pageable, count);
+        return page;
     }
 }

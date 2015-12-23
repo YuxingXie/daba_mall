@@ -16,11 +16,11 @@
         </div>
         <!-- BEGIN CONTENT -->
         <div class="row margin-bottom-40">
-                <div class="col-md-10 col-sm-10 btn-group btn-group-xs"ng-init="defaultSort=true;priceSort=true;salesSort=true;evaluateSort=true">
-                        <button class="btn btn-primary btn-small" ng-click="defaultSort=!defaultSort">综合排序<i ng-class="{'fa':true,'fa-chevron-down':defaultSort,'fa-chevron-up':!defaultSort}"></i></button>
-                        <button class="btn btn-primary btn-small" ng-click="priceSort=!priceSort">价格排序<i ng-class="{'fa':true,'fa-chevron-down':priceSort,'fa-chevron-up':!priceSort}"></i></button>
-                        <button class="btn btn-primary btn-small" ng-click="salesSort=!salesSort">销量排序<i ng-class="{'fa':true,'fa-chevron-down':salesSort,'fa-chevron-up':!salesSort}"></i></button>
-                        <button class="btn btn-primary btn-small" ng-click="evaluateSort=!evaluateSort">评论排序<i ng-class="{'fa':true,'fa-chevron-down':evaluateSort,'fa-chevron-up':!evaluateSort}"></i></button>
+                <div class="col-md-10 col-sm-10 btn-group btn-group-xs">
+                        <button class="btn btn-primary btn-small" ng-click="toSort(sortDefault);">综合排序<i ng-class="{'fa':true,'fa-chevron-down':sortDefault.asc&&sortDefault.asc!=='n','fa-chevron-up':!sortDefault.asc&&sortDefault.asc!=='n'}"></i></button>
+                        <button class="btn btn-primary btn-small" ng-click="toSort(sortPrice);">价格排序<i ng-class="{'fa':true,'fa-chevron-down':sortPrice.asc&&sortPrice.asc!=='n','fa-chevron-up':!sortPrice.asc&&sortPrice.asc!=='n'}"></i></button>
+                        <button class="btn btn-primary btn-small" ng-click="toSort(sortSales);">销量排序<i ng-class="{'fa':true,'fa-chevron-down':sortSales.asc&&sortSales.asc!=='n','fa-chevron-up':!sortSales.asc&&sortSales.asc!=='n'}"></i></button>
+                        <button class="btn btn-primary btn-small" ng-click="toSort(sortEvaluate);">评论排序<i ng-class="{'fa':true,'fa-chevron-down':sortEvaluate.asc&&sortEvaluate.asc!=='n','fa-chevron-up':!sortEvaluate.asc&&sortEvaluate.asc!=='n'}"></i></button>
                 </div>
 
         </div>

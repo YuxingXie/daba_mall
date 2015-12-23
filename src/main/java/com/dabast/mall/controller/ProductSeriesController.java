@@ -5,6 +5,7 @@ import com.dabast.common.constant.Constant;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.*;
 import com.dabast.mall.service.IProductSeriesService;
+import com.dabast.support.vo.Sortable;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
@@ -91,17 +92,26 @@ public class ProductSeriesController extends BaseRestSpringController {
     public String showSort(ModelMap model,@PathVariable String id) {
         ProductSubCategory productSubCategory = ServiceManager.productSubCategoryService.findProductSubCategoryByIdWithoutProductSeries(id);
         model.addAttribute("productSubCategory",productSubCategory);
-        Page<ProductSeries> _page=ServiceManager.productSeriesService.findProductSeriesPageByProductSubCategory(productSubCategory,1,2);
-        model.addAttribute("_page",_page);
+//        Page<ProductSeries> _page=null;
+//        if (sort==null)
+//            _page=ServiceManager.productSeriesService.findProductSeriesPageByProductSubCategory(productSubCategory,1,2);
+//        else if(sort.getField().equals("price"))
+//            _page=ServiceManager.productSeriesPriceService.getProductSeriesOrderByPriceInProductSubCategory(productSubCategory,1,2,sort.getAsc());
+//        model.addAttribute("_page",_page);
         return "product_sort";
     }
     @RequestMapping(value="/sort/json/{id}")
-    public ResponseEntity<Map> showSortJson(ModelMap model,@PathVariable String id,Integer page) {
+    public ResponseEntity<Map> showSortJson(ModelMap model,@PathVariable String id,@RequestBody Sortable sort,Integer page) {
         Map<String,Object> map=new LinkedHashMap<String, Object>();
         page=page==null?1:page.intValue()==0?1:page;
         ProductSubCategory productSubCategory = new ProductSubCategory();
         productSubCategory.setId(id);
-        Page<ProductSeries> _page=ServiceManager.productSeriesService.findProductSeriesPageByProductSubCategory(productSubCategory,page,2);
+        Page<ProductSeries> _page=null;
+        if (sort==null||sort.getField().equals("default"))
+            _page=ServiceManager.productSeriesService.findProductSeriesPageByProductSubCategory(productSubCategory,page,2);
+        else if(sort.getField().equals("price")){
+            _page=ServiceManager.productSeriesPriceService.getProductSeriesOrderByPriceInProductSubCategory(productSubCategory,1,2,sort.getAsc());
+        }
         map.put("page",page);
         map.put("_page",_page);
         return new ResponseEntity<Map>(map,HttpStatus.OK);

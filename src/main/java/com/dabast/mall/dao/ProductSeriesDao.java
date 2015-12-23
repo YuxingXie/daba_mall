@@ -186,9 +186,6 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
 
         return getAll(count);
     }
-    public void mapReduceTest(){
-        String mapFun="";
-        String reduceFun="";
-        MapReduceResults<ProductSeries> reduceResults=getMongoTemplate().mapReduce("haha",mapFun,reduceFun,ProductSeries.class);
-    }
+
+
 }
