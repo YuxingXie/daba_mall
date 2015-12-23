@@ -80,7 +80,7 @@
                     <c:when test="${empty newProducts}"><p class="col-lg-10 col-sm-10">敬请期待!</p></c:when>
                     <c:otherwise>
                         <c:forEach items="${newProducts}" var="productSeries">
-                            <div class="col-lg-3 col-sm-3 padding-left-5 padding-right-0">
+                            <div class="col-lg-3 col-sm-3 padding-left-5 padding-right-0 margin-top-20 height-290">
                                 <div class="thumbnail">
                                     <a href="${path}/product_series/${productSeries.id}">
                                         <c:choose>
@@ -89,8 +89,7 @@
                                                 <img src="${path}/statics/img/img_not_found.jpg" class="img-responsive img-thumbnail" >
                                             </c:when>
                                             <c:otherwise>
-                                                <img src="${path}/${productSeries.pictures[0].picture}" class="img-responsive img-thumbnail" >
-
+                                                <img src="${path}/${productSeries.pictures[0].picture}" class="img-responsive img-thumbnail height-265" >
                                             </c:otherwise>
                                         </c:choose>
                                     </a>
@@ -102,7 +101,7 @@
                                            class="fa fa-shopping-cart btn btn-danger btn-xs pull-right margin-right-20" data-ng-click="popover('${productSeries.id}');">添加到购物车</a>
 
                                     </div>
-                                    <div class="row  margin-left-0 margin-right-0 text-left bg-info">
+                                    <div class="row  margin-left-0 margin-right-0 text-left bg-info height-50">
                                         <em>
                                             <c:choose>
                                                 <c:when test="${fn:length(productSeries.description) > 30}">${fn:substring(productSeries.description, 0, 30)}...</c:when>

@@ -70,7 +70,7 @@ public class ProductSeriesController extends BaseRestSpringController {
         model.put("interested", interested);
         if (orderId!=null&&!orderId.equals("")){
             Order order=ServiceManager.orderService.findOrderById(orderId);
-            model.put("order",order);
+            model.put("order", order);
         }
         return new ResponseEntity<Map>(model, HttpStatus.OK);
     }
@@ -96,12 +96,15 @@ public class ProductSeriesController extends BaseRestSpringController {
         return "product_sort";
     }
     @RequestMapping(value="/sort/json/{id}")
-    public ResponseEntity<Page<ProductSeries>> showSortJson(ModelMap model,@PathVariable String id,Integer page) {
+    public ResponseEntity<Map> showSortJson(ModelMap model,@PathVariable String id,Integer page) {
+        Map<String,Object> map=new LinkedHashMap<String, Object>();
         page=page==null?1:page.intValue()==0?1:page;
         ProductSubCategory productSubCategory = new ProductSubCategory();
         productSubCategory.setId(id);
         Page<ProductSeries> _page=ServiceManager.productSeriesService.findProductSeriesPageByProductSubCategory(productSubCategory,page,2);
-        return new ResponseEntity<Page<ProductSeries>>(_page,HttpStatus.OK);
+        map.put("page",page);
+        map.put("_page",_page);
+        return new ResponseEntity<Map>(map,HttpStatus.OK);
     }
     @RequestMapping(value="/popover/{id}")
     public ResponseEntity<ProductSeries> popover(ModelMap model,@PathVariable java.lang.String id) {

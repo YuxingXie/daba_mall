@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.mapreduce.MapReduceResults;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Repository;
 
@@ -184,5 +185,10 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         //可规定热卖商品数量
 
         return getAll(count);
+    }
+    public void mapReduceTest(){
+        String mapFun="";
+        String reduceFun="";
+        MapReduceResults<ProductSeries> reduceResults=getMongoTemplate().mapReduce("haha",mapFun,reduceFun,ProductSeries.class);
     }
 }

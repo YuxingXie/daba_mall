@@ -217,6 +217,7 @@
                   <li><a href="${path}/sort/"><i class="glyphicon glyphicon-text-width"></i>&nbsp;修改产品信息</a></li>
                   <li><a href="#"><i class="glyphicon glyphicon-ok-circle"></i>&nbsp;首页轮播图片管理</a></li>
                   <li><a href="#"><i class="glyphicon glyphicon-ok-circle"></i>&nbsp;产品库存管理</a></li>
+                  <li><a href="#"><i class="glyphicon glyphicon-ok-circle"></i>&nbsp;产品价格管理</a></li>
                 </ul>
               </li>
 

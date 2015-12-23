@@ -9,11 +9,18 @@
     <li>500,404页面</li>
     <li>json返回modelMap改为返回LinkedHashMap</li>
     <li>个人信息</li>
-    <li>常量配置</li>
+    <li>常量配置(分页，图片规格)</li>
     <li>分类页</li>
     <li>整理url中的混乱及规范url命名</li>
     <li>产品搜索再优化</li>
     <li>等上线后完善用户修改手机号码功能（免费短信太少不够测试）</li>
+    <li></li>
+</ul>
+<div>上线后完善</div>
+<ul>
+    <li>快捷登录</li>
+    <li>个人信息</li>
+    <li>在线支付</li>
     <li></li>
 </ul>
 <div>一些有用的mongodb operations</div>
@@ -110,6 +117,119 @@ db.bank.insert({
   "title" : "系统通知",
   "toUser" : new DBRef("users",ObjectId("55b1e75a845c14e957d5331c"))
 })
+    //聚合的一些操作
+1.投射：投射可以理解为从文档中取出哪些属性，_id是自动被包含的
+db.productSeries.aggregate({"$project":{"name":1}})
+
+ 查询结果类似于
+{ "_id" : ObjectId("56739c8935f0d1141c4b2419"), "name" : "沩山香干" }
+{ "_id" : ObjectId("56739f5435f0d11750c691de"), "name" : "含笑半步癫" }
+
+投射的属性能否取别名，于是我用下面的语句查询结果报错
+db.productSeries.aggregate({"$project":{"name":"allias"}})//exception
+这才是取别名正解：db.productSeries.aggregate({"$project":{"allias":"$name"}})//ok
+
+
+2.分组:
+db.productSeries.aggregate({"$group":{"_id":"$brand","count":{"$sum":1}}})
+解释:用brand属性对文档分组，用$符号应用的字段设置为_id,文档中每个分组的每条记录出现一次则count+1(当然也可以+2)
+结果：
+{ "_id" : "3", "count" : 1 }
+{ "_id" : "daba", "count" : 1 }
+{ "_id" : "大坝", "count" : 3 }
+
+3.投射与分组结合使用
+三个例子
+db.productSeries.aggregate({"$project":{"name":1,"brand":1}},{"$group":{"_id":"$brand","count":{"$sum":1}}})
+结果：
+{ "_id" : "3", "count" : 1 }
+{ "_id" : "daba", "count" : 1 }
+{ "_id" : "大坝", "count" : 3 }
+db.productSeries.aggregate({"$project":{"name":1}},{"$group":{"_id":"$brand","count":{"$sum":1}}})
+结果：{ "_id" : null, "count" : 5 }
+db.productSeries.aggregate({{"$group":{"_id":"$brand","count":{"$sum":1}}},{"$project":{"name":1,"brand":1}})
+ 结果：查询卡住了
+ 结论：投射与分组组合使用的话，投射要放前面，分组是以投射的结果为前提的，如果投射的字段中没有分组的字段,这三个例子中实际上只有第一个有意义
+
+4.排序
+ 简单的排序
+ 先看看这个例子db.productSeries.find({},{"$sort":{"brand":-1}})，它是错误的。本人测试，排序似乎无法用find函数查询
+ db.productSeries.aggregate({"$project":{"brand":1}},{"$sort":{"brand":-1}})
+ 结果：
+ { "_id" : ObjectId("56739c8935f0d1141c4b2419"), "brand" : "大坝" }
+{ "_id" : ObjectId("56739f5435f0d11750c691de"), "brand" : "大坝" }
+{ "_id" : ObjectId("5673b60435f0d11750c691ed"), "brand" : "大坝" }
+{ "_id" : ObjectId("5679fe7635f0d101686906e7"), "brand" : "daba" }
+{ "_id" : ObjectId("5679fe9535f0d101686906ed"), "brand" : "3" }
+结论：排序也必须先经过投射，用aggregate函数查询
+
+5.投射分组排序结合使用
+结合三者使用看似很复杂，实际并非很难，不过是先投射，再分组，再排序，分组用投射的结果，排序用分组的结果而已
+db.productSeries.aggregate({"$project":{"name":1,"brand":1}},{"$group":{"_id":"$brand","count":{"$sum":1}}},{"$sort":{"count":-1}})
+结果：
+{ "_id" : "大坝", "count" : 3 }
+{ "_id" : "3", "count" : 1 }
+{ "_id" : "daba", "count" : 1 }
+
+ 6.查询后再进行聚合可以吗？
+ 下面的语句是报错的
+ db.productSeries.find({}).aggregate({"$project":{"name":1,"brand":1}})//TypeError: Object DBQuery: test.productSeries -> { } has no method 'aggregate'
+ 这样就可以：
+ db.productSeries.aggregate({"$match":{}},{"$project":{"name":1,"brand":1}})
+ 结论：查询条件在aggregate函数中用管道操作符$match中定义
+
+ 7.可以不先投射直接分组吗?当然可以，前面就有现成的示例，所以投射不是聚合的必要前提
+ db.productSeries.aggregate({"$group":{"_id":"$brand","count":{"$sum":1}}})
+
+
+ //MapReduce示例
+
+ 先写再理解
+
+ map=function(){
+	for(var key in this){
+		emit(key,{count:1});
+	}
+ }
+ reduce=function(key,emits){
+	total=0;
+	for(var i in emits){
+		total+=emits[i].count;
+	}
+	return {"count":total};
+ }
+r1=reduce("x",[{count:1,id:1},{count:1,id:2},{count:1,id:3}])
+结果：{ "count" : 3 }
+r2=reduce("x",[{count:1,id:4}])
+结果：{ "count" : 1 }
+reduce("x",[r1,r2])
+结果：{ "count" : 4 }
+mr=db.runCommand({"mapreduce":"productSeries","map":map,"reduce":reduce,"out":"outS"})
+ 结果：
+{
+        "result" : "outS",
+        "timeMillis" : 61,
+        "counts" : {
+                "input" : 5,
+                "emit" : 49,
+                "reduce" : 10,
+                "output" : 10
+        },
+        "ok" : 1
+}
+最后
+> db.outS.find()
+{ "_id" : "_class", "value" : { "count" : 5 } }
+{ "_id" : "_id", "value" : { "count" : 5 } }
+{ "_id" : "brand", "value" : { "count" : 5 } }
+{ "_id" : "description", "value" : { "count" : 5 } }
+{ "_id" : "name", "value" : { "count" : 5 } }
+{ "_id" : "newProduct", "value" : { "count" : 5 } }
+{ "_id" : "pictures", "value" : { "count" : 4 } }
+{ "_id" : "productStore", "value" : { "count" : 5 } }
+{ "_id" : "productSubCategory", "value" : { "count" : 5 } }
+{ "_id" : "shelvesDate", "value" : { "count" : 5 } }
+
 </pre>
 </body>
 </html>

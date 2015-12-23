@@ -151,7 +151,7 @@ Misc tools
 	margin-top: 10px;
 }
 .margin-top-20 {
-	margin-top: 10px;
+	margin-top: 20px;
 }
 .margin-top-112
 {
@@ -208,8 +208,10 @@ Misc tools
 .padding-bottom-40{
 	padding-bottom: 40px;
 }
+.height-50{height:50px;}
 .height-260{height:260px;}
 .height-265{height:265px;}
+.height-290{height:290px;}
 /*.btn-primary:hover,*/
 /*.btn-primary:focus,*/
 /*.btn-primary:active {*/
