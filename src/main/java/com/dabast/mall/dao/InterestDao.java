@@ -19,12 +19,12 @@ public class InterestDao  extends BaseMongoDao<Interest> {
             for (Interest interest:interests){
                 ProductSeries productSeries=interest.getProductSeries();
                 if (productSeries!=null){
-                    List<ProductSeriesPrice> prices= ServiceManager.productSeriesPriceService.findByProductSeriesId(productSeries.getId());
-                    productSeries.setProductSeriesPrices(prices);
-                    List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
-                    if(inAndOuts!=null){
-                        productSeries.getProductStore().setInAndOutList(inAndOuts);
-                    }
+//                    List<ProductSeriesPrice> prices= ServiceManager.productSeriesPriceService.findByProductSeriesId(productSeries.getId());
+//                    productSeries.setProductSeriesPrices(prices);
+//                    List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
+//                    if(inAndOuts!=null){
+//                        productSeries.getProductStore().setInAndOutList(inAndOuts);
+//                    }
                     List<ProductProperty> productProperties=ServiceManager.productPropertyService.getProductPropertiesByProductSeriesId(productSeries.getId());
                     if (productProperties!=null){
                         for (ProductProperty productProperty:productProperties){

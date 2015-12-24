@@ -5,12 +5,12 @@ import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.*;
 import com.mongodb.*;
 import org.bson.types.ObjectId;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
+import org.springframework.data.mongodb.core.aggregation.*;
+import org.springframework.data.mongodb.core.aggregation.AggregationOptions;
 import org.springframework.data.mongodb.core.mapreduce.MapReduceResults;
 import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -44,34 +44,34 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         return productSeriesList;
     }
     public void getStoresAndPrices(List<ProductSeries> productSeriesList) {
-        for (ProductSeries productSeries:productSeriesList){
-            getStoreAndPrice(productSeries);
-        }
+//        for (ProductSeries productSeries:productSeriesList){
+//            getStoreAndPrice(productSeries);
+//        }
     }
     public void getStoresAndPricesAndEvaluates(List<ProductSeries> productSeriesList) {
         for (ProductSeries productSeries:productSeriesList){
-            getStoreAndPrice(productSeries);
+//            getStoreAndPrice(productSeries);
             List<ProductEvaluate> productEvaluateList=ServiceManager.productEvaluateService.findAll(new BasicDBObject("productSeries",productSeries));
             productSeries.setProductEvaluateList(productEvaluateList);
         }
     }
 
 
-    public void getStoreAndPrice(ProductSeries productSeries) {
-        List<ProductSeriesPrice> productSeriesPrices = getProductSeriesPrices(productSeries);
-        productSeries.setProductSeriesPrices(productSeriesPrices);
-        ProductStore store=productSeries.getProductStore();
-        if (store!=null){
-            productSeries.getProductStore().setInAndOutList(ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries));
-        }
-    }
+//    public void getStoreAndPrice(ProductSeries productSeries) {
+//        List<ProductSeriesPrice> productSeriesPrices = getProductSeriesPrices(productSeries);
+//        productSeries.setProductSeriesPrices(productSeriesPrices);
+//        ProductStore store=productSeries.getProductStore();
+//        if (store!=null){
+//            productSeries.getProductStore().setInAndOutList(ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries));
+//        }
+//    }
 
-    public List<ProductSeriesPrice> getProductSeriesPrices(ProductSeries productSeries) {
-        DBRef dbRef=new DBRef("productSeries",new ObjectId(productSeries.getId()));
-        DBObject dbObject=new BasicDBObject();
-        dbObject.put("productSeries",dbRef);
-        return ServiceManager.productSeriesPriceService.findAll(dbObject);
-    }
+//    public List<ProductSeriesPrice> getProductSeriesPrices(ProductSeries productSeries) {
+//        DBRef dbRef=new DBRef("productSeries",new ObjectId(productSeries.getId()));
+//        DBObject dbObject=new BasicDBObject();
+//        dbObject.put("productSeries",dbRef);
+//        return ServiceManager.productSeriesPriceService.findAll(dbObject);
+//    }
     public ProductSeries findProductSeriesByIdButEvaluate(ObjectId objectId,boolean ignoreEvaluate) {
 
         ProductSeries productSeries=findById(objectId);
@@ -85,11 +85,11 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
             productProperty.setPropertyValues(propertyValues);
         }
         productSeries.setProductProperties(productProperties);
-        productSeries.setProductSeriesPrices(getProductSeriesPrices(productSeries));
-        if (productSeries.getProductStore()!=null){
-            List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
-            productSeries.getProductStore().setInAndOutList(inAndOuts);
-        }
+//        productSeries.setProductSeriesPrices(getProductSeriesPrices(productSeries));
+//        if (productSeries.getProductStore()!=null){
+//            List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
+//            productSeries.getProductStore().setInAndOutList(inAndOuts);
+//        }
        if (!ignoreEvaluate){
            List<ProductEvaluate> productEvaluateList=ServiceManager.productEvaluateService.findAll(new BasicDBObject("productSeries",productSeries));
            productSeries.setProductEvaluateList(productEvaluateList);
@@ -136,41 +136,42 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
     }
 
     public List<ProductSeries> getLowPrices(int count) {
-        DBObject productSeriesPriceDBObject=new BasicDBObject();
-        productSeriesPriceDBObject.put("prevPrice",new BasicDBObject("$exists",true));
-        BasicDBList dbList=new BasicDBList();
-        DBObject cond1=new BasicDBObject();
-        Date now=new Date();
-        cond1.put("endDate",null);
-        cond1.put("beginDate",new BasicDBObject("$lt",now));
-        DBObject cond2=new BasicDBObject();
-        cond2.put("endDate",new BasicDBObject("$gt",now));
-        cond2.put("beginDate", new BasicDBObject("$lt", now));
-        dbList.add(cond1);
-        dbList.add(cond2);
-//        DBObject orDBObject=new BasicDBObject("$or",dbList);
-        productSeriesPriceDBObject.put("$or",dbList);
-//        String queryString=" {\"prevPrice\":{\"$exists\":true},\"$or\":[{\"endDate\" : null,\"beginDate\":{\"$lt\": new Date()}},{\"endDate\": {\"$gt\" : new Date()},\"beginDate\":{\"$lt\": new Date()}}]}";
-//        Query query=new BasicQuery(queryString);
-//        System.out.println(new BasicQuery(productSeriesPriceDBObject));
-        List<ProductSeriesPrice> productSeriesPriceList=ServiceManager.productSeriesPriceService.findAll(productSeriesPriceDBObject);
-        List<ProductSeries> list=new ArrayList<ProductSeries>();
-        int i=0;
-        for (ProductSeriesPrice productSeriesPrice:productSeriesPriceList){
-            if (productSeriesPrice==null) continue;
-            if (productSeriesPrice.getPrice()==null) continue;
-            ProductSeriesPrice prevPrice=productSeriesPrice.getPrevPrice();
-            if (prevPrice==null) continue;
-            ProductSeries productSeries=productSeriesPrice.getProductSeries();
-            if (productSeries==null) continue;
-            if (prevPrice.getPrice()==null) continue;
-            if (productSeriesPrice.getPrice()<prevPrice.getPrice()){
-                list.add(productSeries);
-                i++;
-                if (i+1>=count) break;
-            }
-        }
-        return list.size()==0?null:list;
+//        DBObject productSeriesPriceDBObject=new BasicDBObject();
+//        productSeriesPriceDBObject.put("prevPrice",new BasicDBObject("$exists",true));
+//        BasicDBList dbList=new BasicDBList();
+//        DBObject cond1=new BasicDBObject();
+//        Date now=new Date();
+//        cond1.put("endDate",null);
+//        cond1.put("beginDate",new BasicDBObject("$lt",now));
+//        DBObject cond2=new BasicDBObject();
+//        cond2.put("endDate",new BasicDBObject("$gt",now));
+//        cond2.put("beginDate", new BasicDBObject("$lt", now));
+//        dbList.add(cond1);
+//        dbList.add(cond2);
+////        DBObject orDBObject=new BasicDBObject("$or",dbList);
+//        productSeriesPriceDBObject.put("$or",dbList);
+////        String queryString=" {\"prevPrice\":{\"$exists\":true},\"$or\":[{\"endDate\" : null,\"beginDate\":{\"$lt\": new Date()}},{\"endDate\": {\"$gt\" : new Date()},\"beginDate\":{\"$lt\": new Date()}}]}";
+////        Query query=new BasicQuery(queryString);
+////        System.out.println(new BasicQuery(productSeriesPriceDBObject));
+//        List<ProductSeriesPrice> productSeriesPriceList=ServiceManager.productSeriesPriceService.findAll(productSeriesPriceDBObject);
+//        List<ProductSeries> list=new ArrayList<ProductSeries>();
+//        int i=0;
+//        for (ProductSeriesPrice productSeriesPrice:productSeriesPriceList){
+//            if (productSeriesPrice==null) continue;
+//            if (productSeriesPrice.getPrice()==null) continue;
+//            ProductSeriesPrice prevPrice=productSeriesPrice.getPrevPrice();
+//            if (prevPrice==null) continue;
+//            ProductSeries productSeries=productSeriesPrice.getProductSeries();
+//            if (productSeries==null) continue;
+//            if (prevPrice.getPrice()==null) continue;
+//            if (productSeriesPrice.getPrice()<prevPrice.getPrice()){
+//                list.add(productSeries);
+//                i++;
+//                if (i+1>=count) break;
+//            }
+//        }
+//        return list.size()==0?null:list;
+        return null;
     }
 
     public List<ProductSeries> getNewProducts(int count) {
@@ -187,5 +188,15 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         return getAll(count);
     }
 
+    public Page<ProductSeries> orderByPrice(ProductSubCategory subCategory,int currentPage,int pageSize){
+        //1:投射
+        AggregationOperation project=Aggregation.project("productSeries","price");
+        AggregationOperation match = Aggregation.match(Criteria.where("service").is("EFT").and("source").is("MARKUP"));
+        AggregationOperation group = Aggregation.group("card_acceptor").sum("amount").as("amount_sum").count().as("tran_count");
+        AggregationOperation sort = Aggregation.sort(new Sort(Sort.Direction.ASC,"price"));
+        Aggregation aggregation = Aggregation.newAggregation(match,project, group,sort);
+        AggregationResults<ProductSeries> result = getMongoTemplate().aggregate(aggregation, "eft_transactions", ProductSeries.class);
+        return null;
+    }
 
 }

@@ -9,11 +9,13 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-
-@Document(collection = "productSeriesPrice")
+/**
+ * 重大改变：价格变为产品属性而不单独创建集合
+ */
+//@Document(collection = "productSeriesPrice")
 public class ProductSeriesPrice {
-    @Id
-    private String id;
+//    @Id
+//    private String id;
     @NotNull
     @Field(value = "price")
     private Double price;
@@ -26,19 +28,19 @@ public class ProductSeriesPrice {
     @NotNull
     @Field(value = "adjustDate")
     private Date adjustDate;
-    @DBRef
-    private ProductSeriesPrice prevPrice;
-    @DBRef(db = "productSeries")
-    private ProductSeries productSeries;
+//    @DBRef
+//    private ProductSeriesPrice prevPrice;
+//    @DBRef(db = "productSeries")
+//    private ProductSeries productSeries;
     @Field(value = "comment")
     private String comment;
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+//    public String getId() {
+//        return id;
+//    }
+//
+//    public void setId(String id) {
+//        this.id = id;
+//    }
 
     public Double getPrice() {
         return price;
@@ -80,19 +82,19 @@ public class ProductSeriesPrice {
         this.comment = comment;
     }
 
-    public ProductSeries getProductSeries() {
-        return productSeries;
-    }
+//    public ProductSeries getProductSeries() {
+//        return productSeries;
+//    }
+//
+//    public void setProductSeries(ProductSeries productSeries) {
+//        this.productSeries = productSeries;
+//    }
 
-    public void setProductSeries(ProductSeries productSeries) {
-        this.productSeries = productSeries;
-    }
-
-    public ProductSeriesPrice getPrevPrice() {
-        return prevPrice;
-    }
-
-    public void setPrevPrice(ProductSeriesPrice prevPrice) {
-        this.prevPrice = prevPrice;
-    }
+//    public ProductSeriesPrice getPrevPrice() {
+//        return prevPrice;
+//    }
+//
+//    public void setPrevPrice(ProductSeriesPrice prevPrice) {
+//        this.prevPrice = prevPrice;
+//    }
 }

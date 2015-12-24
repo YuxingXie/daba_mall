@@ -264,10 +264,10 @@
                         <%--</div>--%>
                         <div class="row table-responsive">
                             <table class="table table-condensed">
-                                <th>价格<i class="fa fa-rmb"></i></th>
-                                <td class="text-left">{{productSelected.productSeries.commonPrice}}
-                                    <em ng-if="productSelected.productSeries.currentPrice &&productSelected.productSeries.currentPrice.prevPrice && productSelected.productSeries.currentPrice<productSelected.productSeries.currentPrice.prevPrice">
-                                        <i class="fa fa-rmb"></i>{{productSelected.productSeries.currentPrice.prevPrice.price}}
+                                <th>价格</th>
+                                <td class="text-left"><i class="fa fa-rmb"></i>{{productSelected.productSeries.commonPrice}}
+                                    <em ng-if="productSelected.productSeries.currentPrice &&productSelected.productSeries.currentPrice.prevPrice &&lowPrice()">
+                                        <del><i class="fa fa-rmb"></i>{{productSelected.productSeries.currentPrice.prevPrice.price}}</del>
                                     </em>
                                 </td>
                                 <th>库存<i class="fa fa-cubes"></i></th>

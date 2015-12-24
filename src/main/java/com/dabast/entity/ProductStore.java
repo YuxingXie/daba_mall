@@ -11,7 +11,8 @@ public class ProductStore{
     private Integer remain;
     @Field(value = "warningAmount")
     private Integer warningAmount;
-    @Transient
+//    @Transient
+    @Field
     private List<ProductStoreInAndOut> inAndOutList;
 
     public Integer getRemain() {

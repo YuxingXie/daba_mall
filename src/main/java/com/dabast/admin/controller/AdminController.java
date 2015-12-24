@@ -75,6 +75,23 @@ public class AdminController extends BaseRestSpringController {
         ProductStore store=new ProductStore();
         store.setWarningAmount(warningAmount);
         productSeries.setProductStore(store);
+        ProductSeriesPrice productSeriesPrice=new ProductSeriesPrice();
+        Date now=new Date();
+        productSeriesPrice.setAdjustDate(now);
+        productSeriesPrice.setBeginDate(now);
+        productSeriesPrice.setPrice(price);
+        List<ProductSeriesPrice> prices=new ArrayList<ProductSeriesPrice>();
+        prices.add(productSeriesPrice);
+        productSeries.setProductSeriesPrices(prices);
+
+        ProductStoreInAndOut inAndOut=new ProductStoreInAndOut();
+        inAndOut.setAmount(storeAmount);
+        inAndOut.setDate(new Date());
+        inAndOut.setProductSeries(productSeries);
+        inAndOut.setType("in");
+        inAndOut.setOperator(getLoginUser(session));
+//        ServiceManager.productStoreInAndOutService.insert(inAndOut);
+        productSeries.setProductStore(store);
         productSeriesService.insert(productSeries);
 //        List<ProductProperty> productProperties=new ArrayList<ProductProperty>();
         JSONArray productPropertiesJsonArray=JSONArray.fromObject(productPropertiesJson);
@@ -100,27 +117,15 @@ public class AdminController extends BaseRestSpringController {
                 ServiceManager.productPropertyValueService.insert(productPropertyValue);
             }
         }
-        ProductSeriesPrice productSeriesPrice=new ProductSeriesPrice();
-        Date now=new Date();
-        productSeriesPrice.setAdjustDate(now);
-        productSeriesPrice.setBeginDate(now);
-        productSeriesPrice.setPrice(price);
-        productSeriesPrice.setProductSeries(productSeries);
-        ServiceManager.productSeriesPriceService.insert(productSeriesPrice);
-        List<ProductSeriesPrice> prices=productSeries.getProductSeriesPrices();
-        if (prices==null) prices=new ArrayList<ProductSeriesPrice>();
-        prices.add(productSeriesPrice);
-        productSeries.setProductSeriesPrices(prices);
+
+//        productSeriesPrice.setProductSeries(productSeries);
+//        ServiceManager.productSeriesPriceService.insert(productSeriesPrice);
+//        List<ProductSeriesPrice> prices=productSeries.getProductSeriesPrices();
+//        if (prices==null) prices=new ArrayList<ProductSeriesPrice>();
+//        prices.add(productSeriesPrice);
+//        productSeries.setProductSeriesPrices(prices);
 //        ServiceManager.productSeriesService.upsert(productSeries);
-//        ServiceManager.productStoreService.insert(store);
-        ProductStoreInAndOut inAndOut=new ProductStoreInAndOut();
-        inAndOut.setAmount(storeAmount);
-        inAndOut.setDate(new Date());
-        inAndOut.setProductSeries(productSeries);
-        inAndOut.setType("in");
-        inAndOut.setOperator(getLoginUser(session));
-        ServiceManager.productStoreInAndOutService.insert(inAndOut);
-        productSeries.setProductStore(store);
+
 //        ServiceManager.productSeriesService.upsert(productSeries);
         return "redirect:/admin/index/index";
     }

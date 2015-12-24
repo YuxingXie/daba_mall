@@ -58,6 +58,14 @@ var easyzoom=function(){
 }
 mainApp .controller('indexController', ['$scope', '$http','$element', function ($scope, $http,$element) {
     $scope.popover=function(productSeriesId){
+        $scope.lowPrice=function(){
+            if(!$scope.productSelected.productSeries.currentPrice) return false;
+            if(!$scope.productSelected.productSeries.currentPrice.price) return false;
+            if(!$scope.productSelected.productSeries.currentPrice.prevPrice) return false;
+            if(!$scope.productSelected.productSeries.currentPrice.prevPrice.price) return false;
+            return  $scope.productSelected.productSeries.currentPrice.price<$scope.productSelected.productSeries.currentPrice.prevPrice.price;
+
+        }
         $scope.productSelected={};
         $scope.productSelected.productPropertyValueList=[];
         $http.get(path+'/product_series/popover/'+productSeriesId).success(function (data) {
@@ -82,6 +90,7 @@ mainApp .controller('indexController', ['$scope', '$http','$element', function (
                     }
                 }
             }
+
             easyzoom();
 //            var shoppingCartFly=function(start,end){
 //                var offset = end.offset();
@@ -114,7 +123,7 @@ mainApp .controller('indexController', ['$scope', '$http','$element', function (
     $scope.ratingVal =3;
     $scope.readonly = true;
    $scope.add2cart=function(){
-        $http.post('${path}/index/cart', $scope.productSelected).success(function(data){
+        $http.post('${path}/cart/add', $scope.productSelected).success(function(data){
 
             $scope.$parent.cart=data;
             $("#msg").show().animate({width: '250px'}, 600).fadeOut(1800);

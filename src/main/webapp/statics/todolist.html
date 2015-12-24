@@ -11,10 +11,11 @@
     <li>个人信息</li>
     <li>常量配置(分页，图片规格)</li>
     <li>分类页</li>
+    <li>购物车清除后总价仍不变bug</li>
     <li>整理url中的混乱及规范url命名</li>
     <li>产品搜索再优化</li>
     <li>等上线后完善用户修改手机号码功能（免费短信太少不够测试）</li>
-    <li></li>
+    <li>一项巨大的工程在等待，集合设计过于分散和小型化是mongodb大忌，因为其不能多表查询，聚合，排序及分组，导致需要多次访问数据库才能得到相关数据，在二期（如果时间允许可集中解决）中将压缩集合数量。</li>
 </ul>
 <div>上线后完善</div>
 <ul>
@@ -184,19 +185,22 @@ db.productSeries.aggregate({"$project":{"name":1,"brand":1}},{"$group":{"_id":"$
 
  //MapReduce示例
 
- 先写再理解
+
 
  map=function(){
 	for(var key in this){
 		emit(key,{count:1});
 	}
  }
+ 说明：map函数重要的是理解var key in this这句和emit函数的参数。this是mongodb循环某个集合的所有文档时的某一个文档；key是该文档的一个属性；
+    emit函数理解为：把一个数据用key-value的方式发送到某个集合类型的数据中（可以类比java中的hashMap）。
+      其中第一个参数，emit函数的
  reduce=function(key,emits){
 	total=0;
 	for(var i in emits){
 		total+=emits[i].count;
 	}
-	return {"count":total};
+	return {"count":total};//return必须是单条记录不可是个集合
  }
 r1=reduce("x",[{count:1,id:1},{count:1,id:2},{count:1,id:3}])
 结果：{ "count" : 3 }

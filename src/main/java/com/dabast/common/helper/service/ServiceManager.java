@@ -21,8 +21,8 @@ public class ServiceManager implements InitializingBean{
     public static ITestPostsService testPostsService;
     public static ITestAuthorsService testAuthorsService;
     public static IProductCategoryService productCategoryService;
-    public static IProductSeriesPriceService productSeriesPriceService;
-    public static IProductStoreInAndOutService productStoreInAndOutService;
+//    public static IProductSeriesPriceService productSeriesPriceService;
+//    public static IProductStoreInAndOutService productStoreInAndOutService;
     public static IInterestService interestService;
     public static IProductEvaluateService productEvaluateService;
     public static INotifyService notifyService;
@@ -39,17 +39,17 @@ public class ServiceManager implements InitializingBean{
         ServiceManager.notifyService = notifyService;
     }
 
-    public void setProductSeriesPriceService(IProductSeriesPriceService productSeriesPriceService) {
-        ServiceManager.productSeriesPriceService = productSeriesPriceService;
-    }
+//    public void setProductSeriesPriceService(IProductSeriesPriceService productSeriesPriceService) {
+//        ServiceManager.productSeriesPriceService = productSeriesPriceService;
+//    }
 
     public void setInterestService(IInterestService interestService) {
         ServiceManager.interestService = interestService;
     }
 
-    public void setProductStoreInAndOutService(IProductStoreInAndOutService productStoreInAndOutService) {
-        ServiceManager.productStoreInAndOutService = productStoreInAndOutService;
-    }
+//    public void setProductStoreInAndOutService(IProductStoreInAndOutService productStoreInAndOutService) {
+//        ServiceManager.productStoreInAndOutService = productStoreInAndOutService;
+//    }
 
 
 

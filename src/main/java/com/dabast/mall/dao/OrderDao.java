@@ -43,7 +43,7 @@ public class OrderDao extends BaseMongoDao<Order> {
 //
                ProductEvaluate productEvaluate= ServiceManager.productEvaluateService.findByOrderAndProductSeries(order, productSeries);
                productSelected.setProductEvaluate(productEvaluate);
-                productSeries.setProductSeriesPrices(ServiceManager.productSeriesPriceService.findByProductSeriesId(productSeries.getId()));
+//                productSeries.setProductSeriesPrices(ServiceManager.productSeriesPriceService.findByProductSeriesId(productSeries.getId()));
                 List<String> productPropertyValueIds=productSelected.getProductPropertyValueIds();
                 if (productPropertyValueIds!=null){
                     List<ProductPropertyValue> productPropertyValueList=new ArrayList<ProductPropertyValue>();
@@ -53,10 +53,10 @@ public class OrderDao extends BaseMongoDao<Order> {
                     }
                     productSelected.setProductPropertyValueList(productPropertyValueList);
                 }
-                if (productSeries.getProductStore()!=null){
-                    List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
-                    productSeries.getProductStore().setInAndOutList(inAndOuts);
-                }
+//                if (productSeries.getProductStore()!=null){
+//                    List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
+//                    productSeries.getProductStore().setInAndOutList(inAndOuts);
+//                }
             }
         }
     }

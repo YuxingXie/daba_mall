@@ -10,12 +10,17 @@ import com.mongodb.DBObject;
 import com.mongodb.DBRef;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.*;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -25,7 +30,8 @@ import java.util.List;
 public class ProductSeriesPriceDao  extends BaseMongoDao<ProductSeriesPrice> {
     private DBObject getCurrentPriceDBObject(){
         DBObject dbObject=new BasicDBObject();
-        Date now=new Date();
+//        Date now=new Date();
+        long now=System.currentTimeMillis();
         dbObject.put("beginDate",new BasicDBObject("$exists",true));
         dbObject.put("beginDate",new BasicDBObject("$lt",now));
         BasicDBList endDateDbList=new BasicDBList();
@@ -34,6 +40,15 @@ public class ProductSeriesPriceDao  extends BaseMongoDao<ProductSeriesPrice> {
         dbObject.put("$or",endDateDbList);
         return dbObject;
     }
+    private Criteria getCurrentPriceCriteria(){
+        Date now=new Date();
+        Criteria criteria= Criteria.where("beginDate").exists(true).lt(now).orOperator(Criteria.where("endDate").gt(now), Criteria.where("endDate").exists(false));
+        System.out.println(criteria.getCriteriaObject());
+        return  criteria;
+    }
+    public static void main(String[] args){
+        new ProductSeriesPriceDao().getCurrentPriceCriteria();
+    }
     public List<ProductSeriesPrice> findByProductSeriesId(String id) {
         DBRef dbRef=new DBRef("productSeries",new ObjectId(id));
         Query query=new BasicQuery(new BasicDBObject("productSeries",dbRef));
@@ -41,7 +56,7 @@ public class ProductSeriesPriceDao  extends BaseMongoDao<ProductSeriesPrice> {
 
     }
     public Page<ProductSeries> getProductSeriesOrderByPriceInProductSubCategory(ProductSubCategory productSubCategory,Integer currentPage,Integer pageSize,boolean asc){
-        Sort.Direction direction=asc?Sort.Direction.ASC:Sort.Direction.DESC;
+        /*Sort.Direction direction=asc?Sort.Direction.ASC:Sort.Direction.DESC;
         DBObject queryCondition=getCurrentPriceDBObject();
 //        queryCondition.put("productSeries.productSubCategory",new DBRef("productSubCategory",productSubCategory.getId()));
         Pageable pageable = new PageRequest(currentPage-1, pageSize);
@@ -54,6 +69,17 @@ public class ProductSeriesPriceDao  extends BaseMongoDao<ProductSeriesPrice> {
             list.add(productSeriesPrice.getProductSeries());
         }
         Page<ProductSeries> page = new PageImpl<ProductSeries>(list, pageable, count);
-        return page;
+        return page;*/
+        //1:投射
+        AggregationOperation project= Aggregation.project("pid=$productSeries.$id", "pppp=$price");
+//        AggregationOperation project= Aggregation.project("productSeries.$id");
+        AggregationOperation match = Aggregation.match(getCurrentPriceCriteria());
+//        AggregationOperation group = Aggregation.group("card_acceptor").sum("amount").as("amount_sum").count().as("tran_count");
+        AggregationOperation sort = Aggregation.sort(new Sort(Sort.Direction.ASC,"price"));
+
+        Aggregation aggregation = Aggregation.newAggregation(match,project,sort);
+        AggregationResults<LinkedHashMap> result = getMongoTemplate().aggregate(aggregation, "productSeriesPrice", LinkedHashMap.class);
+
+        return null;
     }
 }

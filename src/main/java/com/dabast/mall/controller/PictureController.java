@@ -130,20 +130,6 @@ public class PictureController extends BaseRestSpringController {
         return new ResponseEntity<Order>(order,HttpStatus.OK);
     }
 
-//    /**
-//     * 废弃
-//     * @param model
-//     * @param session
-//     * @param request
-//     * @return
-//     */
-//    @RequestMapping(value = "/cart/to_submit")
-//    public String toBill(ModelMap model, HttpSession session,HttpServletRequest request) {
-////        Order order=session.getAttribute("order")==null?null:(Order)session.getAttribute("order");
-//////        Order order=ServiceManager.orderService.findLastOrderByUserId(orderId);
-//        return "redirect:/to_submit";
-//    }
-
 
 
 

@@ -93,7 +93,7 @@ mainApp.controller("myInterestsController",["$scope","$http",function($scope,$ht
         });
     }
     $scope.add2cart=function(){
-        $http.post('${path}/index/cart', $scope.productSelected).success(function(data){
+        $http.post('${path}/cart', $scope.productSelected).success(function(data){
             $scope.$parent.cart=data;
             $("#showProductModal").modal("hide");
         }).error(function(data) {

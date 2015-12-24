@@ -7,11 +7,11 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Date;
 
-@Document(collection = "productStoreInAndOut")
+//@Document(collection = "productStoreInAndOut")
 public class ProductStoreInAndOut {
-    @Id
-    private String id;
-
+//    @Id
+//    private String id;
+//
     @Field
     private String type;//in,out
     @Field
@@ -33,13 +33,13 @@ public class ProductStoreInAndOut {
         this.productPropertyValue = productPropertyValue;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+//    public String getId() {
+//        return id;
+//    }
+//
+//    public void setId(String id) {
+//        this.id = id;
+//    }
     public String getType() {
         return type;
     }

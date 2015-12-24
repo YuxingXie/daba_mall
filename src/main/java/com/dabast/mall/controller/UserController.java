@@ -233,12 +233,12 @@ public class UserController extends BaseRestSpringController {
                 user.setCart(sessionCart);
             }else{
                 Cart userCart=user.getCart();
-                for (ProductSelected productSelected:userCart.getProductSelectedList()){
-                    ProductSeries productSeries=productSelected.getProductSeries();
-                    if(productSeries.getProductStore()==null) continue;
-                    List<ProductStoreInAndOut> inAndOuts= ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
-                    productSeries.getProductStore().setInAndOutList(inAndOuts);
-                }
+//                for (ProductSelected productSelected:userCart.getProductSelectedList()){
+//                    ProductSeries productSeries=productSelected.getProductSeries();
+//                    if(productSeries.getProductStore()==null) continue;
+//                    List<ProductStoreInAndOut> inAndOuts= ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
+//                    productSeries.getProductStore().setInAndOutList(inAndOuts);
+//                }
                 userCart.merge(sessionCart);
             }
             if (sessionCart!=null){
@@ -365,13 +365,13 @@ public class UserController extends BaseRestSpringController {
         }
         for (Order order1:orders){
             List<ProductSelected> productSelectedList=order1.getProductSelectedList();
-            for (ProductSelected productSelected:productSelectedList){
-                ProductSeries productSeries=productSelected.getProductSeries();
-                if (productSeries!=null){
-                    productSeries.setProductSeriesPrices(ServiceManager.productSeriesPriceService.findByProductSeriesId(productSeries.getId()));
-                }
+//            for (ProductSelected productSelected:productSelectedList){
+//                ProductSeries productSeries=productSelected.getProductSeries();
+//                if (productSeries!=null){
+//                    productSeries.setProductSeriesPrices(ServiceManager.productSeriesPriceService.findByProductSeriesId(productSeries.getId()));
+//                }
 
-            }
+//            }
         }
         model.addAttribute("orders",orders);
         return "my_orders";
@@ -545,15 +545,15 @@ public class UserController extends BaseRestSpringController {
 //        Cart cart=user==null?getCart(session)user.getCart()==null?getCart(session):user.getCart();
         Cart cart=user==null?(getCart(session)==null?null:getCart(session)):user.getCart();
         if (cart!=null && cart.getProductSelectedList()!=null){
-            for (ProductSelected productSelected:cart.getProductSelectedList()){
-                ProductSeries productSeries=productSelected.getProductSeries();
-                List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
-                if (productSeries.getProductStore()!=null) {
-                    productSeries.getProductStore().setInAndOutList(inAndOuts);
-                }else{
+//            for (ProductSelected productSelected:cart.getProductSelectedList()){
+//                ProductSeries productSeries=productSelected.getProductSeries();
+//                List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
+//                if (productSeries.getProductStore()!=null) {
+//                    productSeries.getProductStore().setInAndOutList(inAndOuts);
+//                }else{
 
-                }
-            }
+//                }
+//            }
         }
         session.setAttribute(Constant.CART,cart);
         return new ResponseEntity<Cart>(cart,HttpStatus.OK);

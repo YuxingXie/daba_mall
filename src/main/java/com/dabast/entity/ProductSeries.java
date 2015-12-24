@@ -32,7 +32,7 @@ public class ProductSeries {
     private Date shelvesDate;
     @Field(value = "brand")
     private String brand;
-    @Field(value = "productStore")
+    @Field
     private ProductStore productStore;
     @Field
     private String measurementUnit;
@@ -58,10 +58,13 @@ public class ProductSeries {
     @Field
     private boolean newProduct;
     @Transient
+    private boolean hotSell;
+    @Transient
     private List<ProductProperty> productProperties;
     @Transient
     private List<ProductPropertyValue> productPropertyValues;
-    @Transient
+//    @Transient
+    @Field
     private List<ProductSeriesPrice> productSeriesPrices;
     @Transient
     private Double commonPrice;
@@ -183,7 +186,14 @@ public class ProductSeries {
     }
 
 
+    public boolean getHotSell() {
+        if(evaluateCount==null ||evaluateCount.intValue()==0) return false;
+        return evaluateCount>=100;
+    }
 
+    public void setHotSell(boolean hotSell) {
+        this.hotSell = hotSell;
+    }
 
     public void setProductEvaluateList(List<ProductEvaluate> productEvaluateList) {
         this.productEvaluateList = productEvaluateList;

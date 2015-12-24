@@ -198,7 +198,7 @@ public class UserDao extends BaseMongoDao<User>  {
                     for (ProductSelected productSelected:productSelectedList){
                         ProductSeries productSeries= productSelected.getProductSeries();
                         if (productSeries==null) continue;
-                        productSeries.setProductSeriesPrices(ServiceManager.productSeriesPriceService.findByProductSeriesId(productSeries.getId()));
+//                        productSeries.setProductSeriesPrices(ServiceManager.productSeriesPriceService.findByProductSeriesId(productSeries.getId()));
 
 //                        productSelected.setProductSeries(productSeries);
                         List<String> productPropertyValueIds=productSelected.getProductPropertyValueIds();
