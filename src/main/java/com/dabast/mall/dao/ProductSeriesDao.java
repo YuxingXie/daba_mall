@@ -3,6 +3,7 @@ package com.dabast.mall.dao;
 import com.dabast.common.base.BaseMongoDao;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.*;
+import com.dabast.support.vo.Sortable;
 import com.mongodb.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.*;
@@ -23,6 +24,24 @@ import java.util.regex.Pattern;
  */
 @Repository
 public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
+    private DBObject getCurrentPriceDBObject(){
+        DBObject dbObject=new BasicDBObject();
+//        Date now=new Date();
+        long now=System.currentTimeMillis();
+        dbObject.put("beginDate",new BasicDBObject("$exists",true));
+        dbObject.put("beginDate",new BasicDBObject("$lt",now));
+        BasicDBList endDateDbList=new BasicDBList();
+        endDateDbList.add(new BasicDBObject("endDate",new BasicDBObject("$gt",now)));
+        endDateDbList.add(new BasicDBObject("endDate", new BasicDBObject("$exists", false)));
+        dbObject.put("$or",endDateDbList);
+        return dbObject;
+    }
+    private Criteria getCurrentPriceCriteria(){
+        Date now=new Date();
+        Criteria criteria= Criteria.where("beginDate").exists(true).lt(now).orOperator(Criteria.where("endDate").gt(now), Criteria.where("endDate").exists(false));
+        System.out.println(criteria.getCriteriaObject());
+        return  criteria;
+    }
     public List<String[]> getTop3ProductSeries() {
         List<String[]> list=new ArrayList<String[]>();
         String[] product1={"11111122228x1","statics/assets/temp/sliders/slide2/bg.jpg","黄材水产","新品上市","中华鲟","优惠价","25"};
@@ -102,7 +121,7 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
     public ProductSeries findProductSeriesById(String id) {
         return findProductSeriesById(new ObjectId(id));
     }
-    public Page<ProductSeries> findProductSeriesesByKeyWord(String keyWord,int currentPage,int pageSize) {
+    public Page<ProductSeries> findProductSeriesPageByKeyWord(String keyWord, int currentPage, int pageSize) {
 //        Criteria criteria = new Criteria().orOperator(Criteria.where("name").regex(".*?" + keyWord + ".*"), Criteria.where("description").regex(".*?" + keyWord + ".*"));
         Pattern pattern = Pattern.compile(".*?" + keyWord + ".*");
         DBObject queryCondition=new BasicDBObject();
@@ -122,12 +141,16 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
     public Page<ProductSeries> findProductSeriesPageByProductSubCategory(ProductSubCategory productSubCategory,int currentPage,int pageSize) {
         DBObject queryCondition=new BasicDBObject();
         queryCondition.put("productSubCategory",productSubCategory);
+        queryCondition.put("productSeriesPrices",new BasicDBObject("$elemMatch",getCurrentPriceDBObject()));
         Pageable pageable = new PageRequest(currentPage-1, pageSize);
         Long count = getMongoTemplate().count(new BasicQuery(queryCondition), ProductSeries.class);
         List<ProductSeries> list = getMongoTemplate().find(new BasicQuery(queryCondition).limit(pageSize).skip((currentPage - 1) * pageSize), ProductSeries.class);
         getStoresAndPricesAndEvaluates(list);
         Page<ProductSeries> page = new PageImpl<ProductSeries>(list, pageable, count);
         return page;
+    }
+    public Page<ProductSeries> findProductSeriesPageByProductSubCategory(ProductSubCategory productSubCategory, int currentPage, int pageSize, Sortable sortable) {
+        return null;
     }
     public List<ProductSeries> findProductSeriesAllRef(DBObject dbObject) {
             List<ProductSeries> list = getMongoTemplate().find(new BasicQuery(dbObject), ProductSeries.class);
@@ -198,5 +221,6 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         AggregationResults<ProductSeries> result = getMongoTemplate().aggregate(aggregation, "eft_transactions", ProductSeries.class);
         return null;
     }
+
 
 }

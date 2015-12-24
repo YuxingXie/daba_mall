@@ -42,7 +42,11 @@ public class AdminController extends BaseRestSpringController {
 
     @RequestMapping(value="/")
     public String index() {
-         return "redirect:/admin/index/index";
+         return "admin/index/index";
+    }
+    @RequestMapping(value="")
+    public String index_() {
+        return "admin/index/index";
     }
     @RequestMapping(value="/test")
     public String xx() {
@@ -87,9 +91,11 @@ public class AdminController extends BaseRestSpringController {
         ProductStoreInAndOut inAndOut=new ProductStoreInAndOut();
         inAndOut.setAmount(storeAmount);
         inAndOut.setDate(new Date());
-        inAndOut.setProductSeries(productSeries);
         inAndOut.setType("in");
         inAndOut.setOperator(getLoginUser(session));
+        List<ProductStoreInAndOut> inAndOuts=new ArrayList<ProductStoreInAndOut>();
+        inAndOuts.add(inAndOut);
+        store.setInAndOutList(inAndOuts);
 //        ServiceManager.productStoreInAndOutService.insert(inAndOut);
         productSeries.setProductStore(store);
         productSeriesService.insert(productSeries);
@@ -118,15 +124,6 @@ public class AdminController extends BaseRestSpringController {
             }
         }
 
-//        productSeriesPrice.setProductSeries(productSeries);
-//        ServiceManager.productSeriesPriceService.insert(productSeriesPrice);
-//        List<ProductSeriesPrice> prices=productSeries.getProductSeriesPrices();
-//        if (prices==null) prices=new ArrayList<ProductSeriesPrice>();
-//        prices.add(productSeriesPrice);
-//        productSeries.setProductSeriesPrices(prices);
-//        ServiceManager.productSeriesService.upsert(productSeries);
-
-//        ServiceManager.productSeriesService.upsert(productSeries);
         return "redirect:/admin/index/index";
     }
 

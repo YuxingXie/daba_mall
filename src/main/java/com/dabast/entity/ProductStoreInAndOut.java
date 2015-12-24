@@ -18,8 +18,8 @@ public class ProductStoreInAndOut {
     private Integer amount;
     @Field
     private Date date;
-    @DBRef(db = "productSeries")
-    private ProductSeries productSeries;
+//    @DBRef(db = "productSeries")
+//    private ProductSeries productSeries;
     @DBRef
     private ProductPropertyValue productPropertyValue;
     @DBRef
@@ -72,11 +72,11 @@ public class ProductStoreInAndOut {
         this.date = date;
     }
 
-    public ProductSeries getProductSeries() {
-        return productSeries;
-    }
-
-    public void setProductSeries(ProductSeries productSeries) {
-        this.productSeries = productSeries;
-    }
+//    public ProductSeries getProductSeries() {
+//        return productSeries;
+//    }
+//
+//    public void setProductSeries(ProductSeries productSeries) {
+//        this.productSeries = productSeries;
+//    }
 }

@@ -187,21 +187,23 @@ db.productSeries.aggregate({"$project":{"name":1,"brand":1}},{"$group":{"_id":"$
 
 
 
- map=function(){
-	for(var key in this){
-		emit(key,{count:1});
-	}
- }
- 说明：map函数重要的是理解var key in this这句和emit函数的参数。this是mongodb循环某个集合的所有文档时的某一个文档；key是该文档的一个属性；
+map=function(){
+for(var key in this){
+    emit(key,{count:1});
+}
+}
+ 说明：map函数重要的是理解this和emit函数的参数。this是mongodb循环某个集合的所有文档时的某一个文档；key是该文档的一个属性；
     emit函数理解为：把一个数据用key-value的方式发送到某个集合类型的数据中（可以类比java中的hashMap）。
-      其中第一个参数，emit函数的
- reduce=function(key,emits){
-	total=0;
-	for(var i in emits){
-		total+=emits[i].count;
-	}
-	return {"count":total};//return必须是单条记录不可是个集合
- }
+      其中第一个参数最终会成为输出集合的_id
+极其重要的忠告：我用this对象中的某个ObjectId对象作为emit方法的第一个参数，结果结果完全不正确。即便使用了toString方法转换都不行，
+所以这里的key不要和ObjectId对象有什么关系，虽然理论上并没有说不能这样。
+reduce=function(key,emits){
+total=0;
+for(var i in emits){
+total+=emits[i].count;
+}
+return {"count":total};//return必须是单条记录不可是个集合
+}
 r1=reduce("x",[{count:1,id:1},{count:1,id:2},{count:1,id:3}])
 结果：{ "count" : 3 }
 r2=reduce("x",[{count:1,id:4}])

@@ -6,6 +6,7 @@ import com.dabast.entity.ProductSeries;
 import com.dabast.entity.ProductSubCategory;
 import com.dabast.mall.dao.ProductSeriesDao;
 import com.dabast.mall.service.IProductSeriesService;
+import com.dabast.support.vo.Sortable;
 import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
@@ -45,12 +46,17 @@ public class ProductSeriesService extends BaseEntityManager<ProductSeries> imple
     }
     @Override
     public Page<ProductSeries> findProductSeriesesByKeyWord(String keyWord, int currentPage,int pageSize) {
-        return productSeriesDao.findProductSeriesesByKeyWord(keyWord,currentPage,pageSize);
+        return productSeriesDao.findProductSeriesPageByKeyWord(keyWord, currentPage, pageSize);
     }
 
     @Override
     public Page<ProductSeries> findProductSeriesPageByProductSubCategory(ProductSubCategory productSubCategory, Integer page, int pageSize) {
         return productSeriesDao.findProductSeriesPageByProductSubCategory(productSubCategory,page,pageSize);
+    }
+
+    @Override
+    public Page<ProductSeries> findProductSeriesPageByProductSubCategory(ProductSubCategory productSubCategory, int page, int size, Sortable sort) {
+        return productSeriesDao.findProductSeriesPageByProductSubCategory(productSubCategory,page,size,sort);
     }
 
     @Override

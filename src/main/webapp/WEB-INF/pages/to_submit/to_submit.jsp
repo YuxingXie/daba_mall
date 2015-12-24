@@ -41,7 +41,7 @@
                                             <img class="img-responsive img-ico-sm" src="${path}/${productSelected.productSeries.pictures[0].picture}">
                                         </td>
                                         <td class="shopping-cart-description">
-                                            <b><a href="${path}/product/${productSelected.productSeriesId}">${productSelected.productSeries.name} </a></b>
+                                            <b><a href="${path}/product_series/${productSelected.productSeries.id}">${productSelected.productSeries.name} </a></b>
                                             <c:forEach var="productPropertyValue"
                                                        items="${productSelected.productPropertyValueList}">
                                                 <em>${productPropertyValue.value}</em>
