@@ -1,18 +1,17 @@
 map1=function(){
-    for(var i in this.productSeriesPrices){
-        emit(this,this.productSeriesPrices[i]);
+    for(var i in this.productSelectedList){
+        emit(this.productSelectedList[i].productSeries.$id,this.productSelectedList[i].amount);
     }
 }
 reduce1=function(key,emits){
-    var now=new Date();
+    var amount=0;
+
     for(var i in emits){
-        var productSeriesPrice=emits[i];
-        if(productSeriesPrice.beginDate&&productSeriesPrice.beginDate<now&&(!productSeriesPrice.endDate||productSeriesPrice.endDate>now)){
-            return productSeriesPrice;
-        }
+        amount+=emits[i];
     }
+    return amount;
 }
-mr=db.runCommand({"mapreduce":"productSeries","map":map1,"reduce":reduce1,"out":"xxx"})
+mr=db.runCommand({"mapreduce":"order","map":map1,"reduce":reduce1,"out":"xxx"})
 
 sbs=[1,2,3,4,5,'s','b']
 for(var i in sbs){

@@ -17,12 +17,12 @@
 
         <div class="row margin-bottom-40">
                 <div class="col-md-10 col-sm-10 btn-group btn-group-xs">
-                        <button class="btn btn-primary btn-small" ng-click="toSort('default');">
-                            综合排序<i ng-class="{'fa':true,'fa-chevron-down':sort.asc&&sort.field=='default','fa-chevron-up':!sort.asc&&sort.field=='default'}"></i></button>
+                        <%--<button class="btn btn-primary btn-small" ng-click="toSort('default');">--%>
+                            <%--综合排序<i ng-class="{'fa':true,'fa-chevron-down':sort.asc&&sort.field=='default','fa-chevron-up':!sort.asc&&sort.field=='default'}"></i></button>--%>
+                        <button class="btn btn-primary btn-small" ng-click="toSort('sales');">
+                                销量排序<i ng-class="{'fa':true,'fa-chevron-down':sort.asc&&sort.field=='sales','fa-chevron-up':!sort.asc&&sort.field=='sales'}"></i></button>
                         <button class="btn btn-primary btn-small" ng-click="toSort('price');">
                             价格排序<i ng-class="{'fa':true,'fa-chevron-down':sort.asc&&sort.field=='price','fa-chevron-up':!sort.asc&&sort.field=='price'}"></i></button>
-                        <button class="btn btn-primary btn-small" ng-click="toSort('sales');">
-                            销量排序<i ng-class="{'fa':true,'fa-chevron-down':sort.asc&&sort.field=='sales','fa-chevron-up':!sort.asc&&sort.field=='sales'}"></i></button>
                         <button class="btn btn-primary btn-small" ng-click="toSort('evaluate');">
                             评论排序<i ng-class="{'fa':true,'fa-chevron-down':sort.asc&&sort.field=='evaluate','fa-chevron-up':!sort.asc&&sort.field=='evaluate'}"></i></button>
                 </div>

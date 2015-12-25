@@ -94,7 +94,7 @@ public class ProductSeriesController extends BaseRestSpringController {
         model.addAttribute("productSubCategory",productSubCategory);
 //        Page<ProductSeries> _page=null;
 //        if (sort==null)
-//            _page=ServiceManager.productSeriesService.findProductSeriesPageByProductSubCategory(productSubCategory,1,2);
+//            _page=ServiceManager.productSeriesService.findProductSeriesPageByProductSubCategorySortByPrice(productSubCategory,1,2);
 //        else if(sort.getField().equals("price"))
 //            _page=ServiceManager.productSeriesPriceService.getProductSeriesOrderByPriceInProductSubCategory(productSubCategory,1,2,sort.getAsc());
 //        model.addAttribute("_page",_page);
@@ -110,7 +110,9 @@ public class ProductSeriesController extends BaseRestSpringController {
         if (sort==null||sort.getField().equals("default"))
             _page=ServiceManager.productSeriesService.findProductSeriesPageByProductSubCategory(productSubCategory,page,4);
         else if(sort.getField().equals("price")){
-            _page=productSeriesService.findProductSeriesPageByProductSubCategory(productSubCategory,page,4,sort);
+            _page=productSeriesService.findProductSeriesPageByProductSubCategorySortByPrice(productSubCategory, page, 4, sort);
+        }else if(sort.getField().equals("sales")){
+            _page=productSeriesService.findProductSeriesPageByProductSubCategorySortBySales(productSubCategory, page, 4, sort);
         }
         map.put("page",page);
         map.put("_page",_page);

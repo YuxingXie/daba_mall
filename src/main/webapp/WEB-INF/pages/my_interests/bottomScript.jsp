@@ -93,12 +93,13 @@ mainApp.controller("myInterestsController",["$scope","$http",function($scope,$ht
         });
     }
     $scope.add2cart=function(){
-        $http.post('${path}/cart', $scope.productSelected).success(function(data){
+        $http.post('${path}/cart/add', $scope.productSelected).success(function(data){
             $scope.$parent.cart=data;
+            $scope.getTotalAmountAndPrice();
             $("#showProductModal").modal("hide");
         }).error(function(data) {
             console.log(data)
-            alert("对不起，服务器出现了点异常!");
+
         });
     }
     $scope.max = 5;

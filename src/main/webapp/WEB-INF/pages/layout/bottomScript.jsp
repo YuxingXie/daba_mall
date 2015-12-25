@@ -35,6 +35,19 @@
             }
 
         }
+        $scope.getTotalAmountAndPrice=function(){
+            if($scope.cart&&$scope.cart.productSelectedList&&$scope.cart.productSelectedList.length){
+                var totalPrice= 0,totalAmount=0;
+                for(var i=0;i<$scope.cart.productSelectedList.length;i++){
+                    var productSelected=$scope.cart.productSelectedList[i];
+                    totalPrice+=productSelected.productSeries.commonPrice*productSelected.amount;
+                    totalAmount+=productSelected.amount;
+                }
+                $scope.totalPrice=totalPrice;
+                $scope.totalAmount=totalAmount;
+            }
+        }
+
         $scope.deleteGoods=function(index){
 //            alert(JSON.stringify(index));
             if($scope.cart.productSelectedList&&$scope.cart.productSelectedList.length){
@@ -45,6 +58,7 @@
                     data:$scope.cart
                 }).success(function(cart){
                     $scope.cart=cart;
+                    $scope.getTotalAmountAndPrice();
                 }).error(function(){
 
                 });
@@ -52,6 +66,7 @@
         }
         $http.get('${path}/user/cart').success(function (data) {
             $scope.cart = data;
+            $scope.getTotalAmountAndPrice();
         });
         $http.get('${path}/user/unread_notifies_count').success(function (data) {
             $scope.unreadNotifiesCount = data;

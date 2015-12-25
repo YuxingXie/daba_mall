@@ -126,6 +126,7 @@ mainApp .controller('indexController', ['$scope', '$http','$element', function (
         $http.post('${path}/cart/add', $scope.productSelected).success(function(data){
 
             $scope.$parent.cart=data;
+            $scope.getTotalAmountAndPrice();
             $("#msg").show().animate({width: '250px'}, 600).fadeOut(1800);
         }).error(function(data) {
             alert("对不起，服务器出现了点异常!");

@@ -150,7 +150,8 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         Page<ProductSeries> page = new PageImpl<ProductSeries>(list, pageable, count);
         return page;
     }
-    public Page<ProductSeries> findProductSeriesPageByProductSubCategory(ProductSubCategory productSubCategory, int currentPage, int pageSize, Sortable sortable) {
+
+    public Page<ProductSeries> findProductSeriesPageByProductSubCategorySortBySales(ProductSubCategory productSubCategory, int currentPage, int pageSize, Sortable sortable) {
         Query mrQuery=new BasicQuery(new BasicDBObject("productSubCategory",new DBRef("productSubCategory",new ObjectId(productSubCategory.getId()))));
         MapReduceResults<ProductSeries> mapReduceResults=
                 getMongoTemplate().mapReduce(mrQuery,ProductPriceMR.inputCollectionName, ProductPriceMR.mapFun, ProductPriceMR.reduceFun,ProductPriceMR.mapReduceOptions(), ProductSeries.class);
@@ -159,14 +160,29 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         Pageable pageable = new PageRequest(currentPage-1, pageSize);
         Long count = getMongoTemplate().count(query, ProductPriceMR.class);
         Sort.Direction direction=sortable.getAsc()? Sort.Direction.ASC: Sort.Direction.DESC;
-        String field=null;
-        if (sortable.getField().equals("price")){
-            field="value.price";
-        }
+        String field="value.price";
         List<ProductPriceMR> list = getMongoTemplate().find(query.with(new Sort(direction,field)).limit(pageSize).skip((currentPage - 1) * pageSize), ProductPriceMR.class);
         List<ProductSeries> retList=new ArrayList<ProductSeries>();
         for (ProductPriceMR mr:list){
-//            System.out.println(mr.getValue().getPrice());
+            retList.add(mr.getValue().getProductSeries());
+        }
+        getEvaluates(retList);
+        Page<ProductSeries> page = new PageImpl<ProductSeries>(retList, pageable, count);
+        return page;
+    }
+    public Page<ProductSeries> findProductSeriesPageByProductSubCategorySortByPrice(ProductSubCategory productSubCategory, int currentPage, int pageSize, Sortable sortable) {
+        Query mrQuery=new BasicQuery(new BasicDBObject("productSubCategory",new DBRef("productSubCategory",new ObjectId(productSubCategory.getId()))));
+        MapReduceResults<ProductSeries> mapReduceResults=
+                getMongoTemplate().mapReduce(mrQuery,ProductPriceMR.inputCollectionName, ProductPriceMR.mapFun, ProductPriceMR.reduceFun,ProductPriceMR.mapReduceOptions(), ProductSeries.class);
+        DBObject dbObject=new BasicDBObject();
+        Query query=new BasicQuery(dbObject);
+        Pageable pageable = new PageRequest(currentPage-1, pageSize);
+        Long count = getMongoTemplate().count(query, ProductPriceMR.class);
+        Sort.Direction direction=sortable.getAsc()? Sort.Direction.ASC: Sort.Direction.DESC;
+        String field="value.price";
+        List<ProductPriceMR> list = getMongoTemplate().find(query.with(new Sort(direction,field)).limit(pageSize).skip((currentPage - 1) * pageSize), ProductPriceMR.class);
+        List<ProductSeries> retList=new ArrayList<ProductSeries>();
+        for (ProductPriceMR mr:list){
             retList.add(mr.getValue().getProductSeries());
         }
         getEvaluates(retList);

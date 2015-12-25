@@ -23,7 +23,9 @@ public interface IProductSeriesService  extends IBaseEntityManager<ProductSeries
     ProductSeries findProductSeriesByIdButEvaluate(String id,boolean ignoreEvaluate);
     Page<ProductSeries> findProductSeriesesByKeyWord(String keyWord, int currentPage,int pageSize);
     Page<ProductSeries> findProductSeriesPageByProductSubCategory(ProductSubCategory productSubCategory, Integer page, int pageSize);
-    Page<ProductSeries> findProductSeriesPageByProductSubCategory(ProductSubCategory productSubCategory, int page, int size, Sortable sort);
+    Page<ProductSeries> findProductSeriesPageByProductSubCategorySortByPrice(ProductSubCategory productSubCategory, int page, int size, Sortable sort);
+    Page<ProductSeries> findProductSeriesPageByProductSubCategorySortBySales(ProductSubCategory productSubCategory, int page, int size, Sortable sort);
+
     List<ProductSeries> getNewProducts(int count);
 
     List<ProductSeries> getLowPrices(int count);

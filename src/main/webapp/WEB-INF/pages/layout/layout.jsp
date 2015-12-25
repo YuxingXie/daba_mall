@@ -76,7 +76,7 @@
                         <!-- BEGIN CART CONTENT -->
                         <div class="cart-content-wrapper">
                             <div class="cart-content">
-                                <ul class="scroller" style="height:250px;" id="cart_list" ng-init="totalPrice=0;totalAmount=0;">
+                                <ul class="scroller" style="height:250px;" id="cart_list">
                                     <li ng-if="!cart||!cart.productSelectedList||!cart.productSelectedList.length">您的购物车中还没有商品</li>
                                     <li ng-class="{'text-left':true,'bg-success':$index%2==0}" ng-repeat="productSelected in cart.productSelectedList"   data-selected-index="{{$index}}">
                                         <img ng-if="productSelected.productSeries.pictures" ng-src="${path}/{{productSelected.productSeries.pictures[0].picture}}" width="37" height="34">
@@ -85,8 +85,7 @@
                                         <i class="fa fa-times"> {{productSelected.amount}}</i>
                                         <i ng-repeat="productPropertyValue in productSelected.productPropertyValueList"> {{productPropertyValue.value}}</i>
                                         <i class="fa fa-rmb text-danger"
-                                           ng-init="$parent.totalPrice=$parent.totalPrice+(productSelected.productSeries.commonPrice*productSelected.amount);
-                                           $parent.totalAmount=$parent.totalAmount+productSelected.amount">
+                                          >
                                             {{productSelected.productSeries.commonPrice*productSelected.amount|number:2}}
                                         </i>
                                         <a href="javascript:void(0);" class="del-goods" data-ng-click="deleteGoods($index)"><i class="fa fa-trash"></i></a>

@@ -3,17 +3,14 @@
 
 <script src="${path}/statics/assets/plugins/rateit/src/jquery.rateit.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/bootstrap-star-rating-master/js/star-rating.min.js" type="text/javascript"></script>
-
 <script src="${path}/statics/assets/plugins/bootstrap-tour-0.10.2/js/bootstrap-tour.js"></script>
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/multi-file-upload/js/fileinput_locale_zh.js" type="text/javascript"></script>
-<%--<script src="${path}/statics/assets/plugins/bootstrap-paginator-master/build/bootstrap-paginator.min.js"></script>--%>
 <script src="${path}/statics/assets/plugins/shopping-cart-fly/jquery.fly.min.js"></script>
 <script src="${path}/statics/assets/plugins/shopping-cart-fly/requestAnimationFrame.js"></script>
 
 
 <script type="text/javascript">
-//    angular.module("productSeriesApp",[])
 mainApp.controller('productSeriesCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.productSelected={};
     $scope.productSelected.productPropertyValueList=[];
@@ -106,6 +103,7 @@ mainApp.controller('productSeriesCtrl', ['$scope', '$http', function ($scope, $h
         console.log(JSON.stringify($scope.productSelected));
         $http.post('${path}/cart/add', $scope.productSelected).success(function(data){
             $scope.$parent.cart=data;
+            $scope.getTotalAmountAndPrice();
             $("#msg").show().animate({width: '250px'}, 600).fadeOut(1800);
         }).error(function(data) {
             alert("对不起，服务器出现了点异常!");
@@ -282,9 +280,8 @@ var shoppingCartFly=function(start,end){
     });
 }
     jQuery(document).ready(function() {
-//        easyzoom();
+        easyzoom();
 //        shoppingCartFly($(".add2cart"),$("#cart-block"));
     });
 </script>
 <%--<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>--%>
-<!-- END PAGE LEVEL JAVASCRIPTS -->
