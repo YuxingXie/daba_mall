@@ -103,8 +103,10 @@ mainApp.controller('productSeriesCtrl', ['$scope', '$http', function ($scope, $h
         $scope.ratingVal = val;
     }
     $scope.add2cart=function(){
-        $http.post('${path}/cart', $scope.productSelected).success(function(data){
+        console.log(JSON.stringify($scope.productSelected));
+        $http.post('${path}/cart/add', $scope.productSelected).success(function(data){
             $scope.$parent.cart=data;
+            $("#msg").show().animate({width: '250px'}, 600).fadeOut(1800);
         }).error(function(data) {
             alert("对不起，服务器出现了点异常!");
         });
@@ -280,8 +282,8 @@ var shoppingCartFly=function(start,end){
     });
 }
     jQuery(document).ready(function() {
-        easyzoom();
-        shoppingCartFly($(".add2cart"),$("#cart-block"));
+//        easyzoom();
+//        shoppingCartFly($(".add2cart"),$("#cart-block"));
     });
 </script>
 <%--<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>--%>
