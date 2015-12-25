@@ -3,15 +3,16 @@ package com.dabast.mall.dao;
 import com.dabast.common.base.BaseMongoDao;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.*;
+import com.dabast.support.mapReduce.ProductPriceMR;
 import com.dabast.support.vo.Sortable;
 import com.mongodb.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.*;
 import org.springframework.data.mongodb.core.aggregation.*;
-import org.springframework.data.mongodb.core.aggregation.AggregationOptions;
 import org.springframework.data.mongodb.core.mapreduce.MapReduceResults;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
 //            getStoreAndPrice(productSeries);
 //        }
     }
-    public void getStoresAndPricesAndEvaluates(List<ProductSeries> productSeriesList) {
+    public void getEvaluates(List<ProductSeries> productSeriesList) {
         for (ProductSeries productSeries:productSeriesList){
 //            getStoreAndPrice(productSeries);
             List<ProductEvaluate> productEvaluateList=ServiceManager.productEvaluateService.findAll(new BasicDBObject("productSeries",productSeries));
@@ -134,27 +135,47 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         Pageable pageable = new PageRequest(currentPage-1, pageSize);
         Long count = collection.count(queryCondition);
         List<ProductSeries> list = getMongoTemplate().find(new BasicQuery(queryCondition).limit(pageSize).skip((currentPage - 1) * pageSize), ProductSeries.class);
-        getStoresAndPricesAndEvaluates(list);
+        getEvaluates(list);
         Page<ProductSeries> page = new PageImpl<ProductSeries>(list, pageable, count);
         return page;
     }
     public Page<ProductSeries> findProductSeriesPageByProductSubCategory(ProductSubCategory productSubCategory,int currentPage,int pageSize) {
         DBObject queryCondition=new BasicDBObject();
         queryCondition.put("productSubCategory",productSubCategory);
-        queryCondition.put("productSeriesPrices",new BasicDBObject("$elemMatch",getCurrentPriceDBObject()));
+//        queryCondition.put("productSeriesPrices",new BasicDBObject("$elemMatch",getCurrentPriceDBObject()));
         Pageable pageable = new PageRequest(currentPage-1, pageSize);
         Long count = getMongoTemplate().count(new BasicQuery(queryCondition), ProductSeries.class);
         List<ProductSeries> list = getMongoTemplate().find(new BasicQuery(queryCondition).limit(pageSize).skip((currentPage - 1) * pageSize), ProductSeries.class);
-        getStoresAndPricesAndEvaluates(list);
+        getEvaluates(list);
         Page<ProductSeries> page = new PageImpl<ProductSeries>(list, pageable, count);
         return page;
     }
     public Page<ProductSeries> findProductSeriesPageByProductSubCategory(ProductSubCategory productSubCategory, int currentPage, int pageSize, Sortable sortable) {
-        return null;
+        Query mrQuery=new BasicQuery(new BasicDBObject("productSubCategory",new DBRef("productSubCategory",new ObjectId(productSubCategory.getId()))));
+        MapReduceResults<ProductSeries> mapReduceResults=
+                getMongoTemplate().mapReduce(mrQuery,ProductPriceMR.inputCollectionName, ProductPriceMR.mapFun, ProductPriceMR.reduceFun,ProductPriceMR.mapReduceOptions(), ProductSeries.class);
+        DBObject dbObject=new BasicDBObject();
+        Query query=new BasicQuery(dbObject);
+        Pageable pageable = new PageRequest(currentPage-1, pageSize);
+        Long count = getMongoTemplate().count(query, ProductPriceMR.class);
+        Sort.Direction direction=sortable.getAsc()? Sort.Direction.ASC: Sort.Direction.DESC;
+        String field=null;
+        if (sortable.getField().equals("price")){
+            field="value.price";
+        }
+        List<ProductPriceMR> list = getMongoTemplate().find(query.with(new Sort(direction,field)).limit(pageSize).skip((currentPage - 1) * pageSize), ProductPriceMR.class);
+        List<ProductSeries> retList=new ArrayList<ProductSeries>();
+        for (ProductPriceMR mr:list){
+//            System.out.println(mr.getValue().getPrice());
+            retList.add(mr.getValue().getProductSeries());
+        }
+        getEvaluates(retList);
+        Page<ProductSeries> page = new PageImpl<ProductSeries>(retList, pageable, count);
+        return page;
     }
     public List<ProductSeries> findProductSeriesAllRef(DBObject dbObject) {
             List<ProductSeries> list = getMongoTemplate().find(new BasicQuery(dbObject), ProductSeries.class);
-         getStoresAndPricesAndEvaluates(list);
+         getEvaluates(list);
         return list;
     }
 

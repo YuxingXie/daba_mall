@@ -13,6 +13,7 @@
 		<property name="sourceList">
 			<list>
 				<value>com.dabast.entity</value>
+				<value>com.dabast.support.mapReduce</value>
 			</list>
 		</property>
 	</bean>

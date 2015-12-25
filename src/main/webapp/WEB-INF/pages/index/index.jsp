@@ -255,13 +255,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <%--<div class="row">--%>
-                            <%--<div class="col-lg-3 col-sm-3">--%>
-                                <%--<div class="thumbnail img-ico-lg">--%>
-                                    <%--<a href="javascript:void(0)" data-ng-click="changePicture(picture)"><img class="img-responsive" ng-src="${path}/{{picture.picture}}"></a>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
+
                         <div class="row table-responsive">
                             <table class="table table-condensed">
                                 <th>价格</th>

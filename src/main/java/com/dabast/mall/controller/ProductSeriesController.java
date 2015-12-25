@@ -108,9 +108,9 @@ public class ProductSeriesController extends BaseRestSpringController {
         productSubCategory.setId(id);
         Page<ProductSeries> _page=null;
         if (sort==null||sort.getField().equals("default"))
-            _page=ServiceManager.productSeriesService.findProductSeriesPageByProductSubCategory(productSubCategory,page,2);
+            _page=ServiceManager.productSeriesService.findProductSeriesPageByProductSubCategory(productSubCategory,page,4);
         else if(sort.getField().equals("price")){
-            _page=productSeriesService.findProductSeriesPageByProductSubCategory(productSubCategory,1,2,sort);
+            _page=productSeriesService.findProductSeriesPageByProductSubCategory(productSubCategory,page,4,sort);
         }
         map.put("page",page);
         map.put("_page",_page);
