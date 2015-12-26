@@ -9,13 +9,16 @@ import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.mongodb.core.query.Query;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
 public interface IBaseEntityManager<E> {
    void insert(E e);
    E findById(String id);
-   public String saveFile(String fileName,byte[] file);
+   String saveFile(String fileName,byte[] file);
+   String saveFile(String fileName, File file) throws IOException;
    public GridFSDBFile findFileById(String id);
    List<E> findEquals(E e);
    List<E> findAll(DBObject condition);

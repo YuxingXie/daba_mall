@@ -18,6 +18,8 @@ import com.mongodb.DBRef;
 import org.apache.commons.mail.EmailException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -358,21 +360,7 @@ public class UserController extends BaseRestSpringController {
             return null;
         }
         order.setUser(user);
-        List<Order> orders=ServiceManager.orderService.findAll(new BasicDBObject("user",user));
-        if (orders==null){
-            model.addAttribute("orders",orders);
-            return "my_orders";
-        }
-        for (Order order1:orders){
-            List<ProductSelected> productSelectedList=order1.getProductSelectedList();
-//            for (ProductSelected productSelected:productSelectedList){
-//                ProductSeries productSeries=productSelected.getProductSeries();
-//                if (productSeries!=null){
-//                    productSeries.setProductSeriesPrices(ServiceManager.productSeriesPriceService.findByProductSeriesId(productSeries.getId()));
-//                }
-
-//            }
-        }
+        List<Order> orders=ServiceManager.orderService.findAll(new BasicQuery(new BasicDBObject("user",new DBRef("users",user.getId()))).with(new Sort(Sort.Direction.DESC,"orderDate")));
         model.addAttribute("orders",orders);
         return "my_orders";
     }

@@ -22,13 +22,15 @@
                 <div class="row">
                     <div class="easyzoom easyzoom--adjacent easyzoom--with-thumbnails">
                       <a ng-href="${path}/{{productSeries.pictures[0].bigPicture}}">
-                        <img ng-src="${path}/{{productSeries.pictures[0].picture}}" alt="" width="320" height="180" />
+                        <img ng-if="productSeries.pictures" ng-src="${path}/{{productSeries.pictures[0].picture}}" alt="" width="320" height="180" />
+                          <img ng-if="!productSeries.pictures" src="${path}/statics/img/img_not_found.jpg" width="320" height="180" >
                       </a>
                     </div>
                     <ul class="thumbnails easyzoom-thumbnails">
                       <li ng-repeat="picture in productSeries.pictures">
                         <a ng-href="${path}/{{picture.bigPicture}}" data-standard="${path}/{{picture.picture}}">
-                          <img ng-src="${path}/{{picture.picture}}" alt="" class="img-ico-md" />
+                          <img  ng-src="${path}/{{picture.picture}}" alt="" class="img-ico-md" />
+
                         </a>
                       </li>
                     </ul>
@@ -55,7 +57,7 @@
                 <div class="col-sm-3 col-lg-3 text-left padding-left-0 margin-left-0">库存 {{productSeries.productStore.remain}}</div>
               </div>
               <div class="row padding-bottom-20">
-                <div class="col-sm-3 col-lg-3 text-left padding-left-0 margin-left-0">{{productSeries.evaluateCount}}条评论</div>
+                <div class="col-sm-3 col-lg-3 text-left padding-left-0 margin-left-0">{{_page.totalElements}}条评论</div>
                 <div class="col-sm-3 col-lg-3 text-left padding-left-0 margin-left-0">
                     <c:if test="${not empty orderId}">
                       <a ng-click="isEvaluated('${orderId}',productSeries.id)" href="javascript:void(0)" class="tour-step1"

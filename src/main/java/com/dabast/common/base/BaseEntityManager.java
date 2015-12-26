@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -26,7 +28,10 @@ public abstract class BaseEntityManager<E> implements IBaseEntityManager<E> {
     public String saveFile(String fileName, byte[] file) {
         return getEntityDao().saveFile(fileName, file);
     }
-
+    @Override
+    public String saveFile(String fileName, File file) throws IOException {
+        return getEntityDao().saveFile(fileName, file);
+    }
     @Override
     public GridFSDBFile findFileById(String id) {
         return getEntityDao().findFileById(id);

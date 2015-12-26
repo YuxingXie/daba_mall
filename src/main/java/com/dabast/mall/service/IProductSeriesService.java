@@ -24,7 +24,7 @@ public interface IProductSeriesService  extends IBaseEntityManager<ProductSeries
     Page<ProductSeries> findProductSeriesesByKeyWord(String keyWord, int currentPage,int pageSize);
     Page<ProductSeries> findProductSeriesPageByProductSubCategory(ProductSubCategory productSubCategory, Integer page, int pageSize);
     Page<ProductSeries> findProductSeriesPageByProductSubCategorySortByPrice(ProductSubCategory productSubCategory, int page, int size, Sortable sort);
-    Page<ProductSeries> findProductSeriesPageByProductSubCategorySortBySales(ProductSubCategory productSubCategory, int page, int size, Sortable sort);
+    Page<ProductSeries> findProductSeriesPageByProductSubCategoryWithSort(ProductSubCategory productSubCategory, int page, int size, Sortable sort);
 
     List<ProductSeries> getNewProducts(int count);
 

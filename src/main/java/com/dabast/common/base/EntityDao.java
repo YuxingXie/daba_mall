@@ -7,11 +7,14 @@ import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.mongodb.core.query.Query;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
 public interface EntityDao <E>{
     public String saveFile(String fileName,byte[] file);
+    public String saveFile(String fileName,File file) throws IOException;
     public GridFSDBFile findFileById(String id);
 //    public int upsert(E queryEntity,E updateEntity);
     void insert(E e);

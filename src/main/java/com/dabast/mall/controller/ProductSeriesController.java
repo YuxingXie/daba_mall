@@ -80,9 +80,9 @@ public class ProductSeriesController extends BaseRestSpringController {
         model.addAttribute("id",id);
         if(orderId!=null){
 //            response.setHeader("progma","no-cache");
-            response.setHeader("Cache-Control", "no-store");
-            response.setHeader("Cache-Control","no-cache");
-            response.setDateHeader("Expires",0);
+//            response.setHeader("Cache-Control", "no-store");
+//            response.setHeader("Cache-Control","no-cache");
+//            response.setDateHeader("Expires",0);
             model.addAttribute("orderId",orderId);
         }
 
@@ -92,12 +92,6 @@ public class ProductSeriesController extends BaseRestSpringController {
     public String showSort(ModelMap model,@PathVariable String id) {
         ProductSubCategory productSubCategory = ServiceManager.productSubCategoryService.findProductSubCategoryByIdWithoutProductSeries(id);
         model.addAttribute("productSubCategory",productSubCategory);
-//        Page<ProductSeries> _page=null;
-//        if (sort==null)
-//            _page=ServiceManager.productSeriesService.findProductSeriesPageByProductSubCategorySortByPrice(productSubCategory,1,2);
-//        else if(sort.getField().equals("price"))
-//            _page=ServiceManager.productSeriesPriceService.getProductSeriesOrderByPriceInProductSubCategory(productSubCategory,1,2,sort.getAsc());
-//        model.addAttribute("_page",_page);
         return "product_sort";
     }
     @RequestMapping(value="/sort/json/{id}")
@@ -111,8 +105,8 @@ public class ProductSeriesController extends BaseRestSpringController {
             _page=ServiceManager.productSeriesService.findProductSeriesPageByProductSubCategory(productSubCategory,page,4);
         else if(sort.getField().equals("price")){
             _page=productSeriesService.findProductSeriesPageByProductSubCategorySortByPrice(productSubCategory, page, 4, sort);
-        }else if(sort.getField().equals("sales")){
-            _page=productSeriesService.findProductSeriesPageByProductSubCategorySortBySales(productSubCategory, page, 4, sort);
+        }else{
+            _page=productSeriesService.findProductSeriesPageByProductSubCategoryWithSort(productSubCategory, page, 4, sort);
         }
         map.put("page",page);
         map.put("_page",_page);

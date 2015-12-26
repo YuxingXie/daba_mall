@@ -22,10 +22,10 @@
             <div class="row list-view-sorting clearfix">
                 <div class="shopping-cart-page">
                     <div class="shopping-cart-data clearfix">
-                        <div class="table-wrapper-responsive">
+                        <div class="table-responsive">
                             <form action="${path}/cart/adjust" method="post" id="form" enctype='application/json'>
                                 <input type="hidden" name="cart"/>
-                                <table summary="Shopping cart">
+                                <table class="table table-hover">
                                     <tr><th colspan="5">提示：如果您的订单中多个商品项为同一个产品的不同规格，我们认为这些商品项是同一个商品。订单中的同一个商品只能评价一次。</th></tr>
                                     <c:choose>
                                         <c:when test="${empty order}">
@@ -35,7 +35,7 @@
                                         </c:when>
                                         <c:otherwise>
                                         <tr>
-                                            <th colspan="2">商品信息</th>
+                                            <th colspan="2" class="text-center">商品信息</th>
                                             <th>单价</th>
                                             <th>数量</th>
                                             <th>总价</th>
@@ -53,11 +53,11 @@
                                                 </c:when>
                                                 <c:otherwise>
                                                     <tr name="productSelected">
-                                                        <td class="shopping-cart-image">
-                                                            <a href="${path}/product/${productSelected.productSeries.id}"><img src="${path}/${productSelected.productSeries.pictures[0].picture}"></a>
+                                                        <td class="">
+                                                            <img class="img-ico-md img-responsive" src="${path}/${productSelected.productSeries.pictures[0].picture}">
                                                         </td>
                                                         <td >
-                                                            ${productSelected.productSeries.name}
+                                                            <a href="${path}/product_series/${productSelected.productSeries.id}">${productSelected.productSeries.name}</a>
                                                             <c:forEach var="productPropertyValue" items="${productSelected.productPropertyValueList}">${productPropertyValue.value} </c:forEach>
                                                         </td>
                                                         <td>

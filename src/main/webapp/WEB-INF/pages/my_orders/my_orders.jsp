@@ -15,7 +15,7 @@
             <li class="active">我的订单</li>
         </ul>
         <div class="table-responsive" ng-controller="myOrdersController">
-            <table class="table table-hover table-bordered table-striped text-center">
+            <table class="table table-hover table-striped text-center">
                 <c:choose>
                     <c:when test="${empty orders}">
                         <div class="col-lg-5 text-info text-center">您没有生成过订单<a href="${path}">返回首页</a></div>

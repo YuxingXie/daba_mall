@@ -57,7 +57,7 @@ public class ProductEvaluateDao extends BaseMongoDao<ProductEvaluate> {
         }
         Pageable pageable = new PageRequest(page-1, pageSize);
         Long count = getMongoTemplate().count(new BasicQuery(queryCondition),"productEvaluate");
-        List<ProductEvaluate> list = getMongoTemplate().find(new BasicQuery(queryCondition).with(new Sort(Sort.Direction.ASC, "date")).limit(pageSize).skip((page - 1) * pageSize), ProductEvaluate.class);
+        List<ProductEvaluate> list = getMongoTemplate().find(new BasicQuery(queryCondition).with(new Sort(Sort.Direction.DESC, "date")).limit(pageSize).skip((page - 1) * pageSize), ProductEvaluate.class);
         if (list!=null &&list.size()>0){
             for (ProductEvaluate productEvaluate:list){
                 DBObject repliesDBObject=new BasicDBObject();
@@ -83,7 +83,7 @@ public class ProductEvaluateDao extends BaseMongoDao<ProductEvaluate> {
 
     public List<ProductEvaluate> findEvaluatesWithParentId(String evaluateId) {
         DBObject queryCondition=new BasicDBObject("parent",new DBRef("productEvaluate",new ObjectId(evaluateId)));
-        return getMongoTemplate().find(new BasicQuery(queryCondition).with(new Sort(Sort.Direction.DESC, "date")),ProductEvaluate.class);
+        return getMongoTemplate().find(new BasicQuery(queryCondition).with(new Sort(Sort.Direction.ASC, "date")),ProductEvaluate.class);
     }
 
     public boolean praised(ProductEvaluate parent, User praiseUser) {

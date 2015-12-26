@@ -5,6 +5,7 @@
 <!--[if lt IE 9]>
 <script src="${path}/statics/assets/plugins/respond.min.js"></script>
 <![endif]-->
+<script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/jquery.md5.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/bootstrap/js/bootstrap.js" ></script>
 <script type="text/javascript" src="${path}/statics/assets/scripts/app.js"></script>
@@ -72,6 +73,61 @@
             $scope.unreadNotifiesCount = data;
         });
     }])
+    .directive('star', function () {
+                return {
+                    template: '<ul class="rating" ng-mouseleave="leave()">' +
+                    '<li ng-repeat="star in stars" ng-class="star" ng-click="click($index + 1)" ng-mouseover="over($index + 1)">' +
+                    '\u2605' +
+                    '</li>' +
+                    '</ul>',
+                    scope: {
+                        ratingValue: '=',
+                        max: '=',
+                        readonly: '@',
+                        onHover: '=',
+                        onLeave: '='
+                    },
+                    controller: function($scope){
+                        $scope.ratingValue = $scope.ratingValue || 0;
+                        $scope.max = $scope.max || 5;
+                        $scope.click = function(val){
+                            if ($scope.readonly && $scope.readonly === 'true') {
+                                return;
+                            }
+                            $scope.ratingValue = val;
+                        };
+                        $scope.over = function(val){
+                            $scope.onHover(val);
+                        };
+                        $scope.leave = function(){
+                            $scope.onLeave();
+                        }
+                    },
+                    link: function (scope, elem, attrs) {
+                        elem.css("text-align", "center");
+                        var updateStars = function () {
+                            scope.stars = [];
+                            for (var i = 0; i < scope.max; i++) {
+                                scope.stars.push({
+                                    filled: i < scope.ratingValue
+                                });
+                            }
+                        };
+                        updateStars();
+
+                        scope.$watch('ratingValue', function (oldVal, newVal) {
+                            if (newVal) {
+                                updateStars();
+                            }
+                        });
+                        scope.$watch('max', function (oldVal, newVal) {
+                            if (newVal) {
+                                updateStars();
+                            }
+                        });
+                    }
+                };
+            })
 
 
 </script>

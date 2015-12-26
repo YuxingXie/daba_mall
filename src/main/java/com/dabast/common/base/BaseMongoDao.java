@@ -20,6 +20,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.*;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -58,6 +60,14 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     }
 
     public String saveFile(String fileName, byte[] file) {
+        GridFS fs = new GridFS(mongoTemplate.getDb());
+        GridFSInputFile fsInputFile = fs.createFile(file);
+        fsInputFile.put("uploadDate", new Date());
+        fsInputFile.put("filename", fileName);
+        fsInputFile.save();
+        return fsInputFile.get("_id") == null ? null : fsInputFile.get("_id").toString();
+    }
+    public String saveFile(String fileName, File file) throws IOException {
         GridFS fs = new GridFS(mongoTemplate.getDb());
         GridFSInputFile fsInputFile = fs.createFile(file);
         fsInputFile.put("uploadDate", new Date());

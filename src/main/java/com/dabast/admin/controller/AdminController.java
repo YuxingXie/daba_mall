@@ -3,6 +3,8 @@ package com.dabast.admin.controller;
 import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.common.helper.service.ServiceManager;
+import com.dabast.common.util.FileUtil;
+import com.dabast.common.util.IconCompressUtil;
 import com.dabast.entity.*;
 import com.dabast.mall.service.IProductSeriesService;
 import net.sf.json.JSONArray;
@@ -129,41 +131,41 @@ public class AdminController extends BaseRestSpringController {
 
     private List<ProductSeriesPicture> getProductSeriesPicturesAndSaveFiles(MultipartFile[] files, String dirStr, ServletContext context) throws IOException {
         //循环获取file数组中得文件
-        Map<String,ProductSeriesPicture> originalPrefixesMap= new HashMap<String, ProductSeriesPicture>();
+//        Map<String,ProductSeriesPicture> originalPrefixesMap= new HashMap<String, ProductSeriesPicture>();
         for(int i = 0;i<files.length;i++){
             MultipartFile file = files[i];
             //保存文件到数据库
-            String picture=productSeriesService.saveFile(file.getOriginalFilename(), file.getBytes());
+            String pictureId=productSeriesService.saveFile(file.getOriginalFilename(), file.getBytes());
             String originalFilename=file.getOriginalFilename();
             String prefix=originalFilename.substring(0,originalFilename.lastIndexOf("."));//如xxx.zom,xxx.ico,xxx
             String suffix=originalFilename.substring(originalFilename.lastIndexOf("."));//后缀名如.jpg
-            String originalPrefix=new String();//原始前缀，xxx.zom.jpg,xxx.ico.jpg,xxx.jpg的原始前缀都是xxx
-            if (prefix.indexOf(".")>0){
-                originalPrefix=prefix.substring(0,prefix.lastIndexOf("."));
-            }else{
-                originalPrefix=prefix;
-            }
-            ProductSeriesPicture pictureOfOriginalPrefix=null;
-            if (!originalPrefixesMap.containsKey(originalPrefix)){
-                pictureOfOriginalPrefix=new ProductSeriesPicture();
-                originalPrefixesMap.put(originalPrefix,pictureOfOriginalPrefix);
-            }else{
-                pictureOfOriginalPrefix=originalPrefixesMap.get(originalPrefix);
-            }
-            if (prefix.endsWith(".zoom")){//大图
-                pictureOfOriginalPrefix.setBigPicture("pic/"+picture);
-            }else if(prefix.endsWith(".ico")){//小图
-                pictureOfOriginalPrefix.setIconPicture("pic/" + picture);
-            }else{//原图
-                pictureOfOriginalPrefix.setPicture("pic/"+picture);
-            }
-            String destFileStr=dirStr+"/"+picture+suffix;
+//            String originalPrefix=new String();//原始前缀，xxx.zom.jpg,xxx.ico.jpg,xxx.jpg的原始前缀都是xxx
+//            if (prefix.indexOf(".")>0){
+//                originalPrefix=prefix.substring(0,prefix.lastIndexOf("."));
+//            }else{
+//                originalPrefix=prefix;
+//            }
+            ProductSeriesPicture productSeriesPicture=new ProductSeriesPicture();
+            productSeriesPicture.setBigPicture("pic/" + pictureId);
+            String destFileStr=dirStr+"/"+pictureId+suffix;
             file.transferTo(new ServletContextResource(context,destFileStr).getFile());
+
+            //生成305*350的中等大小图
+            String mdTempPictureStr=dirStr+"/"+pictureId+".md"+suffix;
+            IconCompressUtil.compressPic(new ServletContextResource(context,destFileStr).getFile(), new ServletContextResource(context,mdTempPictureStr).getFile(), 350, 350, false);
+            String mdPictureId=productSeriesService.saveFile(new ServletContextResource(context, mdTempPictureStr).getFile().getName(),
+                   new ServletContextResource(context, mdTempPictureStr).getFile());
+            String mdPictureStr=dirStr+"/"+mdPictureId+suffix;
+            new ServletContextResource(context, mdPictureStr).getFile().renameTo(new ServletContextResource(context, mdPictureStr).getFile());
+            productSeriesPicture.setPicture("pic/" + mdPictureId);
+
+
+
         }
         List<ProductSeriesPicture> productSeriesPictures=new ArrayList<ProductSeriesPicture>();
-        for (String key:originalPrefixesMap.keySet()){
-            productSeriesPictures.add(originalPrefixesMap.get(key));
-        }
+//        for (String key:originalPrefixesMap.keySet()){
+//            productSeriesPictures.add(originalPrefixesMap.get(key));
+//        }
         return productSeriesPictures;
     }
 

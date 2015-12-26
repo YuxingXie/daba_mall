@@ -37,6 +37,12 @@ public class ProductSeries {
     @Field
     private String measurementUnit;
     /**
+     * 销量：该字段由程序维护，不是统计结果
+     */
+    @Field
+    private int sales;
+
+    /**
      * 规格参数
      */
     @Field
@@ -53,8 +59,8 @@ public class ProductSeries {
     private ProductBrochures productBrochures;
     @DBRef
     private ProductSubCategory productSubCategory;
-    @Transient
-    private Integer evaluateCount;
+    @Field
+    private int evaluateCount;
     @Field
     private boolean newProduct;
     @Transient
@@ -187,7 +193,6 @@ public class ProductSeries {
 
 
     public boolean getHotSell() {
-        if(evaluateCount==null ||evaluateCount.intValue()==0) return false;
         return evaluateCount>=100;
     }
 
@@ -203,12 +208,22 @@ public class ProductSeries {
         return productEvaluateList;
     }
 
-    public Integer getEvaluateCount() {
-        if (productEvaluateList==null) return 0;
-        return productEvaluateList.size();
+    public int getEvaluateCount() {
+        return evaluateCount;
     }
 
-//    public void setEvaluateCount(Integer evaluateCount) {
+    public void setEvaluateCount(int evaluateCount) {
+        this.evaluateCount = evaluateCount;
+    }
+
+    public int getSales() {
+        return sales;
+    }
+
+    public void setSales(int sales) {
+        this.sales = sales;
+    }
+    //    public void setEvaluateCount(Integer evaluateCount) {
 //        this.evaluateCount = evaluateCount;
 //    }
 

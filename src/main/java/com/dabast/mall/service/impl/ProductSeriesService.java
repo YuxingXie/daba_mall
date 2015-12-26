@@ -60,8 +60,8 @@ public class ProductSeriesService extends BaseEntityManager<ProductSeries> imple
     }
 
     @Override
-    public Page<ProductSeries> findProductSeriesPageByProductSubCategorySortBySales(ProductSubCategory productSubCategory, int page, int size, Sortable sort) {
-        return productSeriesDao.findProductSeriesPageByProductSubCategorySortBySales(productSubCategory, page, size, sort);
+    public Page<ProductSeries> findProductSeriesPageByProductSubCategoryWithSort(ProductSubCategory productSubCategory, int page, int size, Sortable sort) {
+        return productSeriesDao.findProductSeriesPageByProductSubCategoryWithSort(productSubCategory, page, size, sort);
     }
     @Override
     public List<ProductSeries> getNewProducts(int count) {

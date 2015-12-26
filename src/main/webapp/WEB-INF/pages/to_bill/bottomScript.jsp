@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><c:set var="path" value="<%=request.getContextPath() %>"/><c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
-<script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 
@@ -101,7 +100,7 @@
 //                                });
                                 var $shortcutsPayModal=$("#shortcutsPayModal");
                                 $shortcutsPayModal.modal("hide");
-                                $("#msg").show().animate({width: '250px'}, 200).fadeOut(2500);
+                                $("#pay-msg").show().animate({width: '250px'}, 200).fadeOut(2500);
 
                         }).error(function(){ console.log("error！"); });
                         return false;

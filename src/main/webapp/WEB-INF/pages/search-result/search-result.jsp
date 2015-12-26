@@ -59,14 +59,14 @@
                             </c:choose>
 
                                 <div class="col-lg-1 col-sm-1">
-                                    <a href="${path}/product/${productSeries.id}">
+                                    <a href="${path}/product_series/${productSeries.id}">
                                         <img src="${path}/${productSeries.pictures[0].picture}" class="pull-left resule-thumb" alt="${productSeries.name}">
                                     </a>
                                 </div>
 
                                 <div class="col-lg-3 col-sm-3 pull-left">
                                     <div>
-                                    <a href="${path}/product/${productSeries.id}" class="high-lighter">${productSeries.name}</a>
+                                    <a href="${path}/product_series/${productSeries.id}" class="high-lighter">${productSeries.name}</a>
                                 </div>
                                 </div>
                                 <div class="col-lg-2 col-sm-2 ">

@@ -201,16 +201,6 @@
                                             </form>
                                         </li>
                                     </ul>
-                                <%--<div class="search-box dropdown-menu">--%>
-                                    <%--<form action="${path}/index/product/search" method="post">--%>
-                                        <%--<div class="input-group">--%>
-                                            <%--<input type="text" placeholder="查找" class="form-control" required="true" name="keyWord">--%>
-                                            <%--<span class="input-group-btn">--%>
-                                                <%--<button class="btn btn-primary" type="submit">查找</button>--%>
-                                            <%--</span>--%>
-                                        <%--</div>--%>
-                                    <%--</form>--%>
-                                <%--</div>--%>
                             </li>
                             <li ng-if="unreadNotifiesCount &&unreadNotifiesCount>0"><a href="${path}/my_notifies"><small style="color: red;font-size: 13px;" class="fa fa-envelope-o">({{unreadNotifiesCount}})</small></a></li>
                             <!-- END TOP SEARCH -->

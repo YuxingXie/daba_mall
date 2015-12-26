@@ -25,7 +25,7 @@
                 <strong><span>￥</span>${top3[0][6]}</strong>
             </div>
 
-            <a href="javascript:void(0)" data-href="${path}/product/${top3[0][0]}" class="ls-s-1 ls-more mini-text add2cart" style=" top: 72%; left: 21%; slidedirection : fade; slideoutdirection : fade; durationin : 750; durationout : 750; easingin : easeOutQuint; easingout : easeInOutQuint; delayin : 0; delayout : 0; rotatein : 90; rotateout : -90; scalein : .5; scaleout : .5; showuntil : 4000; display: inline-block; white-space: nowrap;">
+            <a href="javascript:void(0)" data-href="${path}/product_series/${top3[0][0]}" class="ls-s-1 ls-more mini-text add2cart" style=" top: 72%; left: 21%; slidedirection : fade; slideoutdirection : fade; durationin : 750; durationout : 750; easingin : easeOutQuint; easingout : easeInOutQuint; delayin : 0; delayout : 0; rotatein : 90; rotateout : -90; scalein : .5; scaleout : .5; showuntil : 4000; display: inline-block; white-space: nowrap;">
                 添加到购物车
             </a>
         </div>
@@ -38,7 +38,7 @@
 
             <div class="ls-s-1 mini-text" style=" top: 70%; left: 60%; slidedirection : fade; slideoutdirection : fade; durationout : 750; easingin : easeOutQuint; delayin : 300; scalein : .8; scaleout : .8; showuntil : 4000; white-space: nowrap;">
                 <span>${top3[1][3]}</span>
-                <a href="javascript:void(0)" data-href="${path}/product/${top3[1][0]}" class="add2cart">添加到购物车</a>
+                <a href="javascript:void(0)" data-href="${path}/product_series/${top3[1][0]}" class="add2cart">添加到购物车</a>
             </div>
         </div>
         <!--LayerSlider layer-->
@@ -52,7 +52,7 @@
             </div>
 
             <div class="ls-s-1" style=" top: 333px; left: 33%; slidedirection : fade; slideoutdirection : fade; durationout : 750; easingin : easeOutQuint; delayin : 300; scalein : .8; scaleout : .8; showuntil : 4000; white-space: nowrap; font-size: 20px; font: 20px 'Open Sans Light', sans-serif;">
-                <a href="javascript:void(0)" data-href="${path}/product/${top3[2][0]}" class="ls-buy add2cart">
+                <a href="javascript:void(0)" data-href="${path}/product_series/${top3[2][0]}" class="ls-buy add2cart">
                     添加到购物车
                 </a>
                 <div class="ls-price">
@@ -236,12 +236,6 @@
                     </div>
                     <form name="popForm" class="bg-success">
                         <div class="row">
-                            <%--<div class="easyzoom easyzoom--overlay easyzoom--with-thumbnails" style="margin-left: 10px;margin-right: 1px;">--%>
-                                <%--&lt;%&ndash;<a ng-href="${path}/statics/img/product/5649c4116f70e517dce0b22c.JPG">&ndash;%&gt;--%>
-                                <%--<a href="${path}/{{productSelected.productSeries.pictures[0].bigPicture}}">--%>
-                                    <%--<img ng-src="${path}/{{productSelected.productSeries.pictures[0].picture}}"/>--%>
-                                <%--</a>--%>
-                            <%--</div>--%>
                             <div class="easyzoom easyzoom--overlay easyzoom--with-thumbnails">
                                 <a ng-href="${path}/{{productSelected.productSeries.pictures[0].bigPicture}}">
                                     <img ng-src="${path}/{{productSelected.productSeries.pictures[0].picture}}" alt="" width="320" height="180" />

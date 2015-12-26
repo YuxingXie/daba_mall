@@ -32,7 +32,7 @@
 
                 <tr ng-if="cart&&cart.productSelectedList&&cart.productSelectedList.length>0" ng-repeat="productSelected in cart.productSelectedList" >
                         <td>
-                            <a ng-href="${path}/product/{{productSelected.productSeries.id}}">
+                            <a ng-href="${path}/product_series/{{productSelected.productSeries.id}}">
                                 <img class="img-responsive img-ico-sm center-block" ng-src="${path}/{{productSelected.productSeries.pictures[0].picture}}"></a>
                         </td>
                         <td>

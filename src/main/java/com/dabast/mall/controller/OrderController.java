@@ -200,7 +200,9 @@ public class OrderController extends BaseRestSpringController {
                     }
                     ServiceManager.productEvaluateService.insert(productEvaluate);
                     productSelected.setProductEvaluate(productEvaluate);
-//                    ServiceManager.orderService.upsert(order);
+//                    ServiceManager.orderService.update(order);
+                    productSeries.setEvaluateCount(productSeries.getEvaluateCount()+1);
+                    ServiceManager.productSeriesService.update(productSeries);
                     break;
                 }
             }
@@ -281,6 +283,7 @@ public class OrderController extends BaseRestSpringController {
                     order.setPayAccount(account0);
                 }
                 ServiceManager.orderService.update(order);
+                updateProductSeriesSales(order);
                 redirectAttributes.addFlashAttribute("order",order);
                 return new ResponseEntity<Charge>(charge,HttpStatus.OK);
             } catch (PingppException e) {
@@ -293,6 +296,31 @@ public class OrderController extends BaseRestSpringController {
         }
         return null;
     }
+
+    public void updateProductSeriesSales(Order order) {
+        order=orderService.findById(order.getId());//如果页面出入的值包含productSelectedList则可省去查询
+        List<ProductSelected> productSelectedList=order.getProductSelectedList();
+        Assert.notNull(productSelectedList);
+        Map<String,Integer> salesMap=new HashMap<String, Integer>();
+        for (ProductSelected productSelected:productSelectedList){
+            ProductSeries productSeries=productSelected.getProductSeries();
+            Assert.notNull(productSeries);
+            if (!salesMap.containsKey(productSeries.getId())){
+                salesMap.put(productSeries.getId(),productSeries.getSales()+productSelected.getAmount());
+            }else{
+                int sales=salesMap.get(productSeries.getId());
+                sales+=productSelected.getAmount();
+                salesMap.put(productSeries.getId(),sales);//覆盖
+            }
+        }
+        for(String productSeriesId:salesMap.keySet()){
+            ProductSeries dbObject=new ProductSeries();
+            dbObject.setSales(salesMap.get(productSeriesId));
+            dbObject.setId(productSeriesId);
+            ServiceManager.productSeriesService.update(dbObject);
+        }
+    }
+
     @RequestMapping(value = "/cancel")
     public String orderCancel(ModelMap model,HttpSession session) {
         Order order=session.getAttribute("order")==null?null:(Order)session.getAttribute("order");

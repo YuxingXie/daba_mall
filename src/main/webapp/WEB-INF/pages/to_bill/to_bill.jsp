@@ -22,7 +22,7 @@
                     <div class="row">
                         <p class="text-info col-lg-8 text-left ">订单提交成功，请您尽快付款！ 订单号：${form.id},应付金额<fmt:formatNumber value="${form.totalPrice}" pattern="##.##" minFractionDigits="2"></fmt:formatNumber>元</p>
                         <p class="text-danger text-left col-lg-8" >公告： 请您在6小时内完成支付，否则订单会被自动取消。</p>
-                        <div id="msg">已支付成功！</div>
+                        <div id="pay-msg">已支付成功！</div>
                     </div>
                     <div ng-show="useAccountPay">
                         <div class="form-group form-inline">

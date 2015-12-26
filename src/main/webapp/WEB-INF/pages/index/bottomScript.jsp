@@ -1,8 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><c:set var="path" value="<%=request.getContextPath() %>"/><c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 
-<script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
-
 <script type="text/javascript" src="${path}/statics/assets/plugins/back-to-top.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/jQuery-slimScroll/jquery.slimscroll.min.js"></script>
 <!-- END CORE PLUGINS -->
@@ -119,9 +117,8 @@ mainApp .controller('indexController', ['$scope', '$http','$element', function (
             $("#showProductModal").modal().show();
         });
     }
-    $scope.max = 5;
-    $scope.ratingVal =3;
-    $scope.readonly = true;
+
+
    $scope.add2cart=function(){
         $http.post('${path}/cart/add', $scope.productSelected).success(function(data){
 
@@ -134,6 +131,10 @@ mainApp .controller('indexController', ['$scope', '$http','$element', function (
         $("#showProductModal").modal('hide');
 
     }
+/*** 评星相关 begin**/
+    $scope.max = 5;
+    $scope.ratingVal =3;
+    $scope.readonly = true;
     $scope.onHover = function(val){
         $scope.hoverVal = val;
     };
@@ -143,63 +144,10 @@ mainApp .controller('indexController', ['$scope', '$http','$element', function (
     $scope.onChange = function(val){
         $scope.ratingVal = val;
     }
+/******* end ***************/
 
 }])
-.directive('star', function () {
-    return {
-        template: '<ul class="rating" ng-mouseleave="leave()">' +
-        '<li ng-repeat="star in stars" ng-class="star" ng-click="click($index + 1)" ng-mouseover="over($index + 1)">' +
-        '\u2605' +
-        '</li>' +
-        '</ul>',
-        scope: {
-            ratingValue: '=',
-            max: '=',
-            readonly: '@',
-            onHover: '=',
-            onLeave: '='
-        },
-        controller: function($scope){
-            $scope.ratingValue = $scope.ratingValue || 0;
-            $scope.max = $scope.max || 5;
-            $scope.click = function(val){
-                if ($scope.readonly && $scope.readonly === 'true') {
-                    return;
-                }
-                $scope.ratingValue = val;
-            };
-            $scope.over = function(val){
-                $scope.onHover(val);
-            };
-            $scope.leave = function(){
-                $scope.onLeave();
-            }
-        },
-        link: function (scope, elem, attrs) {
-            elem.css("text-align", "center");
-            var updateStars = function () {
-                scope.stars = [];
-                for (var i = 0; i < scope.max; i++) {
-                    scope.stars.push({
-                        filled: i < scope.ratingValue
-                    });
-                }
-            };
-            updateStars();
 
-            scope.$watch('ratingValue', function (oldVal, newVal) {
-                if (newVal) {
-                    updateStars();
-                }
-            });
-            scope.$watch('max', function (oldVal, newVal) {
-                if (newVal) {
-                    updateStars();
-                }
-            });
-        }
-    };
-})
 //  angular.bootstrap(document.getElementById("indexAppMain"),["indexApp"]);
   $(document).ready(function(){
     Index.initLayerSlider();
