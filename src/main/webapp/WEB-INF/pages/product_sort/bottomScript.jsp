@@ -1,37 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><c:set var="path" value="<%=request.getContextPath() %>"/><c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <script>
-    var easyzoom=function(){
-        // Instantiate EasyZoom instances
 
-        var $easyzoom = $('.easyzoom').easyZoom();
-
-        // Setup thumbnails example
-        var api1 = $easyzoom.filter('.easyzoom--with-thumbnails').data('easyZoom');
-
-        $('.thumbnails').on('click', 'a', function(e) {
-            var $this = $(this);
-
-            e.preventDefault();
-
-            // Use EasyZoom's `swap` method
-            api1.swap($this.data('standard'), $this.attr('href'));
-        });
-        // Setup toggles example
-        var api2 = $easyzoom.filter('.easyzoom--with-toggle').data('easyZoom');
-
-        $('.toggle').on('click', function() {
-            var $this = $(this);
-
-            if ($this.data("active") === true) {
-                $this.text("Switch on").data("active", false);
-                api2.teardown();
-            } else {
-                $this.text("Switch off").data("active", true);
-                api2._init();
-            }
-        });
-    }
     mainApp.controller('productSortCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.sort={asc:false,field:'sales'}
         $scope.paginationConf ={};
@@ -132,27 +102,25 @@
             $scope.ratingVal = val;
         }
         /******* end ***************/
-            }]).filter('cut', function () {
-                return function (value, wordwise, max, tail) {
-                    if (!value) return '';
+            }])
+    .filter('cut', function () {
+        return function (value, wordwise, max, tail) {
+            if (!value) return '';
 
-                    max = parseInt(max, 10);
-                    if (!max) return value;
-                    if (value.length <= max) return value;
+            max = parseInt(max, 10);
+            if (!max) return value;
+            if (value.length <= max) return value;
 
-                    value = value.substr(0, max);
-                    if (wordwise) {
-                        var lastspace = value.lastIndexOf(' ');
-                        if (lastspace != -1) {
-                            value = value.substr(0, lastspace);
-                        }
-                    }
+            value = value.substr(0, max);
+            if (wordwise) {
+                var lastspace = value.lastIndexOf(' ');
+                if (lastspace != -1) {
+                    value = value.substr(0, lastspace);
+                }
+            }
 
-                    return value + (tail || ' …');
-                };
-            });
-    $(document).ready(function(){
-
-
+            return value + (tail || ' …');
+        };
     });
+
 </script>

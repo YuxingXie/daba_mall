@@ -70,18 +70,13 @@
                 <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
                     <div class="col-lg-2 col-sm-2  text-right">产品图片</div>
                     <div class="col-lg-6 col-sm-6 ">
-                            重要提示：假设有一个原图xxx.jpg,那么它的大图命名为xxx.zoom.jpg,小图命名为xxx.ico.jpg,则程序可以自动识别这些图的用途。其它格式的图片同理。
-                    </div>
-                </div>
-                <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
-                    <div class="col-lg-2 col-sm-2  text-right"></div>
-                    <div class="col-lg-6 col-sm-6 form-group">
                         <div class="form-group">
                             <input name="files" id="file-5" class="file" type="file" multiple data-preview-file-type="any"
                                    data-show-upload="false" data-preview-file-icon="" data-preview-class="bg-info clearfix">
                         </div>
                     </div>
                 </div>
+
                 <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
                         <div class="col-lg-2 col-sm-2  text-right">property</div>
                     <div class="col-lg-10 col-sm-10">

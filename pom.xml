@@ -288,6 +288,8 @@
           <!--</compilerArguments>-->
           <compilerArguments>
             <endorseddirs>${project.build.directory}/WEB-INF/classes</endorseddirs>
+            <verbose />
+            <bootclasspath>${java.home}/lib/rt.jar;${java.home}/lib/jce.jar</bootclasspath>
           </compilerArguments>
         </configuration>
       </plugin>
@@ -316,6 +318,8 @@
           <mainClass>Tutorial</mainClass>
         </configuration>
       </plugin>
+      <!-- 编译插件 -->
+
     </plugins>
   </build>
 </project>

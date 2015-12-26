@@ -2,58 +2,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><c:set var="path" value="<%=request.getContextPath() %>"/><c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 
 <script type="text/javascript" src="${path}/statics/assets/plugins/back-to-top.js"></script>
-<script type="text/javascript" src="${path}/statics/assets/plugins/jQuery-slimScroll/jquery.slimscroll.min.js"></script>
-<!-- END CORE PLUGINS -->
-
-<!-- BEGIN PAGE LEVEL JAVASCRIPTS (REQUIRED ONLY FOR CURRENT PAGE) -->
-<script type="text/javascript" src="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.js"></script>
-<!-- pop up -->
-<script type="text/javascript" src="${path}/statics/assets/plugins/bxslider/jquery.bxslider.min.js"></script>
-<!-- slider for products -->
-<%--<script type="text/javascript" src='${path}/statics/assets/plugins/zoom/jquery.zoom.min.js'></script>--%>
-<!-- product zoom -->
-<script src="${path}/statics/assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script>
-<!-- Quantity -->
-
 <!-- BEGIN LayerSlider -->
 <script src="${path}/statics/assets/plugins/layerslider/jQuery/jquery-easing-1.3.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/layerslider/jQuery/jquery-transit-modified.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.transitions.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/layerslider/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>
-<script src="${path}/statics/assets/plugins/shopping-cart-fly/jquery.fly.min.js"></script>
-<script src="${path}/statics/assets/plugins/shopping-cart-fly/requestAnimationFrame.js"></script>
+
 <script>
-var easyzoom=function(){
-    // Instantiate EasyZoom instances
-
-    var $easyzoom = $('.easyzoom').easyZoom();
-
-    // Setup thumbnails example
-    var api1 = $easyzoom.filter('.easyzoom--with-thumbnails').data('easyZoom');
-
-    $('.thumbnails').on('click', 'a', function(e) {
-        var $this = $(this);
-
-        e.preventDefault();
-
-        // Use EasyZoom's `swap` method
-        api1.swap($this.data('standard'), $this.attr('href'));
-    });
-    // Setup toggles example
-    var api2 = $easyzoom.filter('.easyzoom--with-toggle').data('easyZoom');
-
-    $('.toggle').on('click', function() {
-        var $this = $(this);
-
-        if ($this.data("active") === true) {
-            $this.text("Switch on").data("active", false);
-            api2.teardown();
-        } else {
-            $this.text("Switch off").data("active", true);
-            api2._init();
-        }
-    });
-}
 mainApp .controller('indexController', ['$scope', '$http','$element', function ($scope, $http,$element) {
     $scope.popover=function(productSeriesId){
         $scope.lowPrice=function(){
@@ -88,32 +43,7 @@ mainApp .controller('indexController', ['$scope', '$http','$element', function (
                     }
                 }
             }
-
             easyzoom();
-//            var shoppingCartFly=function(start,end){
-//                var offset = end.offset();
-//                $(document).on("click",$element,function(event){
-////                    var addcar = $(this);
-//                    var flyer = $('<img class="u-flyer" src="'+$scope.productSelected.productSeries.pictures[0].picture+'">');
-//                    flyer.fly({
-//                        start: {
-//                            left: event.pageX,
-//                            top: event.pageY
-//                        },
-//                        end: {
-//                            left: offset.left+10,
-//                            top: offset.top+10,
-//                            width: 0,
-//                            height: 0
-//                        },
-//                        onEnd: function(){
-//                            $("#msg").show().animate({width: '250px'}, 600).fadeOut(1800);
-//                            this.destory();
-//                        }
-//                    });
-//                });
-//            }
-//            shoppingCartFly($(".add2cart"),$("#cart-block"));
             $("#showProductModal").modal().show();
         });
     }
@@ -148,10 +78,7 @@ mainApp .controller('indexController', ['$scope', '$http','$element', function (
 
 }])
 
-//  angular.bootstrap(document.getElementById("indexAppMain"),["indexApp"]);
   $(document).ready(function(){
     Index.initLayerSlider();
-
-
   });
 </script>

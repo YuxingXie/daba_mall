@@ -132,6 +132,7 @@ public class AdminController extends BaseRestSpringController {
     private List<ProductSeriesPicture> getProductSeriesPicturesAndSaveFiles(MultipartFile[] files, String dirStr, ServletContext context) throws IOException {
         //循环获取file数组中得文件
 //        Map<String,ProductSeriesPicture> originalPrefixesMap= new HashMap<String, ProductSeriesPicture>();
+        List<ProductSeriesPicture> productSeriesPictures=new ArrayList<ProductSeriesPicture>();
         for(int i = 0;i<files.length;i++){
             MultipartFile file = files[i];
             //保存文件到数据库
@@ -147,25 +148,31 @@ public class AdminController extends BaseRestSpringController {
 //            }
             ProductSeriesPicture productSeriesPicture=new ProductSeriesPicture();
             productSeriesPicture.setBigPicture("pic/" + pictureId);
-            String destFileStr=dirStr+"/"+pictureId+suffix;
-            file.transferTo(new ServletContextResource(context,destFileStr).getFile());
+            String bigPictureStr=dirStr+"/"+pictureId+suffix;
+            File bigPictureFile=new ServletContextResource(context,bigPictureStr).getFile();
+            file.transferTo(bigPictureFile);
 
             //生成305*350的中等大小图
             String mdTempPictureStr=dirStr+"/"+pictureId+".md"+suffix;
-            IconCompressUtil.compressPic(new ServletContextResource(context,destFileStr).getFile(), new ServletContextResource(context,mdTempPictureStr).getFile(), 350, 350, false);
-            String mdPictureId=productSeriesService.saveFile(new ServletContextResource(context, mdTempPictureStr).getFile().getName(),
-                   new ServletContextResource(context, mdTempPictureStr).getFile());
-            String mdPictureStr=dirStr+"/"+mdPictureId+suffix;
-            new ServletContextResource(context, mdPictureStr).getFile().renameTo(new ServletContextResource(context, mdPictureStr).getFile());
+            File mdTempPictureFile=new ServletContextResource(context,mdTempPictureStr).getFile();
+            IconCompressUtil.compressPic(bigPictureFile,mdTempPictureFile , 350, 350, false);
+            String mdPictureId=productSeriesService.saveFile(mdTempPictureFile.getName(), mdTempPictureFile);
+            String mdPictureStr = dirStr + "/" + mdPictureId+suffix;
+            File mdPictureFile=new ServletContextResource(context, mdPictureStr).getFile();
+            mdTempPictureFile.renameTo(mdPictureFile);
             productSeriesPicture.setPicture("pic/" + mdPictureId);
-
-
+            //生成小图标75*75像素小图标
+            String smTempPictureStr=dirStr+"/"+pictureId+".sm"+suffix;
+            File smTempPictureFile=new ServletContextResource(context,smTempPictureStr).getFile();
+            IconCompressUtil.compressPic(bigPictureFile,smTempPictureFile , 75, 75, false);
+            String smPictureId=productSeriesService.saveFile(smTempPictureFile.getName(), smTempPictureFile);
+            String smPictureStr = dirStr + "/" + smPictureId+suffix;
+            File smPictureFile=new ServletContextResource(context, smPictureStr).getFile();
+            smTempPictureFile.renameTo(smPictureFile);
+            productSeriesPicture.setIconPicture("pic/" + smPictureId);
+            productSeriesPictures.add(productSeriesPicture);
 
         }
-        List<ProductSeriesPicture> productSeriesPictures=new ArrayList<ProductSeriesPicture>();
-//        for (String key:originalPrefixesMap.keySet()){
-//            productSeriesPictures.add(originalPrefixesMap.get(key));
-//        }
         return productSeriesPictures;
     }
 
