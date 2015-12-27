@@ -169,13 +169,19 @@
                                 <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="#" href="#" ng-mouseover="initProductMenu()">
                                     产品地图<i class="fa fa-angle-down"></i>
                                 </a>
-                                <ul class="dropdown-menu glyphicon-resize-full" aria-labelledby="mega-menu">
+                                <ul class="dropdown-menu" aria-labelledby="mega-menu">
                                     <li>
                                         <div class="nav-content">
-                                            <div class="nav-content-col" ng-repeat="productCategory in productCategories">
+                                            <div class="nav-content-col" ng-if="productCategories&&productCategories.length>0" ng-repeat="productCategory in productCategories">
                                                 <h3>{{productCategory.categoryName}}</h3>
                                                 <ul>
                                                     <li ng-repeat="productSubCategory in productCategory.productSubCategories"><a href="${path}/product_series/sort/{{productSubCategory.id}}">{{productSubCategory.subCategoryName}}</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="nav-content-col" ng-if="!productCategories">
+                                                <h3>抱歉，我们还没有任何产品上架</h3>
+                                                <ul>
+                                                    <li> </li>
                                                 </ul>
                                             </div>
                                         </div>

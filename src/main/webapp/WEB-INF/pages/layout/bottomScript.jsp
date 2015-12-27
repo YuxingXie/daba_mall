@@ -22,7 +22,7 @@
 <%--<script src="${path}/statics/assets/plugins/EasyZoom-master/dist/easyzoom.js" type="text/javascript"></script>--%>
 <script src="${path}/statics/assets/plugins/EasyZoom-master/dist/easyzoom.test.js" type="text/javascript"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/back-to-top.js"></script>
-<script src="${path}/statics/assets/scripts/form-validate.js"></script>
+
 <script>
     var mainApp=angular.module("mainApp",['ui.bootstrap', 'ngRoute','tm.pagination']);
     mainApp .controller('mainController', ['$scope', '$http', function ($scope, $http) {
@@ -131,3 +131,4 @@
 
 
 </script>
+<script src="${path}/statics/assets/scripts/form-validate.js"></script>

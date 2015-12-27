@@ -186,7 +186,6 @@
                             url:path+"/user/exist_email2",
                             data:scope.user
                         }).success(function(data){
-                            //alert("ensureEmailUnique2:"+data.unique);
                             c.$setValidity('unique',data.unique);
                         }).error(function(data){
                             c.$setValidity('unique',false);
@@ -333,7 +332,6 @@
             }
         });
         $scope.getValidCode = function (type){
-            alert("get code");
             $scope.sent=false;
             $scope.sending=true;
             var requestUrl;
@@ -350,6 +348,7 @@
                 if(type==="email"){
                     $scope.sending=false;
                     $scope.sent=true;
+                    $scope.emailUser=data;
                 }
                 if(type==="phone"){
                     var seconds=25;
@@ -361,6 +360,7 @@
                     }else{
                         $scope.sending=false;
                         $scope.sent=true;
+                        $scope.phoneUser=data;
                         var countDown=function(){
                             $timeout(function(){
                                 seconds--;

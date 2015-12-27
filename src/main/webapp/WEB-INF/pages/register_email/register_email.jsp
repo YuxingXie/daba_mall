@@ -124,7 +124,7 @@
                                                     ng-init="user.validateCode='${form.validateCode}'"
                                                     ng-model="user.validateCode" required="true"
                                                     ng-disabled="signupForm.email.$invalid"
-                                                    ensure_validate_code="{{user.validateCode}}" />
+                                                    ensure_validate_code2="{{user.validateCode}}" />
                                         <form:errors path="validateCode" class="control-label"/>
 
                                         <span ng-show="signupForm.validateCode.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
