@@ -63,7 +63,6 @@ public class PictureController extends BaseRestSpringController {
     private void requestImage(String id, HttpServletRequest request, HttpServletResponse response, String dirStr) {
         ServletContext context= ProjectContext.getServletContext();
         ServletContextResource dirResource=new ServletContextResource(context,dirStr);
-
         try {
             File dirFile=dirResource.getFile();
             if (!dirFile.exists() || !dirFile.isDirectory()){
@@ -75,6 +74,7 @@ public class PictureController extends BaseRestSpringController {
                     if (fileInDir.indexOf(id)>=0){
                         String path=new ServletContextResource(context,dirStr+"/"+fileInDir).getPath();
                         request.getRequestDispatcher(path+"?"+Math.random()).forward(request,response);
+//                        response.sendRedirect(path);
                         return;
                     }
                 }

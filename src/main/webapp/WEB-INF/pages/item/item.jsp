@@ -36,13 +36,13 @@
                     <%--</ul>--%>
                     <div class="easyzoom easyzoom--adjacent easyzoom--with-thumbnails">
                         <a ng-href="${path}/{{productSelected.productSeries.pictures[0].bigPicture}}">
-                            <img ng-src="${path}/{{productSelected.productSeries.pictures[0].picture}}" alt=""/>
+                            <img ng-src="${path}/{{productSelected.productSeries.pictures[0].picture}}" width="320" height="180"/>
                         </a>
                     </div>
                     <ul class="thumbnails easyzoom-thumbnails">
                         <li ng-repeat="picture in productSelected.productSeries.pictures">
                             <a ng-href="${path}/{{picture.bigPicture}}" data-standard="${path}/{{picture.picture}}">
-                                <img ng-src="${path}/{{picture.picture}}" alt="" class="img-ico-md" />
+                                <img ng-src="${path}/{{picture.iconPicture}}"  />
                             </a>
                         </li>
                     </ul>
