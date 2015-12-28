@@ -64,7 +64,7 @@ public class ProductEvaluateDao extends BaseMongoDao<ProductEvaluate> {
 //                repliesDBObject.put("parent", productEvaluate);
                 repliesDBObject.put("parent", new DBRef("productEvaluate",productEvaluate.getId()));
                 repliesDBObject.put("type", Constant.EVALUATETYPE.REPLY);
-                Query q=new BasicQuery(repliesDBObject).with(new Sort(Sort.Direction.ASC, "date"));
+                Query q=new BasicQuery(repliesDBObject).with(new Sort(Sort.Direction.DESC, "date"));
                 System.out.println(q);
                 productEvaluate.setReplies(findAll(q));
                 DBObject praiseDBObject=new BasicDBObject();

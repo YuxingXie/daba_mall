@@ -164,7 +164,7 @@ public class AdminController extends BaseRestSpringController {
             //生成小图标75*75像素小图标
             String smTempPictureStr=dirStr+"/"+pictureId+".sm"+suffix;
             File smTempPictureFile=new ServletContextResource(context,smTempPictureStr).getFile();
-            IconCompressUtil.compressPic(bigPictureFile,smTempPictureFile , 64, 32, false);
+            IconCompressUtil.compressPic(bigPictureFile,smTempPictureFile , 64, 36, false);
             String smPictureId=productSeriesService.saveFile(smTempPictureFile.getName(), smTempPictureFile);
             String smPictureStr = dirStr + "/" + smPictureId+suffix;
             File smPictureFile=new ServletContextResource(context, smPictureStr).getFile();
