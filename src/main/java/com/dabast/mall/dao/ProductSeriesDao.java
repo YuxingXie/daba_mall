@@ -76,22 +76,6 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         }
     }
 
-
-//    public void getStoreAndPrice(ProductSeries productSeries) {
-//        List<ProductSeriesPrice> productSeriesPrices = getProductSeriesPrices(productSeries);
-//        productSeries.setProductSeriesPrices(productSeriesPrices);
-//        ProductStore store=productSeries.getProductStore();
-//        if (store!=null){
-//            productSeries.getProductStore().setInAndOutList(ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries));
-//        }
-//    }
-
-//    public List<ProductSeriesPrice> getProductSeriesPrices(ProductSeries productSeries) {
-//        DBRef dbRef=new DBRef("productSeries",new ObjectId(productSeries.getId()));
-//        DBObject dbObject=new BasicDBObject();
-//        dbObject.put("productSeries",dbRef);
-//        return ServiceManager.productSeriesPriceService.findAll(dbObject);
-//    }
     public ProductSeries findProductSeriesByIdButEvaluate(ObjectId objectId,boolean ignoreEvaluate) {
 
         ProductSeries productSeries=findById(objectId);
@@ -105,13 +89,8 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
             productProperty.setPropertyValues(propertyValues);
         }
         productSeries.setProductProperties(productProperties);
-//        productSeries.setProductSeriesPrices(getProductSeriesPrices(productSeries));
-//        if (productSeries.getProductStore()!=null){
-//            List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
-//            productSeries.getProductStore().setInAndOutList(inAndOuts);
-//        }
        if (!ignoreEvaluate){
-           List<ProductEvaluate> productEvaluateList=ServiceManager.productEvaluateService.findAll(new BasicDBObject("productSeries",productSeries));
+           List<ProductEvaluate> productEvaluateList=ServiceManager.productEvaluateService.findAll(new BasicDBObject("productSeries",new DBRef("productSeries",objectId)));
            productSeries.setProductEvaluateList(productEvaluateList);
        }
         return productSeries;
@@ -129,6 +108,8 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         BasicDBList values = new BasicDBList();
         values.add(new BasicDBObject("name", pattern));
         values.add(new BasicDBObject("description", pattern));
+//        values.add(new BasicDBObject("productSubCategory.subCategoryName", pattern));
+//        values.add(new BasicDBObject("productSubCategory.productCategory.categoryName", pattern));
         queryCondition.put("$or", values);
         DB db = getMongoTemplate().getDb();
         DBCollection collection = db.getCollection("productSeries");
@@ -137,7 +118,10 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         List<ProductSeries> list = getMongoTemplate().find(new BasicQuery(queryCondition).limit(pageSize).skip((currentPage - 1) * pageSize), ProductSeries.class);
         getEvaluates(list);
         Page<ProductSeries> page = new PageImpl<ProductSeries>(list, pageable, count);
+//        if (count>0)
         return page;
+
+
     }
     public Page<ProductSeries> findProductSeriesPageByProductSubCategory(ProductSubCategory productSubCategory,int currentPage,int pageSize) {
         return findProductSeriesPageByProductSubCategoryWithSort(productSubCategory, currentPage, pageSize, null);
@@ -232,8 +216,9 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
 
     public List<ProductSeries> getNewProducts(int count) {
         DBObject dbObject=new BasicDBObject();
-        dbObject.put("newProduct",true);
-        List<ProductSeries> productSeriesList=getMongoTemplate().find(new BasicQuery(dbObject).limit(count), ProductSeries.class);
+//        dbObject.put("shelvesDate",new BasicDBObject("$gt",new Date().getTime()-(30L*24L*60L*60L*1000L)));
+//        (now-shelvesDate.getTime()) <=(30L*24L*60L*60L*1000L)
+        List<ProductSeries> productSeriesList=getMongoTemplate().find(new BasicQuery(dbObject).with(new Sort(Sort.Direction.DESC,"shelvesDate")).limit(count), ProductSeries.class);
         getStoresAndPrices(productSeriesList);
         return productSeriesList;
     }

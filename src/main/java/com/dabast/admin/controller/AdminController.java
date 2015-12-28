@@ -94,7 +94,7 @@ public class AdminController extends BaseRestSpringController {
         inAndOut.setAmount(storeAmount);
         inAndOut.setDate(new Date());
         inAndOut.setType("in");
-        inAndOut.setOperator(getLoginUser(session));
+        inAndOut.setOperator(getLoginAdministrator(session));
         List<ProductStoreInAndOut> inAndOuts=new ArrayList<ProductStoreInAndOut>();
         inAndOuts.add(inAndOut);
         store.setInAndOutList(inAndOuts);
@@ -152,10 +152,10 @@ public class AdminController extends BaseRestSpringController {
             File bigPictureFile=new ServletContextResource(context,bigPictureStr).getFile();
             file.transferTo(bigPictureFile);
 
-            //生成305*350的中等大小图
+            //生成305*350的中等大小图,无论中图小图都保持16:9的比例
             String mdTempPictureStr=dirStr+"/"+pictureId+".md"+suffix;
             File mdTempPictureFile=new ServletContextResource(context,mdTempPictureStr).getFile();
-            IconCompressUtil.compressPic(bigPictureFile,mdTempPictureFile , 350, 350, false);
+            IconCompressUtil.compressPic(bigPictureFile,mdTempPictureFile , 320, 180, false);
             String mdPictureId=productSeriesService.saveFile(mdTempPictureFile.getName(), mdTempPictureFile);
             String mdPictureStr = dirStr + "/" + mdPictureId+suffix;
             File mdPictureFile=new ServletContextResource(context, mdPictureStr).getFile();
@@ -164,7 +164,7 @@ public class AdminController extends BaseRestSpringController {
             //生成小图标75*75像素小图标
             String smTempPictureStr=dirStr+"/"+pictureId+".sm"+suffix;
             File smTempPictureFile=new ServletContextResource(context,smTempPictureStr).getFile();
-            IconCompressUtil.compressPic(bigPictureFile,smTempPictureFile , 75, 75, false);
+            IconCompressUtil.compressPic(bigPictureFile,smTempPictureFile , 64, 32, false);
             String smPictureId=productSeriesService.saveFile(smTempPictureFile.getName(), smTempPictureFile);
             String smPictureStr = dirStr + "/" + smPictureId+suffix;
             File smPictureFile=new ServletContextResource(context, smPictureStr).getFile();

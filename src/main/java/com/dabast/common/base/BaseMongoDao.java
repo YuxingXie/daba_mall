@@ -577,5 +577,6 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         dbObject.put("_id",new ObjectId(id));
         Query query=new BasicQuery(dbObject);
         getMongoTemplate().remove(query,collectionClass);
+
     }
   }

@@ -18,7 +18,7 @@
             <table class="table table-hover table-striped text-center">
                 <c:choose>
                     <c:when test="${empty orders}">
-                        <div class="col-lg-5 text-info text-center">您没有生成过订单<a href="${path}">返回首页</a></div>
+                        <div class="col-lg-5 text-info text-center">您没有生成过订单 <a href="${path}" class="fa fa-home fa-2x">返回首页</a></div>
                     </c:when>
                     <c:otherwise>
                         <tr class="margin-top-10">
@@ -49,7 +49,13 @@
                                                             <c:choose>
                                                                 <c:when test="${order.receiveStatus eq 'none'}">已付款,未收货</c:when>
                                                                 <c:when test="${order.receiveStatus eq 'part'}">已付款,未全部收货</c:when>
-                                                                <c:otherwise>已收货</c:otherwise>
+                                                                <c:otherwise>
+                                                                <c:choose>
+                                                                    <c:when test="${order.evaluateStatus eq 'none'}">已收货,未评价</c:when>
+                                                                    <c:when test="${order.evaluateStatus eq 'part'}">已收货,部分评价</c:when>
+                                                                    <c:when test="${order.evaluateStatus eq 'all'}">已收货,已评价</c:when>
+                                                                </c:choose>
+                                                                </c:otherwise>
                                                             </c:choose>
                                                         </c:when>
                                                         <c:otherwise>未知</c:otherwise>

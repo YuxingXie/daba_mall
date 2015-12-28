@@ -192,12 +192,7 @@ public class UserController extends BaseRestSpringController {
         return new ResponseEntity<User>(userService.findById(id), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/order/delete/{id}", method = RequestMethod.GET)
-    public String orderRemove(@PathVariable String id, ModelMap model, HttpSession session) {
-        Assert.notNull(id);
-        ServiceManager.orderService.removeById(id);
-        return myOrders(model,session);
-    }
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody User form, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
@@ -352,18 +347,7 @@ public class UserController extends BaseRestSpringController {
         return "personal_message";
     }
 
-    @RequestMapping(value = "/my_orders")
-    public String myOrders(ModelMap model, HttpSession session) {
-        User user=getLoginUser(session);
-        Order order=new Order();
-        if (user==null){
-            return null;
-        }
-        order.setUser(user);
-        List<Order> orders=ServiceManager.orderService.findAll(new BasicQuery(new BasicDBObject("user",new DBRef("users",user.getId()))).with(new Sort(Sort.Direction.DESC,"orderDate")));
-        model.addAttribute("orders",orders);
-        return "my_orders";
-    }
+
 
     /**
      * 发送邮件验证码并保存用户

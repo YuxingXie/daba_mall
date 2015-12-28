@@ -63,10 +63,8 @@ public class IndexController extends BaseRestSpringController {
             String password = pwdCookie == null ? null : pwdCookie.getValue();
             if (name != null && password != null) {
                 User user = userDao.findByEmailOrPhone(name);
-                if (user.getPassword().equalsIgnoreCase(password)) {
+                if (user!=null && user.getPassword().equalsIgnoreCase(password)) {
                     session.setAttribute(Constant.LOGIN_USER, user);
-
-
                 }
             }
         }
@@ -77,11 +75,8 @@ public class IndexController extends BaseRestSpringController {
         List<ProductSeries> newProducts = ServiceManager.productSeriesService.getNewProducts(Constant.NEW_PRODUCTS_COUNT);
         List<ProductSeries> lowPrices = ServiceManager.productSeriesService.getLowPrices(Constant.LOW_PRICE_COUNT);
         model.addAttribute("newProducts", newProducts);
-        model.addAttribute("newProducts2", newProducts);
         model.addAttribute("hotSells", hotSells);
-        model.addAttribute("hotSells2", hotSells);
         model.addAttribute("lowPrices", lowPrices);
-        model.addAttribute("lowPrices2", lowPrices);
 //        ServiceManager.productStoreInAndOutService.clearNullUserInAndOut();
         return "index";
     }
@@ -92,22 +87,22 @@ public class IndexController extends BaseRestSpringController {
         page=page==null?1:page;
         keyWord=keyWord==null?"":keyWord;
         Page<ProductSeries> productSeriesListPage=ServiceManager.productSeriesService.findProductSeriesesByKeyWord(keyWord,page,3);
-        if (productSeriesListPage.getTotalElements()==1l){
-            ProductSeries productSeries=productSeriesListPage==null?null:productSeriesListPage.getContent()==null?null:productSeriesListPage.getContent().size()==0?null:productSeriesListPage.getContent().get(0);
-            if (productSeries==null){
-                model.addAttribute("_page", productSeriesListPage);
-                model.addAttribute("page", page);
-                model.addAttribute("keyWord", keyWord);
-                return "search-result";
-            }
-            model.addAttribute("productSeries",productSeries);
-            return "item";
-        }else{
+//        if (productSeriesListPage.getTotalElements()==1l){
+//            ProductSeries productSeries=productSeriesListPage==null?null:productSeriesListPage.getContent()==null?null:productSeriesListPage.getContent().size()==0?null:productSeriesListPage.getContent().get(0);
+//            if (productSeries==null){
+//                model.addAttribute("_page", productSeriesListPage);
+//                model.addAttribute("page", page);
+//                model.addAttribute("keyWord", keyWord);
+//                return "search-result";
+//            }
+//            model.addAttribute("productSeries",productSeries);
+//            return "item";
+//        }else{
             model.addAttribute("_page", productSeriesListPage);
             model.addAttribute("page", page);
             model.addAttribute("keyWord", keyWord);
             return "search-result";
-        }
+//        }
 
     }
 

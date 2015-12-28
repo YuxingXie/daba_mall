@@ -12,5 +12,7 @@ public interface IOrderService  extends IBaseEntityManager<Order> {
 
     Order findOrderById(String orderId);
     void removeOrderInterval(long ago);
+
+    void removeOrderById(String id);
 //    void insertOrder(User user);
 }

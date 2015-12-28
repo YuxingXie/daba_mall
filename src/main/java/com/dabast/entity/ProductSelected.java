@@ -20,22 +20,24 @@ public class ProductSelected {
     @Transient
     private List<String> productPropertyValueIds;
     @DBRef
+//    @Transient
     private List<ProductPropertyValue> productPropertyValueList;
     @DBRef
+//    @Transient
     private ProductSeries productSeries;
 
     private String receiveStatus;
 
-    @DBRef
-    private ProductSeriesPrice orderPrice;
+//    @DBRef
+//    private ProductSeriesPrice orderPrice;
 
-    public ProductSeriesPrice getOrderPrice() {
-        return orderPrice;
-    }
-
-    public void setOrderPrice(ProductSeriesPrice orderPrice) {
-        this.orderPrice = orderPrice;
-    }
+//    public ProductSeriesPrice getOrderPrice() {
+//        return orderPrice;
+//    }
+//
+//    public void setOrderPrice(ProductSeriesPrice orderPrice) {
+//        this.orderPrice = orderPrice;
+//    }
 
     public String getReceiveStatus() {
         return receiveStatus;

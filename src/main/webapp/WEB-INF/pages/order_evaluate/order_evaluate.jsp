@@ -54,11 +54,11 @@
                                                 <c:otherwise>
                                                     <tr name="productSelected">
                                                         <td class="">
-                                                            <img class="img-ico-md img-responsive" src="${path}/${productSelected.productSeries.pictures[0].picture}">
+                                                            <img class="img-responsive" src="${path}/${productSelected.productSeries.pictures[0].iconPicture}">
                                                         </td>
                                                         <td >
                                                             <a href="${path}/product_series/${productSelected.productSeries.id}">${productSelected.productSeries.name}</a>
-                                                            <c:forEach var="productPropertyValue" items="${productSelected.productPropertyValueList}">${productPropertyValue.value} </c:forEach>
+                                                            <c:forEach var="productPropertyValue" items="${productSelected.productPropertyValueList}"><i>${productPropertyValue.value}</i> </c:forEach>
                                                         </td>
                                                         <td>
                                                             ￥<fmt:formatNumber value="${productSelected.productSeries.commonPrice}" pattern="##.##" minFractionDigits="2"></fmt:formatNumber>
@@ -80,9 +80,10 @@
                                                         </td>
                                                         <td>
                                                             <c:choose>
-                                                                <c:when test="${empty productSelected.receiveStatus or productSelected.receiveStatus eq 'n'}"><a class="fa fa-sign-in" href="${path}/order/receive_item?id=${order.id}&index=${selectedIndex.index}">确认收货</c:when>
+                                                                <c:when test="${empty productSelected.receiveStatus or productSelected.receiveStatus eq 'n'}">
+                                                                <a class="btn btn-xs btn-primary" href="${path}/order/receive_item?id=${order.id}&index=${selectedIndex.index}">确认收货<i class="fa fa-check"></i></c:when>
                                                                 <c:otherwise>
-                                                                    <c:if test="${empty productSelected.productEvaluate}"><a class="fa fa-pencil" href="${path}/product_series/${productSelected.productSeries.id}?orderId=${order.id}">去评价</a></c:if>
+                                                                    <c:if test="${empty productSelected.productEvaluate}"><a class="btn btn-xs btn-primary" href="${path}/product_series/${productSelected.productSeries.id}?orderId=${order.id}">去评价<i class="fa fa-pencil"></i></a></c:if>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </td>

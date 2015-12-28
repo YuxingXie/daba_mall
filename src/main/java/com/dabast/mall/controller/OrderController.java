@@ -14,10 +14,13 @@ import com.dabast.mall.service.impl.RegisterValidateService;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.DBRef;
 import com.pingplusplus.Pingpp;
 import com.pingplusplus.exception.PingppException;
 import com.pingplusplus.model.Charge;
 import example.ChargeExample;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -63,10 +66,30 @@ public class OrderController extends BaseRestSpringController {
     @RequestMapping(value = "/delete/{id}")
     public String deleteOrder(@PathVariable String id,HttpSession session) {
         Assert.notNull(getLoginUser(session));
-        orderService.removeById(id);
-        return "redirect:/user/my_orders";
+        orderService.removeOrderById(id);
+        return "redirect:/order/my_orders";
     }
 
+    @RequestMapping(value = "/my_orders")
+    public String myOrders(ModelMap model, HttpSession session) {
+        User user=getLoginUser(session);
+        Assert.notNull(user);
+        List<Order> orders=ServiceManager.orderService.findAll(new BasicQuery(new BasicDBObject("user",new DBRef("users",user.getId()))).with(new Sort(Sort.Direction.DESC,"orderDate")));
+        for(Order order:orders){
+            DBObject orderDBObject=new BasicDBObject("order",new DBRef("order",order.getId()));
+            List<ProductEvaluate> evaluates=ServiceManager.productEvaluateService.findAll(orderDBObject);
+            for (ProductSelected productSelected:order.getProductSelectedList()){
+                ProductSeries productSeries=productSelected.getProductSeries();
+                for (ProductEvaluate productEvaluate:evaluates){
+                    if (productEvaluate.getProductSeries().getId().equals(productSeries.getId())){
+                        productSelected.setProductEvaluate(productEvaluate);
+                    }
+                }
+            }
+        }
+        model.addAttribute("orders",orders);
+        return "my_orders";
+    }
     /**
      * 提交订单(实际为更新订单)
      * @param form

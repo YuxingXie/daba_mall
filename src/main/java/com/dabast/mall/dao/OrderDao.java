@@ -3,10 +3,7 @@ package com.dabast.mall.dao;
 import com.dabast.common.base.BaseMongoDao;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.*;
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import com.mongodb.WriteResult;
+import com.mongodb.*;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Query;
@@ -65,13 +62,19 @@ public class OrderDao extends BaseMongoDao<Order> {
         DBObject dbObject=new BasicDBObject();
         Calendar agoC=new GregorianCalendar();
         agoC.setTimeInMillis(System.currentTimeMillis() - ago);
-        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS ", Locale.CHINA);
+//        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS ", Locale.CHINA);
         dbObject.put("orderDate", new BasicDBObject("$lt", agoC.getTime()));
         dbObject.put("orderDate",new BasicDBObject("$lt",agoC.getTime()));
         dbObject.put("payStatus",new BasicDBObject("$exists",false));
+
+
         Query query=new BasicQuery(dbObject);
-        List<Order> orders=getMongoTemplate().findAllAndRemove(query, Order.class);
+        List<Order> orders=getMongoTemplate().find(query, Order.class);
         for (Order order:orders){
+            DBObject evalDBObject=new BasicDBObject();
+            evalDBObject.put("order",new DBRef("order",order.getId()));
+            List<ProductEvaluate> evaluates=ServiceManager.productEvaluateService.findAll(evalDBObject);
+            if (evaluates!=null &&evaluates.size()>0) continue;
             if (order.getUser()==null) continue;
             Notify notify=new Notify();
             notify.setContent("您的订单 "+order.getId()+" 因超过7天未使用，系统已自动删除。");
@@ -82,8 +85,16 @@ public class OrderDao extends BaseMongoDao<Order> {
             notify.setDate(new Date());
             notify.setToUser(order.getUser());
             ServiceManager.notifyService.insert(notify);
+            getMongoTemplate().remove(new BasicQuery(new BasicDBObject("_id",order.getId())), Order.class);
         }
+
 //        System.out.println("清除了" + orders.size() + "条订单");
     }
 
+    public void removeOrderById(String id) {
+        DBObject evaluateDBObject=new BasicDBObject();
+        evaluateDBObject.put("order",new DBRef("order",id));
+        getMongoTemplate().findAndRemove(new BasicQuery(evaluateDBObject),ProductEvaluate.class);
+        removeById(id);
+    }
 }

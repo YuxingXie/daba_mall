@@ -1,5 +1,7 @@
 package com.dabast.common.constant;
 
+import com.dabast.entity.Administrator;
+
 /**
  * Created by Administrator on 2015/7/29.
  */
@@ -11,4 +13,6 @@ public class Constant {
     public static int HOT_SELL_COUNT=20;
     public static int NEW_PRODUCTS_COUNT=20;
     public static int LOW_PRICE_COUNT=20;
+    public static String LOGIN_ADMINISTRATOR="administrator";
+
 }

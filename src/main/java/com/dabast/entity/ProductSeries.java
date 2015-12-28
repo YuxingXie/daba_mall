@@ -63,8 +63,7 @@ public class ProductSeries {
     private int evaluateCount;
     @Field
     private boolean newProduct;
-    @Transient
-    private boolean hotSell;
+
     @Transient
     private List<ProductProperty> productProperties;
     @Transient
@@ -80,9 +79,7 @@ public class ProductSeries {
     private List<ProductEvaluate> productEvaluateList;
     @Transient
     private Double productSeriesEvaluateGrade;
-    public void setNewProduct(boolean newProduct) {
-        this.newProduct = newProduct;
-    }
+
 
     public Double getProductSeriesEvaluateGrade() {
         if (productEvaluateList==null) return 0d;
@@ -95,14 +92,10 @@ public class ProductSeries {
         this.productSeriesEvaluateGrade=BigDecimalUtil.divide(totalGrade,productEvaluateList.size());
         return this.productSeriesEvaluateGrade;
     }
-
+    public void setNewProduct(boolean newProduct) {
+        this.newProduct = newProduct;
+    }
     public boolean isNewProduct() {
-//        long now=System.currentTimeMillis();
-//        if (shelvesDate==null) return false;
-//        if ((now-shelvesDate.getTime()) <=(30L*24L*60L*60L*1000L)) {
-//            return true;
-//        }
-//        return false;
         return newProduct;
     }
 
@@ -189,15 +182,6 @@ public class ProductSeries {
             }
         }
         return null;//这里表示定价的所有时间段都在未来
-    }
-
-
-    public boolean getHotSell() {
-        return evaluateCount>=100;
-    }
-
-    public void setHotSell(boolean hotSell) {
-        this.hotSell = hotSell;
     }
 
     public void setProductEvaluateList(List<ProductEvaluate> productEvaluateList) {

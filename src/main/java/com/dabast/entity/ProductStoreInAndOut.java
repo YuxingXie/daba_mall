@@ -9,21 +9,18 @@ import java.util.Date;
 
 //@Document(collection = "productStoreInAndOut")
 public class ProductStoreInAndOut {
-//    @Id
-//    private String id;
-//
+
     @Field
     private String type;//in,out
     @Field
     private Integer amount;
     @Field
     private Date date;
-//    @DBRef(db = "productSeries")
-//    private ProductSeries productSeries;
+
     @DBRef
     private ProductPropertyValue productPropertyValue;
     @DBRef
-    private User operator;
+    private Administrator operator;
 
     public ProductPropertyValue getProductPropertyValue() {
         return productPropertyValue;
@@ -33,13 +30,6 @@ public class ProductStoreInAndOut {
         this.productPropertyValue = productPropertyValue;
     }
 
-//    public String getId() {
-//        return id;
-//    }
-//
-//    public void setId(String id) {
-//        this.id = id;
-//    }
     public String getType() {
         return type;
     }
@@ -56,11 +46,11 @@ public class ProductStoreInAndOut {
         this.amount = amount;
     }
 
-    public User getOperator() {
+    public Administrator getOperator() {
         return operator;
     }
 
-    public void setOperator(User operator) {
+    public void setOperator(Administrator operator) {
         this.operator = operator;
     }
 
@@ -72,11 +62,4 @@ public class ProductStoreInAndOut {
         this.date = date;
     }
 
-//    public ProductSeries getProductSeries() {
-//        return productSeries;
-//    }
-//
-//    public void setProductSeries(ProductSeries productSeries) {
-//        this.productSeries = productSeries;
-//    }
 }

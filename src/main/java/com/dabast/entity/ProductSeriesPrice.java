@@ -18,7 +18,7 @@ public class ProductSeriesPrice {
 //    private String id;
     @NotNull
     @Field(value = "price")
-    private Double price;
+    private double price;
     @NotNull
     @Future
     @Field(value = "beginDate")
@@ -42,11 +42,11 @@ public class ProductSeriesPrice {
 //        this.id = id;
 //    }
 
-    public Double getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

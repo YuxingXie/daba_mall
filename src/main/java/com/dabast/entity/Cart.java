@@ -1,15 +1,20 @@
 package com.dabast.entity;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.util.Assert;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
-
+    private double totalPrice;
+    private int totalAmount;
     private List<ProductSelected> productSelectedList;
     public List<ProductSelected> getProductSelectedList() {
         return productSelectedList;
     }
-
     public void setProductSelectedList(List<ProductSelected> productSelectedList) {
         this.productSelectedList = productSelectedList;
     }
@@ -52,7 +57,25 @@ public class Cart {
 
     }
 
+    public double getTotalPrice() {
+        if (productSelectedList==null) return 0d;
+        double totalPrice=0d;
+        for (ProductSelected productSelected:productSelectedList){
+            Assert.notNull(productSelected.getProductSeries());
+            if (productSelected.getProductSeries().getCurrentPrice()==null)
+                totalPrice+=0;
+            else
+                totalPrice+=productSelected.getAmount()*productSelected.getProductSeries().getCurrentPrice().getPrice();
+        }
+        return totalPrice;
+    }
 
-
-
+    public int getTotalAmount() {
+        if (productSelectedList==null) return 0;
+        int totalAmount=0;
+        for (ProductSelected productSelected:productSelectedList){
+            totalAmount+=productSelected.getAmount();
+        }
+        return totalAmount;
+    }
 }

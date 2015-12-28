@@ -94,6 +94,15 @@ public class ProductSeriesController extends BaseRestSpringController {
         model.addAttribute("productSubCategory",productSubCategory);
         return "product_sort";
     }
+
+    /**
+     * 产品分类显示并排序
+     * @param model
+     * @param id
+     * @param sort
+     * @param page
+     * @return
+     */
     @RequestMapping(value="/sort/json/{id}")
     public ResponseEntity<Map> showSortJson(ModelMap model,@PathVariable String id,@RequestBody Sortable sort,Integer page) {
         Map<String,Object> map=new LinkedHashMap<String, Object>();
@@ -112,12 +121,7 @@ public class ProductSeriesController extends BaseRestSpringController {
         map.put("_page",_page);
         return new ResponseEntity<Map>(map,HttpStatus.OK);
     }
-    @RequestMapping(value="/popover/{id}")
-    public ResponseEntity<ProductSeries> popover(ModelMap model,@PathVariable java.lang.String id) {
-        ProductSeries productSeries=productSeriesService.findProductSeriesById(new ObjectId(id));
-        ResponseEntity<ProductSeries> rt=new ResponseEntity<ProductSeries>(productSeries, HttpStatus.OK);
-        return rt;
-    }
+
     @RequestMapping(value="/evaluate/reply")
     public ResponseEntity<List<ProductEvaluate>> evaluateReply(@RequestBody ProductEvaluate reply,HttpSession session) {
         Assert.notNull(reply);

@@ -27,9 +27,9 @@ public class ProductEvaluate {
     private List<ProductEvaluate> replies;
     @Transient
     private List<ProductEvaluate> praises;
-    @DBRef(db = "productSeries")
+    @DBRef
     private ProductSeries productSeries;
-    @DBRef(db = "order")
+    @DBRef
     private Order order;
     @Transient
     private String orderId;

@@ -2,6 +2,7 @@ package com.dabast.common.base;
 
 
 import com.dabast.common.constant.Constant;
+import com.dabast.entity.Administrator;
 import com.dabast.entity.Cart;
 import com.dabast.entity.Order;
 import com.dabast.entity.User;
@@ -40,6 +41,9 @@ public class BaseRestSpringController  {
     }
     protected User getLoginUser(HttpSession session) {
         return session.getAttribute(Constant.LOGIN_USER)==null?null:((User)(session.getAttribute(Constant.LOGIN_USER)));
+    }
+    protected Administrator getLoginAdministrator(HttpSession session) {
+        return session.getAttribute(Constant.LOGIN_ADMINISTRATOR)==null?null:((Administrator)(session.getAttribute(Constant.LOGIN_ADMINISTRATOR)));
     }
     protected Cart getCart(HttpSession session) {
         return session.getAttribute(Constant.CART)==null?null:((Cart)(session.getAttribute(Constant.CART)));

@@ -94,7 +94,7 @@
                                 </ul>
                                 <div class="text-right">
                                     总计：<i class="fa fa-rmb text-danger">{{totalPrice | number:2}}</i>
-                                    <a href="${path}/cart" class="btn btn-primary fa fa-credit-card"> 结账付款</a>
+                                    <a data-href="${path}/cart" class="btn btn-primary fa fa-credit-card login-need"> 结账付款</a>
                                 </div>
                             </div>
                             <div id="msg" style="display:none;margin-right: 35px;">已成功加入购物车！</div>
@@ -115,7 +115,7 @@
                                 </a>
                                 <!-- BEGIN DROPDOWN MENU -->
                                 <ul class="dropdown-menu">
-                                    <li><a data-href="${path}/user/my_orders" class="login-need" href="javascript:void(0)"><i class="fa fa-list"></i>我的订单</a></li>
+                                    <li><a data-href="${path}/order/my_orders" class="login-need" href="javascript:void(0)"><i class="fa fa-list"></i>我的订单</a></li>
                                     <%--<li><a data-href="order-form.html" class="login-need" href="javascript:void(0)">待处理订单</a></li>--%>
                                     <li><a data-href="${path}/my_interests" class="login-need" href="javascript:void(0)"><i class="fa fa-heart"></i>我的关注</a></li>
                                     <li><a data-href="${path}/my_notifies" class="login-need" href="javascript:void(0)"><i class="fa fa-envelope"></i>我的消息</a></li>
@@ -287,7 +287,7 @@
                                                name="remember">自动登录
                                     </li>
                                     <li><a href="#">忘记密码</a></li>
-                                    <li style=" border-right:0;"><a href="${path}/user/register_phone">免费注册</a></li>
+                                    <li style=" border-right:0;"><a href="${path}/register_phone">免费注册</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -298,7 +298,79 @@
 
             </div>
         </div>
+        <div class="modal fade active" id="showProductModal" tabindex="-1" role="dialog" aria-labelledby="showProductModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;</button>
+                        <table>
+                            <tr>
+                                <th class="modal-title" >{{productSelected.productSeries.name}}</th>
+                                <th class="center-block">
+                                    <div class="center-block" star rating-value="ratingVal" max="max" on-hover="onHover" on-leave="onLeave" readonly="true"></div>
+                                </th>
+                            </tr>
+                        </table>
 
+                    </div>
+                    <form name="popForm" class="bg-success">
+                        <div class="row">
+
+                            <div class="easyzoom easyzoom--overlay easyzoom--with-thumbnails">
+                                <a ng-href="${path}/{{productSelected.productSeries.pictures[0].bigPicture}}">
+                                    <img ng-src="${path}/{{productSelected.productSeries.pictures[0].picture}}" alt="" width="320" height="180"/>
+                                </a>
+                            </div>
+                            <ul class="thumbnails easyzoom-thumbnails">
+                                <li ng-repeat="picture in productSelected.productSeries.pictures">
+                                    <a ng-href="${path}/{{picture.bigPicture}}" data-standard="${path}/{{picture.picture}}">
+                                        <img ng-src="${path}/{{picture.picture}}" alt="" class="img-ico-md" />
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="row table-responsive">
+                            <table class="table table-condensed">
+                                <th>价格</th>
+                                <td class="text-left"><i class="fa fa-rmb"></i>{{productSelected.productSeries.commonPrice}}
+                                    <em ng-if="productSelected.productSeries.currentPrice &&productSelected.productSeries.currentPrice.prevPrice &&lowPrice()">
+                                        <del><i class="fa fa-rmb"></i>{{productSelected.productSeries.currentPrice.prevPrice.price}}</del>
+                                    </em>
+                                </td>
+                                <th>库存<i class="fa fa-cubes"></i></th>
+                                <td class="text-left">{{productSelected.productSeries.productStore.remain}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><i>{{productSelected.productSeries.description}}</i></td>
+                                </tr>
+                                <tr>
+                                    <th>选择商品<i class="fa fa-flag"></i></th>
+                                    <th colspan="3">
+                                        <span ng-repeat="productProperty in productSelected.productSeries.productProperties">
+                                        <i class="fa fa-spin fa-sun-o"></i>{{productProperty.propertyName}}:
+                                        <select  ng-model="$parent.productSelected.productPropertyValueList[$index]"
+                                                 required="true"
+                                                 ng-options="productPropertyValue.value for productPropertyValue in productProperty.propertyValues"></select>
+
+                                        </span>
+
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>输入数量<i class="fa fa-cube"></i></th>
+                                    <td><input type="number" min="1" class="" ng-model="productSelected.amount" style="max-width: 100px;"></td>
+                                    <td> <button class="btn btn-primary add2cart pull-right fa fa-shopping-cart" type="button" data-ng-click="add2cart()">添加到购物车</button></td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">关闭</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div class="modal fade active" id="showErrorModal" tabindex="-1" role="dialog" aria-labelledby="showErrorModal" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">

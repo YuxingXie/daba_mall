@@ -63,45 +63,7 @@ mainApp.controller("myInterestsController",["$scope","$http",function($scope,$ht
     $http.get(path+"/personal/interests/json").then(function(interests){
         $scope.interests=interests.data;
     });
-    $scope.popover=function(productSeriesId){
-        $scope.productSelected={};
-        $scope.productSelected.productPropertyValueList=[];
-        $http.get(path+'/product_series/popover/'+productSeriesId).success(function (data) {
-            $scope.productSelected.productSeries = data;
-            $scope.productSelected.amount = 1;
-            if(!$scope.productSelected.productSeries.pictures){
-                $scope.productSelected.productSeries.pictures=[];
-                var picture={};
-                picture.picture= "statics/img/img_not_found.jpg";
-                picture.bigPicture= "statics/img/img_not_found.jpg";
-                $scope.productSelected.productSeries.pictures.push(picture);
-            }
-            $scope.currentPicture=$scope.productSelected.productSeries.pictures[0];
-            $scope.ratingVal = $scope.productSelected.productSeries.productSeriesEvaluateGrade?$scope.productSelected.productSeries.productSeriesEvaluateGrade:0;
-            var productProperties= $scope.productSelected.productSeries.productProperties;
-            if(productProperties&&productProperties.length){
-                for(var i=0;i<productProperties.length;i++){
-                    var productProperty=productProperties[i];
-                    var propertyValues=productProperty.propertyValues;
-                    if(propertyValues&&propertyValues.length){
-                        $scope.productSelected.productPropertyValueList.push(propertyValues[0]);
-                    }
-                }
-            }
-            easyzoom();
-            $("#showProductModal").modal().show();
-        });
-    }
-    $scope.add2cart=function(){
-        $http.post('${path}/cart/add', $scope.productSelected).success(function(data){
-            $scope.$parent.cart=data;
-            $scope.getTotalAmountAndPrice();
-            $("#showProductModal").modal("hide");
-        }).error(function(data) {
-            console.log(data)
 
-        });
-    }
     $scope.max = 5;
     $scope.ratingVal =3;
     $scope.readonly = true;

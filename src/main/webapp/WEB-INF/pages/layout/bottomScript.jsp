@@ -37,16 +37,17 @@
 
         }
         $scope.getTotalAmountAndPrice=function(){
+            var totalPrice= 0,totalAmount=0;
             if($scope.cart&&$scope.cart.productSelectedList&&$scope.cart.productSelectedList.length){
-                var totalPrice= 0,totalAmount=0;
+
                 for(var i=0;i<$scope.cart.productSelectedList.length;i++){
                     var productSelected=$scope.cart.productSelectedList[i];
                     totalPrice+=productSelected.productSeries.commonPrice*productSelected.amount;
                     totalAmount+=productSelected.amount;
                 }
-                $scope.totalPrice=totalPrice;
-                $scope.totalAmount=totalAmount;
             }
+            $scope.totalPrice=totalPrice;
+            $scope.totalAmount=totalAmount;
         }
 
         $scope.deleteGoods=function(index){
@@ -72,6 +73,56 @@
         $http.get('${path}/user/unread_notifies_count').success(function (data) {
             $scope.unreadNotifiesCount = data;
         });
+        $scope.popover=function(productSeriesId){
+            $scope.lowPrice=function(){
+                if(!$scope.productSelected.productSeries.currentPrice) return false;
+                if(!$scope.productSelected.productSeries.currentPrice.price) return false;
+                if(!$scope.productSelected.productSeries.currentPrice.prevPrice) return false;
+                if(!$scope.productSelected.productSeries.currentPrice.prevPrice.price) return false;
+                return  $scope.productSelected.productSeries.currentPrice.price<$scope.productSelected.productSeries.currentPrice.prevPrice.price;
+
+            }
+            $scope.productSelected={};
+            $scope.productSelected.productPropertyValueList=[];
+            $http.get(path+'/product_series/popover/'+productSeriesId).success(function (data) {
+                $scope.productSelected.productSeries = data;
+                $scope.productSelected.amount = 1;
+            if(!$scope.productSelected.productSeries.pictures){
+                $scope.productSelected.productSeries.pictures=[];
+                var picture={};
+                picture.picture= "statics/img/img_not_found.jpg";
+                picture.bigPicture= "statics/img/img_not_found.jpg";
+                picture.iconPicture= "statics/img/img_not_found.jpg";
+                $scope.productSelected.productSeries.pictures.push(picture);
+            }
+                $scope.currentPicture=$scope.productSelected.productSeries.pictures[0];
+                $scope.ratingVal = $scope.productSelected.productSeries.productSeriesEvaluateGrade?$scope.productSelected.productSeries.productSeriesEvaluateGrade:0;
+                var productProperties= $scope.productSelected.productSeries.productProperties;
+                if(productProperties&&productProperties.length){
+                    for(var i=0;i<productProperties.length;i++){
+                        var productProperty=productProperties[i];
+                        var propertyValues=productProperty.propertyValues;
+                        if(propertyValues&&propertyValues.length){
+                            $scope.productSelected.productPropertyValueList.push(propertyValues[0]);
+                        }
+                    }
+                }
+                easyzoom();
+                $("#showProductModal").modal().show();
+            });
+        }
+        $scope.add2cart=function(){
+            $http.post('${path}/cart/add', $scope.productSelected).success(function(data){
+
+                $scope.cart=data;
+                $scope.getTotalAmountAndPrice();
+                $("#msg").show().animate({width: '250px'}, 600).fadeOut(1800);
+            }).error(function(data) {
+                alert("对不起，服务器出现了点异常!");
+            });
+            $("#showProductModal").modal('hide');
+
+        }
     }])
     .directive('star', function () {
                 return {
