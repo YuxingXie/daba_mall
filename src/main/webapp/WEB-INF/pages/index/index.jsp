@@ -76,45 +76,89 @@
                     <c:choose>
                         <c:when test="${empty newProducts}"><p class="col-lg-10 col-sm-10">敬请期待!</p></c:when>
                         <c:otherwise>
-                            <c:forEach items="${newProducts}" var="productSeries">
+                            <c:forEach items="${newProducts}" var="productSeries" varStatus="pdVarStatus">
                                 <div class="col-lg-3 col-sm-3 padding-left-5 padding-right-0 margin-top-20 height-290">
-                                    <div class="thumbnail">
-                                        <a href="${path}/product_series/${productSeries.id}">
-                                            <c:choose>
-                                                <c:when test="${empty productSeries.pictures}">
+                                <c:choose>
+                                    <c:when test="${empty productSeries.pictures}">
+                                        <img src="${path}/statics/img/img_not_found.jpg" class="img-responsive img-thumbnail" >
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="interval" value="${2000+(pdVarStatus.index*50)}"/>
+                                        <div class="carousel slide" id="${productSeries.id}" data-ride="carousel"data-interval="${interval}">
+                                                <ol class="carousel-indicators">
+                                                    <c:forEach var="picture" items="${productSeries.pictures}" varStatus="varStatus">
+                                                        <c:set var="active" value="${varStatus.index eq 0?'class=\"active\"':''}"/>
+                                                            <li data-target="#${productSeries.id}" data-slide-to="${varStatus.index}" ${active}></li>
+                                                    </c:forEach>
+                                                </ol>
+                                                <div class="carousel-inner">
+                                                    <c:forEach var="picture" items="${productSeries.pictures}" varStatus="varStatus">
+                                                        <c:set var="active" value="${varStatus.index eq 0?'active':''}"/>
+                                                        <div class="item ${active}"><a href="${path}/product_series/${productSeries.id}">
+                                                            <img src="${path}/${picture.picture}" class="img-responsive img-thumbnail"></a>
+                                                        </div>
+                                                    </c:forEach>
 
-                                                    <img src="${path}/statics/img/img_not_found.jpg" class="img-responsive img-thumbnail" >
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <img src="${path}/${productSeries.pictures[0].picture}" class="img-responsive img-thumbnail height-265" >
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </a>
-                                        <c:if test="${productSeries.newProduct}"><div class="sticker sticker-new"></div></c:if>
-                                        <div class="row margin-left-0">
-                                            <a href="${path}/product_series/${productSeries.id}" class="pull-left">${productSeries.name}</a>
-                                            <i class="fa fa-rmb pi-price"></i>${productSeries.commonPrice}&nbsp;&nbsp;
-                                            <a href="javascript:void(0)"
-                                               class="fa fa-shopping-cart btn btn-danger btn-xs pull-right margin-right-20" data-ng-click="popover('${productSeries.id}');">添加到购物车</a>
-
+                                                </div>
+                                                <%--<a class="carousel-control left" href="#${productSeries.id}" data-slide="prev">&lsaquo;</a>--%>
+                                                <%--<a class="carousel-control right" href="#${productSeries.id}"data-slide="next">&rsaquo;</a>--%>
                                         </div>
-                                        <div class="row  margin-left-0 margin-right-0 text-left bg-info height-50">
-                                            <em>
+                                        <c:if test="${productSeries.newProduct}"><div class="sticker sticker-new"></div></c:if>
+                                    </c:otherwise>
+                                </c:choose>
+                                <div class="bg-info">
+                                    <div class="row margin-left-2 padding-top-10 padding-bottom-10">
+                                        <a href="${path}/product_series/${productSeries.id}" class="fa fa-2x">${productSeries.name}</a>
+                                        <i class="fa fa-rmb pi-price fa-2x">${productSeries.commonPrice}</i>
+
+                                    </div>
+                                    <div class="row margin-left-2 padding-bottom-10 padding-right-0">
+                                        <div class="col-lg-12 col-sm-12 margin-left--10">
+                                            <div class="btn-group btn-group-xs pull-right">
+                                                <c:set var="interested" value="false" />
                                                 <c:choose>
-                                                    <c:when test="${fn:length(productSeries.description) > 30}">${fn:substring(productSeries.description, 0, 30)}...</c:when>
-                                                    <c:otherwise>${productSeries.description}</c:otherwise>
+
+                                                    <c:when test="${not empty interests}">
+
+                                                        <c:forEach var="interest" items="${interests}">
+                                                            <c:if test="${interest.productSeries.id eq productSeries.id}">
+                                                                <c:set var="interested" value="true"/>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                        ${interest}
+                                                        <c:if test="${interested eq 'true'}">
+                                                            <btn class="btn btn-danger" ng-click="toggleInterest('${productSeries.id}')">已关注<i class="fa fa-heart-o"></i></btn>
+                                                        </c:if>
+                                                        <c:if test="${interested eq 'false'}">
+                                                            <btn class="btn btn-danger" ng-click="toggleInterest('${productSeries.id}')">关注<i class="fa fa-heart-o"></i></btn>
+                                                        </c:if>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        ${interest}--
+                                                        <btn class="btn btn-danger" ng-click="toggleInterest('${productSeries.id}')">关注<i class="fa fa-heart-o"></i></btn>
+                                                    </c:otherwise>
                                                 </c:choose>
-                                            </em>
+
+                                                <button class="fa fa-shopping-cart btn btn-danger" data-ng-click="popover('${productSeries.id}');">添加到购物车</button>
+                                            </div>
                                         </div>
 
                                     </div>
+                                    <div class="row margin-left-10 margin-right-5 text-left padding-bottom-10">
+                                        <div class="col-lg-12 col-sm-12"><em>
+                                            <c:choose>
+                                                <c:when test="${fn:length(productSeries.description) > 30}">${fn:substring(productSeries.description, 0, 30)}...</c:when>
+                                                <c:otherwise>${productSeries.description}</c:otherwise>
+                                            </c:choose>
+                                        </em></div>
+                                    </div>
+                                </div>
                                 </div>
 
                             </c:forEach>
                         </c:otherwise>
                     </c:choose>
                 </div>
-                <%--<div class="row pull-right"><input type="button" value="更多新品" class="btn btn-primary fa fa-search"/></div>--%>
             </div>
 
             <div class="row margin-bottom-40">
@@ -144,9 +188,12 @@
                                         <div class="row margin-left-0">
                                             <a href="${path}/product_series/${productSeries.id}" class="pull-left">${productSeries.name}</a>
                                             <i class="fa fa-rmb pi-price"></i>${productSeries.commonPrice}&nbsp;&nbsp;
-                                            <a href="javascript:void(0)"
-                                               class="fa fa-shopping-cart btn btn-danger btn-xs pull-right margin-right-20" data-ng-click="popover('${productSeries.id}');">添加到购物车</a>
 
+
+                                        </div>
+                                        <div class="row margin-left-0">
+                                            <a href="javascript:void(0)" class="fa fa-shopping-cart btn btn-danger btn-xs pull-right margin-right-20"
+                                               data-ng-click="popover('${productSeries.id}');">添加到购物车</a>
                                         </div>
                                         <div class="row  margin-left-0 margin-right-0 text-left bg-info height-50">
                                             <em>

@@ -65,10 +65,12 @@ public class IndexController extends BaseRestSpringController {
                 User user = userDao.findByEmailOrPhone(name);
                 if (user!=null && user.getPassword().equalsIgnoreCase(password)) {
                     session.setAttribute(Constant.LOGIN_USER, user);
+
                 }
             }
         }
-
+        List<Interest> interests=ServiceManager.interestService.findInterestsOfUser(getLoginUser(session));
+        model.addAttribute("interests", interests);
         List<String[]> top3 = ServiceManager.productSeriesService.getTop3ProductSeries();
         model.addAttribute("top3", top3);
         List<ProductSeries> hotSells = ServiceManager.productSeriesService.getHotSell(Constant.HOT_SELL_COUNT);
@@ -77,6 +79,7 @@ public class IndexController extends BaseRestSpringController {
         model.addAttribute("newProducts", newProducts);
         model.addAttribute("hotSells", hotSells);
         model.addAttribute("lowPrices", lowPrices);
+
 //        ServiceManager.productStoreInAndOutService.clearNullUserInAndOut();
         return "index";
     }

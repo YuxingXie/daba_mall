@@ -108,7 +108,9 @@ public class AdminController extends BaseRestSpringController {
 //            if(jsonObjectProductProperty.get("propertyName")==null||jsonObjectProductProperty.get("propertyName").toString().length()==0) continue;
             ProductProperty productProperty=new ProductProperty();
             Assert.notNull(jsonObjectProductProperty.get("propertyName"));
-            productProperty.setPropertyName(jsonObjectProductProperty.get("propertyName").toString());
+            String propertyName=jsonObjectProductProperty.get("propertyName").toString();
+            if (propertyName.equals("")) continue;
+            productProperty.setPropertyName(propertyName);
             productProperty.setProductSeries(productSeries);
             ServiceManager.productPropertyService.insert(productProperty);
             JSONArray jsonArrayPropertyValues=JSONArray.fromObject(jsonObjectProductProperty.get("propertyValues"));

@@ -17,10 +17,9 @@
               <li class="active">物品详情</li>
           </ul>
           <div class="row bg-info margin-bottom-40">
-          <div class="col-lg-5 col-sm-5">
+          <div class="col-lg-4 col-sm-4">
               <form name="form">
-                <div class="row">
-
+                <div class="row padding-left-30 padding-top-30">
                     <div class="easyzoom easyzoom--adjacent easyzoom--with-thumbnails">
                         <a ng-href="${path}/{{productSelected.productSeries.pictures[0].bigPicture}}">
                             <img ng-src="${path}/{{productSelected.productSeries.pictures[0].picture}}" width="320" height="180"/>
@@ -65,24 +64,7 @@
                     </c:if>
                 </div>
               </div>
-            <div class="row padding-bottom-20 form-group">
-                <div ng-repeat="productProperty in productSeries.productProperties">
-                  <label class="control-label pull-left margin-top-10">{{productProperty.propertyName}}:</label>
-                  <div class="col-lg-4 col-sm-4">
-                    <select  ng-model="productSelected.productPropertyValueList[$index]" required="true" class="form-control"
-                        ng-options="productPropertyValue.value for productPropertyValue in productProperty.propertyValues"></select>
-                  </div>
-                </div>
-            </div>
-            <div class="row padding-bottom-20">
-                <div class="col-lg-4 col-sm-4">
-                  <input type="number" min="1" class="form-control" ng-model="productSelected.amount" placeholder="购买数量"/>
-                </div>
-                <div class="col-lg-4 col-sm-4">
-                  <button class="btn btn-primary add2cart fa fa-shopping-cart margin-left-20" type="button" data-ng-click="add2cart()">添加到购物车</button>
 
-                </div>
-            </div>
             <div class="row padding-bottom-20">
               <ul class="social-icons">
                 <div class="bdsharebuttonbox">
@@ -91,16 +73,39 @@
               </ul>
             </div>
           </div>
-          <div class="col-lg-3 col-sm-3">
-            <div class="row margin-top-112">
-              <div class="col-sm-6 col-lg-6" ng-if="!interested">
+          <div class="col-lg-4 col-sm-4 pull-left">
+
+            <div class="row margin-top-20">
+              <div class="col-sm-6 col-lg-6" ng-if="!$parent.interestInfo.interested">
                 <i class="fa fa-heart-o fa-2x">未关注</i>
               </div>
-              <div class="col-sm-6 col-lg-6" ng-if="interested">
-                <i class="fa fa-heart fa-2x">已关注</i>
+              <div class="col-sm-6 col-lg-6" ng-if="$parent.interestInfo.interested">
+                <i class="fa fa-heart fa-2x color-red">已关注</i>
               </div>
-              <div class="col-sm-2 col-lg-2"><a href="javascript:void(0)" ng-class="{'fa':true,'fa-toggle-off':!interested,'fa-toggle-on':interested,'fa-2x':true}"  ng-click="toggleInterest()"></a></div>
+              <div class="col-sm-2 col-lg-2"><a href="javascript:void(0)" ng-class="{'fa':true,'fa-toggle-off':!$parent.interestInfo.interested,'fa-toggle-on':$parent.interestInfo.interested,'fa-2x':true}" ng-click="toggleInterest(productSeries.id)"></a></div>
             </div>
+              <div class="row margin-top-10 input-group">
+                  <div class="input-group form-inline margin-top-10" ng-repeat="productProperty in productSelected.productSeries.productProperties">
+                      <span class="input-group-btn"><button class="btn btn-primary disabled">{{productProperty.propertyName}}</button></span>
+                      <select  ng-model="$parent.productSelected.productPropertyValueList[$index]"
+                               required="true" class="form-control form-control-inline"
+                               ng-options="productPropertyValue.value for productPropertyValue in productProperty.propertyValues">
+                      </select>
+
+                  </div>
+              </div>
+              <div class="row margin-top-10">
+                  <div class="col-lg-4 col-sm-4 input-group">
+                      <span class="input-group-btn"><button class="btn btn-primary disabled">数量</button></span>
+                      <input type="number" min="1" class="form-control" ng-model="productSelected.amount" placeholder="" style="width: 90px;"/>
+                  </div>
+              </div>
+              <div class="row margin-top-10">
+                  <div class="col-lg-4 col-sm-4 pull-left">
+                      <button class="btn btn-primary add2cart fa fa-shopping-cart" type="button" data-ng-click="add2cart()">添加到购物车</button>
+
+                  </div>
+              </div>
           </div>
         </div>
           <ul id="myTab" class="nav nav-tabs">
@@ -130,18 +135,20 @@
                 </table>
               </div>
               <div ng-class="{'tab-pane fade':true,'in active':activeEvaluate}" id="Reviews">
+
+                    <div ng-if="!_page.content||!_page.content.length" class="fa fa-warning fa-2x margin-top-20 margin-bottom-40">暂无评论!</div>
                     <div ng-repeat="productEvaluate in _page.content" class='margin-top-20'>
-                        <div class="row padding-top-10 bg-light-primary padding-bottom-10" ng-init="showEvaluate=false">
-                            <div class="col-lg-1 col-sm-1">
+                        <div class="row padding-top-10 bg-light-primary padding-bottom-10 font-size-17-5" ng-init="showEvaluate=false">
+                            <div class="col-lg-2 col-sm-2">
                                 <strong ng-class="{'fa fa-user':!productEvaluate.anonymous,'fa fa-user-secret':productEvaluate.anonymous}">
                                     <span ng-if="productEvaluate.anonymous">匿名用户</span>
                                     <span ng-if="!productEvaluate.anonymous">{{productEvaluate.order.user.name}}</span>
                                 </strong>
                             </div>
-                            <div class="co2-sm-2 col-lg-2">
+                            <div class="col-sm-3 col-lg-3">
                                 发表于<i class="fa fa-clock-o"></i>{{productEvaluate.date | date:'yyyy-MM-dd hh:mm'}}
                             </div>
-                            <div class="col-sm-2 col-lg-2" ng-init="$parent.ratingVal=productEvaluate.grade">
+                            <div class="col-sm-3 col-lg-3" ng-init="$parent.ratingVal=productEvaluate.grade">
                                 <div star rating-value="$parent.ratingVal" max="$parent.max" on-hover="$parent.onHover" on-leave="$parent.onLeave" readonly="true"></div>
                             </div>
                         </div>

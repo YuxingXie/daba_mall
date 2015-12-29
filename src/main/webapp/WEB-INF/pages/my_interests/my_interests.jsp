@@ -28,7 +28,7 @@
                 </tr>
                 <tr name="interest" ng-if="interests&&interests.length>0" ng-repeat="interest in interests" >
                     <td>
-                        <img class="img-responsive img-ico-sm text-right inline-block" ng-src="${path}/{{interest.productSeries.pictures[0].picture}}">
+                        <img class="img-responsive text-right inline-block" ng-src="${path}/{{interest.productSeries.pictures[0].iconPicture}}">
                         <a class="inline-block" ng-href="${path}/product_series/{{interest.productSeries.id}}">{{interest.productSeries.name}}</a>
                     </td>
 

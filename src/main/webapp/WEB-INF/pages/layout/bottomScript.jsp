@@ -123,6 +123,16 @@
             $("#showProductModal").modal('hide');
 
         }
+        $scope.toggleInterest=function(productSeriesId){
+            var url="${path}/product_series/toggle_interest";
+//        url+="?productSeriesId="+$scope.productSeries.id;
+            if(!productSeriesId) return;
+            if(!productSeriesId==="") return;
+            url+="?productSeriesId="+productSeriesId;
+            $http.get(url).success(function (data) {
+                $scope.interestInfo = data;
+            });
+        }
     }])
     .directive('star', function () {
                 return {

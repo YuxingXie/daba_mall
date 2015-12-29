@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public class InterestDao  extends BaseMongoDao<Interest> {
     public List<Interest> findInterestsOfUser(User user) {
+        if (user==null) return null;
         DBObject dbObject=new BasicDBObject();
         dbObject.put("user",user);
         List<Interest> interests=findAll(dbObject);

@@ -303,70 +303,73 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;</button>
-                        <table>
-                            <tr>
-                                <th class="modal-title" >{{productSelected.productSeries.name}}</th>
-                                <th class="center-block">
-                                    <div class="center-block" star rating-value="ratingVal" max="max" on-hover="onHover" on-leave="onLeave" readonly="true"></div>
-                                </th>
-                            </tr>
-                        </table>
+                            <div class="row">
+                                <div class="modal-title col-sm-3 col-lg-3" ><h3>{{productSelected.productSeries.name}}</h3></div>
+                                <div class="center-block col-sm-5 col-lg-5">
+                                    <h3><div class="center-block" star rating-value="ratingVal" max="max" on-hover="onHover" on-leave="onLeave" readonly="true"></div></h3>
+                                </div>
+                            </div>
+
 
                     </div>
                     <form name="popForm" class="bg-success">
-                        <div class="row">
-
-                            <div class="easyzoom easyzoom--overlay easyzoom--with-thumbnails">
-                                <a ng-href="${path}/{{productSelected.productSeries.pictures[0].bigPicture}}">
-                                    <img ng-src="${path}/{{productSelected.productSeries.pictures[0].picture}}" alt="" width="320" height="180"/>
-                                </a>
-                            </div>
-                            <ul class="thumbnails easyzoom-thumbnails">
-                                <li ng-repeat="picture in productSelected.productSeries.pictures">
-                                    <a ng-href="${path}/{{picture.bigPicture}}" data-standard="${path}/{{picture.picture}}">
-                                        <img ng-src="${path}/{{picture.picture}}" alt="" class="img-ico-md" />
+                        <div class="row padding-top-10">
+                            <div class="col-lg-2 col-sm-2"></div>
+                            <div class="col-lg-8 col-sm-8">
+                                <div class="easyzoom easyzoom--overlay easyzoom--with-thumbnails">
+                                    <a ng-href="${path}/{{productSelected.productSeries.pictures[0].bigPicture}}">
+                                        <img ng-src="${path}/{{productSelected.productSeries.pictures[0].picture}}" alt="" width="320" height="180"/>
                                     </a>
-                                </li>
-                            </ul>
+                                </div>
+                                <ul class="thumbnails easyzoom-thumbnails">
+                                    <li ng-repeat="picture in productSelected.productSeries.pictures">
+                                        <a ng-href="${path}/{{picture.bigPicture}}" data-standard="${path}/{{picture.picture}}">
+                                            <img ng-src="${path}/{{picture.picture}}" alt="" class="img-ico-md" />
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
 
-                        <div class="row table-responsive">
-                            <table class="table table-condensed">
-                                <th>价格</th>
-                                <td class="text-left"><i class="fa fa-rmb"></i>{{productSelected.productSeries.commonPrice}}
-                                    <em ng-if="productSelected.productSeries.currentPrice &&productSelected.productSeries.currentPrice.prevPrice &&lowPrice()">
-                                        <del><i class="fa fa-rmb"></i>{{productSelected.productSeries.currentPrice.prevPrice.price}}</del>
-                                    </em>
-                                </td>
-                                <th>库存<i class="fa fa-cubes"></i></th>
-                                <td class="text-left">{{productSelected.productSeries.productStore.remain}}</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4"><i>{{productSelected.productSeries.description}}</i></td>
-                                </tr>
-                                <tr>
-                                    <th>选择商品<i class="fa fa-flag"></i></th>
-                                    <th colspan="3">
-                                        <span ng-repeat="productProperty in productSelected.productSeries.productProperties">
-                                        <i class="fa fa-spin fa-sun-o"></i>{{productProperty.propertyName}}:
-                                        <select  ng-model="$parent.productSelected.productPropertyValueList[$index]"
-                                                 required="true"
-                                                 ng-options="productPropertyValue.value for productPropertyValue in productProperty.propertyValues"></select>
 
-                                        </span>
-
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th>输入数量<i class="fa fa-cube"></i></th>
-                                    <td><input type="number" min="1" class="" ng-model="productSelected.amount" style="max-width: 100px;"></td>
-                                    <td> <button class="btn btn-primary add2cart pull-right fa fa-shopping-cart" type="button" data-ng-click="add2cart()">添加到购物车</button></td>
-                                    <td>
+                                <div class="row">
+                                    <div class="col-lg-3 col-sm-3">
+                                        <h4>价格 <i class="fa fa-rmb"></i>{{productSelected.productSeries.commonPrice}}
+                                        <em ng-if="productSelected.productSeries.currentPrice &&productSelected.productSeries.currentPrice.prevPrice &&lowPrice()">
+                                            <del><i class="fa fa-rmb"></i>{{productSelected.productSeries.currentPrice.prevPrice.price}}</del>
+                                        </em>
+                                        </h4>
+                                    </div>
+                                <div class="col-lg-3 col-sm-3"><h4>库存<i class="fa fa-cubes"></i>{{productSelected.productSeries.productStore.remain}}</h4></div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12"><i>{{productSelected.productSeries.description}}</i></div>
+                                </div>
+                                <div class="row padding-top-10" ng-if="productSelected.productSeries.productProperties&&productSelected.productSeries.productProperties.length>0">
+                                    <div class="col-lg-2 col-sm-2"><h5>选择商品</h5></div>
+                                    <div class="col-lg-3 col-sm-3 input-group" ng-repeat="productProperty in productSelected.productSeries.productProperties">
+                                        <span class="input-group-btn"><button class="btn btn-primary disabled">{{productProperty.propertyName}}</button></span>
+                                        <select ng-model="$parent.productSelected.productPropertyValueList[$index]"
+                                             required="true" class="form-control"
+                                             ng-options="productPropertyValue.value for productPropertyValue in productProperty.propertyValues">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row padding-top-10">
+                                    <div class="col-lg-2 col-sm-2"><h5>输入数量</h5></div>
+                                    <div class="col-lg-4 col-sm-4">
+                                        <input type="number" min="1" class="form-control" ng-model="productSelected.amount"/></div>
+                                    </div>
+                                </div>
+                                <div class="row padding-bottom-20">
+                                    <div class="col-lg-2 col-sm-2 col-lg-push-8 col-sm-push-8">
+                                        <button class="btn btn-primary add2cart pull-right fa fa-shopping-cart" type="button" data-ng-click="add2cart()">添加到购物车</button>
+                                    </div>
+                                    <div class="col-lg-1 col-sm-1 col-lg-push-8 col-sm-push-8">
                                         <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">关闭</button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                                    </div>
+                                </div>
+
+
                     </form>
                 </div>
             </div>

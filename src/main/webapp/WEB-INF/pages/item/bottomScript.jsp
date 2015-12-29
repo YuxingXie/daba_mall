@@ -15,7 +15,7 @@ mainApp.controller('productSeriesCtrl', ['$scope', '$http', function ($scope, $h
     $scope.productSelected={};
     $scope.productSelected.productPropertyValueList=[];
     $scope.productSelected.amount = 1;
-    $scope.interested=false;
+    $scope.$parent.interestInfo={};
 
     $scope.paginationConf = {
 //            currentPage: 1,
@@ -31,7 +31,7 @@ mainApp.controller('productSeriesCtrl', ['$scope', '$http', function ($scope, $h
         $scope.productSelected.productSeries= $scope.productSeries;
         $scope._page=data._page;
         $scope.page=data.page;
-        $scope.interested=data.interested;
+        $scope.$parent.interestInfo.interested=data.interested;
         $scope.order=data.order;
         if($scope.order){
             var $tour_step1=$(".tour-step1");
@@ -156,13 +156,7 @@ mainApp.controller('productSeriesCtrl', ['$scope', '$http', function ($scope, $h
             }
         });
     }
-    $scope.toggleInterest=function(){
-        var url="${path}/product_series/toggle_interest";
-        url+="?productSeriesId="+$scope.productSeries.id;
-        $http.get(url).success(function (data) {
-            $scope.interested = data.interested;
-        });
-    }
+
     $http.get('${path}/product_series/data/${id}?orderId=${requestScope.orderId}').success(function (data) {
         $scope.data = data;
     });

@@ -200,7 +200,7 @@ public class ProductSeriesController extends BaseRestSpringController {
             ServiceManager.interestService.removeAll(interests);
             model.put("interested", false);
         }
-
+        model.put("productSeriesId", productSeriesId);
         return new ResponseEntity<Map>(model,HttpStatus.OK);
     }
     @RequestMapping("/create_input.do")
