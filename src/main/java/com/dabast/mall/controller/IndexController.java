@@ -72,18 +72,35 @@ public class IndexController extends BaseRestSpringController {
         List<Interest> interests=ServiceManager.interestService.findInterestsOfUser(getLoginUser(session));
         model.addAttribute("interests", interests);
         List<String[]> top3 = ServiceManager.productSeriesService.getTop3ProductSeries();
-        model.addAttribute("top3", top3);
+
         List<ProductSeries> hotSells = ServiceManager.productSeriesService.getHotSell(Constant.HOT_SELL_COUNT);
         List<ProductSeries> newProducts = ServiceManager.productSeriesService.getNewProducts(Constant.NEW_PRODUCTS_COUNT);
         List<ProductSeries> lowPrices = ServiceManager.productSeriesService.getLowPrices(Constant.LOW_PRICE_COUNT);
+        setInterest(newProducts,interests);
+        setInterest(hotSells,interests);
+        setInterest(lowPrices,interests);
         model.addAttribute("newProducts", newProducts);
         model.addAttribute("hotSells", hotSells);
         model.addAttribute("lowPrices", lowPrices);
-
+        model.addAttribute("top3", top3);
 //        ServiceManager.productStoreInAndOutService.clearNullUserInAndOut();
         return "index";
     }
-
+    private void setInterest(List<ProductSeries> productSeriesList,List<Interest> interestList){
+        if (productSeriesList==null) return;
+        if (interestList==null) return;
+        out:for (ProductSeries productSeries:productSeriesList){
+//          if (interestList.contains(productSeries))  productSeries.setInterested(true);
+            String productSeriesId=productSeries.getId();
+            inner:for (Interest interest:interestList){
+                ProductSeries interestProductSeries=interest.getProductSeries();
+                if(productSeriesId.equalsIgnoreCase(interestProductSeries.getId())){
+                    productSeries.setInterested(true);
+                    break inner;
+                }
+            }
+        }
+    }
 
     @RequestMapping(value = "/product/search")
     public String  searchProducts(ModelMap model,String keyWord,Integer page) {

@@ -63,7 +63,8 @@ public class ProductSeries {
     private int evaluateCount;
     @Field
     private boolean newProduct;
-
+    @Transient
+    private boolean interested;
     @Transient
     private List<ProductProperty> productProperties;
     @Transient
@@ -80,6 +81,13 @@ public class ProductSeries {
     @Transient
     private Double productSeriesEvaluateGrade;
 
+    public boolean isInterested() {
+        return interested;
+    }
+
+    public void setInterested(boolean interested) {
+        this.interested = interested;
+    }
 
     public Double getProductSeriesEvaluateGrade() {
         if (productEvaluateList==null) return 0d;

@@ -115,34 +115,12 @@
                                     <div class="row margin-left-2 padding-bottom-10 padding-right-0">
                                         <div class="col-lg-12 col-sm-12 margin-left--10">
                                             <div class="btn-group btn-group-xs pull-right">
-                                                <c:set var="interested" value="false" />
-                                                <c:choose>
-
-                                                    <c:when test="${not empty interests}">
-
-                                                        <c:forEach var="interest" items="${interests}">
-                                                            <c:if test="${interest.productSeries.id eq productSeries.id}">
-                                                                <c:set var="interested" value="true"/>
-                                                            </c:if>
-                                                        </c:forEach>
-                                                        ${interest}
-                                                        <c:if test="${interested eq 'true'}">
-                                                            <btn class="btn btn-danger" ng-click="toggleInterest('${productSeries.id}')">已关注<i class="fa fa-heart-o"></i></btn>
-                                                        </c:if>
-                                                        <c:if test="${interested eq 'false'}">
-                                                            <btn class="btn btn-danger" ng-click="toggleInterest('${productSeries.id}')">关注<i class="fa fa-heart-o"></i></btn>
-                                                        </c:if>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        ${interest}--
-                                                        <btn class="btn btn-danger" ng-click="toggleInterest('${productSeries.id}')">关注<i class="fa fa-heart-o"></i></btn>
-                                                    </c:otherwise>
-                                                </c:choose>
-
+                                                <button class="btn btn-danger" ng-click="toggleInterest('${productSeries.id}')">
+                                                    <c:if test="${productSeries.interested}">已</c:if>关注
+                                                    <i ng-class="{'fa':true,'fa-heart-o':${productSeries.interested},'fa-heart':!${productSeries.interested}}"></i></button>
                                                 <button class="fa fa-shopping-cart btn btn-danger" data-ng-click="popover('${productSeries.id}');">添加到购物车</button>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="row margin-left-10 margin-right-5 text-left padding-bottom-10">
                                         <div class="col-lg-12 col-sm-12"><em>
