@@ -73,17 +73,12 @@ public class IndexController extends BaseRestSpringController {
         model.addAttribute("interests", interests);
         List<String[]> top3 = ServiceManager.productSeriesService.getTop3ProductSeries();
 
-        List<ProductSeries> hotSells = ServiceManager.productSeriesService.getHotSell(Constant.HOT_SELL_COUNT);
-        List<ProductSeries> newProducts = ServiceManager.productSeriesService.getNewProducts(Constant.NEW_PRODUCTS_COUNT);
-        List<ProductSeries> lowPrices = ServiceManager.productSeriesService.getLowPrices(Constant.LOW_PRICE_COUNT);
-        setInterest(newProducts,interests);
-        setInterest(hotSells,interests);
-        setInterest(lowPrices,interests);
-        model.addAttribute("newProducts", newProducts);
-        model.addAttribute("hotSells", hotSells);
-        model.addAttribute("lowPrices", lowPrices);
         model.addAttribute("top3", top3);
-//        ServiceManager.productStoreInAndOutService.clearNullUserInAndOut();
+        List<HomePageBlock> homePageBlocks=ServiceManager.homePageBlockService.findAll(new BasicDBObject("show",true));
+        for (HomePageBlock homePageBlock:homePageBlocks){
+            setInterest(homePageBlock.getProductSeriesList(),interests);
+        }
+        model.addAttribute("homePageBlocks",homePageBlocks);
         return "index";
     }
     private void setInterest(List<ProductSeries> productSeriesList,List<Interest> interestList){

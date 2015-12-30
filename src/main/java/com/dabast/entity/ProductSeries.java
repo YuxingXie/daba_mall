@@ -18,7 +18,6 @@ public class ProductSeries {
     @Id
     private String id;
     @Length(min=2,max=100)
-    @Field(value = "name")
     private String name;
     @Field(value = "pictures")
     private List<ProductSeriesPicture> pictures;

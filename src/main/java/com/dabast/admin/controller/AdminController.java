@@ -10,13 +10,13 @@ import com.dabast.mall.service.IProductSeriesService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -227,5 +227,21 @@ public class AdminController extends BaseRestSpringController {
             ServiceManager.productSubCategoryService.insert(productSubCategory);
         }
         return "redirect:/admin/product_category/create_input";
+    }
+    @RequestMapping(value="/home_page_block/new")
+    public ResponseEntity<HomePageBlock> create(@RequestBody HomePageBlock homePageBlock){
+        ServiceManager.homePageBlockService.insert(homePageBlock);
+        return new ResponseEntity<HomePageBlock>(homePageBlock, HttpStatus.OK);
+    }
+    @RequestMapping(value="/home_page_block/list/json")
+    public ResponseEntity<List<HomePageBlock>> jsonList(){
+        List<HomePageBlock> list=ServiceManager.homePageBlockService.findAll();
+        return new ResponseEntity<List<HomePageBlock>>(list, HttpStatus.OK);
+    }
+    @RequestMapping(value="/home_page_block/remove/{id}")
+    public ResponseEntity<List<HomePageBlock>> removeHomePageBlock(@PathVariable String id){
+        ServiceManager.homePageBlockService.removeById(id);
+        List<HomePageBlock> list=ServiceManager.homePageBlockService.findAll();
+        return new ResponseEntity<List<HomePageBlock>>(list, HttpStatus.OK);
     }
 }

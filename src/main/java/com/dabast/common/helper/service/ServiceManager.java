@@ -26,6 +26,7 @@ public class ServiceManager implements InitializingBean{
     public static IInterestService interestService;
     public static IProductEvaluateService productEvaluateService;
     public static INotifyService notifyService;
+    public static IHomePageBlockService homePageBlockService;
 
     public void setBankService(IBankService bankService) {
         ServiceManager.bankService = bankService;
@@ -33,6 +34,10 @@ public class ServiceManager implements InitializingBean{
 
     public void setProductEvaluateService(IProductEvaluateService productEvaluateService) {
         ServiceManager.productEvaluateService = productEvaluateService;
+    }
+
+    public void setHomePageBlockService(IHomePageBlockService homePageBlockService) {
+        ServiceManager.homePageBlockService = homePageBlockService;
     }
 
     public void setNotifyService(INotifyService notifyService) {

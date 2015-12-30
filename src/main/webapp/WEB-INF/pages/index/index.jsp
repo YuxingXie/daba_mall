@@ -67,178 +67,78 @@
     </div>
     <div class="bg-light-primary">
         <div class="container main">
-            <div class="row margin-bottom-40">
-                <div class="row">
-                    <h2 class="col-lg-10 col-sm-10">新品上市</h2>
-                    <p class="col-lg-10 col-sm-10">国家专利制作工艺,为您打造健康美味的生态食品</p>
-                </div>
-                <div class="row">
-                    <c:choose>
-                        <c:when test="${empty newProducts}"><p class="col-lg-10 col-sm-10">敬请期待!</p></c:when>
-                        <c:otherwise>
-                            <c:forEach items="${newProducts}" var="productSeries" varStatus="pdVarStatus">
-                                <div class="col-lg-3 col-sm-3 padding-left-5 padding-right-0 margin-top-20 height-290">
-                                <c:choose>
-                                    <c:when test="${empty productSeries.pictures}">
-                                        <img src="${path}/statics/img/img_not_found.jpg" class="img-responsive img-thumbnail" >
-                                    </c:when>
-                                    <c:otherwise>
-                                        <c:set var="interval" value="${2000+(pdVarStatus.index*50)}"/>
-                                        <div class="carousel slide" id="${productSeries.id}" data-ride="carousel"data-interval="${interval}">
-                                                <ol class="carousel-indicators">
-                                                    <c:forEach var="picture" items="${productSeries.pictures}" varStatus="varStatus">
-                                                        <c:set var="active" value="${varStatus.index eq 0?'class=\"active\"':''}"/>
+            <c:forEach var="block" items="${homePageBlocks}">
+                <div class="row margin-bottom-40">
+                    <div class="row">
+                        <h2 class="col-lg-10 col-sm-10">${block.title}</h2>
+                        <h3 class="col-lg-10 col-sm-10">${block.description}</h3>
+                    </div>
+                    <div class="row">
+                        <c:choose>
+                            <c:when test="${empty block.productSeriesList}"><p class="col-lg-10 col-sm-10">${block.descriptionWhenEmpty}</p></c:when>
+                            <c:otherwise>
+                                <c:forEach items="${block.productSeriesList}" var="productSeries" varStatus="pdVarStatus">
+                                    <div class="col-lg-3 col-sm-3 padding-left-5 padding-right-0 margin-top-20 height-290">
+                                        <c:choose>
+                                            <c:when test="${empty productSeries.pictures}">
+                                                <img src="${path}/statics/img/img_not_found.jpg" class="img-responsive img-thumbnail" >
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:set var="interval" value="${2000+(pdVarStatus.index*50)}"/>
+                                                <div class="carousel slide" id="${productSeries.id}" data-ride="carousel"data-interval="${interval}">
+                                                    <ol class="carousel-indicators">
+                                                        <c:forEach var="picture" items="${productSeries.pictures}" varStatus="varStatus">
+                                                            <c:set var="active" value="${varStatus.index eq 0?'class=\"active\"':''}"/>
                                                             <li data-target="#${productSeries.id}" data-slide-to="${varStatus.index}" ${active}></li>
-                                                    </c:forEach>
-                                                </ol>
-                                                <div class="carousel-inner">
-                                                    <c:forEach var="picture" items="${productSeries.pictures}" varStatus="varStatus">
-                                                        <c:set var="active" value="${varStatus.index eq 0?'active':''}"/>
-                                                        <div class="item ${active}"><a href="${path}/product_series/${productSeries.id}">
-                                                            <img src="${path}/${picture.picture}" class="img-responsive img-thumbnail"></a>
-                                                        </div>
-                                                    </c:forEach>
+                                                        </c:forEach>
+                                                    </ol>
+                                                    <div class="carousel-inner">
+                                                        <c:forEach var="picture" items="${productSeries.pictures}" varStatus="varStatus">
+                                                            <c:set var="active" value="${varStatus.index eq 0?'active':''}"/>
+                                                            <div class="item ${active}"><a href="${path}/product_series/${productSeries.id}">
+                                                                <img src="${path}/${picture.picture}" class="img-responsive img-thumbnail"></a>
+                                                            </div>
+                                                        </c:forEach>
 
+                                                    </div>
                                                 </div>
-                                                <%--<a class="carousel-control left" href="#${productSeries.id}" data-slide="prev">&lsaquo;</a>--%>
-                                                <%--<a class="carousel-control right" href="#${productSeries.id}"data-slide="next">&rsaquo;</a>--%>
-                                        </div>
-                                        <c:if test="${productSeries.newProduct}"><div class="sticker sticker-new"></div></c:if>
-                                    </c:otherwise>
-                                </c:choose>
-                                <div class="bg-info">
-                                    <div class="row margin-left-2 padding-top-10 padding-bottom-10">
-                                        <a href="${path}/product_series/${productSeries.id}" class="fa fa-2x">${productSeries.name}</a>
-                                        <i class="fa fa-rmb pi-price fa-2x">${productSeries.commonPrice}</i>
+                                                <c:if test="${productSeries.newProduct}"><div class="sticker sticker-new"></div></c:if>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <div class="bg-info">
+                                            <div class="row margin-left-2 padding-top-10 padding-bottom-10">
+                                                <a href="${path}/product_series/${productSeries.id}" class="fa fa-2x">${productSeries.name}</a>
+                                                <i class="fa fa-rmb pi-price fa-2x">${productSeries.commonPrice}</i>
 
-                                    </div>
-                                    <div class="row margin-left-2 padding-bottom-10 padding-right-0">
-                                        <div class="col-lg-12 col-sm-12 margin-left--10">
-                                            <div class="btn-group btn-group-xs pull-right">
-                                                <button class="btn btn-danger" ng-click="toggleInterest('${productSeries.id}')">
-                                                    <c:if test="${productSeries.interested}">已</c:if>关注
-                                                    <i ng-class="{'fa':true,'fa-heart-o':${productSeries.interested},'fa-heart':!${productSeries.interested}}"></i></button>
-                                                <button class="fa fa-shopping-cart btn btn-danger" data-ng-click="popover('${productSeries.id}');">添加到购物车</button>
+                                            </div>
+                                            <div class="row margin-left-2 padding-bottom-10 padding-right-0">
+                                                <div class="col-lg-12 col-sm-12 margin-left--10">
+                                                    <div class="btn-group btn-group-xs pull-right" ng-init="$parent.interested['${productSeries.id}']=${productSeries.interested};">
+                                                        <button class="btn btn-danger" ng-click="toggleInterest('${productSeries.id}')">
+                                                            <span ng-if="$parent.interested['${productSeries.id}']">已</span>关注
+                                                            <i ng-class="{'fa':true,'fa-heart':$parent.interested['${productSeries.id}'],'fa-heart-o':!$parent.interested['${productSeries.id}']}"></i>
+                                                        </button>
+                                                        <button class="fa fa-shopping-cart btn btn-danger" data-ng-click="popover('${productSeries.id}');">添加到购物车</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row margin-left-10 margin-right-5 text-left padding-bottom-10">
+                                                <div class="col-lg-12 col-sm-12"><em>
+                                                    <c:choose>
+                                                        <c:when test="${fn:length(productSeries.description) > 30}">${fn:substring(productSeries.description, 0, 30)}...</c:when>
+                                                        <c:otherwise>${productSeries.description}</c:otherwise>
+                                                    </c:choose>
+                                                </em></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row margin-left-10 margin-right-5 text-left padding-bottom-10">
-                                        <div class="col-lg-12 col-sm-12"><em>
-                                            <c:choose>
-                                                <c:when test="${fn:length(productSeries.description) > 30}">${fn:substring(productSeries.description, 0, 30)}...</c:when>
-                                                <c:otherwise>${productSeries.description}</c:otherwise>
-                                            </c:choose>
-                                        </em></div>
-                                    </div>
-                                </div>
-                                </div>
 
-                            </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
                 </div>
-            </div>
-
-            <div class="row margin-bottom-40">
-                <div class="row">
-                    <h2 class="col-lg-10 col-sm-10">热卖商品</h2>
-                    <p class="col-lg-10 col-sm-10">独一无二的制作工艺，让我们的产品成为您的首选</p>
-                </div>
-                <div class="row">
-                    <c:choose>
-                        <c:when test="${empty hotSells}"><p class="col-lg-10 col-sm-10">敬请期待!</p></c:when>
-                        <c:otherwise>
-                            <c:forEach items="${hotSells}" var="productSeries">
-                                <div class="col-lg-3 col-sm-3 padding-left-5 padding-right-0 margin-top-20 height-290">
-                                    <div class="thumbnail">
-                                        <a href="${path}/product_series/${productSeries.id}">
-                                            <c:choose>
-                                                <c:when test="${empty productSeries.pictures}">
-
-                                                    <img src="${path}/statics/img/img_not_found.jpg" class="img-responsive img-thumbnail" >
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <img src="${path}/${productSeries.pictures[0].picture}" class="img-responsive img-thumbnail height-265" >
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </a>
-                                        <c:if test="${productSeries.newProduct}"><div class="sticker sticker-new"></div></c:if>
-                                        <div class="row margin-left-0">
-                                            <a href="${path}/product_series/${productSeries.id}" class="pull-left">${productSeries.name}</a>
-                                            <i class="fa fa-rmb pi-price"></i>${productSeries.commonPrice}&nbsp;&nbsp;
-
-
-                                        </div>
-                                        <div class="row margin-left-0">
-                                            <a href="javascript:void(0)" class="fa fa-shopping-cart btn btn-danger btn-xs pull-right margin-right-20"
-                                               data-ng-click="popover('${productSeries.id}');">添加到购物车</a>
-                                        </div>
-                                        <div class="row  margin-left-0 margin-right-0 text-left bg-info height-50">
-                                            <em>
-                                                <c:choose>
-                                                    <c:when test="${fn:length(productSeries.description) > 30}">${fn:substring(productSeries.description, 0, 30)}...</c:when>
-                                                    <c:otherwise>${productSeries.description}</c:otherwise>
-                                                </c:choose>
-                                            </em>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-                <%--<div class="row pull-right"><input type="button" value="更多热卖商品" class="btn btn-primary fa fa-search"/></div>--%>
-            </div>
-
-            <div class="row margin-bottom-40">
-                <div class="row">
-                    <h2 class="col-lg-10 col-sm-10">特价优惠</h2>
-                    <p class="col-lg-10 col-sm-10">活动期间享受优惠，实惠多多！</p>
-                </div>
-                <div class="row">
-                    <c:choose>
-                        <c:when test="${empty lowPrices}"><p class="col-lg-10 col-sm-10">敬请期待!</p></c:when>
-                        <c:otherwise>
-                            <c:forEach items="${lowPrices}" var="productSeries">
-                                <div class="col-lg-3 col-sm-3 padding-left-5 padding-right-0 margin-top-20 height-290">
-                                    <div class="thumbnail">
-                                        <a href="${path}/product_series/${productSeries.id}">
-                                            <c:choose>
-                                                <c:when test="${empty productSeries.pictures}">
-
-                                                    <img src="${path}/statics/img/img_not_found.jpg" class="img-responsive img-thumbnail" >
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <img src="${path}/${productSeries.pictures[0].picture}" class="img-responsive img-thumbnail height-265" >
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </a>
-                                        <c:if test="${productSeries.newProduct}"><div class="sticker sticker-new"></div></c:if>
-                                        <div class="row margin-left-0">
-                                            <a href="${path}/product_series/${productSeries.id}" class="pull-left">${productSeries.name}</a>
-                                            <i class="fa fa-rmb pi-price"></i>${productSeries.commonPrice}&nbsp;&nbsp;
-                                            <a href="javascript:void(0)"
-                                               class="fa fa-shopping-cart btn btn-danger btn-xs pull-right margin-right-20" data-ng-click="popover('${productSeries.id}');">添加到购物车</a>
-
-                                        </div>
-                                        <div class="row  margin-left-0 margin-right-0 text-left bg-info height-50">
-                                            <em>
-                                                <c:choose>
-                                                    <c:when test="${fn:length(productSeries.description) > 30}">${fn:substring(productSeries.description, 0, 30)}...</c:when>
-                                                    <c:otherwise>${productSeries.description}</c:otherwise>
-                                                </c:choose>
-                                            </em>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-                <%--<div class="row pull-right"><input type="button" value="更多特价商品" class="btn btn-primary fa fa-search"/></div>--%>
-            </div>
+            </c:forEach>
 
 
         </div>

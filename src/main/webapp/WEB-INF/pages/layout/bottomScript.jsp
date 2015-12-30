@@ -26,7 +26,7 @@
 <script>
     var mainApp=angular.module("mainApp",['ui.bootstrap', 'ngRoute','tm.pagination']);
     mainApp .controller('mainController', ['$scope', '$http', function ($scope, $http) {
-
+        $scope.interested={};//关注信息
         $scope.initProductMenu= function () {
             if(!$scope.productCategories){
                 $http.get('${path}/product_series/categories').success(function (data) {
@@ -124,14 +124,17 @@
 
         }
         $scope.toggleInterest=function(productSeriesId){
-            var url="${path}/product_series/toggle_interest";
-//        url+="?productSeriesId="+$scope.productSeries.id;
-            if(!productSeriesId) return;
-            if(!productSeriesId==="") return;
-            url+="?productSeriesId="+productSeriesId;
-            $http.get(url).success(function (data) {
-                $scope.interestInfo = data;
+
+            loginCheckBeforeHandler(function(){
+                var url="${path}/product_series/toggle_interest";
+                if(!productSeriesId) return;
+                if(!productSeriesId==="") return;
+                url+="?productSeriesId="+productSeriesId;
+                $http.get(url).success(function (data) {
+                    $scope.interested[productSeriesId] = data.interested;
+                });
             });
+
         }
     }])
     .directive('star', function () {

@@ -52,7 +52,14 @@ public class ProductSeriesController extends BaseRestSpringController {
 //        model.put("now", new java.sql.Timestamp(System.currentTimeMillis()));
     }
 
-
+    /**
+     * 单个产品json
+     * @param id
+     * @param orderId
+     * @param page
+     * @param session
+     * @return
+     */
     @RequestMapping(value="/data/{id}")
     public ResponseEntity<Map> show(@PathVariable String id,String orderId,Integer page,HttpSession session) {
         Map<String,Object> model=new LinkedHashMap<String, Object>();
@@ -75,6 +82,17 @@ public class ProductSeriesController extends BaseRestSpringController {
         }
         return new ResponseEntity<Map>(model, HttpStatus.OK);
     }
+
+    /**
+     * 单个产品javaBean
+     * @param model
+     * @param id
+     * @param orderId
+     * @param page
+     * @param response
+     * @return
+     */
+
     @RequestMapping(value="/{id}")
     public String forwardShow(ModelMap model,@PathVariable String id,String orderId,Integer page,HttpServletResponse response) {
         model.addAttribute("id",id);
@@ -87,6 +105,16 @@ public class ProductSeriesController extends BaseRestSpringController {
         }
 
         return "item";
+    }
+
+    /**
+     * 全部产品json
+     * @return
+     */
+    @RequestMapping(value="/data")
+    public ResponseEntity<List<ProductSeries>> list() {
+        List<ProductSeries> list=productSeriesService.findAll();
+        return new ResponseEntity<List<ProductSeries>>(list, HttpStatus.OK);
     }
     @RequestMapping(value="/sort/{id}")
     public String showSort(ModelMap model,@PathVariable String id) {

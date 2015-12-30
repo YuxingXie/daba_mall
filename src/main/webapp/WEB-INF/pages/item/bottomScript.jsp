@@ -15,8 +15,6 @@ mainApp.controller('productSeriesCtrl', ['$scope', '$http', function ($scope, $h
     $scope.productSelected={};
     $scope.productSelected.productPropertyValueList=[];
     $scope.productSelected.amount = 1;
-    $scope.$parent.interestInfo={};
-
     $scope.paginationConf = {
 //            currentPage: 1,
 //            totalItems: 20,
@@ -31,7 +29,7 @@ mainApp.controller('productSeriesCtrl', ['$scope', '$http', function ($scope, $h
         $scope.productSelected.productSeries= $scope.productSeries;
         $scope._page=data._page;
         $scope.page=data.page;
-        $scope.$parent.interestInfo.interested=data.interested;
+        $scope.$parent.interested[$scope.productSeries.id]=data.interested;
         $scope.order=data.order;
         if($scope.order){
             var $tour_step1=$(".tour-step1");

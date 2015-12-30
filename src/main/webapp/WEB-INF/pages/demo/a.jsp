@@ -93,8 +93,6 @@
         type="text/javascript"
         src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js">
 </script>
-<%--<script type="text/javascript" src="${path}/statics/assets/plugins/angular-1.2.19/angular.min.js"></script>--%>
-<%--<script type="text/javascript" src="${path}/statics/assets/plugins/angular-1.2.19/angular-route.js"></script>--%>
 <script type="text/javascript">
 
 

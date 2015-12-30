@@ -76,13 +76,15 @@
           <div class="col-lg-4 col-sm-4 pull-left">
 
             <div class="row margin-top-20">
-              <div class="col-sm-6 col-lg-6" ng-if="!$parent.interestInfo.interested">
+              <div class="col-sm-6 col-lg-6" ng-if="!$parent.interested[productSeries.id]">
                 <i class="fa fa-heart-o fa-2x">未关注</i>
               </div>
-              <div class="col-sm-6 col-lg-6" ng-if="$parent.interestInfo.interested">
+              <div class="col-sm-6 col-lg-6" ng-if="$parent.interested[productSeries.id]">
                 <i class="fa fa-heart fa-2x color-red">已关注</i>
               </div>
-              <div class="col-sm-2 col-lg-2"><a href="javascript:void(0)" ng-class="{'fa':true,'fa-toggle-off':!$parent.interestInfo.interested,'fa-toggle-on':$parent.interestInfo.interested,'fa-2x':true}" ng-click="toggleInterest(productSeries.id)"></a></div>
+              <div class="col-sm-2 col-lg-2">
+                  <a href="javascript:void(0)" ng-class="{'fa':true,'fa-toggle-off':!$parent.interested[productSeries.id],'fa-toggle-on':$parent.interested[productSeries.id],'fa-2x':true}" ng-click="toggleInterest(productSeries.id)"></a>
+              </div>
             </div>
               <div class="row margin-top-10 input-group">
                   <div class="input-group form-inline margin-top-10" ng-repeat="productProperty in productSelected.productSeries.productProperties">
