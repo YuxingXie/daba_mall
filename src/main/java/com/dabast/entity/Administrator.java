@@ -16,7 +16,7 @@ public class Administrator {
     private String idCardNo;
     private Date birthday;
     private String sex;
-
+    private String password;
     public String getId() {
         return id;
     }
@@ -55,5 +55,13 @@ public class Administrator {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

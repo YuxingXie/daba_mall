@@ -81,8 +81,7 @@
   $(".btn-info").on('click', function() {
     $('#file-4').fileinput('refresh', {previewClass:'bg-info'});
   });
-  var app = angular.module('productSeriesInputApp', []);
-  app.controller('psiCtrl', ['$scope', '$http', function ($scope, $http) {
+  mainApp.controller('psiCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.list = [];
     $scope.productSubCategories=[];
 //    $scope.noSortFit=false;

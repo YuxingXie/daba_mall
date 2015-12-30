@@ -1,12 +1,13 @@
 package com.dabast.admin.controller;
 
 import com.dabast.common.base.BaseRestSpringController;
+import com.dabast.common.constant.Constant;
 import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.common.helper.service.ServiceManager;
-import com.dabast.common.util.FileUtil;
 import com.dabast.common.util.IconCompressUtil;
 import com.dabast.entity.*;
 import com.dabast.mall.service.IProductSeriesService;
+import com.dabast.support.vo.Message;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -44,11 +45,43 @@ public class AdminController extends BaseRestSpringController {
 
     @RequestMapping(value="/")
     public String index() {
-         return "admin/index/index";
+         return "redirect:/admin-login.jsp";
     }
     @RequestMapping(value="")
     public String index_() {
-        return "admin/index/index";
+        return "redirect:/admin-login.jsp";
+    }
+
+    @RequestMapping(value="/logout")
+    public String logout(HttpSession session) {
+        session.setAttribute(Constant.LOGIN_ADMINISTRATOR,null);
+        session.removeAttribute(Constant.LOGIN_ADMINISTRATOR);
+        return "redirect:/admin-login.jsp";
+    }
+    @RequestMapping(value="/login")
+    public ResponseEntity<Message> login(@RequestBody Administrator administrator,HttpSession session) {
+        Message message=new Message();
+        if (administrator.getName()==null&&administrator.getName().trim().equals("")){
+            message.setMessage("用户名不能为空");
+            message.setSuccess(false);
+            return new ResponseEntity<Message>(message, HttpStatus.OK);
+        }
+        if (administrator.getPassword()==null&&administrator.getName().trim().equals("")){
+            message.setMessage("密码不能为空");
+            message.setSuccess(false);
+            return new ResponseEntity<Message>(message, HttpStatus.OK);
+        }
+        Administrator dbAdmin= ServiceManager.administratorService.findByNameAndPassword(administrator.getName(),administrator.getPassword());
+
+        if (dbAdmin==null){
+            message.setMessage("用户名密码错误");
+            message.setSuccess(false);
+            return new ResponseEntity<Message>(message, HttpStatus.OK);
+        }
+        message.setSuccess(true);
+        message.setMessage("登陆成功，即将为您跳转!");
+        session.setAttribute(Constant.LOGIN_ADMINISTRATOR,dbAdmin);
+        return new ResponseEntity<Message>(message, HttpStatus.OK);
     }
     @RequestMapping(value="/test")
     public String xx() {

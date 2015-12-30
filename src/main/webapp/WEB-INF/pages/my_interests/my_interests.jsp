@@ -42,9 +42,9 @@
                         </span>
                         <span ng-if="interest.productSeries.productStore&&!interest.productSeries.productStore.remain">无法获取</span>
                     </td>
-                    <td>
-                        <a ng-href="${path}/personal/interests/remove/{{interest.id}}" class="fa fa-trash">删除</a>
-                        <a href="javascript:void(0)" class="fa fa-shopping-cart" data-ng-click="popover(interest.productSeries.id)">添加到购物车</a>
+                    <td class="btn-group btn-group-xs">
+                        <a ng-href="${path}/personal/interests/remove/{{interest.id}}" class="btn btn-primary"><i class=" fa fa-trash"></i>删除</a>
+                        <a href="javascript:void(0)" class="btn btn-primary" data-ng-click="popover(interest.productSeries.id)"><i class="fa fa-shopping-cart"></i>添加到购物车</a>
                     </td>
                 </tr>
             </table>

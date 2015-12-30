@@ -1,16 +1,18 @@
 package com.dabast.mall.interceptor;
 
+import com.dabast.common.constant.Constant;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by Administrator on 2015/7/4.
  */
 public class AuthorizedInterceptor implements HandlerInterceptor {
-
+    private static final String LOGIN_URL = "/admin";
     /**
      * 该方法也是需要当前对应的Interceptor的preHandle方法的返回值为true时才会执行。该方法将在整个请求完成之后，也就是DispatcherServlet渲染了视图执行，
      * 这个方法的主要作用是用于清理资源的，当然这个方法也只能在当前这个Interceptor的preHandle方法的返回值为true时才会执行。
@@ -28,14 +30,7 @@ public class AuthorizedInterceptor implements HandlerInterceptor {
      * 或者是调用action，然后要在Interceptor之前调用的内容都写在调用invoke之前，要在Interceptor之后调用的内容都写在调用invoke方法之后。
      */
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-//        Cookie cookieName = CookieTool.getCookieByName(request,"name");
-//        if (cookieName==null) cookieName = new Cookie("name", URLEncoder.encode("","UTF-8"));
-//        Cookie cookiePwd = CookieTool.getCookieByName(request,"password");
-//        if (cookiePwd==null) cookiePwd = new Cookie("password","");
-//        CookieTool.addCookie(request, response, cookieName, 30 * 60 * 1000);
-//        CookieTool.addCookie(request, response, cookiePwd, 30 * 60 * 1000);
-//        System.out.println("响应之后读取cookie用户名：" + URLDecoder.decode(cookieName.getValue(), "UTF-8"));
-//        System.out.println("响应之后读取cookie密码：" + cookiePwd.getValue());
+
     }
 
     /**
@@ -45,15 +40,16 @@ public class AuthorizedInterceptor implements HandlerInterceptor {
      * 回值为false，当preHandle的返回值为false的时候整个请求就结束了。
      */
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-//        System.out.println("进入拦截器");
-//        Cookie cookieName = CookieTool.getCookieByName(request, "name");
-//        Cookie cookiePwd = CookieTool.getCookieByName(request, "password");
-//        if (cookieName == null || cookiePwd == null) {
-//            cookieName = new Cookie("name", " ");
-//            cookiePwd = new Cookie("password", " ");
-//        }
-//        System.out.println("响应之前读取cookie用户名：" + URLDecoder.decode(cookieName.getValue(), "UTF-8"));
-//        System.out.println("响应之前读取cookie密码：" + cookiePwd.getValue());
+        HttpSession session = request.getSession(true);
+        // 从session 里面获取用户名的信息
+        Object obj = session.getAttribute(Constant.LOGIN_ADMINISTRATOR);
+        // 判断如果没有取到用户信息，就跳转到登陆页面，提示用户进行登陆
+        if (obj == null || "".equals(obj.toString())) {
+            String path=request.getServletContext().getContextPath();
+            if (path.equals("/")) path="";
+            response.sendRedirect(path+LOGIN_URL);
+            return false;
+        }
         return true;
     }
 

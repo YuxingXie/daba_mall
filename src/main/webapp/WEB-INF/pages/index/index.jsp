@@ -66,80 +66,88 @@
         <!--LayerSlider end-->
     </div>
     <div class="bg-light-primary">
-        <div class="container main">
-            <c:forEach var="block" items="${homePageBlocks}">
+        <div class="container">
+            <c:choose>
+                <c:when test="${empty homePageBlocks}">
                 <div class="row margin-bottom-40">
-                    <div class="row">
-                        <h2 class="col-lg-10 col-sm-10">${block.title}</h2>
-                        <h3 class="col-lg-10 col-sm-10">${block.description}</h3>
-                    </div>
-                    <div class="row">
-                        <c:choose>
-                            <c:when test="${empty block.productSeriesList}"><p class="col-lg-10 col-sm-10">${block.descriptionWhenEmpty}</p></c:when>
-                            <c:otherwise>
-                                <c:forEach items="${block.productSeriesList}" var="productSeries" varStatus="pdVarStatus">
-                                    <div class="col-lg-3 col-sm-3 padding-left-5 padding-right-0 margin-top-20 height-290">
-                                        <c:choose>
-                                            <c:when test="${empty productSeries.pictures}">
-                                                <img src="${path}/statics/img/img_not_found.jpg" class="img-responsive img-thumbnail" >
-                                            </c:when>
-                                            <c:otherwise>
-                                                <c:set var="interval" value="${2000+(pdVarStatus.index*50)}"/>
-                                                <div class="carousel slide" id="${productSeries.id}" data-ride="carousel"data-interval="${interval}">
-                                                    <ol class="carousel-indicators">
-                                                        <c:forEach var="picture" items="${productSeries.pictures}" varStatus="varStatus">
-                                                            <c:set var="active" value="${varStatus.index eq 0?'class=\"active\"':''}"/>
-                                                            <li data-target="#${productSeries.id}" data-slide-to="${varStatus.index}" ${active}></li>
-                                                        </c:forEach>
-                                                    </ol>
-                                                    <div class="carousel-inner">
-                                                        <c:forEach var="picture" items="${productSeries.pictures}" varStatus="varStatus">
-                                                            <c:set var="active" value="${varStatus.index eq 0?'active':''}"/>
-                                                            <div class="item ${active}"><a href="${path}/product_series/${productSeries.id}">
-                                                                <img src="${path}/${picture.picture}" class="img-responsive img-thumbnail"></a>
-                                                            </div>
-                                                        </c:forEach>
-
-                                                    </div>
-                                                </div>
-                                                <c:if test="${productSeries.newProduct}"><div class="sticker sticker-new"></div></c:if>
-                                            </c:otherwise>
-                                        </c:choose>
-                                        <div class="bg-info">
-                                            <div class="row margin-left-2 padding-top-10 padding-bottom-10">
-                                                <a href="${path}/product_series/${productSeries.id}" class="fa fa-2x">${productSeries.name}</a>
-                                                <i class="fa fa-rmb pi-price fa-2x">${productSeries.commonPrice}</i>
-
-                                            </div>
-                                            <div class="row margin-left-2 padding-bottom-10 padding-right-0">
-                                                <div class="col-lg-12 col-sm-12 margin-left--10">
-                                                    <div class="btn-group btn-group-xs pull-right" ng-init="$parent.interested['${productSeries.id}']=${productSeries.interested};">
-                                                        <button class="btn btn-danger" ng-click="toggleInterest('${productSeries.id}')">
-                                                            <span ng-if="$parent.interested['${productSeries.id}']">已</span>关注
-                                                            <i ng-class="{'fa':true,'fa-heart':$parent.interested['${productSeries.id}'],'fa-heart-o':!$parent.interested['${productSeries.id}']}"></i>
-                                                        </button>
-                                                        <button class="fa fa-shopping-cart btn btn-danger" data-ng-click="popover('${productSeries.id}');">添加到购物车</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row margin-left-10 margin-right-5 text-left padding-bottom-10">
-                                                <div class="col-lg-12 col-sm-12"><em>
-                                                    <c:choose>
-                                                        <c:when test="${fn:length(productSeries.description) > 30}">${fn:substring(productSeries.description, 0, 30)}...</c:when>
-                                                        <c:otherwise>${productSeries.description}</c:otherwise>
-                                                    </c:choose>
-                                                </em></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </c:forEach>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
+                    <h3>首页推荐即将推出，敬请期待!您可以先去产品地图查找喜欢的产品，祝您购物愉快！</h3>
                 </div>
-            </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <c:forEach var="block" items="${homePageBlocks}">
+                        <div class="row margin-bottom-40">
+                            <div class="row">
+                                <h2 class="col-lg-10 col-sm-10">${block.title}</h2>
+                                <h3 class="col-lg-10 col-sm-10">${block.description}</h3>
+                            </div>
+                            <div class="row">
+                                <c:choose>
+                                    <c:when test="${empty block.productSeriesList}"><p class="col-lg-10 col-sm-10">${block.descriptionWhenEmpty}</p></c:when>
+                                    <c:otherwise>
+                                        <c:forEach items="${block.productSeriesList}" var="productSeries" varStatus="pdVarStatus">
+                                            <div class="col-lg-3 col-sm-3 padding-left-5 padding-right-0 margin-top-20 height-290">
+                                                <c:choose>
+                                                    <c:when test="${empty productSeries.pictures}">
+                                                        <img src="${path}/statics/img/img_not_found.jpg" class="img-responsive img-thumbnail" >
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:set var="interval" value="${2000+(pdVarStatus.index*50)}"/>
+                                                        <div class="carousel slide" id="${productSeries.id}" data-ride="carousel"data-interval="${interval}">
+                                                            <ol class="carousel-indicators">
+                                                                <c:forEach var="picture" items="${productSeries.pictures}" varStatus="varStatus">
+                                                                    <c:set var="active" value="${varStatus.index eq 0?'class=\"active\"':''}"/>
+                                                                    <li data-target="#${productSeries.id}" data-slide-to="${varStatus.index}" ${active}></li>
+                                                                </c:forEach>
+                                                            </ol>
+                                                            <div class="carousel-inner">
+                                                                <c:forEach var="picture" items="${productSeries.pictures}" varStatus="varStatus">
+                                                                    <c:set var="active" value="${varStatus.index eq 0?'active':''}"/>
+                                                                    <div class="item ${active}"><a href="${path}/product_series/${productSeries.id}">
+                                                                        <img src="${path}/${picture.picture}" class="img-responsive img-thumbnail"></a>
+                                                                    </div>
+                                                                </c:forEach>
 
+                                                            </div>
+                                                        </div>
+                                                        <c:if test="${productSeries.newProduct}"><div class="sticker sticker-new"></div></c:if>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <div class="bg-info">
+                                                    <div class="row margin-left-2 padding-top-10 padding-bottom-10">
+                                                        <a href="${path}/product_series/${productSeries.id}" class="fa fa-2x">${productSeries.name}</a>
+                                                        <i class="fa fa-rmb pi-price fa-2x">${productSeries.commonPrice}</i>
+
+                                                    </div>
+                                                    <div class="row margin-left-2 padding-bottom-10 padding-right-0">
+                                                        <div class="col-lg-12 col-sm-12 margin-left--10">
+                                                            <div class="btn-group btn-group-xs pull-right" ng-init="$parent.interested['${productSeries.id}']=${productSeries.interested};">
+                                                                <button class="btn btn-danger" ng-click="toggleInterest('${productSeries.id}')">
+                                                                    <span ng-if="$parent.interested['${productSeries.id}']">已</span>关注
+                                                                    <i ng-class="{'fa':true,'fa-heart':$parent.interested['${productSeries.id}'],'fa-heart-o':!$parent.interested['${productSeries.id}']}"></i>
+                                                                </button>
+                                                                <button class="fa fa-shopping-cart btn btn-danger" data-ng-click="popover('${productSeries.id}');">添加到购物车</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row margin-left-10 margin-right-5 text-left padding-bottom-10">
+                                                        <div class="col-lg-12 col-sm-12"><em>
+                                                            <c:choose>
+                                                                <c:when test="${fn:length(productSeries.description) > 30}">${fn:substring(productSeries.description, 0, 30)}...</c:when>
+                                                                <c:otherwise>${productSeries.description}</c:otherwise>
+                                                            </c:choose>
+                                                        </em></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </c:forEach>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
 
         </div>
     </div>

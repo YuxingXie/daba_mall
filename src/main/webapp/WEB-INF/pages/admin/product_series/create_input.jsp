@@ -6,7 +6,7 @@
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 
 
-<div  ng-app="productSeriesInputApp">
+<div   ng-controller='psiCtrl'>
     <div class="table-bordered">
         <div class="row table-bordered">
             <form role="form"  action="${path}/admin/product_series/new" name="productSeries" id="form" enctype="multipart/form-data" method="post">
@@ -49,7 +49,6 @@
                 <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
                     <div class="col-lg-2 col-sm-2  text-right">产品分类</div>
                     <div class="col-lg-6 col-sm-6 form-inline">
-                        <div ng-controller='psiCtrl'>
                             <div ng-if="list.length">
                                 大类：
                                 <select ng-model="productCategory" ng-options="obj as obj.categoryName for obj in list" name="productCategory" class="form-control">
@@ -61,9 +60,9 @@
                                         <option ng-repeat="productSubCategory in productCategory.productSubCategories" value="{{productSubCategory.id}}">{{productSubCategory.subCategoryName}}</option>
                                     </select>
                                 </label>
-                                <label class=" form-inline">没有找到分类？点<a href="${path}/admin/product_category/create_input.jsp">这里</a>新建产品分类</label>
+                                <label class=" form-inline">没有找到分类？点<a href="${path}/admin/product_category/create_input">这里</a>新建产品分类</label>
                             </div>
-                        </div>
+
 
                     </div>
                 </div>

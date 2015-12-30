@@ -7,7 +7,12 @@
 
 
 <div  ng-controller="HomePageBlockInputController">
-    <div class="margin-top-10 margin-bottom-20 margin-left-20">新增首页区块</div>
+    <div class="row margin-top-10 margin-bottom-20 margin-left-20">
+        <div class="center-block font-size-17-5 text-center"><b>新增首页区块</b></div></div>
+    <div class="row margin-top-10 btn-group btn-group-sm">
+        <a href="${path}/admin/home_page_block/list" class="btn btn-primary">返回<i class="fa fa-reply"></i></a>
+        <%--<a href="${path}/admin/home_page_block/create_input" class="btn btn-primary">编辑区块<i class="fa fa-plus"></i></a>--%>
+    </div>
 
     <div class="row table-bordered">
         <form name="form" id="form"ng-submit="submit()">

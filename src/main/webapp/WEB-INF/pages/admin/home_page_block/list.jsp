@@ -22,6 +22,9 @@
                     <th width="12%">状态</th>
                     <th width="25%">操作</th>
                 </tr>
+                <tr ng-if="!homePageBlockList||!homePageBlockList.length">
+                    <td colspan="6">暂时没有首页产品区块</td>
+                </tr>
                 <tr ng-repeat="homePageBlock in homePageBlockList">
                     <td class="font-size-12">{{homePageBlock.title}}</td>
                     <td class="font-size-12">{{homePageBlock.description | limitTo:20}}...</td>
