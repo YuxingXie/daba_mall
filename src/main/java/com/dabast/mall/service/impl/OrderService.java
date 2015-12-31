@@ -9,6 +9,7 @@ import com.dabast.mall.service.IOrderService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/11/2.
@@ -44,6 +45,11 @@ public class OrderService extends BaseEntityManager<Order> implements IOrderServ
     @Override
     public long findUnHandlerOrdersCount() {
         return orderDao.findUnHandlerOrdersCount();
+    }
+
+    @Override
+    public List<Order> findUnHandlerOrders() {
+        return orderDao.findUnHandlerOrders();
     }
 
 }

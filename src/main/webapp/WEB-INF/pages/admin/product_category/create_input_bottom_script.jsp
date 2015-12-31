@@ -3,8 +3,7 @@
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <script>
-
-    mainApp.controller('productCategoryCtrl', ['$scope', '$http', function ($scope, $http) {
+    mainApp.controller('ProductCategoryCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.list = [];
 //        $scope.noSortFit=false;
         $scope.showSort=function(){

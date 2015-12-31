@@ -4,6 +4,8 @@ import com.dabast.common.base.IBaseEntityManager;
 import com.dabast.entity.Order;
 import com.dabast.entity.User;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2015/11/2.
  */
@@ -16,5 +18,7 @@ public interface IOrderService  extends IBaseEntityManager<Order> {
     void removeOrderById(String id);
 
     long findUnHandlerOrdersCount();
+
+    List<Order> findUnHandlerOrders();
 //    void insertOrder(User user);
 }

@@ -20,26 +20,27 @@
   <script> path="${path}";</script>
   <script type="text/javascript" src="${path}/statics/assets/plugins/jquery-2.1.1.js"></script>
   <tiles:insertAttribute name="css"/>
-
-
-
 </head>
 <body>
   <div class="container">
-      <div class="row text-center text-primary" style="margin-top: 30px;margin-bottom:30px;font-size:large">大坝生态农业科技有限公司管理平台</div>
-      <div class="container-fluid">
-        <div class="row btn-group btn-group-xs margin-left-10" ng-init="showMenu=true">
+      <div class="row" style="margin-top: 30px;margin-bottom:30px;font-size:large">
+        <div class="col-lg-3 col-sm-3 btn-group btn-group-xs" ng-init="showMenu=true">
           <a class="btn btn-primary"  data-ng-click="showMenu=!showMenu" href="${path}/admin/logout">
-            <i class="fa fa-user"></i>${sessionScope.administrator.name} 退出<i class="fa fa-sign-out"></i></a>
+              <i class="fa fa-user"></i>${sessionScope.administrator.name} 退出<i class="fa fa-sign-out"></i>
+          </a>
           <button class="btn btn-primary"  data-ng-click="showMenu=!showMenu">
-            隐藏/显示菜单<i ng-class="{'fa':true,'fa-eye':showMenu,'fa-eye-slash':!showMenu}"></i></button>
+            隐藏/显示菜单<i ng-class="{'fa':true,'fa-eye':showMenu,'fa-eye-slash':!showMenu}"></i>
+          </button>
         </div>
+        <div class="col-lg-7 col-sm-7 text-center"><div class="center-block">大坝生态农业科技有限公司管理平台</div></div>
+      </div>
+      <div class="container-fluid">
         <div class="row">
           <div class="col-md-3" ng-if="showMenu">
             <ul id="main-nav" class="main-nav nav nav-tabs nav-stacked" style="">
               <li>
                 <a href="${path}/admin/index/index">
-                  <i class="glyphicon glyphicon-th-large"></i>
+                  <i class="fa fa-home"></i>
                   首页
                 </a>
               </li>
@@ -59,11 +60,11 @@
               </li>
               <li>
                 <a href="#configSetting" class="nav-header collapsed" data-toggle="collapse">
-                  <i class="glyphicon glyphicon-credit-card"></i>
+                  <i class="fa fa-cubes"></i>
                   商品管理
                   <span class="pull-right glyphicon  glyphicon-chevron-toggle"></span>
                 </a>
-                <ul id="configSetting" class="nav nav-list secondmenu collapse in">
+                <ul id="configSetting" class="nav nav-list secondmenu collapse">
                   <li ng-class="{'active':false}"><a href="${path}/admin/product_series/list"><i class="glyphicon glyphicon-globe"></i>&nbsp;产品信息</a></li>
                   <li><a href="${path}/admin/product_category/create_input"><i class="glyphicon glyphicon-star-empty"></i>&nbsp;产品分类信息</a></li>
                   <li><a href="${path}/admin/product_series/create_input"><i class="glyphicon glyphicon-star"></i>&nbsp;产品上架</a></li>
@@ -77,12 +78,12 @@
 
               <li>
                 <a href="#disSetting" class="nav-header collapsed" data-toggle="collapse">
-                  <i class="glyphicon glyphicon-globe"></i>
+                  <i class="fa fa-list"></i>
                   订单管理
                   <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
                 </a>
                 <ul id="disSetting" class="nav nav-list secondmenu collapse">
-                  <li><a href="#"><i class="glyphicon glyphicon-th-list"></i>&nbsp;分发包配置</a></li>
+                  <li><a href="${path}/admin/order/to_handler"><i class="glyphicon glyphicon-th-list"></i>未处理订单</a></li>
                 </ul>
               </li>
 

@@ -38,10 +38,15 @@ public class Order {
      * 订单是否开始处理
      */
     private boolean handler;
+    private Date handlerDate;
+    @DBRef
+    private Administrator handlerAdmin;
     @Transient
     private String payWayString;
     @Field(value = "orderDate")
     private Date orderDate;
+    @Field
+    private Date payDate;
     @Field(value = "acceptAddress")
     @NotEmpty
     private String acceptAddress;
@@ -126,6 +131,14 @@ public class Order {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Date getPayDate() {
+        return payDate;
+    }
+
+    public void setPayDate(Date payDate) {
+        this.payDate = payDate;
     }
 
     public List<ProductSelected> getProductSelectedList() {
@@ -247,6 +260,22 @@ public class Order {
 
     public void setHandler(boolean handler) {
         this.handler = handler;
+    }
+
+    public Date getHandlerDate() {
+        return handlerDate;
+    }
+
+    public void setHandlerDate(Date handlerDate) {
+        this.handlerDate = handlerDate;
+    }
+
+    public Administrator getHandlerAdmin() {
+        return handlerAdmin;
+    }
+
+    public void setHandlerAdmin(Administrator handlerAdmin) {
+        this.handlerAdmin = handlerAdmin;
     }
 
     //货到付款1，在线支付2，公司转账3，邮局汇款4

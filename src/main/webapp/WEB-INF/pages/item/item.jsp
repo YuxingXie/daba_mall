@@ -148,7 +148,7 @@
                                 </strong>
                             </div>
                             <div class="col-sm-3 col-lg-3">
-                                发表于<i class="fa fa-clock-o"></i>{{productEvaluate.date | date:'yyyy-MM-dd hh:mm'}}
+                                发表于<i class="fa fa-clock-o"></i>{{productEvaluate.date | date:'yyyy-MM-dd'}}
                             </div>
                             <div class="col-sm-3 col-lg-3" ng-init="$parent.ratingVal=productEvaluate.grade">
                                 <div star rating-value="$parent.ratingVal" max="$parent.max" on-hover="$parent.onHover" on-leave="$parent.onLeave" readonly="true"></div>
@@ -201,7 +201,7 @@
                                 <p><i>{{evaluateReply.content}}</i></p>
                             </div>
                             <div ng-class="{'col-lg-3 col-sm-3 text-right':true}" style="vertical-align: bottom">
-                                <p><small>回复by:<i class="fa fa-user"></i><strong></strong>{{evaluateReply.replyUser.name}} {{evaluateReply.date | date:'yyyy-MM-dd hh:mm'}}</small></p>
+                                <p><small>回复by:<i class="fa fa-user"></i><strong></strong>{{evaluateReply.replyUser.name}} {{evaluateReply.date | date:'yyyy-MM-dd'}}</small></p>
                             </div>
                         </div>
                     </div>

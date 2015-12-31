@@ -107,4 +107,14 @@ public class OrderDao extends BaseMongoDao<Order> {
         dbObject.put("$or",dbList);
         return getMongoTemplate().count(new BasicQuery(dbObject),Order.class);
     }
+
+    public List<Order> findUnHandlerOrders() {
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("payStatus","y");
+        BasicDBList dbList=new BasicDBList();
+        dbList.add(new BasicDBObject("handler",false));
+        dbList.add(new BasicDBObject("handler",new BasicDBObject("$exists",false)));
+        dbObject.put("$or",dbList);
+        return getMongoTemplate().find(new BasicQuery(dbObject),Order.class);
+    }
 }

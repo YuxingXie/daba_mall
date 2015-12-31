@@ -305,6 +305,7 @@ public class OrderController extends BaseRestSpringController {
                 }else {
                     order.setPayAccount(account0);
                 }
+                order.setPayDate(new Date());
                 ServiceManager.orderService.update(order);
                 updateProductSeriesSales(order);
                 redirectAttributes.addFlashAttribute("order",order);

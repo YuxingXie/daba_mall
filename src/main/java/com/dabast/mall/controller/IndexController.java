@@ -70,8 +70,11 @@ public class IndexController extends BaseRestSpringController {
         List<Interest> interests=ServiceManager.interestService.findInterestsOfUser(getLoginUser(session));
         model.addAttribute("interests", interests);
         TopCarousel topCarousel=ServiceManager.topCarouselService.findByMaxPriority();
-        List<String[]> top3 = topCarousel.getAdContent();
-        model.addAttribute("top3", top3);
+        if(topCarousel!=null){
+            List<String[]> top3 = topCarousel.getAdContent();
+            model.addAttribute("top3", top3);
+        }
+
         List<HomePageBlock> homePageBlocks=ServiceManager.homePageBlockService.findAll(new BasicDBObject("show",true));
         for (HomePageBlock homePageBlock:homePageBlocks){
             setInterest(homePageBlock.getProductSeriesList(),interests);

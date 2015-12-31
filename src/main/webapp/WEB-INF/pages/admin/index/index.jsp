@@ -10,7 +10,7 @@
         <i class="fa fa-volume-up fa-fw"></i>通知<a  ng-if="data.notifies" href="${path}/admin/order/toHandler"><i class="color-red">({{data.notifies}})</i></a>
     </div>
     <div class="row margin-top-20">
-        <i class="fa fa-list-ul"></i>待处理订单<a  ng-if="data.todoOrders" href="${path}/admin/order/toHandler"><i class="color-red">({{data.todoOrders}})</i></a>
+        <i class="fa fa-list-ul"></i>待处理订单<a  ng-if="data.todoOrders" href="${path}/admin/order/to_handler"><i class="color-red">({{data.todoOrders}})</i></a>
     </div>
     <div class="row margin-top-20">
         <i class="fa fa-list-ul"></i>超过四日未收货订单<a ng-if="data.overFourDaysOrders" href="${path}/admin/order/toHandler"><i class="color-red">({{data.overFourDaysOrders}})</i></a>

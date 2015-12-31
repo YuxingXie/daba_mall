@@ -4,7 +4,7 @@
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 
 
-<div ng-controller='productCategoryCtrl'>
+<div ng-controller='ProductCategoryCtrl'>
     <h3>创建分类</h3>
     <div class="row table-bordered">
         <form role="form"  action="${path}/admin/product_category/new" name="productCategoryForm" method="post">
