@@ -9,10 +9,10 @@
 <div  ng-controller="TopCarouselListController">
     <div class="row margin-top-10 margin-bottom-20 margin-left-20"><div class="center-block font-size-17-5 text-center"><b>首页顶部轮播管理</b></div></div>
     <div class="row margin-top-10 btn-group btn-group-sm">
-        <a href="${path}/admin/top3" class="btn btn-primary">新增轮播方案<i class="fa fa-plus"></i></a>
+        <a href="${path}/admin/top3" class="btn btn-primary">新增轮播方案 <i class="fa fa-plus-circle"></i></a>
         <%--<a href="${path}/admin/home_page_block/create_input" class="btn btn-primary">编辑区块<i class="fa fa-plus"></i></a>--%>
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive row">
             <table class="table table-hover table-condensed table-bordered">
                 <tr>
                     <th>方案名称</th>
