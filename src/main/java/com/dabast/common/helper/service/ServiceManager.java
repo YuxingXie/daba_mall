@@ -28,9 +28,14 @@ public class ServiceManager implements InitializingBean{
     public static INotifyService notifyService;
     public static IHomePageBlockService homePageBlockService;
     public static IAdministratorService administratorService;
+    public static ITopCarouselService topCarouselService;
 
     public void setBankService(IBankService bankService) {
         ServiceManager.bankService = bankService;
+    }
+
+    public void setTopCarouselService(ITopCarouselService topCarouselService) {
+        ServiceManager.topCarouselService = topCarouselService;
     }
 
     public void setProductEvaluateService(IProductEvaluateService productEvaluateService) {

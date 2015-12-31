@@ -34,6 +34,10 @@ public class Order {
      * 支付方式，货到付款1，在线支付2，公司转账3，邮局汇款4
      */
     private String payWay;
+    /**
+     * 订单是否开始处理
+     */
+    private boolean handler;
     @Transient
     private String payWayString;
     @Field(value = "orderDate")
@@ -63,20 +67,7 @@ public class Order {
     private String receiveStatus;//全部未确认收货none,部分确认:part,全部确认:all
     @Transient
     private String evaluateStatus;//全部未评价none,部分:part,全部:all
-//    @Transient
-//    private List<ProductSeries> selectedProductSeriesList;
-//    public List<ProductSeries> getSelectedProductSeriesList() {
-//        Assert.notNull(this.productSelectedList);
-//        List<ProductSeries> selectedProductSeriesList=new ArrayList<ProductSeries>();
-//        for(ProductSelected productSelected:this.productSelectedList){
-//            Assert.notNull(productSelected.getProductSeries());
-//            if (!selectedProductSeriesList.contains(productSelected)){
-//                selectedProductSeriesList.add(productSelected.getProductSeries());
-//            }
-//        }
-//        this.selectedProductSeriesList=selectedProductSeriesList;
-//        return this.selectedProductSeriesList;
-//    }
+
 
     public String getReceiveStatus() {
         Assert.notNull(this.productSelectedList);
@@ -250,16 +241,17 @@ public class Order {
         this.payAccount = payAccount;
     }
 
+    public boolean getHandler() {
+        return handler;
+    }
+
+    public void setHandler(boolean handler) {
+        this.handler = handler;
+    }
+
     //货到付款1，在线支付2，公司转账3，邮局汇款4
     public String getPayWayString() {
         return payWayString==null?null:(payWayString.equals("1")?"货到付款":(payWayString.equals("2")?"在线支付":(payWayString.equals("3")?"公司转账":(payWayString.equals("4")?"邮局汇款":null))));
     }
-//    private ProductSeriesPrice getProductSeriesPriceByDate(Date orderDate, List<ProductSeriesPrice> prices) {
-//        for (ProductSeriesPrice productSeriesPrice:prices){
-//            if (orderDate.after(productSeriesPrice.getBeginDate())&&orderDate.before(productSeriesPrice.getEndDate())){
-//                return productSeriesPrice;
-//            }
-//        }
-//        return null;
-//    }
+
 }

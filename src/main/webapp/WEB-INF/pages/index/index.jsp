@@ -31,11 +31,11 @@
                 <img src="${path}/${top3[1][1]}" class="ls-bg" alt="Slide background">
 
                 <div class="ls-s-1 title" style=" top: 35%; left: 60%; slidedirection : fade; slideoutdirection : fade; durationin : 750; durationout : 750; easingin : easeOutQuint; rotatein : 90; rotateout : -90; scalein : .5; scaleout : .5; showuntil : 4000; white-space: nowrap;">
-                    ${top3[1][2]}
+                    ${top3[1][2]}<br>${top3[1][3]}
                 </div>
 
                 <div class="ls-s-1 mini-text" style=" top: 70%; left: 60%; slidedirection : fade; slideoutdirection : fade; durationout : 750; easingin : easeOutQuint; delayin : 300; scalein : .8; scaleout : .8; showuntil : 4000; white-space: nowrap;">
-                    <span>${top3[1][3]}</span>
+                    <span>${top3[1][4]}</span>
                     <a href="javascript:void(0)" data-href="${path}/product_series/${top3[1][0]}" class="add2cart">添加到购物车</a>
                 </div>
             </div>
@@ -59,9 +59,7 @@
                     </div>
                 </div>
             </div>
-
             <!--LayerSlider layer-->
-
         </div>
         <!--LayerSlider end-->
     </div>
@@ -78,7 +76,7 @@
                         <div class="row margin-bottom-40">
                             <div class="row">
                                 <h2 class="col-lg-10 col-sm-10">${block.title}</h2>
-                                <h3 class="col-lg-10 col-sm-10">${block.description}</h3>
+                                <div class="col-lg-10 col-sm-10 font-size-17-5">${block.description}</div>
                             </div>
                             <div class="row">
                                 <c:choose>

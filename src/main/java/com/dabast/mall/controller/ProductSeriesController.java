@@ -116,6 +116,11 @@ public class ProductSeriesController extends BaseRestSpringController {
         List<ProductSeries> list=productSeriesService.findAll();
         return new ResponseEntity<List<ProductSeries>>(list, HttpStatus.OK);
     }
+    @RequestMapping(value="/top3/data")
+    public ResponseEntity<List<String[]>> top3() {
+        List<String[]> top3 = ServiceManager.productSeriesService.getTop3ProductSeriesDemo();
+        return new ResponseEntity<List<String[]>>(top3, HttpStatus.OK);
+    }
     @RequestMapping(value="/sort/{id}")
     public String showSort(ModelMap model,@PathVariable String id) {
         ProductSubCategory productSubCategory = ServiceManager.productSubCategoryService.findProductSubCategoryByIdWithoutProductSeries(id);

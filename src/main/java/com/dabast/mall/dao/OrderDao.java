@@ -97,4 +97,14 @@ public class OrderDao extends BaseMongoDao<Order> {
         getMongoTemplate().findAndRemove(new BasicQuery(evaluateDBObject),ProductEvaluate.class);
         removeById(id);
     }
+
+    public long findUnHandlerOrdersCount() {
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("payStatus","y");
+        BasicDBList dbList=new BasicDBList();
+        dbList.add(new BasicDBObject("handler",false));
+        dbList.add(new BasicDBObject("handler",new BasicDBObject("$exists",false)));
+        dbObject.put("$or",dbList);
+        return getMongoTemplate().count(new BasicQuery(dbObject),Order.class);
+    }
 }

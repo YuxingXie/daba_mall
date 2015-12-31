@@ -45,7 +45,7 @@ public class AuthorizedInterceptor implements HandlerInterceptor {
         Object obj = session.getAttribute(Constant.LOGIN_ADMINISTRATOR);
         // 判断如果没有取到用户信息，就跳转到登陆页面，提示用户进行登陆
         if (obj == null || "".equals(obj.toString())) {
-            String path=request.getServletContext().getContextPath();
+            String path=request.getContextPath();
             if (path.equals("/")) path="";
             response.sendRedirect(path+LOGIN_URL);
             return false;

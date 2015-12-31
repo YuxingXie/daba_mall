@@ -30,7 +30,10 @@ public class ProductSeriesService extends BaseEntityManager<ProductSeries> imple
     public List<String[]> getTop3ProductSeries() {
         return productSeriesDao.getTop3ProductSeries();
     }
-
+    @Override
+    public List<String[]> getTop3ProductSeriesDemo() {
+        return productSeriesDao.getTop3ProductSeriesDemo();
+    }
 
     @Override
     public ProductSeries findProductSeriesById(ObjectId objectId) {

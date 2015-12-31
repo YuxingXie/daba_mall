@@ -8,6 +8,7 @@ import com.dabast.common.util.IconCompressUtil;
 import com.dabast.entity.*;
 import com.dabast.mall.service.IProductSeriesService;
 import com.dabast.support.vo.Message;
+import com.mongodb.util.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -44,7 +45,7 @@ public class AdminController extends BaseRestSpringController {
     }
 
     @RequestMapping(value="/")
-    public String index() {
+    public String adminLogin() {
          return "redirect:/admin-login.jsp";
     }
     @RequestMapping(value="")
@@ -87,6 +88,13 @@ public class AdminController extends BaseRestSpringController {
     public String xx() {
         ServiceManager.orderService.removeOrderInterval(1000*60*60*24*2);
         return "redirect:/admin/index/index";
+    }
+    @RequestMapping(value="/index/json")
+    public ResponseEntity< Map<String,Object>> index() {
+        Map<String,Object> map=new HashMap<String, Object>();
+        long todoOrders=ServiceManager.orderService.findUnHandlerOrdersCount();
+        map.put("todoOrders",todoOrders);
+        return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);
     }
     @RequestMapping(value="/product_series/new")
     public String createProductSeries(ProductSeries productSeries,
@@ -153,14 +161,12 @@ public class AdminController extends BaseRestSpringController {
                 JSONObject productPropertyValueJSONObject=(JSONObject)productPropertyValueObject;
                 Assert.notNull(productPropertyValueJSONObject.get("value"));
                 if (productPropertyValueJSONObject.get("value").toString().equals("")) continue;
-//                System.out.println(productPropertyValueJSONObject.get("value"));
                 productPropertyValue.setValue(productPropertyValueJSONObject.get("value").toString());
                 productPropertyValue.setProductProperty(productProperty);
                 productProperty.setProductSeries(productSeries);
                 ServiceManager.productPropertyValueService.insert(productPropertyValue);
             }
         }
-
         return "redirect:/admin/index/index";
     }
 
@@ -217,22 +223,6 @@ public class AdminController extends BaseRestSpringController {
             dirFile.mkdirs();
         }
     }
-    public static void main(String args[]){
-        Map<String,ProductSeriesPicture> pictureMap=new HashMap<String, ProductSeriesPicture>();
-        ProductSeriesPicture productSeriesPicture001=new ProductSeriesPicture();
-        productSeriesPicture001.setPicture("001.jpg");
-        productSeriesPicture001.setBigPicture("001.zoom.jpg");
-        productSeriesPicture001.setIconPicture("001.ico.jpg");
-        pictureMap.put("001",productSeriesPicture001);
-
-        ProductSeriesPicture productSeriesPicture002=new ProductSeriesPicture();
-        productSeriesPicture002.setPicture("002.jpg");
-        productSeriesPicture002.setBigPicture("002.zoom.jpg");
-        productSeriesPicture002.setIconPicture("002.ico.jpg");
-        pictureMap.put("002",productSeriesPicture002);
-        pictureMap.get("002").setBigPicture("002.big.jpg");
-        System.out.println(pictureMap.get("002").getBigPicture());
-    }
     @RequestMapping(value="/product_category/new")
     public String createProductCategory(ModelMap model, HttpServletRequest request,String categoryType,String categoryName,String subCategoryName,String productCategoryId){
         Assert.notNull(subCategoryName);
@@ -276,5 +266,43 @@ public class AdminController extends BaseRestSpringController {
         ServiceManager.homePageBlockService.removeById(id);
         List<HomePageBlock> list=ServiceManager.homePageBlockService.findAll();
         return new ResponseEntity<List<HomePageBlock>>(list, HttpStatus.OK);
+    }
+    @RequestMapping(value="/top3")
+    public String top3Maker(ModelMap map){
+        List<String[]> list=ServiceManager.productSeriesService.getTop3ProductSeriesDemo();
+        map.addAttribute("top3",list);
+        return "admin/top3/create_input";
+    }
+    @RequestMapping(value="/top3/demo")
+    public String top3Demo(ModelMap map){
+        List<String[]> list=ServiceManager.productSeriesService.getTop3ProductSeriesDemo();
+        map.addAttribute("top3",list);
+        return "forward:/top3preview.jsp";
+    }
+    @RequestMapping(value="/top3/preview")
+    public String top3preview(ModelMap map, String data){
+        List<String[]> s= (List<String[]>)JSON.parse(data);
+        map.addAttribute("top3",s);
+        return "forward:/top3preview.jsp";
+    }
+
+    @RequestMapping(value="/topCarousel/list/json")
+    public ResponseEntity<List<TopCarousel>> topCarouselList(ModelMap map){
+        List<TopCarousel> topCarousels= ServiceManager.topCarouselService.findAll();
+        return new ResponseEntity<List<TopCarousel>>(topCarousels,HttpStatus.OK);
+    }
+    @RequestMapping(value="/topCarousel/new")
+    public ResponseEntity<Message> topCarouselCreate(ModelMap map, @RequestBody TopCarousel topCarousel){
+        Message message=new Message();
+        ServiceManager.topCarouselService.insert(topCarousel);
+        if (topCarousel.getId()!=null){
+            message.setSuccess(true);
+            message.setMessage("保存成功!");
+        }else{
+            message.setSuccess(false);
+            message.setMessage("保存失败!");
+        }
+
+        return new ResponseEntity<Message>(message,HttpStatus.OK);
     }
 }

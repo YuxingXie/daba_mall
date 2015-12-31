@@ -5,14 +5,14 @@
 <link rel="shortcut icon" type="image/x-icon" href="${path}/statics/assets/img/logo.png"  media="screen" />
 <link href="${path}/statics/assets/plugins/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/plugins/bootstrap-3.3.0/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet">
-<link href="${path}/statics/assets/plugins/bxslider/jquery.bxslider.css" rel="stylesheet">
-<link href="${path}/statics/assets/plugins/layerslider/css/layerslider.css" rel="stylesheet" type="text/css">
+<%--<link href="${path}/statics/assets/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet">--%>
+
+
 <%--style-metronic.css，style-responsive.css和顶部弹出的二级菜单有关--%>
 <link href="${path}/statics/assets/css/style-metronic.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/style.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/style-responsive.css" rel="stylesheet" type="text/css">
-<link href="${path}/statics/assets/css/layer-slider.css" rel="stylesheet" type="text/css">
+
 <link href="${path}/statics/assets/css/cart.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/header.css" rel="stylesheet" type="text/css">
 <link href="${path}/statics/assets/css/footer.css" rel="stylesheet" type="text/css">

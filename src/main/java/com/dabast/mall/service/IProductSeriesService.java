@@ -15,6 +15,7 @@ import java.util.List;
  */
 public interface IProductSeriesService  extends IBaseEntityManager<ProductSeries> {
     List<String[]> getTop3ProductSeries();
+    List<String[]> getTop3ProductSeriesDemo();
 
     List<ProductSeries> getHotSell(int count);
 

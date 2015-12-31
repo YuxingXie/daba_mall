@@ -251,6 +251,8 @@ mr=db.runCommand({"mapreduce":"productSeries","map":map,"reduce":reduce,"out":"o
 { "_id" : "productSubCategory", "value" : { "count" : 5 } }
 { "_id" : "shelvesDate", "value" : { "count" : 5 } }
 db.administrator.insert({"name":"xieyuxing","password":"7e89b492192e4acef570348e88c318ea"})
+db.topCarousel.update({"_id":ObjectId("5684f1bc35f0d110c005af08")},{"$set":{"name":"元旦水果风暴"}})
+
 </pre>
 </body>
 </html>

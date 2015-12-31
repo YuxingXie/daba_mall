@@ -39,9 +39,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Administrator on 2015/6/11.
- */
+
 @Controller
 @RequestMapping("/index")
 //@SessionAttributes("loginUser")
@@ -71,8 +69,8 @@ public class IndexController extends BaseRestSpringController {
         }
         List<Interest> interests=ServiceManager.interestService.findInterestsOfUser(getLoginUser(session));
         model.addAttribute("interests", interests);
-        List<String[]> top3 = ServiceManager.productSeriesService.getTop3ProductSeries();
-
+        TopCarousel topCarousel=ServiceManager.topCarouselService.findByMaxPriority();
+        List<String[]> top3 = topCarousel.getAdContent();
         model.addAttribute("top3", top3);
         List<HomePageBlock> homePageBlocks=ServiceManager.homePageBlockService.findAll(new BasicDBObject("show",true));
         for (HomePageBlock homePageBlock:homePageBlocks){
@@ -81,6 +79,7 @@ public class IndexController extends BaseRestSpringController {
         model.addAttribute("homePageBlocks",homePageBlocks);
         return "index";
     }
+
     private void setInterest(List<ProductSeries> productSeriesList,List<Interest> interestList){
         if (productSeriesList==null) return;
         if (interestList==null) return;

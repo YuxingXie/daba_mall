@@ -41,4 +41,9 @@ public class OrderService extends BaseEntityManager<Order> implements IOrderServ
         orderDao.removeOrderById(id);
     }
 
+    @Override
+    public long findUnHandlerOrdersCount() {
+        return orderDao.findUnHandlerOrdersCount();
+    }
+
 }

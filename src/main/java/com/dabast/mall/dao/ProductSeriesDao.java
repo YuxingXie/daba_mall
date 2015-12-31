@@ -46,14 +46,23 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
     public List<String[]> getTop3ProductSeries() {
         List<String[]> list=new ArrayList<String[]>();
         String[] product1={"11111122228x1","statics/assets/temp/sliders/slide2/bg.jpg","黄材水产","新品上市","中华鲟","优惠价","25"};
-        String[] product2={"0x1451112ffb","statics/assets/temp/sliders/slide5/bg.jpg","本地<br>生态腊鱼","货源充足，放心购买"};
+        String[] product2={"0x1451112ffb","statics/assets/temp/sliders/slide5/bg.jpg","本地","生态腊鱼","货源充足，放心购买"};
         String[] product3={"4512f44d003f","statics/assets/temp/sliders/slide3/bg.jpg","正宗乡里腊肉","源自宁乡","您购买的不二选择","最新优惠价","149"};
         list.add(product1);
         list.add(product2);
         list.add(product3);
         return list;
     }
-
+    public List<String[]> getTop3ProductSeriesDemo() {
+        List<String[]> list=new ArrayList<String[]>();
+        String[] product1={"11111122228x1","statics/assets/temp/sliders/slide2/bg.jpg","第一个产品","广告词2","广告词3","优惠价","25"};
+        String[] product2={"0x1451112ffb","statics/assets/temp/sliders/slide5/bg.jpg","这是","第2个产品","我是第二个产品的广告词"};
+        String[] product3={"4512f44d003f","statics/assets/temp/sliders/slide3/bg.jpg","第三个产品","广告词。。","这里八个字左右为好","五个字左右","149"};
+        list.add(product1);
+        list.add(product2);
+        list.add(product3);
+        return list;
+    }
 
     public List<ProductSeries> getAll() {
         return getAll(null);
