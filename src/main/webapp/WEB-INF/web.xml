@@ -127,17 +127,19 @@
         <taglib-location>/WEB-INF/tags/functions.tld</taglib-location>
     </taglib>
 
-    <!--<security-constraint>-->
-        <!--<web-resource-collection>-->
-            <!--<web-resource-name>securedapp</web-resource-name>-->
-            <!--<url-pattern>/user/register</url-pattern>-->
-            <!--<url-pattern>/user/login</url-pattern>-->
-            <!--<url-pattern>/user/login/direct/*</url-pattern>-->
-            <!--<url-pattern>/order/to_bill/*</url-pattern>-->
-            <!--<url-pattern>/user/personal_message</url-pattern>-->
-        <!--</web-resource-collection>-->
-        <!--<user-data-constraint>-->
-            <!--<transport-guarantee>CONFIDENTIAL</transport-guarantee>-->
-        <!--</user-data-constraint>-->
-    <!--</security-constraint>-->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>securedapp</web-resource-name>
+            <url-pattern>/register_phone</url-pattern>
+            <url-pattern>/register_email</url-pattern>
+            <url-pattern>/user/login</url-pattern>
+            <url-pattern>/user/login/direct/*</url-pattern>
+            <url-pattern>/order/to_bill/*</url-pattern>
+            <url-pattern>/user/personal_message</url-pattern>
+            <url-pattern>/admin-login.jsp</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
 </web-app>
