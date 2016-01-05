@@ -30,10 +30,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
 
@@ -439,7 +441,7 @@ public class UserController extends BaseRestSpringController {
             modelMap.addAttribute("org.springframework.validation.BindingResult.form", errors);
 //            modelMap.addAttribute("modelMap", modelMap);
 //            modelMap.addAttribute("BindingResult", errors);
-            return "redirect:/user/register";
+            return "forward:/user/register";
         }
 
         User dbUser=userDao.findByEmail(form.getEmail());
@@ -449,15 +451,15 @@ public class UserController extends BaseRestSpringController {
             if (!form.getPassword().equals(form.getRePassword())){
                 errors.rejectValue("rePassword","user.signup.rePassword.error");
             }
-            modelMap.addFlashAttribute("form", form);
-            modelMap.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
-            return "redirect:/user/register";
+            modelMap.addAttribute("form", form);
+            modelMap.addAttribute("org.springframework.validation.BindingResult.form", errors);
+            return "forward:/user/register";
         }else{
             if (!form.getPassword().equals(form.getRePassword())){
                 errors.rejectValue("rePassword","user.signup.rePassword.error");
-                modelMap.addFlashAttribute("form", form);
-                modelMap.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
-                return "redirect:/user/register";
+                modelMap.addAttribute("form", form);
+                modelMap.addAttribute("org.springframework.validation.BindingResult.form", errors);
+                return "forward:/user/register";
             }
             BeanUtils.copyProperties(form, dbUser, new String[]{"id"});
             dbUser.setActivated(true);
@@ -469,10 +471,18 @@ public class UserController extends BaseRestSpringController {
             modelMap.addFlashAttribute("form", dbUser);
             modelMap.addFlashAttribute("message", "注册成功!");
             doLogin(form,session,request,response,dbUser);
-            return "redirect:/register_success";
+            String httpUrlString=getHttpUrlString(request,"register_success");
+            try {
+                response.sendRedirect(httpUrlString) ;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
 
     }
+
+
 
     /**
      * 手机注册账号

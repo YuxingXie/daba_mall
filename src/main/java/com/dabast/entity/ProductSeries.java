@@ -19,7 +19,6 @@ public class ProductSeries {
     private String id;
     @Length(min=2,max=100)
     private String name;
-    @Field(value = "pictures")
     private List<ProductSeriesPicture> pictures;
 //    @Field(value = "commonPrice")
 

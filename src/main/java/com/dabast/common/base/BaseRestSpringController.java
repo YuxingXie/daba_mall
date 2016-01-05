@@ -7,9 +7,11 @@ import com.dabast.entity.Cart;
 import com.dabast.entity.Order;
 import com.dabast.entity.User;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ReflectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
@@ -22,6 +24,18 @@ public class BaseRestSpringController  {
     protected static final String RESULT_STRING = "result";
     protected static final String TOTAL = "total";
     protected static final String RESULT_ACTION = "redirect:/result";
+    @Value(value = "${app.httpPort}")
+    protected String httpPort;
+
+
+    public String getHttpPort() {
+        return httpPort;
+    }
+
+    public void setHttpPort(String httpPort) {
+        this.httpPort = httpPort;
+    }
+
 
     public static void copyProperties(Object target,Object source) {
         BeanUtils.copyProperties(target, source);
@@ -63,7 +77,12 @@ public class BaseRestSpringController  {
         }
         return (T)value;
     }
-
+    protected String getHttpUrlString(HttpServletRequest request,String vieName) {
+        String path = request.getContextPath();
+//        String basePath ="http://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+        String basePath ="http://"+request.getServerName()+":"+httpPort+path+"/";
+        return basePath+vieName;
+    }
 
 
 }

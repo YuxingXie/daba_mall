@@ -9,61 +9,60 @@
 <div   ng-controller='psiCtrl'>
     <div class="table-bordered">
         <div class="row table-bordered">
-            <form role="form"  action="${path}/admin/product_series/new" name="productSeries" id="form" enctype="multipart/form-data" method="post">
+            <form role="form"  ng-submit="submit()" name="productSeriesForm" id="form" enctype="multipart/form-data" method="post">
                 <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
                     <div class="col-lg-2 col-sm-2  text-right">产品名称</div>
                     <div class="col-lg-6 col-sm-6">
-                        <input type="text" class="form-control" required="true" name="name" ng-model="name"/>
+                        <input type="text" class="form-control" ng-required="true" name="name" ng-model="productSeries.name"/>
                     </div>
                 </div>
                 <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
                     <div class="col-lg-2 col-sm-2  text-right">价格</div>
                     <div class="col-lg-4 col-sm-4">
-                        <input type="text" class="form-control " required="true" name="price" ng-model="price"/>
+                        <input type="text" class="form-control " required="true" name="price" ng-model="productSeries.productSeriesPrices[0].price"/>
                     </div>
                 </div>
                 <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
                     <div class="col-lg-2 col-sm-2  text-right ">产品描述</div>
                     <div class="col-lg-6 col-sm-6">
-                        <input type="text" name="description" class="form-control" required="true" model="description"/>
+                        <input type="text" name="description" class="form-control" required="true" model="productSeries.description"/>
                     </div>
                 </div>
                 <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
                     <div class="col-lg-2 col-sm-2  text-right">品牌</div>
                     <div class="col-lg-6 col-sm-6">
-                        <input type="text" name="brand" class="form-control " required="true" ng-model="brand"/>
+                        <input type="text" name="brand" class="form-control " required="true" ng-model="productSeries.brand"/>
                     </div>
                 </div>
                 <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
                     <div class="col-lg-2 col-sm-2  text-right">库存数量</div>
                     <div class="col-lg-6 col-sm-6">
-                        <input type="number" name="storeAmount" class="form-control " required="true" ng-model="storeAmount"/>
+                        <input type="number" name="storeAmount" class="form-control " required="true" ng-model="productSeries.productStore.inAndOutList[0].amount"/>
                     </div>
                 </div>
                 <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
                 <div class="col-lg-2 col-sm-2  text-right">库存警告数量</div>
                 <div class="col-lg-6 col-sm-6">
-                    <input type="number" name="warningAmount" class="form-control " required="true" ng-model="warningAmount"/>
+                    <input type="number" name="warningAmount" class="form-control " required="true" ng-model="productSeries.productStore.warningAmount"/>
                 </div>
             </div>
                 <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
                     <div class="col-lg-2 col-sm-2  text-right">产品分类</div>
                     <div class="col-lg-6 col-sm-6 form-inline">
-                            <div ng-if="list.length">
+                            <div ng-if="categories.length">
                                 大类：
-                                <select ng-model="productCategory" ng-options="obj as obj.categoryName for obj in list" name="productCategory" class="form-control">
+                                <select ng-model="productCategory" ng-options="productCategory.categoryName for productCategory in categories" name="productCategory" class="form-control">
                                     <option>--选择大类--</option>
                                 </select>
                                 <label ng-show="productCategory.productSubCategories.length>0">
                                     小类：
-                                    <select ng-model="productSubCategoryId" required="true" name="productSubCategoryId" class="form-control">
-                                        <option ng-repeat="productSubCategory in productCategory.productSubCategories" value="{{productSubCategory.id}}">{{productSubCategory.subCategoryName}}</option>
+                                    <select ng-model="productSeries.productSubCategory" required="true" name="productSubCategory" class="form-control"
+                                            ng-options="productSubCategory.subCategoryName for productSubCategory in productCategory.productSubCategories">
+                                        <%--<option ng-repeat="productSubCategory in productCategory.productSubCategories" value="{{productSubCategory.id}}">{{productSubCategory.subCategoryName}}</option>--%>
                                     </select>
                                 </label>
-                                <label class=" form-inline">没有找到分类？点<a href="${path}/admin/product_category/create_input">这里</a>新建产品分类</label>
+                                <label class=" form-inline">没有找到分类？点<a href="${path}/admin/product_category/create_input" target="_blank">这里</a>新建产品分类</label>
                             </div>
-
-
                     </div>
                 </div>
                 <div class="row " style="margin-bottom: 15px;margin-top: 15px;">
@@ -77,21 +76,25 @@
                 </div>
 
                 <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
-                        <div class="col-lg-2 col-sm-2  text-right">property</div>
-                    <div class="col-lg-10 col-sm-10">
-                        <div class="row" data-property-index="0">
-                            <div class="col-lg-2 col-sm-2">
-                                <input type="text" class="form-control propertyName" placeholder="属性名，如:包装" data-property-index="0"/>
+                    <div class="col-lg-2 col-sm-2  text-right">产品属性</div>
+                    <div class="col-lg-7 col-sm-7">
+                        <div class="row" data-property-index="0" ng-repeat="productProperty in productSeries.productProperties track by $index">
+                            <div class="col-lg-4 col-sm-4">
+                                <input type="text" class="form-control propertyName" placeholder="属性名，如:包装"  ng-model="productProperty.propertyName"/>
                             </div>
-                            <div class="col-lg-5 col-sm-5">
-                                <input type="text" class="form-control propertyValue" placeholder="属性值，如：散装,袋装，多个属性用英文逗号隔开" data-property-index="0"/>
-                            </div>
-                            <div class="col-lg-3 col-sm-3">
-                                <a class="btn btn-primary addNewProperty">再增加一个属性</a>
+                            <div ng-class="{'col-lg-8 col-sm-8':true,'input-group':($index+1)===productSeries.productProperties.length} ">
+                                <input type="text" class="form-control" placeholder="属性值，如：散装,袋装，多个属性用英文逗号隔开"
+                                       ng-model="productProperty.propertyValues"/>
+                                <span class="input-group-btn">
+                                    <a class="btn btn-primary" ng-if="($index+1)===productSeries.productProperties.length"
+                                       data-ng-click="addNewProperty()">再增加一个属性</a>
+                                </span>
                             </div>
                         </div>
                     </div>
+                    <%--<div class="col-lg-3 col-sm-3"> <a class="btn btn-primary" data-ng-click="addNewProperty()">再增加一个属性</a></div>--%>
                 </div>
+
                 <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
                     <div class="col-lg-2 col-sm-2  text-right ">
                         <input type="hidden" name="productPropertiesJson" id="productPropertiesJson" value="[]"/>

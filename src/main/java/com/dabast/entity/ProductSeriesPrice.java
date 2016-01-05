@@ -17,7 +17,6 @@ public class ProductSeriesPrice {
 //    @Id
 //    private String id;
     @NotNull
-    @Field(value = "price")
     private double price;
     @NotNull
     @Future

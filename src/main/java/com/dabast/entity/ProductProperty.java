@@ -16,7 +16,6 @@ import java.util.List;
 public class ProductProperty {
     @Id
     private String id;
-    @Field(value = "propertyName")
     private String propertyName;
     @DBRef
     @NotNull

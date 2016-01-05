@@ -299,7 +299,7 @@
                 <version>2.2</version>
                 <configuration>
                     <path>/mall</path>
-                    <port>8088</port>
+                    <port>80</port>
                     <httpsPort>8443</httpsPort>
                     <keystoreFile>${user.home}/.keystore</keystoreFile>
                     <keystorePass>dabast</keystorePass>

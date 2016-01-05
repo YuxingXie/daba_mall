@@ -8,6 +8,7 @@ import com.dabast.mall.dao.UserDao;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,6 +22,46 @@ import java.util.Date;
 public class RegisterValidateService {
     @Resource
     private UserDao userDao;
+    @Value(value = "${app.email.hostName}")
+    private String emailHostName;
+    @Value(value = "${app.email.address}")
+    private String emailAddress;
+    @Value(value = "${app.email.authentication.userName}")
+    private String emailUserName;
+    @Value(value = "${app.email.authentication.password}")
+    private String emailPassword;
+
+    public String getEmailHostName() {
+        return emailHostName;
+    }
+
+    public void setEmailHostName(String emailHostName) {
+        this.emailHostName = emailHostName;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public String getEmailUserName() {
+        return emailUserName;
+    }
+
+    public void setEmailUserName(String emailUserName) {
+        this.emailUserName = emailUserName;
+    }
+
+    public String getEmailPassword() {
+        return emailPassword;
+    }
+
+    public void setEmailPassword(String emailPassword) {
+        this.emailPassword = emailPassword;
+    }
 
     /**
      * 注册时发送验证码到邮箱
@@ -37,14 +78,14 @@ public class RegisterValidateService {
 
         //发送邮件
         HtmlEmail htmlEmail = new HtmlEmail();
-        htmlEmail.setHostName("smtp.qq.com");//设置使用发电子邮件的邮件服务器
-        htmlEmail.setAuthentication("185246042", "xieyuxing1978");
+        htmlEmail.setHostName(emailHostName);//设置使用发电子邮件的邮件服务器
+        htmlEmail.setAuthentication(emailUserName, emailPassword);
         htmlEmail.setCharset("UTF-8");
         htmlEmail.setSubject("大坝生态账号激活");
         htmlEmail.getBounceAddress();
 //        try {
             htmlEmail.addTo(email);
-            htmlEmail.setFrom("185246042@qq.com");
+            htmlEmail.setFrom(emailAddress);
             htmlEmail.setMsg(sb.toString());
             htmlEmail.send();
             //保存注册信息,如果发送邮件抛出异常，不会保存
@@ -55,8 +96,8 @@ public class RegisterValidateService {
             userToUpdate.setValidateCode("" + validateCode);
             userToUpdate.setEmail(email);
             userDao.upsert(userToUpdate);
-            String code=email.indexOf("@")>=0?email.substring(email.indexOf("@")+1):"";
-            String url= EmailEnum.getUrlByCode(code);
+//            String code=email.indexOf("@")>=0?email.substring(email.indexOf("@")+1):"";
+//            String url= EmailEnum.getUrlByCode(code);
 //        }
 //        catch (EmailException ex) {
 //            ex.printStackTrace();

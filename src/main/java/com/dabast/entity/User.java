@@ -17,7 +17,7 @@ import java.util.List;
 public class User {
     @Id private String id;
     @Field(value = "name")
-    @Length(min=2,max=12)
+    @Length(min=2,max=20)
     private String name;
     @Field
     private String realName;

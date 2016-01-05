@@ -9,7 +9,6 @@ import java.util.List;
 public class ProductStore{
     @Transient
     private Integer remain;
-    @Field(value = "warningAmount")
     private Integer warningAmount;
 //    @Transient
     @Field
