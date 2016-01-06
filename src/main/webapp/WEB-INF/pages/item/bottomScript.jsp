@@ -11,7 +11,10 @@
 
 
 <script type="text/javascript">
-mainApp.controller('productSeriesCtrl', ['$scope', '$http', function ($scope, $http) {
+mainApp.controller('productSeriesCtrl', ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
+    $scope.trustSrc = function(src) {
+        return $sce.trustAsResourceUrl(src);
+    }
     $scope.productSelected={};
     $scope.productSelected.productPropertyValueList=[];
     $scope.productSelected.amount = 1;

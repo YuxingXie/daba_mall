@@ -103,7 +103,10 @@ public class ProductSeriesController extends BaseRestSpringController {
 //            response.setDateHeader("Expires",0);
             model.addAttribute("orderId",orderId);
         }
-
+//        response.Headers.Remove("X-Frame-Options");
+//        response.AddHeader("X-Frame-Options", "AllowAll");
+//        response..Remove("X-Frame-Options");
+        response.addHeader("X-Frame-Options", "SAMEORIGIN");
         return "item";
     }
 

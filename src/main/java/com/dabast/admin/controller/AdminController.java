@@ -5,6 +5,7 @@ import com.dabast.common.constant.Constant;
 import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.common.util.IconCompressUtil;
+import com.dabast.common.util.MongoDbUtil;
 import com.dabast.entity.*;
 import com.dabast.mall.service.IProductSeriesService;
 import com.dabast.support.vo.Message;
@@ -96,7 +97,49 @@ public class AdminController extends BaseRestSpringController {
         map.put("todoOrders",todoOrders);
         return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);
     }
+
     @RequestMapping(value="/product_series/new")
+    public ResponseEntity<ProductSeries> saveProductSeries(@RequestBody ProductSeries productSeries,HttpServletRequest request,HttpSession session) throws IOException {
+//        productSeries.setId("fsdfdsfsdfe3fewfws33");
+        Assert.notNull(productSeries.getProductSeriesPrices());
+        Assert.notNull(productSeries.getProductSeriesPrices().get(0));
+        productSeries.getProductSeriesPrices().get(0).setBeginDate(new Date());
+        productSeries.setShelvesDate(new Date());
+        productSeriesService.insert(productSeries);
+        List<ProductProperty> productProperties=productSeries.getProductProperties();
+        for (ProductProperty productProperty:productProperties){
+            productProperty.setProductSeries(productSeries);
+            ServiceManager.productPropertyService.insert(productProperty);
+            List<ProductPropertyValue> propertyValues=productProperty.getPropertyValues();
+            for (ProductPropertyValue propertyValue:propertyValues){
+                propertyValue.setProductProperty(productProperty);
+                ServiceManager.productPropertyValueService.insert(propertyValue);
+            }
+        }
+        MongoDbUtil.clearTransientFields(productSeries);
+        return new ResponseEntity<ProductSeries>(productSeries,HttpStatus.OK);
+    }
+    @RequestMapping(value="/product_series/update_img")
+    public String uploadImg(String productSeriesId,@RequestParam("files") MultipartFile[] files,HttpServletRequest request,HttpSession session) throws IOException {
+        if(files!=null&&files.length>0){
+            for (MultipartFile multipartFile:files){
+                System.out.println(multipartFile.getOriginalFilename());
+            }
+        }
+        ProductSeries productSeries=new ProductSeries();
+        productSeries.setId(productSeriesId);
+        if(files!=null&&files.length>0){
+            String dirStr="statics/img/product";
+            ServletContext context= ProjectContext.getServletContext();
+            ServletContextResource dirResource=new ServletContextResource(context,dirStr);
+            mkDirs(dirResource);
+            List<ProductSeriesPicture> productSeriesPictures = getProductSeriesPicturesAndSaveFiles(files, dirStr, context);
+            productSeries.setPictures(productSeriesPictures);
+            productSeriesService.update(productSeries);
+        }
+        return "redirect:/admin/index/index";
+    }
+    @RequestMapping(value="/product_series/new2")
     public String createProductSeries(ProductSeries productSeries,
                                       Double price,Integer storeAmount,
                                       Integer warningAmount,

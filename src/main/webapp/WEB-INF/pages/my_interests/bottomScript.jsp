@@ -77,7 +77,6 @@ mainApp.controller("myInterestsController",["$scope","$http",function($scope,$ht
         $scope.ratingVal = val;
     }
 }])
-//    angular.bootstrap(document.getElementById("myInterestsAppMain"),["myInterestsApp"]);
 $(document).ready(function() {
 easyzoom();
 shoppingCartFly($(".add2cart"),$("#cart-block"));

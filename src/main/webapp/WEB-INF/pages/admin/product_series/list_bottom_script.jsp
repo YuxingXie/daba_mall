@@ -91,6 +91,5 @@
       console.log(data);
     });
   }]);
-//  angular.bootstrap(document, ['productSeriesInputApp']);
 
 </script>

@@ -171,7 +171,7 @@ public class ProductSeries {
         }
         Date now=new Date();
         for (ProductSeriesPrice productSeriesPrice:productSeriesPrices){
-            Assert.notNull(productSeriesPrice.getBeginDate());
+            if(productSeriesPrice.getBeginDate()==null) continue;
             if (productSeriesPrice.getEndDate()==null){
                 if (now.after(productSeriesPrice.getBeginDate())){
                     this.currentPrice=productSeriesPrice;
@@ -187,7 +187,7 @@ public class ProductSeries {
                 }
             }
         }
-        return null;//这里表示定价的所有时间段都在未来
+        return null;//这里表示定价的所有时间段都在未来或者价格都没有记录开始时间
     }
 
     public void setProductEvaluateList(List<ProductEvaluate> productEvaluateList) {

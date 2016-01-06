@@ -51,6 +51,7 @@ var loginAndCallBack=function (callBack) {
                 console.log("login,now invoke callback");
                 callBack();
             }
+            //获得mainController的作用域
             var appElement = document.querySelector('[ng-controller=mainController]');
             var $scope = angular.element(appElement).scope();
             $scope.cart=data.cart;

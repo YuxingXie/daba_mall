@@ -26,7 +26,6 @@
 <script type="text/javascript" src="${path}/statics/assets/plugins/sco.js-master/js/sco.modal.js"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/sco.js-master/js/sco.confirm.js"></script>
 <script type="text/javascript">
-//    angular.module("cartAdjustApp",[])
             mainApp.controller("cartAdjustController",["$scope","$http",function($scope,$http){
 
                 $scope.change=function(){

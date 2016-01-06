@@ -15,12 +15,13 @@
 <script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/tooltip.js"></script>
 <script src="${path}/statics/assets/plugins/bootstrap-3.3.0/js/popover.js"></script>
 <script src="${path}/statics/assets/plugins/angular-1.2.19/ui-bootstrap-tpls.min.js"></script>
+<script src="${path}/statics/assets/plugins/angular-1.4.8/angular-sanitize.min.js"></script>
 <script src="${path}/statics/assets/plugins/angularJs-pagination/src/pagination/tm.pagination.js"></script>
 <script src="${path}/statics/assets/plugins/EasyZoom-master/dist/easyzoom.test.js" type="text/javascript"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/back-to-top.js"></script>
 
 <script>
-    var mainApp=angular.module("mainApp",['ui.bootstrap', 'ngRoute','tm.pagination']);
+    var mainApp=angular.module("mainApp",['ui.bootstrap', 'ngRoute','tm.pagination','ngSanitize']);
     mainApp .controller('mainController', ['$scope', '$http', function ($scope, $http) {
         $scope.interested={};//关注信息
         $scope.initProductMenu= function () {

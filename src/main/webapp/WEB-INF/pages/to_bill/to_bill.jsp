@@ -101,8 +101,10 @@
                                     <td class="text-left"><i class="fa fa-adjust padding-top-10">卡种</i></td>
                                     <td class="text-left form-inline">
                                         <label>
-                                            <input type="radio" card_type_valid name="cardSort" value="1" required="true" ng-model="order.payAccount.cardSort" class="radio form-control"/>信用卡</label>&nbsp;&nbsp;&nbsp;
-                                        <label><input type="radio" card_type_valid name="cardSort" value="2" required="true" ng-model="order.payAccount.cardSort" class="radio form-control"/>储蓄卡</label>
+                                            <input type="radio" card_type_valid name="cardSort" value="1" required="true"
+                                                   ng-model="order.payAccount.cardSort" class="radio form-control"/>信用卡</label>&nbsp;&nbsp;&nbsp;
+                                        <label><input type="radio" card_type_valid name="cardSort" value="2" required="true"
+                                                      ng-model="order.payAccount.cardSort" class="radio form-control"/>储蓄卡</label>
                                     </td>
                                 </tr>
                                 <tr>

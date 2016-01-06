@@ -1,0 +1,41 @@
+{
+  "productSeriesPrices": [{"price": "33"}],
+  "productProperties": [
+    {
+      "propertyName": "11111x",
+      "propertyValues": [
+        {"value": "11111xxx"},
+        {"value": "11111xxxx"}
+      ]
+    },
+    {
+      "propertyName": "2222x",
+      "propertyValues": [
+        {"value": "2222xxxx"},
+        {"value": "2222xxxxxx"}
+      ]
+    }
+  ],
+  "productStore": {
+    "inAndOutList": [{"amount": 3333}],
+    "warningAmount": 33
+  },
+  "productBrochures": {
+    "type": "img",
+    "url": "http://baike.baidu.com/link?url=pURVSSKeoGI8EGPQzhTm4DqlmywwE9Lz855Tb_XCAyuIF5H-wN9_-BmJAWQ7GDi47uFRylq4k0wF4v4qGrJW8cYy8E9LFA-R6j0LoJEnCF3"
+  },
+  "name": "ddd",
+  "measurementUnit": "斤",
+  "brand": "333的地方",
+  "productSubCategory": {
+    "id": "5680b2af35f0d115b4f8555d",
+    "productCategory": {
+      "id": "5680b2af35f0d115b4f8555c",
+      "categoryName": "鲜果蔬",
+      "productSubCategories": null
+    },
+    "subCategoryName": "水果",
+    "productSeriesList": null,
+    "$$hashKey": "object:22"
+  }
+}

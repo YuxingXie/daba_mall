@@ -120,8 +120,9 @@
                 <div ng-if="!productSeries.productBrochures">
                   <div class="datasheet-features-type">抱歉，暂无商品介绍宣传册。</div>
                 </div>
-                <img ng-if="productSeries.productBrochures &&productSeries.productBrochures === 'img' " ng-src="${path}/{{productSeries.productBrochures.url}}"/>
-                <iframe ng-if="productSeries.productBrochures &&productSeries.productBrochures === 'page'" src="${productSeries.productBrochures.url}"  scroling="no"  width="100%" height="2600px;" name="float" frameborder="0"></iframe>
+                <img ng-if="productSeries.productBrochures &&productSeries.productBrochures.type === 'img'" ng-src="{{productSeries.productBrochures.url}}"/>
+                <iframe ng-if="productSeries.productBrochures &&productSeries.productBrochures.type === 'page'" ng-src="{{trustSrc(productSeries.productBrochures.url)}}"
+                        allowfullscreen frameborder="0"  width="100%" height="2600px;" frameborder="0"></iframe>
               </div>
               <div class="tab-pane fade table-responsive" id="Information">
                 <table class="datasheet">

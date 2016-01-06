@@ -8,20 +8,20 @@ import java.util.List;
 
 public class ProductStore{
     @Transient
-    private Integer remain;
+    private int remain;
     private Integer warningAmount;
 //    @Transient
     @Field
     private List<ProductStoreInAndOut> inAndOutList;
 
-    public Integer getRemain() {
+    public int getRemain() {
         if (inAndOutList==null) return 0;
         if (inAndOutList.size()==0) return 0;
         Integer remain=0;
         for (ProductStoreInAndOut inAndOut :inAndOutList){
             String type=inAndOut.getType();
-            Assert.notNull(type);
-            Assert.notNull(inAndOut.getAmount());
+            if(type==null) continue;
+            if(inAndOut.getAmount()==null) continue;
             if (type.equals("in"))
             remain+=inAndOut.getAmount();
             else remain-=inAndOut.getAmount();

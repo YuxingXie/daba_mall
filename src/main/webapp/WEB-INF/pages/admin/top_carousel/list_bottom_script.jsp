@@ -20,6 +20,5 @@
         <%--}--%>
 
   }])
-//  angular.bootstrap(document, ['productSeriesInputApp']);
 
 </script>

@@ -5,10 +5,12 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Date;
 
 public class MongoDbUtil {
@@ -133,5 +135,34 @@ public class MongoDbUtil {
         if (!org.apache.commons.lang.StringUtils.isEmpty(collection)) return collection;
         return clazz.getSimpleName();
 
+    }
+    public static <T> void clearTransientFields(T t)  {
+        Class clz=t.getClass();
+        for (Field field:clz.getDeclaredFields()){
+            if (field.getType().isPrimitive() ||ReflectUtil.isWrapClass(field.getType()) ||field.getType()==String.class) continue;
+            field.setAccessible(true);
+            Object fieldValue= null;
+            try {
+                fieldValue = field.get(t);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            if (fieldValue==null) continue;
+//            System.out.println("------"+field.getName());
+            if (field.isAnnotationPresent(Transient.class)){
+//                field.setAccessible(true);
+                try {
+                    field.set(t,null);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+//                String setterMethodName= ReflectUtil.getSetterMethodName(field.getName());
+//                Method setter=clz.getDeclaredMethod(setterMethodName,field.getType());
+//                setter.invoke(t,null);
+//                ReflectUtil.invokeSetter(t,field.getName(),null);
+            }else{
+                clearTransientFields(fieldValue);
+            }
+        }
     }
 }
