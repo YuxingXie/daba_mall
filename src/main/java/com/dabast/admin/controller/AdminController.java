@@ -100,11 +100,17 @@ public class AdminController extends BaseRestSpringController {
 
     @RequestMapping(value="/product_series/new")
     public ResponseEntity<ProductSeries> saveProductSeries(@RequestBody ProductSeries productSeries,HttpServletRequest request,HttpSession session) throws IOException {
-//        productSeries.setId("fsdfdsfsdfe3fewfws33");
         Assert.notNull(productSeries.getProductSeriesPrices());
         Assert.notNull(productSeries.getProductSeriesPrices().get(0));
-        productSeries.getProductSeriesPrices().get(0).setBeginDate(new Date());
+        Date now=new Date();
+        productSeries.getProductSeriesPrices().get(0).setBeginDate(now);
+        productSeries.getProductSeriesPrices().get(0).setAdjustDate(now);
         productSeries.setShelvesDate(new Date());
+        Assert.notNull(productSeries.getProductStore());
+        Assert.notNull(productSeries.getProductStore().getInAndOutList());
+        Assert.notNull(productSeries.getProductStore().getInAndOutList().get(0));
+        productSeries.getProductStore().getInAndOutList().get(0).setOperator(getLoginAdministrator(session));
+        productSeries.getProductStore().getInAndOutList().get(0).setType("in");
         productSeriesService.insert(productSeries);
         List<ProductProperty> productProperties=productSeries.getProductProperties();
         for (ProductProperty productProperty:productProperties){
@@ -139,15 +145,23 @@ public class AdminController extends BaseRestSpringController {
         }
         return "redirect:/admin/index/index";
     }
-    @RequestMapping(value="/product_series/new2")
-    public String createProductSeries(ProductSeries productSeries,
-                                      Double price,Integer storeAmount,
-                                      Integer warningAmount,
-                                      String productSubCategoryId,
-                                      @RequestParam("files") MultipartFile[] files,
-                                      String productPropertiesJson,
-                                      HttpServletRequest request,HttpSession session) throws IOException {
 
+    /**
+     * 此方法废弃
+     * @param productSeries
+     * @param price
+     * @param storeAmount
+     * @param warningAmount
+     * @param productSubCategoryId
+     * @param files
+     * @param productPropertiesJson
+     * @param request
+     * @param session
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value="/product_series/new2")
+    public String createProductSeries(ProductSeries productSeries,Double price,Integer storeAmount,Integer warningAmount,String productSubCategoryId,@RequestParam("files") MultipartFile[] files,String productPropertiesJson, HttpServletRequest request,HttpSession session) throws IOException {
 //        printRequestParameters(request);
         if(files!=null&&files.length>0){
             String dirStr="statics/img/product";
@@ -309,6 +323,12 @@ public class AdminController extends BaseRestSpringController {
         ServiceManager.homePageBlockService.removeById(id);
         List<HomePageBlock> list=ServiceManager.homePageBlockService.findAll();
         return new ResponseEntity<List<HomePageBlock>>(list, HttpStatus.OK);
+    }
+    @RequestMapping(value="/adjust_price/{id}")
+    public String adjust_price(@PathVariable String id,ModelMap map){
+        ProductSeries productSeries=productSeriesService.findProductSeriesById(id);
+       map.addAttribute("productSeries",productSeries);
+        return "admin/product_series/adjust_price";
     }
     @RequestMapping(value="/top3")
     public String top3Maker(ModelMap map){

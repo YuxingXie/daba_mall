@@ -34,7 +34,7 @@
 	<%--<b>错误信息:</b> <%=exception.getMessage()%>--%>
 	<div class="row margin-top-20"><a href="${webRoot}" class="fa fa-home fa-2x margin-top-20">返回首页</a></div>
 	<div class="row margin-top-20">
-		<div><i class="fa fa-smile-o margin-left-10 font-size-13-5">我们的诊断</i></div>
+		<div><i class="fa fa-smile-o margin-left-10 font-size-13-5">通常情况下</i></div>
 		<ul class="list-unstyled margin-left-10">
 			<li class="margin-top-10"><i class="fa fa-dot-circle-o"></i>您可能输入了错误的地址</li>
 			<li class="margin-top-10"><i class="fa fa-dot-circle-o"></i>您可能登录超时了</li>

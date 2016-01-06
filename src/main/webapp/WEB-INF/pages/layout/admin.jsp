@@ -68,7 +68,7 @@
                   <li ng-class="{'active':false}"><a href="${path}/admin/product_series/list"><i class="glyphicon glyphicon-globe"></i>&nbsp;产品信息</a></li>
                   <li><a href="${path}/admin/product_category/create_input"><i class="glyphicon glyphicon-star-empty"></i>&nbsp;产品分类信息</a></li>
                   <li><a href="${path}/admin/product_series/create_input"><i class="glyphicon glyphicon-star"></i>&nbsp;产品上架</a></li>
-                  <li><a href="${path}/sort/"><i class="glyphicon glyphicon-text-width"></i>&nbsp;修改产品信息</a></li>
+                  <li><a href="${path}/admin/product_series/alert_price"><i class="glyphicon glyphicon-text-width"></i>&nbsp;产品调价</a></li>
                   <li><a href="${path}/admin/top_carousel/list"><i class="glyphicon glyphicon-ok-circle"></i>&nbsp;首页轮播图片管理</a></li>
                   <li><a href="${path}/admin/home_page_block/list"><i class="glyphicon glyphicon-ok-circle"></i>&nbsp;首页产品区块</a></li>
                   <li><a href="#"><i class="glyphicon glyphicon-ok-circle"></i>&nbsp;产品库存管理</a></li>
