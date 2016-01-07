@@ -28,15 +28,14 @@ public class SalesCampaign {
     @Field
     private Double commonRate;//通用折扣
     @Field
-    private boolean allProductParticipateIn;//是否所有商品券参与
+    private Boolean allProductParticipateIn;//是否所有商品券参与
 
     private List<ProductSeriesRate> productSeriesRates;//每个产品的折扣，优先于通用折扣
     @Field
     private String comment;
     @Field
     private String url;
-    @Transient
-    private boolean now;
+
 
     public String getId() {
         return id;
@@ -86,11 +85,11 @@ public class SalesCampaign {
         this.commonRate = commonRate;
     }
 
-    public Boolean isAllProductParticipateIn() {
+    public Boolean getAllProductParticipateIn() {
         return allProductParticipateIn;
     }
 
-    public void setAllProductParticipateIn(boolean allProductParticipateIn) {
+    public void setAllProductParticipateIn(Boolean allProductParticipateIn) {
         this.allProductParticipateIn = allProductParticipateIn;
     }
 

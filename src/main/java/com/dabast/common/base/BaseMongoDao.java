@@ -67,6 +67,10 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         fsInputFile.save();
         return fsInputFile.get("_id") == null ? null : fsInputFile.get("_id").toString();
     }
+    public void deleteFile(String id) {
+        GridFS fs = new GridFS(mongoTemplate.getDb());
+        fs.remove(new ObjectId(id));
+    }
     public String saveFile(String fileName, File file) throws IOException {
         GridFS fs = new GridFS(mongoTemplate.getDb());
         GridFSInputFile fsInputFile = fs.createFile(file);

@@ -11,23 +11,10 @@
     <div class="row margin-bottom-10"><b>商品名称：</b>${productSeries.name}</div>
     <div class="row margin-bottom-10"><b>库存警告数量：</b>${productSeries.productStore.warningAmount}</div>
     <div class="row margin-bottom-10"><b>库存剩余：</b>${productSeries.productStore.remain}</div>
-
-    <%--<div class="row margin-bottom-10"><b>价格生效起始日期：</b>--%>
-        <%--<fmt:formatDate value="${productSeries.currentPrice.beginDate}" type="both" dateStyle="default"/>--%>
-    <%--</div>--%>
-    <%--<div class="row margin-bottom-10"><b>价格生效结束日期：</b>--%>
-        <%--<c:choose>--%>
-            <%--<c:when test="${empty productSeries.currentPrice.endDate}">永久</c:when>--%>
-            <%--<c:otherwise>--%>
-                <%--<fmt:formatDate value="${productSeries.currentPrice.endDate}" type="both" dateStyle="default"/>--%>
-            <%--</c:otherwise>--%>
-        <%--</c:choose>--%>
-    <%--</div>--%>
     <div class="row margin-bottom-10"><h4>增加一次库存记录<span class="color-red">(改数量会累加到库存数上，而不是把该数字作为库存数)</span></h4></div>
     <div class="row margin-bottom-10">
         <form action="${path}/admin/do/adjust_store" method="post" class="form-without-legend" novalidate="novalidate" name="form">
             <fieldset>
-
                 <div class="row form-group">
                     <div class="col-sm-2 col-lg-2 control-label padding-top-10 text-right">修改库存警告数：</div>
                     <div class="col-sm-7 col-lg-7 pull-left">

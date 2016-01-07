@@ -16,7 +16,7 @@ public interface EntityDao <E>{
     public String saveFile(String fileName,byte[] file);
     public String saveFile(String fileName,File file) throws IOException;
     public GridFSDBFile findFileById(String id);
-//    public int upsert(E queryEntity,E updateEntity);
+    void deleteFile(String id);
     void insert(E e);
     List<E> findEquals(E e);
     List<E> findAll();

@@ -22,7 +22,7 @@ public class HomePageBlock {
     private Date date;
     @DBRef
     private List<ProductSeries> productSeriesList;
-    private boolean show;
+    private Boolean show;
 
     public String getId() {
         return id;
@@ -64,11 +64,11 @@ public class HomePageBlock {
         this.productSeriesList = productSeriesList;
     }
 
-    public boolean isShow() {
+    public Boolean getShow() {
         return show;
     }
 
-    public void setShow(boolean show) {
+    public void setShow(Boolean show) {
         this.show = show;
     }
 

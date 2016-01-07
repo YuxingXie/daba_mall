@@ -19,6 +19,7 @@ public interface IBaseEntityManager<E> {
    E findById(String id);
    String saveFile(String fileName,byte[] file);
    String saveFile(String fileName, File file) throws IOException;
+   void deleteFile(String id);
    public GridFSDBFile findFileById(String id);
    List<E> findEquals(E e);
    List<E> findAll(DBObject condition);

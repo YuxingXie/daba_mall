@@ -7,6 +7,7 @@
 
 
 <div ng-controller='psiCtrl'>
+    <a href="${path}/admin/product_series/list" class="btn btn-primary"><i class="fa fa-reply"></i> 返回商品列表</a>
         <div class="row table-bordered">
             <form role="form" name="productSeriesForm" id="form" method="post" enctype="multipart/form-data" action="${path}/admin/product_series/update_img">
                 <div class="row" ng-if="!productSeries.id" >
@@ -80,8 +81,8 @@
                         </div>
                     </div>
                     <div class="row" style="margin-bottom: 15px;margin-top: 15px;">
-                        <div class="col-lg-2 col-sm-2 text-right">属性
-                            <a class="btn btn-primary btn-xs fa fa-plus-circle" data-ng-click="addNewProperty()">add</a></div>
+                        <div class="col-lg-2 col-sm-2 text-right">
+                            <a class="btn btn-primary btn-xs fa fa-plus-circle" data-ng-click="addNewProperty()">添加属性</a></div>
                         <div class="col-lg-10 col-sm-10">
                             <div class="row" data-property-index="0" ng-repeat="productProperty in productSeries.productProperties track by $index">
                                 <div class="row">

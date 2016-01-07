@@ -143,88 +143,7 @@ public class AdminController extends BaseRestSpringController {
             productSeries.setPictures(productSeriesPictures);
             productSeriesService.update(productSeries);
         }
-        return "redirect:/admin/index/index";
-    }
-
-    /**
-     * 此方法废弃
-     * @param productSeries
-     * @param price
-     * @param storeAmount
-     * @param warningAmount
-     * @param productSubCategoryId
-     * @param files
-     * @param productPropertiesJson
-     * @param request
-     * @param session
-     * @return
-     * @throws IOException
-     */
-    @RequestMapping(value="/product_series/new2")
-    public String createProductSeries(ProductSeries productSeries,Double price,Integer storeAmount,Integer warningAmount,String productSubCategoryId,@RequestParam("files") MultipartFile[] files,String productPropertiesJson, HttpServletRequest request,HttpSession session) throws IOException {
-//        printRequestParameters(request);
-        if(files!=null&&files.length>0){
-            String dirStr="statics/img/product";
-            ServletContext context= ProjectContext.getServletContext();
-            ServletContextResource dirResource=new ServletContextResource(context,dirStr);
-            mkDirs(dirResource);
-            List<ProductSeriesPicture> productSeriesPictures = getProductSeriesPicturesAndSaveFiles(files, dirStr, context);
-            productSeries.setPictures(productSeriesPictures);
-
-        }
-        productSeries.setNewProduct(true);
-        productSeries.setShelvesDate(new Date());
-        ProductSubCategory productSubCategory=ServiceManager.productSubCategoryService.findById(productSubCategoryId);
-        productSeries.setProductSubCategory(productSubCategory);
-        ProductStore store=new ProductStore();
-        store.setWarningAmount(warningAmount);
-        productSeries.setProductStore(store);
-        ProductSeriesPrice productSeriesPrice=new ProductSeriesPrice();
-        Date now=new Date();
-        productSeriesPrice.setAdjustDate(now);
-        productSeriesPrice.setBeginDate(now);
-        productSeriesPrice.setPrice(price);
-        List<ProductSeriesPrice> prices=new ArrayList<ProductSeriesPrice>();
-        prices.add(productSeriesPrice);
-        productSeries.setProductSeriesPrices(prices);
-
-        ProductStoreInAndOut inAndOut=new ProductStoreInAndOut();
-        inAndOut.setAmount(storeAmount);
-        inAndOut.setDate(new Date());
-        inAndOut.setType("in");
-        inAndOut.setOperator(getLoginAdministrator(session));
-        List<ProductStoreInAndOut> inAndOuts=new ArrayList<ProductStoreInAndOut>();
-        inAndOuts.add(inAndOut);
-        store.setInAndOutList(inAndOuts);
-//        ServiceManager.productStoreInAndOutService.insert(inAndOut);
-        productSeries.setProductStore(store);
-        productSeriesService.insert(productSeries);
-//        List<ProductProperty> productProperties=new ArrayList<ProductProperty>();
-        JSONArray productPropertiesJsonArray=JSONArray.fromObject(productPropertiesJson);
-        for (Object object:productPropertiesJsonArray.toArray()){
-            JSONObject jsonObjectProductProperty=(JSONObject) object;
-//            if(jsonObjectProductProperty.get("propertyName")==null||jsonObjectProductProperty.get("propertyName").toString().length()==0) continue;
-            ProductProperty productProperty=new ProductProperty();
-            Assert.notNull(jsonObjectProductProperty.get("propertyName"));
-            String propertyName=jsonObjectProductProperty.get("propertyName").toString();
-            if (propertyName.equals("")) continue;
-            productProperty.setPropertyName(propertyName);
-            productProperty.setProductSeries(productSeries);
-            ServiceManager.productPropertyService.insert(productProperty);
-            JSONArray jsonArrayPropertyValues=JSONArray.fromObject(jsonObjectProductProperty.get("propertyValues"));
-
-            for (Object productPropertyValueObject:jsonArrayPropertyValues){
-                ProductPropertyValue productPropertyValue=new ProductPropertyValue();
-                JSONObject productPropertyValueJSONObject=(JSONObject)productPropertyValueObject;
-                Assert.notNull(productPropertyValueJSONObject.get("value"));
-                if (productPropertyValueJSONObject.get("value").toString().equals("")) continue;
-                productPropertyValue.setValue(productPropertyValueJSONObject.get("value").toString());
-                productPropertyValue.setProductProperty(productProperty);
-                productProperty.setProductSeries(productSeries);
-                ServiceManager.productPropertyValueService.insert(productPropertyValue);
-            }
-        }
-        return "redirect:/admin/index/index";
+        return "redirect:/admin/product_series/list";
     }
 
     private List<ProductSeriesPicture> getProductSeriesPicturesAndSaveFiles(MultipartFile[] files, String dirStr, ServletContext context) throws IOException {
@@ -480,7 +399,7 @@ public class AdminController extends BaseRestSpringController {
             ServiceManager.productEvaluateService.removeByProductSeries(productSeries);
             ServiceManager.salesCampaignService.removeProductSeries(productSeries);
             ServiceManager.homePageBlockService.removeProductSeries(productSeries);
-            ServiceManager.productSeriesService.removeById(productSeries.getId());
+            ServiceManager.productSeriesService.removeProductSeriesAndPictures(productSeries);
             message.setSuccess(true);
             message.setMessage("删除成功!");
             List<ProductSeries> list=productSeriesService.findAll();

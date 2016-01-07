@@ -13,7 +13,7 @@ public class TopCarousel {
     @Id
     private String id;
     private List<String[]> adContent;
-    private int priority;
+    private Integer priority;
     private String name;
     public String getId() {
         return id;
@@ -31,11 +31,11 @@ public class TopCarousel {
         this.adContent = adContent;
     }
 
-    public int getPriority() {
+    public Integer getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(Integer priority) {
         this.priority = priority;
     }
 

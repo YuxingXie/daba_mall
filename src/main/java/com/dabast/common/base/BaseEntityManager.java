@@ -33,6 +33,10 @@ public abstract class BaseEntityManager<E> implements IBaseEntityManager<E> {
         return getEntityDao().saveFile(fileName, file);
     }
     @Override
+    public void deleteFile(String id){
+        getEntityDao().deleteFile(id);
+    }
+    @Override
     public GridFSDBFile findFileById(String id) {
         return getEntityDao().findFileById(id);
     }

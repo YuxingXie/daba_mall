@@ -41,9 +41,7 @@
         $scope.productSubCategories = [];
         $scope.productSeries = {};
         $scope.productSeries.productSeriesPrices=[];
-        $scope.productSeries.productProperties = [];
-        $scope.productSeries.productProperties[0] = {};
-        $scope.productSeries.productProperties[0].propertyValues = [];
+
 //        $scope.productSeries.productProperties[0].propertyValues[0] = {};
         $scope.productSeries.productStore = {};
         $scope.productSeries.productStore.inAndOutList = [];
@@ -54,13 +52,15 @@
         });
 
         $scope.addNewProperty = function () {
-//            console.log($scope.productSeries.productProperties);
-            $scope.productSeries.productProperties[$scope.productSeries.productProperties.length-1]={};
-            $scope.productSeries.productProperties.length = $scope.productSeries.productProperties.length + 1;
-//            console.log(JSON.stringify($scope.productSeries.productProperties));
+            if(!$scope.productSeries.productProperties){
+                $scope.productSeries.productProperties = [];
+                $scope.productSeries.productProperties[0] = {};
+                $scope.productSeries.productProperties[0].propertyValues = [];
+            }else{
+                $scope.productSeries.productProperties.length = $scope.productSeries.productProperties.length + 1;
+            }
         }
         $scope.newPropertyValue=function(index){
-//            console.log(index)
             if(!$scope.productSeries.productProperties[index])$scope.productSeries.productProperties[index]={};
             if(!$scope.productSeries.productProperties[index].propertyValues)
                 $scope.productSeries.productProperties[index].propertyValues=[];

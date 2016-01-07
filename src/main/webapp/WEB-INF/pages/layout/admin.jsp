@@ -18,7 +18,8 @@
   <script src="${path}/statics/assets/plugins/respond.min.js"></script>
   <![endif]-->
   <script> path="${path}";</script>
-  <script type="text/javascript" src="${path}/statics/assets/plugins/jquery-2.1.1.js"></script>
+  <script src="${path}/statics/assets/plugins/jquery-2.1.1.min.js" type="text/javascript"></script>
+
   <tiles:insertAttribute name="css"/>
 </head>
 <body>
@@ -52,11 +53,7 @@
                 </a>
                 <ul id="systemSetting" class="nav nav-list secondmenu collapse" style="height: 0px;">
                   <li><a href="#"><i class="glyphicon glyphicon-user"></i>&nbsp;用户管理</a></li>
-                  <li><a href="#"><i class="glyphicon glyphicon-th-list"></i>&nbsp;菜单管理</a></li>
-                  <li><a href="#"><i class="glyphicon glyphicon-asterisk"></i>&nbsp;角色管理</a></li>
                   <li><a href="#"><i class="glyphicon glyphicon-asterisk"></i>&nbsp;留言及回复管理</a></li>
-                  <li><a href="#"><i class="glyphicon glyphicon-edit"></i>&nbsp;修改密码</a></li>
-                  <li><a href="#"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;日志查看</a></li>
                 </ul>
               </li>
               <li>
@@ -66,13 +63,10 @@
                   <span class="pull-right glyphicon  glyphicon-chevron-toggle"></span>
                 </a>
                 <ul id="configSetting" class="nav nav-list secondmenu collapse">
-                  <li ng-class="{'active':false}"><a href="${path}/admin/product_series/list"><i class="glyphicon glyphicon-globe"></i>&nbsp;产品信息</a></li>
+                  <li ng-class="{'active':false}"><a href="${path}/admin/product_series/list"><i class="glyphicon glyphicon-globe"></i>&nbsp;商品信息</a></li>
                   <li><a href="${path}/admin/product_category/create_input"><i class="glyphicon glyphicon-star-empty"></i>&nbsp;产品分类信息</a></li>
-                  <li><a href="${path}/admin/product_series/create_input"><i class="glyphicon glyphicon-star"></i>&nbsp;产品上架</a></li>
                   <li><a href="${path}/admin/top_carousel/list"><i class="glyphicon glyphicon-ok-circle"></i>&nbsp;首页轮播图片管理</a></li>
                   <li><a href="${path}/admin/home_page_block/list"><i class="glyphicon glyphicon-ok-circle"></i>&nbsp;首页产品区块</a></li>
-                  <li><a href="#"><i class="glyphicon glyphicon-ok-circle"></i>&nbsp;产品库存管理</a></li>
-                  <li><a href="#"><i class="glyphicon glyphicon-ok-circle"></i>&nbsp;产品价格管理</a></li>
                 </ul>
               </li>
 
@@ -116,7 +110,6 @@
   </div>
 </body>
 
-<script src="${path}/statics/assets/plugins/jquery-2.1.1.min.js" type="text/javascript"></script>
 <script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/angular-1.4.8/angular.js"></script>
 <script src="${path}/statics/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>

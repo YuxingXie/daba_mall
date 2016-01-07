@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
+    @Transient
     private double totalPrice;
+    @Transient
     private int totalAmount;
     private List<ProductSelected> productSelectedList;
     public List<ProductSelected> getProductSelectedList() {

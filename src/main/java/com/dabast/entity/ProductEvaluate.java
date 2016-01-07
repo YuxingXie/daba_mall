@@ -20,7 +20,7 @@ public class ProductEvaluate {
     private Integer grade;
     private Date date;
     private String type;//praise赞,evaluate评论,reply评论的回复
-    private boolean anonymous;
+    private Boolean anonymous;
     @DBRef
     private ProductEvaluate parent;
     @Transient
@@ -65,11 +65,11 @@ public class ProductEvaluate {
         this.date = date;
     }
 
-    public boolean getAnonymous() {
+    public Boolean getAnonymous() {
         return anonymous;
     }
 
-    public void setAnonymous(boolean anonymous) {
+    public void setAnonymous(Boolean anonymous) {
         this.anonymous = anonymous;
     }
 

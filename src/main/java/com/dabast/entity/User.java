@@ -50,10 +50,10 @@ public class User {
     private Cart cart;
     @Field(value = "addresses")
     private String[] addresses;
-    @Field private boolean disabled;//禁用
+    @Field private Boolean disabled;//禁用
     @Field(value = "idCardNo")
     private String idCardNo;
-    private boolean activated;//激活
+    private Boolean activated;//激活
     @Transient
     private List<Account> userAccounts;
     @Transient
@@ -195,21 +195,22 @@ public class User {
         this.userCategory = userCategory;
     }
 
-    public boolean isDisabled() {
+    public Boolean getDisabled() {
         return disabled;
     }
 
-    public void setDisabled(boolean disabled) {
+    public void setDisabled(Boolean disabled) {
         this.disabled = disabled;
     }
 
-    public boolean isActivated() {
+    public Boolean getActivated() {
         return activated;
     }
 
-    public void setActivated(boolean activated) {
+    public void setActivated(Boolean activated) {
         this.activated = activated;
     }
+
     private PersonalRealMessage realMessage;
 
     public PersonalRealMessage getRealMessage() {
@@ -233,30 +234,28 @@ public class User {
      */
 
     @Transient
-    private boolean remember;
+    private Boolean remember;
     @NotNull
     @Transient
     private String rePassword;
     @Transient
     private String loginStr;
     @Transient
-    private boolean mergeCart;
+    private Boolean mergeCart;
 
-    public boolean isMergeCart() {
+    public Boolean getMergeCart() {
         return mergeCart;
     }
 
-    public void setMergeCart(boolean mergeCart) {
+    public void setMergeCart(Boolean mergeCart) {
         this.mergeCart = mergeCart;
     }
 
-
-
-    public boolean isRemember() {
+    public Boolean getRemember() {
         return remember;
     }
 
-    public void setRemember(boolean remember) {
+    public void setRemember(Boolean remember) {
         this.remember = remember;
     }
 

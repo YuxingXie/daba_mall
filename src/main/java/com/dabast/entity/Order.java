@@ -37,7 +37,7 @@ public class Order {
     /**
      * 订单是否开始处理
      */
-    private boolean handler;
+    private Boolean handler;
     private Date handlerDate;
     @DBRef
     private Administrator handlerAdmin;
@@ -254,11 +254,11 @@ public class Order {
         this.payAccount = payAccount;
     }
 
-    public boolean getHandler() {
+    public Boolean getHandler() {
         return handler;
     }
 
-    public void setHandler(boolean handler) {
+    public void setHandler(Boolean handler) {
         this.handler = handler;
     }
 

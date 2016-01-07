@@ -38,7 +38,7 @@ public class ProductSeries {
      * 销量：该字段由程序维护，不是统计结果
      */
     @Field
-    private int sales;
+    private Integer sales;
 
     /**
      * 规格参数
@@ -58,11 +58,11 @@ public class ProductSeries {
     @DBRef
     private ProductSubCategory productSubCategory;
     @Field
-    private int evaluateCount;
+    private Integer evaluateCount;
     @Field
-    private boolean newProduct;
+    private Boolean newProduct;
     @Transient
-    private boolean interested;
+    private Boolean interested;
     @Transient
     private List<ProductProperty> productProperties;
     @Transient
@@ -79,11 +79,11 @@ public class ProductSeries {
     @Transient
     private Double productSeriesEvaluateGrade;
 
-    public boolean isInterested() {
+    public Boolean getInterested() {
         return interested;
     }
 
-    public void setInterested(boolean interested) {
+    public void setInterested(Boolean interested) {
         this.interested = interested;
     }
 
@@ -98,11 +98,13 @@ public class ProductSeries {
         this.productSeriesEvaluateGrade=BigDecimalUtil.divide(totalGrade,productEvaluateList.size());
         return this.productSeriesEvaluateGrade;
     }
-    public void setNewProduct(boolean newProduct) {
-        this.newProduct = newProduct;
-    }
-    public boolean isNewProduct() {
+
+    public Boolean getNewProduct() {
         return newProduct;
+    }
+
+    public void setNewProduct(Boolean newProduct) {
+        this.newProduct = newProduct;
     }
 
     public ProductStore getProductStore() {
@@ -198,22 +200,23 @@ public class ProductSeries {
         return productEvaluateList;
     }
 
-    public int getEvaluateCount() {
+    public Integer getEvaluateCount() {
         return evaluateCount;
     }
 
-    public void setEvaluateCount(int evaluateCount) {
+    public void setEvaluateCount(Integer evaluateCount) {
         this.evaluateCount = evaluateCount;
     }
 
-    public int getSales() {
+    public Integer getSales() {
         return sales;
     }
 
-    public void setSales(int sales) {
+    public void setSales(Integer sales) {
         this.sales = sales;
     }
-    //    public void setEvaluateCount(Integer evaluateCount) {
+
+//    public void setEvaluateCount(Integer evaluateCount) {
 //        this.evaluateCount = evaluateCount;
 //    }
 

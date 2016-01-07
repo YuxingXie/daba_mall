@@ -272,4 +272,19 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
     }
 
 
+    public void removeProductSeriesAndPictures(ProductSeries productSeries) {
+        List<ProductSeriesPicture> productSeriesPictures=productSeries.getPictures();
+        for (ProductSeriesPicture productSeriesPicture:productSeriesPictures){
+            String bigPicture=productSeriesPicture.getBigPicture();
+            String picture=productSeriesPicture.getPicture();
+            String iconPicture=productSeriesPicture.getIconPicture();
+            String bigPictureId=bigPicture.substring(4);
+            String pictureId=picture.substring(4);
+            String iconPictureId=iconPicture.substring(4);
+            deleteFile(bigPictureId);
+            deleteFile(pictureId);
+            deleteFile(iconPictureId);
+        }
+        removeById(productSeries.getId());
+    }
 }

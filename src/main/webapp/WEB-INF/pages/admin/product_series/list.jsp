@@ -6,25 +6,30 @@
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 
 <div ng-controller='ProductSeriesListController'>
-    <div class="row margin-bottom-10">筛选产品</div>
-    <div class="row form-inline font-size-13-5" ng-if="categories.length">
-        <div class="col-sm-5 col-lg-5">大类：
-            <select ng-model="productCategory" ng-change="byCategory(productCategory)"
-                    ng-options="productCategory.categoryName for productCategory in categories"
-                    name="form-productCategory" class="form-control form-group-sm">
-                <option>--选择大类--</option>
-            </select>
-            <label ng-show="productCategory.productSubCategories.length>0"> </label>
-            小类：
-            <select ng-model="productSeries.productSubCategory" required="true" name="form-productSubCategory"
-                    class="form-control form-group-sm"  ng-change="bySubCategory(productSeries.productSubCategory)"
-                    ng-options="productSubCategory.subCategoryName for productSubCategory in productCategory.productSubCategories">
-            </select>
+    <div class="row btn-group btn-group-xs">
+            <a href="${path}/admin/index/index" class="btn btn-primary"><i class="fa fa-reply"></i> 返回首页</a>
+            <a href="${path}/admin/product_series/create_input" class="btn btn-primary"><i class="fa fa-plus"></i> 新增商品</a>
+    </div>
+    <div class="row form-inline font-size-13-5">
+        <div class="col-sm-9 col-lg-9" ng-if="categories.length">
+            <div class="inline-block margin-top-10">
+                选择分类：
+                <select ng-model="productCategory" ng-change="byCategory(productCategory)"
+                        ng-options="productCategory.categoryName for productCategory in categories"
+                        name="form-productCategory" class="form-control input-sm">
+                    <option>--选择大类--</option>
+                </select>
+                <select ng-model="productSeries.productSubCategory" required="true" name="form-productSubCategory"
+                        class="form-control input-sm"  ng-change="bySubCategory(productSeries.productSubCategory)"
+                        ng-options="productSubCategory.subCategoryName for productSubCategory in productCategory.productSubCategories">
+                </select>
+            </div>
+            <div class="inline-block margin-top-10">
+                <input type="text" placeholder="产品名" class="form-control input-sm" style="width: 200px;" ng-model="name"/>
+                <button class="btn btn-primary btn-sm" data-ng-click="byName(name)" ng-disabled="!name">搜索产品</button>
+            </div>
         </div>
-        <div class="col-sm-7 col-lg-7 input-group">
-            <input type="text" placeholder="产品名" class="form-control pull-left padding-left-0" ng-model="name"/>
-            <span class="input-group-btn"><button class="btn btn-primary" data-ng-click="byName(name)" ng-disabled="!name">搜索产品</button></span>
-        </div>
+
     </div>
     <div class="row table-responsive padding-top-15">
         <table class="table table-hover">

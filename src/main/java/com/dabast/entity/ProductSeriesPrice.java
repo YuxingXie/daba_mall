@@ -13,18 +13,19 @@ import java.util.Date;
 public class ProductSeriesPrice {
 
     @NotNull
-    private double price;
+    private Double price;
     @NotNull
     private Date beginDate;
     private Date endDate;
     @NotNull
     private Date adjustDate;
     private String comment;
-    public double getPrice() {
+
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

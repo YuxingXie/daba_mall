@@ -18,7 +18,7 @@ public class Notify {
     private User toUser;
     private String content;
     private Date date;
-    private boolean read;
+    private Boolean read;
     private String title;
     private Map<String,Object> importantStuffs;
     public String getId() {
@@ -53,11 +53,11 @@ public class Notify {
         this.date = date;
     }
 
-    public boolean getRead() {
+    public Boolean getRead() {
         return read;
     }
 
-    public void setRead(boolean read) {
+    public void setRead(Boolean read) {
         this.read = read;
     }
 

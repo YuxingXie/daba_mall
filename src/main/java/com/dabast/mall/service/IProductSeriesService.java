@@ -39,4 +39,6 @@ public interface IProductSeriesService  extends IBaseEntityManager<ProductSeries
     List<ProductSeries> findProductSeriesByProductSubCategory(ProductSubCategory productSubCategory);
 
     List<ProductSeries> findProductSeriesByName(String name);
+
+    void removeProductSeriesAndPictures(ProductSeries productSeries);
 }

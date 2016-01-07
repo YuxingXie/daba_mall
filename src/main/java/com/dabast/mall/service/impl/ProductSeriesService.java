@@ -100,4 +100,9 @@ public class ProductSeriesService extends BaseEntityManager<ProductSeries> imple
     public List<ProductSeries> findProductSeriesByName(String name) {
         return productSeriesDao.findProductSeriesByName(name);
     }
+
+    @Override
+    public void removeProductSeriesAndPictures(ProductSeries productSeries) {
+        productSeriesDao.removeProductSeriesAndPictures(productSeries);
+    }
 }

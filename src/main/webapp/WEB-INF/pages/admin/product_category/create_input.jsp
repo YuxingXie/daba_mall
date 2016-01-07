@@ -18,15 +18,15 @@
                 </div>
             </div>
             <div class="row margin-top-10" ng-if="categoryType==='1'">
-                <div class="col-lg-3 col-sm-3 text-right">
+                <div class="col-lg-3 col-sm-3 text-right padding-top-8">
                     创建大类
                 </div>
                 <div class="col-lg-7 col-sm-7 ">
-                        <input class="form-control" type="text" name="categoryName" placeholder="输入大类名称" ng-model="$parent.productCategory"/>
+                    <input class="form-control" type="text" name="categoryName" placeholder="输入大类名称" ng-model="$parent.productCategory"/>
                 </div>
             </div>
             <div class="row margin-top-10" ng-if="categoryType==='2'&&list.length">
-                    <div class="col-lg-3 col-sm-3 text-right">
+                    <div class="col-lg-3 col-sm-3 text-right padding-top-8">
                         选择大类
                     </div>
                 <div class="col-lg-7 col-sm-7">
@@ -36,22 +36,22 @@
                 </div>
             </div>
             <div class="row margin-top-10" ng-if="categoryType==='2'&&(!list.length ||list.length==0)">
-                        <div class="col-lg-3 col-sm-3 text-right">没有大类数据，请创建：</div>
+                        <div class="col-lg-3 col-sm-3 text-right padding-top-8">没有大类数据，请创建：</div>
                         <div class="col-lg-7 col-sm-7">
                             <input type="text" name="categoryName" class="form-control" placeholder="输入大类名称" ng-model="$parent.productCategory"/>
                         </div>
             </div>
 
             <div class="row margin-top-10" ng-if="productCategory">
-                <div class="col-lg-3 col-sm-3 text-right">为大类创建小类</div>
+                <div class="col-lg-3 col-sm-3 text-right padding-top-8">为大类创建小类</div>
                 <div class="col-lg-7 col-sm-7">
-                    <input type="text" name="subCategoryName" placeholder="输入小类名称" class="form-control"/>
+                    <input type="text" name="subCategoryName" placeholder="输入小类名称" class="form-control" ng-model="$parent.subCategoryName"/>
                 </div>
             </div>
             <div class="row margin-top-10">
-                <div class="col-lg-3 col-sm-3 text-right"></div>
+                <div class="col-lg-3 col-sm-3 text-right padding-top-8"></div>
                 <div class="col-lg-7 col-sm-7">
-                    <input type="submit" value="提交" class="btn btn-primary pull-right" />
+                    <input type="submit" value="提交" class="btn btn-primary pull-right" ng-disabled="!subCategoryName"/>
                 </div>
             </div>
 
