@@ -50,4 +50,9 @@ public class ProductEvaluateService extends BaseEntityManager<ProductEvaluate> i
     public ProductEvaluate praisedEvaluate(ProductEvaluate parent, User praiseUser) {
         return productEvaluateDao.praisedEvaluate(parent,praiseUser);
     }
+
+    @Override
+    public void removeByProductSeries(ProductSeries productSeries) {
+        productEvaluateDao.removeByProductSeries(productSeries);
+    }
 }

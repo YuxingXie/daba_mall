@@ -117,4 +117,16 @@ public class OrderDao extends BaseMongoDao<Order> {
         dbObject.put("$or",dbList);
         return getMongoTemplate().find(new BasicQuery(dbObject),Order.class);
     }
+
+    public List<Order> findOrdersByProductSeries(ProductSeries productSeries) {
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("productSelectedList.productSeries",productSeries);
+        return getMongoTemplate().find(new BasicQuery(dbObject),Order.class);
+    }
+
+    public long findOrdersCountByProductSeries(ProductSeries productSeries) {
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("productSelectedList.productSeries",productSeries);
+        return getMongoTemplate().count(new BasicQuery(dbObject),Order.class);
+    }
 }

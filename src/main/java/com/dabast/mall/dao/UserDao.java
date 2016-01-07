@@ -226,5 +226,9 @@ public class UserDao extends BaseMongoDao<User>  {
     }
 
 
-
+    public List<User> findUsersByProductSeriesInCart(ProductSeries productSeries) {
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("cart.productSelectedList.productSeries",productSeries);
+        return getMongoTemplate().find(new BasicQuery(dbObject),User.class);
+    }
 }

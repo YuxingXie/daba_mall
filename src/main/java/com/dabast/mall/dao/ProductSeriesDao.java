@@ -132,6 +132,13 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
 
 
     }
+    public List<ProductSeries> findProductSeriesByName(String name) {
+        Pattern pattern = Pattern.compile(".*?" + name + ".*");
+        DBObject queryCondition=new BasicDBObject("name", pattern);
+        DB db = getMongoTemplate().getDb();
+        List<ProductSeries> list = getMongoTemplate().find(new BasicQuery(queryCondition), ProductSeries.class);
+        return list;
+    }
     public Page<ProductSeries> findProductSeriesPageByProductSubCategory(ProductSubCategory productSubCategory,int currentPage,int pageSize) {
         return findProductSeriesPageByProductSubCategoryWithSort(productSubCategory, currentPage, pageSize, null);
     }
@@ -247,6 +254,21 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
         Aggregation aggregation = Aggregation.newAggregation(match,project, group,sort);
         AggregationResults<ProductSeries> result = getMongoTemplate().aggregate(aggregation, "eft_transactions", ProductSeries.class);
         return null;
+    }
+
+
+    public List<ProductSeries> findProductSeriesByProductCategory(ProductCategory productCategory) {
+        List<ProductSubCategory>subCategories=ServiceManager.productSubCategoryService.getProductSubCategoriesByCategoryId(productCategory.getId());
+        DBObject dbObject=new BasicDBObject();
+
+        dbObject.put("productSubCategory",new BasicDBObject("$in",subCategories));
+        return getMongoTemplate().find(new BasicQuery(dbObject),ProductSeries.class);
+    }
+
+    public List<ProductSeries> findProductSeriesByProductSubCategory(ProductSubCategory productSubCategory) {
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("productSubCategory",new DBRef("productSubCategory",new ObjectId(productSubCategory.getId())));
+        return getMongoTemplate().find(new BasicQuery(dbObject),ProductSeries.class);
     }
 
 

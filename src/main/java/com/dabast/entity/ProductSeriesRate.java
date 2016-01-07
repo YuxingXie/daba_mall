@@ -8,15 +8,11 @@ import org.springframework.data.mongodb.core.mapping.Field;
 /**
  * 参与活动的某个产品的折扣
  */
-@Document(collection = "productSeriesRate")
 public class ProductSeriesRate {
-    @Id
-    private String id;
-    @DBRef
+
     private SalesCampaign salesCampaign;
     @DBRef
     private ProductSeries productSeries;
-    @Field(value = "rate")
     private Double rate;
 
     public SalesCampaign getSalesCampaign() {

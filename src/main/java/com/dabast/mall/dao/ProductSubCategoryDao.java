@@ -51,4 +51,10 @@ public class ProductSubCategoryDao  extends BaseMongoDao<ProductSubCategory> {
     public ProductSubCategory findProductSubCategoryByIdWithoutProductSeries(String id) {
         return findProductSubCategoryById(id,false);
     }
+
+@Deprecated
+    public void removeByProductSeries(ProductSeries productSeries) {
+//        DBRef dbRef=new DBRef("productSubCategory",new ObjectId(id));
+//        DBObject dbObject=new BasicDBObject("productSubCategory",dbRef);
+    }
 }

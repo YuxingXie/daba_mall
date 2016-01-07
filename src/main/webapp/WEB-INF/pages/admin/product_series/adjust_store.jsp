@@ -6,12 +6,12 @@
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 
-<div ng-controller='AdjustPriceController'>
+<div ng-controller='AdjustStoreController'>
     <div class="row margin-bottom-10"><h4>商品调价</h4></div>
     <div class="row margin-bottom-10"><b>商品名称：</b>${productSeries.name}</div>
-    <div class="row margin-bottom-10"><b>当前价格：</b>${productSeries.currentPrice.price}/${productSeries.measurementUnit}</div>
-    <div class="row margin-bottom-10"><b>调价说明：</b>${productSeries.currentPrice.comment}</div>
-    <div class="row margin-bottom-10"><b>定价日期：</b><fmt:formatDate value="${productSeries.currentPrice.adjustDate}" type="date" dateStyle="default"/></div>
+    <div class="row margin-bottom-10"><b>库存警告数量：</b>${productSeries.productStore.warningAmount}</div>
+    <div class="row margin-bottom-10"><b>库存剩余：</b>${productSeries.productStore.remain}</div>
+
     <%--<div class="row margin-bottom-10"><b>价格生效起始日期：</b>--%>
         <%--<fmt:formatDate value="${productSeries.currentPrice.beginDate}" type="both" dateStyle="default"/>--%>
     <%--</div>--%>
@@ -23,21 +23,37 @@
             <%--</c:otherwise>--%>
         <%--</c:choose>--%>
     <%--</div>--%>
-    <div class="row margin-bottom-10"><h4>调整当前价格</h4></div>
+    <div class="row margin-bottom-10"><h4>增加一次库存记录<span class="color-red">(改数量会累加到库存数上，而不是把该数字作为库存数)</span></h4></div>
     <div class="row margin-bottom-10">
-        <form action="${path}/admin/do/adjust_price" method="post" class="form-without-legend" novalidate="novalidate" name="form">
+        <form action="${path}/admin/do/adjust_store" method="post" class="form-without-legend" novalidate="novalidate" name="form">
             <fieldset>
+
                 <div class="row form-group">
-                    <div class="col-sm-2 col-lg-2 control-label padding-top-10 text-right">调价说明：</div>
+                    <div class="col-sm-2 col-lg-2 control-label padding-top-10 text-right">修改库存警告数：</div>
                     <div class="col-sm-7 col-lg-7 pull-left">
-                        <input type="text" name="comment" class="form-control" ng-model="productSeriesPrice.comment"/>
+                        <input type="number" name="warningAmount" class="form-control" ng-model="warningAmount"/>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col-sm-2 col-lg-2 control-label padding-top-10 text-right">价格调为：</div>
-                    <div class="col-sm-4 col-lg-4 pull-left">
+                    <div class="col-sm-2 col-lg-2 control-label padding-top-10 text-right">出入库存数<i class="fa fa-asterisk color-red"></i>：</div>
+                    <div class="col-sm-7 col-lg-7 pull-left">
                         <input type="hidden" name="productSeriesId" value="${productSeries.id}" />
-                        <input type="number" name="price" class="form-control" required="true" ng-model="productSeriesPrice.price"/>
+                        <input type="number" name="amount" class="form-control" ng-model="productStoreInAndOut.amount" required="true"/>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-2 col-lg-2 control-label padding-top-10 text-right">库存类型<i class="fa fa-asterisk color-red"></i>：</div>
+                    <div class="col-sm-4 col-lg-4">
+                        <span class="radio inline-block">
+                            <label>
+                                <input type="radio" name="type" required="true" ng-model="productStoreInAndOut.type" value="in" checked/>入库
+                            </label>
+                        </span>
+                       <span class="radio inline-block">
+                            <label>
+                                <input type="radio" name="type"  required="true" ng-model="productStoreInAndOut.type" value="out"/>出库
+                            </label>
+                       </span>
                     </div>
 
                 </div>

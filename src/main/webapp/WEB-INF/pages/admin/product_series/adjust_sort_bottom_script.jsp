@@ -6,26 +6,15 @@
 <script type="text/javascript" src="${path}/statics/assets/plugins/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 
 <script>
-    $(document).ready(function(){
-        $('.form_date').datetimepicker({
-            language:'zh-CN',
-            format:'yyyy-mm-dd hh:mm',
-            weekStart: 1,
-            autoclose: 1,
-            todayBtn:  1,
-            startDate:new Date(),
-            todayHighlight: 1,
-            startView: 2,
-            minView: 1
+    mainApp.controller('AdjustStoreController', ['$scope', '$http', function ($scope, $http) {
+        $scope.categories = [];
+        $http.get('${path}/product_series/categories').success(function (data) {
+            $scope.categories = data;
         });
-    });
-
-    mainApp.controller('AdjustPriceController', ['$scope', '$http', function ($scope, $http) {
-
-        <%--$http.get('${path}/product_series/data').success(function (data) {--%>
-            <%--$scope.list = data;--%>
-            <%--console.log(JSON.stringify(data));--%>
-        <%--});--%>
+        $scope.getProductSubCategory=function(productSubCategory){
+            if(!productSubCategory) return;
+            $("#subCategoryId").val(productSubCategory.id);
+        }
     }]);
 
 </script>

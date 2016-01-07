@@ -24,4 +24,6 @@ public interface IProductEvaluateService extends IBaseEntityManager<ProductEvalu
     boolean praised(ProductEvaluate parent, User praiseUser);
 
     ProductEvaluate praisedEvaluate(ProductEvaluate parent, User praiseUser);
+
+    void removeByProductSeries(ProductSeries productSeries);
 }

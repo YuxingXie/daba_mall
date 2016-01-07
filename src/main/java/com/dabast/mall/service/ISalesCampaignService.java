@@ -1,12 +1,12 @@
 package com.dabast.mall.service;
 
 import com.dabast.common.base.IBaseEntityManager;
-import com.dabast.entity.HomePageBlock;
 import com.dabast.entity.ProductSeries;
+import com.dabast.entity.SalesCampaign;
 
 /**
- * Created by Administrator on 2015/12/30.
+ * Created by Administrator on 2016/1/7.
  */
-public interface IHomePageBlockService  extends IBaseEntityManager<HomePageBlock> {
+public interface ISalesCampaignService extends IBaseEntityManager<SalesCampaign> {
     void removeProductSeries(ProductSeries productSeries);
 }

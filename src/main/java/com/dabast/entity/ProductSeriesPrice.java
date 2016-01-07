@@ -9,38 +9,17 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-/**
- * 重大改变：价格变为产品属性而不单独创建集合
- */
-//@Document(collection = "productSeriesPrice")
+
 public class ProductSeriesPrice {
-//    @Id
-//    private String id;
+
     @NotNull
     private double price;
     @NotNull
-    @Future
-    @Field(value = "beginDate")
     private Date beginDate;
-    @Field(value = "endDate")
     private Date endDate;
     @NotNull
-    @Field(value = "adjustDate")
     private Date adjustDate;
-//    @DBRef
-//    private ProductSeriesPrice prevPrice;
-//    @DBRef(db = "productSeries")
-//    private ProductSeries productSeries;
-    @Field(value = "comment")
     private String comment;
-//    public String getId() {
-//        return id;
-//    }
-//
-//    public void setId(String id) {
-//        this.id = id;
-//    }
-
     public double getPrice() {
         return price;
     }

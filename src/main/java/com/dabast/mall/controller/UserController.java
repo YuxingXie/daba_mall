@@ -189,7 +189,7 @@ public class UserController extends BaseRestSpringController {
     }
 
 
-    @RequestMapping(value = "/{id}")
+    @RequestMapping(value = "/data/{id}", method = RequestMethod.GET)
     public ResponseEntity<User> get(ModelMap model, @PathVariable String id,HttpServletRequest request) {
         return new ResponseEntity<User>(userService.findById(id), HttpStatus.OK);
     }

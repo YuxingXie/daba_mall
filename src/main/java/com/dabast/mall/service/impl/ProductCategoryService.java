@@ -3,6 +3,7 @@ package com.dabast.mall.service.impl;
 import com.dabast.common.base.BaseEntityManager;
 import com.dabast.common.base.EntityDao;
 import com.dabast.entity.ProductCategory;
+import com.dabast.entity.ProductSeries;
 import com.dabast.mall.dao.ProductCategoryDao;
 import com.dabast.mall.service.IProductCategoryService;
 import org.springframework.stereotype.Service;
@@ -29,5 +30,10 @@ public class ProductCategoryService extends BaseEntityManager<ProductCategory> i
     @Override
     public List<ProductCategory> findAllCategories() {
         return productCategoryDao.findAllCategories();
+    }
+
+    @Override
+    public void removeByProductSeries(ProductSeries productSeries) {
+        productCategoryDao.removeByProductSeries(productSeries);
     }
 }

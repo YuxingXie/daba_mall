@@ -3,6 +3,7 @@ package com.dabast.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.util.Assert;
 
@@ -12,6 +13,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/11/14.
  */
+@Document(collection = "salesCampaign")
 public class SalesCampaign {
     @Id
     private String id;
@@ -27,7 +29,7 @@ public class SalesCampaign {
     private Double commonRate;//通用折扣
     @Field
     private boolean allProductParticipateIn;//是否所有商品券参与
-    @DBRef(db = "productSeriesRate")
+
     private List<ProductSeriesRate> productSeriesRates;//每个产品的折扣，优先于通用折扣
     @Field
     private String comment;

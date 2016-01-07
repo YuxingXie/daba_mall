@@ -56,10 +56,9 @@ var loginAndCallBack=function (callBack) {
             var $scope = angular.element(appElement).scope();
             $scope.cart=data.cart;
             $scope.$apply();
-            //renderCart(data.cart);
 
         }).fail(function(data){
-            console.log("there is an error!");
+            console.log(JSON.stringify(data));
         });
     }
 

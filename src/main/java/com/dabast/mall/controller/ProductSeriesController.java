@@ -119,6 +119,21 @@ public class ProductSeriesController extends BaseRestSpringController {
         List<ProductSeries> list=productSeriesService.findAll();
         return new ResponseEntity<List<ProductSeries>>(list, HttpStatus.OK);
     }
+    @RequestMapping(value="/data/by_category")
+    public ResponseEntity<List<ProductSeries>> listByCategory(@RequestBody ProductCategory productCategory) {
+        List<ProductSeries> list=productSeriesService.findProductSeriesByProductCategory(productCategory);
+        return new ResponseEntity<List<ProductSeries>>(list, HttpStatus.OK);
+    }
+    @RequestMapping(value="/data/by_sub_category")
+    public ResponseEntity<List<ProductSeries>> listBySubCategory(@RequestBody ProductSubCategory productSubCategory) {
+        List<ProductSeries> list=productSeriesService.findProductSeriesByProductSubCategory(productSubCategory);
+        return new ResponseEntity<List<ProductSeries>>(list, HttpStatus.OK);
+    }
+    @RequestMapping(value="/data/by_name")
+    public ResponseEntity<List<ProductSeries>> listByName(@RequestBody String name) {
+        List<ProductSeries> list=productSeriesService.findProductSeriesByName(name);
+        return new ResponseEntity<List<ProductSeries>>(list, HttpStatus.OK);
+    }
     @RequestMapping(value="/top3/data")
     public ResponseEntity<List<String[]>> top3() {
         List<String[]> top3 = ServiceManager.productSeriesService.getTop3ProductSeriesDemo();

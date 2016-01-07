@@ -3,6 +3,7 @@ package com.dabast.mall.service.impl;
 import com.dabast.common.base.BaseEntityManager;
 import com.dabast.common.base.EntityDao;
 import com.dabast.entity.ProductProperty;
+import com.dabast.entity.ProductSeries;
 import com.dabast.mall.dao.ProductPropertyDao;
 import com.dabast.mall.service.IProductPropertyService;
 import org.springframework.stereotype.Service;
@@ -24,5 +25,10 @@ public class ProductPropertyService extends BaseEntityManager<ProductProperty> i
     @Override
     public List<ProductProperty> getProductPropertiesByProductSeriesId(String productSeriesId) {
         return productPropertyDao.getProductPropertiesByProductSeriesId(productSeriesId);
+    }
+
+    @Override
+    public void removeByProductSeries(ProductSeries productSeries) {
+        productPropertyDao.removeByProductSeries(productSeries);
     }
 }

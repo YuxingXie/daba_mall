@@ -37,4 +37,9 @@ public class InterestService  extends BaseEntityManager<Interest> implements IIn
     public List<Interest> findByUserAndProductSeries(User user, ProductSeries productSeries) {
         return interestDao.findByUserAndProductSeries(user, productSeries);
     }
+
+    @Override
+    public List<Interest> findByProductSeries(ProductSeries productSeries) {
+        return interestDao.findByProductSeries(productSeries);
+    }
 }

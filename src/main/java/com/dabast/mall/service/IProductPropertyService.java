@@ -2,6 +2,7 @@ package com.dabast.mall.service;
 
 import com.dabast.common.base.IBaseEntityManager;
 import com.dabast.entity.ProductProperty;
+import com.dabast.entity.ProductSeries;
 
 import java.util.List;
 
@@ -10,4 +11,6 @@ import java.util.List;
  */
 public interface IProductPropertyService  extends IBaseEntityManager<ProductProperty> {
     List<ProductProperty> getProductPropertiesByProductSeriesId(String productSeriesId);
+
+    void removeByProductSeries(ProductSeries productSeries);
 }

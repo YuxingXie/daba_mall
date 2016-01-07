@@ -18,5 +18,8 @@
     <div class="row margin-top-20">
         <i class="fa fa-list-ul"></i>退换货订单<a ng-if="data.returnOrders" href="${path}/admin/order/toHandler"><i class="color-red">({{data.returnOrders}})</i></a>
     </div>
+    <div class="row margin-top-20">
+        <i class="fa fa-list-ul"></i>库存警告<a ng-if="data.returnOrders" href="${path}/admin/order/toHandler"><i class="color-red">({{data.returnOrders}})</i></a>
+    </div>
 </div>
 

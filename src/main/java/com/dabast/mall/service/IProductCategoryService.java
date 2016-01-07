@@ -2,6 +2,7 @@ package com.dabast.mall.service;
 
 import com.dabast.common.base.IBaseEntityManager;
 import com.dabast.entity.ProductCategory;
+import com.dabast.entity.ProductSeries;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ public interface IProductCategoryService extends IBaseEntityManager<ProductCateg
     String getProductCategoryIdByProductSeriesId(String productSeriesId);
 
     List<ProductCategory> findAllCategories();
+@Deprecated
+    void removeByProductSeries(ProductSeries productSeries);
 }

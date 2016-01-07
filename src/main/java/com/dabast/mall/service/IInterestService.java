@@ -16,4 +16,6 @@ public interface  IInterestService extends IBaseEntityManager<Interest> {
     boolean alreadyInterested(User user, ProductSeries productSeries);
 
     List<Interest> findByUserAndProductSeries(User user, ProductSeries productSeries);
+
+    List<Interest> findByProductSeries(ProductSeries productSeries);
 }

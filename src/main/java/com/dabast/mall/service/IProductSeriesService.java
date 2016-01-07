@@ -1,6 +1,7 @@
 package com.dabast.mall.service;
 
 import com.dabast.common.base.IBaseEntityManager;
+import com.dabast.entity.ProductCategory;
 import com.dabast.entity.ProductSeries;
 import com.dabast.entity.ProductSubCategory;
 import com.dabast.support.vo.Sortable;
@@ -33,4 +34,9 @@ public interface IProductSeriesService  extends IBaseEntityManager<ProductSeries
     List<ProductSeries> findProductSeriesAllRef(DBObject dbObject);
 
 
+    List<ProductSeries> findProductSeriesByProductCategory(ProductCategory productCategory);
+
+    List<ProductSeries> findProductSeriesByProductSubCategory(ProductSubCategory productSubCategory);
+
+    List<ProductSeries> findProductSeriesByName(String name);
 }

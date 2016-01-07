@@ -12,16 +12,16 @@
         $http.get('${path}/product_series/categories').success(function (data) {
             $scope.list = data;
         });
-        $scope.$watch('categoryType', function(newVal,oldVal) {
-            if(newVal!==oldVal) {
-                $scope.productCategory =undefined;
-                <%--if(newVal==='2'){--%>
-                    <%--$http.get('${path}/product_series/categories').success(function (data) {--%>
-                        <%--$scope.list = data;--%>
-<%--//                        $scope.$apply();--%>
-                    <%--});--%>
-                <%--}--%>
-            }
-        });
+        <%--$scope.$watch('categoryType', function(newVal,oldVal) {--%>
+            <%--if(newVal!==oldVal) {--%>
+                <%--$scope.productCategory =undefined;--%>
+                <%--&lt;%&ndash;if(newVal==='2'){&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;$http.get('${path}/product_series/categories').success(function (data) {&ndash;%&gt;--%>
+                        <%--&lt;%&ndash;$scope.list = data;&ndash;%&gt;--%>
+<%--&lt;%&ndash;//                        $scope.$apply();&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;});&ndash;%&gt;--%>
+                <%--&lt;%&ndash;}&ndash;%&gt;--%>
+            <%--}--%>
+        <%--});--%>
     }]);
 </script>

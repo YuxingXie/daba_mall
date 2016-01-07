@@ -6,7 +6,7 @@
         $scope.emailUser={};//为了更新email创建的一个临时用户
         $scope.phoneUser={};//为了更新phone创建的一个临时用户
         $scope.validCodeGetted=false;
-        $http.get("${path}/user/${sessionScope.loginUser.id}").success(function(data){
+        $http.get("${path}/user/data/${sessionScope.loginUser.id}").success(function(data){
             $scope.user=data;
             $scope.user.validateCode="";
         })

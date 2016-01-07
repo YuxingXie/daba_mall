@@ -2,6 +2,7 @@ package com.dabast.mall.service;
 
 import com.dabast.common.base.IBaseEntityManager;
 import com.dabast.entity.Order;
+import com.dabast.entity.ProductSeries;
 import com.dabast.entity.User;
 
 import java.util.List;
@@ -20,5 +21,9 @@ public interface IOrderService  extends IBaseEntityManager<Order> {
     long findUnHandlerOrdersCount();
 
     List<Order> findUnHandlerOrders();
+
+    List<Order> findOrdersByProductSeries(ProductSeries productSeries);
+
+    long findOrdersCountByProductSeries(ProductSeries productSeries);
 //    void insertOrder(User user);
 }

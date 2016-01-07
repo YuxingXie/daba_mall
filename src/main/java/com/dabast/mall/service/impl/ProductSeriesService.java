@@ -2,6 +2,7 @@ package com.dabast.mall.service.impl;
 
 import com.dabast.common.base.BaseEntityManager;
 import com.dabast.common.base.EntityDao;
+import com.dabast.entity.ProductCategory;
 import com.dabast.entity.ProductSeries;
 import com.dabast.entity.ProductSubCategory;
 import com.dabast.mall.dao.ProductSeriesDao;
@@ -83,5 +84,20 @@ public class ProductSeriesService extends BaseEntityManager<ProductSeries> imple
     @Override
     public List<ProductSeries> findProductSeriesAllRef(DBObject dbObject) {
         return productSeriesDao.findProductSeriesAllRef(dbObject);
+    }
+
+    @Override
+    public List<ProductSeries> findProductSeriesByProductCategory(ProductCategory productCategory) {
+        return productSeriesDao.findProductSeriesByProductCategory(productCategory) ;
+    }
+
+    @Override
+    public List<ProductSeries> findProductSeriesByProductSubCategory(ProductSubCategory productSubCategory) {
+        return productSeriesDao.findProductSeriesByProductSubCategory(productSubCategory) ;
+    }
+
+    @Override
+    public List<ProductSeries> findProductSeriesByName(String name) {
+        return productSeriesDao.findProductSeriesByName(name);
     }
 }

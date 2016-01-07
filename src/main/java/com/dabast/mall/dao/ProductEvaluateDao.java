@@ -99,4 +99,10 @@ public class ProductEvaluateDao extends BaseMongoDao<ProductEvaluate> {
         dbObject.put("replyUser",praiseUser);
         return getMongoTemplate().findOne(new BasicQuery(dbObject), ProductEvaluate.class);
     }
+
+    public void removeByProductSeries(ProductSeries productSeries) {
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("productSeries",new DBRef("productSeries",new ObjectId(productSeries.getId())));
+        getMongoTemplate().findAndRemove(new BasicQuery(dbObject), ProductEvaluate.class);
+    }
 }

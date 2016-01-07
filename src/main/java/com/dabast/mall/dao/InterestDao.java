@@ -56,4 +56,11 @@ public class InterestDao  extends BaseMongoDao<Interest> {
         dbObject.put("user",user);
         return findAll(dbObject);
     }
+
+    public List<Interest> findByProductSeries(ProductSeries productSeries) {
+        if (productSeries==null) return null;
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("productSeries",productSeries);
+        return findAll(dbObject);
+    }
 }

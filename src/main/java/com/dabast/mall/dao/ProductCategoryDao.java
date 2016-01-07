@@ -5,6 +5,8 @@ import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.ProductCategory;
 import com.dabast.entity.ProductSeries;
 import com.dabast.entity.ProductSubCategory;
+import com.mongodb.DBObject;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,5 +35,9 @@ public class ProductCategoryDao extends BaseMongoDao<ProductCategory> {
             productCategory.setProductSubCategories(productSubCategories);
         }
         return productCategories;
+    }
+@Deprecated
+    public void removeByProductSeries(ProductSeries productSeries) {
+
     }
 }

@@ -330,6 +330,63 @@ public class AdminController extends BaseRestSpringController {
        map.addAttribute("productSeries",productSeries);
         return "admin/product_series/adjust_price";
     }
+
+    @RequestMapping(value="/do/adjust_price")
+    public String do_adjust_price(@ModelAttribute ProductSeriesPrice productSeriesPrice,String productSeriesId,ModelMap map){
+        ProductSeries productSeries=productSeriesService.findById(productSeriesId);
+        List<ProductSeriesPrice> prices=productSeries.getProductSeriesPrices();
+        ProductSeriesPrice lastPrice=prices.get(prices.size()-1);
+        Assert.isTrue(lastPrice.getEndDate()==null);
+        Date now=new Date();
+        lastPrice.setEndDate(now);
+        productSeriesPrice.setBeginDate(now);
+        productSeriesPrice.setAdjustDate(now);
+        prices.add(productSeriesPrice);
+        ProductSeries update=new ProductSeries();
+        update.setId(productSeriesId);
+        update.setProductSeriesPrices(prices);
+        productSeriesService.update(update);
+        return "redirect:/admin/product_series/list";
+    }
+    @RequestMapping(value="/adjust_store/{id}")
+    public String adjust_store(@PathVariable String id,ModelMap map){
+        ProductSeries productSeries=productSeriesService.findProductSeriesById(id);
+        map.addAttribute("productSeries",productSeries);
+        return "admin/product_series/adjust_store";
+    }
+    @RequestMapping(value="/adjust_sort/{id}")
+    public String adjust_sort(@PathVariable String id,ModelMap map){
+        ProductSeries productSeries=productSeriesService.findProductSeriesById(id);
+        map.addAttribute("productSeries",productSeries);
+        return "admin/product_series/adjust_sort";
+    }
+    @RequestMapping(value="/do/adjust_sort")
+    public String do_adjust_sort(String subCategoryId,String productSeriesId,ModelMap map,HttpSession session){
+        Date now=new Date();
+        ProductSeries update=new ProductSeries();
+        update.setId(productSeriesId);
+        ProductSubCategory subCategory=new ProductSubCategory();
+        subCategory.setId(subCategoryId);
+        update.setProductSubCategory(subCategory);
+        productSeriesService.update(update);
+        return "redirect:/admin/product_series/list";
+    }
+    @RequestMapping(value="/do/adjust_store")
+    public String do_adjust_store(@ModelAttribute ProductStoreInAndOut inAndOut,String productSeriesId,Integer warningAmount,ModelMap map,HttpSession session){
+        ProductSeries productSeries=productSeriesService.findById(productSeriesId);
+        ProductStore store=productSeries.getProductStore();
+        List<ProductStoreInAndOut> inAndOuts=store.getInAndOutList();
+        if (warningAmount!=null &&warningAmount.intValue()!=0) store.setWarningAmount(warningAmount);
+        Date now=new Date();
+        inAndOut.setDate(now);
+        inAndOut.setOperator(getLoginAdministrator(session));
+        inAndOuts.add(inAndOut);
+        ProductSeries update=new ProductSeries();
+        update.setId(productSeriesId);
+        update.setProductStore(store);
+        productSeriesService.update(update);
+        return "redirect:/admin/product_series/list";
+    }
     @RequestMapping(value="/top3")
     public String top3Maker(ModelMap map){
         List<String[]> list=ServiceManager.productSeriesService.getTop3ProductSeriesDemo();
@@ -367,5 +424,72 @@ public class AdminController extends BaseRestSpringController {
         }
 
         return new ResponseEntity<Message>(message,HttpStatus.OK);
+    }
+    @RequestMapping(value="/product_series/remove")
+    public ResponseEntity<Map<String,Object>> removeProduct( @RequestBody ProductSeries productSeries){
+        Map<String,Object> map=new HashMap<String,Object>();
+        Message message=new Message();
+        //查询是否生成订单
+        long useInOrder=ServiceManager.orderService.findOrdersCountByProductSeries(productSeries);
+        if (useInOrder==0){
+            //是否有加入购物车
+            List<User> users=ServiceManager.userService.findUsersByProductSeriesInCart(productSeries);
+            List<Interest> interests=ServiceManager.interestService.findByProductSeries(productSeries);
+            Date now=new Date();
+            if (interests!=null&&interests.size()>0){
+                for(Interest interest:interests){
+                    User user=interest.getUser();
+                    Notify notify=new Notify();
+                    notify.setToUser(user);
+                    notify.setContent("我们很遗憾的通知您，您关注的商品\"" + productSeries.getName() + "\"被系统删除，因此我们将此商品从您的关注列表中移除了。感谢您对大坝的支持！");
+                    notify.setDate(now);
+                    notify.setTitle("系统通知");
+                    ServiceManager.notifyService.insert(notify);
+                    ServiceManager.interestService.removeById(interest.getId());
+                }
+            }
+            if(users!=null&&users.size()>0){
+                for (User user:users){
+                    Assert.notNull(user.getCart());
+                    Assert.notNull(user.getCart().getProductSelectedList());
+                    List<ProductSelected> productSelectedList=user.getCart().getProductSelectedList();
+                    List<ProductSelected> newProductSelectedList=new ArrayList<ProductSelected>();
+                    for (ProductSelected productSelected:productSelectedList){
+                        if (!productSelected.getProductSeries().getId().equalsIgnoreCase(productSeries.getId())){
+                            newProductSelectedList.add(productSelected);
+                        }
+                    }
+                    User updateUser=new User();
+                    updateUser.setId(user.getId());
+                    Cart cart=new Cart();
+                    cart.setProductSelectedList(newProductSelectedList);
+                    updateUser.setCart(cart);
+                    ServiceManager.userService.update(updateUser);
+
+                    Notify notify=new Notify();
+                    notify.setToUser(user);
+                    notify.setContent("我们很遗憾的通知您，您购物车中的商品\"" + productSeries.getName() + "\"被系统删除，因此我们将此商品从您的购物车移除了。感谢您对大坝的支持！");
+                    notify.setDate(now);
+                    notify.setTitle("系统通知");
+                    ServiceManager.notifyService.insert(notify);
+                }
+            }
+
+            //删除关联的DBRef,包括productSubCategory,productCategory,productProperty,productPropertyValue,productEvaluate,salesCampaign,homePageBlock
+            ServiceManager.productPropertyService.removeByProductSeries(productSeries);
+            ServiceManager.productEvaluateService.removeByProductSeries(productSeries);
+            ServiceManager.salesCampaignService.removeProductSeries(productSeries);
+            ServiceManager.homePageBlockService.removeProductSeries(productSeries);
+            ServiceManager.productSeriesService.removeById(productSeries.getId());
+            message.setSuccess(true);
+            message.setMessage("删除成功!");
+            List<ProductSeries> list=productSeriesService.findAll();
+            map.put("list",list);
+        }else{
+            message.setSuccess(false);
+            message.setMessage("已有订单使用该产品，删除失败!");
+        }
+        map.put("message",message);
+        return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
     }
 }
