@@ -304,11 +304,6 @@
                     <keystoreFile>${user.home}/.keystore</keystoreFile>
                     <keystorePass>dabast</keystorePass>
                 </configuration>
-                <!--<configuration>-->
-                    <!--<port>8088</port>-->
-
-                <!--</configuration>-->
-
             </plugin>
             <!--<plugin>-->
                 <!--<groupId>org.mortbay.jetty</groupId>-->

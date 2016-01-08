@@ -14,6 +14,10 @@
     <link href="${path}/statics/assets/css/style.css" rel="stylesheet" type="text/css">
     <link href="${path}/statics/assets/css/style-responsive.css" rel="stylesheet" type="text/css">
     <link href="${path}/statics/assets/css/color-bg-color.css" rel="stylesheet" type="text/css">
+    <script> path="${path}";</script>
+    <script src="${path}/statics/assets/plugins/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="${path}/statics/assets/plugins/jquery.md5.js"></script>
     <style>
         .error {
             margin: 0;
@@ -42,11 +46,6 @@
             width: 50px; background: darkgray;border-right: 1px #fff solid;display:inline-block;margin: 0px;
         }
     </style>
-    <script> path="${path}";</script>
-    <script src="${path}/statics/assets/plugins/jquery-2.1.1.min.js" type="text/javascript"></script>
-    <script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="${path}/statics/assets/plugins/jquery.md5.js"></script>
-
 
 
 </head>

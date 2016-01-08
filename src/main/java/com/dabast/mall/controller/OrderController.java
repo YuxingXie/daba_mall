@@ -171,7 +171,7 @@ public class OrderController extends BaseRestSpringController {
         Order order = ServiceManager.orderService.findOrderById(id);
 //        session.setAttribute("order",order);
         model.addAttribute("form",order);
-        return "to_bill";
+        return "forward:/to_bill/to_bill.jsp";
     }
 
     @RequestMapping(value = "/receive/{id}")
