@@ -69,7 +69,7 @@ public class RegisterValidateService {
 
     public User sendValidateCodeToMailAndUpsertUser(String email) throws EmailException {
         User userToUpdate=userDao.findByEmail(email);
-        if (userToUpdate!=null && userToUpdate.isActivated()) return null;
+        if (userToUpdate!=null && userToUpdate.getActivated()!=null&&userToUpdate.getActivated()) return null;
         ///邮件的内容
         StringBuffer sb = new StringBuffer("<p>您的大坝生态邮箱注册验证码是:");
         int validateCode=(int)(Math.random()*999999-99999);
@@ -111,7 +111,7 @@ public class RegisterValidateService {
 
     public User sendValidateCodeToPhoneAndUpsertUser(String phone) throws Exception {
         User userToUpdate=userDao.findByPhone(phone);
-        if (userToUpdate!=null && userToUpdate.isActivated()) return null;
+        if (userToUpdate!=null && userToUpdate.getActivated()!=null&&userToUpdate.getActivated()) return null;
         ///邮件的内容
         StringBuffer sb = new StringBuffer("您的大坝生态手机注册验证码是: ");
         int validateCode=(int)(Math.random()*999999-99999);
@@ -143,7 +143,7 @@ public class RegisterValidateService {
         //验证用户是否存在
         if (user != null) {
             //验证用户激活状态
-            if (!user.isActivated()) {
+            if (user.getActivated()==null|| !user.getActivated()) {
                 ///没激活
                 Date currentTime = new Date();//获取当前时间
                 //验证链接是否过期

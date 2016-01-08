@@ -103,6 +103,6 @@ public class ProductEvaluateDao extends BaseMongoDao<ProductEvaluate> {
     public void removeByProductSeries(ProductSeries productSeries) {
         DBObject dbObject=new BasicDBObject();
         dbObject.put("productSeries",new DBRef("productSeries",new ObjectId(productSeries.getId())));
-        getMongoTemplate().findAndRemove(new BasicQuery(dbObject), ProductEvaluate.class);
+        getMongoTemplate().findAllAndRemove(new BasicQuery(dbObject), ProductEvaluate.class);
     }
 }

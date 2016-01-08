@@ -26,7 +26,7 @@ public class PricePolicy {
     }
     public boolean canJoin(SalesCampaign salesCampaign){
         Assert.notNull(salesCampaign);
-        if (salesCampaign.isAllProductParticipateIn()) return true;
+        if (salesCampaign.getAllProductParticipateIn()!=null&&salesCampaign.getAllProductParticipateIn()) return true;
         if (user==null) return false;
         if (salesCampaignsNow==null) return false;
         if (salesCampaign.getParticipants()==null) return true;//未指定表示都能参加

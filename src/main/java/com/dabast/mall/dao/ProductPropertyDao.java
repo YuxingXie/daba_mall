@@ -39,8 +39,8 @@ public class ProductPropertyDao extends BaseMongoDao<ProductProperty> {
         for (ProductProperty productProperty:productProperties){
             DBObject propertyValueDBObject=new BasicDBObject();
             propertyValueDBObject.put("productProperty",new DBRef("productProperty",new ObjectId(productProperty.getId())));
-            getMongoTemplate().findAndRemove(new BasicQuery(propertyValueDBObject),ProductPropertyValue.class);
+            getMongoTemplate().findAllAndRemove(new BasicQuery(propertyValueDBObject), ProductPropertyValue.class);
         }
-        getMongoTemplate().findAndRemove(new BasicQuery(dbObject),ProductProperty.class);
+        getMongoTemplate().findAllAndRemove(new BasicQuery(dbObject),ProductProperty.class);
     }
 }

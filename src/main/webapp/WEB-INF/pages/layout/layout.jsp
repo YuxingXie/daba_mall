@@ -23,7 +23,7 @@
                             <ul class="list-unstyled list-inline pull-right" style=" float:left !important;">
                                 <c:choose>
                                     <c:when test="${empty sessionScope.loginUser}">
-                                        <li><a href="${path}/register_phone">注册</a></li>
+                                        <li><a href="${path}/user/register_phone" target="_blank">注册</a></li>
                                         <li><a href="javascript:void(0)" data-toggle="modal" data-target="#myModal">登录</a></li>
                                     </c:when>
                                     <c:otherwise>
@@ -119,7 +119,9 @@
                                     <%--<li><a data-href="order-form.html" class="login-need" href="javascript:void(0)">待处理订单</a></li>--%>
                                     <li><a data-href="${path}/my_interests" class="login-need" href="javascript:void(0)"><i class="fa fa-heart"></i>我的关注</a></li>
                                     <li><a data-href="${path}/my_notifies" class="login-need" href="javascript:void(0)"><i class="fa fa-envelope"></i>我的消息</a></li>
-                                    <li><a data-href="${path}/user/personal_message" class="login-need" href="javascript:void(0)"><i class="fa fa-user"></i>个人信息</a></li>
+                                    <c:if test="${not empty sessionScope.loginUser}">
+                                        <li><a href="${path}/personal_message/personal_message.jsp" target="_blank"><i class="fa fa-user"></i>个人信息</a></li>
+                                    </c:if>
                                     <li><a data-href="order-form.html" class="login-need" href="javascript:void(0)"><i class="fa fa-reply"></i>退货换货</a></li>
                                 </ul>
                                 <!-- END DROPDOWN MENU -->
@@ -178,10 +180,10 @@
                                                     <li ng-repeat="productSubCategory in productCategory.productSubCategories"><a href="${path}/product_series/sort/{{productSubCategory.id}}">{{productSubCategory.subCategoryName}}</a></li>
                                                 </ul>
                                             </div>
-                                            <div class="nav-content-col" ng-if="!productCategories">
-                                                <h3>抱歉，我们还没有任何产品上架</h3>
+                                            <div class="nav-content-col" ng-if="!productCategories||!productCategories.length">
+                                                <h3>还没有产品上架</h3>
                                                 <ul>
-                                                    <li> </li>
+                                                    <li></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -287,7 +289,7 @@
                                                name="remember">自动登录
                                     </li>
                                     <li><a href="#">忘记密码</a></li>
-                                    <li style=" border-right:0;"><a href="${path}/register_phone">免费注册</a></li>
+                                    <li style=" border-right:0;"><a href="${path}/user/register_phone" target="_blank">免费注册</a></li>
                                 </ul>
                             </div>
                         </div>

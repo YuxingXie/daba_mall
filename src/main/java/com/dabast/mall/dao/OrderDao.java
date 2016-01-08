@@ -94,7 +94,7 @@ public class OrderDao extends BaseMongoDao<Order> {
     public void removeOrderById(String id) {
         DBObject evaluateDBObject=new BasicDBObject();
         evaluateDBObject.put("order",new DBRef("order",id));
-        getMongoTemplate().findAndRemove(new BasicQuery(evaluateDBObject),ProductEvaluate.class);
+        getMongoTemplate().findAllAndRemove(new BasicQuery(evaluateDBObject),ProductEvaluate.class);
         removeById(id);
     }
 

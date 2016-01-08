@@ -98,7 +98,7 @@ public class OrderController extends BaseRestSpringController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "/to_bill", method = RequestMethod.POST)
+    @RequestMapping(value = "/do_submit", method = RequestMethod.POST)
     public String orderSubmit(@Valid @ModelAttribute Order form,BindingResult errors,ModelMap model,RedirectAttributesModelMap redirectAttributes,HttpSession session) {
         Assert.notNull(getLoginUser(session));
         if (errors.hasErrors()){

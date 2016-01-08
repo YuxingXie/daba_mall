@@ -28,6 +28,10 @@
         </div>
 
         <div class="row">
+
+            <div class="col-lg-6 col-sm-6 padding-left-5 padding-right-0 margin-top-20" ng-if="!_page.content||!_page.content.length">
+                <i class="fa fa-warning fa-2x">该类产品即将上架，敬请期待!</i>
+            </div>
             <div class="col-lg-3 col-sm-3 padding-left-5 padding-right-0 margin-top-20 height-290" ng-repeat="productSeries in _page.content">
                 <div class="thumbnail">
                     <a ng-href="${path}/product_series/{{productSeries.id}}">

@@ -118,7 +118,7 @@
           <div id="myTabContent" class="tab-content">
               <div ng-class="{'tab-pane fade':true,'in active':!activeEvaluate}" id="Description">
                 <div ng-if="!productSeries.productBrochures">
-                  <div class="datasheet-features-type">抱歉，暂无商品介绍宣传册。</div>
+                  <div class="fa fa-warning fa-2x margin-top-20 margin-bottom-20">抱歉，暂无商品介绍宣传册。</div>
                 </div>
                 <img ng-if="productSeries.productBrochures &&productSeries.productBrochures.type === 'img'" ng-src="{{productSeries.productBrochures.url}}"/>
                 <iframe ng-if="productSeries.productBrochures &&productSeries.productBrochures.type === 'page'" ng-src="{{trustSrc(productSeries.productBrochures.url)}}"
@@ -129,7 +129,7 @@
                   <tr>
                     <th colspan="2">规格参数</th>
                       <tr ng-if="!productSeries.instructionManual">
-                        <td class="datasheet-features-type" colspan="2">抱歉，暂无规格参数说明。</td>
+                        <td class="fa fa-warning fa-2x" colspan="2">抱歉，暂无规格参数说明。</td>
                   </tr>
                   <tr ng-if="productSeries.instructionManual" ng-repeat="instructionManualItem in productSeries.instructionManual">
                     <td class="datasheet-features-type">${instructionManualItem.key}：</td>

@@ -21,9 +21,19 @@ var loginCheckBeforeHandler=function(handler){
         return false;
     });
 }
-var toUrl=function(url){
+var toUrl=function(url,target){
     return function(){
-        if(url&&url!==undefined&&url!=="") window.location.href=url;
+        if(target&&target=="_blank"){
+            var a = document.createElement("a");
+            a.setAttribute("href", url);
+            a.setAttribute("target", "_blank");
+            document.body.appendChild(a);
+            a.click();
+        }
+        else if(url&&url!==undefined&&url!=="") {
+            window.location.href=url;
+        }
+
     }
 }
 var loginAndCallBack=function (callBack) {
@@ -67,7 +77,9 @@ $(document).ready(function () {
     $(document).on("click", "#login", new loginAndCallBack());
     $(".login-need").click(function(){
         var url=$(this).data("href");
-        loginCheckBeforeHandler(new toUrl(url));
+        var target=$(this).data("target");
+
+        loginCheckBeforeHandler(new toUrl(url,target));
     });
     $(document).on("click",".glyphicon-remove",function(){
         $(this).prev().val("").focus();

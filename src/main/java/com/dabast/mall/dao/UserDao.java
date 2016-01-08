@@ -175,7 +175,8 @@ public class UserDao extends BaseMongoDao<User>  {
     public boolean isPhoneUsed(String phone) {
         User user=findByPhone(phone,true);
         if (user==null) return false;
-        if (!user.isActivated()) return false;
+        if (user.getActivated()==null) return false;
+        if (!user.getActivated()) return false;
         return true;
     }
 

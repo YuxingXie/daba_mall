@@ -83,8 +83,8 @@
                             </c:otherwise>
                         </c:choose>
                     </table>
-                <form:form class="form-horizontal form-without-legend" novalidate="novalidate" action="${path}/order/to_bill"
-                      id="form" name="form" autocomplete="off" _method="post" modelAttribute="form">
+                <form:form class="form-horizontal form-without-legend" novalidate="novalidate" action="${path}/order/do_submit"
+                      id="form" name="form" autocomplete="off" method="post" modelAttribute="form">
                     <table class="table table-striped content-form-page">
                         <tr>
                             <th class="bg-info text-center" colspan="3">填写并核对订单</th>
@@ -143,10 +143,10 @@
                             </td>
                             <td ng-class="{'has-success':form.payWay.$valid}" ng-init="order.payWay='${form.payWay}'">
                                 <div class="radio">
-                                    <label class="radio-inline"><form:radiobutton ng-model="order.payWay" value="1" path="payWay"/>货到付款</label>
-                                    <label class="radio-inline"><form:radiobutton ng-model="order.payWay" value="2" path="payWay"/>在线支付</label>
-                                    <label class="radio-inline"><form:radiobutton ng-model="order.payWay" value="3" path="payWay"/>公司转账</label>
-                                    <label class="radio-inline"><form:radiobutton ng-model="order.payWay" value="4" path="payWay"/>邮局汇款</label>
+                                    <label class="radio-inline"><form:radiobutton ng-model="order.payWay" value="1" path="payWay" required="true"/>货到付款</label>
+                                    <label class="radio-inline"><form:radiobutton ng-model="order.payWay" value="2" path="payWay" required="true"/>在线支付</label>
+                                    <label class="radio-inline"><form:radiobutton ng-model="order.payWay" value="3" path="payWay" required="true"/>公司转账</label>
+                                    <label class="radio-inline"><form:radiobutton ng-model="order.payWay" value="4" path="payWay" required="true"/>邮局汇款</label>
                                 </div>
                             </td>
                             <td class="has-error">
@@ -161,7 +161,7 @@
                                 总计：<b>${totalCount}</b>件商品,共<b><fmt:formatNumber value="${totalPrice}" pattern="##.##" minFractionDigits="2"/></b>元
                             </td>
                             <td>
-                                <button class="btn btn-primary center-block btn-sm pull-left" ng-disabled="form.$invalid" type="submit">提交订单{{order.id}}</button>
+                                <button class="btn btn-primary center-block btn-sm pull-left" ng-disabled="form.$invalid" type="submit">提交订单</button>
                             </td>
                         </tr>
                     </table>

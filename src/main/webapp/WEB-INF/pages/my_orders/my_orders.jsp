@@ -16,18 +16,19 @@
         </ul>
         <div class="table-responsive" ng-controller="myOrdersController">
             <table class="table table-hover table-striped text-center">
+                <tr class="margin-top-10">
+                    <th class="text-center">订单号</th>
+                    <th class="text-center">下单日期</th>
+                    <th class="text-center">订单状态</th>
+                    <th class="text-center">商品金额</th>
+                    <th class="text-center">操作</th>
+                </tr>
                 <c:choose>
                     <c:when test="${empty orders}">
-                        <div class="col-lg-5 text-info text-center">您没有生成过订单 <a href="${path}" class="fa fa-home fa-2x">返回首页</a></div>
+                        <tr><td class="text-warning text-center" colspan="5">您没有生成过订单 <a href="${path}" class="fa fa-home">返回首页</a></td></tr>
                     </c:when>
                     <c:otherwise>
-                        <tr class="margin-top-10">
-                            <th class="text-center">订单号</th>
-                            <th class="text-center">下单日期</th>
-                            <th class="text-center">订单状态</th>
-                            <th class="text-center">商品金额</th>
-                            <th class="text-center">操作</th>
-                        </tr>
+
                         <c:forEach var="order" items="${orders}" varStatus="selectedIndex">
                             <tr class="margin-top-10">
                                 <td>

@@ -52,8 +52,14 @@ public class UserController extends BaseRestSpringController {
     private RegisterValidateService registerValidateService;
     @Resource
     private UserDao userDao;
-
-
+    @RequestMapping(value = "/register_email")
+    public String register_email(ModelMap model) {
+        return "forward:/register_email/register_email.jsp";
+    }
+    @RequestMapping(value = "/register_phone")
+    public String register_phone(ModelMap model) {
+        return "forward:/register_phone/register_phone.jsp";
+    }
     @RequestMapping(value = "/exist_name")
     public ResponseEntity existName(ModelMap model, @RequestBody User user) {
         Assert.notNull(user);
@@ -219,7 +225,7 @@ public class UserController extends BaseRestSpringController {
     private ResponseEntity<User> doLogin(User form, HttpSession session, HttpServletRequest request, HttpServletResponse response, User user) {
         session.setAttribute("loginUser", user);
         int loginMaxAge = 30 * 24 * 60 * 60;   //定义账户密码的生命周期，这里是一个月。单位为秒
-        if (form.isRemember()) {
+        if (form.getRemember()!=null &&form.getRemember()) {
             CookieTool.addCookie(request, response, "loginStr", form.getLoginStr(), loginMaxAge);
             CookieTool.addCookie(request, response, "password", form.getPassword(), loginMaxAge);
         } else {
@@ -445,7 +451,7 @@ public class UserController extends BaseRestSpringController {
         }
 
         User dbUser=userDao.findByEmail(form.getEmail());
-        Assert.isTrue(!dbUser.isActivated());
+        Assert.isTrue(dbUser.getActivated()==null);//may error
         if (!dbUser.getValidateCode().equals(form.getValidateCode())){
             errors.rejectValue("validateCode","user.signup.validateCode.error");
             if (!form.getPassword().equals(form.getRePassword())){
@@ -524,26 +530,12 @@ public class UserController extends BaseRestSpringController {
     @RequestMapping(value = "/cart")
     public ResponseEntity<Cart> cart(HttpSession session) {
         User user=getLoginUser(session);
-//        Cart cart=user==null?getCart(session)user.getCart()==null?getCart(session):user.getCart();
         Cart cart=user==null?(getCart(session)==null?null:getCart(session)):user.getCart();
-        if (cart!=null && cart.getProductSelectedList()!=null){
-//            for (ProductSelected productSelected:cart.getProductSelectedList()){
-//                ProductSeries productSeries=productSelected.getProductSeries();
-//                List<ProductStoreInAndOut> inAndOuts=ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
-//                if (productSeries.getProductStore()!=null) {
-//                    productSeries.getProductStore().setInAndOutList(inAndOuts);
-//                }else{
-
-//                }
-//            }
-        }
         session.setAttribute(Constant.CART,cart);
         return new ResponseEntity<Cart>(cart,HttpStatus.OK);
     }
     @RequestMapping(value = "/accounts/{userId}")
     public ResponseEntity<List<Account>> accounts(@PathVariable String userId,HttpSession session) {
-//        User user=getLoginUser(session);
-//        Assert.notNull(user);
         User user=new User();
         user.setId(userId);
         List<Account> accounts=ServiceManager.accountService.findAll(new BasicDBObject("user",user));

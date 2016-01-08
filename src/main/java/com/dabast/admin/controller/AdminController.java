@@ -113,15 +113,18 @@ public class AdminController extends BaseRestSpringController {
         productSeries.getProductStore().getInAndOutList().get(0).setType("in");
         productSeriesService.insert(productSeries);
         List<ProductProperty> productProperties=productSeries.getProductProperties();
-        for (ProductProperty productProperty:productProperties){
-            productProperty.setProductSeries(productSeries);
-            ServiceManager.productPropertyService.insert(productProperty);
-            List<ProductPropertyValue> propertyValues=productProperty.getPropertyValues();
-            for (ProductPropertyValue propertyValue:propertyValues){
-                propertyValue.setProductProperty(productProperty);
-                ServiceManager.productPropertyValueService.insert(propertyValue);
+        if (productProperties!=null){
+            for (ProductProperty productProperty:productProperties){
+                productProperty.setProductSeries(productSeries);
+                ServiceManager.productPropertyService.insert(productProperty);
+                List<ProductPropertyValue> propertyValues=productProperty.getPropertyValues();
+                for (ProductPropertyValue propertyValue:propertyValues){
+                    propertyValue.setProductProperty(productProperty);
+                    ServiceManager.productPropertyValueService.insert(propertyValue);
+                }
             }
         }
+
         MongoDbUtil.clearTransientFields(productSeries);
         return new ResponseEntity<ProductSeries>(productSeries,HttpStatus.OK);
     }
