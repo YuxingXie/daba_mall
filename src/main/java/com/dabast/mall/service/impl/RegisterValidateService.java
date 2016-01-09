@@ -1,7 +1,7 @@
 package com.dabast.mall.service.impl;
 
 import com.dabast.common.code.EmailEnum;
-import com.dabast.common.sms.SMSTest;
+import com.dabast.common.helper.service.SmsManager;
 import com.dabast.common.util.BusinessException;
 import com.dabast.entity.User;
 import com.dabast.mall.dao.UserDao;
@@ -30,7 +30,8 @@ public class RegisterValidateService {
     private String emailUserName;
     @Value(value = "${app.email.authentication.password}")
     private String emailPassword;
-
+    @Resource
+    private SmsManager smsManager;
     public String getEmailHostName() {
         return emailHostName;
     }
@@ -117,7 +118,7 @@ public class RegisterValidateService {
         int validateCode=(int)(Math.random()*999999-99999);
         sb.append(validateCode)
         .append(" 验证码有效时间为30分钟。");
-        String msg=SMSTest.send(sb.toString(),phone);
+        String msg=smsManager.send(sb.toString(),phone);
         if (!msg.equals("100")){
             throw new BusinessException("发送短信时出现了问题，问题代码："+msg);
         }

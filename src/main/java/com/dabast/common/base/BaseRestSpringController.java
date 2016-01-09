@@ -83,6 +83,18 @@ public class BaseRestSpringController  {
         String basePath ="http://"+request.getServerName()+":"+httpPort+path+"/";
         return basePath+vieName;
     }
-
+    protected String getInputHttpUrlString(HttpServletRequest request) {
+        String path = request.getContextPath();
+//        String basePath ="http://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+        String basePath ="http://"+request.getServerName()+":"+httpPort+path+"/";
+        String uri=request.getRequestURI();
+        return basePath+uri;
+    }
+    protected String getHttpUrlStringFromUri(HttpServletRequest request,String uri) {
+        String path = request.getContextPath();
+//        String basePath ="http://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+        String url ="http://"+request.getServerName()+":"+httpPort+uri;
+        return url;
+    }
 
 }

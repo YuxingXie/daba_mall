@@ -5,9 +5,17 @@ var loginCheckBeforeHandler=function(handler){
         url: path + "/user/login_user"
     }).done(function (data) {
         if (!data.id) {
-            $("#myModal").modal().show();
-            $(document).on("click", "#login", new loginAndCallBack(handler));
-            return false;
+            if(typeof handler==='string'){
+                //alert("handler is string")
+                var str=encodeURIComponent(handler);
+                window.location.href=path+"/user/to_login?to="+str;
+                return false;
+            }else{
+                $("#myModal").modal().show();
+                $(document).on("click", "#login", new loginAndCallBack(handler));
+                return false;
+            }
+
         }else{
             handler();
             return true;
@@ -75,11 +83,12 @@ var loginAndCallBack=function (callBack) {
 }
 $(document).ready(function () {
     $(document).on("click", "#login", new loginAndCallBack());
-    $(".login-need").click(function(){
+    $(document).on("click",".login-need",function(){
         var url=$(this).data("href");
         var target=$(this).data("target");
 
-        loginCheckBeforeHandler(new toUrl(url,target));
+        //loginCheckBeforeHandler(new toUrl(url,target));
+        loginCheckBeforeHandler(url);
     });
     $(document).on("click",".glyphicon-remove",function(){
         $(this).prev().val("").focus();
@@ -91,7 +100,8 @@ $(document).ready(function () {
             //$(".additional-nav>ul>li:eq(0)").remove();
             //$(".additional-nav>ul>li:eq(0)").remove();
             $(".additional-nav>ul").empty();
-            var $new_li = $('<li><a href="'+path+'/register_phone">注册</a></li><li><a href="#" data-toggle="modal" data-target="#myModal">登录</a></li>');
+            var $new_li = $('<li><a href="'+path+'/user/register_phone">注册</a></li>' +
+            '<li><a data-href="'+uri+'" class="login-need" href="javascript:void(0)">登录</a></li>');
             $new_li.appendTo($(".additional-nav>ul"));
         }).fail()
     });

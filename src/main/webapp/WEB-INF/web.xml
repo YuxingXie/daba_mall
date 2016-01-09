@@ -132,7 +132,7 @@
             <web-resource-name>securedapp</web-resource-name>
             <url-pattern>/user/register_phone</url-pattern>
             <url-pattern>/user/register_email</url-pattern>
-            <!--<url-pattern>/user/login</url-pattern>-->
+            <url-pattern>/user/to_login</url-pattern>
             <url-pattern>/user/login/direct/*</url-pattern>
             <url-pattern>/order/to_bill/*</url-pattern>
             <url-pattern>/user/personal_message</url-pattern>

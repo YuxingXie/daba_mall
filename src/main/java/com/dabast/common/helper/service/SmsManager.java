@@ -1,7 +1,7 @@
-package com.dabast.common.sms;
+package com.dabast.common.helper.service;
 
-
-import com.dabast.common.util.MD5;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -9,11 +9,17 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-public class SMSTest {
+/**
+ * Created by Administrator on 2016/1/9.
+ */
+@Component
+public class SmsManager {
 
-    private static final String addr = "http://api.sms.cn/mt/";
-//    private static final String addr = "\"http://api.sms.cn/mtutf8";
-    private static final String userId = "xieyuxing";
+    @Value(value = "${app.sms.addr}")
+    private String addr;
+    //    private static final String addr = "\"http://api.sms.cn/mtutf8";
+    @Value(value = "${app.sms.userId}")
+    private String userId;
 
 	/*
 	 * 如uid是：test，登录密码是：123123
@@ -21,13 +27,45 @@ public class SMSTest {
 	 *
 	 * 可用在线生成地址：http://www.sms.cn/password
 	 */
-
-    private static final String pwd = ("5dcd15557f05314072ad9f6e94b408d7");
+    @Value(value = "${app.sms.pwd}")
+    private String pwd ;
     //5dcd15557f05314072ad9f6e94b408d7
+    @Value(value = "${app.sms.encode}")
+    private String encode;
 
-    private static final String encode = "utf8";
+    public String getAddr() {
+        return addr;
+    }
 
-    public static String send(String msgContent, String mobile) throws Exception {
+    public void setAddr(String addr) {
+        this.addr = addr;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public String getEncode() {
+        return encode;
+    }
+
+    public void setEncode(String encode) {
+        this.encode = encode;
+    }
+
+    public String send(String msgContent, String mobile) throws Exception {
 
         // 组建请求
         String straddr = addr + "?uid=" + userId + "&pwd=" + pwd + "&mobile="
@@ -106,13 +144,12 @@ public class SMSTest {
 
 
     public static void main(String[] args) {
-        try {
-            send("您的验证码是565853。请在页面中提交验证码完成验证。【大坝生态】", "18974989697");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            new SmsManager().send("您的验证码是565853。请在页面中提交验证码完成验证。【大坝生态】", "18974989697");
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
     }
-
 }

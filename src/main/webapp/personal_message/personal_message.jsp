@@ -8,6 +8,7 @@
 <head>
     <meta charset="utf-8">
     <title>个人信息</title>
+    <link rel="shortcut icon" type="image/x-icon" href="${path}/statics/assets/img/logo.png"  media="screen" />
     <link href="${path}/statics/assets/plugins/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="${path}/statics/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="${path}/statics/assets/css/style.css" rel="stylesheet" type="text/css">

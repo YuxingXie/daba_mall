@@ -116,7 +116,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
-                            <p class="modal-title" id="myModalLabel">订单详情&nbsp;&nbsp;订单号:{{order.id}}</p>
+                            <p class="modal-title" id="orderDetailLabel">订单详情&nbsp;&nbsp;订单号:{{order.id}}</p>
                         </div>
                         <div class="modal-body">
                             <div class="row margin-top-10">
@@ -166,7 +166,7 @@
                 </div>
             </div>
             <div class="modal fade active" id="confirmDeleteOrderModal" tabindex="-1" role="dialog"
-                 aria-labelledby="myModalLabel" aria-hidden="true">
+                 aria-labelledby="confirmDeleteOrderModalLabel" aria-hidden="true">
                 <div class="modal-dialog" style="width: 400px;">
                     <div class="modal-content">
                         <div class="modal-header">

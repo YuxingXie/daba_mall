@@ -12,8 +12,10 @@
     <title>大坝生态农业</title>
     <tiles:insertAttribute name="topCss"/>
     <tiles:insertAttribute name="pageTopCss"/>
+    <script>uri='${uri}'</script>
     <tiles:insertAttribute name="topScript" />
     <tiles:insertAttribute name="pageTopScript" />
+
 </head>
 <body  ng-controller="mainController">
         <div class="topscoll">
@@ -24,7 +26,7 @@
                                 <c:choose>
                                     <c:when test="${empty sessionScope.loginUser}">
                                         <li><a href="${path}/user/register_phone" target="_blank">注册</a></li>
-                                        <li><a href="javascript:void(0)" data-toggle="modal" data-target="#myModal">登录</a></li>
+                                        <li><a data-href="${uri}" class="login-need" href="javascript:void(0)">登录</a></li>
                                     </c:when>
                                     <c:otherwise>
                                         <li>欢迎您,<a href="${path}/personal_message">${sessionScope.loginUser.name}</a>!</li>
@@ -223,83 +225,7 @@
         <!-- END BEGIN STYLE CUSTOMIZER -->
 
         <tiles:insertAttribute name="body" />
-        <div class="modal fade active" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" style="width: 400px;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close"
-                                data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h2 class="modal-title" id="myModalLabel">
-                            登录&nbsp;&nbsp;
-                            <small style=" color:#187705;">支持以下登录方式登录</small>
-                        </h2>
-                        <br/>
-                        <ul class="social-icons">
-                            <li><a href="#" data-original-title="txqq" class="txqq" title="腾讯QQ"></a></li>
-                            <li><a href="#" data-original-title="xlwb" class="xlwb" title="新浪微博"></a></li>
-                            <li><a href="#" data-original-title="rrw" class="rrw" title="人人网"></a></li>
-                            <li><a href="#" data-original-title="wx" class="wx" title="微信"></a></li>
-                            <li><a href="#" data-original-title="zfb" class="zfb" title="支付宝"></a></li>
-                            <li><a href="#" data-original-title="wy" class="wy" title="网易"></a></li>
-                            <li><a href="#" data-original-title="txwb" class="txwb" title="腾讯微博"></a></li>
-                        </ul>
-                    </div>
-                    <form id="loginForm" name="loginForm" class="form-horizontal form-without-legend" role="form">
-                        <div class="modal-body">
-                            <div class="row"><div class="col-lg-1"></div>
-                                <div class="col-lg-10"><span id="error-msg" class="text-danger"></span></div>
-                                <div class="col-lg-1"></div></div>
 
-                            <fieldset>
-
-                                <div class="form-group has-feedback">
-                                    <div class="row">
-                                        <div class="col-lg-1"></div>
-                                        <div class="col-lg-10 has-error">
-                                            <input type="text" class="form-control" id="loginStr" name="loginStr" placeholder="邮箱/用户名/已验证手机"  required="true"/>
-                                            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-                                            <input type="hidden" name="mergeCart" id="mergeCart"/>
-                                        </div>
-                                        <div class="col-lg-1"></div>
-                                    </div>
-                                </div>
-                                <div class="form-group has-feedback">
-                                    <div class="row">
-                                        <div class="col-lg-1"></div>
-                                        <div class="col-lg-10 has-error">
-                                            <input type="password" class="form-control" id="password" name="password" placeholder="密码" required="true" ng-minlength="{{pw_min}}" />
-                                            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-                                        </div>
-                                        <div class="col-lg-1"></div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-
-                        <div class="modal-footer">
-                            <div class="col-lg-12">
-                                <button type="button" class="btn btn-primary" id="login" style=" width:100%;">
-                                    登录
-                                </button>
-                                <ul class="automatically">
-                                    <li class="first">
-                                        <input type="checkbox" value="true" class="common_chk" checked="checked"
-                                               name="remember">自动登录
-                                    </li>
-                                    <li><a href="#">忘记密码</a></li>
-                                    <li style=" border-right:0;"><a href="${path}/user/register_phone" target="_blank">免费注册</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-                <!-- /.modal-content -->
-
-            </div>
-        </div>
         <div class="modal fade active" id="showProductModal" tabindex="-1" role="dialog" aria-labelledby="showProductModal" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">

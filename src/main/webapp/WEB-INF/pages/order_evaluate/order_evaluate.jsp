@@ -104,7 +104,7 @@
 
 
     <div class="modal fade active" id="evaluteModal" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
+         aria-labelledby="evaluteModalLabel" aria-hidden="true">
         <div class="modal-dialog" style="width: 400px;">
             <div class="modal-content">
                 <div class="modal-header">

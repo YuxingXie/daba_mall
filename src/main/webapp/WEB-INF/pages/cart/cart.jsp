@@ -76,7 +76,7 @@
 
         </div>
         <div class="modal fade active" id="orderModal" tabindex="-1" role="dialog"
-             aria-labelledby="myModalLabel" aria-hidden="true">
+             aria-labelledby="orderModal" aria-hidden="true">
             <div class="modal-dialog" style="width: 400px;">
                 <div class="modal-content">
                     <div class="modal-header">

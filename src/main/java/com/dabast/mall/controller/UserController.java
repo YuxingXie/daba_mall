@@ -11,6 +11,7 @@ import com.dabast.mall.dao.UserDao;
 import com.dabast.mall.service.impl.CartService;
 import com.dabast.mall.service.impl.RegisterValidateService;
 import com.dabast.mall.service.impl.UserService;
+import com.dabast.support.vo.Message;
 import com.dabast.support.vo.PairUsers;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -36,6 +37,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.ParseException;
 import java.util.*;
 
@@ -199,7 +202,16 @@ public class UserController extends BaseRestSpringController {
     public ResponseEntity<User> get(ModelMap model, @PathVariable String id,HttpServletRequest request) {
         return new ResponseEntity<User>(userService.findById(id), HttpStatus.OK);
     }
+    @RequestMapping(value = "/to_login")
+    public String toLogin(ModelMap model,String to, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        if (to==null||"".equals(to.trim())){
+            to=request.getRequestURI();
+        }
+        System.out.println(URLDecoder.decode(to,"UTF-8"));
 
+        model.addAttribute("to",to);
+        return "forward:/login.jsp";
+    }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody User form, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
@@ -221,7 +233,65 @@ public class UserController extends BaseRestSpringController {
             return new ResponseEntity<User>(user,HttpStatus.OK);
         }
     }
+    @RequestMapping(value = "/https/login", method = RequestMethod.POST)
+    public String httpsLogin(@ModelAttribute User form,@RequestParam String to, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        Message message=new Message();
+        User user = userService.findByEmailOrPhone(form.getLoginStr());
+        if (user==null){
+            message.setMessage("用户不存在");
+            message.setSuccess(false);
+            model.addAttribute("message",message);
+            return "forward:/user/to_login";
+        }
+        //form.password可能是原始密码或者经过一次MD5加密，也可能是两次md5加密
+        if (form.getPassword().equalsIgnoreCase(user.getPassword())
+                ||form.getPassword().equalsIgnoreCase(MD5.convert(user.getPassword()))
+                ||MD5.convert(form.getPassword()).equalsIgnoreCase(user.getPassword()))
+            return doHttpsLogin(form, session, request, response, user,to);
+        else {
+            message.setMessage("用户名/密码错误");
+            message.setSuccess(false);
+            model.addAttribute("message",message);
+            return "forward:/user/to_login";
 
+        }
+    }
+    private String doHttpsLogin(User form, HttpSession session, HttpServletRequest request, HttpServletResponse response, User user,String to) {
+        session.setAttribute("loginUser", user);
+        int loginMaxAge = 30 * 24 * 60 * 60;   //定义账户密码的生命周期，这里是一个月。单位为秒
+        if (form.getRemember()!=null &&form.getRemember()) {
+            CookieTool.addCookie(request, response, "loginStr", form.getLoginStr(), loginMaxAge);
+            CookieTool.addCookie(request, response, "password", form.getPassword(), loginMaxAge);
+        } else {
+            CookieTool.removeCookie(request, response, "loginStr");
+            CookieTool.removeCookie(request, response, "password");
+        }
+        Cart sessionCart=session.getAttribute(Constant.CART)==null?null:((Cart)(session.getAttribute(Constant.CART)));
+//        if (form.isMergeCart()){
+        if (user.getCart()==null){
+            user.setCart(sessionCart);
+        }else{
+            Cart userCart=user.getCart();
+//                for (ProductSelected productSelected:userCart.getProductSelectedList()){
+//                    ProductSeries productSeries=productSelected.getProductSeries();
+//                    if(productSeries.getProductStore()==null) continue;
+//                    List<ProductStoreInAndOut> inAndOuts= ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
+//                    productSeries.getProductStore().setInAndOutList(inAndOuts);
+//                }
+            userCart.merge(sessionCart);
+        }
+        if (sessionCart!=null){
+            ServiceManager.userService.update(user);
+        }
+//        }
+        session.setAttribute(Constant.CART,user.getCart());
+        try {
+            response.sendRedirect(getHttpUrlStringFromUri(request, URLDecoder.decode(to, "UTF-8"))) ;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     private ResponseEntity<User> doLogin(User form, HttpSession session, HttpServletRequest request, HttpServletResponse response, User user) {
         session.setAttribute("loginUser", user);
         int loginMaxAge = 30 * 24 * 60 * 60;   //定义账户密码的生命周期，这里是一个月。单位为秒

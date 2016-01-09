@@ -37,7 +37,6 @@ import java.util.*;
 @RequestMapping("/admin/order")
 public class AdminOrderController extends BaseRestSpringController {
     @Resource private IOrderService orderService;
-//    http://www.dabast.com/mall/admin/order/toHandler
     @RequestMapping(value="/to_handler/data")
     public ResponseEntity<List<Order>>  orderToHandler() {
         List<Order> orders=ServiceManager.orderService.findUnHandlerOrders();
