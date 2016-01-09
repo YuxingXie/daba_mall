@@ -5,6 +5,7 @@ import com.dabast.common.constant.Constant;
 import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.common.util.BigDecimalUtil;
+import com.dabast.common.util.MongoDbUtil;
 import com.dabast.common.util.ThirdPartPayUtil;
 import com.dabast.entity.*;
 import com.dabast.mall.dao.UserDao;
@@ -89,6 +90,20 @@ public class OrderController extends BaseRestSpringController {
         }
         model.addAttribute("orders",orders);
         return "my_orders";
+    }
+    @RequestMapping(value = "/my_paid_orders/json")
+    public ResponseEntity<List<Order>> myOrdersJson( HttpSession session) {
+        User user=getLoginUser(session);
+        Assert.notNull(user);
+        DBObject dbObject=new BasicDBObject("user",new DBRef("users",user.getId()));
+        dbObject.put("payStatus","y");
+        List<Order> orders=ServiceManager.orderService.findAll(new BasicQuery(dbObject).with(new Sort(Sort.Direction.DESC,"orderDate")));
+        if (orders!=null){
+            for(Order order:orders){
+                MongoDbUtil.clearTransientFields(order);
+            }
+        }
+        return new ResponseEntity<List<Order>>(orders,HttpStatus.OK);
     }
     /**
      * 提交订单(实际为更新订单)
@@ -330,7 +345,8 @@ public class OrderController extends BaseRestSpringController {
             ProductSeries productSeries=productSelected.getProductSeries();
             Assert.notNull(productSeries);
             if (!salesMap.containsKey(productSeries.getId())){
-                salesMap.put(productSeries.getId(),productSeries.getSales()+productSelected.getAmount());
+                Integer sales=productSeries.getSales()==null?0:productSeries.getSales();
+                salesMap.put(productSeries.getId(),sales+productSelected.getAmount());
             }else{
                 int sales=salesMap.get(productSeries.getId());
                 sales+=productSelected.getAmount();
@@ -338,10 +354,10 @@ public class OrderController extends BaseRestSpringController {
             }
         }
         for(String productSeriesId:salesMap.keySet()){
-            ProductSeries dbObject=new ProductSeries();
-            dbObject.setSales(salesMap.get(productSeriesId));
-            dbObject.setId(productSeriesId);
-            ServiceManager.productSeriesService.update(dbObject);
+            ProductSeries update=new ProductSeries();
+            update.setSales(salesMap.get(productSeriesId));
+            update.setId(productSeriesId);
+            ServiceManager.productSeriesService.update(update);
         }
     }
 

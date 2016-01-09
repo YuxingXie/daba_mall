@@ -17,8 +17,14 @@ var loginCheckBeforeHandler=function(handler){
             }
 
         }else{
-            handler();
-            return true;
+            if(typeof handler==='string'){
+                window.location.href=handler;
+                return false;
+            }else{
+                handler();
+                return true;
+            }
+
         }
     }).fail(function(XMLHttpRequest, textStatus, errorThrown){
         console.log("error ");

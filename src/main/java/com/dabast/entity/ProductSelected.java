@@ -20,25 +20,11 @@ public class ProductSelected {
     @Transient
     private List<String> productPropertyValueIds;
     @DBRef
-//    @Transient
     private List<ProductPropertyValue> productPropertyValueList;
     @DBRef
-//    @Transient
     private ProductSeries productSeries;
-
     private String receiveStatus;
-
-//    @DBRef
-//    private ProductSeriesPrice orderPrice;
-
-//    public ProductSeriesPrice getOrderPrice() {
-//        return orderPrice;
-//    }
-//
-//    public void setOrderPrice(ProductSeriesPrice orderPrice) {
-//        this.orderPrice = orderPrice;
-//    }
-
+    private ReturnExchange returnExchange;
     public String getReceiveStatus() {
         return receiveStatus;
     }
@@ -94,6 +80,13 @@ public class ProductSelected {
         this.productSeries = productSeries;
     }
 
+    public ReturnExchange getReturnExchange() {
+        return returnExchange;
+    }
+
+    public void setReturnExchange(ReturnExchange returnExchange) {
+        this.returnExchange = returnExchange;
+    }
 
     @Override
     public boolean equals(Object obj) {

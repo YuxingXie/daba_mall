@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,11 +17,17 @@ public class Notify {
     private String id;
     @DBRef
     private User toUser;
+    @DBRef
+    private Administrator toAdministrator;
+    @DBRef
+    private User fromUser;
     private String content;
     private Date date;
     private Boolean read;
     private String title;
     private Map<String,Object> importantStuffs;
+    private List<String> pictures;
+    private String notifyType;
     public String getId() {
         return id;
     }
@@ -75,5 +82,37 @@ public class Notify {
 
     public void setImportantStuffs(Map<String, Object> importantStuffs) {
         this.importantStuffs = importantStuffs;
+    }
+
+    public Administrator getToAdministrator() {
+        return toAdministrator;
+    }
+
+    public void setToAdministrator(Administrator toAdministrator) {
+        this.toAdministrator = toAdministrator;
+    }
+
+    public List<String> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<String> pictures) {
+        this.pictures = pictures;
+    }
+
+    public User getFromUser() {
+        return fromUser;
+    }
+
+    public String getNotifyType() {
+        return notifyType;
+    }
+
+    public void setNotifyType(String notifyType) {
+        this.notifyType = notifyType;
+    }
+
+    public void setFromUser(User fromUser) {
+        this.fromUser = fromUser;
     }
 }

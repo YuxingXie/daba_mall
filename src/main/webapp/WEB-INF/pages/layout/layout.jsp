@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html ng-app="mainApp">
 <head>
+    <base href="<%=request.getContextPath() %>"/>
     <tiles:insertAttribute name="meta" />
     <title>大坝生态农业</title>
     <tiles:insertAttribute name="topCss"/>
@@ -124,7 +125,7 @@
                                     <c:if test="${not empty sessionScope.loginUser}">
                                         <li><a href="${path}/personal_message/personal_message.jsp" target="_blank"><i class="fa fa-user"></i>个人信息</a></li>
                                     </c:if>
-                                    <li><a data-href="order-form.html" class="login-need" href="javascript:void(0)"><i class="fa fa-reply"></i>退货换货</a></li>
+                                    <li><a data-href="${path}/return_exchange_notify" class="login-need" href="javascript:void(0)"><i class="fa fa-reply"></i>退货换货</a></li>
                                 </ul>
                                 <!-- END DROPDOWN MENU -->
                             </li>
