@@ -20,7 +20,6 @@ import java.util.List;
 public class Order {
     @Id
     private String id;
-//    @Field(value = "productSelectedList")
     @Field
     private List<ProductSelected> productSelectedList;
     @Field(value = "payStatus")
@@ -176,18 +175,9 @@ public class Order {
     }
 
     public void setProductSelectedList(List<ProductSelected> productSelectedList) {
-
-//        for (ProductSelected productSelected:productSelectedList){
-//            List<String> productPropertyValueIds=new ArrayList<String>();
-//            List<ProductPropertyValue> productPropertyValueList=productSelected.getProductPropertyValueList();
-//            if (productPropertyValueList==null) continue;
-//            for (ProductPropertyValue productPropertyValue:productPropertyValueList){
-//                productPropertyValueIds.add(productPropertyValue.getId());
-//            }
-//            productSelected.setProductPropertyValueIds(productPropertyValueIds);
-//        }
         this.productSelectedList = productSelectedList;
     }
+
 
     public String getPayStatus() {
         return payStatus;

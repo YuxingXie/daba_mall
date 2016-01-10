@@ -12,6 +12,7 @@ import com.dabast.mall.dao.UserDao;
 import com.dabast.mall.service.impl.CartService;
 import com.dabast.mall.service.impl.OrderService;
 import com.dabast.mall.service.impl.RegisterValidateService;
+import com.dabast.support.vo.Message;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -105,6 +106,24 @@ public class OrderController extends BaseRestSpringController {
         }
         return new ResponseEntity<List<Order>>(orders,HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/return_exchange/submit")
+    public ResponseEntity<Message> submitReturnExchange(@RequestBody Order order, HttpSession session) {
+        User user=getLoginUser(session);
+        Assert.notNull(user);
+
+//        DBObject dbObject=new BasicDBObject("user",new DBRef("users",user.getId()));
+//        dbObject.put("payStatus","y");
+//        List<Order> orders=ServiceManager.orderService.findAll(new BasicQuery(dbObject).with(new Sort(Sort.Direction.DESC,"orderDate")));
+//        if (orders!=null){
+//            for(Order order:orders){
+//                MongoDbUtil.clearTransientFields(order);
+//            }
+//        }
+        Message message=new Message();
+        message.setSuccess(true);
+        return new ResponseEntity<Message>(message,HttpStatus.OK);
+    }
     /**
      * 提交订单(实际为更新订单)
      * @param form
@@ -125,12 +144,10 @@ public class OrderController extends BaseRestSpringController {
         }
         form.setSubmitStatus("y");
         ServiceManager.orderService.update(form);
-//        redirectAttributes.addFlashAttribute("form", form);
         return "redirect:/order/to_bill/"+form.getId();
     }
     @RequestMapping(value = "/to_submit/{orderId}")
     public String toBill(@PathVariable String orderId,ModelMap model, HttpSession session) {
-
         User user=getLoginUser(session);
         Assert.notNull(user);
         Order form=orderService.findOrderById(orderId);
@@ -159,13 +176,6 @@ public class OrderController extends BaseRestSpringController {
 //        List<ProductSelected> productSelectedList=order.getProductSelectedList();
         Map<String,Object> map=new LinkedHashMap<String, Object>();
         boolean evaluated=false;
-//        for (ProductSelected productSelected:productSelectedList){
-//            ProductSeries productSeries=productSelected.getProductSeries();
-//            if (productSeriesId.equals(productSeries.getId())){
-//                evaluated=true;
-//                break;
-//            }
-//        }
         Assert.notNull(orderId);
         Assert.notNull(productSeriesId);
         Order order=new Order();
@@ -176,7 +186,6 @@ public class OrderController extends BaseRestSpringController {
         dbObject.put("order",order);
         dbObject.put("productSeries",productSeries);
         List<ProductEvaluate> evaluates=ServiceManager.productEvaluateService.findAll(dbObject);
-//        if (evaluates!=null &&evaluates.size()>0) evaluated=true;
         map.put("isEvaluated",evaluated);
         ResponseEntity<Map> entity=new ResponseEntity<Map>(map, HttpStatus.OK);
         return entity;
@@ -184,7 +193,6 @@ public class OrderController extends BaseRestSpringController {
     @RequestMapping(value = "/to_bill/{id}")
     public String orderSubmit(@PathVariable String id,HttpSession session,ModelMap model,RedirectAttributes redirectAttributes) {
         Order order = ServiceManager.orderService.findOrderById(id);
-//        session.setAttribute("order",order);
         model.addAttribute("form",order);
         return "forward:/to_bill/to_bill.jsp";
     }
@@ -238,7 +246,6 @@ public class OrderController extends BaseRestSpringController {
                     }
                     ServiceManager.productEvaluateService.insert(productEvaluate);
                     productSelected.setProductEvaluate(productEvaluate);
-//                    ServiceManager.orderService.update(order);
                     productSeries.setEvaluateCount(productSeries.getEvaluateCount()+1);
                     ServiceManager.productSeriesService.update(productSeries);
                     break;
@@ -272,23 +279,17 @@ public class OrderController extends BaseRestSpringController {
         Assert.notNull(user);
         Assert.notNull(order);
         Assert.notNull(order.getId());
-//        Order order=ServiceManager.orderService.findById(orderId);
-//        Assert.notNull(order.getUser());
         String payWay=order.getPayWay();
         Assert.notNull(payWay);
         //货到付款1，在线支付2，公司转账3，邮局汇款4
         if (payWay.equals("1")){
             order.setPayStatus("n");
         }else if (payWay.equals("2")){
-//            String outUrl="http://127.0.0.1:8088/mall/xxxxx";
-//            CustomServletRequestWrapper requestWrapper=new CustomServletRequestWrapper(request);
-//            Map<String,String[]> requestParams=requestWrapper.getParameterMap();
-//            String result=OuterRequestUtil.sendPost(outUrl,requestParams);
+
 
             Pingpp.apiKey = ChargeExample.apiKey;
             ChargeExample ce = new ChargeExample();
             System.out.println("---------创建 charge");
-//                Charge charge = ce.charge();
             Charge charge = null;
             Map<String, Object> chargeMap = new HashMap<String, Object>();
             chargeMap.put("amount", 10);
@@ -366,7 +367,6 @@ public class OrderController extends BaseRestSpringController {
         Order order=session.getAttribute("order")==null?null:(Order)session.getAttribute("order");
         User user=getLoginUser(session);
         Assert.notNull(order.getId());
-//        System.out.println("订单取消：" + order.getId());
         ServiceManager.orderService.removeById(order.getId());
         session.setAttribute("order", null);
         session.removeAttribute("order");

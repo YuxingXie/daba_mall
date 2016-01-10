@@ -16,6 +16,8 @@ public class ProductSelected {
     private Integer amount;
     @Transient
     private ProductEvaluate productEvaluate;
+    private List<ReturnExchange> returnExchangeList;
+
 
     @Transient
     private List<String> productPropertyValueIds;
@@ -24,7 +26,6 @@ public class ProductSelected {
     @DBRef
     private ProductSeries productSeries;
     private String receiveStatus;
-    private ReturnExchange returnExchange;
     public String getReceiveStatus() {
         return receiveStatus;
     }
@@ -79,15 +80,13 @@ public class ProductSelected {
     public void setProductSeries(ProductSeries productSeries) {
         this.productSeries = productSeries;
     }
-
-    public ReturnExchange getReturnExchange() {
-        return returnExchange;
+    public List<ReturnExchange> getReturnExchangeList() {
+        return returnExchangeList;
     }
 
-    public void setReturnExchange(ReturnExchange returnExchange) {
-        this.returnExchange = returnExchange;
+    public void setReturnExchangeList(List<ReturnExchange> returnExchangeList) {
+        this.returnExchangeList = returnExchangeList;
     }
-
     @Override
     public boolean equals(Object obj) {
         Assert.notNull(obj);
