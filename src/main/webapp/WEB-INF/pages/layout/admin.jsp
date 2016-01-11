@@ -78,6 +78,7 @@
                 </a>
                 <ul id="disSetting" class="nav nav-list secondmenu collapse">
                   <li><a href="${path}/admin/order/to_handler"><i class="glyphicon glyphicon-th-list"></i>未处理订单</a></li>
+                  <li><a href="${path}/admin/order/return_exchange"><i class="glyphicon glyphicon-th-list"></i>退/换货</a></li>
                 </ul>
               </li>
 

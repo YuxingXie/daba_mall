@@ -108,7 +108,7 @@ public class OrderController extends BaseRestSpringController {
     }
 
     @RequestMapping(value = "/return_exchange/submit")
-    public ResponseEntity<Message> submitReturnExchange(@RequestBody Order order, HttpSession session) {
+    public ResponseEntity<Map<String,Object>> submitReturnExchange(@RequestBody Order order, HttpSession session) {
         User user=getLoginUser(session);
         Assert.notNull(user);
 
@@ -120,9 +120,35 @@ public class OrderController extends BaseRestSpringController {
 //                MongoDbUtil.clearTransientFields(order);
 //            }
 //        }
+        for (ProductSelected productSelected:order.getProductSelectedList()){
+            ReturnExchange returnExchange=productSelected.getNewReturnExchange();
+            if (returnExchange==null) continue;
+            returnExchange.setDate(new Date());
+            if (productSelected.getReturnExchangeList()==null||productSelected.getReturnExchangeList().size()==0){
+                productSelected.setReturnExchangeList(new ArrayList<ReturnExchange>());
+            }
+            productSelected.getReturnExchangeList().add(returnExchange);
+        }
+        Order update=new Order();
+        update.setProductSelectedList(order.getProductSelectedList());
+        update.setId(order.getId());
+        orderService.update(update);
         Message message=new Message();
         message.setSuccess(true);
-        return new ResponseEntity<Message>(message,HttpStatus.OK);
+        message.setMessage("退/换货申请提交成功,请您耐心等待处理结果!");
+        DBObject dbObject=new BasicDBObject("user",new DBRef("users",user.getId()));
+        dbObject.put("payStatus","y");
+        List<Order> orders=ServiceManager.orderService.findAll(new BasicQuery(dbObject).with(new Sort(Sort.Direction.DESC,"orderDate")));
+        if (orders!=null){
+            for(Order o:orders){
+                MongoDbUtil.clearTransientFields(o);
+            }
+        }
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("message",message);
+
+        map.put("orders",orders);
+        return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
     }
     /**
      * 提交订单(实际为更新订单)

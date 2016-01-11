@@ -17,6 +17,8 @@ public class ProductSelected {
     @Transient
     private ProductEvaluate productEvaluate;
     private List<ReturnExchange> returnExchangeList;
+    @Transient
+    private ReturnExchange newReturnExchange;//最后一条退换货记录
 
 
     @Transient
@@ -87,6 +89,15 @@ public class ProductSelected {
     public void setReturnExchangeList(List<ReturnExchange> returnExchangeList) {
         this.returnExchangeList = returnExchangeList;
     }
+
+    public ReturnExchange getNewReturnExchange() {
+        return newReturnExchange;
+    }
+
+    public void setNewReturnExchange(ReturnExchange newReturnExchange) {
+        this.newReturnExchange = newReturnExchange;
+    }
+
     @Override
     public boolean equals(Object obj) {
         Assert.notNull(obj);

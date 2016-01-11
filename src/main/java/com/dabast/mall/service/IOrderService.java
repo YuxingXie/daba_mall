@@ -25,5 +25,7 @@ public interface IOrderService  extends IBaseEntityManager<Order> {
     List<Order> findOrdersByProductSeries(ProductSeries productSeries);
 
     long findOrdersCountByProductSeries(ProductSeries productSeries);
+
+    List<Order> findReturnExchangeOrders();
 //    void insertOrder(User user);
 }

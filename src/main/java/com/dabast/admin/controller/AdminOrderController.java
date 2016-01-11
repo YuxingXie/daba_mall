@@ -42,8 +42,13 @@ public class AdminOrderController extends BaseRestSpringController {
         List<Order> orders=ServiceManager.orderService.findUnHandlerOrders();
         return new ResponseEntity<List<Order>>(orders,HttpStatus.OK);
     }
+    @RequestMapping(value="/to_return_exchange/data")
+    public ResponseEntity<List<Order>>  to_return_exchange() {
+        List<Order> orders=ServiceManager.orderService.findReturnExchangeOrders();
+        return new ResponseEntity<List<Order>>(orders,HttpStatus.OK);
+    }
     @RequestMapping(value="/handler")
-    public ResponseEntity<List<Order>>orderHandler(@RequestBody Order order,HttpSession session) {
+    public ResponseEntity<List<Order>> orderHandler(@RequestBody Order order,HttpSession session) {
         order.setHandler(true);
         order.setHandlerDate(new Date());
         Order updateOrder=new Order();
@@ -55,4 +60,23 @@ public class AdminOrderController extends BaseRestSpringController {
         List<Order> orders=ServiceManager.orderService.findUnHandlerOrders();
         return new ResponseEntity<List<Order>>(orders,HttpStatus.OK);
     }
+    @RequestMapping(value="/return_exchange_handler")
+    public ResponseEntity<Order> return_exchange_handler(@RequestBody Order order,HttpSession session) {
+        Order updateOrder=new Order();
+        updateOrder.setId(order.getId());
+//        updateOrder.setHandlerAdmin(getLoginAdministrator(session));
+        updateOrder.setProductSelectedList(order.getProductSelectedList());
+        orderService.update(updateOrder);
+        order=orderService.findById(order.getId());
+        return new ResponseEntity<Order>(order,HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/return_exchange_order/{id}")
+    public String return_exchange_order(@PathVariable String id,ModelMap map,HttpSession session) {
+
+        map.addAttribute("id",id);
+        return "admin/order/return_exchange_order";
+    }
+
+
 }
