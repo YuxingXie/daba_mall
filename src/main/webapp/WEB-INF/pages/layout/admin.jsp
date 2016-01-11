@@ -114,8 +114,9 @@
 <script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/angular-1.4.8/angular.js"></script>
 <script src="${path}/statics/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="${path}/statics/assets/plugins/ui-autocomplete-master/autocomplete.js" type="text/javascript"></script>
 <script>
-  var mainApp=angular.module("mainApp",[]);
+  var mainApp=angular.module("mainApp",['ui.autocomplete']);
 </script>
 <tiles:insertAttribute name="bottomScript"/>
 </html>

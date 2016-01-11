@@ -64,13 +64,38 @@ public class AdminOrderController extends BaseRestSpringController {
     public ResponseEntity<Order> return_exchange_handler(@RequestBody Order order,HttpSession session) {
         Order updateOrder=new Order();
         updateOrder.setId(order.getId());
-//        updateOrder.setHandlerAdmin(getLoginAdministrator(session));
         updateOrder.setProductSelectedList(order.getProductSelectedList());
         orderService.update(updateOrder);
+
         order=orderService.findById(order.getId());
+
         return new ResponseEntity<Order>(order,HttpStatus.OK);
     }
-
+    @RequestMapping(value="/return_exchange_handler/postNotify")
+    public ResponseEntity<Notify> postNotify(@RequestBody Order order) {
+        Notify notify=new Notify();
+        notify.setTitle("退换货处理通知");
+        notify.setDate(new Date());
+        notify.setToUser(order.getUser());
+        StringBuffer sb=new StringBuffer("您的订单号为 "+order.getId()+" 的订单的退换货请求已被处理。\n");
+        for (ProductSelected productSelected:order.getProductSelectedList()){
+            if (productSelected.getReturnExchangeList()==null) continue;
+            sb.append("商品名：").append(productSelected.getProductSeries().getName()).append("\n");
+            for(ReturnExchange returnExchange:productSelected.getReturnExchangeList()){
+                String type=returnExchange.getType().equals("return")?"退货":"换货";
+                sb.append("要求").append(type).append("，数量：").append(returnExchange.getAmount());
+                if (returnExchange.getReason()!=null)
+                    sb.append(",理由：'").append(returnExchange.getReason()).append("'");
+                sb.append("的请求");
+                String handler=returnExchange.getHandler()==null?"仍未处理":(returnExchange.getHandler()?"已处理":"已重置为‘未处理’");
+                sb.append(handler).append("\n");
+            }
+        }
+        notify.setContent(sb.toString());
+        notify.setNotifyType("administrator notify");
+        ServiceManager.notifyService.insert(notify);
+        return new ResponseEntity<Notify>(notify,HttpStatus.OK);
+    }
     @RequestMapping(value="/return_exchange_order/{id}")
     public String return_exchange_order(@PathVariable String id,ModelMap map,HttpSession session) {
 

@@ -135,9 +135,11 @@ public class OrderDao extends BaseMongoDao<Order> {
         dbObject.put("payStatus","y");
         dbObject.put("productSelectedList.returnExchangeList",new BasicDBObject("$exists",true));
         BasicDBList dbList=new BasicDBList();
-        dbList.add(new BasicDBObject("productSelectedList.returnExchangeList.$.handler",false));
-        dbList.add(new BasicDBObject("productSelectedList.returnExchangeList.$.handler",new BasicDBObject("$exists",false)));
+        dbList.add(new BasicDBObject("productSelectedList.returnExchangeList",new BasicDBObject("$elemMatch",new BasicDBObject("handler",false))));
+        dbList.add(new BasicDBObject("productSelectedList.returnExchangeList",new BasicDBObject("$elemMatch",new BasicDBObject("handler",new BasicDBObject("$exists",false)))));
+//        dbList.add(new BasicDBObject("productSelectedList.returnExchangeList.$.handler",new BasicDBObject("$exists",false)));
         dbObject.put("$or",dbList);
+//        System.out.println(new BasicQuery(dbObject));
         return getMongoTemplate().find(new BasicQuery(dbObject),Order.class);
     }
 }

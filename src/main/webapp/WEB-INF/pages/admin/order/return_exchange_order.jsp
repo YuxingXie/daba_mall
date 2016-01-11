@@ -23,12 +23,16 @@
     <div class="row padding-top-15">
         <p class="fa fa-info-circle text-danger">即使您已经确认处理好了某个退换货请求，用户也可能不会满意退换货结果，在此情形下，如果您决定重新处理该用户的请求，可以请将标记为已处理的请求重新标记为未处理。</p>
     </div>
+    <div class="row padding-top-15">
+        <p class="fa fa-info-circle text-danger">标记的状态改变时，系统会向用户自动发送一份系统通知。</p>
+    </div>
     <div class="row padding-top-15 padding-bottom-20">
         <b class="fa fa-list fa-2x">要求退换货详情</b>
-
+        <button ng-init="handlerOnce=false" ng-disabled="!handlerOnce" data-ng-click="notify()" class="btn btn-primary">给用户发送通知</button>
+        <pre>{{notify.content}}</pre>
     </div>
     <div class="row padding-top-5" ng-repeat="productSelected in order.productSelectedList">
-        <div class="row bg-info" ng-if="productSelected.returnExchangeList&&productSelected.returnExchangeList.length">
+        <div class="row bg-info">
             <div class="row">
                 <div class="col-sm-12 col-lg-12 padding-top-10 padding-bottom-10">
                     <img ng-src="${path}/{{productSelected.productSeries.pictures[0].iconPicture}}" class="padding-left-10"/>
@@ -37,11 +41,11 @@
                     &times;{{productSelected.amount}}
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-sm-12 col-lg-12 text-left form-inline padding-top-6">
 
-                    <div>退换记录：</div>
-                    <span ng-if="!productSelected.returnExchangeList||!productSelected.returnExchangeList.length">无</span>
+
                     <span class="table-responsive">
                         <table class="table table-hover">
                             <tr>
@@ -52,6 +56,7 @@
                                 <th>状态</th>
                                 <th>处理</th>
                             </tr>
+                            <tr ng-if="!productSelected.returnExchangeList||!productSelected.returnExchangeList.length"><td class="font-size-12 fa fa-info-circle text-danger" colspan="6">该商品无退/换货请求记录</td></tr>
                             <tr ng-repeat="returnExchange in productSelected.returnExchangeList" class="padding-top-5">
                                 <td class="font-size-12">
                                     <span ng-if="returnExchange.type==='return'">退货</span>
@@ -67,7 +72,6 @@
                                 <td class="font-size-12">
                                     <button class="btn btn-primary btn-xs" ng-if="!returnExchange.handler" data-ng-click="handler(returnExchange)">标记为已处理</button>
                                     <button class="btn btn-primary btn-xs" ng-if="returnExchange.handler" data-ng-click="handler(returnExchange)">标记为未处理</button>
-                                    <button class="btn btn-primary btn-xs" data-ng-click="notify(order)">通知用户</button>
                                 </td>
                             </tr>
                         </table>

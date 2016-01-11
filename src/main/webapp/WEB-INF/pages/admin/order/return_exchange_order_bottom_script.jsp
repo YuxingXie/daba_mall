@@ -40,6 +40,14 @@
 //                return;
                 $http.post('${path}/admin/order/return_exchange_handler',$scope.order).success(function (data) {
                     $scope.order = data;
+                    $scope.handlerOnce=true;
+                });
+            }
+        }
+        $scope.notify=function(){
+            if(confirm("确定发送通知？")){
+                $http.post('${path}/admin/order/return_exchange_handler/postNotify',$scope.order).success(function (data) {
+                    $scope.notify = data;
                 });
             }
         }

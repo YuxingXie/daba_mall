@@ -106,6 +106,18 @@ public class OrderController extends BaseRestSpringController {
         }
         return new ResponseEntity<List<Order>>(orders,HttpStatus.OK);
     }
+    @RequestMapping(value = "/all/json")
+    public ResponseEntity<List<String>> allJson( HttpSession session) {
+
+        List<Order> orders=ServiceManager.orderService.findAll(new BasicQuery(new BasicDBList()).with(new Sort(Sort.Direction.DESC,"orderDate")));
+        List<String> orderIds=new ArrayList<String>();
+        if (orders!=null){
+            for(Order order:orders){
+                orderIds.add(order.getId());
+            }
+        }
+        return new ResponseEntity<List<String>>(orderIds,HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/return_exchange/submit")
     public ResponseEntity<Map<String,Object>> submitReturnExchange(@RequestBody Order order, HttpSession session) {

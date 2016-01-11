@@ -27,7 +27,7 @@ public class Notify {
     private String title;
     private Map<String,Object> importantStuffs;
     private List<String> pictures;
-    private String notifyType;
+    private String notifyType;//administrator notify,
     public String getId() {
         return id;
     }

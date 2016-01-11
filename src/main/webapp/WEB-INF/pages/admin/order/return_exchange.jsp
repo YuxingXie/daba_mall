@@ -11,7 +11,10 @@
     <div class="row btn-group btn-group-sm input-group padding-top-15">
         <a href="${path}/admin/index/index" class="btn btn-primary">返回首页<i class="fa fa-reply"></i></a>
         <button onclick="window.location.reload();" class="btn btn-primary">刷新<i class="fa fa-refresh"></i></button>
-        <input type="text" class="form-control input-sm" style="width: 300px;" placeholder="结果中搜索：订单号,联系人,电话,商品名,地址等"/>
+        <input type="text" class="form-control input-sm" style="width: 300px;"
+               placeholder="结果若不在列表中，可输入订单号查询"ng-model="orderId" ui-event="{autocompletecreate:'changeClass(myOption)'}" ui-autocomplete="myOption"/>
+
+        <button type="btn" class="btn btn-primary" data-ng-click="findOrder()" ng-disabled="!orderId"><i class="fa fa-search"></i>搜索订单</button>
         <%--<span class="input-group-btn" style="width: auto"></span>--%>
             <%--<button class="btn btn-primary btn-sm input-group-btn" style="width: auto">查找<i class="fa fa-search"></i></button>--%>
 
@@ -28,7 +31,7 @@
                 <th>操作</th>
             </tr>
             <tr ng-if="!orders||!orders.length">
-                <td colspan="6" class="fa-2x">所有的订单都处理过了<i class="fa fa-smile-o"></i></td>
+                <td colspan="6" class="fa-2x">没有未处理的退/换货订单了<i class="fa fa-smile-o"></i></td>
             </tr>
             <tr ng-repeat="order in orders">
                 <td>...{{order.id |limitTo:-5}}</td>
