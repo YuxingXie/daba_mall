@@ -29,11 +29,11 @@
                         </div>
                         
                         <div class="form-group">
-                            <div class="col-lg-2 text-center"><label class="control-label">退/换数量</label></div>
+                            <div class="col-lg-2 text-center"><label class="control-label margin-top-20">退/换数量</label></div>
                             <div class="col-lg-9">
                                 <%--<div class="row padding-top-5" ng-repeat="productSelected in returnList">--%>
                                 <div class="row padding-top-5" ng-repeat="productSelected in order.productSelectedList">
-                                    <div class="row table-bordered">
+                                    <div class="row bg-info">
                                         <div class="row">
                                             <div class="col-sm-2 col-lg-2 padding-top-20">
                                                 <img ng-src="${path}/{{productSelected.productSeries.pictures[0].iconPicture}}" class="padding-left-10"/>
@@ -73,7 +73,7 @@
                                                        max="{{max}}" min="1" required="true" placeholder="退/换数量" ng-disabled="max==0"/>
                                                 <input class="form-control" ng-if="productSelected.newReturnExchange" type="text" ng-disabled="max==0"
                                                        ng-model="productSelected.newReturnExchange.reason" placeholder="理由,非必填,20字内" maxlength="20"/>
-                                                <span ng-if="max==0" class="text-warning fa fa-warning">该商品已全部退/换</span>
+                                                <span ng-if="max==0" class="text-warning fa fa-warning">该商品已全部请求退/换</span>
 
                                             </div>
                                         </div>

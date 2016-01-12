@@ -63,4 +63,5 @@ public interface IBaseEntityManager<E> {
 
    Page<E> findPage(DBObject dbObject, Integer page);
    Page<E> findPage(DBObject condition,int currentPage,int pageSize);
+   Page<E> findPage(DBObject dbObject, Integer page, int i, String sortField, boolean asc);
 }

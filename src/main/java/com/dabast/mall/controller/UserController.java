@@ -13,6 +13,7 @@ import com.dabast.mall.service.impl.RegisterValidateService;
 import com.dabast.mall.service.impl.UserService;
 import com.dabast.support.vo.Message;
 import com.dabast.support.vo.PairUsers;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.DBRef;
@@ -362,7 +363,10 @@ public class UserController extends BaseRestSpringController {
         if (user==null) return null;
         DBObject dbObject=new BasicDBObject();
         dbObject.put("toUser",user);
-        dbObject.put("read",false);
+        BasicDBList dbList=new BasicDBList();
+        dbList.add(new BasicDBObject("read",false));
+        dbList.add(new BasicDBObject("read",new BasicDBObject("$exists",false)));
+        dbObject.put("$or",dbList);
         long notifyCount=ServiceManager.notifyService.count(dbObject);
         return new ResponseEntity<Long>(notifyCount,HttpStatus.OK);
     }
@@ -379,7 +383,7 @@ public class UserController extends BaseRestSpringController {
         dbObject.put("toUser",new DBRef("users",user.getId()));
 //        dbObject.put("read",false);
         page=page==null?1:page;
-        Page<Notify> notifyPage=ServiceManager.notifyService.findPage(dbObject,page,4);
+        Page<Notify> notifyPage=ServiceManager.notifyService.findPage(dbObject,page,4,"date",false);
         Map<String,Object> map=new LinkedHashMap<String,Object>();
         map.put("notifyPage", notifyPage);
         map.put("page", page);
@@ -403,6 +407,15 @@ public class UserController extends BaseRestSpringController {
         Map<String,Object> map=new LinkedHashMap<String,Object>();
         map.put("notifyPage", notifyPage);
         map.put("page", page);
+
+        DBObject notifyCountDbObject=new BasicDBObject();
+        dbObject.put("toUser",user);
+        BasicDBList dbList=new BasicDBList();
+        dbList.add(new BasicDBObject("read",false));
+        dbList.add(new BasicDBObject("read", new BasicDBObject("$exists", false)));
+        notifyCountDbObject.put("$or",dbList);
+        long notifyCount=ServiceManager.notifyService.count(notifyCountDbObject);
+        map.put("unreadNotifiesCount",notifyCount);
         return new ResponseEntity<Map>(map,HttpStatus.OK);
     }
     @RequestMapping(value = "/notify/remove")

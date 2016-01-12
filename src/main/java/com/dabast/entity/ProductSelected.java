@@ -20,7 +20,9 @@ public class ProductSelected {
     @Transient
     private ReturnExchange newReturnExchange;//最后一条退换货记录
 
-
+    private List<HandlerInfo> handlerInfoList;
+    @Transient
+    private HandlerInfo newHandlerInfo;
     @Transient
     private List<String> productPropertyValueIds;
     @DBRef
@@ -98,6 +100,14 @@ public class ProductSelected {
         this.newReturnExchange = newReturnExchange;
     }
 
+    public List<HandlerInfo> getHandlerInfoList() {
+        return handlerInfoList;
+    }
+
+    public void setHandlerInfoList(List<HandlerInfo> handlerInfoList) {
+        this.handlerInfoList = handlerInfoList;
+    }
+
     @Override
     public boolean equals(Object obj) {
         Assert.notNull(obj);
@@ -124,4 +134,11 @@ public class ProductSelected {
         return true;
     }
 
+    public HandlerInfo getNewHandlerInfo() {
+        return newHandlerInfo;
+    }
+
+    public void setNewHandlerInfo(HandlerInfo newHandlerInfo) {
+        this.newHandlerInfo = newHandlerInfo;
+    }
 }

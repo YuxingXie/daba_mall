@@ -11,9 +11,16 @@
         $http.get('${path}/admin/order/to_handler/data').success(function (data) {
             $scope.orders = data;
         });
-        $scope.handler=function(order){
+        $scope.toHandler=function(order){
+
+            $scope.order=order;
+            $("#orderDetail").modal().show();
+        }
+        $scope.handler=function(){
             if(confirm("确定处理?")){
-                $http.post('${path}/admin/order/handler',order).success(function (data) {
+                $("#orderDetail").modal("hide");
+                console.log(JSON.stringify($scope.order));
+                $http.post('${path}/admin/order/handler',$scope.order).success(function (data) {
                     $scope.orders = data;
                 });
             }

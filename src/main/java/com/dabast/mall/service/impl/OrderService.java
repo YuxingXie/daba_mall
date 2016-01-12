@@ -68,4 +68,9 @@ public class OrderService extends BaseEntityManager<Order> implements IOrderServ
         return orderDao.findReturnExchangeOrders();
     }
 
+    @Override
+    public long findReturnExchangeOrdersCount() {
+        return orderDao.findReturnExchangeOrdersCount();
+    }
+
 }

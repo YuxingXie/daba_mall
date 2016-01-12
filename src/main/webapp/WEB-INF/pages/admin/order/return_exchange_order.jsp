@@ -23,13 +23,16 @@
     <div class="row padding-top-15">
         <p class="fa fa-info-circle text-danger">即使您已经确认处理好了某个退换货请求，用户也可能不会满意退换货结果，在此情形下，如果您决定重新处理该用户的请求，可以请将标记为已处理的请求重新标记为未处理。</p>
     </div>
-    <div class="row padding-top-15">
-        <p class="fa fa-info-circle text-danger">标记的状态改变时，系统会向用户自动发送一份系统通知。</p>
-    </div>
-    <div class="row padding-top-15 padding-bottom-20">
-        <b class="fa fa-list fa-2x">要求退换货详情</b>
+
+    <div class="row padding-top-15 btn-group" ng-init="viewNotify=false">
         <button ng-init="handlerOnce=false" ng-disabled="!handlerOnce" data-ng-click="notify()" class="btn btn-primary">给用户发送通知</button>
-        <pre>{{notify.content}}</pre>
+        <a class="btn btn-primary fa fa-search" href="javascript:void(0)" data-ng-click="viewNotify=!viewNotify">查看通知内容</a>
+    </div>
+    <div class="row padding-top-15">
+        <b class="fa fa-list fa-2x">要求退换货详情</b>
+    </div>
+    <div class="row padding-top-15">
+        <pre ng-if="viewNotify">{{notify.content}}</pre>
     </div>
     <div class="row padding-top-5" ng-repeat="productSelected in order.productSelectedList">
         <div class="row bg-info">

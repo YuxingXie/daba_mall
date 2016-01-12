@@ -111,7 +111,7 @@
                     </c:otherwise>
                 </c:choose>
             </table>
-            <div class="modal fade active" id="orderDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal fade active" id="orderDetail" tabindex="-1" role="dialog" aria-labelledby="orderDetailLabel" aria-hidden="true">
                 <div class="modal-dialog" style="width: 68%;">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -124,7 +124,7 @@
                                 <div class="col-lg-2 col-sm-2 text-center">单价</div>
                                 <div class="col-lg-2 col-sm-2 text-center">数量</div>
                                 <div class="col-lg-2 col-sm-2 text-center">总价</div>
-                                <div class="col-lg-3 col-sm-3 fa fa-wrench" ng-init="hasEmptyProduct=false;totalPrice=0">快捷操作 </div>
+                                <div class="col-lg-3 col-sm-3 fa fa-wrench" ng-init="hasEmptyProduct=false;totalPrice=0">处理情况</div>
                             </div>
                             <div class="row margin-top-10" ng-repeat="productSelected in order.productSelectedList">
                                 <div class="col-lg-8 col-sm-8 text-center" ng-show="!productSelected.productSeries.id">
@@ -144,6 +144,10 @@
                                     {{productSelected.amount*productSelected.productSeries.commonPrice | number:2}}
                                 </div>
                                 <div class="col-lg-3 col-sm-3 text-center">
+                                    <div class="row text-left" ng-repeat="handlerInfo in productSelected.handlerInfoList">
+                                        {{handlerInfo.date|date:'yyyy-MM-dd hh:mm'}}:{{handlerInfo.description}}
+                                    </div>
+                                    <span ng-if="!productSelected.handlerInfoList||!productSelected.handlerInfoList.length">无</span>
                                 </div>
                             </div>
                         </div>

@@ -120,7 +120,8 @@
                                 <td class="text-left form-inline">
                                     <label>
                                         <input type="radio" card_type_valid name="cardSort" value="1" required="true"
-                                               ng-model="order.payAccount.cardSort"/>信用卡</label>&nbsp;&nbsp;&nbsp;
+                                               ng-model="order.payAccount.cardSort"/>信用卡
+                                    </label>&nbsp;&nbsp;&nbsp;
                                     <label><input type="radio" card_type_valid name="cardSort" value="2" required="true"
                                                   ng-model="order.payAccount.cardSort"/>储蓄卡</label>
                                 </td>

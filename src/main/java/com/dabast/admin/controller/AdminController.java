@@ -9,9 +9,15 @@ import com.dabast.common.util.MongoDbUtil;
 import com.dabast.entity.*;
 import com.dabast.mall.service.IProductSeriesService;
 import com.dabast.support.vo.Message;
+import com.dabast.support.vo.NotifySearch;
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.DBRef;
 import com.mongodb.util.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.bson.types.ObjectId;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -91,10 +97,19 @@ public class AdminController extends BaseRestSpringController {
         return "redirect:/admin/index/index";
     }
     @RequestMapping(value="/index/json")
-    public ResponseEntity< Map<String,Object>> index() {
+    public ResponseEntity< Map<String,Object>> index(HttpSession session) {
         Map<String,Object> map=new HashMap<String, Object>();
         long todoOrders=ServiceManager.orderService.findUnHandlerOrdersCount();
+        long returnOrders=ServiceManager.orderService.findReturnExchangeOrdersCount();
+        DBObject dbObject=new BasicDBObject();
+        Administrator administrator=getLoginAdministrator(session);
+        dbObject.put("toAdministrator",new DBRef("administrator",new ObjectId(administrator.getId())));
+        long notifies=ServiceManager.notifyService.count(dbObject);
+
         map.put("todoOrders",todoOrders);
+        map.put("returnOrders",returnOrders);
+        map.put("notifies",notifies);
+
         return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);
     }
 
@@ -160,12 +175,7 @@ public class AdminController extends BaseRestSpringController {
             String originalFilename=file.getOriginalFilename();
             String prefix=originalFilename.substring(0,originalFilename.lastIndexOf("."));//如xxx.zom,xxx.ico,xxx
             String suffix=originalFilename.substring(originalFilename.lastIndexOf("."));//后缀名如.jpg
-//            String originalPrefix=new String();//原始前缀，xxx.zom.jpg,xxx.ico.jpg,xxx.jpg的原始前缀都是xxx
-//            if (prefix.indexOf(".")>0){
-//                originalPrefix=prefix.substring(0,prefix.lastIndexOf("."));
-//            }else{
-//                originalPrefix=prefix;
-//            }
+
             ProductSeriesPicture productSeriesPicture=new ProductSeriesPicture();
             productSeriesPicture.setBigPicture("pic/" + pictureId);
             String bigPictureStr=dirStr+"/"+pictureId+suffix;
@@ -347,8 +357,19 @@ public class AdminController extends BaseRestSpringController {
 
         return new ResponseEntity<Message>(message,HttpStatus.OK);
     }
+    @RequestMapping(value="/notify/remove")
+    public ResponseEntity<Map<String,Object>> removeProduct( @RequestBody Notify notify,HttpSession session){
+        Map<String,Object> map=new HashMap<String,Object>();
+        ServiceManager.notifyService.removeById(notify.getId());
+        DBObject dbObject=new BasicDBObject();
+        Administrator administrator=getLoginAdministrator(session);
+        dbObject.put("fromAdministrator",new DBRef("administrator",new ObjectId(administrator.getId())));
+        List<Notify> notifies=ServiceManager.notifyService.findAll(dbObject);
+        map.put("list",notifies);
+        return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
+    }
     @RequestMapping(value="/product_series/remove")
-    public ResponseEntity<Map<String,Object>> removeProduct( @RequestBody ProductSeries productSeries){
+    public ResponseEntity<Map<String,Object>> removeProduct( @RequestBody ProductSeries productSeries,HttpSession session){
         Map<String,Object> map=new HashMap<String,Object>();
         Message message=new Message();
         //查询是否生成订单
@@ -366,6 +387,7 @@ public class AdminController extends BaseRestSpringController {
                     notify.setContent("我们很遗憾的通知您，您关注的商品\"" + productSeries.getName() + "\"被系统删除，因此我们将此商品从您的关注列表中移除了。感谢您对大坝的支持！");
                     notify.setDate(now);
                     notify.setTitle("系统通知");
+                    notify.setFromAdministrator(getLoginAdministrator(session));
                     ServiceManager.notifyService.insert(notify);
                     ServiceManager.interestService.removeById(interest.getId());
                 }
@@ -393,6 +415,7 @@ public class AdminController extends BaseRestSpringController {
                     notify.setContent("我们很遗憾的通知您，您购物车中的商品\"" + productSeries.getName() + "\"被系统删除，因此我们将此商品从您的购物车移除了。感谢您对大坝的支持！");
                     notify.setDate(now);
                     notify.setTitle("系统通知");
+                    notify.setFromAdministrator(getLoginAdministrator(session));
                     ServiceManager.notifyService.insert(notify);
                 }
             }
@@ -413,5 +436,29 @@ public class AdminController extends BaseRestSpringController {
         }
         map.put("message",message);
         return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value="/notifies/data")
+    public ResponseEntity<List<Notify>> notifies(ModelMap map, @RequestBody NotifySearch notifySearch,HttpSession session){
+        DBObject dbObject=new BasicDBObject();
+        String fromTo=notifySearch.getFromToMe();
+        String read=notifySearch.getRead();
+        Administrator administrator=getLoginAdministrator(session);
+        if (fromTo!=null&&fromTo.equals("toMe")){
+            dbObject.put("toAdministrator",new DBRef("administrator",new ObjectId(administrator.getId())));
+        }else if (fromTo!=null&&fromTo.equals("fromMe")){
+            dbObject.put("fromAdministrator",new DBRef("administrator",new ObjectId(administrator.getId())));
+        }
+        if (read!=null&&read.equals("read")){
+            dbObject.put("read",true);
+        }else if (read!=null&&read.equals("unread")){
+            BasicDBList dbList=new BasicDBList();
+            dbList.add(new BasicDBObject("read",false));
+            dbList.add(new BasicDBObject("read",new BasicDBObject("$exists",false)));
+            dbObject.put("$or",dbList);
+        }
+        List<Notify> notifies=ServiceManager.notifyService.findAll(dbObject);
+        return new ResponseEntity<List<Notify>>(notifies,HttpStatus.OK);
     }
 }

@@ -4,7 +4,6 @@ import com.dabast.common.base.BaseMongoDao;
 import com.dabast.entity.TestAuthors;
 import com.dabast.entity.TestPosts;
 import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
 import com.mongodb.DBObject;
 import com.mongodb.DBRef;
 import org.bson.types.ObjectId;
@@ -20,7 +19,6 @@ public class TestPostsDao extends BaseMongoDao<TestPosts> {
         List<DBRef> listDBRef = new ArrayList<DBRef>();
         DBObject testPostsDBObject =new BasicDBObject();
         testPostsDBObject.put("title",testPosts.getTitle());
-        DB db=getMongoTemplate().getDb();
         for (TestAuthors author:authors){
             //一个DBRef是这样子的：{"$ref" : "testAuthors","$id" : ObjectId("5645a4a86f87bce59c62a7ad")}
 

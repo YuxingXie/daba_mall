@@ -10,10 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -166,34 +163,30 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
     public E findOne(DBObject queryCondition){
 //        DB db = mongoTemplate.getDb();
        return mongoTemplate.findOne(new BasicQuery(queryCondition),collectionClass);
-//        DBCollection collection = db.getCollection(getCollectionName());
-//        DBObject dbObject=collection.findOne(queryCondition);
-//
-//        E e = null;
-//        try {
-//            e = collectionClass.newInstance();
-//            e=MongoDbUtil.dbObject2Bean(dbObject,e);
-//        } catch (InstantiationException e1) {
-//            e1.printStackTrace();
-//        } catch (IllegalAccessException e1) {
-//            e1.printStackTrace();
-//        } catch (NoSuchMethodException e1) {
-//            e1.printStackTrace();
-//        } catch (InvocationTargetException e1) {
-//            e1.printStackTrace();
-//        }
-//        return e;
+
     }
+    @Override
     public Page<E> findPage(DBObject condition,int currentPage,int pageSize){
-//        DB db = mongoTemplate.getDb();
-//        DBCollection collection = db.getCollection(getCollectionName());
+        return findPage(condition,currentPage,pageSize,null,null);
+    }
+    @Override
+    public Page<E> findPage(DBObject condition,Integer currentPage,Integer pageSize,String sortField,Boolean asc){
+        Sort sort=null;
+        if (sortField!=null&&asc!=null){
+            Sort.Direction direction=asc?Sort.Direction.ASC:Sort.Direction.DESC;
+            sort=new Sort(direction,sortField);
+        }
         Pageable pageable = new PageRequest(currentPage-1, pageSize);
         Long count = mongoTemplate.count(new BasicQuery(condition),collectionClass);
-        List<E> list = mongoTemplate.find(new BasicQuery(condition).limit(pageSize).skip((currentPage - 1) * pageSize),collectionClass);
-        Page<E> page = new PageImpl<E>(list, pageable, count);
-        return page;
-    }
+        Query q=null;
+        if(sort==null)
+            q=new BasicQuery(condition).limit(pageSize).skip((currentPage - 1) * pageSize);
+        else
+            q=new BasicQuery(condition).with(sort).limit(pageSize).skip((currentPage - 1) * pageSize);
+        List<E> list = mongoTemplate.find(q,collectionClass);
 
+        return new PageImpl<E>(list, pageable, count);
+    }
     @Override
     public Page<E> findPage(DBObject dbObject, Integer page) {
         return findPage(dbObject,page,6);

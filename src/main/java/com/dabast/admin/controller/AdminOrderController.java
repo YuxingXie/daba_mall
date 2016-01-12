@@ -49,13 +49,26 @@ public class AdminOrderController extends BaseRestSpringController {
     }
     @RequestMapping(value="/handler")
     public ResponseEntity<List<Order>> orderHandler(@RequestBody Order order,HttpSession session) {
-        order.setHandler(true);
-        order.setHandlerDate(new Date());
         Order updateOrder=new Order();
-        updateOrder.setHandler(true);
-        updateOrder.setHandlerDate(new Date());
+        updateOrder.setHandler(order.getHandler());
         updateOrder.setId(order.getId());
-        updateOrder.setHandlerAdmin(getLoginAdministrator(session));
+        Date now=new Date();
+        if (order.getHandler()!=null&&order.getHandler()){
+            updateOrder.setHandlerDate(now);
+            updateOrder.setHandlerAdmin(getLoginAdministrator(session));
+        }
+        for (ProductSelected productSelected:order.getProductSelectedList()){
+            HandlerInfo newHandlerInfo=productSelected.getNewHandlerInfo();
+            if (newHandlerInfo==null) continue;
+            List<HandlerInfo> handlerInfoList=productSelected.getHandlerInfoList();
+            if (handlerInfoList==null||handlerInfoList.size()==0){
+                handlerInfoList=new ArrayList<HandlerInfo>();
+            }
+            newHandlerInfo.setDate(now);
+            handlerInfoList.add(newHandlerInfo);
+            productSelected.setHandlerInfoList(handlerInfoList);
+        }
+        updateOrder.setProductSelectedList(order.getProductSelectedList());
         orderService.update(updateOrder);
         List<Order> orders=ServiceManager.orderService.findUnHandlerOrders();
         return new ResponseEntity<List<Order>>(orders,HttpStatus.OK);
@@ -72,7 +85,7 @@ public class AdminOrderController extends BaseRestSpringController {
         return new ResponseEntity<Order>(order,HttpStatus.OK);
     }
     @RequestMapping(value="/return_exchange_handler/postNotify")
-    public ResponseEntity<Notify> postNotify(@RequestBody Order order) {
+    public ResponseEntity<Notify> postNotify(@RequestBody Order order,HttpSession session) {
         Notify notify=new Notify();
         notify.setTitle("退换货处理通知");
         notify.setDate(new Date());
@@ -93,6 +106,7 @@ public class AdminOrderController extends BaseRestSpringController {
         }
         notify.setContent(sb.toString());
         notify.setNotifyType("administrator notify");
+        notify.setFromAdministrator(getLoginAdministrator(session));
         ServiceManager.notifyService.insert(notify);
         return new ResponseEntity<Notify>(notify,HttpStatus.OK);
     }

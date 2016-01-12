@@ -305,31 +305,7 @@
                     <keystorePass>dabast</keystorePass>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.mortbay.jetty</groupId>-->
-                <!--<artifactId>jetty-maven-plugin</artifactId>-->
-                <!--<version>8.1.0.RC5</version>-->
-                <!--<configuration>-->
-                    <!--<webAppConfig>-->
-                        <!--<contextPath>/test</contextPath>-->
-                        <!--<defaultsDescriptor>src/test/resources/webdefault.xml</defaultsDescriptor>-->
-                    <!--</webAppConfig>-->
-                    <!--<stopKey/>-->
-                    <!--<stopPort/>-->
-                    <!--<connectors>-->
-                        <!--<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">-->
-                            <!--<port>8080</port>-->
-                        <!--</connector>-->
-                        <!--<connector implementation="org.eclipse.jetty.server.ssl.SslSocketConnector">-->
-                            <!--<port>8443</port>-->
-                            <!--<maxIdleTime>60000</maxIdleTime>-->
-                            <!--<keystore>${project.build.directory}/jetty-ssl.keystore</keystore>-->
-                            <!--<password>test</password>-->
-                            <!--<keyPassword>test</keyPassword>-->
-                        <!--</connector>-->
-                    <!--</connectors>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>

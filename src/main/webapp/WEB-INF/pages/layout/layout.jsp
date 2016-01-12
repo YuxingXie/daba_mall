@@ -167,6 +167,7 @@
                                     </li>
                                     <li><a href="#">意见建议</a></li>
                                     <li><a href="#">客服邮箱</a></li>
+                                    <li><a href="${path}/download_cer">下载根证书</a></li>
                                 </ul>
                                 <!-- END DROPDOWN MENU -->
                             </li>

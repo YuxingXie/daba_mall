@@ -33,6 +33,7 @@
             <tr ng-if="!orders||!orders.length">
                 <td colspan="6" class="fa-2x">没有未处理的退/换货订单了<i class="fa fa-smile-o"></i></td>
             </tr>
+            <tr ng-if="!orders ||!orders.length"><td colspan="6" class="text-info fa fa-info-circle">{{message}}</td></tr>
             <tr ng-repeat="order in orders">
                 <td>...{{order.id |limitTo:-5}}</td>
                 <td>{{order.acceptAddress}}</td>

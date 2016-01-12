@@ -60,4 +60,5 @@ public interface EntityDao <E>{
 
     Page<E> findPage(DBObject dbObject, Integer page);
     Page<E> findPage(DBObject condition,int currentPage,int pageSize);
+    Page<E> findPage(DBObject dbObject, Integer currentPage, Integer pageSize, String sortField, Boolean asc);
 }

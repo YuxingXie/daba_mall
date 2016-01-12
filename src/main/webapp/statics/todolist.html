@@ -127,6 +127,7 @@ db.order.remove({"_id":ObjectId("56556dc235f0d11a6cb2af61")})
 db.account.update({},{"$set":{"bank":"招商银行"}},false,true)
 db.account.update({},{"$set":{"bank":new DBRef("bank",ObjectId("566fbb241314abc734cae5ba"))}},false,true)
 db.account.update({"_id":ObjectId("565f9c5d35f0d10a745a0853")},{"$set":{"bank":new DBRef("bank",ObjectId("566fbb061314abc734cae5b9"))}},false,true)
+db.notify.update({},{"$set":{"fromAdministrator":new DBRef("administrator",ObjectId("56847ec9e223b5cdf6544c90"))}},false,true)
 db.bank.remove({"_id":ObjectId("566fbaa51314abc734cae5b6")})
 db.bank.insert({
     "code": "ICBC",

@@ -25,7 +25,13 @@
         });
         $scope.findOrder=function(){
             $http.get('${path}/order/json/'+$scope.orderId).success(function (data) {
-                $scope.orders[0] = data;
+                if(data&&data.length){
+                    $scope.orders[0] = data;
+                }else{
+                    $scope.message = "没有找到匹配的订单";
+                }
+            }).error(function(){
+                $scope.message = "服务器异常，您可能输入了不合法的订单号";
             });
         }
         $scope.myOption = {

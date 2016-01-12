@@ -30,6 +30,7 @@ mainApp.controller("myNotifiesController",["$scope","$http",function($scope,$htt
             $http.post("${path}/user/notify/read?page="+$scope.page,$scope.notify).success(function(data){
                 $scope.notifyPage=data.notifyPage;
                 $scope.page=data.page;
+                $scope.$parent.unreadNotifiesCount=data.unreadNotifiesCount;
             });
         }
         $("#notifyModal").modal().show();

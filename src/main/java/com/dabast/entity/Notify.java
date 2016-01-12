@@ -20,6 +20,8 @@ public class Notify {
     @DBRef
     private Administrator toAdministrator;
     @DBRef
+    private Administrator fromAdministrator;
+    @DBRef
     private User fromUser;
     private String content;
     private Date date;
@@ -114,5 +116,13 @@ public class Notify {
 
     public void setFromUser(User fromUser) {
         this.fromUser = fromUser;
+    }
+
+    public Administrator getFromAdministrator() {
+        return fromAdministrator;
+    }
+
+    public void setFromAdministrator(Administrator fromAdministrator) {
+        this.fromAdministrator = fromAdministrator;
     }
 }

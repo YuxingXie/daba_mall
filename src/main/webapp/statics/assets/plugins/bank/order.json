@@ -1,0 +1,767 @@
+{
+  "id": "568f7bd435f0d1183c9ee545",
+  "productSelectedList": [
+    {
+      "productSeriesId": null,
+      "amount": 5,
+      "productEvaluate": null,
+      "returnExchangeList": [
+        {
+          "type": "return",
+          "reason": "太臭",
+          "amount": 1,
+          "date": 1452485013657,
+          "handlerDate": 1452568281743,
+          "handler": true,
+          "administrator": {
+            "id": "56847ec9e223b5cdf6544c90",
+            "name": "xieyuxing",
+            "idCardNo": null,
+            "birthday": null,
+            "sex": null,
+            "password": "7e89b492192e4acef570348e88c318ea"
+          }
+        }
+      ],
+      "newReturnExchange": null,
+      "productPropertyValueIds": null,
+      "productPropertyValueList": [
+        {
+          "id": "568f735335f0d1183c9ee487",
+          "value": "北京",
+          "productProperty": {
+            "id": "568f735335f0d1183c9ee486",
+            "propertyName": "产地",
+            "productSeries": {
+              "id": "568f735335f0d1183c9ee485",
+              "name": "榴莲",
+              "pictures": [
+                {
+                  "picture": "pic/568f736535f0d1183c9ee48c",
+                  "bigPicture": "pic/568f736535f0d1183c9ee48a",
+                  "iconPicture": "pic/568f736535f0d1183c9ee48e"
+                },
+                {
+                  "picture": "pic/568f736535f0d1183c9ee492",
+                  "bigPicture": "pic/568f736535f0d1183c9ee490",
+                  "iconPicture": "pic/568f736535f0d1183c9ee494"
+                },
+                {
+                  "picture": "pic/568f736535f0d1183c9ee498",
+                  "bigPicture": "pic/568f736535f0d1183c9ee496",
+                  "iconPicture": "pic/568f736535f0d1183c9ee49a"
+                },
+                {
+                  "picture": "pic/568f736535f0d1183c9ee49e",
+                  "bigPicture": "pic/568f736535f0d1183c9ee49c",
+                  "iconPicture": "pic/568f736535f0d1183c9ee4a0"
+                }
+              ],
+              "description": "榴莲（学名：Durio zibethinus Murr ），是一种巨型的热带常绿乔木，叶片长圆，顶端较尖，聚伞花序，花色淡黄，果实足球大小，果皮坚实，密生三角形刺，果肉是由假种皮的肉包组成，肉色淡黄，粘性多汁是一种极具经济价值的水果。",
+              "shelvesDate": 1452241747923,
+              "brand": "大坝",
+              "productStore": {
+                "remain": 500,
+                "warningAmount": null,
+                "inAndOutList": [
+                  {
+                    "type": "in",
+                    "amount": 500,
+                    "date": null,
+                    "productPropertyValue": null,
+                    "operator": {
+                      "id": "56847ec9e223b5cdf6544c90",
+                      "name": "xieyuxing",
+                      "idCardNo": null,
+                      "birthday": null,
+                      "sex": null,
+                      "password": "7e89b492192e4acef570348e88c318ea"
+                    }
+                  }
+                ]
+              },
+              "measurementUnit": "斤",
+              "sales": null,
+              "instructionManual": null,
+              "productBrochures": {
+                "type": "page",
+                "url": "http://baike.baidu.com/link?url=QeEc_uGFyPT33u9BqNXO1uHmIyeK2B6pPAHTblYklaesi4dNmAkzn0cRB6Og19Ius8tOCktitDEDD0-E7vxvzMjh7kccT716wl7t0skk8Dq"
+              },
+              "productSubCategory": {
+                "id": "568f281735f0d112a0ed47b1",
+                "productCategory": {
+                  "id": "568f281735f0d112a0ed47b0",
+                  "categoryName": "鲜果蔬类",
+                  "productSubCategories": null
+                },
+                "subCategoryName": "水果",
+                "productSeriesList": null
+              },
+              "evaluateCount": null,
+              "newProduct": null,
+              "interested": null,
+              "productProperties": null,
+              "productPropertyValues": null,
+              "productSeriesPrices": [
+                {
+                  "price": 32,
+                  "beginDate": 1452241747923,
+                  "endDate": null,
+                  "adjustDate": 1452241747923,
+                  "comment": null
+                }
+              ],
+              "commonPrice": 32,
+              "currentPrice": {
+                "price": 32,
+                "beginDate": 1452241747923,
+                "endDate": null,
+                "adjustDate": 1452241747923,
+                "comment": null
+              },
+              "productEvaluateList": null,
+              "productSeriesEvaluateGrade": 0
+            },
+            "propertyValues": null
+          },
+          "$$hashKey": "object:13"
+        }
+      ],
+      "productSeries": {
+        "id": "568f735335f0d1183c9ee485",
+        "name": "榴莲",
+        "pictures": [
+          {
+            "picture": "pic/568f736535f0d1183c9ee48c",
+            "bigPicture": "pic/568f736535f0d1183c9ee48a",
+            "iconPicture": "pic/568f736535f0d1183c9ee48e"
+          },
+          {
+            "picture": "pic/568f736535f0d1183c9ee492",
+            "bigPicture": "pic/568f736535f0d1183c9ee490",
+            "iconPicture": "pic/568f736535f0d1183c9ee494"
+          },
+          {
+            "picture": "pic/568f736535f0d1183c9ee498",
+            "bigPicture": "pic/568f736535f0d1183c9ee496",
+            "iconPicture": "pic/568f736535f0d1183c9ee49a"
+          },
+          {
+            "picture": "pic/568f736535f0d1183c9ee49e",
+            "bigPicture": "pic/568f736535f0d1183c9ee49c",
+            "iconPicture": "pic/568f736535f0d1183c9ee4a0"
+          }
+        ],
+        "description": "榴莲（学名：Durio zibethinus Murr ），是一种巨型的热带常绿乔木，叶片长圆，顶端较尖，聚伞花序，花色淡黄，果实足球大小，果皮坚实，密生三角形刺，果肉是由假种皮的肉包组成，肉色淡黄，粘性多汁是一种极具经济价值的水果。",
+        "shelvesDate": 1452241747923,
+        "brand": "大坝",
+        "productStore": {
+          "remain": 500,
+          "warningAmount": null,
+          "inAndOutList": [
+            {
+              "type": "in",
+              "amount": 500,
+              "date": null,
+              "productPropertyValue": null,
+              "operator": {
+                "id": "56847ec9e223b5cdf6544c90",
+                "name": "xieyuxing",
+                "idCardNo": null,
+                "birthday": null,
+                "sex": null,
+                "password": "7e89b492192e4acef570348e88c318ea"
+              }
+            }
+          ]
+        },
+        "measurementUnit": "斤",
+        "sales": null,
+        "instructionManual": null,
+        "productBrochures": {
+          "type": "page",
+          "url": "http://baike.baidu.com/link?url=QeEc_uGFyPT33u9BqNXO1uHmIyeK2B6pPAHTblYklaesi4dNmAkzn0cRB6Og19Ius8tOCktitDEDD0-E7vxvzMjh7kccT716wl7t0skk8Dq"
+        },
+        "productSubCategory": {
+          "id": "568f281735f0d112a0ed47b1",
+          "productCategory": {
+            "id": "568f281735f0d112a0ed47b0",
+            "categoryName": "鲜果蔬类",
+            "productSubCategories": null
+          },
+          "subCategoryName": "水果",
+          "productSeriesList": null
+        },
+        "evaluateCount": null,
+        "newProduct": null,
+        "interested": null,
+        "productProperties": null,
+        "productPropertyValues": null,
+        "productSeriesPrices": [
+          {
+            "price": 32,
+            "beginDate": 1452241747923,
+            "endDate": null,
+            "adjustDate": 1452241747923,
+            "comment": null
+          }
+        ],
+        "commonPrice": 32,
+        "currentPrice": {
+          "price": 32,
+          "beginDate": 1452241747923,
+          "endDate": null,
+          "adjustDate": 1452241747923,
+          "comment": null
+        },
+        "productEvaluateList": null,
+        "productSeriesEvaluateGrade": 0
+      },
+      "receiveStatus": null,
+      "$$hashKey": "object:9",
+      "newHandlerInfo": {"description": "dsfffffffff"}
+    },
+    {
+      "productSeriesId": null,
+      "amount": 9,
+      "productEvaluate": null,
+      "returnExchangeList": [
+        {
+          "type": "return",
+          "reason": "太甜",
+          "amount": 2,
+          "date": 1452485013657,
+          "handlerDate": 1452565412949,
+          "handler": true,
+          "administrator": {
+            "id": "56847ec9e223b5cdf6544c90",
+            "name": "xieyuxing",
+            "idCardNo": null,
+            "birthday": null,
+            "sex": null,
+            "password": "7e89b492192e4acef570348e88c318ea"
+          }
+        },
+        {
+          "type": "exchange",
+          "reason": "还是太甜",
+          "amount": 1,
+          "date": 1452491304234,
+          "handlerDate": 1452565408029,
+          "handler": true,
+          "administrator": {
+            "id": "56847ec9e223b5cdf6544c90",
+            "name": "xieyuxing",
+            "idCardNo": null,
+            "birthday": null,
+            "sex": null,
+            "password": "7e89b492192e4acef570348e88c318ea"
+          }
+        },
+        {
+          "type": "return",
+          "reason": "太甜太甜",
+          "amount": 1,
+          "date": 1452492215892,
+          "handlerDate": 1452565426245,
+          "handler": true,
+          "administrator": {
+            "id": "56847ec9e223b5cdf6544c90",
+            "name": "xieyuxing",
+            "idCardNo": null,
+            "birthday": null,
+            "sex": null,
+            "password": "7e89b492192e4acef570348e88c318ea"
+          }
+        },
+        {
+          "type": "return",
+          "reason": null,
+          "amount": 1,
+          "date": 1452494042864,
+          "handlerDate": 1452564783300,
+          "handler": false,
+          "administrator": {
+            "id": "56847ec9e223b5cdf6544c90",
+            "name": "xieyuxing",
+            "idCardNo": null,
+            "birthday": null,
+            "sex": null,
+            "password": "7e89b492192e4acef570348e88c318ea"
+          }
+        },
+        {
+          "type": "exchange",
+          "reason": "全退了",
+          "amount": 4,
+          "date": 1452495536961,
+          "handlerDate": null,
+          "handler": null,
+          "administrator": null
+        }
+      ],
+      "newReturnExchange": null,
+      "productPropertyValueIds": null,
+      "productPropertyValueList": [
+        {
+          "id": "568f743c35f0d1183c9ee4b4",
+          "value": "沙",
+          "productProperty": {
+            "id": "568f743c35f0d1183c9ee4b3",
+            "propertyName": "口感",
+            "productSeries": {
+              "id": "568f743c35f0d1183c9ee4b2",
+              "name": "西瓜",
+              "pictures": [
+                {
+                  "picture": "pic/568f74ae35f0d1183c9ee4b8",
+                  "bigPicture": "pic/568f74ae35f0d1183c9ee4b6",
+                  "iconPicture": "pic/568f74ae35f0d1183c9ee4ba"
+                },
+                {
+                  "picture": "pic/568f74ae35f0d1183c9ee4be",
+                  "bigPicture": "pic/568f74ae35f0d1183c9ee4bc",
+                  "iconPicture": "pic/568f74ae35f0d1183c9ee4c0"
+                }
+              ],
+              "description": "西瓜，（学名：Citrullus lanatus，英文：Watermelon），西瓜堪称“瓜中之王”，原产于非洲。唐代引入新疆，五代时期引入中土。属葫芦科，有多个种子。",
+              "shelvesDate": 1452241980279,
+              "brand": "大坝",
+              "productStore": {
+                "remain": 5000,
+                "warningAmount": 200,
+                "inAndOutList": [
+                  {
+                    "type": "in",
+                    "amount": 5000,
+                    "date": null,
+                    "productPropertyValue": null,
+                    "operator": {
+                      "id": "56847ec9e223b5cdf6544c90",
+                      "name": "xieyuxing",
+                      "idCardNo": null,
+                      "birthday": null,
+                      "sex": null,
+                      "password": "7e89b492192e4acef570348e88c318ea"
+                    }
+                  }
+                ]
+              },
+              "measurementUnit": "斤",
+              "sales": null,
+              "instructionManual": null,
+              "productBrochures": {
+                "type": "page",
+                "url": "http://image.baidu.com/search/index?tn=baiduimage&ct=201326592&lm=-1&cl=2&i…ord=%CE%F7%B9%CF&fr=ala&ori_query=%E8%A5%BF%E7%93%9C&ala=0&alatpl=sp&pos=0"
+              },
+              "productSubCategory": {
+                "id": "568f281735f0d112a0ed47b1",
+                "productCategory": {
+                  "id": "568f281735f0d112a0ed47b0",
+                  "categoryName": "鲜果蔬类",
+                  "productSubCategories": null
+                },
+                "subCategoryName": "水果",
+                "productSeriesList": null
+              },
+              "evaluateCount": null,
+              "newProduct": null,
+              "interested": null,
+              "productProperties": null,
+              "productPropertyValues": null,
+              "productSeriesPrices": [
+                {
+                  "price": 2,
+                  "beginDate": 1452241980279,
+                  "endDate": null,
+                  "adjustDate": 1452241980279,
+                  "comment": null
+                }
+              ],
+              "commonPrice": 2,
+              "currentPrice": {
+                "price": 2,
+                "beginDate": 1452241980279,
+                "endDate": null,
+                "adjustDate": 1452241980279,
+                "comment": null
+              },
+              "productEvaluateList": null,
+              "productSeriesEvaluateGrade": 0
+            },
+            "propertyValues": null
+          },
+          "$$hashKey": "object:15"
+        }
+      ],
+      "productSeries": {
+        "id": "568f743c35f0d1183c9ee4b2",
+        "name": "西瓜",
+        "pictures": [
+          {
+            "picture": "pic/568f74ae35f0d1183c9ee4b8",
+            "bigPicture": "pic/568f74ae35f0d1183c9ee4b6",
+            "iconPicture": "pic/568f74ae35f0d1183c9ee4ba"
+          },
+          {
+            "picture": "pic/568f74ae35f0d1183c9ee4be",
+            "bigPicture": "pic/568f74ae35f0d1183c9ee4bc",
+            "iconPicture": "pic/568f74ae35f0d1183c9ee4c0"
+          }
+        ],
+        "description": "西瓜，（学名：Citrullus lanatus，英文：Watermelon），西瓜堪称“瓜中之王”，原产于非洲。唐代引入新疆，五代时期引入中土。属葫芦科，有多个种子。",
+        "shelvesDate": 1452241980279,
+        "brand": "大坝",
+        "productStore": {
+          "remain": 5000,
+          "warningAmount": 200,
+          "inAndOutList": [
+            {
+              "type": "in",
+              "amount": 5000,
+              "date": null,
+              "productPropertyValue": null,
+              "operator": {
+                "id": "56847ec9e223b5cdf6544c90",
+                "name": "xieyuxing",
+                "idCardNo": null,
+                "birthday": null,
+                "sex": null,
+                "password": "7e89b492192e4acef570348e88c318ea"
+              }
+            }
+          ]
+        },
+        "measurementUnit": "斤",
+        "sales": null,
+        "instructionManual": null,
+        "productBrochures": {
+          "type": "page",
+          "url": "http://image.baidu.com/search/index?tn=baiduimage&ct=201326592&lm=-1&cl=2&i…ord=%CE%F7%B9%CF&fr=ala&ori_query=%E8%A5%BF%E7%93%9C&ala=0&alatpl=sp&pos=0"
+        },
+        "productSubCategory": {
+          "id": "568f281735f0d112a0ed47b1",
+          "productCategory": {
+            "id": "568f281735f0d112a0ed47b0",
+            "categoryName": "鲜果蔬类",
+            "productSubCategories": null
+          },
+          "subCategoryName": "水果",
+          "productSeriesList": null
+        },
+        "evaluateCount": null,
+        "newProduct": null,
+        "interested": null,
+        "productProperties": null,
+        "productPropertyValues": null,
+        "productSeriesPrices": [
+          {
+            "price": 2,
+            "beginDate": 1452241980279,
+            "endDate": null,
+            "adjustDate": 1452241980279,
+            "comment": null
+          }
+        ],
+        "commonPrice": 2,
+        "currentPrice": {
+          "price": 2,
+          "beginDate": 1452241980279,
+          "endDate": null,
+          "adjustDate": 1452241980279,
+          "comment": null
+        },
+        "productEvaluateList": null,
+        "productSeriesEvaluateGrade": 0
+      },
+      "receiveStatus": null,
+      "$$hashKey": "object:10"
+    }
+  ],
+  "payStatus": "y",
+  "payWay": "2",
+  "handler": null,
+  "handlerDate": null,
+  "handlerAdmin": null,
+  "payWayString": null,
+  "orderDate": 1452243924268,
+  "payDate": 1452324094909,
+  "acceptAddress": "北京 延庆县 小灰灰城堡",
+  "submitStatus": "y",
+  "acceptPersonName": "小灰灰他爸",
+  "contactPhone": "15866668888",
+  "totalPrice": 178,
+  "totalAmount": 14,
+  "user": {
+    "id": "568f5d1735f0d1183c9ee46a",
+    "name": "小灰灰",
+    "realName": null,
+    "sex": null,
+    "height": null,
+    "password": "96e79218965eb72c92a549dd5a330112",
+    "email": "2019911908@qq.com",
+    "userCategory": null,
+    "registerTime": 1452236070022,
+    "validateCode": "262836",
+    "lastActivateTime": 1452236070022,
+    "phone": null,
+    "loginStatus": null,
+    "cart": null,
+    "addresses": null,
+    "disabled": null,
+    "idCardNo": null,
+    "activated": true,
+    "userAccounts": null,
+    "interests": null,
+    "realMessage": null,
+    "remember": null,
+    "rePassword": null,
+    "loginStr": null,
+    "mergeCart": null
+  },
+  "payAccount": {
+    "id": "5690b4fe35f0d1149c1c933d",
+    "cardUserIdCardNo": "430124199555558887",
+    "cardNo": "4392222222222",
+    "cardSort": "2",
+    "cardUserPhone": "18974998887",
+    "cardUserName": "有钱爸",
+    "cardValidateCode": null,
+    "cardValidDate": null,
+    "bank": {
+      "id": "566fbb241314abc734cae5ba",
+      "code": "CMB",
+      "name": "招商银行",
+      "ico": "20060713191624295.gif",
+      "cardSorts": [
+        {
+          "noStart": "628262",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "518710",
+          "cardSort": "",
+          "cardName": "招商银行哆啦A梦粉丝信用卡"
+        },
+        {
+          "noStart": "518718",
+          "cardSort": "",
+          "cardName": "招商银行哆啦A梦粉丝信用卡珍藏版卡面/MC贝塔斯曼金卡/MC车主卡"
+        },
+        {
+          "noStart": "622588",
+          "cardSort": "",
+          "cardName": "招商银行QQ一卡通借记卡"
+        },
+        {
+          "noStart": "622575",
+          "cardSort": "",
+          "cardName": "招商银行HELLO KITTY单币卡"
+        },
+        {
+          "noStart": "628362",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "545947",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "545948",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "356885",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "552581",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "552580",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "545623",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "356889",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "356890",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "479229",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "439227",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "622579",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "622577",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "552534",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "439229",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "521302",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "628362",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "628262",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "439226",
+          "cardSort": "",
+          "cardName": "招商银行VISA信用卡金卡"
+        },
+        {
+          "noStart": "439225",
+          "cardSort": "",
+          "cardName": "招商银行VISA信用卡普通卡"
+        },
+        {
+          "noStart": "439228",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "622581",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "622576",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "622578",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "356886",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "545619",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "645621",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "552589",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "552586",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "552585",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "552584",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "552583",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "552582",
+          "cardSort": "",
+          "cardName": "招商银行"
+        },
+        {
+          "noStart": "439188",
+          "cardSort": "",
+          "cardName": "招商银行VISA白金卡"
+        }
+      ]
+    },
+    "user": {
+      "id": "568f5d1735f0d1183c9ee46a",
+      "name": "小灰灰",
+      "realName": null,
+      "sex": null,
+      "height": null,
+      "password": "96e79218965eb72c92a549dd5a330112",
+      "email": "2019911908@qq.com",
+      "userCategory": null,
+      "registerTime": 1452236070022,
+      "validateCode": "262836",
+      "lastActivateTime": 1452236070022,
+      "phone": null,
+      "loginStatus": null,
+      "cart": null,
+      "addresses": null,
+      "disabled": null,
+      "idCardNo": null,
+      "activated": true,
+      "userAccounts": null,
+      "interests": null,
+      "realMessage": null,
+      "remember": null,
+      "rePassword": null,
+      "loginStr": null,
+      "mergeCart": null
+    },
+    "cardSortString": "储蓄卡",
+    "bankCardSort": null
+  },
+  "receiveStatus": "none",
+  "evaluateStatus": "none",
+  "$$hashKey": "object:7"
+}

@@ -14,7 +14,7 @@
             <li class="active">我的消息</li>
         </ul>
         <div class="row">
-            <b>共{{notifyPage.totalElements}}个消息</b>
+            <b>共{{notifyPage.totalElements}}个消息，其中未读消息{{unreadNotifiesCount}}个</b>
         </div>
         <div class="table-responsive">
             <table class="table table-hover text-center">
@@ -57,9 +57,9 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <label class="col-lg-2">内容</label>
-                            <div class="col-lg-8">
-                                {{notify.content}}
+
+                            <div class="col-lg-12">
+                                <pre style="width: 100%">{{notify.content}}</pre>
                             </div>
                         </div>
 

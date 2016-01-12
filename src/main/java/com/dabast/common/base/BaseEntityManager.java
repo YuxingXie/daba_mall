@@ -163,4 +163,7 @@ public abstract class BaseEntityManager<E> implements IBaseEntityManager<E> {
     public Page<E> findPage(DBObject condition,int currentPage,int pageSize){
         return getEntityDao().findPage(condition,currentPage,pageSize);
     }
+    public Page<E> findPage(DBObject dbObject, Integer currentPage, int pageSize, String sortField, boolean asc){
+        return getEntityDao().findPage(dbObject,currentPage,pageSize,sortField,asc);
+    }
 }

@@ -4,6 +4,7 @@ import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.constant.Constant;
 import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.common.helper.service.ServiceManager;
+import com.dabast.common.util.FileUtil;
 import com.dabast.common.web.CookieTool;
 import com.dabast.entity.*;
 import com.dabast.mall.dao.UserDao;
@@ -82,7 +83,6 @@ public class IndexController extends BaseRestSpringController {
         model.addAttribute("homePageBlocks",homePageBlocks);
         return "index";
     }
-
     private void setInterest(List<ProductSeries> productSeriesList,List<Interest> interestList){
         if (productSeriesList==null) return;
         if (interestList==null) return;
@@ -121,6 +121,12 @@ public class IndexController extends BaseRestSpringController {
             return "search-result";
 //        }
 
+    }
+
+    @RequestMapping(value = "/download/cer")
+    public void   downloadCer(HttpServletResponse response) throws IOException {
+        ServletContextResource resource=new ServletContextResource(ProjectContext.getServletContext(),"statics/docs/tomcat.cer");
+        FileUtil.fileDownload(response,resource.getFile().getAbsolutePath());
     }
 
     public static void main(String[] args) {
