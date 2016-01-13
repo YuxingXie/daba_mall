@@ -26,7 +26,7 @@ public class Account {
     private String cardValidDate;
     @DBRef
     private Bank bank;
-    @DBRef(db = "users")
+    @DBRef
     private User user;
     @Transient
     private String cardSortString;

@@ -385,7 +385,7 @@ public class UserController extends BaseRestSpringController {
         User user=getLoginUser(session);
         if (user==null) return null;
         DBObject dbObject=new BasicDBObject();
-        dbObject.put("toUser",new DBRef("users",user.getId()));
+        dbObject.put("toUser",new DBRef("mallUser",user.getId()));
 //        dbObject.put("read",false);
         page=page==null?1:page;
         Page<Notify> notifyPage=ServiceManager.notifyService.findPage(dbObject,page,4,"date",false);
@@ -406,7 +406,7 @@ public class UserController extends BaseRestSpringController {
         if (user==null) return null;
         ServiceManager.notifyService.update(notify);
         DBObject dbObject=new BasicDBObject();
-        dbObject.put("toUser",new DBRef("users",user.getId()));
+        dbObject.put("toUser",new DBRef("mallUser",user.getId()));
         page=page==null?1:page;
         Page<Notify> notifyPage=ServiceManager.notifyService.findPage(dbObject,page,4);
         Map<String,Object> map=new LinkedHashMap<String,Object>();
@@ -429,7 +429,7 @@ public class UserController extends BaseRestSpringController {
         if (user==null) return null;
         ServiceManager.notifyService.removeById(notify.getId());
         DBObject dbObject=new BasicDBObject();
-        dbObject.put("toUser",new DBRef("users",user.getId()));
+        dbObject.put("toUser",new DBRef("mallUser",user.getId()));
         page=page==null?1:page;
         Page<Notify> notifyPage=ServiceManager.notifyService.findPage(dbObject,page,4);
         Map<String,Object> map=new LinkedHashMap<String,Object>();
@@ -642,7 +642,7 @@ public class UserController extends BaseRestSpringController {
     public ResponseEntity<List<Account>> accounts(HttpSession session) {
         User user=getLoginUser(session);
 //        Assert.notNull(user);
-        List<Account> accounts=ServiceManager.accountService.findAll(new BasicDBObject("user",new DBRef("users",user.getId())));
+        List<Account> accounts=ServiceManager.accountService.findAll(new BasicDBObject("user",new DBRef("mallUser",user.getId())));
         return new ResponseEntity<List<Account>>(accounts,HttpStatus.OK);
     }
 }

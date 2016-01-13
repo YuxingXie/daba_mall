@@ -74,7 +74,7 @@ public class OrderController extends BaseRestSpringController {
     public String myOrders(ModelMap model, HttpSession session) {
         User user=getLoginUser(session);
         Assert.notNull(user);
-        List<Order> orders=ServiceManager.orderService.findAll(new BasicQuery(new BasicDBObject("user",new DBRef("users",user.getId()))).with(new Sort(Sort.Direction.DESC,"orderDate")));
+        List<Order> orders=ServiceManager.orderService.findAll(new BasicQuery(new BasicDBObject("user",new DBRef("mallUser",user.getId()))).with(new Sort(Sort.Direction.DESC,"orderDate")));
         for(Order order:orders){
             DBObject orderDBObject=new BasicDBObject("order",new DBRef("order",order.getId()));
             List<ProductEvaluate> evaluates=ServiceManager.productEvaluateService.findAll(orderDBObject);
@@ -94,7 +94,7 @@ public class OrderController extends BaseRestSpringController {
     public ResponseEntity<List<Order>> myOrdersJson( HttpSession session) {
         User user=getLoginUser(session);
         Assert.notNull(user);
-        DBObject dbObject=new BasicDBObject("user",new DBRef("users",user.getId()));
+        DBObject dbObject=new BasicDBObject("user",new DBRef("mallUser",user.getId()));
         dbObject.put("payStatus","y");
         List<Order> orders=ServiceManager.orderService.findAll(new BasicQuery(dbObject).with(new Sort(Sort.Direction.DESC,"orderDate")));
         if (orders!=null){
@@ -122,14 +122,6 @@ public class OrderController extends BaseRestSpringController {
         User user=getLoginUser(session);
         Assert.notNull(user);
 
-//        DBObject dbObject=new BasicDBObject("user",new DBRef("users",user.getId()));
-//        dbObject.put("payStatus","y");
-//        List<Order> orders=ServiceManager.orderService.findAll(new BasicQuery(dbObject).with(new Sort(Sort.Direction.DESC,"orderDate")));
-//        if (orders!=null){
-//            for(Order order:orders){
-//                MongoDbUtil.clearTransientFields(order);
-//            }
-//        }
         for (ProductSelected productSelected:order.getProductSelectedList()){
             ReturnExchange returnExchange=productSelected.getNewReturnExchange();
             if (returnExchange==null) continue;
@@ -146,7 +138,7 @@ public class OrderController extends BaseRestSpringController {
         Message message=new Message();
         message.setSuccess(true);
         message.setMessage("退/换货申请提交成功,请您耐心等待处理结果!");
-        DBObject dbObject=new BasicDBObject("user",new DBRef("users",user.getId()));
+        DBObject dbObject=new BasicDBObject("user",new DBRef("mallUser",user.getId()));
         dbObject.put("payStatus","y");
         List<Order> orders=ServiceManager.orderService.findAll(new BasicQuery(dbObject).with(new Sort(Sort.Direction.DESC,"orderDate")));
         if (orders!=null){

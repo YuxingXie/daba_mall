@@ -24,14 +24,13 @@
     </Appenders>
     <!--定义了一个新logger，它的级别是trace ，使用文件方式来记录日志,name应该可以是包名或类名-->
     <Loggers>
-        <Logger name="com.dabast" level="trace"
-                additivity="true">
-            <!--<AppenderRef ref="running-log" />-->
-        </Logger>
-        <logger name="org.springframework.core" additivity="true" level="error"/>
-        <logger name="org.springframework.beans" additivity="true" level="info"/>
-        <logger name="org.springframework.context" additivity="true" level="info"/>
-        <logger name="org.springframework.web" additivity="true" level="info"/>
+        <Logger name="com.dabast" level="trace" additivity="true"/>
+        <logger name="org.springframework" additivity="true" level="info"/>
+        <logger name="org.springframework" additivity="true" level="info"/>
+        <logger name="org.springframework" additivity="true" level="info"/>
+        <logger name="org.springframework" additivity="true" level="info"/>
+        <logger name="org.mongodb" additivity="true" level="info"/>
+        <logger name="org.quartz" additivity="true" level="info"/>
         <Root level="trace" includeLocation="true">
             <AppenderRef ref="running-log" />
             <appender-ref ref="Console" />

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
-@Document(collection = "users")
+@Document(collection = "mallUser")
 public class User {
     @Id private String id;
     @Field(value = "name")

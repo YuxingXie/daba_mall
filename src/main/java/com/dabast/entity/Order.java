@@ -61,7 +61,7 @@ public class Order {
     private Double totalPrice;
     @Transient
     private Integer totalAmount;
-    @DBRef(db = "users")
+    @DBRef
     private User user;
     @DBRef(db = "account")
     private Account payAccount;
