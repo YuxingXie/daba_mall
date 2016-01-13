@@ -10,6 +10,8 @@ import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.DBRef;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.*;
 import org.springframework.data.mongodb.core.query.BasicQuery;
@@ -23,6 +25,7 @@ import java.util.List;
  */
 @Repository
 public class ProductEvaluateDao extends BaseMongoDao<ProductEvaluate> {
+    private static Logger logger = LogManager.getLogger();
     public ProductEvaluate findByOrderAndProductSeries(Order order, ProductSeries productSeries) {
         DBObject dbObject=new BasicDBObject();
 //        DBObject orderDBObject=new BasicDBObject();
@@ -65,7 +68,7 @@ public class ProductEvaluateDao extends BaseMongoDao<ProductEvaluate> {
                 repliesDBObject.put("parent", new DBRef("productEvaluate",productEvaluate.getId()));
                 repliesDBObject.put("type", Constant.EVALUATETYPE.REPLY);
                 Query q=new BasicQuery(repliesDBObject).with(new Sort(Sort.Direction.DESC, "date"));
-                System.out.println(q);
+                logger.trace(q);
                 productEvaluate.setReplies(findAll(q));
                 DBObject praiseDBObject=new BasicDBObject();
                 praiseDBObject.put("parent", productEvaluate);

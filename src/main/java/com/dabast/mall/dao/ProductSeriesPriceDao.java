@@ -8,8 +8,11 @@ import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.DBRef;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bson.types.ObjectId;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
@@ -18,7 +21,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -28,6 +30,7 @@ import java.util.List;
  */
 @Repository
 public class ProductSeriesPriceDao  extends BaseMongoDao<ProductSeriesPrice> {
+    private static Logger logger = LogManager.getLogger();
     private DBObject getCurrentPriceDBObject(){
         DBObject dbObject=new BasicDBObject();
 //        Date now=new Date();
@@ -43,7 +46,7 @@ public class ProductSeriesPriceDao  extends BaseMongoDao<ProductSeriesPrice> {
     private Criteria getCurrentPriceCriteria(){
         Date now=new Date();
         Criteria criteria= Criteria.where("beginDate").exists(true).lt(now).orOperator(Criteria.where("endDate").gt(now), Criteria.where("endDate").exists(false));
-        System.out.println(criteria.getCriteriaObject());
+        logger.trace(criteria.getCriteriaObject());
         return  criteria;
     }
     public static void main(String[] args){

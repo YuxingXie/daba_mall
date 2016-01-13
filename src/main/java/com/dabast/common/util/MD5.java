@@ -1,13 +1,15 @@
 package com.dabast.common.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.security.MessageDigest;
 
 public final class MD5 {
 	private static char hexChars[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
-    private static Logger logger = LoggerFactory.getLogger(MD5.class);
+    private static Logger logger = LogManager.getLogger();
 	
 	private MD5(){}
 
@@ -37,7 +39,7 @@ public final class MD5 {
 		}
 	}
 	public static void main(String[] args) {
-		System.out.println(MD5.convert("dabastAdmin"));
+		logger.info(MD5.convert("dabastAdmin"));
 	}
 
 }

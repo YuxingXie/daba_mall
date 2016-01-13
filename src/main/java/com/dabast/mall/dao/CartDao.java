@@ -2,6 +2,8 @@ package com.dabast.mall.dao;
 
 import com.dabast.common.base.BaseMongoDao;
 import com.dabast.entity.Cart;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 //import com.dabast.entity.ProductPropertySelect;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class CartDao extends BaseMongoDao<Cart> {
+    private static Logger logger = LogManager.getLogger();
     public Cart getCartByUserId(String id) {
         //TODO
         return null;

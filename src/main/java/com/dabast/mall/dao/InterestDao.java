@@ -5,12 +5,15 @@ import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.*;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 public class InterestDao  extends BaseMongoDao<Interest> {
+    private static Logger logger = LogManager.getLogger();
     public List<Interest> findInterestsOfUser(User user) {
         if (user==null) return null;
         DBObject dbObject=new BasicDBObject();

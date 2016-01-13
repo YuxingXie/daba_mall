@@ -1,12 +1,15 @@
 package com.dabast.common.util;
 
 import com.dabast.entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReflectUtil {
+    private static Logger logger= LogManager.getLogger();
     public static <T> boolean methodExists(T t, String methodName) {
         Method[] methods = t.getClass().getMethods();
         for (Method method : methods) {
@@ -117,41 +120,41 @@ public class ReflectUtil {
      * @param object
      */
     public static <E> void analysisBean(Object object) throws IllegalAccessException {
-        //System.out.println("-----begin analysis "+object.getClass().getName()+"--------");
+        //logger.info("-----begin analysis "+object.getClass().getName()+"--------");
         for (Field field : object.getClass().getDeclaredFields()) {
             String fieldName = field.getName();
-            //System.out.println("field name:" + fieldName);
+            //logger.info("field name:" + fieldName);
             field.setAccessible(true);
             Object fieldValue = field.get(object);
             Type genericType=field.getGenericType();
             if (field.getType().isPrimitive() ||ReflectUtil.isWrapClass(field.getType()) ||field.getType()==String.class){
-                //System.out.println("field is a primitive type type");
+                //logger.info("field is a primitive type type");
             }else if (field.getType().isArray()){
                 if (fieldValue!=null){
-                    System.out.print("field is an array,field values are:");
+                    logger.info("field is an array,field values are:");
 
                     Object[] fieldArrayObject=(Object[])fieldValue;
                     for (Object fieldArrayObjectItem:fieldArrayObject){
-                        System.out.print(fieldArrayObjectItem + ",class is:" + fieldArrayObjectItem.getClass() + ",");
+                        logger.info(fieldArrayObjectItem + ",class is:" + fieldArrayObjectItem.getClass() + ",");
                     }
-                    //System.out.println("");
+                    //logger.info("");
                 }else{
-                    //System.out.println("field is an array,field value is null");
+                    //logger.info("field is an array,field value is null");
                 }
             }else if (genericType instanceof ParameterizedType){
 
                 ParameterizedType parameterizedType=(ParameterizedType)genericType;
-                //System.out.println("field is a parameterized type:"+parameterizedType);
+                //logger.info("field is a parameterized type:"+parameterizedType);
                 Type[] actualTypes=parameterizedType.getActualTypeArguments();
                 Type rawType=parameterizedType.getRawType();
 
                 if (rawType==List.class){
-                    //System.out.println("field is a java.util.List");
+                    //logger.info("field is a java.util.List");
                 }
 
                 if (actualTypes.length>0){
                     Class class0=(Class<?>)actualTypes[0];
-                    //System.out.println("field parameterized type:"+class0);
+                    //logger.info("field parameterized type:"+class0);
                 }
                 if (fieldValue!=null&&rawType==List.class){
                     List<?> fieldValueList=(ArrayList)fieldValue;
@@ -161,20 +164,20 @@ public class ReflectUtil {
                 }
 
             }else{
-                //System.out.println("field is a simple class");
+                //logger.info("field is a simple class");
             }
 
-            //System.out.println("--------------------------------------------------------------");
+            //logger.info("--------------------------------------------------------------");
         }
     }
 
     public static void main(String[] args) {
-//        System.out.println(isWrapClass(String.class));//false
-//        System.out.println(isWrapClass(Integer.class));//true
-//        System.out.println(isWrapClass(int.class));//false
-//        System.out.println(int.class==Integer.class);//false
-//        System.out.println(int.class.isPrimitive());//true
-//        System.out.println(Integer.class.isPrimitive());//false
+//        logger.info(isWrapClass(String.class));//false
+//        logger.info(isWrapClass(Integer.class));//true
+//        logger.info(isWrapClass(int.class));//false
+//        logger.info(int.class==Integer.class);//false
+//        logger.info(int.class.isPrimitive());//true
+//        logger.info(Integer.class.isPrimitive());//false
         List<User> users = new ArrayList<User>();
         User user1 = new User();
         User user2 = new User();

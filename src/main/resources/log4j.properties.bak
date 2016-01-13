@@ -6,31 +6,34 @@ log4j.rootLogger=INFO
 # common appenders
 ################################
 #stdout configure
-log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+#log4j.appender.stdout=org.apache.log4j.ConsoleAppender
 
-#log4j.appender.stdout=org.apache.log4j.FileAppender
+log4j.appender.stdout=org.apache.log4j.FileAppender
 #log4j.appender.stdout.file= ${user.home}/logs/log.log
+log4j.appender.stdout.file= ${webApp.root}/statics/logs/log.log
+
 log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
 log4j.appender.stdout.layout.conversionPattern= %d{MM.dd HH:mm:ss.SSS} %-5p %c - %m%n
 
 #common-error file appender
-#log4j.appender.common-error=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.common-error=org.apache.log4j.DailyRollingFileAppender
 #log4j.appender.common-error.file=${user.home}/logs/common-error.log
-#log4j.appender.common-error.layout=org.apache.log4j.PatternLayout
-#log4j.appender.common-error.threshold=ERROR
-#log4j.appender.common-error.layout.conversionPattern= %d{MM-dd HH:mm:ss.SSS} %-5p %c - %m%n
+log4j.appender.common-error.file=${webApp.root}/statics/logs/common-error.log
+log4j.appender.common-error.layout=org.apache.log4j.PatternLayout
+log4j.appender.common-error.threshold=ERROR
+log4j.appender.common-error.layout.conversionPattern= %d{MM-dd HH:mm:ss.SSS} %-5p %c - %m%n
 
 #common-dao file appender
-log4j.appender.common-dao=org.apache.log4j.ConsoleAppender
-#log4j.appender.common-dao=org.apache.log4j.DailyRollingFileAppender
-#log4j.appender.common-dao.file=${user.home}/logs/common-dao.log
+#log4j.appender.common-dao=org.apache.log4j.ConsoleAppender
+log4j.appender.common-dao=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.common-dao.file=${webApp.root}/statics/logs/common-dao.log
 log4j.appender.common-dao.layout=org.apache.log4j.PatternLayout
 log4j.appender.common-dao.layout.conversionPattern= %d{MM-dd HH:mm:ss.SSS} %-5p %c - %m%n
 
 #common-pageNotFound file appender
-log4j.appender.common-pageNotFound=org.apache.log4j.ConsoleAppender
-#log4j.appender.common-pageNotFound=org.apache.log4j.DailyRollingFileAppender
-#log4j.appender.common-pageNotFound.file=${user.home}/logs/common-pageNotFound.log
+#log4j.appender.common-pageNotFound=org.apache.log4j.ConsoleAppender
+log4j.appender.common-pageNotFound=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.common-pageNotFound.file=${webApp.root}/statics/logs/common-pageNotFound.log
 log4j.appender.common-pageNotFound.layout=org.apache.log4j.PatternLayout
 log4j.appender.common-pageNotFound.layout.conversionPattern= %d{MM-dd HH:mm:ss.SSS} %-5p %c - %m%n
 
@@ -40,17 +43,17 @@ log4j.appender.common-pageNotFound.layout.conversionPattern= %d{MM-dd HH:mm:ss.S
 #project-dao file appender
 
 #project-web file appender
-log4j.appender.project-web=org.apache.log4j.ConsoleAppender
-#log4j.appender.project-web=org.apache.log4j.DailyRollingFileAppender
-#log4j.appender.project-web.file=${user.home}/logs/project-web.log
+#log4j.appender.project-web=org.apache.log4j.ConsoleAppender
+log4j.appender.project-web=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.project-web.file=${webApp.root}/statics/logs/project-web.log
 log4j.appender.project-web.layout=org.apache.log4j.PatternLayout
 log4j.appender.project-web.threshold=INFO
 log4j.appender.project-web.layout.conversionPattern= %d{MM-dd HH:mm:ss.SSS} %-5p %c - %m%n
 
 #project-service file appender
-log4j.appender.project-service=org.apache.log4j.ConsoleAppender
-#log4j.appender.project-service=org.apache.log4j.DailyRollingFileAppender
-#log4j.appender.project-service.file=${user.home}/logs/project-service.log
+#log4j.appender.project-service=org.apache.log4j.ConsoleAppender
+log4j.appender.project-service=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.project-service.file=${webApp.root}/statics/logs/project-service.log
 log4j.appender.project-service.layout=org.apache.log4j.PatternLayout
 log4j.appender.project-service.threshold=INFO
 log4j.appender.project-service.layout.conversionPattern= %d{MM-dd HH:mm:ss.SSS} %-5p %c - %m%n
@@ -100,7 +103,7 @@ log4j.logger.org.hibernate.cfg=ERROR,stdout
 log4j.logger.org.springframework=ERROR,stdout
 log4j.logger.org.springframework.jdbc.core.JdbcTemplate=DEBUG,common-dao
 ############handler################
-log4j.logger.com.dabast.fgw.module.project.controller=DEBUG
-log4j.appender.com.dabast.fgw.module.project.controller=org.apache.log4j.ConsoleAppender
+log4j.logger.com.dabast.admin.controller=DEBUG
+log4j.appender.com.dabast.mall.controller=org.apache.log4j.ConsoleAppender
 ######################################
 log4j.logger.org.dbunit=INFO,stdout

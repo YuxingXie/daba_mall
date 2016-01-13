@@ -1,5 +1,7 @@
 package com.dabast.common.helper.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +16,7 @@ import java.net.URLEncoder;
  */
 @Component
 public class SmsManager {
-
+    private static Logger logger = LogManager.getLogger();
     @Value(value = "${app.sms.addr}")
     private String addr;
     //    private static final String addr = "\"http://api.sms.cn/mtutf8";
@@ -85,7 +87,7 @@ public class SmsManager {
         String inputline = in.readLine();
 //        System.out.println("Response:" + inputline);
         String msg=inputline.substring(inputline.indexOf("stat=")+5,inputline.indexOf("stat=")+8);
-        System.out.println(msg);
+        logger.info("短信发送结果："+getResponse(msg));
         return msg;
     }
     /**

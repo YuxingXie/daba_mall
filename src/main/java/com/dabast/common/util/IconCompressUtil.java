@@ -1,31 +1,25 @@
 package com.dabast.common.util;
 
-        import java.awt.Graphics;
-        import java.awt.GraphicsConfiguration;
-        import java.awt.GraphicsDevice;
-        import java.awt.GraphicsEnvironment;
-        import java.awt.HeadlessException;
-        import java.awt.Image;
-        import java.awt.Rectangle;
-        import java.awt.Transparency;
-        import java.awt.image.BufferedImage;
-        import java.io.File;
-        import java.io.FileInputStream;
-        import java.io.FileOutputStream;
-        import java.io.IOException;
-        import java.text.SimpleDateFormat;
-        import java.util.Date;
-        import java.util.Iterator;
-        import java.util.Random;
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-        import javax.imageio.ImageIO;
-        import javax.imageio.ImageReadParam;
-        import javax.imageio.ImageReader;
-        import javax.imageio.stream.ImageInputStream;
-        import javax.swing.ImageIcon;
-
-        import com.sun.image.codec.jpeg.JPEGCodec;
-        import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReadParam;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Random;
 
 /**
  * @作者 王建明
@@ -34,6 +28,7 @@ package com.dabast.common.util;
  * @版本号 V 1.0
  */
 public class IconCompressUtil {
+    private static Logger logger = LogManager.getLogger();
     public String path = "";
 
     public IconCompressUtil(String path) {
@@ -62,12 +57,12 @@ public class IconCompressUtil {
             } catch (IOException e1) {
                 // TODO Auto-generated catch block
                 //e1.printStackTrace();
-                System.out.println("无法创建文件！！！");
+                logger.info("无法创建文件！！！");
                 return null;
             }
         BufferedImage bi;
         try {
-            System.out.println("正在压缩:" + oldFile.getName());
+           logger.info("正在压缩:" + oldFile.getName());
             bi = ImageIO.read(new FileInputStream(oldFile));
             int width = bi.getWidth();
             int height = bi.getHeight();
@@ -84,10 +79,10 @@ public class IconCompressUtil {
                 }
                 ImageIO.write(toBufferedImage(image), "png",
                         new FileOutputStream(newFile));
-                System.out.println("压缩完成:" + newFile.getName());
+               logger.info("压缩完成:" + newFile.getName());
                 return newFile;
             } else {
-                System.out.println("无须压缩:" + oldFile.getName());
+               logger.info("无须压缩:" + oldFile.getName());
                 return oldFile;
             }
         } catch (Exception e) {

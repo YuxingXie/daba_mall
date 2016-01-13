@@ -4,17 +4,10 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.pingplusplus.Pingpp;
-import com.pingplusplus.exception.APIConnectionException;
-import com.pingplusplus.exception.APIException;
-import com.pingplusplus.exception.AuthenticationException;
-import com.pingplusplus.exception.ChannelException;
-import com.pingplusplus.exception.InvalidRequestException;
-import com.pingplusplus.model.Charge;
-import com.pingplusplus.model.ChargeRefundCollection;
-import com.pingplusplus.model.PingppObject;
-import com.pingplusplus.model.RedEnvelope;
-import com.pingplusplus.model.Transfer;
+import com.pingplusplus.exception.*;
+import com.pingplusplus.model.*;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -25,14 +18,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-
-import javax.net.ssl.HttpsURLConnection;
+import java.util.*;
 
 /**
  * extends the abstract class when you need requset anything from ping++

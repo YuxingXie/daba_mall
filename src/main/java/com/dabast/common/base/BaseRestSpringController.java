@@ -6,12 +6,13 @@ import com.dabast.entity.Administrator;
 import com.dabast.entity.Cart;
 import com.dabast.entity.Order;
 import com.dabast.entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ReflectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class BaseRestSpringController  {
     @Value(value = "${app.httpPort}")
     protected String httpPort;
 
-
+    private static Logger logger = LogManager.getLogger();
     public String getHttpPort() {
         return httpPort;
     }
@@ -49,8 +50,8 @@ public class BaseRestSpringController  {
             for (String val:requestMap.get(key)){
                 str+=val + ",";
             }
-            if (str.endsWith(","))  System.out.print(str.substring(0,str.length()-1)+"]\n");
-            else System.out.print(str+"]\n");
+            if (str.endsWith(","))  logger.info(str.substring(0,str.length()-1)+"]\n");
+            else logger.info(str+"]\n");
         }
     }
     protected User getLoginUser(HttpSession session) {

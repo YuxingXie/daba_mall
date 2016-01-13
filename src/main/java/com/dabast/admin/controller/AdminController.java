@@ -15,8 +15,8 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.DBRef;
 import com.mongodb.util.JSON;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bson.types.ObjectId;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
@@ -41,6 +41,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/admin")
 public class AdminController extends BaseRestSpringController {
+    private static Logger logger = LogManager.getLogger();
     protected static final String DEFAULT_SORT_COLUMNS = null;
     protected static final String REDIRECT_ACTION = "";
 
@@ -145,11 +146,7 @@ public class AdminController extends BaseRestSpringController {
     }
     @RequestMapping(value="/product_series/update_img")
     public String uploadImg(String productSeriesId,@RequestParam("files") MultipartFile[] files,HttpServletRequest request,HttpSession session) throws IOException {
-        if(files!=null&&files.length>0){
-            for (MultipartFile multipartFile:files){
-                System.out.println(multipartFile.getOriginalFilename());
-            }
-        }
+
         ProductSeries productSeries=new ProductSeries();
         productSeries.setId(productSeriesId);
         if(files!=null&&files.length>0){
@@ -172,8 +169,8 @@ public class AdminController extends BaseRestSpringController {
             MultipartFile file = files[i];
             //保存文件到数据库
             String pictureId=productSeriesService.saveFile(file.getOriginalFilename(), file.getBytes());
+            logger.info("产品原图保存："+pictureId);
             String originalFilename=file.getOriginalFilename();
-            String prefix=originalFilename.substring(0,originalFilename.lastIndexOf("."));//如xxx.zom,xxx.ico,xxx
             String suffix=originalFilename.substring(originalFilename.lastIndexOf("."));//后缀名如.jpg
 
             ProductSeriesPicture productSeriesPicture=new ProductSeriesPicture();
@@ -187,6 +184,7 @@ public class AdminController extends BaseRestSpringController {
             File mdTempPictureFile=new ServletContextResource(context,mdTempPictureStr).getFile();
             IconCompressUtil.compressPic(bigPictureFile,mdTempPictureFile , 320, 180, false);
             String mdPictureId=productSeriesService.saveFile(mdTempPictureFile.getName(), mdTempPictureFile);
+            logger.info("产品标准图保存："+mdPictureId);
             String mdPictureStr = dirStr + "/" + mdPictureId+suffix;
             File mdPictureFile=new ServletContextResource(context, mdPictureStr).getFile();
             mdTempPictureFile.renameTo(mdPictureFile);
@@ -196,6 +194,7 @@ public class AdminController extends BaseRestSpringController {
             File smTempPictureFile=new ServletContextResource(context,smTempPictureStr).getFile();
             IconCompressUtil.compressPic(bigPictureFile,smTempPictureFile , 64, 36, false);
             String smPictureId=productSeriesService.saveFile(smTempPictureFile.getName(), smTempPictureFile);
+            logger.info("产品小图保存："+smPictureId);
             String smPictureStr = dirStr + "/" + smPictureId+suffix;
             File smPictureFile=new ServletContextResource(context, smPictureStr).getFile();
             smTempPictureFile.renameTo(smPictureFile);

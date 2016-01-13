@@ -3,12 +3,12 @@ package com.dabast.mall.controller;
 import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.constant.Constant;
 import com.dabast.common.helper.service.ServiceManager;
-import com.dabast.common.web.CookieTool;
 import com.dabast.entity.*;
 import com.dabast.mall.dao.UserDao;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import org.springframework.data.domain.Page;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,12 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +34,7 @@ import java.util.List;
 @RequestMapping("/cart")
 //@SessionAttributes("loginUser")
 public class CartController extends BaseRestSpringController {
+    private static Logger logger = LogManager.getLogger();
     @Resource(name = "userDao")
     private UserDao userDao;
 

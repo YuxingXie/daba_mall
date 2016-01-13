@@ -1,6 +1,5 @@
 package com.pingplusplus.net;
 
-import com.pingplusplus.Pingpp;
 import com.pingplusplus.model.PingppObject;
 
 /**

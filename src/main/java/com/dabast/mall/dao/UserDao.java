@@ -3,7 +3,12 @@ package com.dabast.mall.dao;
 import com.dabast.common.base.BaseMongoDao;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.*;
-import com.mongodb.*;
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.WriteResult;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -21,6 +26,7 @@ import java.util.List;
  */
 @Repository
 public class UserDao extends BaseMongoDao<User>  {
+    private static Logger logger = LogManager.getLogger();
     //单个插入
     @Resource
     private MongoOperations mongoTemplate;

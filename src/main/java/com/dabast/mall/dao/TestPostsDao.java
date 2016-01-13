@@ -6,6 +6,8 @@ import com.dabast.entity.TestPosts;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.DBRef;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +16,7 @@ import java.util.List;
 
 @Repository
 public class TestPostsDao extends BaseMongoDao<TestPosts> {
+    private static Logger logger = LogManager.getLogger();
     public void insertDBRef(TestPosts testPosts) {
         List<TestAuthors> authors=testPosts.getAuthors();
         List<DBRef> listDBRef = new ArrayList<DBRef>();

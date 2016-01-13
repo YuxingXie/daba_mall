@@ -1,9 +1,6 @@
 package com.dabast.entity;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * 参与活动的某个产品的折扣

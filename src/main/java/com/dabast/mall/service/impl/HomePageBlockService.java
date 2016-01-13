@@ -6,8 +6,6 @@ import com.dabast.entity.HomePageBlock;
 import com.dabast.entity.ProductSeries;
 import com.dabast.mall.dao.HomePageBlockDao;
 import com.dabast.mall.service.IHomePageBlockService;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

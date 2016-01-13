@@ -26,6 +26,12 @@
     </div>
     <div class="row bg-success margin-bottom-20">
         <div class="col-lg-12 has-success">
+            <h4><i class="fa fa-question-circle"></i>不安装根证书影响使用吗?</h4>
+            <p><i class="fa fa-info-circle"></i>不安装根证书首先会出现安全警告（在不同浏览器下警告有所区别），一般情况下可以忽略警告继续使用，但是，由于我们制作的根证书是服务器客户端双向认证的证书，会出现服务器不信赖客户端而拒绝向客户端响应某些资源(比如图片等)的情况，从而导致页面显示不正常。</p>
+        </div>
+    </div>
+    <div class="row bg-success margin-bottom-20">
+        <div class="col-lg-12 has-success">
             <h4><i class="fa fa-question-circle"></i>如何安装</h4>
             <p><i class="fa fa-info-circle"></i>当您下载完成后，双击下载的"**.cer"文件，点击“安装证书...”按钮开始安装;</p>
             <p><i class="fa fa-info-circle"></i>点击“下一步”，在界面中选择“将所有的证书放入下列存储(P)”>>>“浏览(R)...”>>>选择“受信任的根证书颁发机构”。如下图所示：</p>

@@ -1,12 +1,14 @@
 package com.dabast.mall.controller;
 
 import com.dabast.common.base.BaseRestSpringController;
-import com.dabast.common.code.EmailEnum;
 import com.dabast.common.constant.Constant;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.common.util.MD5;
 import com.dabast.common.web.CookieTool;
-import com.dabast.entity.*;
+import com.dabast.entity.Account;
+import com.dabast.entity.Cart;
+import com.dabast.entity.Notify;
+import com.dabast.entity.User;
 import com.dabast.mall.dao.UserDao;
 import com.dabast.mall.service.impl.CartService;
 import com.dabast.mall.service.impl.RegisterValidateService;
@@ -18,10 +20,10 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.DBRef;
 import org.apache.commons.mail.EmailException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -32,7 +34,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -41,7 +42,10 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.ParseException;
-import java.util.*;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2015/6/11.
@@ -49,6 +53,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/user")
 public class UserController extends BaseRestSpringController {
+    private static Logger logger = LogManager.getLogger();
     @Resource(name = "userService")
     UserService userService;
     @Resource private CartService cartService;
@@ -68,7 +73,6 @@ public class UserController extends BaseRestSpringController {
     public ResponseEntity existName(ModelMap model, @RequestBody User user) {
         Assert.notNull(user);
         Assert.notNull(user.getName());
-        System.out.println(user.getName());
         ResponseEntity responseEntity = null;
         boolean used = registerValidateService.isNameUsed(user.getName());
         if (used) {
@@ -208,7 +212,7 @@ public class UserController extends BaseRestSpringController {
         if (to==null||"".equals(to.trim())){
             to=request.getRequestURI();
         }
-        System.out.println(URLDecoder.decode(to,"UTF-8"));
+        logger.trace(URLDecoder.decode(to, "UTF-8"));
 
         model.addAttribute("to",to);
         return "forward:/login.jsp";
@@ -322,6 +326,7 @@ public class UserController extends BaseRestSpringController {
             }
 //        }
         session.setAttribute(Constant.CART,user.getCart());
+        logger.info("用户登录，用户名："+user.getName()+",用户id:"+user.getId());
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
@@ -559,7 +564,16 @@ public class UserController extends BaseRestSpringController {
             userDao.upsert(dbUser);
             modelMap.addFlashAttribute("form", dbUser);
             modelMap.addFlashAttribute("message", "注册成功!");
-            doLogin(form,session,request,response,dbUser);
+            logger.info("用户注册成功，用户名："+dbUser.getName()+"用户id:"+dbUser.getId());
+            Notify notify=new Notify();
+            notify.setTitle("欢迎您注册成为大坝用户");
+
+            notify.setContent("欢迎您注册成为大坝第 " + userService.count(new BasicDBObject()) + " 名用户！大坝将为您提供绿色安全的生态食品，祝您购物愉快！");
+            notify.setDate(now);
+            notify.setNotifyType("REGISTER_NOTIFY");
+            notify.setToUser(dbUser);
+            ServiceManager.notifyService.insert(notify);
+            doLogin(form, session, request, response, dbUser);
             String httpUrlString=getHttpUrlString(request,"register_success");
             try {
                 response.sendRedirect(httpUrlString) ;

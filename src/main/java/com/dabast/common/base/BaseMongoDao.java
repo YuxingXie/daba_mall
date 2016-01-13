@@ -7,6 +7,8 @@ import com.mongodb.gridfs.GridFS;
 import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSInputFile;
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -23,12 +25,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/5/22.
  */
 public abstract class BaseMongoDao<E> implements EntityDao<E> {
+    private static Logger logger= LogManager.getLogger();
     @Resource
     private MongoTemplate mongoTemplate;
     private Class<E> collectionClass;
@@ -77,26 +83,8 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         return fsInputFile.get("_id") == null ? null : fsInputFile.get("_id").toString();
     }
     public static void main(String[] args){
-        System.out.println(Boolean.class==boolean.class);
     }
-//    public int upsert(E queryEntity, E updateEntity) {
-//        Query query = getEqualsQuery(queryEntity);
-////        System.out.println("upsert:" + getEqualsQuery(updateEntity).toString());
-//        List<E> list = mongoTemplate.find(query, collectionClass);
-//        Assert.isTrue(list == null || list.size() <= 1);
-//        if (list == null || list.size() == 0) {
-//            mongoTemplate.insert(updateEntity);
-//            return 1;
-//        } else {
-//            E e = list.get(0);
-//            BeanUtils.copyProperties(updateEntity, e);
-//            return mongoTemplate.updateFirst(query, getUpdateFromEntity(updateEntity), collectionClass).getN();
-//
-//        }
-//
-////        Update upsert=getUpdateFromEntity(updateEntity);
-////        return  mongoTemplate.upsert(query,upsert,collectionClass).getN();
-//    }
+
 
     public GridFSDBFile findFileById(String id) {
         GridFS fs = new GridFS(mongoTemplate.getDb());
@@ -333,19 +321,6 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         return  mongoTemplate.executeCommand(command);
     }
 
-    @Override
-    public Object find(Object parse) {
-        Query query = Query.query(Criteria.where("中国名").is("谢宇星"));
-        DBObject dbObject = query.getQueryObject();
-        DBCollection collection = getDBCollection();
-
-        DBCursor cursor = collection.find(dbObject);
-        while (cursor.hasNext()) {
-//            System.out.println(cursor.next());
-        }
-        return null;
-    }
-
     private String getCollectionName() {
         Document document = collectionClass.getAnnotation(Document.class);
         if (document == null) return collectionClass.getSimpleName();
@@ -356,75 +331,7 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
         return mongoTemplate.getDb().getCollection(getCollectionName());
     }
 
-    private Object dbObject2EntityBean(Class cls, DBObject dbObject) throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-        //TODO
-        Object o = cls.newInstance();
-        for (java.lang.reflect.Field field : cls.getDeclaredFields()) {
-            if (!field.isAnnotationPresent(org.springframework.data.mongodb.core.mapping.Field.class)) continue;
-            String fieldName = field.getName();
-//            System.out.println("field name:" + fieldName);
-            field.setAccessible(true);
-            Object fieldValue = dbObject.get(fieldName);
-            if (fieldValue == null) continue;
-            Type genericType = field.getGenericType();
-            if (field.getType().isPrimitive() || ReflectUtil.isWrapClass(field.getType()) || field.getType() == String.class) {
-//                System.out.println("field is a primitive type type");
-                Method setter = cls.getDeclaredMethod(ReflectUtil.getSetterMethodName(fieldName), field.getType());
-                setter.invoke(o, fieldValue);
-            } else if (field.getType().isArray()) {
-//                System.out.print("field is an array");
-                Object[] fieldArrayObject = (Object[]) fieldValue;
-                for (Object fieldArrayObjectItem : fieldArrayObject) {
-//                    System.out.print(fieldArrayObjectItem + ",class is:" + fieldArrayObjectItem.getClass() + ",");
-                }
-//                System.out.println("");
 
-            } else if (genericType instanceof ParameterizedType) {
-                ParameterizedType parameterizedType = (ParameterizedType) genericType;
-//                System.out.println("field is a parameterized type:" + parameterizedType);
-                Type[] actualTypes = parameterizedType.getActualTypeArguments();
-                Type rawType = parameterizedType.getRawType();
-
-                if (rawType == List.class) {
-//                    System.out.println("field is a java.util.List");
-                }
-
-//                if (actualTypes.length>0){
-                Class class0 = (Class<?>) actualTypes[0];
-//                System.out.println("field parameterized type:" + class0);
-//                }
-                if (fieldValue != null && rawType == List.class) {
-                    BasicDBList dd = (BasicDBList) fieldValue;
-                    Iterator iterator = dd.iterator();
-                    while (iterator.hasNext()) {
-                        Object iteratorItem = iterator.next();
-                        DBObject iteratorItemDbObject = (DBObject) iteratorItem;
-                        dbObject2EntityBean(class0, iteratorItemDbObject);
-                    }
-                }
-            } else {
-//                System.out.println("field is a simple class");
-            }
-//            System.out.println("--------------------------------------------------------------");
-        }
-        return o;
-    }
-
-//    private List<E> writeResult2List(WriteResult writeResult) {
-//        DBCursor cursor = getDBCollection().find();
-//        try {
-//            List<E> result = new ArrayList<E>();
-//            while (cursor.hasNext()) {
-//                DBObject object = cursor.next();
-//                result.add(dbObject2EntityBean(object));
-//            }
-//            return result;
-//        } finally {
-//            if (cursor != null) {
-//                cursor.close();
-//            }
-//        }
-//    }
 
     private boolean collectionExists() {
         return mongoTemplate.getDb().collectionExists(getCollectionName());
@@ -432,7 +339,6 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 
     private Query getEqualsQuery(E e) {
         if (e == null) return null;
-        Query query = null;
         Criteria criteria = null;
         boolean firstCriteriaAdded = false;
         for (java.lang.reflect.Field field : collectionClass.getDeclaredFields()) {
@@ -457,16 +363,14 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
                     criteria.and(key).is(fieldValue);
                 }
             }
-
         }
         if (criteria == null) return null;
-        query = Query.query(criteria);
+        Query query = Query.query(criteria);
 //        System.out.println(query);
         return query;
     }
 
     private Query getNotEqualsQuery(E e) {
-        Query query = null;
         Criteria criteria = null;
         boolean firstCriteriaAdded = false;
         for (java.lang.reflect.Field field : collectionClass.getDeclaredFields()) {
@@ -486,8 +390,8 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
             }
         }
         if (criteria == null) return null;
-        query = Query.query(criteria);
-//        System.out.println(query);
+        Query query = Query.query(criteria);
+        logger.trace(query);
         return query;
 
     }

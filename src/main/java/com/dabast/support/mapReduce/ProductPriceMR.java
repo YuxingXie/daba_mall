@@ -1,7 +1,5 @@
 package com.dabast.support.mapReduce;
 
-import com.dabast.entity.ProductSeries;
-import com.dabast.entity.ProductSeriesPrice;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;

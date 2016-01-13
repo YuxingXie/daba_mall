@@ -1,7 +1,5 @@
 package com.dabast.common.constant;
 
-import com.dabast.entity.Administrator;
-
 /**
  * Created by Administrator on 2015/7/29.
  */

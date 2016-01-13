@@ -136,10 +136,7 @@ public abstract class BaseEntityManager<E> implements IBaseEntityManager<E> {
     public E findOne(DBObject condition){
         return getEntityDao().findOne(condition);
     }
-    @Override
-    public Object find(Object parse) {
-        return getEntityDao().find(parse);
-    }
+
     @Override
     public void  removeById(String id){
         getEntityDao().removeById(id);

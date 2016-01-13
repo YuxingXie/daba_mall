@@ -3,18 +3,22 @@ package com.dabast.mall.dao;
 import com.dabast.common.base.BaseMongoDao;
 import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.*;
-import com.mongodb.*;
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.DBRef;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.Assert;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Repository
 public class OrderDao extends BaseMongoDao<Order> {
+    private static Logger logger = LogManager.getLogger();
     public Order findLastOrderByUserId(String userId) {
         DBObject dbObject=new BasicDBObject();
         dbObject.put("userId",userId);

@@ -1,7 +1,7 @@
 package com.dabast.common.pay;
 
 import com.pingplusplus.Pingpp;
-import com.pingplusplus.exception.*;
+import com.pingplusplus.exception.AuthenticationException;
 import com.pingplusplus.model.Charge;
 
 import java.util.HashMap;
@@ -30,7 +30,6 @@ public class PingPlusPlusPay {
         try {
             //发起交易请求
             charge = Charge.create(chargeParams);
-            System.out.println(charge);
         } catch (AuthenticationException e) {
             e.printStackTrace();
         } catch (Exception e) {

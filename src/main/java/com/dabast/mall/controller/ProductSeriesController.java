@@ -8,7 +8,8 @@ import com.dabast.mall.service.IProductSeriesService;
 import com.dabast.support.vo.Sortable;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import org.bson.types.ObjectId;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -34,6 +35,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/product_series")
 public class ProductSeriesController extends BaseRestSpringController {
+    private static Logger logger = LogManager.getLogger();
     protected static final String DEFAULT_SORT_COLUMNS = null;
     protected static final String REDIRECT_ACTION = "";
 

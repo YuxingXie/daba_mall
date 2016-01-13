@@ -1,27 +1,22 @@
 package com.dabast.mall.controller;
 
 import com.dabast.common.base.BaseRestSpringController;
-import com.dabast.common.constant.Constant;
-import com.dabast.common.helper.service.ServiceManager;
-import com.dabast.entity.*;
-import com.dabast.mall.service.IProductSeriesService;
+import com.dabast.entity.Bank;
 import com.dabast.mall.service.impl.BankService;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import org.bson.types.ObjectId;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.Assert;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +26,7 @@ import java.util.List;
 public class BankController extends BaseRestSpringController {
     protected static final String DEFAULT_SORT_COLUMNS = null;
     protected static final String REDIRECT_ACTION = "";
-
+    private static Logger logger = LogManager.getLogger();
     @Resource private BankService bankService;
     @Resource private Validator validator;
 

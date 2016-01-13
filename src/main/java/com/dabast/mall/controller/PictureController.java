@@ -4,15 +4,12 @@ import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.constant.Constant;
 import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.common.helper.service.ServiceManager;
-import com.dabast.common.web.CookieTool;
-import com.dabast.entity.*;
-import com.dabast.mall.dao.UserDao;
-import com.dabast.mall.service.impl.CartService;
-import com.dabast.mall.service.impl.RegisterValidateService;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
+import com.dabast.entity.Cart;
+import com.dabast.entity.Order;
+import com.dabast.entity.User;
 import com.mongodb.gridfs.GridFSDBFile;
-import org.springframework.data.domain.Page;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,23 +18,16 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.support.ServletContextResource;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Administrator on 2015/6/11.
@@ -47,7 +37,7 @@ import java.util.List;
 //@SessionAttributes("loginUser")
 public class PictureController extends BaseRestSpringController {
 
-
+    private static Logger logger = LogManager.getLogger();
     @RequestMapping(value="/user/evaluate/{id}")
     public void showUserEvaluatePic(@PathVariable String id,HttpServletRequest request,HttpServletResponse response) {
         String dirStr="statics/img/user/evaluate";

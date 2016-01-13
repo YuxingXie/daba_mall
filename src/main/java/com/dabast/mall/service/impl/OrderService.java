@@ -4,7 +4,6 @@ import com.dabast.common.base.BaseEntityManager;
 import com.dabast.common.base.EntityDao;
 import com.dabast.entity.Order;
 import com.dabast.entity.ProductSeries;
-import com.dabast.entity.User;
 import com.dabast.mall.dao.OrderDao;
 import com.dabast.mall.service.IOrderService;
 import org.springframework.stereotype.Service;

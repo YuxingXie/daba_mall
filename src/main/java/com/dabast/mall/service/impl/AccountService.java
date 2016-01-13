@@ -5,6 +5,8 @@ import com.dabast.common.base.EntityDao;
 import com.dabast.entity.Account;
 import com.dabast.mall.dao.AccountDao;
 import com.dabast.mall.service.IAccountService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -14,6 +16,7 @@ import javax.annotation.Resource;
  */
 @Service
 public class AccountService extends BaseEntityManager<Account> implements IAccountService{
+    private static Logger logger = LogManager.getLogger();
     @Resource
     private AccountDao accountDao;
     protected EntityDao<Account> getEntityDao() {

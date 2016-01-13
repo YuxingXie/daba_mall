@@ -6,7 +6,6 @@ import com.dabast.entity.ProductSeries;
 import com.dabast.entity.User;
 import com.dabast.mall.dao.UserDao;
 import com.dabast.mall.service.IUserService;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

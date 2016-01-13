@@ -4,6 +4,8 @@ import com.dabast.common.base.BaseMongoDao;
 import com.dabast.entity.Account;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class AccountDao extends BaseMongoDao<Account> {
+    private static Logger logger = LogManager.getLogger();
     public Account findAccountsByUserId(String userId, String cardNo) {
         DBObject dbObject=new BasicDBObject();
         dbObject.put("userId",userId);

@@ -1,6 +1,8 @@
 package com.dabast.mall.interceptor;
 
 import com.dabast.common.constant.Constant;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpSession;
  * Created by Administrator on 2015/7/4.
  */
 public class AuthorizedInterceptor implements HandlerInterceptor {
+    private static Logger logger = LogManager.getLogger();
     private static final String LOGIN_URL = "/admin";
     /**
      * 该方法也是需要当前对应的Interceptor的preHandle方法的返回值为true时才会执行。该方法将在整个请求完成之后，也就是DispatcherServlet渲染了视图执行，

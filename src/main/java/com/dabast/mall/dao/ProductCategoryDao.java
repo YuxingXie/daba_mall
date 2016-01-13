@@ -5,8 +5,8 @@ import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.ProductCategory;
 import com.dabast.entity.ProductSeries;
 import com.dabast.entity.ProductSubCategory;
-import com.mongodb.DBObject;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,6 +16,7 @@ import java.util.List;
  */
 @Repository
 public class ProductCategoryDao extends BaseMongoDao<ProductCategory> {
+    private static Logger logger = LogManager.getLogger();
     public String getProductCategoryIdByProductSeriesId(String productSeriesId) {
         if (productSeriesId==null) return null;
         ProductSeries productSeries= ServiceManager.productSeriesService.findById(productSeriesId);

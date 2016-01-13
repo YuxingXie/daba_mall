@@ -5,6 +5,8 @@ import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.Cart;
 import com.dabast.entity.Interest;
 import com.dabast.entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ import java.util.List;
 @RequestMapping("/personal")
 //@SessionAttributes("loginUser")
 public class PersonalController extends BaseRestSpringController {
+    private static Logger logger = LogManager.getLogger();
     @RequestMapping(value = "/cart/text")
     public ResponseEntity<Cart> cart( HttpSession session) {
         Cart cart=getCart(session);

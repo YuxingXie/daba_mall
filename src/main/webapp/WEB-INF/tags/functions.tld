@@ -11,11 +11,7 @@
     <short-name>f</short-name>
     <uri>/functions</uri>
 
-    <function>
-        <name>test</name>
-        <function-class>com.dabast.function.TestFunction</function-class>
-        <function-signature>com.dabast.entity.User test(java.lang.String)String test(java.lang.String)</function-signature>
-    </function>
+
     <function>
         <name>getProductPropertiesById</name>
         <function-class>com.dabast.function.ProductFunction</function-class>

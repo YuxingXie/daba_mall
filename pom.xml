@@ -9,6 +9,9 @@
     <url>http://maven.apache.org</url>
     <properties>
         <spring.version>4.2.2.RELEASE</spring.version>
+        <log4j2.version>2.5</log4j2.version>
+        <slf4j.version>1.7.13</slf4j.version>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -213,22 +216,57 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.6.3</version>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>commons-logging</groupId>-->
-        <!--<artifactId>commons-logging</artifactId>-->
-        <!--<version>1.2</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>com.danga</groupId>-->
-        <!--<artifactId>memcached</artifactId>-->
-        <!--<version>2.6.6</version>-->
-        <!--</dependency>-->
+        <!-- log4j 2 + slf4j -->
         <dependency>
-            <groupId>net.sf.json-lib</groupId>
-            <artifactId>json-lib</artifactId>
-            <version>2.4</version>
-            <classifier>jdk15</classifier>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j2.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+             <groupId>org.apache.logging.log4j</groupId>
+             <artifactId>log4j-web</artifactId>
+             <version>${log4j2.version}</version>
+         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.jboss.logging</groupId>-->
+            <!--<artifactId>jboss-logging</artifactId>-->
+            <!--<version>${jboss-logging.version}</version>-->
+        <!--</dependency>-->
+
+
+        <!--<dependency>-->
+            <!--<groupId>net.sf.json-lib</groupId>-->
+            <!--<artifactId>json-lib</artifactId>-->
+            <!--<version>2.4</version>-->
+            <!--<classifier>jdk15</classifier>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.dbunit</groupId>
@@ -297,6 +335,7 @@
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
+
                 <configuration>
                     <path>/mall</path>
                     <port>80</port>

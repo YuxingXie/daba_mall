@@ -6,9 +6,13 @@ import com.dabast.entity.*;
 import com.dabast.support.mapReduce.ProductPriceMR;
 import com.dabast.support.vo.Sortable;
 import com.mongodb.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.*;
-import org.springframework.data.mongodb.core.aggregation.*;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.mapreduce.MapReduceResults;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -25,6 +29,7 @@ import java.util.regex.Pattern;
  */
 @Repository
 public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
+    private static Logger logger = LogManager.getLogger();
     private DBObject getCurrentPriceDBObject(){
         DBObject dbObject=new BasicDBObject();
 //        Date now=new Date();
@@ -40,7 +45,7 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
     private Criteria getCurrentPriceCriteria(){
         Date now=new Date();
         Criteria criteria= Criteria.where("beginDate").exists(true).lt(now).orOperator(Criteria.where("endDate").gt(now), Criteria.where("endDate").exists(false));
-        System.out.println(criteria.getCriteriaObject());
+        logger.trace(criteria.getCriteriaObject());
         return  criteria;
     }
     public List<String[]> getTop3ProductSeries() {

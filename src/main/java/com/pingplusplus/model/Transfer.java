@@ -4,11 +4,7 @@ package com.pingplusplus.model;
  * Created by sunkai on 15/5/11.
  */
 
-import com.pingplusplus.exception.APIConnectionException;
-import com.pingplusplus.exception.APIException;
-import com.pingplusplus.exception.AuthenticationException;
-import com.pingplusplus.exception.ChannelException;
-import com.pingplusplus.exception.InvalidRequestException;
+import com.pingplusplus.exception.*;
 import com.pingplusplus.net.APIResource;
 
 import java.util.Map;

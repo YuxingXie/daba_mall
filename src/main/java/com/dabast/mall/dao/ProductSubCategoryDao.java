@@ -7,6 +7,8 @@ import com.dabast.entity.ProductSubCategory;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.DBRef;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Repository;
@@ -18,6 +20,7 @@ import java.util.List;
  */
 @Repository
 public class ProductSubCategoryDao  extends BaseMongoDao<ProductSubCategory> {
+    private static Logger logger = LogManager.getLogger();
     public List<ProductSubCategory> getProductSubCategoriesByCategoryId(String categoryId) {
 //        ProductSubCategory productSubCategory=new ProductSubCategory();
         //TODO

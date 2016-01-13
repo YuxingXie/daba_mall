@@ -1,10 +1,16 @@
 package com.dabast.common.util;
 
+
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public class RuntimeUtil {
+	private static Logger logger = LogManager.getLogger();
 	/**
 	 * 
 	 * @param c 实现类的class
@@ -33,11 +39,8 @@ public class RuntimeUtil {
 		return false;
 	}
 	public static void main(String[] args) {
-		System.out
-				.println(isInterface(ArrayList.class, Collection.class));
-		System.out
-				.println(ArrayList.class.isAssignableFrom(List.class));
-		System.out
-		.println(Collection.class.isAssignableFrom(List.class));
+		logger.info(isInterface(ArrayList.class, Collection.class));
+		logger.info(ArrayList.class.isAssignableFrom(List.class));
+		logger.info(Collection.class.isAssignableFrom(List.class));
 	}
 }

@@ -1,6 +1,5 @@
 package com.dabast.mall.service.impl;
 
-import com.dabast.common.code.EmailEnum;
 import com.dabast.common.helper.service.SmsManager;
 import com.dabast.common.util.BusinessException;
 import com.dabast.entity.User;

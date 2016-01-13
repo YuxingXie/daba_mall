@@ -5,6 +5,8 @@ import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.TestAuthors;
 import com.dabast.entity.TestPosts;
 import com.dabast.entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,7 +25,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/api")
 public class TestController extends BaseRestSpringController {
-
+    private static Logger logger = LogManager.getLogger();
 
 //    @ModelAttribute
 //    public void init(ModelMap model) {

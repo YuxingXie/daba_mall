@@ -4,11 +4,8 @@ import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.constant.Constant;
 import com.dabast.common.helper.service.ProjectContext;
 import com.dabast.common.helper.service.ServiceManager;
-import com.dabast.common.util.BigDecimalUtil;
 import com.dabast.common.util.MongoDbUtil;
-import com.dabast.common.util.ThirdPartPayUtil;
 import com.dabast.entity.*;
-import com.dabast.mall.dao.UserDao;
 import com.dabast.mall.service.impl.CartService;
 import com.dabast.mall.service.impl.OrderService;
 import com.dabast.mall.service.impl.RegisterValidateService;
@@ -21,6 +18,8 @@ import com.pingplusplus.Pingpp;
 import com.pingplusplus.exception.PingppException;
 import com.pingplusplus.model.Charge;
 import example.ChargeExample;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.http.HttpStatus;
@@ -37,8 +36,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
@@ -52,6 +49,7 @@ import java.util.*;
 @RequestMapping("/order")
 //@SessionAttributes("loginUser")
 public class OrderController extends BaseRestSpringController {
+    private static Logger logger = LogManager.getLogger();
     @Resource(name = "orderService")
     OrderService orderService;
     @Resource
@@ -327,7 +325,7 @@ public class OrderController extends BaseRestSpringController {
 
             Pingpp.apiKey = ChargeExample.apiKey;
             ChargeExample ce = new ChargeExample();
-            System.out.println("---------创建 charge");
+            logger.info("---------创建 charge");
             Charge charge = null;
             Map<String, Object> chargeMap = new HashMap<String, Object>();
             chargeMap.put("amount", 10);
@@ -348,7 +346,7 @@ public class OrderController extends BaseRestSpringController {
             try {
                 //发起交易请求
                 charge = Charge.create(chargeMap);
-                System.out.println(charge);
+                logger.info(charge);
                 order.setPayStatus("y");
                 Account account0 = ServiceManager.accountService.findAccountsByUserIdAndCardNo(user.getId(),order.getPayAccount().getCardNo());
                 if (account0==null){

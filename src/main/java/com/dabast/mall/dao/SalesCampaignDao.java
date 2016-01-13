@@ -7,6 +7,8 @@ import com.dabast.entity.SalesCampaign;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.DBRef;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Repository;
@@ -19,6 +21,7 @@ import java.util.List;
  */
 @Repository
 public class SalesCampaignDao extends BaseMongoDao<SalesCampaign> {
+    private static Logger logger = LogManager.getLogger();
     public void removeProductSeries(ProductSeries productSeries) {
         DBObject dbObject=new BasicDBObject();
         dbObject.put("productSeriesRates.productSeries",new DBRef("productSeries",new ObjectId(productSeries.getId())));
