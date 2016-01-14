@@ -18,7 +18,7 @@ db.createUser(
   {
     user: "admin",
     pwd: "admin",
-    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" },{ role: "readWrite", db: "dabast" } ]
   }
 )
 
@@ -27,13 +27,13 @@ db.createUser(
 
       /**********在admin下创建用户 ***********/
 
-        db.createUser(
-          {
-            user: "dabast_admin",
-            pwd: "dabast_admin",
-            roles: ["dbOwner"]
-          }
-        )
+db.createUser(
+  {
+    user: "dabast_admin",
+    pwd: "dabast_admin",
+    roles: ["dbOwner","readWrite"]
+  }
+)
 
 
 -----------------------------------------------
@@ -42,4 +42,5 @@ db.createUser(
   --------------------------------------------------------
   mongod --dbpath D:\MongoDB\data\db --auth
   use dabast
+  db.auth("admin","admin")
   db.auth("dabast_admin","dabast_admin")

@@ -182,7 +182,6 @@ public abstract class BaseMongoDao<E> implements EntityDao<E> {
 
     public List<E> findAll(DBObject condition){
         return mongoTemplate.find(new BasicQuery(condition),collectionClass);
-
     }
 
 

@@ -15,11 +15,11 @@
   db.system.version.insert({ "_id" : "authSchema", "currentVersion" : 3 })
 
 db.createUser(
-  {
-    user: "admin",
-    pwd: "admin",
-    roles: [ { role: "readWriteAnyDatabase", db: "admin" } ]
-  }
+{
+  user: "admin",
+  pwd: "admin",
+  roles: [ { role: "readWriteAnyDatabase", db: "admin" } ]
+}
 )
 
 
@@ -31,7 +31,7 @@ db.createUser(
           {
             user: "dabast_admin",
             pwd: "dabast_admin",
-            roles: [ { role: "readWrite", db: "dabast" } ]
+            roles: [ { role: "dbOwner", db: "dabast" } ]
           }
         )
 
