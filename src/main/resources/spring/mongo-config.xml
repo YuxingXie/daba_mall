@@ -11,12 +11,21 @@
     <!-- Default bean name is 'mongo' -->
     <!-- 定义mongo对象，对应的是mongodb官方jar包中的Mongo，replica-set设置集群副本的ip地址和端口 -->
     <mongo:mongo id="mongo" replica-set="${mongo.hostport}">
+        <mongo:options
+                auto-connect-retry="${mongo.autoConnectRetry}"
+                connect-timeout="${mongo.connectTimeout}"
+                slave-ok="${mongo.slaveOk}"
+                socket-keep-alive="${mongo.socketKeepAlive}"
+                socket-timeout="${mongo.socketTimeout}"
+                max-wait-time="${mongo.maxWaitTime}"
+                threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"
+                connections-per-host="${mongo.connectionsPerHost}"
+                />
 
     </mongo:mongo>
-    <!--<mongo:db-factory dbname="database" mongo-ref="mongo" />-->
 
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-        <constructor-arg ref="mongo" />
+        <constructor-arg name="mongo" ref="mongo" />
         <constructor-arg name="databaseName" value="${mongo.db.name}" />
         <constructor-arg name="userCredentials" ref="userCredentials" />
     </bean>
@@ -24,5 +33,4 @@
         <constructor-arg name="username" value="${mongo.db.username}"/>
         <constructor-arg name="password" value="${mongo.db.password}"/>
     </bean>
-    <!--<bean id="mongo" class="com.mongodb.Mongo"/>-->
 </beans>

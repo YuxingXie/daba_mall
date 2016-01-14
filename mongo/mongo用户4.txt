@@ -1,0 +1,44 @@
+
+  admin下创建admin,在--auth,use dabast下用admin用户创建dabast_admin，roles: ["dbOwner"]
+  --------------------如果MongoDB-CR Authentication failed. Missing credentials in user document ---------------------
+  mongod --dbpath D:\MongoDB\data\db
+  mongo
+  use admin
+  db.system.users.find()
+  db.system.users.remove({})
+
+  db.system.version.find()
+  如果{ "_id" : "authSchema", "currentVersion" : 5 }，
+  则db.system.version.update({ "_id" : "authSchema"},{$set: {"currentVersion" : 3} })
+  或
+  db.system.version.remove({}) <== removing current version
+  db.system.version.insert({ "_id" : "authSchema", "currentVersion" : 3 })
+
+db.createUser(
+  {
+    user: "admin",
+    pwd: "admin",
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+  }
+)
+
+-----------------------------------------------
+  db.shutdownServer() --关闭Mongodb
+  --------------------------------------------------------
+  mongod --dbpath D:\MongoDB\data\db --auth
+
+  use admin
+  db.auth("admin","admin")
+
+
+  在dabast下创建用户
+        use dabast
+        db.createUser(
+          {
+            user: "dabast_admin",
+            pwd: "dabast_admin",
+            roles: [ { role: "dbOwner", db: "dabast" } ]
+          }
+        )
+
+        db.auth("dabast_admin","dabast_admin")
