@@ -35,7 +35,10 @@ public class IndexController extends BaseRestSpringController {
     private static Logger logger = LogManager.getLogger();
     @Resource(name = "userDao")
     private UserDao userDao;
-
+    @RequestMapping(value = "/test")
+    public String test(HttpServletRequest request, ModelMap model, HttpSession session) {
+        return "forward:/index.jsp?test=test_exit";
+    }
     @RequestMapping(value = "")
     public String index(HttpServletRequest request, ModelMap model, HttpSession session) {
         if (session.getAttribute(Constant.LOGIN_USER)==null){

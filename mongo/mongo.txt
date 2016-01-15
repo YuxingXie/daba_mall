@@ -1,0 +1,20 @@
+mongod --dbpath D:\MongoDB\data\db
+
+>use admin
+>db.system.version.remove({}) <== removing current version
+>db.system.version.insert({ "_id" : "authSchema", "currentVersion" : 3 })
+>db.system.users.remove({})
+>db.createUser(
+  {
+    user: "admin",
+    pwd: "admin",
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" },{ role: "readWrite", db: "dabast" } ]
+  }
+)
+>db.shutdownServer()
+
+mongod --dbpath D:\MongoDB\data\db --auth
+> use admin
+> db.auth("admin","admin")
+>use dabast
+>db.administrator.insert({"name":"xieyuxing","password":"7e89b492192e4acef570348e88c318ea"})
