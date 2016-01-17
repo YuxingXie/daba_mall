@@ -45,48 +45,6 @@ public class CommonInterceptor  implements HandlerInterceptor {
         request.setAttribute("uri",request.getRequestURI());
 
 
-
-        //for test
-        String path=request.getContextPath();
-        if (path.equals("/")) path="";
-        String test = request.getParameter("test");
-        HttpSession session=request.getSession(true);
-        /**
-         * url param可能为：
-         * url
-         * url?test=
-         * url?test=aaa
-         * url?test=test_aaa
-         * url?test=test_exit
-         */
-
-        boolean forceRedirect=test!=null&&test.startsWith("test_")&&test.substring(5).equals("exit");
-        boolean paramRedirect=!forceRedirect||(test==null?true:(test.equals("")?true:(!test.startsWith("test_")?true:false)));
-        if (!paramRedirect) session.setAttribute("redirect",false);
-        boolean sessionRedirect=session.getAttribute("redirect")==null?true:((Boolean)session.getAttribute("redirect"));
-
-        if (test != null &&! "".equals(test)&&test.startsWith("test_")){
-            String test_name=test.substring(5);
-            if(test_name.equals("exit")){
-                response.sendRedirect(path+"/index/test?test=test_exit");
-                return false;
-            }else
-                return true;
-        }
-        else  {
-            response.sendRedirect(path+"/index/test?test=test_exit");
-            return false;
-        }
-
-//        else{
-//            if (test!=null&&test.startsWith("test_")&&test.substring(5).equals("exit")){
-//                session.setAttribute("testName",null);
-//                session.removeAttribute("testName");
-//                response.sendRedirect(path+"/index/test");
-//                return false;
-//            }else
-//                return true;
-//        }
-//        return true;
+        return true;
     }
 }
