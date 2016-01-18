@@ -8,30 +8,26 @@
             http://www.springframework.org/schema/data/mongo
             http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
 
-    <!-- Default bean name is 'mongo' -->
-    <!-- 定义mongo对象，对应的是mongodb官方jar包中的Mongo，replica-set设置集群副本的ip地址和端口 -->
-    <!--<mongo:mongo id="mongo" replica-set="${mongo.hostport}">-->
-        <!---->
-    <!--</mongo:mongo>-->
-    <!--<mongo:mongo-client credentials="${mongo.db.username}:${mongo.db.password}@${mongo.db.name}?authMode=scram-sha1" id="mongo" replica-set="${mongo.hostport}">-->
-    <!--<mongo:mongo-client credentials="${mongo.db.username}:${mongo.db.password}@${mongo.db.name}?authMode=scram-sha1" id="mongo" replica-set="${mongo.hostport}">-->
-    <!--<mongo:mongo-client credentials="admin:admin@admin?authMode=scram-sha1" id="mongo" replica-set="${mongo.hostport}">-->
-    <mongo:mongo-client credentials="admin:admin@admin" id="mongo" replica-set="${mongo.hostport}">
+    <!--<mongo:mongo-client credentials="admin:admin@admin" id="mongo" replica-set="${mongo.hostport}">-->
+        <!--<mongo:client-options description="for production"/>-->
+    <!--</mongo:mongo-client>-->
+    <!--<mongo:db-factory mongo-ref="mongo" id="mongoDbFactory" dbname="dabast"/>-->
 
+
+    <!--           for test begin                -->
+    <mongo:mongo-client id="mongo" replica-set="${mongo.hostport}">
+        <mongo:client-options description="for test"/>
     </mongo:mongo-client>
-    <!--<mongo:mongo-client id="mongo" replica-set="${mongo.hostport}" credentials="${mongo.db.username}:${mongo.db.password}@${mongo.db.name}"/>-->
-
-    <mongo:db-factory mongo-ref="mongo" id="mongoDbFactory" dbname="dabast"/>
+    <mongo:db-factory mongo-ref="mongo" id="mongoDbFactory" dbname="test"/>
+    <!--           for test end                  -->
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
         <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
         <!--<constructor-arg name="databaseName" value="${mongo.db.name}" />-->
         <!--<constructor-arg name="userCredentials" ref="userCredentials" />-->
     </bean>
 
-    <bean class="org.springframework.data.authentication.UserCredentials" id="userCredentials">
+    <!--<bean class="org.springframework.data.authentication.UserCredentials" id="userCredentials">-->
         <!--<constructor-arg name="username" value="${mongo.db.username}"/>-->
         <!--<constructor-arg name="password" value="${mongo.db.password}"/>-->
-        <constructor-arg name="username" value="${mongo.db.username}"/>
-        <constructor-arg name="password" value="${mongo.db.password}"/>
-    </bean>
+    <!--</bean>-->
 </beans>
