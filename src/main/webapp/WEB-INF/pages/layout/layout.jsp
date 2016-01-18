@@ -10,7 +10,7 @@
 <head>
     <base href="<%=request.getContextPath() %>"/>
     <tiles:insertAttribute name="meta" />
-    <title>大坝生态农业</title>
+    <title>大坝生态农业<c:if test="${not empty sessionScope.test}">(测试)</c:if></title>
     <tiles:insertAttribute name="topCss"/>
     <tiles:insertAttribute name="pageTopCss"/>
     <script>uri='${uri}'</script>
@@ -35,7 +35,7 @@
                                     </c:otherwise>
                                 </c:choose>
 
-                                <%--<li><a href="checkout.html">结账</a></li>--%>
+                                <c:if test="${not empty sessionScope.test}"><li class="fa fa-warning color-red">这是一个测试版本</li></c:if>
                                 <%--<li><a href="${path}/my_account">我的账户</a></li>--%>
                                 <%--<li><a href="#">我的收藏</a></li>--%>
                             </ul>

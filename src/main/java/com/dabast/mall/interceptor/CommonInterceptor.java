@@ -43,8 +43,34 @@ public class CommonInterceptor  implements HandlerInterceptor {
      */
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         request.setAttribute("uri",request.getRequestURI());
+        HttpSession session=request.getSession(true);
+        Object testObj=session.getAttribute("test");
+        String test=request.getParameter("test");
+        if(testObj==null){
+            if (test==null||"".equals(test.trim())){
+//                request.getRequestDispatcher("test.jsp").forward(request,response);
+                response.sendRedirect("test.jsp");
+                return false;
+            }else if(test.equals("exit")){
+                response.sendRedirect("test.jsp");
+//                request.getRequestDispatcher("test.jsp").forward(request,response);
+                return false;
+            }else{
+                session.setAttribute("test",test);
+                return true;
+            }
+        }else {
+            if (test!=null&&test.equals("exit")){
+                session.setAttribute("test",null);
+                session.removeAttribute("test");
+                response.sendRedirect("test.jsp");
+//                request.getRequestDispatcher("test.jsp").forward(request,response);
+                return false;
+            }else{
+                return true;
+            }
+        }
 
-
-        return true;
+//        return true;
     }
 }
