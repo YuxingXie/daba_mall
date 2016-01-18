@@ -50,6 +50,25 @@
                     <li><a href="#" data-original-title="wy" class="wy" title="网易"></a></li>
                     <li><a href="#" data-original-title="txwb" class="txwb" title="腾讯微博"></a></li>
                 </ul>
+                <%--<!--MOB SHARE BEGIN-->--%>
+                <%--<div class="-mob-share-ui-button -mob-share-open">分享</div>--%>
+                <%--<div class="-mob-share-ui" style="display: none">--%>
+                    <%--<ul class="-mob-share-list">--%>
+                        <%--<li class="-mob-share-weibo"><p>新浪微博</p></li>--%>
+                        <%--<li class="-mob-share-tencentweibo"><p>腾讯微博</p></li>--%>
+                        <%--<li class="-mob-share-qzone"><p>QQ空间</p></li>--%>
+                        <%--<li class="-mob-share-qq"><p>QQ好友</p></li>--%>
+                        <%--<li class="-mob-share-renren"><p>人人网</p></li>--%>
+                        <%--<li class="-mob-share-kaixin"><p>开心网</p></li>--%>
+                        <%--<li class="-mob-share-douban"><p>豆瓣</p></li>--%>
+                        <%--<li class="-mob-share-facebook"><p>Facebook</p></li>--%>
+                        <%--<li class="-mob-share-twitter"><p>Twitter</p></li>--%>
+                    <%--</ul>--%>
+                    <%--<div class="-mob-share-close">取消</div>--%>
+                <%--</div>--%>
+                <%--<div class="-mob-share-ui-bg"></div>--%>
+                <%--<script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=edf9e3a25db0"></script>--%>
+                <%--<!--MOB SHARE END-->--%>
             </div>
             <div class="row margin-top-10">
                 <div class="col-lg-1 col-sm-1"></div>
