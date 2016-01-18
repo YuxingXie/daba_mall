@@ -95,22 +95,11 @@ public class IndexController extends BaseRestSpringController {
         page=page==null?1:page;
         keyWord=keyWord==null?"":keyWord;
         Page<ProductSeries> productSeriesListPage=ServiceManager.productSeriesService.findProductSeriesesByKeyWord(keyWord,page,3);
-//        if (productSeriesListPage.getTotalElements()==1l){
-//            ProductSeries productSeries=productSeriesListPage==null?null:productSeriesListPage.getContent()==null?null:productSeriesListPage.getContent().size()==0?null:productSeriesListPage.getContent().get(0);
-//            if (productSeries==null){
-//                model.addAttribute("_page", productSeriesListPage);
-//                model.addAttribute("page", page);
-//                model.addAttribute("keyWord", keyWord);
-//                return "search-result";
-//            }
-//            model.addAttribute("productSeries",productSeries);
-//            return "item";
-//        }else{
-            model.addAttribute("_page", productSeriesListPage);
-            model.addAttribute("page", page);
-            model.addAttribute("keyWord", keyWord);
-            return "search-result";
-//        }
+
+        model.addAttribute("_page", productSeriesListPage);
+        model.addAttribute("page", page);
+        model.addAttribute("keyWord", keyWord);
+        return "search-result";
 
     }
 
