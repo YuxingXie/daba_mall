@@ -10,7 +10,7 @@
 <div class="container"  id="myInterestsAppMain">
     <div ng-controller="myInterestsController">
         <ul class="breadcrumb">
-            <li><a href="${path}">首页</a></li>
+            <li><a href="${path}/index">首页</a></li>
             <li><a href="">我的大坝</a></li>
             <li class="active">我的关注</li>
         </ul>

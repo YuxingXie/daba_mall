@@ -22,8 +22,8 @@
         </div>
         <div class="col-sm-6 col-lg-6 ">
             <div class="row margin-top-112"><i class="fa fa-warning fa-3x">您访问的页面不存在</i></div>
-            <div class="row margin-top-20"><a href="${webRoot}" class="fa fa-home">返回首页</a></div>
-            <div class="row margin-top-20"><a href="${webRoot}"><%=request.getServerName() %></a>提醒您 - 您可能输入了错误的网址，或者该网页已删除或移动</div>
+            <div class="row margin-top-20"><a href="${webRoot}/index" class="fa fa-home">返回首页</a></div>
+            <div class="row margin-top-20"><a href="${webRoot}/index">大坝</a>提醒您 - 您可能输入了错误的网址，或者该网页已删除或移动</div>
         </div>
     </div>
 

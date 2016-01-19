@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <div class="container" id="payResultAppMain">
         <ul class="breadcrumb">
-            <li><a href="${path}">首页</a></li>
+            <li><a href="${path}/index">首页</a></li>
             <li><a href="">购物车</a></li>
             <li class="active">支付成功</li>
         </ul>

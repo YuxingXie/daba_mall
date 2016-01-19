@@ -9,7 +9,7 @@
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row">
             <ul class="breadcrumb col-md-3 col-sm-5">
-                <li><a href="${path}">首页</a></li>
+                <li><a href="${path}/index">首页</a></li>
                 <li>${productSubCategory.productCategory.categoryName}</li>
                 <li class="active">${productSubCategory.subCategoryName}</li>
             </ul>

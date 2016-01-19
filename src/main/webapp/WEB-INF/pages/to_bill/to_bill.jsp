@@ -11,7 +11,7 @@
 <div class="container" ng-init="matchCode=true" id="bankAppMain">
     <div ng-controller="bankController" ng-init="useAccountPay=true">
         <ul class="breadcrumb">
-            <li><a href="${path}">首页</a></li>
+            <li><a href="${path}/index">首页</a></li>
             <li><a href="">购物车</a></li>
             <li class="active">大坝收银台</li>
         </ul>

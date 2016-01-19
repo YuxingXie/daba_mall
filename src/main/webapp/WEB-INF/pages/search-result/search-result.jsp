@@ -12,7 +12,7 @@
 
 <div class="container ">
         <ul class="breadcrumb">
-            <li><a href="${path}">首页</a></li>
+            <li><a href="${path}/index">首页</a></li>
             <li><a href="">商店</a></li>
             <li class="active">搜索结果页</li>
         </ul>

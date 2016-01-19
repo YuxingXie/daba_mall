@@ -110,7 +110,7 @@
                     <div class="collapse navbar-collapse margin-left-20">
                         <ul class="nav navbar-nav">
 
-                            <li><a href="${path}"><i class="fa fa-home"></i>首页</a></li>
+                            <li><a href="${path}/index"><i class="fa fa-home"></i>首页</a></li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="#" href="#">
                                     我的大坝
@@ -168,6 +168,7 @@
                                     <li><a href="#">意见建议</a></li>
                                     <li><a href="#">客服邮箱</a></li>
                                     <li><a href="${path}/download_cer">下载根证书</a></li>
+                                    <li><a href="${path}/suggest">使用建议</a></li>
                                 </ul>
                                 <!-- END DROPDOWN MENU -->
                             </li>

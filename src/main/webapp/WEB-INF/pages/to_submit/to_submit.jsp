@@ -9,7 +9,7 @@
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
 <div class="container" ng-app="toBillApp">
         <ul class="breadcrumb">
-            <li><a href="${path}">首页</a></li>
+            <li><a href="${path}/index">首页</a></li>
             <li><a href="">购物车</a></li>
             <li class="active">填写订单</li>
         </ul>
