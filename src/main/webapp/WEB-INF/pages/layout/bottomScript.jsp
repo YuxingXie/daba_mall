@@ -20,6 +20,71 @@
 <script src="${path}/statics/assets/plugins/EasyZoom-master/dist/easyzoom.test.js" type="text/javascript"></script>
 <script type="text/javascript" src="${path}/statics/assets/plugins/back-to-top.js"></script>
 
+<c:if test="${empty sessionScope.loginUser}"></c:if>
+    <%--<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc.js" data-appid="APPID"></script>--%>
+    <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101288574"  charset="utf-8"></script>
+    <%--<script type="text/javascript">--%>
+
+        <%--QC.Login({--%>
+                    <%--btnId:"qqLoginBtn",    //插入按钮的节点id--%>
+                    <%--size: "C_S"--%>
+                <%--},function(reqData, opts){//登录成功--%>
+                    <%--//根据返回数据，更换按钮显示状态方法--%>
+            <%--var dom = document.getElementById(opts['btnId']),--%>
+                    <%--_logoutTemplate=[--%>
+                        <%--//头像--%>
+                        <%--'<span><img src="{figureurl}" class="{size_key}"/></span>',--%>
+                        <%--//昵称--%>
+                        <%--'<span>{nickname}</span>',--%>
+                        <%--//退出--%>
+                        <%--'<span><a href="javascript:QC.Login.signOut();">退出</a></span>'--%>
+                    <%--].join("");--%>
+            <%--dom && (dom.innerHTML = QC.String.format(_logoutTemplate, {--%>
+                <%--nickname : QC.String.escHTML(reqData.nickname), //做xss过滤--%>
+                <%--figureurl : reqData.figureurl--%>
+            <%--}));--%>
+                    <%--if(QC.Login.check()){--%>
+                        <%--QC.Login.getMe(function(openId, accessToken){--%>
+                            <%--console.log(openId);--%>
+                            <%--console.log(accessToken);--%>
+                            <%--console.log(JSON.stringify(reqData));--%>
+                            <%--var mallUser={};--%>
+                            <%--mallUser.tencentLoginInfo=reqData;--%>
+                            <%--mallUser.tencentLoginInfo.openId=openId;--%>
+                            <%--mallUser.tencentLoginInfo.accessToken=accessToken;--%>
+                            <%--$.ajax({--%>
+                                <%--url:path+"/user/qq_login",--%>
+                                <%--contentType: "application/json",--%>
+                                <%--data: JSON.stringify(mallUser),--%>
+                                <%--method: "post"--%>
+                            <%--}).done(function (data) {--%>
+<%--//                                var $dom = $(document.getElementById(opts['btnId']));--%>
+<%--//                                $dom.remove();--%>
+                                <%--$("#commonLogin").hide();--%>
+<%--//                                var $new_li = $('<li>欢迎您,<a href="#">' + data.name + '</a>! </li><li><a href="#" id="logout">退出</a></li>');--%>
+<%--//                                //$new_li.insertBefore($(".additional-nav>ul>li:eq(0)"));--%>
+<%--//                                $new_li.appendTo($(".additional-nav>ul"));--%>
+                                <%--//获得mainController的作用域--%>
+                                <%--var appElement = document.querySelector('[ng-controller=mainController]');--%>
+                                <%--var $scope = angular.element(appElement).scope();--%>
+                                <%--$scope.cart=data.cart;--%>
+                                <%--$scope.logged=true;--%>
+                                <%--console.log(JSON.stringify(data));--%>
+                                <%--$scope.$apply();--%>
+                            <%--})--%>
+
+                        <%--})--%>
+                    <%--}--%>
+
+                <%--}, function(opts){//注销成功--%>
+<%--//                    alert('QQ登录 注销成功');--%>
+                     <%--logout();--%>
+                <%--}--%>
+        <%--);--%>
+
+    <%--</script>--%>
+
+
 <script>
     var mainApp=angular.module("mainApp",['ui.bootstrap', 'ngRoute','tm.pagination','ngSanitize']);
     mainApp .controller('mainController', ['$scope', '$http', function ($scope, $http) {
@@ -132,6 +197,71 @@
                 });
             });
 
+        }
+        <c:choose>
+        <c:when test="${empty sessionScope.loginUser}">
+        <c:set var="logged" value="false"></c:set>
+        </c:when>
+        <c:otherwise><c:set var="logged" value="false"></c:set> </c:otherwise>
+        </c:choose>
+        $scope.logged=${logged};
+        $scope.qqLogin=function(){
+            QC.Login({
+                        btnId:"qqLoginBtn",    //插入按钮的节点id
+                        size: "C_S"
+                    },function(reqData, opts){//登录成功
+                        //根据返回数据，更换按钮显示状态方法
+                        var dom = document.getElementById(opts['btnId']),
+                                _logoutTemplate=[
+                                    //头像
+                                    '<span><img src="{figureurl}" class="{size_key}"/></span>',
+                                    //昵称
+                                    '<span>{nickname}</span>',
+                                    //退出
+                                    '<span><a href="javascript:QC.Login.signOut();">退出</a></span>'
+                                ].join("");
+                        dom && (dom.innerHTML = QC.String.format(_logoutTemplate, {
+                            nickname : QC.String.escHTML(reqData.nickname), //做xss过滤
+                            figureurl : reqData.figureurl
+                        }));
+                        if(QC.Login.check()){
+                            QC.Login.getMe(function(openId, accessToken){
+                                console.log(openId);
+                                console.log(accessToken);
+                                console.log(JSON.stringify(reqData));
+                                var mallUser={};
+                                mallUser.tencentLoginInfo=reqData;
+                                mallUser.tencentLoginInfo.openId=openId;
+                                mallUser.tencentLoginInfo.accessToken=accessToken;
+                                $.ajax({
+                                    url:path+"/user/qq_login",
+                                    contentType: "application/json",
+                                    data: JSON.stringify(mallUser),
+                                    method: "post"
+                                }).done(function (data) {
+//                                var $dom = $(document.getElementById(opts['btnId']));
+//                                $dom.remove();
+                                    $("#commonLogin").hide();
+//                                var $new_li = $('<li>欢迎您,<a href="#">' + data.name + '</a>! </li><li><a href="#" id="logout">退出</a></li>');
+//                                //$new_li.insertBefore($(".additional-nav>ul>li:eq(0)"));
+//                                $new_li.appendTo($(".additional-nav>ul"));
+                                    //获得mainController的作用域
+                                    var appElement = document.querySelector('[ng-controller=mainController]');
+                                    var $scope = angular.element(appElement).scope();
+                                    $scope.cart=data.cart;
+                                    $scope.logged=true;
+                                    console.log(JSON.stringify(data));
+                                    $scope.$apply();
+                                })
+
+                            })
+                        }
+
+                    }, function(opts){//注销成功
+//                    alert('QQ登录 注销成功');
+                        logout();
+                    }
+            );
         }
     }])
     .directive('star', function () {

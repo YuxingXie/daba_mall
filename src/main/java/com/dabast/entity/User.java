@@ -53,6 +53,7 @@ public class User {
     @Field(value = "idCardNo")
     private String idCardNo;
     private Boolean activated;//激活
+    private TencentLoginInfo tencentLoginInfo;
     @Transient
     private List<Account> userAccounts;
     @Transient
@@ -226,6 +227,14 @@ public class User {
 
     public void setInterests(List<Interest> interests) {
         this.interests = interests;
+    }
+
+    public TencentLoginInfo getTencentLoginInfo() {
+        return tencentLoginInfo;
+    }
+
+    public void setTencentLoginInfo(TencentLoginInfo tencentLoginInfo) {
+        this.tencentLoginInfo = tencentLoginInfo;
     }
 
     /**

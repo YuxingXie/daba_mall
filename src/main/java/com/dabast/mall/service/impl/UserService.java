@@ -35,4 +35,8 @@ public class UserService extends BaseEntityManager<User> implements IUserService
     protected EntityDao<User> getEntityDao() {
         return this.userDao;
     }
+
+    public User findByTencentOpenId(String openId) {
+        return userDao.findByTencentOpenId(openId);
+    }
 }

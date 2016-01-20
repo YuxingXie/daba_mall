@@ -238,4 +238,10 @@ public class UserDao extends BaseMongoDao<User>  {
         dbObject.put("cart.productSelectedList.productSeries",productSeries);
         return getMongoTemplate().find(new BasicQuery(dbObject),User.class);
     }
+
+    public User findByTencentOpenId(String openId) {
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("tencentLoginInfo.openId",openId);
+        return getMongoTemplate().findOne(new BasicQuery(dbObject),User.class);
+    }
 }

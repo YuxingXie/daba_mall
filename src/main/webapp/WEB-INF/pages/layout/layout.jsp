@@ -10,7 +10,7 @@
 <head>
     <base href="<%=request.getContextPath() %>"/>
     <tiles:insertAttribute name="meta" />
-    <title>大坝生态农业<c:if test="${not empty sessionScope.test}">(测试)</c:if></title>
+    <title>大坝生态农业(测试)</title>
     <tiles:insertAttribute name="topCss"/>
     <tiles:insertAttribute name="pageTopCss"/>
     <script>uri='${uri}'</script>
@@ -19,25 +19,27 @@
 
 </head>
 <body  ng-controller="mainController">
-        <div class="topscoll">
+        <div class="topscoll" >
             <div class="pre-header">
                     <div class="row">
                         <div class="col-md-6 col-sm-6 additional-nav">
-                            <ul class="list-unstyled list-inline pull-right" style=" float:left !important;">
-                                <c:choose>
-                                    <c:when test="${empty sessionScope.loginUser}">
-                                        <li><a href="${path}/user/register_phone" target="_blank">注册</a></li>
-                                        <li><a data-href="${uri}" class="login-need" href="javascript:void(0)">登录</a></li>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <li>欢迎您,<a href="${path}/personal_message">${sessionScope.loginUser.name}</a>!</li>
-                                        </li><li><a href="#" id="logout">退出</a></li>
-                                    </c:otherwise>
-                                </c:choose>
 
-                                <c:if test="${not empty sessionScope.test}"><li class="fa fa-warning color-red">这是一个测试版本</li></c:if>
-                                <%--<li><a href="${path}/my_account">我的账户</a></li>--%>
-                                <%--<li><a href="#">我的收藏</a></li>--%>
+                            <ul class="list-unstyled list-inline pull-right" style=" float:left !important;" id="commonLogin" >
+                                        <li><a href="#">sssssss{{logged}}--{{$parent.logged}}</a></li>
+                                        <%--<li ng-if="!logged"><a href="${path}/user/register_phone" target="_blank">注册</a></li>--%>
+                                        <%--<li ng-if="!logged"><a data-href="${uri}" class="login-need" href="javascript:void(0)">登录</a></li>--%>
+
+                                        <%--<li ng-if="logged">欢迎您,<a href="${path}/personal_message">${sessionScope.loginUser.name}</a>!</li>--%>
+                                        <%--<li ng-if="logged"><a href="#" id="logout">退出</a></li>--%>
+
+                            </ul>
+                            <ul class="list-unstyled list-inline pull-right" style=" float:left !important;" id="thirdPartLogin">
+                                <li ng-if="!logged">其它账号登录</li>
+                                <li ng-if="!logged"><span id="qqLoginBtn" data-ng-click="qqLogin()"></span></li>
+                            </ul>
+                            <ul class="list-unstyled list-inline pull-right" style=" float:left !important;" >
+                                <li class="fa fa-warning color-red">登录：{{logged}}</li>
+                                <li class="fa fa-warning color-red">这是一个测试版本，所有数据将在正式上线后清除。</li>
                             </ul>
                         </div>
                         <%--<div class="col-md-6 col-sm-6 additional-shop-info">--%>
@@ -313,6 +315,46 @@
                         <div class="modal-title" >抱歉，我们出了点错</div>
                     </div>
                     <div id="error-area"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade active" id="qqLoginModal" tabindex="-1" role="dialog" aria-labelledby="qqLoginModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;</button>
+                        <div class="row">
+                            <div class="modal-title col-sm-8 col-lg-8" ><h3>欢迎使用QQ登录</h3></div>
+                        </div>
+                    </div>
+                    <form name="qqForm" class="bg-success">
+                        <div class="row padding-top-10">
+                            <div class="col-lg-2 col-sm-2">
+                                <label class="control-label margin-top-10"> QQ账号</label>
+                            </div>
+                            <div class="col-lg-8 col-sm-8">
+                                <input type="text" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="row padding-top-10">
+                            <div class="col-lg-2 col-sm-2">
+
+                            </div>
+                            <div class="col-lg-8 col-sm-8">
+
+                            </div>
+                        </div>
+                        <div class="row padding-bottom-20">
+                            <div class="col-lg-2 col-sm-2 col-lg-push-8 col-sm-push-8">
+                                <button class="btn btn-primary add2cart pull-right fa fa-shopping-cart" type="button" data-ng-click="add2cart()">添加到购物车</button>
+                            </div>
+                            <div class="col-lg-1 col-sm-1 col-lg-push-8 col-sm-push-8">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">关闭</button>
+                            </div>
+                        </div>
+
+
+                    </form>
                 </div>
             </div>
         </div>

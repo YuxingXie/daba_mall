@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * Created by Administrator on 2016/1/9.
@@ -43,6 +44,12 @@ public class CommonInterceptor  implements HandlerInterceptor {
      */
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         request.setAttribute("uri",request.getRequestURI());
+//        return forTest(request, response);
+
+        return true;
+    }
+
+    public boolean forTest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session=request.getSession(true);
         Object testObj=session.getAttribute("test");
         String test=request.getParameter("test");
@@ -70,7 +77,5 @@ public class CommonInterceptor  implements HandlerInterceptor {
                 return true;
             }
         }
-
-//        return true;
     }
 }

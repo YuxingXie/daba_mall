@@ -238,6 +238,24 @@ public class UserController extends BaseRestSpringController {
             return new ResponseEntity<User>(user,HttpStatus.OK);
         }
     }
+    @RequestMapping(value = "/qq_login", method = RequestMethod.POST)
+    public ResponseEntity<User> qqLogin(@RequestBody User form, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        User sessionUser=getLoginUser(session);
+        if (sessionUser!=null){
+            return new ResponseEntity<User>(sessionUser,HttpStatus.OK);
+        }
+        User user = userService.findByTencentOpenId(form.getTencentLoginInfo().getOpenId());
+        if (user==null){
+            user=form;
+            user.setName(form.getTencentLoginInfo().getNickname());
+            user.setActivated(true);
+            userService.insert(user);
+//            return new ResponseEntity<User>(user,HttpStatus.OK);
+        }
+//        user.setRemember(true);
+        return doLogin(user, session, request, response, user);
+
+    }
     @RequestMapping(value = "/https/login", method = RequestMethod.POST)
     public String httpsLogin(@ModelAttribute User form,@RequestParam String to, ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         Message message=new Message();
@@ -313,12 +331,6 @@ public class UserController extends BaseRestSpringController {
                 user.setCart(sessionCart);
             }else{
                 Cart userCart=user.getCart();
-//                for (ProductSelected productSelected:userCart.getProductSelectedList()){
-//                    ProductSeries productSeries=productSelected.getProductSeries();
-//                    if(productSeries.getProductStore()==null) continue;
-//                    List<ProductStoreInAndOut> inAndOuts= ServiceManager.productStoreInAndOutService.findByProductSeries(productSeries);
-//                    productSeries.getProductStore().setInAndOutList(inAndOuts);
-//                }
                 userCart.merge(sessionCart);
             }
             if (sessionCart!=null){
@@ -341,6 +353,9 @@ public class UserController extends BaseRestSpringController {
 
     @RequestMapping(value = "/logout")
     public ResponseEntity logout(ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        User user=getLoginUser(session);
+        logger.info("用户 \""+user.getName()+"\" 退出");
+
         session.setAttribute("loginUser", null);
         session.removeAttribute("loginUser");
         session.setAttribute(Constant.CART, null);

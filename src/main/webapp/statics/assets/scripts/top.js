@@ -1,3 +1,20 @@
+var logout=function () {
+    $.ajax(path+"/user/logout")
+        .done(function(){
+            //var $commonLogin=$("#commonLogin");
+            //$commonLogin.empty();
+            //var $new_li = $('<li><a href="'+path+'/user/register_phone">注册</a></li>' +
+            //'<li><a data-href="'+uri+'" class="login-need" href="javascript:void(0)">登录</a></li>');
+            //$new_li.appendTo($commonLogin);
+            console.log("user logout");
+            console.log($commonLogin.attr("id"));
+            var appElement = document.querySelector('[ng-controller=mainController]');
+            var $scope = angular.element(appElement).scope();
+            $scope.cart=data.cart;
+            $scope.logged=false;
+            $scope.$apply();
+        }).fail()
+}
 var loginCheckBeforeHandler=function(handler){
     $.ajax({
         //dataType:"json",
@@ -100,17 +117,7 @@ $(document).ready(function () {
         $(this).prev().val("").focus();
     });
 
-    $(document).on("click", "#logout", function () {
-        $.ajax(path+"/user/logout")
-        .done(function(){
-            //$(".additional-nav>ul>li:eq(0)").remove();
-            //$(".additional-nav>ul>li:eq(0)").remove();
-            $(".additional-nav>ul").empty();
-            var $new_li = $('<li><a href="'+path+'/user/register_phone">注册</a></li>' +
-            '<li><a data-href="'+uri+'" class="login-need" href="javascript:void(0)">登录</a></li>');
-            $new_li.appendTo($(".additional-nav>ul"));
-        }).fail()
-    });
+    $(document).on("click", "#logout", logout);
 
 });
 $.fn.serializeObject = function (excludeFields) {
