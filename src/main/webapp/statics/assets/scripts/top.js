@@ -1,18 +1,17 @@
 var logout=function () {
     $.ajax(path+"/user/logout")
         .done(function(){
-            //var $commonLogin=$("#commonLogin");
-            //$commonLogin.empty();
-            //var $new_li = $('<li><a href="'+path+'/user/register_phone">注册</a></li>' +
-            //'<li><a data-href="'+uri+'" class="login-need" href="javascript:void(0)">登录</a></li>');
-            //$new_li.appendTo($commonLogin);
+            var $commonLogin=$("#commonLogin");
+            $commonLogin.empty();
+            var $new_li = $('<li><a href="'+path+'/user/register_phone">注册</a></li>' +
+            '<li><a data-href="'+uri+'" class="login-need" href="javascript:void(0)">登录</a></li>');
+            $new_li.appendTo($commonLogin);
             console.log("user logout");
             console.log($commonLogin.attr("id"));
             var appElement = document.querySelector('[ng-controller=mainController]');
             var $scope = angular.element(appElement).scope();
-            $scope.cart=data.cart;
-            $scope.logged=false;
             $scope.$apply();
+            //window.location.reload();
         }).fail()
 }
 var loginCheckBeforeHandler=function(handler){

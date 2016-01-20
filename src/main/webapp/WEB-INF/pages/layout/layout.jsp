@@ -25,20 +25,26 @@
                         <div class="col-md-6 col-sm-6 additional-nav">
 
                             <ul class="list-unstyled list-inline pull-right" style=" float:left !important;" id="commonLogin" >
-                                        <li><a href="#">sssssss{{logged}}--{{$parent.logged}}</a></li>
-                                        <%--<li ng-if="!logged"><a href="${path}/user/register_phone" target="_blank">注册</a></li>--%>
-                                        <%--<li ng-if="!logged"><a data-href="${uri}" class="login-need" href="javascript:void(0)">登录</a></li>--%>
+                                <c:choose>
+                                    <c:when test="${empty sessionScope.loginUser}">
+                                        <li><a href="${path}/user/register_phone" target="_blank">注册</a></li>
+                                        <li><a data-href="${uri}" class="login-need" href="javascript:void(0)">登录</a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li>欢迎您,<a href="${path}/personal_message">${sessionScope.loginUser.name}</a>!</li>
+                                        <li><a href="#" id="logout">退出</a></li>
+                                    </c:otherwise>
+                                </c:choose>
 
-                                        <%--<li ng-if="logged">欢迎您,<a href="${path}/personal_message">${sessionScope.loginUser.name}</a>!</li>--%>
-                                        <%--<li ng-if="logged"><a href="#" id="logout">退出</a></li>--%>
+
+
 
                             </ul>
                             <ul class="list-unstyled list-inline pull-right" style=" float:left !important;" id="thirdPartLogin">
-                                <li ng-if="!logged">其它账号登录</li>
-                                <li ng-if="!logged"><span id="qqLoginBtn" data-ng-click="qqLogin()"></span></li>
+                                <li>其它账号登录</li>
+                                <li><span id="qqLoginBtn"></span></li>
                             </ul>
                             <ul class="list-unstyled list-inline pull-right" style=" float:left !important;" >
-                                <li class="fa fa-warning color-red">登录：{{logged}}</li>
                                 <li class="fa fa-warning color-red">这是一个测试版本，所有数据将在正式上线后清除。</li>
                             </ul>
                         </div>

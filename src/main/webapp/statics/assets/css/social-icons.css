@@ -4,14 +4,14 @@
     padding: 0;
     margin: 0;
 }
-.social-icons:after,
-.social-icons:before {
-    content: "";
-    display: table;
-}
-.social-icons:after {
-    clear: both;
-}
+/*.social-icons:after,*/
+/*.social-icons:before {*/
+    /*content: "";*/
+    /*display: table;*/
+/*}*/
+/*.social-icons:after {*/
+    /*clear: both;*/
+/*}*/
 .social-icons li {
     float: left;
     display: inline;
@@ -33,9 +33,9 @@ a.social-icon {
     -moz-transition: all 0.3s ease-in-out;
     -webkit-transition: all 0.3s ease-in-out;
 }
-.social-icons li:hover a {
-    background-position:0 -38px;
-}
+/*.social-icons li:hover a {*/
+    /*background-position:0 -38px;*/
+/*}*/
 .social-icons li a {
     opacity: 0.5;
 }
@@ -58,7 +58,7 @@ a.social-icon {
 .social-icons .dribbble {background: url(../img/icons/social/dribbble.png) no-repeat;}
 .social-icons .dropbox {background: url(../img/icons/social/dropbox.png) no-repeat;}
 .social-icons .evernote {background: url(../img/icons/social/evernote.png) no-repeat;}
-.social-icons .txqq {background:url(../img/icons/social/txqq.png) no-repeat;}
+.social-icons .txqq {background:url(../../images/qq/Connect_logo_1.png) no-repeat;}
 .social-icons .flickr {background: url(../img/icons/social/flickr.png) no-repeat;}
 .social-icons .forrst {background: url(../img/icons/social/forrst.png) no-repeat;}
 .social-icons .foursquare {background: url(../img/icons/social/foursquare.png) no-repeat;}
