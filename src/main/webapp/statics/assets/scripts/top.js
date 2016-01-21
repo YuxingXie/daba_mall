@@ -4,7 +4,7 @@ var logout=function () {
             var $commonLogin=$("#commonLogin");
             $commonLogin.empty();
             var $new_li = $('<li><a href="'+path+'/user/register_phone">注册</a></li>' +
-            '<li><a data-href="'+uri+'" class="login-need" href="javascript:void(0)">登录</a></li>');
+            '<li><a data-href="'+uri+'" data-target="_blank" class="login-need" href="javascript:void(0)">登录</a></li>');
             $new_li.appendTo($commonLogin);
             console.log("user logout");
             console.log($commonLogin.attr("id"));
@@ -25,6 +25,7 @@ var loginCheckBeforeHandler=function(handler){
                 //alert("handler is string")
                 var str=encodeURIComponent(handler);
                 window.location.href=path+"/user/to_login?to="+str;
+                //window.open(path+"/user/to_login?to="+str);
                 return false;
             }else{
                 $("#myModal").modal().show();

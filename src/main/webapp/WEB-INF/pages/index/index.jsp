@@ -77,6 +77,7 @@
     </div>
     <div class="bg-light-primary">
         <div class="container">
+
             <c:choose>
                 <c:when test="${empty homePageBlocks}">
                 <div class="row margin-bottom-40">

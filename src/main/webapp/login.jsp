@@ -37,38 +37,24 @@
 
                     </div>
                 </div>
-                <%--<h2 class="modal-title" id="myModalLabel">--%>
-                    <%--<small style=" color:#187705;">支持以下登录方式登录</small>--%>
-                <%--</h2>--%>
-                <%--<br/>--%>
-                <%--<ul class="social-icons">--%>
-                    <%--<li><a href="#" class="txqq" title="腾讯QQ" id="qqLoginBtn" onclick='toLogin()'></a></li>--%>
+                <h2 class="modal-title" id="myModalLabel">
+                    <small style=" color:#187705;">支持以下登录方式登录</small>
+                </h2>
+                <br/>
+                <ul class="social-icons">
+                    <li>
+
+                        <%--<a href="https://graph.qq.com/oauth/show?which=ConfirmPage&display=pc&client_id=101288574&response_type=token&scope=all&redirect_uri=http://www.dabast.com/"--%>
+                        <a href="https://graph.qq.com/oauth/show?which=ConfirmPage&display=pc&response_type=code&client_id=101288574&state=dabast&redirect_uri=http%3A%2F%2Fwww.dabast.com%2F"
+                           class="txqq" title="腾讯QQ"></a></li>
                     <%--<li><a href="#" data-original-title="xlwb" class="xlwb" title="新浪微博"></a></li>--%>
                     <%--<li><a href="#" data-original-title="rrw" class="rrw" title="人人网"></a></li>--%>
                     <%--<li><a href="#" data-original-title="wx" class="wx" title="微信"></a></li>--%>
                     <%--<li><a href="#" data-original-title="zfb" class="zfb" title="支付宝"></a></li>--%>
                     <%--<li><a href="#" data-original-title="wy" class="wy" title="网易"></a></li>--%>
                     <%--<li><a href="#" data-original-title="txwb" class="txwb" title="腾讯微博"></a></li>--%>
-                <%--</ul>--%>
-                <%--<!--MOB SHARE BEGIN-->--%>
-                <%--<div class="-mob-share-ui-button -mob-share-open">分享</div>--%>
-                <%--<div class="-mob-share-ui" style="display: none">--%>
-                <%--<ul class="-mob-share-list">--%>
-                <%--<li class="-mob-share-weibo"><p>新浪微博</p></li>--%>
-                <%--<li class="-mob-share-tencentweibo"><p>腾讯微博</p></li>--%>
-                <%--<li class="-mob-share-qzone"><p>QQ空间</p></li>--%>
-                <%--<li class="-mob-share-qq"><p>QQ好友</p></li>--%>
-                <%--<li class="-mob-share-renren"><p>人人网</p></li>--%>
-                <%--<li class="-mob-share-kaixin"><p>开心网</p></li>--%>
-                <%--<li class="-mob-share-douban"><p>豆瓣</p></li>--%>
-                <%--<li class="-mob-share-facebook"><p>Facebook</p></li>--%>
-                <%--<li class="-mob-share-twitter"><p>Twitter</p></li>--%>
-                <%--</ul>--%>
-                <%--<div class="-mob-share-close">取消</div>--%>
-                <%--</div>--%>
-                <%--<div class="-mob-share-ui-bg"></div>--%>
-                <%--<script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=edf9e3a25db0"></script>--%>
-                <%--<!--MOB SHARE END-->--%>
+                </ul>
+
             </div>
             <div class="row margin-top-10">
                 <div class="col-lg-1 col-sm-1"></div>
@@ -208,13 +194,13 @@
 
 <%--</script>--%>
 <script>
-//    function toLogin()
-//    {
-//        //以下为按钮点击事件的逻辑。注意这里要重新打开窗口
-//        //否则后面跳转到QQ登录，授权页面时会直接缩小当前浏览器的窗口，而不是打开新窗口
-//        var A=window.open("https://graph.qq.com/oauth/show?which=ConfirmPage&display=pc&client_id=101288574&response_type=token&scope=all&redirect_uri=http%3A%2F%2Fqzonestyle.gtimg.cn%2Fqzone%2Fopenapi%2Fredirect-1.0.1.html",
-//                "TencentLogin","width=450,height=320,menubar=0,scrollbars=1,resizable=1,status=1,titlebar=0,toolbar=0,location=1");
-//    }
+    function toLogin()
+    {
+        //以下为按钮点击事件的逻辑。注意这里要重新打开窗口
+        //否则后面跳转到QQ登录，授权页面时会直接缩小当前浏览器的窗口，而不是打开新窗口
+        var A=window.open("https://graph.qq.com/oauth/show?which=ConfirmPage&display=pc&client_id=101288574&response_type=token&scope=all&redirect_uri=dabast.com/index",
+                "TencentLogin","width=450,height=320,menubar=0,scrollbars=1,resizable=1,status=1,titlebar=0,toolbar=0,location=1");
+    }
 </script>
 <script>
     var mainApp = angular.module("mainApp", ['ui.bootstrap', 'ngRoute', 'ngSanitize']);

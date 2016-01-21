@@ -28,7 +28,7 @@
                                 <c:choose>
                                     <c:when test="${empty sessionScope.loginUser}">
                                         <li><a href="${path}/user/register_phone" target="_blank">注册</a></li>
-                                        <li><a data-href="${uri}" class="login-need" href="javascript:void(0)">登录</a></li>
+                                        <li><a data-href="${uri}" class="login-need" data-target="_blank" href="javascript:void(0)">登录</a></li>
                                     </c:when>
                                     <c:otherwise>
                                         <li>欢迎您,<a href="${path}/personal_message">${sessionScope.loginUser.name}</a>!</li>
@@ -40,10 +40,10 @@
 
 
                             </ul>
-                            <ul class="list-unstyled list-inline pull-right" style=" float:left !important;" id="thirdPartLogin">
-                                <li>其它账号登录</li>
-                                <li><span id="qqLoginBtn"></span></li>
-                            </ul>
+                            <%--<ul class="list-unstyled list-inline pull-right" style=" float:left !important;" id="thirdPartLogin">--%>
+                                <%--<li>其它账号登录</li>--%>
+                                <%--<li><span id="qqLoginBtn"></span></li>--%>
+                            <%--</ul>--%>
                             <ul class="list-unstyled list-inline pull-right" style=" float:left !important;" >
                                 <li class="fa fa-warning color-red">这是一个测试版本，所有数据将在正式上线后清除。</li>
                             </ul>
@@ -95,8 +95,7 @@
                                         <a ng-href="${path}/product_series/{{productSelected.productSeries.id}}"> {{productSelected.productSeries.name}}</a>
                                         <i class="fa fa-times"> {{productSelected.amount}}</i>
                                         <i ng-repeat="productPropertyValue in productSelected.productPropertyValueList"> {{productPropertyValue.value}}</i>
-                                        <i class="fa fa-rmb text-danger"
-                                          >
+                                        <i class="fa fa-rmb text-danger">
                                             {{productSelected.productSeries.commonPrice*productSelected.amount|number:2}}
                                         </i>
                                         <a href="javascript:void(0);" class="del-goods" data-ng-click="deleteGoods($index)"><i class="fa fa-trash"></i></a>
