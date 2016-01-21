@@ -29,8 +29,19 @@ public class RegisterValidateService {
     private String emailUserName;
     @Value(value = "${app.email.authentication.password}")
     private String emailPassword;
+    @Value(value = "${app.email.authentication.smtpPort}")
+    private int smtpPort;
     @Resource
     private SmsManager smsManager;
+
+    public int getSmtpPort() {
+        return smtpPort;
+    }
+
+    public void setSmtpPort(int smtpPort) {
+        this.smtpPort = smtpPort;
+    }
+
     public String getEmailHostName() {
         return emailHostName;
     }
@@ -83,6 +94,7 @@ public class RegisterValidateService {
         htmlEmail.setCharset("UTF-8");
         htmlEmail.setSubject("大坝生态账号激活");
         htmlEmail.getBounceAddress();
+        htmlEmail.setSmtpPort(smtpPort);
 //        try {
             htmlEmail.addTo(email);
             htmlEmail.setFrom(emailAddress);

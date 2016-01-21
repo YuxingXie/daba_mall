@@ -636,7 +636,13 @@ public class UserController extends BaseRestSpringController {
             modelMap.addFlashAttribute("phoneForm", form);
             modelMap.addFlashAttribute("message", "注册成功!");
             doLogin(form,session,request,response,form);
-            return "redirect:/register_success";
+            String httpUrlString=getHttpUrlString(request,"register_success");
+            try {
+                response.sendRedirect(httpUrlString) ;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
     }
     @RequestMapping(value = "/cart")
