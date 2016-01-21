@@ -29,7 +29,7 @@ public class RegisterValidateService {
     private String emailUserName;
     @Value(value = "${app.email.authentication.password}")
     private String emailPassword;
-    @Value(value = "${app.email.authentication.smtpPort}")
+    @Value(value = "${app.email.smtpPort}")
     private int smtpPort;
     @Resource
     private SmsManager smsManager;
@@ -93,28 +93,20 @@ public class RegisterValidateService {
         htmlEmail.setAuthentication(emailUserName, emailPassword);
         htmlEmail.setCharset("UTF-8");
         htmlEmail.setSubject("大坝生态账号激活");
+//        htmlEmail.setSmtpPort(smtpPort);
         htmlEmail.getBounceAddress();
-        htmlEmail.setSmtpPort(smtpPort);
-//        try {
-            htmlEmail.addTo(email);
-            htmlEmail.setFrom(emailAddress);
-            htmlEmail.setMsg(sb.toString());
-            htmlEmail.send();
-            //保存注册信息,如果发送邮件抛出异常，不会保存
-            if (userToUpdate==null){
-                userToUpdate=new User();
-            }
-            userToUpdate.setRegisterTime(new Date());
-            userToUpdate.setValidateCode("" + validateCode);
-            userToUpdate.setEmail(email);
-            userDao.upsert(userToUpdate);
-//            String code=email.indexOf("@")>=0?email.substring(email.indexOf("@")+1):"";
-//            String url= EmailEnum.getUrlByCode(code);
-//        }
-//        catch (EmailException ex) {
-//            ex.printStackTrace();
-//            msg="对不起，服务器发送邮件时出现异常，请稍后再试!";
-//        }
+        htmlEmail.addTo(email);
+        htmlEmail.setFrom(emailAddress);
+        htmlEmail.setMsg(sb.toString());
+        htmlEmail.send();
+        //保存注册信息,如果发送邮件抛出异常，不会保存
+        if (userToUpdate==null){
+            userToUpdate=new User();
+        }
+        userToUpdate.setRegisterTime(new Date());
+        userToUpdate.setValidateCode("" + validateCode);
+        userToUpdate.setEmail(email);
+        userDao.upsert(userToUpdate);
         return userToUpdate;
     }
     /**

@@ -9,6 +9,10 @@
         <!--<param-value>true</param-value>-->
     <!--</context-param>-->
     <filter>
+        <filter-name>httpsToHttpKeepSessionFilter</filter-name>
+        <filter-class>com.dabast.mall.filter.HttpsToHttpKeepSessionFilter</filter-class>
+    </filter>
+    <filter>
         <filter-name>CharacterEncodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
         <init-param>
@@ -20,7 +24,10 @@
             <param-value>true</param-value>
         </init-param>
     </filter>
-
+<filter-mapping>
+    <filter-name>httpsToHttpKeepSessionFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
     <!--<filter>-->
         <!--<filter-name>sitemesh</filter-name>-->
         <!--<filter-class>org.sitemesh.config.ConfigurableSiteMeshFilter</filter-class>-->
