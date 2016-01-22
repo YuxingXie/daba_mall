@@ -78,7 +78,8 @@
                                     <label class="col-lg-4 control-label">昵称 <span class="require">*</span></label>
 
                                     <div class="col-lg-8 has-success">
-                                        <form:hidden path="id" class="form-control" ng-model="user.id" ng-init="user.id='${phoneForm.id}'"/>
+                                        <%--<form:hidden path="id" class="form-control" ng-model="user.id" ng-init="user.id='${phoneForm.id}'"/>--%>
+                                        <form:input path="id" ng-show="false" ng-model="user.id" ng-init="user.id='${phoneForm.id}'"/>
                                         <form:input path="name" class="form-control" ensure_name_unique="{{user.name}}" required="true"
                                                     ng-maxlength="20" ng-init="user.name='${phoneForm.name}'" ng-model="user.name"/>
                                         <span ng-show="signupForm.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
@@ -102,7 +103,7 @@
                                     <label class="col-lg-4 control-label">手机号码 <span class="require">*</span></label>
                                     <div class="col-lg-8 has-success">
                                         <form:input type="tel" class="form-control" path="phone" ng-init="user.phone='${phoneForm.phone}'" ng-model="user.phone" placeholder="请输入11位手机号"
-                                                    required="true" phone_number_valid="{{user.phone}}"  ensure_phone_unique="{{user.phone}}" autocomplete="false"/>
+                                                    required="true" phone_number_valid="{{user.phone}}"  ensure_phone_unique="{{user.phone}}" autocomplete="false" maxlength="11"/>
                                         <span ng-show="signupForm.phone.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                                         <form:errors path="phone" class="control-label"/>
                                     </div>
@@ -225,172 +226,9 @@
 <script>
     var mainApp=angular.module("mainApp",['ui.bootstrap', 'ngRoute','ngSanitize']);
     mainApp .controller('mainController', ['$scope', '$http', function ($scope, $http) {
-        $scope.interested={};//关注信息
-        $scope.initProductMenu= function () {
-            if(!$scope.productCategories){
-                $http.get('${path}/product_series/categories').success(function (data) {
-                    $scope.productCategories = data;
-//                    console.log(JSON.stringify(data));
-                });
-            }
 
-        }
-        $scope.getTotalAmountAndPrice=function(){
-            var totalPrice= 0,totalAmount=0;
-            if($scope.cart&&$scope.cart.productSelectedList&&$scope.cart.productSelectedList.length){
-
-                for(var i=0;i<$scope.cart.productSelectedList.length;i++){
-                    var productSelected=$scope.cart.productSelectedList[i];
-                    totalPrice+=productSelected.productSeries.commonPrice*productSelected.amount;
-                    totalAmount+=productSelected.amount;
-                }
-            }
-            $scope.totalPrice=totalPrice;
-            $scope.totalAmount=totalAmount;
-        }
-
-        $scope.deleteGoods=function(index){
-//            alert(JSON.stringify(index));
-            if($scope.cart.productSelectedList&&$scope.cart.productSelectedList.length){
-                $scope.cart.productSelectedList.splice(index,1);
-                $http({
-                    method:"POST",
-                    url:path+"/cart/update",
-                    data:$scope.cart
-                }).success(function(cart){
-                    $scope.cart=cart;
-                    $scope.getTotalAmountAndPrice();
-                }).error(function(){
-
-                });
-            }
-        }
-        $http.get('${path}/user/cart').success(function (data) {
-            $scope.cart = data;
-            $scope.getTotalAmountAndPrice();
-        });
-        $http.get('${path}/user/unread_notifies_count').success(function (data) {
-            $scope.unreadNotifiesCount = data;
-        });
-        $scope.popover=function(productSeriesId){
-            $scope.lowPrice=function(){
-                if(!$scope.productSelected.productSeries.currentPrice) return false;
-                if(!$scope.productSelected.productSeries.currentPrice.price) return false;
-                if(!$scope.productSelected.productSeries.currentPrice.prevPrice) return false;
-                if(!$scope.productSelected.productSeries.currentPrice.prevPrice.price) return false;
-                return  $scope.productSelected.productSeries.currentPrice.price<$scope.productSelected.productSeries.currentPrice.prevPrice.price;
-
-            }
-            $scope.productSelected={};
-            $scope.productSelected.productPropertyValueList=[];
-            $http.get(path+'/product_series/popover/'+productSeriesId).success(function (data) {
-                $scope.productSelected.productSeries = data;
-                $scope.productSelected.amount = 1;
-                if(!$scope.productSelected.productSeries.pictures){
-                    $scope.productSelected.productSeries.pictures=[];
-                    var picture={};
-                    picture.picture= "statics/img/img_not_found.jpg";
-                    picture.bigPicture= "statics/img/img_not_found.jpg";
-                    picture.iconPicture= "statics/img/img_not_found.jpg";
-                    $scope.productSelected.productSeries.pictures.push(picture);
-                }
-                $scope.currentPicture=$scope.productSelected.productSeries.pictures[0];
-                $scope.ratingVal = $scope.productSelected.productSeries.productSeriesEvaluateGrade?$scope.productSelected.productSeries.productSeriesEvaluateGrade:0;
-                var productProperties= $scope.productSelected.productSeries.productProperties;
-                if(productProperties&&productProperties.length){
-                    for(var i=0;i<productProperties.length;i++){
-                        var productProperty=productProperties[i];
-                        var propertyValues=productProperty.propertyValues;
-                        if(propertyValues&&propertyValues.length){
-                            $scope.productSelected.productPropertyValueList.push(propertyValues[0]);
-                        }
-                    }
-                }
-                easyzoom();
-                $("#showProductModal").modal().show();
-            });
-        }
-        $scope.add2cart=function(){
-            $http.post('${path}/cart/add', $scope.productSelected).success(function(data){
-
-                $scope.cart=data;
-                $scope.getTotalAmountAndPrice();
-                $("#msg").show().animate({width: '250px'}, 600).fadeOut(1800);
-            }).error(function(data) {
-                alert("对不起，服务器出现了点异常!");
-            });
-            $("#showProductModal").modal('hide');
-
-        }
-        $scope.toggleInterest=function(productSeriesId){
-
-            loginCheckBeforeHandler(function(){
-                var url="${path}/product_series/toggle_interest";
-                if(!productSeriesId) return;
-                if(!productSeriesId==="") return;
-                url+="?productSeriesId="+productSeriesId;
-                $http.get(url).success(function (data) {
-                    $scope.interested[productSeriesId] = data.interested;
-                });
-            });
-
-        }
     }])
-            .directive('star', function () {
-                return {
-                    template: '<ul class="rating" ng-mouseleave="leave()">' +
-                    '<li ng-repeat="star in stars" ng-class="star" ng-click="click($index + 1)" ng-mouseover="over($index + 1)">' +
-                    '\u2605' +
-                    '</li>' +
-                    '</ul>',
-                    scope: {
-                        ratingValue: '=',
-                        max: '=',
-                        readonly: '@',
-                        onHover: '=',
-                        onLeave: '='
-                    },
-                    controller: function($scope){
-                        $scope.ratingValue = $scope.ratingValue || 0;
-                        $scope.max = $scope.max || 5;
-                        $scope.click = function(val){
-                            if ($scope.readonly && $scope.readonly === 'true') {
-                                return;
-                            }
-                            $scope.ratingValue = val;
-                        };
-                        $scope.over = function(val){
-                            $scope.onHover(val);
-                        };
-                        $scope.leave = function(){
-                            $scope.onLeave();
-                        }
-                    },
-                    link: function (scope, elem, attrs) {
-                        elem.css("text-align", "center");
-                        var updateStars = function () {
-                            scope.stars = [];
-                            for (var i = 0; i < scope.max; i++) {
-                                scope.stars.push({
-                                    filled: i < scope.ratingValue
-                                });
-                            }
-                        };
-                        updateStars();
 
-                        scope.$watch('ratingValue', function (oldVal, newVal) {
-                            if (newVal) {
-                                updateStars();
-                            }
-                        });
-                        scope.$watch('max', function (oldVal, newVal) {
-                            if (newVal) {
-                                updateStars();
-                            }
-                        });
-                    }
-                };
-            })
 </script>
 <script src="${path}/statics/assets/scripts/form-validate.js"></script>
 </body>

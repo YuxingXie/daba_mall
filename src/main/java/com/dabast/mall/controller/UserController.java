@@ -604,7 +604,7 @@ public class UserController extends BaseRestSpringController {
 
     /**
      * 手机注册账号
-     * @param form
+     * @param phoneForm
      * @param errors
      * @param modelMap
      * @param session
@@ -613,29 +613,29 @@ public class UserController extends BaseRestSpringController {
      * @return
      */
     @RequestMapping(value = "/register/phone",method = RequestMethod.POST)
-    public String phoneRegister(@Valid @ModelAttribute User form,BindingResult errors,RedirectAttributesModelMap modelMap,HttpSession session, HttpServletRequest request,HttpServletResponse response) {
-        Assert.notNull(form);
-        Assert.notNull(form.getId());
+    public String phoneRegister(@Valid @ModelAttribute User phoneForm,BindingResult errors,RedirectAttributesModelMap modelMap,HttpSession session, HttpServletRequest request,HttpServletResponse response) {
+        Assert.notNull(phoneForm);
+        Assert.isTrue(phoneForm.getId() != null && !phoneForm.getId().equals(""));
         if (errors.hasErrors()){
-            modelMap.addFlashAttribute("phoneForm", form);
+            modelMap.addFlashAttribute("phoneForm", phoneForm);
             modelMap.addFlashAttribute("org.springframework.validation.BindingResult.phoneForm", errors);
             return "redirect:/register_phone";
         }else{
-            if (!form.getPassword().equals(form.getRePassword())){
+            if (!phoneForm.getPassword().equals(phoneForm.getRePassword())){
                 errors.rejectValue("rePassword","user.signup.rePassword.error");
-                modelMap.addFlashAttribute("form", form);
-                modelMap.addFlashAttribute("org.springframework.validation.BindingResult.form", errors);
+                modelMap.addFlashAttribute("phoneForm", phoneForm);
+                modelMap.addFlashAttribute("org.springframework.validation.BindingResult.phoneForm", errors);
                 return "redirect:/register_phone";
             }
-            form.setActivated(true);
+            phoneForm.setActivated(true);
             Date now = new Date();
-            form.setRegisterTime(now);
-            form.setLastActivateTime(now);
-            form.setPassword(MD5.convert(form.getPassword()));
-            userDao.upsert(form);
-            modelMap.addFlashAttribute("phoneForm", form);
+            phoneForm.setRegisterTime(now);
+            phoneForm.setLastActivateTime(now);
+            phoneForm.setPassword(MD5.convert(phoneForm.getPassword()));
+            userDao.upsert(phoneForm);
+            modelMap.addFlashAttribute("phoneForm", phoneForm);
             modelMap.addFlashAttribute("message", "注册成功!");
-            doLogin(form,session,request,response,form);
+            doLogin(phoneForm,session,request,response,phoneForm);
             String httpUrlString=getHttpUrlString(request,"register_success");
             try {
                 response.sendRedirect(httpUrlString) ;
