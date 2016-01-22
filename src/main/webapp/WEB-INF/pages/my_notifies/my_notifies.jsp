@@ -19,7 +19,7 @@
         <div class="table-responsive">
             <table class="table table-hover text-center">
                 <tr ng-if="!notifyPage.content||notifyPage.content.length==0">
-                    <td colspan="5">您暂时没有消息!<a href="${path}">返回首页继续购物</a></td>
+                    <td colspan="5">您暂时没有消息!<a href="${path}/index">返回首页继续购物</a></td>
                 </tr>
                 <tr ng-if="notifyPage.content&&notifyPage.content.length>0">
                     <th class="text-center">状态</th>

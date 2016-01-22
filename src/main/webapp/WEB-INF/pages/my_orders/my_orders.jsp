@@ -25,7 +25,7 @@
                 </tr>
                 <c:choose>
                     <c:when test="${empty orders}">
-                        <tr><td class="text-warning text-center" colspan="5">您没有生成过订单 <a href="${path}" class="fa fa-home">返回首页</a></td></tr>
+                        <tr><td class="text-warning text-center" colspan="5">您没有生成过订单 返回<a href="${path}/index" class="fa fa-home">首页</a></td></tr>
                     </c:when>
                     <c:otherwise>
 

@@ -27,7 +27,7 @@
                 <c:choose>
                     <c:when test="${empty order}">
                         <tr>
-                            <th colspan="5" class="text-info center-block shopping-cart-description">不知为什么订单不见了</th><th><a href="${path}">返回首页</a>或联系客服 </th>
+                            <th colspan="5" class="text-info center-block shopping-cart-description">不知为什么订单不见了,返回</th><th><a href="${path}/index">首页</a>或联系客服 </th>
                         </tr>
                     </c:when>
                     <c:otherwise>

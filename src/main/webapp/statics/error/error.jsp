@@ -32,7 +32,7 @@
 	</div>
 	<div class="row margin-top-20"><h3>对不起,发生系统内部错误,不能处理你的请求</h3></div>
 	<%--<b>错误信息:</b> <%=exception.getMessage()%>--%>
-	<div class="row margin-top-20"><a href="${webRoot}" class="fa fa-home fa-2x margin-top-20">返回首页</a></div>
+	<div class="row margin-top-20"><a href="${webRoot}/index" class="fa fa-home fa-2x margin-top-20">返回首页</a></div>
 	<div class="row margin-top-20">
 		<div><i class="fa fa-smile-o margin-left-10 font-size-13-5">通常情况下</i></div>
 		<ul class="list-unstyled margin-left-10">

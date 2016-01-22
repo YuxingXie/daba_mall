@@ -24,7 +24,7 @@
                     <th class="text-center">操作</th>
                 </tr>
                 <tr ng-if="!interests||interests.length==0">
-                    <td colspan="5">您没有关注任何商品!<a href="${path}">返回首页继续购物</a></td>
+                    <td colspan="5">您没有关注任何商品!返回<a href="${path}/index" class="fa fa-home">首页</a>继续购物</td>
                 </tr>
                 <tr name="interest" ng-if="interests&&interests.length>0" ng-repeat="interest in interests" >
                     <td>

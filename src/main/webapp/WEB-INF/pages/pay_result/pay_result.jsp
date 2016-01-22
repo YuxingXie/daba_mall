@@ -14,7 +14,7 @@
             <li class="active">支付成功</li>
         </ul>
         <div class="col-md-9 col-sm-7"  ng-init="totalPrice=0">
-            支付成功！您可以在“我的订单”中跟踪物流信息，保持手机通信畅通。<a href="${path}">返回首页继续购物</a>
+            支付成功！您可以在“我的订单”中跟踪物流信息，保持手机通信畅通。返回<a href="${path}/index">首页</a>继续购物
         </div>
 
 

@@ -27,7 +27,7 @@
                     <th class="text-center">交易操作</th>
                 </tr>
                 <tr ng-if="!cart||!cart.productSelectedList||cart.productSelectedList.length==0">
-                    <td colspan="5">您的购物车中空空如也!<a href="${path}">返回首页继续购物</a></td>
+                    <td colspan="5">您的购物车中空空如也!<a href="${path}/index">返回首页继续购物</a></td>
                 </tr>
 
                 <tr ng-if="cart&&cart.productSelectedList&&cart.productSelectedList.length>0" ng-repeat="productSelected in cart.productSelectedList" >
