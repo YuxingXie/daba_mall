@@ -130,7 +130,8 @@
                                                     </div>
                                                     <div class="row margin-left-2 padding-bottom-10 padding-right-0">
                                                         <div class="col-lg-12 col-sm-12 margin-left--10">
-                                                            <div class="btn-group btn-group-xs pull-right" ng-init="$parent.interested['${productSeries.id}']=${productSeries.interested};">
+                                                            <c:set var="interested" value="${empty productSeries.interested?false:productSeries.interested}"/>
+                                                            <div class="btn-group btn-group-xs pull-right" ng-init="$parent.interested['${productSeries.id}']=${interested};">
                                                                 <button class="btn btn-danger" ng-click="toggleInterest('${productSeries.id}')">
                                                                     <span ng-if="$parent.interested['${productSeries.id}']">已</span>关注
                                                                     <i ng-class="{'fa':true,'fa-heart':$parent.interested['${productSeries.id}'],'fa-heart-o':!$parent.interested['${productSeries.id}']}"></i>

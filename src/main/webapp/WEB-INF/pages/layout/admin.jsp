@@ -7,6 +7,8 @@
 <html ng-app="mainApp">
 <head>
   <title>大坝生态农业科技有限公司电商网站管理平台</title>
+  <link rel="shortcut icon" href="${path}/statics/assets/img/favicon.ico"/>
+  <link rel="bookmark" href="${path}/statics/assets/img/favicon.ico"/>
   <link href="${path}/statics/assets/plugins/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link href="${path}/statics/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="${path}/statics/assets/css/style.css" rel="stylesheet" type="text/css">

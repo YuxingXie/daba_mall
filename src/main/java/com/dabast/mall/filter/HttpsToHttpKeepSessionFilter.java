@@ -21,11 +21,12 @@ public final class HttpsToHttpKeepSessionFilter  implements Filter {
         HttpServletRequest httpServletRequest=(HttpServletRequest)request;
         if(httpServletRequest.getRequestURI().indexOf("layerslider/skins/fullwidth/skin")>=0){//屏蔽一个不知道从哪里来的请求
 //            System.out.println("i got it");
+            httpServletRequest.getRequestDispatcher("/statics/assets/plugins/layerslider/skins/fullwidth/skin.css").forward(request,response);
             return;
         }
-        HttpsToHttpKeepSessionRequestWarp myrequest = new HttpsToHttpKeepSessionRequestWarp(httpServletRequest);
-        myrequest.setResponse((HttpServletResponse)response);
-        chain.doFilter(myrequest, response);
+        HttpsToHttpKeepSessionRequestWarp requestWarp = new HttpsToHttpKeepSessionRequestWarp(httpServletRequest);
+        requestWarp.setResponse((HttpServletResponse) response);
+        chain.doFilter(requestWarp, response);
     }
 
     @Override
