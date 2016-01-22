@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapreduce.MapReduceOptions;
  * Created by Administrator on 2015/12/25.
  */
 @Document(collection = "MapReduceProductPrice")
-public class ProductPriceMR {
+public class ProductPriceMR{
         public static String inputCollectionName="productSeries";
         public static String mapFun="function(){" +
                 "var emitVal={}; " +
