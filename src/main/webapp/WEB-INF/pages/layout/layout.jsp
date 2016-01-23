@@ -31,7 +31,7 @@
                                         <li><a data-href="${uri}" href="javascript:void(0)" id="toLogin">登录</a></li>
                                     </c:when>
                                     <c:otherwise>
-                                        <li>欢迎您,<a href="${path}/personal_message">${sessionScope.loginUser.name}</a>!</li>
+                                        <li>欢迎您,<a href="${path}/user/personal_message" target="_blank">${sessionScope.loginUser.name}</a>!</li>
                                         <li><a href="#" id="logout">退出</a></li>
                                     </c:otherwise>
                                 </c:choose>

@@ -155,20 +155,20 @@
         <taglib-location>/WEB-INF/tags/functions.tld</taglib-location>
     </taglib>
 
-    <!--<security-constraint>-->
-        <!--<web-resource-collection>-->
-            <!--<web-resource-name>securedapp</web-resource-name>-->
-            <!--<url-pattern>/user/register_phone</url-pattern>-->
-            <!--<url-pattern>/user/register_email</url-pattern>-->
-            <!--&lt;!&ndash;腾讯审核期间需要去掉&ndash;&gt;-->
-            <!--<url-pattern>/user/to_login</url-pattern>-->
-            <!--<url-pattern>/user/login/direct/*</url-pattern>-->
-            <!--<url-pattern>/order/to_bill/*</url-pattern>-->
-            <!--<url-pattern>/user/personal_message</url-pattern>-->
-            <!--<url-pattern>/admin-login.jsp</url-pattern>-->
-        <!--</web-resource-collection>-->
-        <!--<user-data-constraint>-->
-            <!--<transport-guarantee>CONFIDENTIAL</transport-guarantee>-->
-        <!--</user-data-constraint>-->
-    <!--</security-constraint>-->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>securedapp</web-resource-name>
+            <url-pattern>/user/register_phone</url-pattern>
+            <url-pattern>/user/register_email</url-pattern>
+            <!--腾讯审核期间需要去掉-->
+            <url-pattern>/user/to_login</url-pattern>
+            <url-pattern>/user/login/direct/*</url-pattern>
+            <url-pattern>/order/to_bill/*</url-pattern>
+            <url-pattern>/user/personal_message</url-pattern>
+            <url-pattern>/admin-login.jsp</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
 </web-app>

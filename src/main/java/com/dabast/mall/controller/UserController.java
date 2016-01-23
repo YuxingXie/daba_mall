@@ -121,7 +121,22 @@ public class UserController extends BaseRestSpringController {
         session.setAttribute(Constant.LOGIN_USER,user);
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
-
+    @RequestMapping(value = "/update/password")
+    public ResponseEntity<User> updatePassword(ModelMap model,@RequestBody User user,HttpSession session) {
+        Assert.notNull(user);
+        String password=user.getPassword();
+        String userId=user.getId();
+        Assert.notNull(password);
+        Assert.notNull(userId);
+        ResponseEntity responseEntity = null;
+        User updateUser=new User();
+        updateUser.setId(userId);
+        updateUser.setPassword(MD5.convert(password));
+        userService.update(updateUser);
+        user=userService.findById(userId);
+        session.setAttribute(Constant.LOGIN_USER,user);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
     /**
      *更新用户邮箱
      * @param model
@@ -262,9 +277,16 @@ public class UserController extends BaseRestSpringController {
         //form.password可能是原始密码或者经过一次MD5加密，也可能是两次md5加密
         if (form.getPassword().equalsIgnoreCase(user.getPassword())
                 ||form.getPassword().equalsIgnoreCase(MD5.convert(user.getPassword()))
-                ||MD5.convert(form.getPassword()).equalsIgnoreCase(user.getPassword()))
+                ||MD5.convert(form.getPassword()).equalsIgnoreCase(user.getPassword())){
+            user.setLastActivateTime(new Date());
+            User updateUser=new User();
+            updateUser.setId(user.getId());
+            Date now =new Date();
+            updateUser.setLastActivateTime(now);
+            userService.update(updateUser);
+            user.setLastActivateTime(now);
             return doLogin(form, session, request, response, user);
-        else {
+        }else {
             user=new User();
             user.setLoginStatus("用户名/密码错误");
             return new ResponseEntity<User>(user,HttpStatus.OK);
@@ -281,6 +303,7 @@ public class UserController extends BaseRestSpringController {
             user=form;
             user.setName(form.getTencentLoginInfo().getNickname());
             user.setActivated(true);
+            user.setLastActivateTime(new Date());
             userService.insert(user);
 //            return new ResponseEntity<User>(user,HttpStatus.OK);
         }

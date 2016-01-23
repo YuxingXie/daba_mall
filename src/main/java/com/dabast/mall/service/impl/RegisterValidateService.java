@@ -7,6 +7,8 @@ import com.dabast.mall.dao.UserDao;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import java.util.Date;
  */
 @Service
 public class RegisterValidateService {
+    private static Logger logger = LogManager.getLogger();
     @Resource
     private UserDao userDao;
     @Value(value = "${app.email.hostName}")
@@ -151,6 +154,7 @@ public class RegisterValidateService {
         int validateCode=(int)(Math.random()*999999-99999);
         sb.append(validateCode)
         .append(" 验证码有效时间为30分钟。");
+        logger.info("用户注册，给手机 "+phone+" 发送验证码："+validateCode);
         String msg=smsManager.send(sb.toString(),phone);
         if (!msg.equals("100")){
             throw new BusinessException("发送短信时出现了问题，问题代码："+msg);
@@ -175,12 +179,13 @@ public class RegisterValidateService {
         int validateCode=(int)(Math.random()*999999-99999);
         sb.append(validateCode)
                 .append(" 验证码有效时间为30分钟。");
+        logger.info("用户修改手机号码，给手机 "+phone+" 发送验证码："+validateCode);
+
         String msg=smsManager.send(sb.toString(),phone);
         if (!msg.equals("100")){
             throw new BusinessException("发送短信时出现了问题，问题代码："+msg);
         }
         //保存注册信息
-
         return validateCode;
     }
     /**

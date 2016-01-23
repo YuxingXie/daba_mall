@@ -15,34 +15,7 @@
     <link href="${path}/statics/assets/css/style.css" rel="stylesheet" type="text/css">
     <link href="${path}/statics/assets/css/style-responsive.css" rel="stylesheet" type="text/css">
     <link href="${path}/statics/assets/css/color-bg-color.css" rel="stylesheet" type="text/css">
-    <style>
-        .error {
-            margin: 0;
-            padding: 0;
-            color: #E94D1C
-        }
-        .info {
-            margin: 0;
-            padding: 0;
-            color: #18e957;
-            margin-left: 80px;
-            margin-top: 10px;
-            width: 100%;
-
-        }
-        .pw_weak{
-            width: 50px;background: red;border-right: 1px #fff solid;display:inline-block;margin: 0px;
-        }
-        .pw_mid{
-            width: 50px;background: orange;border-right: 1px #fff solid;display:inline-block;margin: 0px;
-        }
-        .pw_strong{
-            width: 50px;background: #008000;border-right: 1px #fff solid;display:inline-block;margin: 0px;
-        }
-        .pw_un_reach{
-            width: 50px; background: darkgray;border-right: 1px #fff solid;display:inline-block;margin: 0px;
-        }
-    </style>
+    <link href="${path}/statics/assets/css/password_strength.css" rel="stylesheet" type="text/css">
     <script> path="${path}";</script>
     <script src="${path}/statics/assets/plugins/jquery-2.1.1.min.js" type="text/javascript"></script>
     <script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>

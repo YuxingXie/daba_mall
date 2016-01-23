@@ -14,45 +14,16 @@
     <link href="${path}/statics/assets/css/style.css" rel="stylesheet" type="text/css">
     <link href="${path}/statics/assets/css/style-responsive.css" rel="stylesheet" type="text/css">
     <link href="${path}/statics/assets/css/color-bg-color.css" rel="stylesheet" type="text/css">
-    <style>
-        .error {
-            margin: 0;
-            padding: 0;
-            color: #E94D1C
-        }
-        .info {
-            margin: 0;
-            padding: 0;
-            color: #18e957;
-            margin-left: 80px;
-            margin-top: 10px;
-            width: 100%;
-
-        }
-        .pw_weak{
-            width: 50px;background: red;border-right: 1px #fff solid;display:inline-block;margin: 0px;
-        }
-        .pw_mid{
-            width: 50px;background: orange;border-right: 1px #fff solid;display:inline-block;margin: 0px;
-        }
-        .pw_strong{
-            width: 50px;background: #008000;border-right: 1px #fff solid;display:inline-block;margin: 0px;
-        }
-        .pw_un_reach{
-            width: 50px; background: darkgray;border-right: 1px #fff solid;display:inline-block;margin: 0px;
-        }
-    </style>
+    <link href="${path}/statics/assets/css/password_strength.css" rel="stylesheet" type="text/css">
     <script> path="${path}";</script>
     <script src="${path}/statics/assets/plugins/jquery-2.1.1.min.js" type="text/javascript"></script>
     <script src="${path}/statics/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="${path}/statics/assets/plugins/jquery.md5.js"></script>
-
-
-
 </head>
 <body ng-controller="PersonalMessageController">
 <div class="container">
-        <div class="row margin-top-112 padding-left-30">
+    <div class="row margin-top-112"><i class="fa fa-info"></i>如果您是通过第三方登录(QQ,微博)登录，我们建议您留下手机号码或者邮箱。如果您设置了密码，则可以用手机号码或邮箱号作为大坝登录账号登录。</div>
+        <div class="row margin-top-40 padding-left-30">
                 <form name="signupForm" role="form" class="form-horizontal form-without-legend" novalidate="novalidate" _method="POST" autocomplete="false">
                     <fieldset>
                         <div class="row">
@@ -176,19 +147,19 @@
 
 
                     <div class="row">
-                        <div class="form-group has-feedback">
+                        <div ng-class="{'form-group has-feedback':true,'has-error':signupForm.password.$invalid,'has-success':signupForm.password.$valid} ">
                             <label for="password" class="col-lg-1 control-label">密码 <span class="fa fa-key fa-fw"></span></label>
                             <div class="col-lg-3 has-success" ng-init="editPassword=false">
-                                <input type="password" autocomplete="false" class="form-control" path="password" id="password"
-                                       ng-init="password='${sessionScope.loginUser.password}'" ng-model="password"
-                                       pw_check="#rePassword" placeholder="请输入密码" required="true" ng-minlength="{{pw_min}}"/>
+                                <input type="password" autocomplete="false" class="form-control" name="password" id="password" ng-model="user.password" ng-disabled="!editPassword"
+                                       <%--pw_check="#rePassword" --%>
+                                       placeholder="请输入密码" required="true" ng-minlength="{{pw_min}}"/>
                                 <span ng-show="signupForm.password.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                <span ng-show="signupForm.password.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
 
                             </div>
                             <div class="col-lg-2">
-                                <span class="fa fa-ban" ng-if="!signupForm.password.$dirty ||signupForm.password.$invalid">修改</span>
-                                <a href="#" class="fa fa-edit" ng-if="signupForm.password.$dirty &&signupForm.password.$valid">修改</a>
-                                <a href="#" class="fa fa-check-square" ng-if="signupForm.password.$dirty&&true">成功</a>
+                                <a href="#" ng-class="{'margin-top-10 fa':true,'fa-edit':!editPassword,'fa-ban':editPassword}" ng-click="editPassword=!editPassword">修改</a>
+
                             </div>
                         </div>
                         <div class="row">
@@ -197,7 +168,7 @@
                                 <label class="control-label" ng-show="signupForm.password.$error.required">密码必填</label>
                                 <label class="control-label" ng-show="signupForm.password.$error.minlength">密码最少需要{{pw_min}}个字符</label>
                             </div>
-                            <div class="has-success col-lg-5" ng-show="signupForm.password.$valid&&signupForm.password.$dirty">
+                            <div class="has-success col-lg-5" ng-show="signupForm.password.$valid&&editPassword">
                                 <label class="control-label">密码强度:
                                     <div class="{{cls1}}">&nbsp;</div><div class="{{cls2}}">&nbsp;</div><div class="{{cls3}}">&nbsp;</div>
                                     {{passwordStrength}}</label>
@@ -205,59 +176,36 @@
                         </div>
 
                     </div>
-                    <div class="row">
-                            <div class="form-group has-feedback" ng-show="editPassword">
-                                <label for="password" class="col-lg-1 control-label">确认密码<span class="fa fa-key fa-fw"></span></label>
+                    <div class="row margin-top-10">
+                            <div ng-class="{'form-group has-feedback':true,'has-error':signupForm.rePassword.$invalid,'has-success':signupForm.rePassword.$valid} "
+                                 ng-show="editPassword">
+                                <label for="rePassword" class="col-lg-1 control-label">确认密码<span class="fa fa-key fa-fw"></span></label>
                                 <div class="col-lg-3 has-success">
-                                    <input onfocus="this.type='password'" autocomplete="false" class="form-control" id="rePassword" path="rePassword" ng-init="rePassword='${form.rePassword}'"
-                                           ng-model="rePassword" pw_check="#password" placeholder="请再输入一次密码" required="true" ng-disabled="!signupForm.password.$dirty"/>
+                                    <input onfocus="this.type='password'" autocomplete="false" class="form-control" id="rePassword" name="rePassword" ng-minlength="{{pw_min}}"
+                                           ng-model="user.rePassword" pw_check="#password" placeholder="请再输入一次密码" required="true" ng-disabled="signupForm.password.$invalid"/>
                                     <span ng-show="signupForm.rePassword.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                    <span ng-show="signupForm.rePassword.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
 
+                                </div>
+                                <div class="col-lg-2">
+                                    <a href="#" class="fa fa-check-square margin-top-10"
+                                       ng-if="editPassword&&signupForm.password.$valid&&signupForm.rePassword.$valid" ng-click="updateUserPassword()">确认</a>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-1">&nbsp;</div>
-                                <div class="has-error col-lg-3" ng-show="signupForm.rePassword.$dirty &&signupForm.rePassword.$invalid">
+                                <div class="has-error col-lg-3" ng-show="signupForm.rePassword.$dirty&&signupForm.rePassword.$invalid&&editPassword">
                                     <label class="control-label" ng-show="signupForm.rePassword.$error.required"> 必须确认密码</label>
                                     <label class="control-label" ng-show="signupForm.rePassword.$error.minlength"> 密码最少需要{{pw_min}}个字符 </label>
                                     <label class="control-label" ng-show="signupForm.password.$invalid"> 请填写密码再进行确认</label>
-                                    <label class="control-label" ng-show="signupForm.password.$error.pwmatch &&signupForm.rePassword.$error.pwmatch"> 两次密码必须相同</label>
+                                    <label class="control-label" ng-show="signupForm.rePassword.$error.pwmatch"> 两次密码必须相同</label>
                                 </div>
-                                <div class="col-lg-5 has-success" ng-show="signupForm.rePassword.$valid && signupForm.password.$valid">
-                                    <label class="control-label"></label>
-                                </div>
+                                <%--<div class="col-lg-5 has-success" ng-show="signupForm.rePassword.$valid && signupForm.password.$valid">--%>
+                                    <%--<label class="control-label"></label>--%>
+                                <%--</div>--%>
                             </div>
                         </div>
 
-                        <%--<div class="row table-bordered">--%>
-                        <%--<div class="col-lg-1 col-sm-1"></div>--%>
-                        <%--<div class="col-lg-6 col-sm-6">--%>
-                        <%--<div class="form-group">--%>
-                        <%--<div class="row">--%>
-                        <%--<div class="col-lg-4 col-sm-4">--%>
-                        <%--<span class="btn btn-primary fa fa-user-secret disabled" style="margin: 0px;">个人真实信息</span>--%>
-                        <%--</div>--%>
-                        <%--</div>--%>
-                        <%--<div class="row table-bordered bg-success" style="margin-bottom:10px;">--%>
-                        <%--<label class="col-lg-2 control-label">姓名 <span class="fa fa-user"></span></label>--%>
-                        <%--<div class="col-lg-5 has-success">--%>
-                        <%--<input type="text" class="form-control"--%>
-                        <%--ng-init="realMessage.firstName='${sessionScope.loginUser.realMessage.firstName}'" ng-model="realMessage.firstName"/>--%>
-                        <%--</div>--%>
-
-                        <%--</div>--%>
-                        <%--<div class="row table-bordered bg-success" style="margin-bottom:10px;">--%>
-                        <%--<label class="col-lg-2 control-label">身份证 <span class="fa fa-user"></span></label>--%>
-                        <%--<div class="col-lg-5 has-success">--%>
-                        <%--<input class="form-control" type="text"--%>
-                        <%--ng-init="realMessage.idCardNo='${sessionScope.loginUser.realMessage.idCardNo}'" ng-model="realMessage.idCardNo"/>--%>
-
-                        <%--</div>--%>
-                        <%--</div>--%>
-                        <%--</div>--%>
-                        <%--</div>--%>
-
-                        <%--</div>--%>
 
 
                     </fieldset>

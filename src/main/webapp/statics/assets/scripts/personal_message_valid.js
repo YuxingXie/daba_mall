@@ -1,6 +1,30 @@
 var mainApp=angular.module("mainApp",['ui.bootstrap', 'ngRoute','ngSanitize']);
-
-mainApp.controller('PersonalMessageController',['$scope', '$http',"$timeout", function ($scope, $http,$timeout) {
+mainApp.constant('pw_min',6)
+mainApp.controller('PersonalMessageController',['$scope', '$http',"$timeout","pw_min", function ($scope, $http,$timeout,pw_min) {
+    $scope.pw_min=pw_min;
+    $scope.$watch('user.password', function (newVal, oldVal, scope) {
+        if (newVal && newVal !== oldVal && newVal.length >= pw_min) {
+            $scope.password=newVal;
+            if (newVal.length >=pw_min && newVal.length < (pw_min+3)) {
+                $scope.passwordStrength = "弱";
+                $scope.cls1 = "pw_weak";
+                $scope.cls2 = "pw_un_reach";
+                $scope.cls3 = "pw_un_reach";
+            }
+            else if (newVal.length >= pw_min+3 && newVal.length < pw_min+6) {
+                $scope.passwordStrength = "中";
+                $scope.cls1 = "pw_mid";
+                $scope.cls2 = "pw_mid";
+                $scope.cls3 = "pw_un_reach";
+            }
+            else {
+                $scope.passwordStrength = "强";
+                $scope.cls1 = "pw_strong";
+                $scope.cls2 = "pw_strong";
+                $scope.cls3 = "pw_strong";
+            }
+        }
+    });
     $scope.user={};
     $scope.emailUser={};//为了更新email创建的一个临时用户
     $scope.phoneUser={};//为了更新phone创建的一个临时用户
@@ -8,11 +32,19 @@ mainApp.controller('PersonalMessageController',['$scope', '$http',"$timeout", fu
     $http.get(path+"/user/data/"+userId).success(function(data){
         $scope.user=data;
         $scope.user.validateCode="";
+        $scope.user.password="";
     })
     $scope.updateUserName=function(){
         $http.post(path+"/user/update/name",$scope.user).success(function(data){
             $scope.user=data;
             $scope.modifyName=false;
+        })
+    }
+
+    $scope.updateUserPassword=function(){
+        $http.post(path+"/user/update/password",$scope.user).success(function(data){
+            $scope.user=data;
+            $scope.editPassword=false;
         })
     }
     $scope.updateUserEmail=function(){
@@ -189,3 +221,20 @@ mainApp.controller('PersonalMessageController',['$scope', '$http',"$timeout", fu
             }
         }
     })
+    .directive('pwCheck', [function () {
+        return {
+            require: 'ngModel',
+            link: function (scope, elem, attrs, ctrl) {
+                var firstPassword =attrs.pwCheck;
+                elem.add($(firstPassword)).on('keyup', function () {
+                    scope.$apply(function () {
+                        //console.log("scope.password"+scope.password);
+                        //console.log("first:"+firstPassword+"-"+$(firstPassword).val());
+                        //var v = elem.val()===$(firstPassword).val();
+                        //console.log("scope.rePassword:"+scope.rePassword);
+                        ctrl.$setValidity('pwmatch', !scope.user.password ||!scope.user.rePassword || scope.user.rePassword&&scope.user.password===scope.user.rePassword);
+                    });
+                });
+            }
+        }
+    }])
