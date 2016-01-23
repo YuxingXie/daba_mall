@@ -12,7 +12,7 @@
         </ul>
         <div class="row bg-success" style="margin-bottom: 20px;">
             <div class="col-lg-12 has-success">
-                <h3><i class="fa fa-info-circle"></i>恭喜您注册成为大坝用户，您可以使用注册用户的功能了。您也可以继续<a href="${path}/user/personal_message"> 完善个人资料</a>。</h3>
+                <h3><i class="fa fa-info-circle"></i>恭喜您注册成为大坝用户，您可以使用注册用户的功能了。您也可以继续<a href="${path}/user/personal_message" target="_blank"> 完善个人资料</a>。</h3>
             </div>
         </div>
 

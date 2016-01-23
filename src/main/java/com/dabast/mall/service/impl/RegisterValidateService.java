@@ -109,6 +109,36 @@ public class RegisterValidateService {
         userDao.upsert(userToUpdate);
         return userToUpdate;
     }
+
+    /**
+     * 用户修改邮箱时发送验证码
+     * @param email
+     * @return
+     * @throws EmailException
+     */
+    public int sendValidateCodeToMail(String email) throws EmailException {
+        ///邮件的内容
+        StringBuffer sb = new StringBuffer("<p>您的大坝生态邮箱注册验证码是:");
+        int validateCode=(int)(Math.random()*999999-99999);
+        sb.append("<font color='red'>").append(validateCode).append("</font></p>");
+        sb.append("<p>验证码有效时间为30分钟。</p>");
+
+        //发送邮件
+        HtmlEmail htmlEmail = new HtmlEmail();
+        htmlEmail.setHostName(emailHostName);//设置使用发电子邮件的邮件服务器
+        htmlEmail.setAuthentication(emailUserName, emailPassword);
+        htmlEmail.setCharset("UTF-8");
+        htmlEmail.setSubject("大坝生态账号激活");
+//        htmlEmail.setSmtpPort(smtpPort);
+        htmlEmail.getBounceAddress();
+        htmlEmail.addTo(email);
+        htmlEmail.setFrom(emailAddress);
+        htmlEmail.setMsg(sb.toString());
+        htmlEmail.send();
+        //保存注册信息,如果发送邮件抛出异常，不会保存
+
+        return validateCode;
+    }
     /**
      * 注册时发送验证码到手机
      */
@@ -134,6 +164,24 @@ public class RegisterValidateService {
         userToUpdate.setPhone(phone);
         userDao.upsert(userToUpdate);
         return userToUpdate;
+    }
+    /**
+     * 修改手机时发送验证码到手机
+     */
+
+    public int sendValidateCodeToPhone(String phone) throws Exception {
+        ///邮件的内容
+        StringBuffer sb = new StringBuffer("您的大坝生态手机注册验证码是: ");
+        int validateCode=(int)(Math.random()*999999-99999);
+        sb.append(validateCode)
+                .append(" 验证码有效时间为30分钟。");
+        String msg=smsManager.send(sb.toString(),phone);
+        if (!msg.equals("100")){
+            throw new BusinessException("发送短信时出现了问题，问题代码："+msg);
+        }
+        //保存注册信息
+
+        return validateCode;
     }
     /**
      * 处理激活
@@ -192,5 +240,9 @@ public class RegisterValidateService {
 
     public boolean isEmailUsed(String email, String userId) {
         return userDao.isEmailUsed(email,userId);
+    }
+
+    public boolean isPhoneUsed(String phone, String userId) {
+        return userDao.isPhoneUsed(phone,userId);
     }
 }

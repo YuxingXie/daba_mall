@@ -105,7 +105,14 @@ var loginAndCallBack=function (callBack) {
 
 }
 $(document).ready(function () {
+    (function(){
+        var url=$("#toLogin").data("href");
+        var str=encodeURIComponent(url);
+        $("#toLogin").attr("href",path+"/user/to_login?to="+str);
+        $("#toLogin").attr("target","_blank");
+    }());
     $(document).on("click", "#login", new loginAndCallBack());
+
     $(document).on("click",".login-need",function(){
         var url=$(this).data("href");
         var target=$(this).data("target");

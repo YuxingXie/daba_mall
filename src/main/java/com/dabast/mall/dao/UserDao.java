@@ -170,7 +170,14 @@ public class UserDao extends BaseMongoDao<User>  {
         List<User> users=mongoTemplate.find(new BasicQuery(dbObject),User.class);
         return users!=null&&users.size()>0;
     }
-
+    public boolean isPhoneUsed(String phone, String userId) {
+        DBObject dbObject=new BasicDBObject();
+        dbObject.put("_id", new BasicDBObject("$ne",userId));
+        dbObject.put("activated", true);
+        dbObject.put("phone", phone);
+        List<User> users=mongoTemplate.find(new BasicQuery(dbObject),User.class);
+        return users!=null&&users.size()>0;
+    }
     public boolean isEmailUsed(String email) {
         User user=findByEmail(email,true);
         if (user==null) return false;
@@ -244,4 +251,6 @@ public class UserDao extends BaseMongoDao<User>  {
         dbObject.put("tencentLoginInfo.openId",openId);
         return getMongoTemplate().findOne(new BasicQuery(dbObject),User.class);
     }
+
+
 }

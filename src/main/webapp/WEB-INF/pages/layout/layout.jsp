@@ -28,7 +28,7 @@
                                 <c:choose>
                                     <c:when test="${empty sessionScope.loginUser}">
                                         <li><a href="${path}/user/register_phone" target="_blank">注册</a></li>
-                                        <li><a data-href="${uri}" class="login-need" data-target="_blank" href="javascript:void(0)">登录</a></li>
+                                        <li><a data-href="${uri}" href="javascript:void(0)" id="toLogin">登录</a></li>
                                     </c:when>
                                     <c:otherwise>
                                         <li>欢迎您,<a href="${path}/personal_message">${sessionScope.loginUser.name}</a>!</li>
@@ -130,7 +130,7 @@
                                     <li><a data-href="${path}/my_interests" class="login-need" href="javascript:void(0)"><i class="fa fa-heart"></i>我的关注</a></li>
                                     <li><a data-href="${path}/my_notifies" class="login-need" href="javascript:void(0)"><i class="fa fa-envelope"></i>我的消息</a></li>
                                     <c:if test="${not empty sessionScope.loginUser}">
-                                        <li><a href="${path}/personal_message/personal_message.jsp" target="_blank"><i class="fa fa-user"></i>个人信息</a></li>
+                                        <li><a href="${path}/user/personal_message" target="_blank"><i class="fa fa-user"></i>个人信息</a></li>
                                     </c:if>
                                     <li><a data-href="${path}/return_exchange_notify" class="login-need" href="javascript:void(0)"><i class="fa fa-reply"></i>退货换货</a></li>
                                 </ul>

@@ -68,7 +68,8 @@ public class SmsManager {
     }
 
     public String send(String msgContent, String mobile) throws Exception {
-
+        String sign="【大坝生态农业】";
+        msgContent+=sign;
         // 组建请求
         String straddr = addr + "?uid=" + userId + "&pwd=" + pwd + "&mobile="
                 + mobile + "&encode=" + encode + "&content="

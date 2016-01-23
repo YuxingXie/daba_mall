@@ -123,31 +123,45 @@ public class UserController extends BaseRestSpringController {
     }
 
     /**
-     * 发送验证码时可能会创建一个新临时用户保存email和验证码，也可能使用用户本身的这条记录，如果创建了临时用户则需要删除
+     *更新用户邮箱
      * @param model
-     * @param users
+     * @param user
      * @param session
      * @return
      */
     @RequestMapping(value = "/update/email")
-    public ResponseEntity<User> updateEmail(ModelMap model,@RequestBody PairUsers users,HttpSession session) {
-        User user=users.getFirstUser();
-        User emailUser=users.getSecondUser();
+    public ResponseEntity<User> updateEmail(ModelMap model,@RequestBody User user,HttpSession session) {
         Assert.notNull(user);
-        Assert.notNull(emailUser);
-        Assert.notNull(emailUser.getId());
-        String email=emailUser.getEmail();
         String userId=user.getId();
-        Assert.notNull(email);
         Assert.notNull(userId);
-        if (user.getEmail().equals(emailUser.getEmail())) return new ResponseEntity<User>(user, HttpStatus.OK);
+        Assert.notNull(user.getEmail());
         User updateUser=new User();
         updateUser.setId(userId);
-        updateUser.setEmail(email);
+        updateUser.setEmail(user.getEmail());
         userService.update(updateUser);
-        if(!user.getId().equalsIgnoreCase(emailUser.getId())){
-            userService.removeById(emailUser.getId());
-        }
+
+        user=userService.findById(userId);
+        session.setAttribute(Constant.LOGIN_USER,user);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+    /**
+     *更新用户手机
+     * @param model
+     * @param user
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/update/phone")
+    public ResponseEntity<User> updatePhone(ModelMap model,@RequestBody User user,HttpSession session) {
+        Assert.notNull(user);
+        String userId=user.getId();
+        Assert.notNull(userId);
+        Assert.notNull(user.getPhone());
+        User updateUser=new User();
+        updateUser.setId(userId);
+        updateUser.setEmail(user.getPhone());
+        userService.update(updateUser);
+
         user=userService.findById(userId);
         session.setAttribute(Constant.LOGIN_USER,user);
         return new ResponseEntity<User>(user, HttpStatus.OK);
@@ -163,7 +177,25 @@ public class UserController extends BaseRestSpringController {
         }
         return responseEntity;
     }
-
+    /**
+     * 用户修改手机时验证手机是否被使用
+     * @param model
+     * @param user
+     * @return
+     */
+    @RequestMapping(value = "/exist_phone2")
+    public ResponseEntity existPhone2(ModelMap model, @RequestBody User user) {
+        ResponseEntity responseEntity = null;
+        Assert.notNull(user);
+        Assert.notNull(user.getPhone());
+        boolean used = registerValidateService.isPhoneUsed(user.getPhone(),user.getId());
+        if (used) {
+            responseEntity = new ResponseEntity("{\"unique\":false}", HttpStatus.OK);
+        } else {
+            responseEntity = new ResponseEntity("{\"unique\":true}", HttpStatus.OK);
+        }
+        return responseEntity;
+    }
     /**
      * 用户修改邮箱时验证邮箱是否可用
      * @param model
@@ -454,8 +486,8 @@ public class UserController extends BaseRestSpringController {
     }
     @RequestMapping(value = "/personal_message")
     public String personalMessage(ModelMap model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-//        User user=session.getAttribute("loginUser")==null?null:(User)session.getAttribute("loginUser");
-        return "personal_message";
+
+        return "forward:/personal_message/personal_message.jsp";
     }
 
 
@@ -473,6 +505,42 @@ public class UserController extends BaseRestSpringController {
     public ResponseEntity<User> emailValidateCode(ModelMap map, HttpServletRequest request, String email) throws ParseException, EmailException {
         User user=registerValidateService.sendValidateCodeToMailAndUpsertUser(email);//发邮箱激活
         return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+
+    /**
+     * 用户修改邮箱时获取验证码
+     * @param map
+     * @param request
+     * @param email
+     * @return
+     * @throws ParseException
+     * @throws EmailException
+     */
+    @RequestMapping(value = "/email/edit/validate_code", method = {RequestMethod.POST})
+    public ResponseEntity<Message> emailEditValidateCode(ModelMap map, HttpServletRequest request, String email) throws ParseException, EmailException {
+        int validateCode=registerValidateService.sendValidateCodeToMail(email);//发邮箱激活
+        Message message=new Message();
+        message.setSuccess(true);
+        message.setMessage(validateCode+"");
+        return new ResponseEntity<Message>(message, HttpStatus.OK);
+    }
+    /**
+     * 用户修改手机时获取验证码
+     * @param map
+     * @param request
+     * @param phone
+     * @return
+     * @throws ParseException
+     * @throws EmailException
+     */
+    @RequestMapping(value = "/phone/edit/validate_code", method = {RequestMethod.POST})
+    public ResponseEntity<Message> phoneEditValidateCode(ModelMap map, HttpServletRequest request, String phone) throws Exception {
+        int validateCode=registerValidateService.sendValidateCodeToPhone(phone);
+//        String code= phone.indexOf("@")>=0? phone.substring(phone.indexOf("@")+1):"";
+        Message message=new Message();
+        message.setSuccess(true);
+        message.setMessage(validateCode+"");
+        return new ResponseEntity<Message>(message, HttpStatus.OK);
     }
     /**
      * 发送手机短信验证码并保存用户

@@ -197,48 +197,11 @@ public class ProductSeriesDao extends BaseMongoDao<ProductSeries> {
     }
 
     public List<ProductSeries> getLowPrices(int count) {
-//        DBObject productSeriesPriceDBObject=new BasicDBObject();
-//        productSeriesPriceDBObject.put("prevPrice",new BasicDBObject("$exists",true));
-//        BasicDBList dbList=new BasicDBList();
-//        DBObject cond1=new BasicDBObject();
-//        Date now=new Date();
-//        cond1.put("endDate",null);
-//        cond1.put("beginDate",new BasicDBObject("$lt",now));
-//        DBObject cond2=new BasicDBObject();
-//        cond2.put("endDate",new BasicDBObject("$gt",now));
-//        cond2.put("beginDate", new BasicDBObject("$lt", now));
-//        dbList.add(cond1);
-//        dbList.add(cond2);
-////        DBObject orDBObject=new BasicDBObject("$or",dbList);
-//        productSeriesPriceDBObject.put("$or",dbList);
-////        String queryString=" {\"prevPrice\":{\"$exists\":true},\"$or\":[{\"endDate\" : null,\"beginDate\":{\"$lt\": new Date()}},{\"endDate\": {\"$gt\" : new Date()},\"beginDate\":{\"$lt\": new Date()}}]}";
-////        Query query=new BasicQuery(queryString);
-////        System.out.println(new BasicQuery(productSeriesPriceDBObject));
-//        List<ProductSeriesPrice> productSeriesPriceList=ServiceManager.productSeriesPriceService.findAll(productSeriesPriceDBObject);
-//        List<ProductSeries> list=new ArrayList<ProductSeries>();
-//        int i=0;
-//        for (ProductSeriesPrice productSeriesPrice:productSeriesPriceList){
-//            if (productSeriesPrice==null) continue;
-//            if (productSeriesPrice.getPrice()==null) continue;
-//            ProductSeriesPrice prevPrice=productSeriesPrice.getPrevPrice();
-//            if (prevPrice==null) continue;
-//            ProductSeries productSeries=productSeriesPrice.getProductSeries();
-//            if (productSeries==null) continue;
-//            if (prevPrice.getPrice()==null) continue;
-//            if (productSeriesPrice.getPrice()<prevPrice.getPrice()){
-//                list.add(productSeries);
-//                i++;
-//                if (i+1>=count) break;
-//            }
-//        }
-//        return list.size()==0?null:list;
         return null;
     }
 
     public List<ProductSeries> getNewProducts(int count) {
         DBObject dbObject=new BasicDBObject();
-//        dbObject.put("shelvesDate",new BasicDBObject("$gt",new Date().getTime()-(30L*24L*60L*60L*1000L)));
-//        (now-shelvesDate.getTime()) <=(30L*24L*60L*60L*1000L)
         List<ProductSeries> productSeriesList=getMongoTemplate().find(new BasicQuery(dbObject).with(new Sort(Sort.Direction.DESC,"shelvesDate")).limit(count), ProductSeries.class);
         getStoresAndPrices(productSeriesList);
         return productSeriesList;
