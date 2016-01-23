@@ -147,7 +147,7 @@ public class RegisterValidateService {
         User userToUpdate=userDao.findByPhone(phone);
         if (userToUpdate!=null && userToUpdate.getActivated()!=null&&userToUpdate.getActivated()) return null;
         ///邮件的内容
-        StringBuffer sb = new StringBuffer("您的大坝生态手机注册验证码是: ");
+        StringBuffer sb = new StringBuffer("您的手机注册验证码是: ");
         int validateCode=(int)(Math.random()*999999-99999);
         sb.append(validateCode)
         .append(" 验证码有效时间为30分钟。");
@@ -171,7 +171,7 @@ public class RegisterValidateService {
 
     public int sendValidateCodeToPhone(String phone) throws Exception {
         ///邮件的内容
-        StringBuffer sb = new StringBuffer("您的大坝生态手机注册验证码是: ");
+        StringBuffer sb = new StringBuffer("您的手机注册验证码是: ");
         int validateCode=(int)(Math.random()*999999-99999);
         sb.append(validateCode)
                 .append(" 验证码有效时间为30分钟。");
