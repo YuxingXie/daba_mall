@@ -39,7 +39,7 @@ public final class MD5 {
 		}
 	}
 	public static void main(String[] args) {
-		logger.info(MD5.convert("dabastAdmin"));
+		logger.info(MD5.convert("111111"));
 	}
 
 }
