@@ -68,8 +68,8 @@ public class SmsManager {
     }
 
     public String send(String msgContent, String mobile) throws Exception {
-//        String sign="[大坝生态农业]";
-//        msgContent+=sign;
+        String sign="【大坝生态】";
+        msgContent+=sign;
         // 组建请求
         String straddr = addr + "?uid=" + userId + "&pwd=" + pwd + "&mobile="
                 + mobile + "&encode=" + encode + "&content="
@@ -147,12 +147,7 @@ public class SmsManager {
 
 
     public static void main(String[] args) {
-//        try {
-//            new SmsManager().send("您的验证码是565853。请在页面中提交验证码完成验证。【大坝生态】", "18974989697");
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        System.out.println(Math.abs(-100001));
 
     }
 }
