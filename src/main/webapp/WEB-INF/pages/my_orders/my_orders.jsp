@@ -137,7 +137,7 @@
                                 </div>
 
                                 <div class="col-lg-2 col-sm-2 text-center fa fa-rmb">
-                                    {{productSelected.productSeries.commonPrice | number:2}}
+                                    {{productSelected.productSeries.commonPrice | number:2}}/{{productSelected.productSeries.measurementUnit}}
                                 </div>
                                 <div class="col-lg-2 col-sm-2 text-center">{{productSelected.amount}}</div>
                                 <div class="col-lg-2 col-sm-2 text-center fa fa-rmb">
