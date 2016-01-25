@@ -42,7 +42,7 @@
                                 </em>
                         </td>
                         <td>
-                        <span class="fa fa-rmb">{{productSelected.productSeries.commonPrice | number:2}}</span>
+                        <span class="fa fa-rmb">{{productSelected.productSeries.commonPrice | number:2}}/{{productSelected.productSeries.measurementUnit}}</span>
                         </td>
                         <td>
                         <span style=" font-size:14px;">

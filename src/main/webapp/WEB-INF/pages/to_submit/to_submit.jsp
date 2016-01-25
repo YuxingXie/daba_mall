@@ -49,7 +49,10 @@
                                         </td>
 
                                         <td class="shopping-cart-price text-center">
-                                            <span class="fa fa-rmb"><fmt:formatNumber value="${productSelected.productSeries.commonPrice}" pattern="##.##" minFractionDigits="2"/></span>
+                                            <span class="fa fa-rmb">
+                                                <fmt:formatNumber value="${productSelected.productSeries.commonPrice}" pattern="##.##" minFractionDigits="2"/>
+                                                /${productSelected.productSeries.measurementUnit}
+                                            </span>
                                             <c:set var="totalCount" value="${totalCount+productSelected.amount}"/>
                                         </td>
                                         <td class="shopping-cart-price text-center">

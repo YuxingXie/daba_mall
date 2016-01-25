@@ -73,7 +73,7 @@
                                 <ul class="list-group list-inline">
                                             <li class="fa fa-cubes">库存:<a><c:choose><c:when test="${empty productSeries.productStore}">0</c:when><c:otherwise>${productSeries.productStore.remain}</c:otherwise></c:choose></a></li>
                                             <li class="fa fa-pencil">评论数:<a>${productSeries.evaluateCount}</a></li>
-                                            <li class="fa fa-rmb">价格:<a>${productSeries.commonPrice}</a></li>
+                                            <li class="fa fa-rmb">价格:<a>${productSeries.commonPrice}/${productSelected.productSeries.measurementUnit}</a></li>
                                 </ul>
                             </td>
                         </tr>

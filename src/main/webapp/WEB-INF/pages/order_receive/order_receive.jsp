@@ -60,6 +60,7 @@
                                     </td>
                                     <td>
                                         ￥<fmt:formatNumber value="${productSelected.productSeries.commonPrice}" pattern="##.##" minFractionDigits="2"></fmt:formatNumber>
+                                        /${productSelected.productSeries.measurementUnit}
                                     </td>
                                     <td>${productSelected.amount}</td>
                                     <td>

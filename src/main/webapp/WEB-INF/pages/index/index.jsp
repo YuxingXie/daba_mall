@@ -125,8 +125,7 @@
                                                 <div class="bg-info">
                                                     <div class="row margin-left-2 padding-top-10 padding-bottom-10">
                                                         <a href="${path}/product_series/${productSeries.id}" class="fa fa-2x">${productSeries.name}</a>
-                                                        <i class="fa fa-rmb pi-price fa-2x">${productSeries.commonPrice}</i>
-
+                                                        <i class="fa fa-rmb pi-price fa-2x">${productSeries.commonPrice}<c:if test="${not empty productSeries.measurementUnit}">/${productSeries.measurementUnit}</c:if></i>
                                                     </div>
                                                     <div class="row margin-left-2 padding-bottom-10 padding-right-0">
                                                         <div class="col-lg-12 col-sm-12 margin-left--10">

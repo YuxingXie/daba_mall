@@ -82,7 +82,7 @@
                             </td>
 
                             <td class="font-size-12 text-center fa fa-rmb">
-                                {{productSelected.productSeries.commonPrice | number:2}}
+                                {{productSelected.productSeries.commonPrice | number:2}}/{{productSelected.productSeries.measurementUnit}}
                             </td>
                             <td class="font-size-12 text-center">{{productSelected.amount}}</td>
                             <td class="font-size-12 text-center fa fa-rmb">

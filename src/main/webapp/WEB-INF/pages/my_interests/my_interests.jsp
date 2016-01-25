@@ -33,7 +33,7 @@
                     </td>
 
                     <td>
-                    <span class="fa fa-rmb">{{interest.productSeries.commonPrice | number:2}}</span>
+                    <span class="fa fa-rmb">{{interest.productSeries.commonPrice | number:2}}/{{interest.productSeries.measurementUnit}}</span>
                     </td>
                     <td>
                         <span ng-if="!interest.productSeries.productStore">无库存信息</span>

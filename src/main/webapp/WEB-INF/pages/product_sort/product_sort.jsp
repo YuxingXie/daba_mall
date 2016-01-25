@@ -42,7 +42,7 @@
                     <div class="sticker sticker-sale" ng-if="productSeries.hotSell"></div>
                     <div class="row margin-left-0">
                         <a href="${path}/product_series/{{productSeries.id}}" class="pull-left">{{productSeries.name}}</a>
-                        <i class="fa fa-rmb pi-price"></i>{{productSeries.commonPrice | number:2}}&nbsp;&nbsp;
+                        <i class="fa fa-rmb pi-price"></i>{{productSeries.commonPrice | number:2}}/{{productSeries.measurementUnit}}
                         <a href="javascript:void(0)"
                            class="fa fa-shopping-cart btn btn-danger btn-xs pull-right margin-right-20" data-ng-click="popover(productSeries.id);">添加到购物车</a>
 

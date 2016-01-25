@@ -272,10 +272,11 @@
 
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-3">
-                                        <h4>价格 <i class="fa fa-rmb"></i>{{productSelected.productSeries.commonPrice}}
+                                        <h4> <i class="fa fa-rmb"></i>{{productSelected.productSeries.commonPrice}}
                                         <em ng-if="productSelected.productSeries.currentPrice &&productSelected.productSeries.currentPrice.prevPrice &&lowPrice()">
                                             <del><i class="fa fa-rmb"></i>{{productSelected.productSeries.currentPrice.prevPrice.price}}</del>
                                         </em>
+                                            /{{productSelected.productSeries.measurementUnit}}
                                         </h4>
                                     </div>
                                 <div class="col-lg-3 col-sm-3"><h4>库存<i class="fa fa-cubes"></i>{{productSelected.productSeries.productStore.remain}}</h4></div>

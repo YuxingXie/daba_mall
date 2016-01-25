@@ -785,7 +785,7 @@ public class UserController extends BaseRestSpringController {
         idCode.drawRandomLines(g, 160) ;
         String randCode=idCode.drawRandomString(4, g) ;
         session.setAttribute("pictureRandCode",randCode);
-        System.out.println("图片验证码："+randCode);
+//        System.out.println("图片验证码："+randCode);
         g.dispose() ;
         ImageIO.write(image, "JPEG", response.getOutputStream()) ;
     }
@@ -793,7 +793,7 @@ public class UserController extends BaseRestSpringController {
     public ResponseEntity<Message> identifyImageMatch(@RequestBody Message message,HttpServletResponse response,HttpSession session) throws IOException {
         String pictureRandCode=session.getAttribute("pictureRandCode")==null?"":session.getAttribute("pictureRandCode").toString();
         Assert.notNull(message.getMessage());
-        System.out.println(message.getMessage());
+//        System.out.println(message.getMessage());
         if (message.getMessage().equalsIgnoreCase(pictureRandCode)){
             message.setSuccess(true);
         }

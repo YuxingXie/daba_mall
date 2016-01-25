@@ -41,7 +41,7 @@
           <div class="col-lg-4 col-sm-4">
               <div class="row padding-bottom-20"><h1 class="center-block">{{productSeries.name}}</h1></div>
               <div class="row padding-bottom-20">
-                <div class="col-sm-3 col-lg-3 padding-left-0 margin-left-0 text-left"><h3 class="fa fa-rmb fa-2x">{{productSeries.commonPrice}}</h3>
+                <div class="col-sm-3 col-lg-3 padding-left-0 margin-left-0 text-left"><h3 class="fa fa-rmb fa-2x">{{productSeries.commonPrice}}/{{productSeries.measurementUnit}}</h3>
                   <em ng-if="productSeries.currentPrice &&productSeries.currentPrice.prevPrice && productSeries.currentPrice<productSeries.currentPrice.prevPrice">
                     <i class="fa fa-rmb"></i>{{productSeries.currentPrice.prevPrice.price}}
                   </em>
