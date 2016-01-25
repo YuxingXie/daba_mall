@@ -3,6 +3,7 @@ package com.dabast.mall.controller;
 import com.dabast.common.base.BaseRestSpringController;
 import com.dabast.common.constant.Constant;
 import com.dabast.common.helper.service.ServiceManager;
+import com.dabast.common.util.IdentifyingCode;
 import com.dabast.common.util.MD5;
 import com.dabast.common.web.CookieTool;
 import com.dabast.entity.Account;
@@ -34,10 +35,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -756,5 +760,43 @@ public class UserController extends BaseRestSpringController {
 //        Assert.notNull(user);
         List<Account> accounts=ServiceManager.accountService.findAll(new BasicDBObject("user",new DBRef("mallUser",user.getId())));
         return new ResponseEntity<List<Account>>(accounts,HttpStatus.OK);
+    }
+    @RequestMapping(value = "/identify_image")
+    public void identify_image(HttpSession session,HttpServletResponse response) throws IOException {
+        //设置不缓存图片
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "No-cache");
+        response.setDateHeader("Expires", 0) ;
+        //指定生成的相应图片
+        response.setContentType("image/jpeg") ;
+        IdentifyingCode idCode = new IdentifyingCode();
+        BufferedImage image =new BufferedImage(idCode.getWidth() , idCode.getHeight() , BufferedImage.TYPE_INT_BGR) ;
+        Graphics2D g = image.createGraphics() ;
+        //定义字体样式
+        Font myFont = new Font("黑体" , Font.BOLD , 16) ;
+        //设置字体
+        g.setFont(myFont) ;
+
+        g.setColor(idCode.getRandomColor(200 , 250)) ;
+        //绘制背景
+        g.fillRect(0, 0, idCode.getWidth() , idCode.getHeight()) ;
+
+        g.setColor(idCode.getRandomColor(180, 200)) ;
+        idCode.drawRandomLines(g, 160) ;
+        String randCode=idCode.drawRandomString(4, g) ;
+        session.setAttribute("pictureRandCode",randCode);
+        System.out.println("图片验证码："+randCode);
+        g.dispose() ;
+        ImageIO.write(image, "JPEG", response.getOutputStream()) ;
+    }
+    @RequestMapping(value = "/identify_image/match")
+    public ResponseEntity<Message> identifyImageMatch(@RequestBody Message message,HttpServletResponse response,HttpSession session) throws IOException {
+        String pictureRandCode=session.getAttribute("pictureRandCode")==null?"":session.getAttribute("pictureRandCode").toString();
+        Assert.notNull(message.getMessage());
+        System.out.println(message.getMessage());
+        if (message.getMessage().equalsIgnoreCase(pictureRandCode)){
+            message.setSuccess(true);
+        }
+        return new ResponseEntity<Message>(message,HttpStatus.OK);
     }
 }

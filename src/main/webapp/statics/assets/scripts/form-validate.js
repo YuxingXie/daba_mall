@@ -272,7 +272,7 @@
             }
         }
     })
-   .directive("ensurePhoneValidateCode", function ($http,$timeout) {
+    .directive("ensurePhoneValidateCode", function ($http,$timeout) {
        return{
            require:"ngModel",
            link:function(scope,ele,attrs,c){
@@ -304,8 +304,32 @@
            }
        }
    })
+    .directive("ensurePictureValidateCode", function ($http,$timeout) {
+        return{
+            require:"ngModel",
+            link:function(scope,ele,attrs,c){
+                //var timeout;
+                scope.$watch(attrs.ngModel,function(n){
+                    if(!n) return;
+                    $http({
+                        method:"POST",
+                        url:path+"/user/identify_image/match",
+                        data:{success:false,message:attrs.ensurePictureValidateCode}
+                    }).success(function(data){
+                        c.$setValidity('match',data.success);
+                    }).error(function(data){
+                        c.$setValidity('match',false);
+                    });
+                    //},300);
+
+                });
+
+            }
+        }
+    })
     .constant('pw_min',6)
     .controller("formController", ["$scope","$http","$timeout","pw_min","$location",function ($scope,$http,$timeout,pw_min) {
+
         $scope.user={};
         $scope.pw_min=pw_min;
         $scope.$watch('user.password', function (newVal, oldVal, scope) {
@@ -378,6 +402,11 @@
                 $scope.sent=false;
                 //$scope.message="服务器的错误导致邮件发送失败";
             });
+        }
+        $scope.reloadImg=function (){
+
+            document.getElementById("createCheckCode").src=document.getElementById("createCheckCode").src + "?nocache="+new Date().getTime();
+            $scope.checkCode="";
         }
     }])
 

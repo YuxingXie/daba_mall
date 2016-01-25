@@ -23,7 +23,7 @@
 
 </head>
 <body ng-controller="formController">
-<div class="container" id="registerAppMain" ng-init='sending=false;sent=false;'>
+<div class="container" ng-init='sending=false;sent=false;'>
         <div class="row margin-top-112">
             <div class="center-block">
                 <h3>大坝生态农业</h3>
@@ -141,13 +141,48 @@
                             </div>
                             <div class="form-group has-feedback">
                                 <div class="row">
+                                    <label class="col-lg-4 control-label">图形验证码 <span class="require">*</span></label>
+                                    <div ng-class="{'col-lg-4':true, 'has-error':signupForm.checkCode.$invalid,'has-success':signupForm.checkCode.$valid}">
+                                            <%--(sending||(!sent))||--%>
+                                        <input type="text" class="form-control" id="checkCode" name="checkCode" ng-model="checkCode" required="true" ensure_picture_validate_code="{{checkCode}}"/>
+                                        <span ng-show="signupForm.checkCode.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                    </div>
+                                    <div class="col-lg-2">
+
+                                            <img id="createCheckCode" src="${path}/user/identify_image">
+                                      </div>
+                                    <div class="col-lg-2">
+
+                                        <button type="button" class="btn btn-primary" data-ng-click="reloadImg()">
+                                            换一个<i class=" fa fa-refresh"></i>
+                                        </button>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4" ng-show="signupForm.checkCode.$dirty&&signupForm.checkCode.$error.match">&nbsp;
+                                    </div>
+                                        <%--前后这两个div一定要ng-show相同哦--%>
+                                    <div class="col-lg-8 has-error"
+                                         ng-show="signupForm.checkCode.$dirty&&signupForm.checkCode.$error.match">
+                                        <label class="control-label" >图形验证码错误！</label>
+                                    </div>
+                                    <div class="col-lg-4"  ng-show="signupForm.checkCode.$dirty&&signupForm.checkCode.$valid">&nbsp;</div>
+                                        <%--前后这两个div一定要ng-show相同哦--%>
+                                    <div class="col-lg-8 has-success"  ng-show="signupForm.checkCode.$dirty&&signupForm.checkCode.$valid">
+                                        <label class="control-label" >图形验证码正确！</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <div class="row">
                                     <label class="col-lg-4 control-label">手机验证码 <span class="require">*</span></label>
-                                    <div class="col-lg-4 has-error">
+                                    <div ng-class="{'col-lg-4':true, 'has-error':signupForm.validateCode.$invalid,'has-success':signupForm.validateCode.$valid}">
                                             <%--(sending||(!sent))||--%>
                                         <form:input type="text" class="form-control" phone="{{phone}}" path="validateCode"
                                                     ng-init="user.validateCode='${phoneForm.validateCode}'"
                                                     ng-model="user.validateCode" required="true"
-                                                    ng-disabled="signupForm.phone.$invalid"
+                                                    ng-disabled="signupForm.phone.$invalid||signupForm.checkCode.$invalid"
                                                     ensure_phone_validate_code="{{user.validateCode}}" />
 
                                         <form:errors path="validateCode" class="control-label"/>
@@ -156,7 +191,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <button type="button"  class="btn btn-primary"
-                                                ng-disabled="signupForm.phone.$invalid||(sending&&!sent)||seconds>0" data-ng-click="getValidCode('phone')">
+                                                ng-disabled="signupForm.phone.$invalid||signupForm.checkCode.$invalid||(sending&&!sent)||seconds>0" data-ng-click="getValidCode('phone')">
                                             获取验证码<span ng-if="seconds && seconds>0">,{{seconds}}秒后可重新获取</span><i ng-if="sending" class="fa fa-spin fa-spinner pull-right"></i>
                                         </button><span class="fa fa-warning" ng-if="sending">(如果一直处于发送中，可能是短信系统故障)</span>
                                     </div>
@@ -197,10 +232,9 @@
 <script type="text/javascript" src="${path}/statics/assets/scripts/top.js"></script>
 <script src="${path}/statics/assets/plugins/angular-1.2.19/ui-bootstrap-tpls.min.js"></script>
 <script>
-    var mainApp=angular.module("mainApp",['ui.bootstrap', 'ngRoute','ngSanitize']);
-    mainApp .controller('mainController', ['$scope', '$http', function ($scope, $http) {
 
-    }])
+    var mainApp=angular.module("mainApp",['ui.bootstrap', 'ngRoute','ngSanitize']);
+
 
 </script>
 <script src="${path}/statics/assets/scripts/form-validate.js"></script>

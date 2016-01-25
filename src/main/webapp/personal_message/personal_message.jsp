@@ -22,7 +22,7 @@
 </head>
 <body ng-controller="PersonalMessageController">
 <div class="container">
-    <div class="row margin-top-112"><i class="fa fa-info"></i>如果您是通过第三方登录(QQ,微博)登录，我们建议您留下手机号码或者邮箱。如果您设置了密码，则可以用手机号码或邮箱号作为大坝登录账号登录。</div>
+    <div class="row margin-top-112"><i class="fa fa-info"></i>如果您是通过第三方登录(QQ,微博)登录，我们建议您留下手机号码或者邮箱。如果您设置了密码，则可以用手机号码或邮箱号作为账号登录。</div>
         <div class="row margin-top-40 padding-left-30">
                 <form name="signupForm" role="form" class="form-horizontal form-without-legend" novalidate="novalidate" _method="POST" autocomplete="false">
                     <fieldset>
