@@ -1,5 +1,7 @@
 package com.dabast.entity;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 import java.util.Date;
 
 /**
@@ -8,6 +10,7 @@ import java.util.Date;
 public class EvaluateFilterInfo {
     private Boolean forbid;
     private String messageWhenForbid;
+    @DBRef
     private Administrator administrator;
     private String reason;
     private Date date;

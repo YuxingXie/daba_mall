@@ -460,4 +460,15 @@ public class AdminController extends BaseRestSpringController {
         List<Notify> notifies=ServiceManager.notifyService.findAll(dbObject);
         return new ResponseEntity<List<Notify>>(notifies,HttpStatus.OK);
     }
+    @RequestMapping(value="/evaluate/update")
+    public ResponseEntity<ProductEvaluate> evaluateUpdate(ModelMap map, @RequestBody ProductEvaluate evaluate,HttpSession session){
+        ProductEvaluate updateEvaluate=new ProductEvaluate();
+        updateEvaluate.setId(evaluate.getId());
+        EvaluateFilterInfo evaluateFilterInfo=evaluate.getEvaluateFilterInfo();
+        evaluateFilterInfo.setAdministrator(getLoginAdministrator(session));
+        evaluateFilterInfo.setDate(new Date());
+        updateEvaluate.setEvaluateFilterInfo(evaluateFilterInfo);
+        ServiceManager.productEvaluateService.update(updateEvaluate);
+        return new ResponseEntity<ProductEvaluate>(evaluate,HttpStatus.OK);
+    }
 }

@@ -9,7 +9,7 @@
     <div class="row btn-group btn-group-xs">
             <a href="${path}/admin/index/index" class="btn btn-primary"><i class="fa fa-reply"></i> 返回首页</a>
             <a href="${path}/admin/product_series/create_input" class="btn btn-primary"><i class="fa fa-plus"></i> 新增商品</a>
-            <a href="${path}/admin/product_series/list" class="btn btn-primary"><i class="fa fa-refresh"></i> 刷新</a>
+            <a href="${path}/admin/evaluate/list" class="btn btn-primary"><i class="fa fa-refresh"></i> 刷新</a>
     </div>
     <div class="row form-inline font-size-13-5">
         <div class="col-sm-9 col-lg-9" ng-if="categories.length">
@@ -45,12 +45,15 @@
             <tr ng-repeat="evaluate in list">
                 <td class="font-size-12">{{evaluate.content}}</td>
                 <td class="font-size-12">
-                    <a ng-repeat="picture in evaluate.pictures" ng-href="${path}/{{picture}}" target="_blank"><img  ng-src="${path}/{{picture}}" class="img-responsive img-ico-sm"/></a>
+                    <a ng-repeat="picture in evaluate.pictures" ng-href="${path}/{{picture}}" target="_blank"><img  ng-src="${path}/{{picture}}" class="img-responsive img-ico-sm inline-block"/></a>
                 </td>
                 <td class="font-size-12">{{evaluate.replyUser.name}}</td>
                 <td class="font-size-12">{{evaluate.date | date:'yyyy-MM-dd'}}</td>
                 <td class="font-size-12">
-                    <i ng-class="{'fa fa-2x':true,'fa-lock color-red':evaluate.evaluateFilterInfo.forbid=='true','fa-unlock color-green':!evaluate.evaluateFilterInfo.forbid||evaluate.evaluateFilterInfo.forbid=='false'}"></i>
+                    <i class="fa fa-2x fa-lock color-red"
+                       ng-if="evaluate.evaluateFilterInfo.forbid==='true'||evaluate.evaluateFilterInfo.forbid==true"></i>
+                    <i class="fa fa-2x fa-unlock color-green"
+                       ng-if="evaluate.evaluateFilterInfo.forbid==='false'||!evaluate.evaluateFilterInfo||!evaluate.evaluateFilterInfo.forbid"></i>
                 </td>
                 <td class="font-size-12 btn-group btn-group-xs">
                     <button data-ng-click="openModal(evaluate)" class="btn btn-primary"><i class="fa fa-filter"></i> 过滤</button>
@@ -60,7 +63,7 @@
         </table>
     </div>
     <div class="modal fade active" id="evaluateFilterModal" tabindex="-1" role="dialog" aria-labelledby="evaluateFilterModal" aria-hidden="true">
-        <form name="evaluateForm" id="evaluateForm" action="${path}/order/evaluate/product" novalidate="novalidate" method="POST" enctype="multipart/form-data">
+        <form name="evaluateForm" id="evaluateForm" ng-submit="doFilter()" novalidate="novalidate" method="POST" enctype="multipart/form-data">
 
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -74,9 +77,9 @@
                                 <div class="row">
                                     <label class="col-lg-2 control-label">状态</label>
                                     <div class="col-lg-8 has-success">
-                                        <select ng-model="evaluate.evaluateFilterInfo.forbid">
-                                            <option value="true">禁止显示</option>
-                                            <option value="false">显示</option>
+                                        <select ng-model="evaluate.evaluateFilterInfo.forbid" class="form-control">
+                                            <option value="true" class="fa fa-lock">禁止显示</option>
+                                            <option value="false" class="fa fa-unlock">显示</option>
                                         </select>
                                     </div>
                                 </div>
@@ -93,7 +96,8 @@
                                 <div class="row">
                                     <label  class="col-lg-2 control-label">图片</label>
                                     <div class="col-lg-8 has-success">
-                                        <a ng-repeat="picture in evaluate.pictures" ng-href="${path}/{{picture}}" target="_blank"><img  ng-src="${path}/{{picture}}" class="img-responsive img-ico-sm"/></a>
+                                        <a ng-repeat="picture in evaluate.pictures" ng-href="${path}/{{picture}}" target="_blank">
+                                            <img  ng-src="${path}/{{picture}}" class="img-responsive img-ico-sm inline-block"/></a>
                                     </div>
                                 </div>
                             </div>
