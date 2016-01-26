@@ -24,6 +24,11 @@ public final class HttpsToHttpKeepSessionFilter  implements Filter {
             httpServletRequest.getRequestDispatcher("/statics/assets/plugins/layerslider/skins/fullwidth/skin.css").forward(request,response);
             return;
         }
+        if(httpServletRequest.getRequestURI().indexOf("favicon")>=0){//屏蔽favicon的请求
+//            System.out.println("i got it");
+            httpServletRequest.getRequestDispatcher("/statics/assets/img/favicon.ico").forward(request,response);
+            return;
+        }
         HttpsToHttpKeepSessionRequestWarp requestWarp = new HttpsToHttpKeepSessionRequestWarp(httpServletRequest);
         requestWarp.setResponse((HttpServletResponse) response);
         chain.doFilter(requestWarp, response);
