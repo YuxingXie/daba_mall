@@ -36,6 +36,7 @@
     <li>已提交的订单定时删除</li>
     <!--<li>消息应在pre中显示？</li>-->
     <!--<li>图片上传后不能马上显示</li>-->
+    <li>三级地址放入数据库</li>
     <li>等上线后完善用户修改手机号码功能（免费短信太少不够测试）</li>
     <!--<li>window.open()遭浏览器拦截</li>-->
     <!--<li>在单独页面登录</li>-->
@@ -270,7 +271,20 @@ mr=db.runCommand({"mapreduce":"productSeries","map":map,"reduce":reduce,"out":"o
 { "_id" : "shelvesDate", "value" : { "count" : 5 } }
 db.administrator.insert({"name":"xieyuxing","password":"7e89b492192e4acef570348e88c318ea"})
 db.topCarousel.update({"_id":ObjectId("5684f1bc35f0d110c005af08")},{"$set":{"name":"元旦水果风暴"}})
-
+> db.users.remove({})
+WriteResult({ "nRemoved" : 1 })
+> db.order.remove({"user":new DBRef("users",ObjectId("568f5d1735f0d1183c9ee46a")
+)})
+WriteResult({ "nRemoved" : 1 })
+> db.account.remove({"user":new DBRef("users",ObjectId("568f5d1735f0d1183c9ee46a
+"))})
+WriteResult({ "nRemoved" : 1 })
+> db.interest.remove({"user":new DBRef("users",ObjectId("568f5d1735f0d1183c9ee46
+a"))})
+WriteResult({ "nRemoved" : 1 })
+> db.notify.remove({"toUser":new DBRef("users",ObjectId("568f5d1735f0d1183c9ee46
+a"))})
+WriteResult({ "nRemoved" : 15 })
 </pre>
 </body>
 </html>

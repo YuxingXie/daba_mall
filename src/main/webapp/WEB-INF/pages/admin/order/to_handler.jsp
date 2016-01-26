@@ -81,12 +81,12 @@
 
                             </td>
 
-                            <td class="font-size-12 text-center fa fa-rmb">
-                                {{productSelected.productSeries.commonPrice | number:2}}/{{productSelected.productSeries.measurementUnit}}
+                            <td class="font-size-12 text-center">
+                                <i class=" fa fa-rmb"></i>{{productSelected.productSeries.commonPrice | number:2}}/{{productSelected.productSeries.measurementUnit}}
                             </td>
                             <td class="font-size-12 text-center">{{productSelected.amount}}</td>
-                            <td class="font-size-12 text-center fa fa-rmb">
-                                {{productSelected.amount*productSelected.productSeries.commonPrice | number:2}}
+                            <td class="font-size-12 text-center">
+                                <i class=" fa fa-rmb"></i>{{productSelected.amount*productSelected.productSeries.commonPrice | number:2}}
                             </td>
                             <td class="font-size-12 text-center">
                                 <div class="row text-left" ng-repeat="handlerInfo in productSelected.handlerInfoList">

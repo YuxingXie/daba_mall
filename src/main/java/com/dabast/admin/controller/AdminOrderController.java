@@ -55,6 +55,14 @@ public class AdminOrderController extends BaseRestSpringController {
             newHandlerInfo.setDate(now);
             handlerInfoList.add(newHandlerInfo);
             productSelected.setHandlerInfoList(handlerInfoList);
+            Notify notify=new Notify();
+            notify.setToUser(order.getUser());
+            notify.setNotifyType("order handler");
+            notify.setContent("您的订单 "+order.getId()+" 已经开始处理。\n商品 "+productSelected.getProductSeries().getName()+"处理信息："+newHandlerInfo.getDescription());
+            notify.setDate(now);
+            notify.setFromAdministrator(getLoginAdministrator(session));
+            notify.setTitle("订单处理通知");
+            ServiceManager.notifyService.insert(notify);
         }
         updateOrder.setProductSelectedList(order.getProductSelectedList());
         orderService.update(updateOrder);

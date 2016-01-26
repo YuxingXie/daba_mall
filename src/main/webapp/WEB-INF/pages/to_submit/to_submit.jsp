@@ -7,7 +7,7 @@
 <jsp:useBean id="form" class="com.dabast.entity.Order" scope="request"></jsp:useBean>
 <c:set var="path" value="<%=request.getContextPath() %>"/>
 <c:if test="${path eq '/'}"><c:set var="path" value=""/></c:if>
-<div class="container" ng-app="toBillApp">
+<div class="container" ng-controller="ToBillController">
         <ul class="breadcrumb">
             <li><a href="${path}/index">首页</a></li>
             <li><a href="">购物车</a></li>
@@ -87,7 +87,7 @@
                         </c:choose>
                     </table>
                 <form:form class="form-horizontal form-without-legend" novalidate="novalidate" action="${path}/order/do_submit"
-                      id="form" name="form" autocomplete="off" method="post" modelAttribute="form">
+                      id="form" name="form" autocomplete="off" method="post" modelAttribute="form" target="_blank">
                     <table class="table table-striped content-form-page">
                         <tr>
                             <th class="bg-info text-center" colspan="3">填写并核对订单</th>
@@ -163,8 +163,17 @@
                             <td>
                                 总计：<b>${totalCount}</b>件商品,共<b><fmt:formatNumber value="${totalPrice}" pattern="##.##" minFractionDigits="2"/></b>元
                             </td>
-                            <td>
-                                <button class="btn btn-primary center-block btn-sm pull-left" ng-disabled="form.$invalid" type="submit">提交订单</button>
+
+                            <td >
+                                <c:set var="submitStatus" value="${empty form.submitStatus?'n':form.submitStatus}"></c:set>
+                                <c:choose>
+                                    <c:when test="${submitStatus eq 'n'}">
+                                        <button class="btn btn-primary center-block btn-sm pull-left" ng-disabled="form.$invalid||disabled" data-ng-click="submit()" type="submit">提交订单</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="fa fa-warning text-danger">该订单已提交！</span>
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
                         </tr>
                     </table>
