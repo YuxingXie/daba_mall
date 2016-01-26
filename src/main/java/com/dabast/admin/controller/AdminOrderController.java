@@ -48,6 +48,7 @@ public class AdminOrderController extends BaseRestSpringController {
         for (ProductSelected productSelected:order.getProductSelectedList()){
             HandlerInfo newHandlerInfo=productSelected.getNewHandlerInfo();
             if (newHandlerInfo==null) continue;
+            if (newHandlerInfo.getDescription()==null||newHandlerInfo.getDescription().equals("")) continue;
             List<HandlerInfo> handlerInfoList=productSelected.getHandlerInfoList();
             if (handlerInfoList==null||handlerInfoList.size()==0){
                 handlerInfoList=new ArrayList<HandlerInfo>();
@@ -58,7 +59,7 @@ public class AdminOrderController extends BaseRestSpringController {
             Notify notify=new Notify();
             notify.setToUser(order.getUser());
             notify.setNotifyType("order handler");
-            notify.setContent("您的订单 "+order.getId()+" 已经开始处理。\n商品 "+productSelected.getProductSeries().getName()+"处理信息："+newHandlerInfo.getDescription());
+            notify.setContent("您的订单 "+order.getId()+" 已经开始处理。\n商品:"+productSelected.getProductSeries().getName()+",处理信息："+newHandlerInfo.getDescription());
             notify.setDate(now);
             notify.setFromAdministrator(getLoginAdministrator(session));
             notify.setTitle("订单处理通知");

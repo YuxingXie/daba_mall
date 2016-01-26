@@ -34,7 +34,8 @@ mainApp.controller('productSeriesCtrl', ['$scope', '$http', '$sce', function ($s
         $scope.page=data.page;
         $scope.$parent.interested[$scope.productSeries.id]=data.interested;
         $scope.order=data.order;
-        if($scope.order){
+        $scope.myProductEvaluate=data.productEvaluate;
+        if($scope.order&&!$scope.myProductEvaluate){
             var $tour_step1=$(".tour-step1");
             var tour = new Tour({
                 storage:false,
@@ -139,6 +140,17 @@ mainApp.controller('productSeriesCtrl', ['$scope', '$http', '$sce', function ($s
                     var productEvaluateInPage=$scope._page.content[i];
                     if(productEvaluateInPage.id===productEvaluate.id){
                         $scope._page.content[i].praises=data;
+                        $scope._page.content[i].praisedByMe=false;
+                        for(var j=0;j<$scope._page.content[i].praises.length;j++){
+                            var praiseUser=$scope._page.content[i].praises[j].replyUser;
+                            if(praiseUser){
+                                var praiseUserId=praiseUser.id;
+                                if(praiseUserId&&praiseUserId==='${sessionScope.loginUser.id}'){
+                                    $scope._page.content[i].praisedByMe=true;
+                                    break;
+                                }
+                            }
+                        }
                         break;
                     }
                 }

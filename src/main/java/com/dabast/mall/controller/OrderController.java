@@ -249,7 +249,10 @@ public class OrderController extends BaseRestSpringController {
                     productEvaluate.setProductSeries(productSeries);
                     productEvaluate.setOrder(order);
                     productEvaluate.setUser(user);
+                    productEvaluate.setReplyUser(user);
+                    productEvaluate.setType("evaluate");
                     productEvaluate.setDate(new Date());
+
                     if(files!=null&&files.length>0){
                         String dirStr="statics/img/user/evaluate";
                         ServletContext context= ProjectContext.getServletContext();
@@ -274,7 +277,8 @@ public class OrderController extends BaseRestSpringController {
                     }
                     ServiceManager.productEvaluateService.insert(productEvaluate);
                     productSelected.setProductEvaluate(productEvaluate);
-                    productSeries.setEvaluateCount(productSeries.getEvaluateCount()+1);
+                    int evaluateCount=productSeries.getEvaluateCount()==null?1:productSeries.getEvaluateCount()+1;
+                    productSeries.setEvaluateCount(evaluateCount);
                     ServiceManager.productSeriesService.update(productSeries);
                     break;
                 }

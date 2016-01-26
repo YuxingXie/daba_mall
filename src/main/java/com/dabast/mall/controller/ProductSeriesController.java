@@ -6,6 +6,7 @@ import com.dabast.common.helper.service.ServiceManager;
 import com.dabast.entity.*;
 import com.dabast.mall.service.IProductSeriesService;
 import com.dabast.support.vo.Sortable;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.apache.logging.log4j.LogManager;
@@ -81,6 +82,8 @@ public class ProductSeriesController extends BaseRestSpringController {
         if (orderId!=null&&!orderId.equals("")){
             Order order=ServiceManager.orderService.findOrderById(orderId);
             model.put("order", order);
+            ProductEvaluate productEvaluate=ServiceManager.productEvaluateService.findByOrderAndProductSeries(order,productSeries);
+            model.put("productEvaluate",productEvaluate);
         }
         return new ResponseEntity<Map>(model, HttpStatus.OK);
     }
@@ -175,6 +178,20 @@ public class ProductSeriesController extends BaseRestSpringController {
         return new ResponseEntity<Map>(map,HttpStatus.OK);
     }
 
+    /**
+     * 商品评论及回复
+     * @return
+     */
+    @RequestMapping(value="/evaluates/data")
+    public ResponseEntity<List<ProductEvaluate>> evaluates() {
+
+        DBObject basicDBObject=new BasicDBObject();
+
+        basicDBObject.put("content",new BasicDBObject("$exists", true));
+        List<ProductEvaluate> replies=ServiceManager.productEvaluateService.findAll(new BasicQuery(basicDBObject).with(new Sort(Sort.Direction.DESC, "date")));
+        ResponseEntity<List<ProductEvaluate>> rt=new ResponseEntity<List<ProductEvaluate>>(replies, HttpStatus.OK);
+        return rt;
+    }
     @RequestMapping(value="/evaluate/reply")
     public ResponseEntity<List<ProductEvaluate>> evaluateReply(@RequestBody ProductEvaluate reply,HttpSession session) {
         Assert.notNull(reply);

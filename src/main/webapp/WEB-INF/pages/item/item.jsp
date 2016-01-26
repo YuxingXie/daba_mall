@@ -41,7 +41,8 @@
           <div class="col-lg-4 col-sm-4">
               <div class="row padding-bottom-20"><h1 class="center-block">{{productSeries.name}}</h1></div>
               <div class="row padding-bottom-20">
-                <div class="col-sm-3 col-lg-3 padding-left-0 margin-left-0 text-left"><h3 class="fa fa-rmb fa-2x">{{productSeries.commonPrice}}/{{productSeries.measurementUnit}}</h3>
+                <div class="col-sm-4 col-lg-4 padding-left-0 margin-left-0 text-left">
+                    <h3 class="fa fa-rmb fa-2x">{{productSeries.commonPrice}}/{{productSeries.measurementUnit}}</h3>
                   <em ng-if="productSeries.currentPrice &&productSeries.currentPrice.prevPrice && productSeries.currentPrice<productSeries.currentPrice.prevPrice">
                     <i class="fa fa-rmb"></i>{{productSeries.currentPrice.prevPrice.price}}
                   </em>
@@ -58,9 +59,7 @@
                 <div class="col-sm-3 col-lg-3 text-left padding-left-0 margin-left-0">{{_page.totalElements}}条评论</div>
                 <div class="col-sm-3 col-lg-3 text-left padding-left-0 margin-left-0">
                     <c:if test="${not empty orderId}">
-                      <a ng-click="isEvaluated('${orderId}',productSeries.id)" href="javascript:void(0)" class="tour-step1"
-                         <%--data-toggle="modal" data-target="#evaluateModal"--%>
-                              >发表评论</a>
+                      <a ng-if="!myProductEvaluate" ng-click="isEvaluated('${orderId}',productSeries.id)" href="javascript:void(0)" class="tour-step1">发表评论</a>
                     </c:if>
                 </div>
               </div>
@@ -158,15 +157,20 @@
                         <div class="row padding-top-10 bg-light-blue">
                             <div class="col-sm-1 col-lg-1"></div>
                             <div class="col-sm-9 col-lg-9">
-                                <b class="fa fa-file-text-o">{{productEvaluate.content}}</b>
+                                <b class="fa fa-file-text-o" ng-if="!productEvaluate.evaluateFilterInfo||!productEvaluate.evaluateFilterInfo.forbid">{{productEvaluate.content}}</b>
+                                <b class="fa fa-ban text-danger" ng-if="productEvaluate.evaluateFilterInfo&&productEvaluate.evaluateFilterInfo.forbid">该用户发言已被管理员隐藏</b>
                             </div>
 
                         </div>
                         <div class="row padding-top-10 bg-light-blue">
                             <div class="col-sm-1 col-lg-1"></div>
                             <div class="col-sm-10 col-lg-10">
-                                <a ng-repeat="picture in productEvaluate.pictures" href="javascript:void(0)">
-                                    <img class="img-responsive img-ico-md inline-block" ng-src="${path}/{{picture}}" onClick="$('#imageZoom').attr('src', $(this).attr('src')); $('#imageZoomModal').modal('show');"/></a>
+                                <a ng-repeat="picture in productEvaluate.pictures" href="javascript:void(0)" >
+                                    <img ng-if="!productEvaluate.evaluateFilterInfo||!productEvaluate.evaluateFilterInfo.forbid" class="img-responsive img-ico-md inline-block"
+                                         ng-src="${path}/{{picture}}" onClick="$('#imageZoom').attr('src', $(this).attr('src')); $('#imageZoomModal').modal('show');"/>
+                                    <span ng-if="productEvaluate.evaluateFilterInfo&&productEvaluate.evaluateFilterInfo.forbid" class="fa fa-ban fa-2x">图片已屏蔽</span>
+                                </a>
+
                             </div>
 
                         </div>
@@ -176,7 +180,7 @@
                                     回复<span ng-if="!productEvaluate.replies.length">(0)</span>
                                     <span ng-if="productEvaluate.replies.length">({{productEvaluate.replies.length}})</span>
                                 </a> &nbsp;
-                                <a class="fa fa-thumbs-o-up" href="javascript:void(0)" data-ng-click="toPraise(productEvaluate)">
+                                <a ng-class="{'fa fa-thumbs-o-up':true,'color-red':productEvaluate.praisedByMe}" href="javascript:void(0)" data-ng-click="toPraise(productEvaluate)">
                                     赞<span ng-if="!productEvaluate.praises &&productEvaluate.praises.length==0">(0)</span>
                                     <span ng-if="productEvaluate.praises">({{productEvaluate.praises.length}})</span>
                                 </a>
@@ -199,7 +203,10 @@
                         <div ng-show="showEvaluate" ng-repeat="evaluateReply in productEvaluate.replies" class="row table-bordered bg-info">
                             <div ng-class="{'col-sm-1 col-lg-1 text-right':true}"><p>&nbsp;</p></div>
                             <div ng-class="{'col-lg-8 col-sm-8':true}">
-                                <p><i>{{evaluateReply.content}}</i></p>
+                                <p>
+                                    <i ng-if="!evaluateReply.evaluateFilterInfo||!evaluateReply.evaluateFilterInfo.forbid">{{evaluateReply.content}}</i>
+                                    <i class="fa fa-ban text-danger" ng-if="evaluateReply.evaluateFilterInfo&&evaluateReply.evaluateFilterInfo.forbid">该用户发言已被管理员隐藏</i>
+                                </p>
                             </div>
                             <div ng-class="{'col-lg-3 col-sm-3 text-right':true}" style="vertical-align: bottom">
                                 <p><small>回复by:<i class="fa fa-user"></i><strong></strong>{{evaluateReply.replyUser.name}} {{evaluateReply.date | date:'yyyy-MM-dd'}}</small></p>

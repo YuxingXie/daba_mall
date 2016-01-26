@@ -54,7 +54,7 @@
                   <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
                 </a>
                 <ul id="systemSetting" class="nav nav-list secondmenu collapse" style="height: 0px;">
-                  <li><a href="#"><i class="fa fa-user fa-fw"></i>&nbsp;用户管理</a></li>
+                  <li><a href="${path}/admin/evaluate/list"><i class="fa fa-user fa-fw"></i>&nbsp;用户管理</a></li>
                   <li><a href="#"><i class="fa fa-reply fa-fw"></i>&nbsp;留言及回复管理</a></li>
                   <li><a href="${path}/admin/notify/list"><i class="fa fa-envelope fa-fw"></i>&nbsp;消息管理</a></li>
                 </ul>

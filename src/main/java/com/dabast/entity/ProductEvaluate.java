@@ -40,6 +40,7 @@ public class ProductEvaluate {
     @DBRef
     private User replyUser;
 
+    private EvaluateFilterInfo evaluateFilterInfo;
 
     public User getReplyUser() {
         return replyUser;
@@ -171,5 +172,13 @@ public class ProductEvaluate {
 
     public void setPraises(List<ProductEvaluate> praises) {
         this.praises = praises;
+    }
+
+    public EvaluateFilterInfo getEvaluateFilterInfo() {
+        return evaluateFilterInfo;
+    }
+
+    public void setEvaluateFilterInfo(EvaluateFilterInfo evaluateFilterInfo) {
+        this.evaluateFilterInfo = evaluateFilterInfo;
     }
 }
