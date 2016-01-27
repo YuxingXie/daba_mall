@@ -8,30 +8,9 @@
 <div ng-controller='EvaluateController'>
     <div class="row btn-group btn-group-xs">
             <a href="${path}/admin/index/index" class="btn btn-primary"><i class="fa fa-reply"></i> 返回首页</a>
-            <a href="${path}/admin/product_series/create_input" class="btn btn-primary"><i class="fa fa-plus"></i> 新增商品</a>
             <a href="${path}/admin/evaluate/list" class="btn btn-primary"><i class="fa fa-refresh"></i> 刷新</a>
     </div>
-    <div class="row form-inline font-size-13-5">
-        <div class="col-sm-9 col-lg-9" ng-if="categories.length">
-            <div class="inline-block margin-top-10">
-                选择分类：
-                <select ng-model="productCategory" ng-change="byCategory(productCategory)"
-                        ng-options="productCategory.categoryName for productCategory in categories"
-                        name="form-productCategory" class="form-control input-sm">
-                    <option>--选择大类--</option>
-                </select>
-                <select ng-model="productSeries.productSubCategory" required="true" name="form-productSubCategory"
-                        class="form-control input-sm"  ng-change="bySubCategory(productSeries.productSubCategory)"
-                        ng-options="productSubCategory.subCategoryName for productSubCategory in productCategory.productSubCategories">
-                </select>
-            </div>
-            <div class="inline-block margin-top-10">
-                <input type="text" placeholder="产品名" class="form-control input-sm" style="width: 200px;" ng-model="name"/>
-                <button class="btn btn-primary btn-sm" data-ng-click="byName(name)" ng-disabled="!name">搜索产品</button>
-            </div>
-        </div>
 
-    </div>
     <div class="row table-responsive padding-top-15">
         <table class="table table-hover">
             <tr>
@@ -78,8 +57,8 @@
                                     <label class="col-lg-2 control-label">状态</label>
                                     <div class="col-lg-8 has-success">
                                         <select ng-model="evaluate.evaluateFilterInfo.forbid" class="form-control">
-                                            <option value="true" class="fa fa-lock">禁止显示</option>
-                                            <option value="false" class="fa fa-unlock">显示</option>
+                                            <option value="true">禁止显示</option>
+                                            <option value="false">显示</option>
                                         </select>
                                     </div>
                                 </div>

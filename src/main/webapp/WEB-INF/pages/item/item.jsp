@@ -168,7 +168,7 @@
                                 <a ng-repeat="picture in productEvaluate.pictures" href="javascript:void(0)" >
                                     <img ng-if="!productEvaluate.evaluateFilterInfo||!productEvaluate.evaluateFilterInfo.forbid" class="img-responsive img-ico-md inline-block"
                                          ng-src="${path}/{{picture}}" onClick="$('#imageZoom').attr('src', $(this).attr('src')); $('#imageZoomModal').modal('show');"/>
-                                    <span ng-if="productEvaluate.evaluateFilterInfo&&productEvaluate.evaluateFilterInfo.forbid" class="fa fa-ban fa-2x">图片已屏蔽</span>
+                                    <span ng-if="productEvaluate.evaluateFilterInfo&&productEvaluate.evaluateFilterInfo.forbid" class="fa fa-ban">图片已屏蔽</span>
                                 </a>
 
                             </div>
