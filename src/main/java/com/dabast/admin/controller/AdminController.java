@@ -179,7 +179,7 @@ public class AdminController extends BaseRestSpringController {
             File bigPictureFile=new ServletContextResource(context,bigPictureStr).getFile();
             file.transferTo(bigPictureFile);
 
-            //生成305*350的中等大小图,无论中图小图都保持16:9的比例
+            //生成320*180的中等大小图,无论中图小图都保持16:9的比例
             String mdTempPictureStr=dirStr+"/"+pictureId+".md"+suffix;
             File mdTempPictureFile=new ServletContextResource(context,mdTempPictureStr).getFile();
             IconCompressUtil.compressPic(bigPictureFile,mdTempPictureFile , 320, 180, false);
