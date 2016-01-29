@@ -324,6 +324,14 @@ public class AdminController extends BaseRestSpringController {
         map.addAttribute("top3",list);
         return "admin/top3/create_input";
     }
+    @RequestMapping(value="/top3/edit/{id}")
+    public String top3Maker(ModelMap map,@PathVariable String id){
+        TopCarousel topCarousel=ServiceManager.topCarouselService.findById(id);
+        map.addAttribute("topCarousel",topCarousel);
+        map.addAttribute("top3",topCarousel.getAdContent());
+        map.addAttribute("id",id);
+        return "admin/top3/create_input";
+    }
     @RequestMapping(value="/top3/demo")
     public String top3Demo(ModelMap map){
         List<String[]> list=ServiceManager.productSeriesService.getTop3ProductSeriesDemo();
@@ -336,16 +344,31 @@ public class AdminController extends BaseRestSpringController {
         map.addAttribute("top3",s);
         return "forward:/top3preview.jsp";
     }
-
+    @RequestMapping(value="/top3/preview2")
+    public String top3preview2(ModelMap map, List<String[]> data){
+        map.addAttribute("top3",data);
+        return "forward:/top3preview.jsp";
+    }
     @RequestMapping(value="/topCarousel/list/json")
     public ResponseEntity<List<TopCarousel>> topCarouselList(ModelMap map){
         List<TopCarousel> topCarousels= ServiceManager.topCarouselService.findAll();
         return new ResponseEntity<List<TopCarousel>>(topCarousels,HttpStatus.OK);
     }
+    @RequestMapping(value="/topCarousel/remove/{id}")
+    public ResponseEntity<Map<String,Object>> removeTopCarousel(@PathVariable String id){
+        Map<String,Object> map=new HashMap<String, Object>();
+        ServiceManager.topCarouselService.removeById(id);
+        List<TopCarousel> topCarousels= ServiceManager.topCarouselService.findAll();
+        map.put("topCarousels",topCarousels);
+        Message message=new Message();
+        message.setSuccess(true);
+        map.put("message",message);
+        return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
+    }
     @RequestMapping(value="/topCarousel/new")
     public ResponseEntity<Message> topCarouselCreate(ModelMap map, @RequestBody TopCarousel topCarousel){
         Message message=new Message();
-        ServiceManager.topCarouselService.insert(topCarousel);
+        ServiceManager.topCarouselService.update(topCarousel);
         if (topCarousel.getId()!=null){
             message.setSuccess(true);
             message.setMessage("保存成功!");

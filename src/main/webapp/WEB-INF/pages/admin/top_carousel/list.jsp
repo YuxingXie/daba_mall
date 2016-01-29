@@ -26,9 +26,10 @@
                     <td>{{topCarousel.name}}</td>
                     <td>{{topCarousel.priority}}</td>
                     <td class="btn-group btn-group-xs">
-                        <button class="btn btn-primary">预览<i class="fa fa-eye"></i></button>
-                        <button class="btn btn-primary">修改<i class="fa fa-edit"></i></button>
-                        <button class="btn btn-primary" >删除<i class="fa fa-remove"></i></button>
+                        <form name="form" id="form" target="_blank"  method="post"><input type="hidden" name="data" id="data"/></form>
+                        <button class="btn btn-primary" data-ng-click="preview(topCarousel)">预览<i class="fa fa-eye"></i></button>
+                        <a class="btn btn-primary" ng-href="${path}/admin/top3/edit/{{topCarousel.id}}">修改<i class="fa fa-edit"></i></a>
+                        <button class="btn btn-primary" data-ng-click="remove(topCarousel)">删除<i class="fa fa-remove"></i></button>
                     </td>
                 </tr>
             </table>

@@ -38,7 +38,7 @@
                     <button data-ng-click="openModal(evaluate)" class="btn btn-primary"><i class="fa fa-filter"></i> 过滤</button>
                 </td>
             </tr>
-            <tr ng-if="!list ||!list.length"><th class="text-warning font-size-13-5" colspan="5">没有找到符合的商品</th></tr>
+            <tr ng-if="!list ||!list.length"><th class="text-warning font-size-13-5" colspan="5">暂无评论及回复</th></tr>
         </table>
     </div>
     <div class="modal fade active" id="evaluateFilterModal" tabindex="-1" role="dialog" aria-labelledby="evaluateFilterModal" aria-hidden="true">

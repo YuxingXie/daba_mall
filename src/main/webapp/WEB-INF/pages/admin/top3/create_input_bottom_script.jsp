@@ -17,11 +17,19 @@
         $http.get('${path}/product_series/data').success(function (data) {
             $scope.productSeriesList = data;
         });
+      <c:choose>
+      <c:when test="${empty id}">
       $http.get('${path}/product_series/top3/data').success(function (data) {
           $scope.top3 = data;
-//          console.log(JSON.stringify(data));
-
       });
+      </c:when>
+      <c:otherwise>
+      $http.get('${path}/product_series/topCarousel/data/${id}').success(function (data) {
+          $scope.top3 = data;
+      });
+      </c:otherwise>
+      </c:choose>
+
 
       $scope.addToList=function(checked,index,productSeries){
           if(checked)
@@ -53,6 +61,9 @@
           topCarousel.adContent=$scope.top3;
           topCarousel.priority=$scope.priority;
           topCarousel.name=$scope.topCarouselName;
+          <c:if test="${not empty id}">
+          topCarousel.id='${id}';
+          </c:if>
           var action="${path}/admin/topCarousel/new";
           console.log(JSON.stringify(topCarousel))
           $http.post(action,topCarousel).success(function(data){

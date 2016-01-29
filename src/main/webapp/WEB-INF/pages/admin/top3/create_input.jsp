@@ -7,8 +7,9 @@
 <div  ng-controller="HomePageTopController">
     <form name="form" id="form" target="_blank"  method="post">
         <input type="hidden" name="data" id="data"/>
+
         <div class="row">
-            <h4>顶部轮播图制作</h4>
+            <h4>顶部轮播图<c:if test="${empty id}">制作</c:if><c:if test="${not empty id}"> 编辑</c:if></h4>
         </div>
         <div class="page-slider">
             <!--LayerSlider begin-->
@@ -82,7 +83,7 @@
             </div>
             <div class="center-block font-size-17-5">
                 <b>第五步：如果效果已经确定，为该方案设置一个优先级，只有优先级最大的方案才会在首页显示，优先级为一个1-9999之间的数字。不输入默认优先级为零。</b>
-                <input type="number" ng-model="priority" placeholder="1-9999之间的数字" max="9999"/>
+                <input type="number" ng-model="priority" placeholder="1-9999之间的数字" max="9999" <c:if test="${not empty topCarousel.priority}">ng-init="priority=${topCarousel.priority}"</c:if>/>
                 <a class="btn btn-primary btn-xs"  ng-init="showTopCarousels=false" data-ng-click="showTopCarousels=!showTopCarousels;getTopCarousels()">显示/隐藏其它方案的优先级<i class=" fa fa-search"></i></a>
                 <div class="table-responsive" ng-if="showTopCarousels">
                     <table class="table table-hover table-condensed table-bordered">
@@ -102,7 +103,7 @@
             </div>
             <div class="center-block font-size-17-5">
                 <b>第六步：为该方案命名。</b>
-                <input type="text" class="form-control" ng-model="topCarouselName" placeholder="方案名称">
+                <input type="text" class="form-control" ng-model="topCarouselName" ng-init="topCarouselName='${topCarousel.name}'" placeholder="方案名称">
             </div>
             <div class="center-block font-size-17-5">
                 <b>第七步：保存方案。如果优先级设置为所有方案中最高，该方案会立即生效。</b>
@@ -111,7 +112,7 @@
             <div class="center-block font-size-17-5 color-red fa fa-warning">
                 <b>注意：每个产品的第一项为产品id,第二项为产品图片，一般情况下请不要手动修改第一二项。</b>
             </div>
-            <div class="row" style="margin-bottom: 15px;margin-top: 15px;" ng-repeat="adv in top3">
+            <div class="row" style="margin-bottom: 15px;margin-top: 15px;" ng-repeat="adv in top3 track by $index">
                 <div class="row">
                     <b class="font-size-13-5">第{{$index+1}}个产品</b>
                 </div>
@@ -121,7 +122,7 @@
                     <input type="text" class="form-control" placeholder="在这里输入不会失去焦点" style="width: 400px;"/>
 
                 </div>
-                <div class="row padding-top-5"  ng-repeat="word in adv">
+                <div class="row padding-top-5"  ng-repeat="word in adv track by $index">
                     <%--<input type="text" ng-model="adv[$index]" ng-init="adv[$index]=word" class="form-control">--%>
                     <input type="text" ng-init="adv[$index]=word" ng-model="adv[$index]" class="form-control" style="width: 350px;">
                 </div>
