@@ -87,7 +87,16 @@ public class ProductSeriesController extends BaseRestSpringController {
         }
         return new ResponseEntity<Map>(model, HttpStatus.OK);
     }
-
+    /**
+     * 单个产品json
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="/data/simple/{id}")
+    public ResponseEntity<ProductSeries> data(@PathVariable String id) {
+        ProductSeries productSeries = productSeriesService.findProductSeriesById(id);
+        return new ResponseEntity<ProductSeries>(productSeries, HttpStatus.OK);
+    }
     /**
      * 单个产品javaBean
      * @param model

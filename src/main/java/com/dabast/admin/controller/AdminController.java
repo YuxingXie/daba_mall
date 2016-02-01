@@ -160,7 +160,21 @@ public class AdminController extends BaseRestSpringController {
         }
         return "redirect:/admin/product_series/list";
     }
+    @RequestMapping(value="/product_series/update_brochures")
+    public String update_brochures(String productSeriesId,@RequestParam("file") MultipartFile file,HttpServletRequest request,HttpSession session) throws IOException {
 
+        ProductSeries productSeries=new ProductSeries();
+        productSeries.setId(productSeriesId);
+        String dirStr="statics/img/product";
+        ServletContext context= ProjectContext.getServletContext();
+        ServletContextResource dirResource=new ServletContextResource(context,dirStr);
+        mkDirs(dirResource);
+
+
+        productSeriesService.update(productSeries);
+
+        return "redirect:/admin/product_series/list";
+    }
     private List<ProductSeriesPicture> getProductSeriesPicturesAndSaveFiles(MultipartFile[] files, String dirStr, ServletContext context) throws IOException {
         //循环获取file数组中得文件
 //        Map<String,ProductSeriesPicture> originalPrefixesMap= new HashMap<String, ProductSeriesPicture>();
@@ -262,6 +276,11 @@ public class AdminController extends BaseRestSpringController {
         return "admin/product_series/adjust_price";
     }
 
+    @RequestMapping(value="/product_brochures/{id}")
+    public String make_product_brochures(@PathVariable String id,ModelMap map){
+        map.addAttribute("id",id);
+        return "admin/product_series/brochures";
+    }
     @RequestMapping(value="/do/adjust_price")
     public String do_adjust_price(@ModelAttribute ProductSeriesPrice productSeriesPrice,String productSeriesId,ModelMap map){
         ProductSeries productSeries=productSeriesService.findById(productSeriesId);

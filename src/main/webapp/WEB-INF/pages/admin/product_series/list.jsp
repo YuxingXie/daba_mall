@@ -50,6 +50,7 @@
                     <a ng-href="${path}/admin/adjust_price/{{productSeries.id}}" class="btn btn-primary"><i class="fa fa-dollar"></i> 调价</a>
                     <a ng-href="${path}/admin/adjust_store/{{productSeries.id}}" class="btn btn-primary"><i class="fa fa-cubes"></i> 调整库存</a>
                     <a ng-href="${path}/admin/adjust_sort/{{productSeries.id}}" class="btn btn-primary"><i class="fa fa-paperclip"></i> 调整分类</a>
+                    <a ng-href="${path}/admin/product_brochures/{{productSeries.id}}" class="btn btn-primary"><i class="fa fa-paperclip"></i> 制作宣传册</a>
                     <a href="javascript:void(0)" ng-click="remove(productSeries)" class="btn btn-primary"><i class="fa fa-trash"></i> 删除</a>
                 </td>
             </tr>
