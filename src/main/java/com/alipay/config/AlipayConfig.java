@@ -22,7 +22,9 @@ public class AlipayConfig {
 	public static String seller_id = partner;
 
 	// MD5密钥，安全检验码，由数字和字母组成的32位字符串，查看地址：https://b.alipay.com/order/pidAndKey.htm
-    public static String key = "aaus668vnwr7rswcl2k04v5eeupn7o2p";
+//    public static String key = "aaus668vnwr7rswcl2k04v5eeupn7o2p";
+    public static String key = "oiopjifbmjhxfeg3g0bm8pk8zkc1kyfc";
+
 
 	// 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
 	public static String notify_url = "http://www.dabast.com/notify_url.jsp";
