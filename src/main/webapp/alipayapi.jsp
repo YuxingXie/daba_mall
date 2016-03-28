@@ -66,6 +66,28 @@
 		
 		//建立请求
 		String sHtmlText = AlipaySubmit.buildRequest(sParaTemp,"get","确认");
+//		System.out.println(sHtmlText);
+		/**
+		 * sHtmlText likes follow without line break:
+		 <form id="alipaysubmit" name="alipaysubmit" action="https://mapi.alipay.com/gateway.do?_input_charset=utf-8" method="get">
+		 <input type="hidden" name="sign" value="d88454692dc3e6de44055d89cfcca02f"/>
+		 <input type="hidden" name="body" value="??????"/>
+		 <input type="hidden" name="_input_charset" value="utf-8"/>
+		 <input type="hidden" name="subject" value="test??123"/>
+		 <input type="hidden" name="total_fee" value="0.01"/>
+		 <input type="hidden" name="sign_type" value="MD5"/>
+		 <input type="hidden" name="service" value="create_direct_pay_by_user"/>
+		 <input type="hidden" name="notify_url" value="http://www.dabast.com/notify_url.jsp"/>
+		 <input type="hidden" name="partner" value="2088221273018992"/>
+		 <input type="hidden" name="seller_id" value="2088221273018992"/>
+		 <input type="hidden" name="out_trade_no" value="test20160328103653"/>
+		 <input type="hidden" name="payment_type" value="1"/>
+		 <input type="hidden" name="return_url" value="http://www.dabast.com/return_url.jsp"/>
+		 <input type="submit" value="确认" style="display:none;">
+		 </form>
+		 <script>document.forms['alipaysubmit'].submit();</script>
+		 */
+
 		out.println(sHtmlText);
 	%>
 	<body>
