@@ -44,10 +44,12 @@
 	}
 	
 	//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
-	//商户订单号
+	//商户订单号
+
 	String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
 
-	//支付宝交易号
+	//支付宝交易号
+
 	String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
 
 	//交易状态
@@ -70,6 +72,9 @@
 		}
 		
 		//该页面可做页面美工编辑
+
+		out.println("您的订单"+out_trade_no+"付款成功!<br />");
+
 		out.println("验证成功<br />");
 		//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
 

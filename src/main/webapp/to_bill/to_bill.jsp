@@ -57,8 +57,23 @@
                             ng-options="useAccount as useAccount.bank.name+' '+useAccount.cardNo+' '+useAccount.cardSortString for useAccount in accounts">
                     </select>
                 </span>
-                    <label class="control-label" ng-show="!accounts||!accounts.length">您没有在本站使用过银行卡 </label>
-                    <label class="control-label"><a class="btn btn-sm btn-primary fa fa-credit-card" ng-click="useAccountPay=!useAccountPay;getBanks();">使用新银行卡</a></label>
+                <label class="margin-top-20">选择在线支付方式:</label>
+                <div>
+                    <div class="padding-bottom-10">
+                        <a disabled class="btn btn-sm btn-primary fa fa-credit-card" ng-click="useAccountPay=!useAccountPay;getBanks();">使用新银行卡(暂不支持)</a>
+                        <%--<label class="control-label padding-left-10" ng-show="!accounts||!accounts.length">您没有在本站使用过银行卡 </label>--%>
+                    </div>
+                    <div class="padding-bottom-10">
+                        <a ng-href="${path}/alipay//order/${form.id}">
+                            <img src="${path}/statics/alipay/img/alipay_logo.png" height="30px">
+                        </a>
+                    </div>
+
+                </div>
+
+
+
+
                     <label class="control-label">支付<fmt:formatNumber value="${form.totalPrice}" pattern="##.##" minFractionDigits="2"></fmt:formatNumber>元</label>
                 </div>
                 <div ng-show="accounts &&accounts.length" class="form-group form-inline">
