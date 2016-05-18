@@ -14,9 +14,6 @@ import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.DBRef;
-import com.pingplusplus.Pingpp;
-import com.pingplusplus.exception.PingppException;
-import com.pingplusplus.model.Charge;
 import example.ChargeExample;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -298,76 +295,76 @@ public class OrderController extends BaseRestSpringController {
 //        model.addAttribute("order", order);
         return "redirect:/order/receive/"+id;
     }
-    @RequestMapping(value = "/pay", method = RequestMethod.POST)
-    public ResponseEntity<Charge> orderPay( @RequestBody Order order, ModelMap model,HttpSession session,RedirectAttributes redirectAttributes) throws IOException {
-        /**
-         * 付款成功系统需要做的事
-         * 1.发送请求至外部接口，接收返回数据
-         * 2.更新订单状态
-         * 3.保存用户的账户信息（银行卡号）
-         * 4.通知用户等待收货
-         */
-        User user=getLoginUser(session);
-        Assert.notNull(user);
-        Assert.notNull(order);
-        Assert.notNull(order.getId());
-        String payWay=order.getPayWay();
-        Assert.notNull(payWay);
-        //货到付款1，在线支付2，公司转账3，邮局汇款4
-        if (payWay.equals("1")){
-            order.setPayStatus("n");
-        }else if (payWay.equals("2")){
-
-
-            Pingpp.apiKey = ChargeExample.apiKey;
-            ChargeExample ce = new ChargeExample();
-            logger.info("---------创建 charge");
-            Charge charge = null;
-            Map<String, Object> chargeMap = new HashMap<String, Object>();
-            chargeMap.put("amount", 10);
-            chargeMap.put("currency", "cny");
-            chargeMap.put("subject", "Your Subject");
-            chargeMap.put("body", "Your Body");
-            chargeMap.put("order_no", order.getId());
-            chargeMap.put("channel", "alipay");
-            chargeMap.put("channel", "alipay_pc_direct");
-            chargeMap.put("client_ip", "127.0.0.1");
-            Map extra=new HashMap<String,String>();
-            extra.put("success_url","http://www.dabast.com/order/to_bill/565bc67335f0d102e85d21d9");
-            chargeMap.put("extra", extra);
-//        chargeMap.put("success_url", "http://localhost:8088/mall/order/to_bill/565bc67335f0d102e85d21d9");
-            Map<String, String> app = new HashMap<String, String>();
-            app.put("id",ChargeExample.appId);
-            chargeMap.put("app", app);
-            try {
-                //发起交易请求
-                charge = Charge.create(chargeMap);
-                logger.info(charge);
-                order.setPayStatus("y");
-                Account account0 = ServiceManager.accountService.findAccountsByUserIdAndCardNo(user.getId(),order.getPayAccount().getCardNo());
-                if (account0==null){
-                    Account account=order.getPayAccount();
-                    account.setUser(user);
-                    ServiceManager.accountService.insert(account);
-                    order.setPayAccount(account);
-                }else {
-                    order.setPayAccount(account0);
-                }
-                order.setPayDate(new Date());
-                ServiceManager.orderService.update(order);
-                updateProductSeriesSales(order);
-                redirectAttributes.addFlashAttribute("order",order);
-                return new ResponseEntity<Charge>(charge,HttpStatus.OK);
-            } catch (PingppException e) {
-                e.printStackTrace();
-            }
-        }else if (payWay.equals("3")){
-            order.setPayStatus("n");
-        }else if (payWay.equals("4")){
-            order.setPayStatus("n");
-        }
-        return null;
-    }
+//    @RequestMapping(value = "/pay", method = RequestMethod.POST)
+//    public ResponseEntity<Charge> orderPay( @RequestBody Order order, ModelMap model,HttpSession session,RedirectAttributes redirectAttributes) throws IOException {
+//        /**
+//         * 付款成功系统需要做的事
+//         * 1.发送请求至外部接口，接收返回数据
+//         * 2.更新订单状态
+//         * 3.保存用户的账户信息（银行卡号）
+//         * 4.通知用户等待收货
+//         */
+//        User user=getLoginUser(session);
+//        Assert.notNull(user);
+//        Assert.notNull(order);
+//        Assert.notNull(order.getId());
+//        String payWay=order.getPayWay();
+//        Assert.notNull(payWay);
+//        //货到付款1，在线支付2，公司转账3，邮局汇款4
+//        if (payWay.equals("1")){
+//            order.setPayStatus("n");
+//        }else if (payWay.equals("2")){
+//
+//
+//            Pingpp.apiKey = ChargeExample.apiKey;
+//            ChargeExample ce = new ChargeExample();
+//            logger.info("---------创建 charge");
+//            Charge charge = null;
+//            Map<String, Object> chargeMap = new HashMap<String, Object>();
+//            chargeMap.put("amount", 10);
+//            chargeMap.put("currency", "cny");
+//            chargeMap.put("subject", "Your Subject");
+//            chargeMap.put("body", "Your Body");
+//            chargeMap.put("order_no", order.getId());
+//            chargeMap.put("channel", "alipay");
+//            chargeMap.put("channel", "alipay_pc_direct");
+//            chargeMap.put("client_ip", "127.0.0.1");
+//            Map extra=new HashMap<String,String>();
+//            extra.put("success_url","http://www.dabast.com/order/to_bill/565bc67335f0d102e85d21d9");
+//            chargeMap.put("extra", extra);
+////        chargeMap.put("success_url", "http://localhost:8088/mall/order/to_bill/565bc67335f0d102e85d21d9");
+//            Map<String, String> app = new HashMap<String, String>();
+//            app.put("id",ChargeExample.appId);
+//            chargeMap.put("app", app);
+//            try {
+//                //发起交易请求
+//                charge = Charge.create(chargeMap);
+//                logger.info(charge);
+//                order.setPayStatus("y");
+//                Account account0 = ServiceManager.accountService.findAccountsByUserIdAndCardNo(user.getId(),order.getPayAccount().getCardNo());
+//                if (account0==null){
+//                    Account account=order.getPayAccount();
+//                    account.setUser(user);
+//                    ServiceManager.accountService.insert(account);
+//                    order.setPayAccount(account);
+//                }else {
+//                    order.setPayAccount(account0);
+//                }
+//                order.setPayDate(new Date());
+//                ServiceManager.orderService.update(order);
+//                updateProductSeriesSales(order);
+//                redirectAttributes.addFlashAttribute("order",order);
+//                return new ResponseEntity<Charge>(charge,HttpStatus.OK);
+//            } catch (PingppException e) {
+//                e.printStackTrace();
+//            }
+//        }else if (payWay.equals("3")){
+//            order.setPayStatus("n");
+//        }else if (payWay.equals("4")){
+//            order.setPayStatus("n");
+//        }
+//        return null;
+//    }
 
     public void updateProductSeriesSales(Order order) {
         order=orderService.findById(order.getId());//如果页面出入的值包含productSelectedList则可省去查询
